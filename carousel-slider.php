@@ -17,11 +17,6 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-// Define Carousel Slider Version
-if ( ! defined( 'CAROUSEL_SLIDER_VERSION' ) ) {
-	define( 'CAROUSEL_SLIDER_VERSION', '1.7.2' );
-}
-
 if ( ! class_exists( 'Carousel_Slider' ) ):
 
 	class Carousel_Slider {
@@ -54,6 +49,10 @@ if ( ! class_exists( 'Carousel_Slider' ) ):
 		 * Carousel_Slider constructor.
 		 */
 		public function __construct() {
+
+			// define constants
+			$this->define_constants();
+
 			$this->plugin_name    = 'carousel-slider';
 			$this->plugin_version = CAROUSEL_SLIDER_VERSION;
 
@@ -65,7 +64,32 @@ if ( ! class_exists( 'Carousel_Slider' ) ):
 			add_action( 'wp_footer', array( $this, 'inline_script' ), 30 );
 			add_action( 'init', array( $this, 'load_textdomain' ) );
 			add_filter( 'admin_footer_text', array( $this, 'admin_footer_text' ) );
+
+			// include files
 			$this->includes();
+		}
+
+		public function define_constants() {
+			define( 'CAROUSEL_SLIDER_VERSION', '1.7.2' );
+			define( 'CAROUSEL_SLIDER_FILE', __FILE__ );
+			define( 'CAROUSEL_SLIDER_PATH', dirname( CAROUSEL_SLIDER_FILE ) );
+			define( 'CAROUSEL_SLIDER_INCLUDES', CAROUSEL_SLIDER_PATH . '/includes' );
+			define( 'CAROUSEL_SLIDER_TEMPLATES', CAROUSEL_SLIDER_PATH . '/templates' );
+			define( 'CAROUSEL_SLIDER_WIDGETS', CAROUSEL_SLIDER_PATH . '/widgets' );
+			define( 'CAROUSEL_SLIDER_URL', plugins_url( '', CAROUSEL_SLIDER_FILE ) );
+			define( 'CAROUSEL_SLIDER_ASSETS', CAROUSEL_SLIDER_URL . '/assets' );
+		}
+
+		/**
+		 * Define constant if not already set.
+		 *
+		 * @param  string $name
+		 * @param  string|bool $value
+		 */
+		public function define( $name, $value ) {
+			if ( ! defined( $name ) ) {
+				define( $name, $value );
+			}
 		}
 
 		/**
@@ -100,7 +124,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ):
 		 * @return void
 		 */
 		public function activation() {
-			require_once $this->plugin_path() . '/includes/class-carousel-slider-activation.php';
+			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-activation.php';
 			Carousel_Slider_Activation::activate();
 		}
 
@@ -123,41 +147,39 @@ if ( ! class_exists( 'Carousel_Slider' ) ):
 				$this->frontend_includes();
 			}
 
-			require_once $this->plugin_path() . '/widgets/widget-carousel_slider.php';
-			require_once $this->plugin_path() . '/includes/class-carousel-slider-product.php';
+			require_once CAROUSEL_SLIDER_WIDGETS . '/widget-carousel_slider.php';
+			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-product.php';
 		}
 
 		/**
 		 * Include admin files
 		 */
 		public function admin_includes() {
-			require_once $this->plugin_path() . '/includes/class-carousel-slider-vc-element.php';
-			require_once $this->plugin_path() . '/includes/class-carousel-slider-documentation.php';
-			require_once $this->plugin_path() . '/includes/class-carousel-slider-form.php';
-			require_once $this->plugin_path() . '/includes/class-carousel-slider-admin.php';
-
-			new Carousel_Slider_Admin( $this->plugin_path(), $this->plugin_url() );
+			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-vc-element.php';
+			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-documentation.php';
+			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-form.php';
+			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-admin.php';
 		}
 
 		/**
 		 * Load front facing files
 		 */
 		public function frontend_includes() {
-			require_once $this->plugin_path() . '/shortcodes/class-carousel-slider-shortcode.php';
-			require_once $this->plugin_path() . '/shortcodes/class-carousel-slider-deprecated-shortcode.php';
-			require_once $this->plugin_path() . '/includes/class-carousel-slider-structured-data.php';
+			require_once CAROUSEL_SLIDER_PATH . '/shortcodes/class-carousel-slider-shortcode.php';
+			require_once CAROUSEL_SLIDER_PATH . '/shortcodes/class-carousel-slider-deprecated-shortcode.php';
+			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-structured-data.php';
 
-			new Carousel_Slider_Shortcode( $this->plugin_path(), $this->plugin_url() );
-			new Carousel_Slider_Deprecated_Shortcode( $this->plugin_path() );
+			new Carousel_Slider_Shortcode();
+			new Carousel_Slider_Deprecated_Shortcode();
 		}
 
 		/**
 		 * Load frontend scripts
 		 */
 		public function frontend_scripts() {
-			wp_register_style( $this->plugin_name, $this->plugin_url() . '/assets/css/style.css', array(), $this->plugin_version, 'all' );
-			wp_register_script( 'owl-carousel', $this->plugin_url() . '/assets/js/owl.carousel.min.js', array( 'jquery' ), '2.2.0', true );
-			wp_register_script( 'magnific-popup', $this->plugin_url() . '/assets/js/jquery.magnific-popup.min.js', array(), '1.1.0', true );
+			wp_register_style( $this->plugin_name, CAROUSEL_SLIDER_ASSETS . '/css/style.css', array(), $this->plugin_version, 'all' );
+			wp_register_script( 'owl-carousel', CAROUSEL_SLIDER_ASSETS . '/js/owl.carousel.min.js', array( 'jquery' ), '2.2.0', true );
+			wp_register_script( 'magnific-popup', CAROUSEL_SLIDER_ASSETS . '/js/jquery.magnific-popup.min.js', array(), '1.1.0', true );
 
 			if ( $this->should_load_scripts() ) {
 				wp_enqueue_style( $this->plugin_name );
@@ -167,6 +189,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ):
 
 		/**
 		 * Load admin scripts
+		 *
 		 * @param $hook
 		 */
 		public function admin_scripts( $hook ) {
@@ -178,10 +201,18 @@ if ( ! class_exists( 'Carousel_Slider' ) ):
 
 					wp_enqueue_media();
 					wp_enqueue_style( 'wp-color-picker' );
-					wp_enqueue_style( $this->plugin_name . '-admin', $this->plugin_url() . '/assets/css/admin.css', array(), $this->plugin_version, 'all' );
-					wp_enqueue_script( 'select2', $this->plugin_url() . '/assets/js/select2.min.js', array( 'jquery' ), '4.0.3', true );
-					wp_enqueue_script( 'livequery', $this->plugin_url() . '/assets/js/jquery.livequery.js', array( 'jquery' ), '1.3.6', true );
-					wp_enqueue_script( $this->plugin_name . '-admin', $this->plugin_url() . '/assets/js/admin.js', array( 'jquery', 'wp-color-picker', 'jquery-ui-accordion', 'jquery-ui-datepicker', 'jquery-ui-sortable', 'select2', 'livequery' ), $this->plugin_version, true );
+					wp_enqueue_style( $this->plugin_name . '-admin', CAROUSEL_SLIDER_ASSETS . '/css/admin.css', array(), $this->plugin_version, 'all' );
+					wp_enqueue_script( 'select2', CAROUSEL_SLIDER_ASSETS . '/js/select2.min.js', array( 'jquery' ), '4.0.3', true );
+					wp_enqueue_script( 'livequery', CAROUSEL_SLIDER_ASSETS . '/js/jquery.livequery.js', array( 'jquery' ), '1.3.6', true );
+					wp_enqueue_script( $this->plugin_name . '-admin', CAROUSEL_SLIDER_ASSETS . '/js/admin.js', array(
+						'jquery',
+						'wp-color-picker',
+						'jquery-ui-accordion',
+						'jquery-ui-datepicker',
+						'jquery-ui-sortable',
+						'select2',
+						'livequery'
+					), $this->plugin_version, true );
 
 					wp_localize_script( $this->plugin_name . '-admin', 'CarouselSlider', array(
 						'post_id'           => $post->ID,
@@ -203,69 +234,69 @@ if ( ! class_exists( 'Carousel_Slider' ) ):
 		public function inline_script() {
 			if ( $this->should_load_scripts() ):
 				?>
-				<script type="text/javascript">
-					jQuery(document).ready(function ($) {
+                <script type="text/javascript">
+                    jQuery(document).ready(function ($) {
 
-						$('body').find('.carousel-slider').each(function () {
-							var _this = $(this);
-							var isVideo = _this.data('slide-type') == 'video-carousel' ? true : false;
-							var videoWidth = isVideo ? _this.data('video-width') : false;
-							var videoHeight = isVideo ? _this.data('video-height') : false;
-							var autoWidth = isVideo ? true : false;
+                        $('body').find('.carousel-slider').each(function () {
+                            var _this = $(this);
+                            var isVideo = _this.data('slide-type') == 'video-carousel' ? true : false;
+                            var videoWidth = isVideo ? _this.data('video-width') : false;
+                            var videoHeight = isVideo ? _this.data('video-height') : false;
+                            var autoWidth = isVideo ? true : false;
 
-					    	if (jQuery().magnificPopup) {
-					    		var popupType = _this.data('slide-type') == 'product-carousel' ? 'ajax' : 'image';
-					    		var popupGallery = _this.data('slide-type') != 'product-carousel' ? true : false;
-						    	$(this).find('.magnific-popup').magnificPopup({
-						    		type: popupType,
-						    		gallery:{
-									    enabled: popupGallery
-									},
-									zoom: {
-									    enabled: popupGallery,
-									    duration: 300,
-									    easing: 'ease-in-out'
-									}
-						    	});
-					    	}
-					    	
-							if (jQuery().owlCarousel) {
-								_this.owlCarousel({
-									nav: _this.data('nav'),
-									dots: _this.data('dots'),
-									margin: _this.data('margin'),
-									loop: _this.data('loop'),
-									autoplay: _this.data('autoplay'),
-									autoplayTimeout: _this.data('autoplay-timeout'),
-									autoplaySpeed: _this.data('autoplay-speed'),
-									autoplayHoverPause: _this.data('autoplay-hover-pause'),
-									slideBy: _this.data('slide-by'),
-									lazyLoad: _this.data('lazy-load'),
-									video: isVideo,
-									videoWidth: videoWidth,
-									videoHeight: videoHeight,
-									autoWidth: autoWidth,
-									navText: [_this.data('nav-previous-icon'), _this.data('nav-next-icon')],
-									responsive: {
-										320: {items: _this.data('colums-mobile')},
-										600: {items: _this.data('colums-small-tablet')},
-										768: {items: _this.data('colums-tablet')},
-										993: {items: _this.data('colums-small-desktop')},
-										1200: {items: _this.data('colums-desktop')},
-										1921: {items: _this.data('colums')}
-									}
-								});
-							}
-						});
-					});
-				</script><?php
+                            if (jQuery().magnificPopup) {
+                                var popupType = _this.data('slide-type') == 'product-carousel' ? 'ajax' : 'image';
+                                var popupGallery = _this.data('slide-type') != 'product-carousel' ? true : false;
+                                $(this).find('.magnific-popup').magnificPopup({
+                                    type: popupType,
+                                    gallery: {
+                                        enabled: popupGallery
+                                    },
+                                    zoom: {
+                                        enabled: popupGallery,
+                                        duration: 300,
+                                        easing: 'ease-in-out'
+                                    }
+                                });
+                            }
+
+                            if (jQuery().owlCarousel) {
+                                _this.owlCarousel({
+                                    nav: _this.data('nav'),
+                                    dots: _this.data('dots'),
+                                    margin: _this.data('margin'),
+                                    loop: _this.data('loop'),
+                                    autoplay: _this.data('autoplay'),
+                                    autoplayTimeout: _this.data('autoplay-timeout'),
+                                    autoplaySpeed: _this.data('autoplay-speed'),
+                                    autoplayHoverPause: _this.data('autoplay-hover-pause'),
+                                    slideBy: _this.data('slide-by'),
+                                    lazyLoad: _this.data('lazy-load'),
+                                    video: isVideo,
+                                    videoWidth: videoWidth,
+                                    videoHeight: videoHeight,
+                                    autoWidth: autoWidth,
+                                    navText: [_this.data('nav-previous-icon'), _this.data('nav-next-icon')],
+                                    responsive: {
+                                        320: {items: _this.data('colums-mobile')},
+                                        600: {items: _this.data('colums-small-tablet')},
+                                        768: {items: _this.data('colums-tablet')},
+                                        993: {items: _this.data('colums-small-desktop')},
+                                        1200: {items: _this.data('colums-desktop')},
+                                        1921: {items: _this.data('colums')}
+                                    }
+                                });
+                            }
+                        });
+                    });
+                </script><?php
 			endif;
 		}
 
 		/**
 		 * Check if it should load frontend scripts
 		 *
-		 * @return mixed|void
+		 * @return boolean
 		 */
 		private function should_load_scripts() {
 			global $post;
@@ -278,14 +309,15 @@ if ( ! class_exists( 'Carousel_Slider' ) ):
 		 * Add custom footer text on plugins page.
 		 *
 		 * @param string $text
+		 *
+		 * @return string
 		 */
-		public function admin_footer_text( $text )
-		{
+		public function admin_footer_text( $text ) {
 			global $post_type, $hook_suffix;
 
-			$footer_text = sprintf(__('If you like %1$s Carousel Slider %2$s please leave us a %3$s rating. A huge thanks in advance!', 'carousel-slider' ), '<strong>', '</strong>', '<a href="https://wordpress.org/support/view/plugin-reviews/carousel-slider?filter=5#postform" target="_blank" data-rated="Thanks :)">&starf;&starf;&starf;&starf;&starf;</a>');
+			$footer_text = sprintf( __( 'If you like %1$s Carousel Slider %2$s please leave us a %3$s rating. A huge thanks in advance!', 'carousel-slider' ), '<strong>', '</strong>', '<a href="https://wordpress.org/support/view/plugin-reviews/carousel-slider?filter=5#postform" target="_blank" data-rated="Thanks :)">&starf;&starf;&starf;&starf;&starf;</a>' );
 
-			if ($post_type == 'carousels' || $hook_suffix == 'carousels_page_carousel-slider-documentation') {
+			if ( $post_type == 'carousels' || $hook_suffix == 'carousels_page_carousel-slider-documentation' ) {
 				return $footer_text;
 			}
 

@@ -106,6 +106,10 @@ Now you can use the following function at your theme template file replacing `YO
 
 == Changelog ==
 
+= Master =
+* Tweak - Refactor code with WordPress coding style.
+* Fixed - get_product() deprecated notice on WooCommerce version 3
+
 = version 1.7.2 - 2017-04-07 =
 * New   - Structured data generator using JSON-LD format for Product Carousel and Gallery Image Carousel.
 

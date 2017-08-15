@@ -31,8 +31,7 @@ class Carousel_Slider_Structured_Data {
 	 *
 	 * Hooked into `wp_footer` action hook.
 	 */
-	public function output_structured_data()
-	{
+	public function output_structured_data() {
 		$data = $this->get_structured_product_data();
 		if ( $data ) {
 			echo '<script type="application/ld+json">' . wp_json_encode( $data ) . '</script>' . "\n";
@@ -44,63 +43,16 @@ class Carousel_Slider_Structured_Data {
 	}
 
 	/**
-	 * Sets data.
-	 *
-	 * @param  array $data  Structured data.
-	 * @return bool
+	 * Structures and returns product data.
+	 * @return array
 	 */
-	public function set_data( $data ) {
-		if ( ! isset( $data['@type'] ) || ! preg_match( '|^[a-zA-Z]{1,20}$|', $data['@type'] ) ) {
-			return false;
-		}
+	public function get_structured_product_data() {
+		$data = array(
+			'@context' => 'http://schema.org/',
+			"@graph"   => $this->get_product_data()
+		);
 
-		if ( $data['@type'] == 'ImageObject' ) {
-			if ( ! $this->maybe_image_added( $data['contentUrl'] ) ) {
-				$this->_image_data[] = $data;
-			}
-		}
-
-		if ( $data['@type'] == 'Product' ) {
-			if ( ! $this->maybe_product_added( $data['@id'] ) ) {
-				$this->_product_data[] = $data;
-			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * Check if product is already added to list
-	 * 
-	 * @param  string $product_id
-	 * @return boolean
-	 */
-	private function maybe_product_added( $product_id = null )
-	{
-		$product_data = $this->get_product_data();
-		if ( count($product_data) > 0 ) {
-			$product_data = array_map( function( $data ){ return $data['@id']; }, $product_data );
-			return in_array( $product_id, $product_data );
-		}
-
-		return false;
-	}
-
-	/**
-	 * Check if image is already added to list
-	 * 
-	 * @param  string $image_id
-	 * @return boolean
-	 */
-	private function maybe_image_added( $image_id = null )
-	{
-		$image_data = $this->get_image_data();
-		if ( count($image_data) > 0 ) {
-			$image_data = array_map( function( $data ){ return $data['contentUrl']; }, $image_data );
-			return in_array( $image_id, $image_data );
-		}
-
-		return false;
+		return $this->get_product_data() ? $data : array();
 	}
 
 	/**
@@ -113,41 +65,26 @@ class Carousel_Slider_Structured_Data {
 	}
 
 	/**
-	 * Get image data
-	 * 
-	 * @return array
-	 */
-	public function get_image_data()
-	{
-		return $this->_image_data;
-	}
-
-	/**
 	 * Structures and returns image data.
 	 * @return array
 	 */
-	public function get_structured_image_data()
-	{
+	public function get_structured_image_data() {
 		$data = array(
-			'@context' => 'http://schema.org/',
-			"@type" => "ImageGallery",
+			'@context'        => 'http://schema.org/',
+			"@type"           => "ImageGallery",
 			"associatedMedia" => $this->get_image_data()
 		);
+
 		return $this->get_image_data() ? $data : array();
 	}
 
 	/**
-	 * Structures and returns product data.
+	 * Get image data
+	 *
 	 * @return array
 	 */
-	public function get_structured_product_data()
-	{
-		$data = array(
-			'@context' => 'http://schema.org/',
-			"@graph" => $this->get_product_data()
-		);
-
-		return $this->get_product_data() ? $data : array();
+	public function get_image_data() {
+		return $this->_image_data;
 	}
 
 	/**
@@ -171,6 +108,73 @@ class Carousel_Slider_Structured_Data {
 	}
 
 	/**
+	 * Sets data.
+	 *
+	 * @param  array $data Structured data.
+	 *
+	 * @return bool
+	 */
+	public function set_data( $data ) {
+		if ( ! isset( $data['@type'] ) || ! preg_match( '|^[a-zA-Z]{1,20}$|', $data['@type'] ) ) {
+			return false;
+		}
+
+		if ( $data['@type'] == 'ImageObject' ) {
+			if ( ! $this->maybe_image_added( $data['contentUrl'] ) ) {
+				$this->_image_data[] = $data;
+			}
+		}
+
+		if ( $data['@type'] == 'Product' ) {
+			if ( ! $this->maybe_product_added( $data['@id'] ) ) {
+				$this->_product_data[] = $data;
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Check if image is already added to list
+	 *
+	 * @param  string $image_id
+	 *
+	 * @return boolean
+	 */
+	private function maybe_image_added( $image_id = null ) {
+		$image_data = $this->get_image_data();
+		if ( count( $image_data ) > 0 ) {
+			$image_data = array_map( function ( $data ) {
+				return $data['contentUrl'];
+			}, $image_data );
+
+			return in_array( $image_id, $image_data );
+		}
+
+		return false;
+	}
+
+	/**
+	 * Check if product is already added to list
+	 *
+	 * @param  string $product_id
+	 *
+	 * @return boolean
+	 */
+	private function maybe_product_added( $product_id = null ) {
+		$product_data = $this->get_product_data();
+		if ( count( $product_data ) > 0 ) {
+			$product_data = array_map( function ( $data ) {
+				return $data['@id'];
+			}, $product_data );
+
+			return in_array( $product_id, $product_data );
+		}
+
+		return false;
+	}
+
+	/**
 	 * Generates Image structured data.
 	 *
 	 * Hooked into `carousel_slider_image_gallery_loop` action hook.
@@ -182,10 +186,10 @@ class Carousel_Slider_Structured_Data {
 			global $cs_post;
 		}
 
-		$image 					= wp_get_attachment_image_src( $cs_post->ID, 'full' );
-		$markup['@type'] 		= 'ImageObject';
-		$markup['contentUrl']  	= $image[0];
-		$markup['name']  		= $cs_post->post_title;
+		$image                = wp_get_attachment_image_src( $cs_post->ID, 'full' );
+		$markup['@type']      = 'ImageObject';
+		$markup['contentUrl'] = $image[0];
+		$markup['name']       = $cs_post->post_title;
 
 		$this->set_data( apply_filters( 'carousel_slider_structured_data_image', $markup, $cs_post ) );
 	}
