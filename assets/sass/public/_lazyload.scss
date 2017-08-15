@@ -1,0 +1,17 @@
+// Owl Carousel - Lazy Load Plugin
+.carousel-slider {
+	.owl-item {
+		.owl-lazy {
+				// opacity: 0;
+				// transition: opacity 400ms ease;
+		}
+
+		img.owl-lazy {
+			// transform-style: preserve-3d;
+			background: url($ajax-loader-url) no-repeat center;
+			min-width: 32px;
+			min-height: 32px;
+		}
+	}
+}
+

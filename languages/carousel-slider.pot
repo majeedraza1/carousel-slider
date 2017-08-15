@@ -1,0 +1,318 @@
+# Copyright (C) 2014 
+# This file is distributed under the same license as the  package.
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Carousel Slider 1.5.2\n"
+"POT-Creation-Date: 2016-12-03 09:56+0600\n"
+"PO-Revision-Date: 2016-11-14 12:48+0600\n"
+"Last-Translator: \n"
+"Language-Team: Sayful Islam <sayful.islam001@gmail.com>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"X-Poedit-Basepath: ..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: includes/Carousel_Slider_Admin.php:22
+msgctxt "Post Type General Name"
+msgid "Carousels"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:23
+msgctxt "Post Type Singular Name"
+msgid "Carousel"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:24
+msgid "Carousels"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:25
+msgid "Parent Carousel:"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:26
+msgid "All Carousels"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:27
+msgid "View Carousel"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:28
+msgid "Add New Carousel"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:29
+msgid "Add New"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:30
+msgid "Edit Carousel"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:31
+msgid "Update Carousel"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:32
+msgid "Search Carousel"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:33
+msgid "Not found"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:34
+msgid "Not found in Trash"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:37 includes/Carousel_Slider_Admin.php:38
+msgid "Carousel"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:63
+msgid "Carousel Slide Title"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:64
+msgid "Shortcode"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:65 includes/Carousel_Slider_Admin.php:149
+msgid "Carousel Images"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:106
+msgid "Usage (Shortcode)"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:119
+msgid ""
+"Copy the following shortcode and paste in post or page where you want to "
+"show."
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:127
+msgid ""
+"If you like this plugin or if you make money using this or if you want to "
+"help me to continue my contribution on open source projects, consider to "
+"make a small donation."
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:141
+msgid "Carousel Slider Settings"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:150
+msgid "Choose carousel images."
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:155
+msgid "Carousel Image Size"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:156
+#, php-format
+msgid ""
+"Select \"full\" for full size image or your desired image size for carousel "
+"image. You can change the default size for thumbnail, medium and large from "
+"%1$s Settings >> Media %2$s."
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:161
+msgid "Carousel items"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:162
+msgid ""
+"To set the maximum amount of items displayed at a time with the widest "
+"browser width (window >= 1200)"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:168
+msgid "Carousel items for small desktop"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:169
+msgid ""
+"This allows you to preset the number of slides visible with (window >= 980) "
+"browser width."
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:175
+msgid "Carousel items for portrait Tablet"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:176
+msgid ""
+"This allows you to preset the number of slides visible with (window >= 768) "
+"browser width."
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:182
+msgid "Carousel items for small portrait Tablet"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:183
+msgid ""
+"This allows you to preset the number of slides visible with (window >= 600) "
+"browser width."
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:189
+msgid "Carousel items for portrait Mobile"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:190
+msgid ""
+"This allows you to preset the number of slides visible with (window >= 320) "
+"browser width."
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:196
+msgid "Slide By"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:197
+msgid ""
+"Navigation slide by x number. Write \"page\" with inverted comma to slide by "
+"page. Default value is 1."
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:203
+msgid "Margin Right(px) on item."
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:204
+msgid "margin-right(px) on item. Default value is 10. Example: 20"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:210
+msgid "Display navigation buttons"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:211
+msgid "Display \"next\" and \"previous\" buttons"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:212
+msgid "Check to display \"next\" and \"previous\" buttons"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:217
+msgid "Show dots navigation"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:218
+msgid "Show dots navigation."
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:219
+msgid "Check to show dots navigation."
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:224
+msgid "Inifnity loop"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:225
+msgid "Inifnity loop."
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:226
+msgid ""
+"Check to show inifnity loop. Duplicate last and first items to get loop "
+"illusion"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:232
+msgid "Autoplay"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:233
+msgid "Autoplay."
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:234
+msgid "Check to enable autoplay"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:240
+msgid "Autoplay Timeout"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:241
+msgid "Autoplay interval timeout in millisecond. Default: 5000"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:248
+msgid "Autoplay Speed"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:249
+msgid "Autoplay speen in millisecond. Default: 500"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:255
+msgid "Autoplay Hover Pause"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:256
+msgid "Pause on mouse hover."
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:257
+msgid "Pause autoplay on mouse hover."
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:262
+msgid "Navigation Color\t"
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:263
+#: includes/Carousel_Slider_Admin.php:271
+msgid "Enter hex value of color for carousel navigation."
+msgstr ""
+
+#: includes/Carousel_Slider_Admin.php:270
+msgid "Navigation Color: Hover & Active"
+msgstr ""
+
+#: includes/Carousel_Slider_Meta_Box.php:161
+msgid "Insert"
+msgstr ""
+
+#: includes/Carousel_Slider_VC_Element.php:23
+msgid "Carousel Slider"
+msgstr ""
+
+#: includes/Carousel_Slider_VC_Element.php:24
+msgid "Place Carousel Slider."
+msgstr ""
+
+#: includes/Carousel_Slider_VC_Element.php:28
+msgid "Content"
+msgstr ""
+
+#: includes/Carousel_Slider_VC_Element.php:35
+msgid "Carousel Slide ID"
+msgstr ""
+
+#: includes/Carousel_Slider_VC_Element.php:36
+#, php-format
+msgid "Place carousel slide id here. %s to go Carousels page"
+msgstr ""
+
+#: includes/Carousel_Slider_VC_Element.php:36
+msgid "Click here"
+msgstr ""
+
+#: widgets/widget-carousel_slider.php:79
+msgid "click here"
+msgstr ""

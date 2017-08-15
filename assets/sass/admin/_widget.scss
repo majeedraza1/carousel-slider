@@ -1,0 +1,10 @@
+// Widget Styles
+div[id*="_carousel_slider"] .widget-top{
+    background: #ddffff !important;
+    border: 1px solid #2196f3 !important;
+
+    &:hover {
+	    background: #ffdddd !important;
+	    border: 1px solid #f44336 !important;
+    }
+}

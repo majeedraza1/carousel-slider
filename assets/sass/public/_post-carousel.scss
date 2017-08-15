@@ -1,0 +1,120 @@
+.carousel-slider {
+	&__post {
+		border: 1px solid #f1f1f1;
+		float: left;
+		height: 450px;
+		width: 100%;
+		position: relative;
+		display: block;
+		overflow: hidden;
+
+		&-content {
+			bottom: 0;
+			position: absolute;
+			top: 0;
+			transition: all 0.2s ease 0s;
+			width: 100%;
+			display: block;
+		}
+
+		&-image {
+			border-bottom: 1px solid #f1f1f1;
+			display: block;
+			height: 207px;
+			line-height: 0;
+			margin: 0 auto;
+			overflow: hidden;
+			text-align: center;
+			width: 100%;
+			background-color: #f1f1f1;
+			background-size: cover;
+			background-position: center center;
+		}
+
+		&-title {
+			display: block;
+			margin: 10px 15px 0;
+			max-height: 70px;
+
+			h1 {
+				color: #4a4a4a;
+				font: bold 18px/1.4em Arial,sans-serif;
+				margin-bottom: 0;
+				margin-top: 0;
+			}
+		}
+
+		&-excerpt {
+			color: #7d7d7d;
+			font-size: 14px;
+			line-height: 1.5em;
+			padding: 10px 15px 5px;
+			text-align: left;
+			width: 100%;
+			position: absolute;
+			top: 285px;
+
+			&-overlay {
+				background: transparent none repeat scroll 0 0;
+				display: block;
+				height: 20px;
+				width: 100%;
+			}
+		}
+
+		&-meta {
+			bottom: 10px;
+			color: #8e8e8e;
+			font-size: 12px;
+			left: 0;
+			padding: 0 15px;
+			position: absolute;
+			width: 100%;
+			display: block;
+		}
+
+		&-publication-meta {
+			background-color: white;
+			display: block;
+			padding-top: 15px;
+			width: 100%;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+
+		&-details-info {
+			display: inline-block;
+		}
+		&-author {
+			display: block;
+			font-style: normal;
+			line-height: 1em;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			margin-bottom: 5px;
+
+			&-link {
+				color: #8e8e8e;
+				display: inline-block;
+				max-width: 175px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				vertical-align: middle;
+				white-space: nowrap;
+			}
+		}
+
+		&-category {
+			color: #4cc1be;
+			text-transform: uppercase;
+			position: absolute;
+			right: 15px;
+			top: 50px;
+			z-index: 1;
+
+			&-link {}
+		}
+	}
+}
