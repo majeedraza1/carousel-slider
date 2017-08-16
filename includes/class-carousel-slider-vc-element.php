@@ -4,11 +4,27 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-if ( ! class_exists( 'Carousel_Slider_VC_Element' ) ):
+if ( ! class_exists( 'CarouselSliderVisualComposerElement' ) ):
 
-	class Carousel_Slider_VC_Element {
+	class CarouselSliderVisualComposerElement {
+
+		protected static $instance = null;
+
 		/**
-		 * Carousel_Slider_VC_Element constructor.
+		 * Ensures only one instance of this class is loaded or can be loaded.
+		 *
+		 * @return CarouselSliderVisualComposerElement
+		 */
+		public static function init() {
+			if ( is_null( self::$instance ) ) {
+				self::$instance = new self();
+			}
+
+			return self::$instance;
+		}
+
+		/**
+		 * CarouselSliderVisualComposerElement constructor.
 		 */
 		public function __construct() {
 			// We safely integrate with VC with this hook
@@ -70,4 +86,4 @@ if ( ! class_exists( 'Carousel_Slider_VC_Element' ) ):
 	}
 
 endif;
-new Carousel_Slider_VC_Element;
+CarouselSliderVisualComposerElement::init();

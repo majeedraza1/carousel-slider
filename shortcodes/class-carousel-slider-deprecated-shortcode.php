@@ -8,11 +8,23 @@ if ( ! class_exists( 'Carousel_Slider_Deprecated_Shortcode' ) ):
 
 	class Carousel_Slider_Deprecated_Shortcode {
 		private $plugin_path;
+		protected static $instance = null;
+
+		/**
+		 * Ensures only one instance of this class is loaded or can be loaded.
+		 *
+		 * @return Carousel_Slider_Deprecated_Shortcode
+		 */
+		public static function init() {
+			if ( is_null( self::$instance ) ) {
+				self::$instance = new self();
+			}
+
+			return self::$instance;
+		}
 
 		/**
 		 * Carousel_Slider_Deprecated_Shortcode constructor.
-		 *
-		 * @param $plugin_path
 		 */
 		public function __construct() {
 			$this->plugin_path = CAROUSEL_SLIDER_PATH;
@@ -121,3 +133,5 @@ if ( ! class_exists( 'Carousel_Slider_Deprecated_Shortcode' ) ):
 	}
 
 endif;
+
+Carousel_Slider_Deprecated_Shortcode::init();

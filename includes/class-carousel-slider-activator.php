@@ -1,16 +1,43 @@
 <?php
+/**
+ * Fired during plugin activation.
+ * This class defines all code necessary to run during the plugin's activation.
+ *
+ * @class   CarouselSliderActivation
+ * @since   1.6.0
+ * @author  Sayful Islam <sayful.islam001@gmail.com>
+ */
+if ( ! class_exists( 'CarouselSliderActivator' ) ):
 
-if ( ! class_exists( 'Carousel_Slider_Activation' ) ):
+	class CarouselSliderActivator {
 
-	class Carousel_Slider_Activation {
+		protected static $instance = null;
+
+		/**
+		 * Ensures only one instance of this class is loaded or can be loaded.
+		 *
+		 * @return CarouselSliderActivator
+		 */
+		public static function init() {
+			if ( is_null( self::$instance ) ) {
+				self::$instance = new self();
+			}
+
+			return self::$instance;
+		}
+
+		public function __construct() {
+			add_action( 'carousel_slider_activation', array( $this, 'activate' ) );
+		}
+
 		/**
 		 * Script that should load upon plugin activation
 		 */
-		public static function activate() {
+		public function activate() {
 			$version = get_option( 'carousel_slider_version' );
 
 			if ( $version == false ) {
-				self::update_meta_160();
+				$this->update_meta_160();
 			}
 
 			// Add plugin version to database
@@ -23,7 +50,7 @@ if ( ! class_exists( 'Carousel_Slider_Activation' ) ):
 		/**
 		 * Update meta for prior to version 1.6.0
 		 */
-		public static function update_meta_160() {
+		public function update_meta_160() {
 			$carousels = get_posts( array(
 				'post_type'   => 'carousels',
 				'post_status' => 'any',
@@ -48,3 +75,5 @@ if ( ! class_exists( 'Carousel_Slider_Activation' ) ):
 	}
 
 endif;
+
+CarouselSliderActivator::init();

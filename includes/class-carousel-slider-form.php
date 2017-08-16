@@ -4,9 +4,9 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-if ( ! class_exists( 'Carousel_Slider_Form' ) ):
+if ( ! class_exists( 'CarouselSliderForm' ) ):
 
-	class Carousel_Slider_Form {
+	class CarouselSliderForm {
 		public function text( array $args ) {
 			if ( ! isset( $args['id'], $args['name'] ) ) {
 				return;
@@ -119,9 +119,10 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ):
 
 			echo $this->field_before( $args );
 			echo sprintf( '<select name="%1$s" id="%2$s" class="select2 sp-input-text" %3$s>', $name, $args['id'], $multiple );
-			$posts = get_posts( array( 'post_type'      => $post_type,
-			                           'post_status'    => 'publish',
-			                           'posts_per_page' => - 1
+			$posts = get_posts( array(
+				'post_type'      => $post_type,
+				'post_status'    => 'publish',
+				'posts_per_page' => - 1
 			) );
 
 			foreach ( $posts as $post ) {

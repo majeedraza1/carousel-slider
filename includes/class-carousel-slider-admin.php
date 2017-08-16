@@ -4,20 +4,20 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
+if ( ! class_exists( 'CarouselSliderAdmin' ) ):
 
-	class Carousel_Slider_Admin {
+	class CarouselSliderAdmin {
 		private $plugin_path;
 		private $plugin_url;
 		private $form;
 
 		/**
-		 * Carousel_Slider_Admin constructor.
+		 * CarouselSliderAdmin constructor.
 		 */
 		public function __construct() {
 			$this->plugin_path = CAROUSEL_SLIDER_PATH;
 			$this->plugin_url  = CAROUSEL_SLIDER_URL;
-			$this->form        = new Carousel_Slider_Form();
+			$this->form        = new CarouselSliderForm();
 
 			add_action( 'init', array( $this, 'carousel_post_type' ) );
 			add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
@@ -74,6 +74,7 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 				'rewrite'             => false,
 				'capability_type'     => 'post',
 			);
+
 			register_post_type( 'carousels', $args );
 		}
 
@@ -390,17 +391,8 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 
 			return $post;
 		}
-
-		private function is_woocommerce_active() {
-			if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins' ) ) ) {
-
-				return true;
-			}
-
-			return false;
-		}
 	}
 
 endif;
 
-new Carousel_Slider_Admin();
+new CarouselSliderAdmin();

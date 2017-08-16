@@ -4,13 +4,26 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-if ( ! class_exists( 'Carousel_Slider_Documentation' ) ):
+if ( ! class_exists( 'CarouselSliderDocumentation' ) ):
 
-	class Carousel_Slider_Documentation {
-		private $plugin_path;
+	class CarouselSliderDocumentation {
+
+		protected static $instance = null;
+
+		/**
+		 * Ensures only one instance of this class is loaded or can be loaded.
+		 *
+		 * @return CarouselSliderDocumentation
+		 */
+		public static function init() {
+			if ( is_null( self::$instance ) ) {
+				self::$instance = new self();
+			}
+
+			return self::$instance;
+		}
 
 		public function __construct() {
-			$this->plugin_path = CAROUSEL_SLIDER_PATH;
 			add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		}
 
@@ -32,4 +45,4 @@ if ( ! class_exists( 'Carousel_Slider_Documentation' ) ):
 
 endif;
 
-new Carousel_Slider_Documentation();
+CarouselSliderDocumentation::init();

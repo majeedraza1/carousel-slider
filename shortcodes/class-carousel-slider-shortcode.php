@@ -4,14 +4,28 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
+if ( ! class_exists( 'CarouselSliderShortcode' ) ):
 
-	class Carousel_Slider_Shortcode {
+	class CarouselSliderShortcode {
 		private $plugin_path;
 		private $plugin_url;
+		protected static $instance = null;
 
 		/**
-		 * Carousel_Slider_Shortcode constructor.
+		 * Ensures only one instance of this class is loaded or can be loaded.
+		 *
+		 * @return CarouselSliderShortcode
+		 */
+		public static function init() {
+			if ( is_null( self::$instance ) ) {
+				self::$instance = new self();
+			}
+
+			return self::$instance;
+		}
+
+		/**
+		 * CarouselSliderShortcode constructor.
 		 */
 		public function __construct() {
 			$this->plugin_path = CAROUSEL_SLIDER_PATH;
@@ -50,7 +64,7 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 
 			if ( $slide_type == 'post-carousel' ) {
 				ob_start();
-				require $this->plugin_path . '/templates/post-carousel.php';
+				require CAROUSEL_SLIDER_TEMPLATES . '/post-carousel.php';
 				$html = ob_get_contents();
 				ob_end_clean();
 
@@ -59,7 +73,7 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 
 			if ( $slide_type == 'video-carousel' ) {
 				ob_start();
-				require $this->plugin_path . '/templates/video-carousel.php';
+				require CAROUSEL_SLIDER_TEMPLATES . '/video-carousel.php';
 				$html = ob_get_contents();
 				ob_end_clean();
 
@@ -68,7 +82,7 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 
 			if ( $slide_type == 'image-carousel-url' ) {
 				ob_start();
-				require $this->plugin_path . '/templates/images-carousel-url.php';
+				require CAROUSEL_SLIDER_TEMPLATES . '/images-carousel-url.php';
 				$html = ob_get_contents();
 				ob_end_clean();
 
@@ -77,7 +91,7 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 
 			if ( $slide_type == 'image-carousel' ) {
 				ob_start();
-				require $this->plugin_path . '/templates/images-carousel.php';
+				require CAROUSEL_SLIDER_TEMPLATES . '/images-carousel.php';
 				$html = ob_get_contents();
 				ob_end_clean();
 
@@ -86,14 +100,14 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 
 			if ( $slide_type == 'product-carousel' ) {
 				ob_start();
-				require $this->plugin_path . '/templates/product-carousel.php';
+				require CAROUSEL_SLIDER_TEMPLATES . '/product-carousel.php';
 				$html = ob_get_contents();
 				ob_end_clean();
 
 				return apply_filters( 'carousel_slider_product_carousel', $html, $id );
 			}
 
-			return;
+			return '';
 		}
 
 		/**
@@ -151,26 +165,7 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 		 * @return string
 		 */
 		public function get_meta( $id, $key, $default = null ) {
-			$meta = get_post_meta( $id, $key, true );
-
-			if ( empty( $meta ) && $default ) {
-				$meta = $default;
-			}
-
-			if ( $meta == 'zero' ) {
-				$meta = '0';
-			}
-			if ( $meta == 'on' ) {
-				$meta = 'true';
-			}
-			if ( $meta == 'off' ) {
-				$meta = 'false';
-			}
-			if ( $key == '_margin_right' && $meta == 0 ) {
-				$meta = '0';
-			}
-
-			return esc_attr( $meta );
+			return carousel_slider_get_meta( $id, $key, $default );
 		}
 
 		/**
@@ -181,29 +176,7 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 		 * @return array
 		 */
 		public function array_to_data( $array ) {
-
-			$array_map = array_map( function ( $key, $value ) {
-
-				if ( is_bool( $value ) ) {
-					if ( $value ) {
-
-						return sprintf( '%s="%s"', $key, 'true' );
-					} else {
-
-						return sprintf( '%s="%s"', $key, 'false' );
-					}
-				}
-
-				if ( is_array( $value ) ) {
-
-					return sprintf( '%s="%s"', $key, implode( " ", $value ) );
-				}
-
-				return sprintf( '%s="%s"', $key, esc_attr( $value ) );
-
-			}, array_keys( $array ), array_values( $array ) );
-
-			return $array_map;
+			return carousel_slider_array_to_attribute( $array );
 		}
 
 		/**
@@ -214,12 +187,7 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 		 * @return boolean
 		 */
 		public function is_valid_url( $url ) {
-			if ( filter_var( $url, FILTER_VALIDATE_URL ) ) {
-
-				return true;
-			}
-
-			return false;
+			return carousel_slider_is_url( $url );
 		}
 
 		/**
@@ -307,3 +275,5 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 	}
 
 endif;
+
+CarouselSliderShortcode::init();

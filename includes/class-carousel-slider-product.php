@@ -1,7 +1,22 @@
 <?php
-if ( ! class_exists( 'Carousel_Slider_Product' ) ):
+if ( ! class_exists( 'CarouselSliderProduct' ) ):
 
-	class Carousel_Slider_Product {
+	class CarouselSliderProduct {
+
+		protected static $instance = null;
+
+		/**
+		 * Ensures only one instance of this class is loaded or can be loaded.
+		 *
+		 * @return CarouselSliderProduct
+		 */
+		public static function init() {
+			if ( is_null( self::$instance ) ) {
+				self::$instance = new self();
+			}
+
+			return self::$instance;
+		}
 
 		public function __construct() {
 			add_action( 'wp_ajax_carousel_slider_quick_view', array( $this, 'quick_view' ) );
@@ -82,4 +97,4 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ):
 
 endif;
 
-new Carousel_Slider_Product();
+CarouselSliderProduct::init();

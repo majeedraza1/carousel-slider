@@ -11,10 +11,25 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @since   1.7.2
  * @author  Sayful Islam <sayful.islam001@gmail.com>
  */
-class Carousel_Slider_Structured_Data {
+class CarouselSliderStructuredData {
 
 	private $_product_data = array();
 	private $_image_data = array();
+
+	protected static $instance = null;
+
+	/**
+	 * Ensures only one instance of this class is loaded or can be loaded.
+	 *
+	 * @return CarouselSliderStructuredData
+	 */
+	public static function init() {
+		if ( is_null( self::$instance ) ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
+	}
 
 	/**
 	 * Constructor.
@@ -195,4 +210,4 @@ class Carousel_Slider_Structured_Data {
 	}
 }
 
-new Carousel_Slider_Structured_Data();
+CarouselSliderStructuredData::init();
