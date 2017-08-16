@@ -20,8 +20,10 @@ if ( ! class_exists( 'CarouselSliderScripts' ) ):
 
 		public function __construct() {
 			add_action( 'wp_enqueue_scripts', array( $this, 'frontend_scripts' ), 15 );
-			add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ), 10 );
 			add_action( 'wp_footer', array( $this, 'inline_script' ), 30 );
+
+			add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ), 10 );
+			add_action( 'admin_footer', array( $this, 'gallery_url_template' ), 5 );
 		}
 
 		/**
@@ -37,14 +39,14 @@ if ( ! class_exists( 'CarouselSliderScripts' ) ):
 			);
 			wp_register_script(
 				'owl-carousel',
-				CAROUSEL_SLIDER_ASSETS . '/js/owl.carousel.min.js',
+				CAROUSEL_SLIDER_ASSETS . '/js/vendors/owl.carousel.min.js',
 				array( 'jquery' ),
 				'2.2.0',
 				true
 			);
 			wp_register_script(
 				'magnific-popup',
-				CAROUSEL_SLIDER_ASSETS . '/js/jquery.magnific-popup.min.js',
+				CAROUSEL_SLIDER_ASSETS . '/js/vendors/jquery.magnific-popup.min.js',
 				array(),
 				'1.1.0',
 				true
@@ -78,14 +80,14 @@ if ( ! class_exists( 'CarouselSliderScripts' ) ):
 					);
 					wp_enqueue_script(
 						'select2',
-						CAROUSEL_SLIDER_ASSETS . '/js/select2.min.js',
+						CAROUSEL_SLIDER_ASSETS . '/js/vendors/select2.min.js',
 						array( 'jquery' ),
 						'4.0.3',
 						true
 					);
 					wp_enqueue_script(
 						'livequery',
-						CAROUSEL_SLIDER_ASSETS . '/js/jquery.livequery.js',
+						CAROUSEL_SLIDER_ASSETS . '/js/vendors/jquery.livequery.js',
 						array( 'jquery' ),
 						'1.3.6',
 						true
@@ -183,6 +185,49 @@ if ( ! class_exists( 'CarouselSliderScripts' ) ):
                     });
                 </script><?php
 			endif;
+		}
+
+		/**
+		 * Carousel slider gallery url template
+		 *
+		 * @return void
+		 */
+		public function gallery_url_template() {
+			global $post_type;
+			if ( $post_type != 'carousels' ) {
+				return;
+			}
+			?>
+            <template id="carouselSliderGalleryUrlTemplate" style="display: none;">
+                <div class="carousel_slider-fields">
+                    <label class="setting">
+                        <span class="name"><?php esc_html_e( 'URL', 'carousel-slider' ); ?></span>
+                        <input type="url" name="_images_urls[url][]" value="" autocomplete="off">
+                    </label>
+                    <label class="setting">
+                        <span class="name"><?php esc_html_e( 'Title', 'carousel-slider' ); ?></span>
+                        <input type="text" name="_images_urls[title][]" value="" autocomplete="off">
+                    </label>
+                    <label class="setting">
+                        <span class="name"><?php esc_html_e( 'Caption', 'carousel-slider' ); ?></span>
+                        <textarea name="_images_urls[caption][]"></textarea>
+                    </label>
+                    <label class="setting">
+                        <span class="name"><?php esc_html_e( 'Alt Text', 'carousel-slider' ); ?></span>
+                        <input type="text" name="_images_urls[alt][]" value="" autocomplete="off">
+                    </label>
+                    <label class="setting">
+                        <span class="name"><?php esc_html_e( 'Link To URL', 'carousel-slider' ); ?></span>
+                        <input type="text" name="_images_urls[link_url][]" value="" autocomplete="off">
+                    </label>
+                    <div class="actions">
+                        <span><span class="dashicons dashicons-move"></span></span>
+                        <span class="add_row"><span class="dashicons dashicons-plus-alt"></span></span>
+                        <span class="delete_row"><span class="dashicons dashicons-trash"></span></span>
+                    </div>
+                </div>
+            </template>
+			<?php
 		}
 
 		/**

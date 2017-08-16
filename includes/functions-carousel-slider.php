@@ -87,11 +87,28 @@ if ( ! function_exists( 'carousel_slider_array_to_attribute' ) ) {
 
 				return sprintf( '%s="%s"', $key, implode( " ", $value ) );
 			}
+
 			// If string value
 			return sprintf( '%s="%s"', $key, esc_attr( $value ) );
 
 		}, array_keys( $array ), array_values( $array ) );
 
 		return $attribute;
+	}
+}
+
+if ( ! function_exists( 'carousel_slider_is_woocommerce_active' ) ) {
+	/**
+	 * Check if WooCommerce is active
+	 *
+	 * @return bool
+	 */
+	function carousel_slider_is_woocommerce_active() {
+
+		if ( in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins' ) ) ) {
+			return true;
+		}
+
+		return false;
 	}
 }
