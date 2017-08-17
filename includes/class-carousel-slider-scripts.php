@@ -86,38 +86,19 @@ if ( ! class_exists( 'CarouselSliderScripts' ) ):
 						true
 					);
 					wp_enqueue_script(
-						'livequery',
-						CAROUSEL_SLIDER_ASSETS . '/js/vendors/jquery.livequery.js',
-						array( 'jquery' ),
-						'1.3.6',
-						true
-					);
-					wp_enqueue_script(
 						'carousel-slider-admin',
-						CAROUSEL_SLIDER_ASSETS . '/js/admin.js',
+						CAROUSEL_SLIDER_ASSETS . '/js/admin.min.js',
 						array(
 							'jquery',
 							'wp-color-picker',
 							'jquery-ui-accordion',
 							'jquery-ui-datepicker',
 							'jquery-ui-sortable',
-							'select2',
-							'livequery'
+							'select2'
 						),
 						CAROUSEL_SLIDER_VERSION,
 						true
 					);
-
-					wp_localize_script( 'carousel-slider-admin', 'CarouselSlider', array(
-						'post_id'           => $post->ID,
-						'image_ids'         => get_post_meta( $post->ID, '_wpdh_image_ids', true ),
-						'nonce'             => wp_create_nonce( 'carousel_slider_ajax' ),
-						'create_btn_text'   => __( 'Create Gallery', 'carousel-slider' ),
-						'edit_btn_text'     => __( 'Edit Gallery', 'carousel-slider' ),
-						'save_btn_text'     => __( 'Save Gallery', 'carousel-slider' ),
-						'progress_btn_text' => __( 'Saving...', 'carousel-slider' ),
-						'insert_btn_text'   => __( 'Insert', 'carousel-slider' ),
-					) );
 				}
 			}
 		}

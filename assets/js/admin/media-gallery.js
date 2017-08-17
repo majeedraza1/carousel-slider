@@ -1,22 +1,22 @@
-/* global CarouselSlider */
 (function ($) {
     "use strict";
 
     var frame,
-        images = CarouselSlider.image_ids,
+        _this = $('#carousel_slider_gallery_btn'),
+        images = _this.data('ids'),
         selection = loadImages(images);
 
-    $('#carousel_slider_gallery_btn').on('click', function (e) {
+    _this.on('click', function (e) {
         e.preventDefault();
         var options = {
-            title: CarouselSlider.create_btn_text,
+            title: _this.data('create'),
             state: 'gallery-edit',
             frame: 'post',
             selection: selection
         };
 
         if (frame || selection) {
-            options['title'] = CarouselSlider.edit_btn_text;
+            options['title'] = _this.data('edit');
         }
 
         frame = wp.media(options).open();
@@ -24,7 +24,7 @@
         // Tweak Views
         frame.menu.get('view').unset('cancel');
         frame.menu.get('view').unset('separateCancel');
-        frame.menu.get('view').get('gallery-edit').el.innerHTML = CarouselSlider.edit_btn_text;
+        frame.menu.get('view').get('gallery-edit').el.innerHTML = _this.data('edit');
         frame.content.get('view').sidebar.unset('gallery'); // Hide Gallery Settings in sidebar
 
         // when editing a gallery
@@ -55,8 +55,7 @@
                 $.post(ajaxurl, {
                     ids: '',
                     action: 'carousel_slider_save_images',
-                    post_id: CarouselSlider.post_id,
-                    nonce: CarouselSlider.nonce
+                    post_id: _this.data('id')
                 });
             }
         });
@@ -65,7 +64,7 @@
             frame.toolbar.get('view').set({
                 insert: {
                     style: 'primary',
-                    text: CarouselSlider.save_btn_text,
+                    text: _this.data('save'),
                     click: function () {
                         var models = frame.state().get('library'),
                             ids = '';
@@ -74,7 +73,7 @@
                             ids += attachment.id + ','
                         });
 
-                        this.el.innerHTML = CarouselSlider.progress_btn_text;
+                        this.el.innerHTML = _this.data('progress');
 
                         $.ajax({
                             type: 'POST',
@@ -82,8 +81,7 @@
                             data: {
                                 ids: ids,
                                 action: 'carousel_slider_save_images',
-                                post_id: CarouselSlider.post_id,
-                                nonce: CarouselSlider.nonce
+                                post_id: _this.data('id')
                             },
                             success: function () {
                                 selection = loadImages(ids);
@@ -93,7 +91,6 @@
                             dataType: 'html'
                         }).done(function (data) {
                             $('.carousel_slider_gallery_list').html(data);
-                            console.log(data);
                         });
                     }
                 }

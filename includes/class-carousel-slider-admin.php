@@ -297,11 +297,7 @@ if ( ! class_exists( 'CarouselSliderAdmin' ) ):
 				return;
 			}
 			// Check if required fields are set
-			if ( ! isset( $_POST['ids'], $_POST['post_id'], $_POST['nonce'] ) ) {
-				return;
-			}
-			// Check if nonce is valid.
-			if ( ! wp_verify_nonce( $_POST['nonce'], 'carousel_slider_ajax' ) ) {
+			if ( ! isset( $_POST['ids'], $_POST['post_id'] ) ) {
 				return;
 			}
 			// Check if user has permissions to save data.

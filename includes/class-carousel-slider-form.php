@@ -142,6 +142,7 @@ if ( ! class_exists( 'CarouselSliderForm' ) ):
 			$btn_text = $value ? 'Edit Gallery' : 'Add Gallery';
 			$value    = strip_tags( rtrim( $value, ',' ) );
 			$output   = '';
+			global $post;
 
 			if ( $value ) {
 				$thumbs = explode( ',', $value );
@@ -153,7 +154,18 @@ if ( ! class_exists( 'CarouselSliderForm' ) ):
 			$html = $this->field_before( $args );
 			$html .= '<div class="carousel_slider_images">';
 			$html .= sprintf( '<input type="hidden" value="%1$s" id="_carousel_slider_images_ids" name="%2$s">', $value, $name );
-			$html .= sprintf( '<a href="#" id="carousel_slider_gallery_btn" class="carousel_slider_gallery_btn">%s</a>', $btn_text );
+			$html .= sprintf(
+				'<a href="#" id="%1$s" class="button" data-id="%2$s" data-ids="%3$s" data-create="%5$s" data-edit="%6$s" data-save="%7$s" data-progress="%8$s" data-insert="%9$s">%4$s</a>',
+				'carousel_slider_gallery_btn',
+				$post->ID,
+				$value,
+				$btn_text,
+				esc_html__( 'Create Gallery', 'carousel-slider' ),
+				esc_html__( 'Edit Gallery', 'carousel-slider' ),
+				esc_html__( 'Save Gallery', 'carousel-slider' ),
+				esc_html__( 'Saving...', 'carousel-slider' ),
+				esc_html__( 'Insert', 'carousel-slider' )
+			);
 			$html .= sprintf( '<ul class="carousel_slider_gallery_list">%s</ul>', $output );
 			$html .= '</div>';
 			$html .= $this->field_after();
@@ -169,7 +181,7 @@ if ( ! class_exists( 'CarouselSliderForm' ) ):
 			$btn_text = $value ? __( 'Edit URLs', 'carousel-slider' ) : __( 'Add URLs', 'carousel-slider' );
 
 			$html = $this->field_before( $args );
-			$html .= sprintf( '<a id="_images_urls_btn" class="button button-primary" href="#">%s</a>', $btn_text );
+			$html .= sprintf( '<a id="_images_urls_btn" class="button" href="#">%s</a>', $btn_text );
 			$html .= '<ul class="carousel_slider_url_images_list">';
 			if ( is_array( $value ) && count( $value ) > 0 ) {
 				foreach ( $value as $image ) {
