@@ -86,4 +86,5 @@ if ( ! class_exists( 'CarouselSliderVisualComposerElement' ) ):
 	}
 
 endif;
+
 CarouselSliderVisualComposerElement::init();

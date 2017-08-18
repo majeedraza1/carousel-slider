@@ -43,15 +43,11 @@ if ( ! class_exists( 'CarouselSliderShortcode' ) ):
 		 * @return string  The shortcode output
 		 */
 		public function carousel_slide( $attributes, $content = null ) {
-			extract(
-				shortcode_atts(
-					array( 'id' => '' ),
-					$attributes
-				)
-			);
-			if ( ! $id ) {
+			if ( empty( $attributes['id'] ) ) {
 				return '';
 			}
+
+			$id = intval( $attributes['id'] );
 
 			$slide_type = get_post_meta( $id, '_slide_type', true );
 			$slide_type = in_array( $slide_type, array(
@@ -68,7 +64,7 @@ if ( ! class_exists( 'CarouselSliderShortcode' ) ):
 				$html = ob_get_contents();
 				ob_end_clean();
 
-				return apply_filters( 'carousel_slider_posts_carousel', $html, $id, $posts );
+				return apply_filters( 'carousel_slider_posts_carousel', $html, $id );
 			}
 
 			if ( $slide_type == 'video-carousel' ) {
@@ -233,45 +229,6 @@ if ( ! class_exists( 'CarouselSliderShortcode' ) ):
 			return '<svg class="carousel-slider-nav-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="48" viewBox="0 0 9 28"><path d="M9.3 15c0 0.1-0.1 0.3-0.2 0.4l-7.3 7.3c-0.1 0.1-0.2 0.2-0.4 0.2s-0.3-0.1-0.4-0.2l-0.8-0.8c-0.1-0.1-0.2-0.2-0.2-0.4 0-0.1 0.1-0.3 0.2-0.4l6.1-6.1-6.1-6.1c-0.1-0.1-0.2-0.2-0.2-0.4s0.1-0.3 0.2-0.4l0.8-0.8c0.1-0.1 0.2-0.2 0.4-0.2s0.3 0.1 0.4 0.2l7.3 7.3c0.1 0.1 0.2 0.2 0.2 0.4z"/></svg>';
 		}
 
-		/**
-		 * Filter posts data
-		 *
-		 * @param $posts
-		 *
-		 * @return array
-		 */
-		public function filter_posts( $posts ) {
-			if ( ! is_array( $posts ) ) {
-				return;
-			}
-
-			return array_map( function ( $value ) {
-
-				$category = get_the_category( $value->ID );
-				$category = (object) array(
-					'link'  => isset( $category[0]->term_id ) ? esc_url( get_category_link( $category[0]->term_id ) ) : '',
-					'title' => isset( $category[0]->name ) ? esc_html( $category[0]->name ) : '',
-				);
-
-				return (object) array(
-					'id'           => $value->ID,
-					'title'        => esc_attr( $value->post_title ),
-					'permalink'    => esc_url( get_permalink( $value->ID ) ),
-					'excerpt'      => wp_trim_words(
-						strip_tags( $value->post_content ), '19', ' ...'
-					),
-					'thumbnail_id' => intval( get_post_thumbnail_id( $value->ID ) ),
-					'category'     => $category,
-					'author'       => (object) array(
-						'id'           => intval( $value->post_author ),
-						'posts_url'    => esc_url( get_author_posts_url( intval( $value->post_author ) ) ),
-						'display_name' => esc_html( get_the_author_meta( 'display_name', intval( $value->post_author ) ) ),
-					),
-					'created'      => strtotime( $value->post_date ),
-					'modified'     => strtotime( $value->post_modified ),
-				);
-			}, $posts );
-		}
 	}
 
 endif;

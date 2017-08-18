@@ -32,7 +32,12 @@ if ( ! class_exists( 'CarouselSliderCredit' ) ):
 		public function admin_footer_text( $text ) {
 			global $post_type, $hook_suffix;
 
-			$footer_text = sprintf( __( 'If you like %1$s Carousel Slider %2$s please leave us a %3$s rating. A huge thanks in advance!', 'carousel-slider' ), '<strong>', '</strong>', '<a href="https://wordpress.org/support/view/plugin-reviews/carousel-slider?filter=5#postform" target="_blank" data-rated="Thanks :)">&starf;&starf;&starf;&starf;&starf;</a>' );
+			$footer_text = sprintf(
+				__( 'If you like %1$s Carousel Slider %2$s please leave us a %3$s rating. A huge thanks in advance!', 'carousel-slider' ),
+				'<strong>',
+				'</strong>',
+				'<a href="https://wordpress.org/support/view/plugin-reviews/carousel-slider?filter=5#postform" target="_blank" data-rated="Thanks :)">&starf;&starf;&starf;&starf;&starf;</a>'
+			);
 
 			if ( $post_type == 'carousels' || $hook_suffix == 'carousels_page_carousel-slider-documentation' ) {
 				return $footer_text;

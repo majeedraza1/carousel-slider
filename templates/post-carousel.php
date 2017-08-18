@@ -4,80 +4,6 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-$args = array(
-	'post_type'      => 'post',
-	'post_status'    => 'publish',
-	'order'          => get_post_meta( $id, '_post_order', true ),
-	'orderby'        => get_post_meta( $id, '_post_orderby', true ),
-	'posts_per_page' => intval( get_post_meta( $id, '_posts_per_page', true ) )
-);
-
-$query_type = get_post_meta( $id, '_post_query_type', true );
-$query_type = empty( $query_type ) ? 'latest_posts' : $query_type;
-
-// Get posts by post IDs
-if ( $query_type == 'specific_posts' ) {
-	$post_in = explode( ',', get_post_meta( $id, '_post_in', true ) );
-	$post_in = array_map( function ( $value ) {
-		return intval( $value );
-	}, $post_in );
-	unset( $args['posts_per_page'] );
-	$args = array_merge( $args, array( 'post__in' => $post_in ) );
-}
-
-// Get posts by post catagories IDs
-if ( $query_type == 'post_categories' ) {
-	$post_categories = get_post_meta( $id, '_post_categories', true );
-	$args            = array_merge( $args, array( 'cat' => $post_categories ) );
-}
-
-// Get posts by post tags IDs
-if ( $query_type == 'post_tags' ) {
-	$post_tags = get_post_meta( $id, '_post_tags', true );
-	$post_tags = array_map( 'intval', explode( ',', $post_tags ) );
-	$args      = array_merge( $args, array( 'tag__in' => $post_tags ) );
-}
-
-// Get posts by date range
-if ( $query_type == 'date_range' ) {
-
-	$post_date_after  = get_post_meta( $id, '_post_date_after', true );
-	$post_date_before = get_post_meta( $id, '_post_date_before', true );
-
-	if ( $post_date_after && $post_date_before ) {
-		$args = array_merge( $args, array(
-			'date_query' => array(
-				array(
-					'after'     => $post_date_after,
-					'before'    => $post_date_before,
-					'inclusive' => true,
-				),
-			),
-		) );
-	} elseif ( $post_date_after ) {
-		$args = array_merge( $args, array(
-			'date_query' => array(
-				array(
-					'before'    => $post_date_before,
-					'inclusive' => true,
-				),
-			),
-		) );
-	} elseif ( $post_date_before ) {
-		$args = array_merge( $args, array(
-			'date_query' => array(
-				array(
-					'before'    => $post_date_before,
-					'inclusive' => true,
-				),
-			),
-		) );
-	}
-}
-
-$posts     = get_posts( $args );
-$carousels = $this->filter_posts( $posts );
-
 $_image_size       = get_post_meta( $id, '_image_size', true );
 $_nav_color        = get_post_meta( $id, '_nav_color', true );
 $_nav_active_color = get_post_meta( $id, '_nav_active_color', true );
@@ -108,65 +34,84 @@ $_post_height      = get_post_meta( $id, '_post_height', true );
 </style>
 <div <?php echo join( " ", $this->carousel_options( $id ) ); ?>>
 	<?php
-	foreach ( $carousels as $query ):
+	$posts = carousel_slider_posts( $id );
+	foreach ( $posts as $_post ):
+
+		$_post    = get_post( $_post );
+		$category = get_the_category( $_post->ID );
+
+		do_action( 'carousel_slider_post_loop', $_post, $category );
+
 		echo '<div class="carousel-slider__post">';
 		echo '<div class="carousel-slider__post-content">';
 		echo '<div class="carousel-slider__post-header">';
 		// Post Thumbnail
-		if ( $query->thumbnail_id ) {
-			$image_src = wp_get_attachment_image_src( $query->thumbnail_id, $_image_size );
+		$_permalink = esc_url( get_permalink( $_post->ID ) );
+		$_thumb_id  = get_post_thumbnail_id( $_post->ID );
+		$_excerpt   = wp_trim_words( wp_strip_all_tags( $_post->post_content ), '20', ' ...' );
+
+		if ( has_post_thumbnail( $_post ) ) {
+			$image_src = wp_get_attachment_image_src( $_thumb_id, $_image_size );
 
 			if ( $_lazy_load_image == 'on' ) {
 
-				echo sprintf( '<a href="%s" class="carousel-slider__post-image owl-lazy" data-src="%s"></a>', $query->permalink, $image_src[0] );
+				echo sprintf( '<a href="%s" class="carousel-slider__post-image owl-lazy" data-src="%s"></a>', $_permalink, $image_src[0] );
 			} else {
 
-				echo sprintf( '<a href="%s" class="carousel-slider__post-image" style="background-image: url(%s)"></a>', $query->permalink, $image_src[0] );
+				echo sprintf( '<a href="%s" class="carousel-slider__post-image" style="background-image: url(%s)"></a>', $_permalink, $image_src[0] );
 			}
 
 		} else {
 
-			echo sprintf( '<a href="%s" class="carousel-slider__post-image"></a>', $query->permalink );
+			echo sprintf( '<a href="%s" class="carousel-slider__post-image"></a>', $_permalink );
 		}
 
 		// Post Title
-		echo sprintf( '<a class="carousel-slider__post-title" href="%s"><h1>%s</h1></a>', $query->permalink, $query->title );
+		echo sprintf( '<a class="carousel-slider__post-title" href="%s"><h1>%s</h1></a>', $_permalink, $_post->post_title );
 		echo '</div>'; // End Post Header
-		echo '<div class="carousel-slider__post-excerpt">' . $query->excerpt . '</div>';
+		echo '<div class="carousel-slider__post-excerpt">' . $_excerpt . '</div>';
 		echo '<footer class="carousel-slider__post-meta">';
 		echo '<div class="carousel-slider__post-excerpt-overlay"></div>';
 		echo '<div class="carousel-slider__post-publication-meta">';
 		echo '<div class="carousel-slider__post-details-info">';
 
 		// Post author
+		$_author_url  = esc_url( get_author_posts_url( intval( $_post->post_author ) ) );
+		$_author_name = esc_html( get_the_author_meta( 'display_name', intval( $_post->post_author ) ) );
+
 		echo sprintf( '<div class="carousel-slider__post-author"><a class="carousel-slider__post-author-link" href="%s">%s</a></div>',
-			$query->author->posts_url,
-			$query->author->display_name
+			$_author_url,
+			$_author_name
 		);
 		// Post date
-		if ( $query->created !== $query->modified ) {
+		$_created  = strtotime( $_post->post_date );
+		$_modified = strtotime( $_post->post_modified );
+
+		if ( $_created !== $_modified ) {
 
 			echo sprintf( '<time class="carousel-slider__post-publication-date" datetime="%s">%s</time>',
-				date_i18n( 'c', $query->modified ),
-				date_i18n( get_option( 'date_format' ), $query->modified )
+				date_i18n( 'c', $_modified ),
+				date_i18n( get_option( 'date_format' ), $_modified )
 			);
 
 		} else {
 
-			echo sprintf( '<time class="carousel-slider__post-publication-date" datetime="%s">%s</time>',
-				date_i18n( 'c', $query->created ),
-				date_i18n( get_option( 'date_format' ), $query->created )
+			printf( '<time class="carousel-slider__post-publication-date" datetime="%s">%s</time>',
+				date_i18n( 'c', $_created ),
+				date_i18n( get_option( 'date_format' ), $_created )
 			);
 		}
 		echo '</div>';
 		echo '</div>';
 
 		// Post catagory
+		$cat_link  = isset( $category[0]->term_id ) ? esc_url( get_category_link( $category[0]->term_id ) ) : '';
+		$cat_title = isset( $category[0]->name ) ? esc_html( $category[0]->name ) : '';
 		echo '<div class="carousel-slider__post-category">';
-		if ( isset( $query->category->link ) ) {
+		if ( isset( $cat_link ) ) {
 			echo sprintf( '<a class="carousel-slider__post-category-link" href="%s">%s</a>',
-				$query->category->link,
-				$query->category->title
+				$cat_link,
+				$cat_title
 			);
 		}
 		echo '</div>';

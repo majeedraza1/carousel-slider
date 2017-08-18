@@ -3,20 +3,19 @@
  * Fired during plugin activation.
  * This class defines all code necessary to run during the plugin's activation.
  *
- * @class   CarouselSliderActivation
  * @since   1.6.0
  * @author  Sayful Islam <sayful.islam001@gmail.com>
  */
-if ( ! class_exists( 'CarouselSliderActivator' ) ):
+if ( ! class_exists( 'Carousel_Slider_Activator' ) ):
 
-	class CarouselSliderActivator {
+	class Carousel_Slider_Activator {
 
 		protected static $instance = null;
 
 		/**
 		 * Ensures only one instance of this class is loaded or can be loaded.
 		 *
-		 * @return CarouselSliderActivator
+		 * @return Carousel_Slider_Activator
 		 */
 		public static function init() {
 			if ( is_null( self::$instance ) ) {
@@ -42,9 +41,6 @@ if ( ! class_exists( 'CarouselSliderActivator' ) ):
 
 			// Add plugin version to database
 			update_option( 'carousel_slider_version', CAROUSEL_SLIDER_VERSION );
-
-			// Flush the rewrite rules on activation
-			flush_rewrite_rules();
 		}
 
 		/**
@@ -76,4 +72,4 @@ if ( ! class_exists( 'CarouselSliderActivator' ) ):
 
 endif;
 
-CarouselSliderActivator::init();
+Carousel_Slider_Activator::init();

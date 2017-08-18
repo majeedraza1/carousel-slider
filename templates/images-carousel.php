@@ -40,13 +40,12 @@ $_show_lightbox           = get_post_meta( $id, '_image_lightbox', true );
 	<?php
 	foreach ( $images_ids as $image_id ):
 
-		$get_post           = get_post( $image_id );
-		$GLOBALS['cs_post'] = $get_post;
-		do_action( 'carousel_slider_image_gallery_loop' );
+		$_post = get_post( $image_id );
+		do_action( 'carousel_slider_image_gallery_loop', $_post );
 
-		$image_title       = $get_post->post_title;
-		$image_caption     = $get_post->post_excerpt;
-		$image_description = $get_post->post_content;
+		$image_title       = $_post->post_title;
+		$image_caption     = $_post->post_excerpt;
+		$image_description = $_post->post_content;
 		$image_alt_text    = trim( strip_tags( get_post_meta( $image_id, '_wp_attachment_image_alt', true ) ) );
 		$image_link_url    = get_post_meta( $image_id, "_carousel_slider_link_url", true );
 

@@ -7,6 +7,12 @@ if ( ! defined( 'WPINC' ) ) {
 if ( ! class_exists( 'CarouselSliderForm' ) ):
 
 	class CarouselSliderForm {
+
+		/**
+		 * Generate text field
+		 *
+		 * @param array $args
+		 */
 		public function text( array $args ) {
 			if ( ! isset( $args['id'], $args['name'] ) ) {
 				return;
@@ -19,6 +25,11 @@ if ( ! class_exists( 'CarouselSliderForm' ) ):
 			echo $this->field_after();
 		}
 
+		/**
+		 * Generate textarea field
+		 *
+		 * @param array $args
+		 */
 		public function textarea( array $args ) {
 			if ( ! isset( $args['id'], $args['name'] ) ) {
 				return;
@@ -33,6 +44,11 @@ if ( ! class_exists( 'CarouselSliderForm' ) ):
 			echo $this->field_after();
 		}
 
+		/**
+		 * Generate color picker field
+		 *
+		 * @param array $args
+		 */
 		public function color( array $args ) {
 			if ( ! isset( $args['id'], $args['name'] ) ) {
 				return;
@@ -46,6 +62,11 @@ if ( ! class_exists( 'CarouselSliderForm' ) ):
 			echo $this->field_after();
 		}
 
+		/**
+		 * Generate date picker field
+		 *
+		 * @param array $args
+		 */
 		public function date( array $args ) {
 			if ( ! isset( $args['id'], $args['name'] ) ) {
 				return;
@@ -59,6 +80,11 @@ if ( ! class_exists( 'CarouselSliderForm' ) ):
 			echo $this->field_after();
 		}
 
+		/**
+		 * Generate number field
+		 *
+		 * @param array $args
+		 */
 		public function number( array $args ) {
 			if ( ! isset( $args['id'], $args['name'] ) ) {
 				return;
@@ -73,6 +99,11 @@ if ( ! class_exists( 'CarouselSliderForm' ) ):
 			echo $this->field_after();
 		}
 
+		/**
+		 * Generate checkbox field
+		 *
+		 * @param array $args
+		 */
 		public function checkbox( array $args ) {
 			if ( ! isset( $args['id'], $args['name'] ) ) {
 				return;
@@ -88,6 +119,11 @@ if ( ! class_exists( 'CarouselSliderForm' ) ):
 			echo $this->field_after();
 		}
 
+		/**
+		 * Generate select field
+		 *
+		 * @param $args
+		 */
 		public function select( $args ) {
 			if ( ! isset( $args['id'], $args['name'] ) ) {
 				return;
@@ -107,6 +143,12 @@ if ( ! class_exists( 'CarouselSliderForm' ) ):
 			echo $this->field_after();
 		}
 
+		/**
+		 * Generate posts list dropdown
+		 * Also support for any custom post type
+		 *
+		 * @param $args
+		 */
 		public function posts_list( $args ) {
 			if ( ! isset( $args['id'], $args['name'] ) ) {
 				return;
@@ -133,6 +175,11 @@ if ( ! class_exists( 'CarouselSliderForm' ) ):
 			echo $this->field_after();
 		}
 
+		/**
+		 * Generate image gallery field
+		 *
+		 * @param $args
+		 */
 		public function images_gallery( $args ) {
 			if ( ! isset( $args['id'], $args['name'] ) ) {
 				return;
@@ -172,6 +219,11 @@ if ( ! class_exists( 'CarouselSliderForm' ) ):
 			echo $html;
 		}
 
+		/**
+		 * Generate image gallery list from images URL
+		 *
+		 * @param array $args
+		 */
 		public function images_url( array $args ) {
 			if ( ! isset( $args['id'], $args['name'] ) ) {
 				return;
@@ -206,6 +258,11 @@ if ( ! class_exists( 'CarouselSliderForm' ) ):
 			echo $this->field_after();
 		}
 
+		/**
+		 * Generate image sizes dropdown from available image sizes
+		 *
+		 * @param array $args
+		 */
 		public function image_sizes( array $args ) {
 			if ( ! isset( $args['id'], $args['name'] ) ) {
 				return;
@@ -249,6 +306,11 @@ if ( ! class_exists( 'CarouselSliderForm' ) ):
 			echo $this->field_after();
 		}
 
+		/**
+		 * Get post terms drowdown list
+		 *
+		 * @param array $args
+		 */
 		public function post_terms( array $args ) {
 			global $wp_version;
 
@@ -267,7 +329,6 @@ if ( ! class_exists( 'CarouselSliderForm' ) ):
 				$terms = get_terms( $taxonomy );
 			}
 
-			// var_dump($terms);
 
 			echo $this->field_before( $args );
 
@@ -283,6 +344,13 @@ if ( ! class_exists( 'CarouselSliderForm' ) ):
 			echo $this->field_after();
 		}
 
+		/**
+		 * Generate field name and field value
+		 *
+		 * @param $args
+		 *
+		 * @return array
+		 */
 		private function field_common( $args ) {
 			global $post;
 			// Meta Name
@@ -302,6 +370,13 @@ if ( ! class_exists( 'CarouselSliderForm' ) ):
 			return array( $name, $value );
 		}
 
+		/**
+		 * Generate field before template
+		 *
+		 * @param $args
+		 *
+		 * @return string
+		 */
 		private function field_before( $args ) {
 			$table = sprintf( '<div class="sp-input-group" id="field-%s">', $args['id'] );
 			$table .= sprintf( '<div class="sp-input-label">' );
@@ -315,6 +390,11 @@ if ( ! class_exists( 'CarouselSliderForm' ) ):
 			return $table;
 		}
 
+		/**
+		 * Generate field after template
+		 *
+		 * @return string
+		 */
 		private function field_after() {
 			return '</div></div>';
 		}

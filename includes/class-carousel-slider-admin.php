@@ -7,16 +7,12 @@ if ( ! defined( 'WPINC' ) ) {
 if ( ! class_exists( 'CarouselSliderAdmin' ) ):
 
 	class CarouselSliderAdmin {
-		private $plugin_path;
-		private $plugin_url;
 		private $form;
 
 		/**
 		 * CarouselSliderAdmin constructor.
 		 */
 		public function __construct() {
-			$this->plugin_path = CAROUSEL_SLIDER_PATH;
-			$this->plugin_url  = CAROUSEL_SLIDER_URL;
 			$this->form        = new CarouselSliderForm();
 
 			add_action( 'init', array( $this, 'carousel_post_type' ) );
@@ -131,9 +127,9 @@ if ( ! class_exists( 'CarouselSliderAdmin' ) ):
                             type="text"
                             onmousedown="this.clicked = 1;"
                             onfocus="if (!this.clicked) this.select(); else this.clicked = 2;"
-                            onclick="if (this.clicked == 2) this.select(); this.clicked = 0;"
+                            onclick="if (this.clicked === 2) this.select(); this.clicked = 0;"
                             value="[carousel_slide id='<?php echo $post_id; ?>']"
-                            style="background-color: #f1f1f1;font-family: monospace;min-width: 250px;padding: 5px 8px;"
+                            style="background-color: #f1f1f1;min-width: 250px;padding: 5px 8px;"
                     >
 					<?php
 
@@ -212,26 +208,17 @@ if ( ! class_exists( 'CarouselSliderAdmin' ) ):
 		public function render_meta_box_shortcode_info() {
 			ob_start(); ?>
             <p><strong>
-					<?php _e( 'Copy the following shortcode and paste in post or page where you want to show.', 'carousel-slider' ); ?>
-                </strong></p>
+					<?php esc_html_e( 'Copy the following shortcode and paste in post or page where you want to show.', 'carousel-slider' ); ?>
+                </strong>
+            </p>
             <input
                     type="text"
                     onmousedown="this.clicked = 1;"
                     onfocus="if (!this.clicked) this.select(); else this.clicked = 2;"
-                    onclick="if (this.clicked == 2) this.select(); this.clicked = 0;"
+                    onclick="if (this.clicked === 2) this.select(); this.clicked = 0;"
                     value="[carousel_slide id='<?php echo get_the_ID(); ?>']"
                     style="background-color: #f1f1f1; width: 100%; padding: 8px;"
             >
-            <hr>
-            <p>
-				<?php _e( 'If you like this plugin or if you make money using this or if you want to help me to continue my contribution on open source projects, consider to make a small donation.', 'carousel-slider' ); ?>
-            </p>
-            <p style="text-align: center;">
-                <a target="_blank"
-                   href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3LZWQTHEVYWCY">
-                    <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" alt="PayPal Donate">
-                </a>
-            </p>
 			<?php echo ob_get_clean();
 		}
 

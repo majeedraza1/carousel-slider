@@ -189,7 +189,7 @@ $_product_btn_text_color = get_post_meta( $id, '_product_button_text_color', tru
 	<?php foreach ( $posts as $post ): setup_postdata( $post ); ?>
 		<?php
 		$product = wc_get_product( $post->ID );
-		do_action( 'carousel_slider_product_loop' );
+		do_action( 'carousel_slider_product_loop', $product );
 		?>
         <div class="product carousel-slider__product">
 			<?php
@@ -238,10 +238,11 @@ $_product_btn_text_color = get_post_meta( $id, '_product_button_text_color', tru
 
 			if ( $_product_quick_view == 'on' ) {
 				wp_enqueue_script( 'magnific-popup' );
-				$ajax_url = wp_nonce_url( add_query_arg( array( 'ajax'       => 'true',
-				                                                'action'     => 'carousel_slider_quick_view',
-				                                                'product_id' => $post->ID,
-				                                                'slide_id'   => $id
+				$ajax_url = wp_nonce_url( add_query_arg( array(
+					'ajax'       => 'true',
+					'action'     => 'carousel_slider_quick_view',
+					'product_id' => $post->ID,
+					'slide_id'   => $id
 				), admin_url( 'admin-ajax.php' ) ), 'carousel_slider_quick_view' );
 				echo sprintf( '<a class="magnific-popup button quick_view" href="%1$s" data-product-id="%2$s">%3$s</a>', $ajax_url, $post->ID, __( 'Quick View', 'carousel-slider' ) );
 			}

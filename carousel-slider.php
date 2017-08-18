@@ -28,7 +28,7 @@ if ( ! class_exists( 'CarouselSlider' ) ) {
 
 	final class CarouselSlider {
 		private $plugin_name = 'carousel-slider';
-		private $version = '1.7.2';
+		private $version = '1.7.3';
 
 		protected static $instance = null;
 
