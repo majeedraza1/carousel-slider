@@ -109,7 +109,7 @@ if ( ! function_exists( 'carousel_slider_is_woocommerce_active' ) ) {
 
 if ( ! function_exists( 'carousel_slider_posts' ) ) {
 	/**
-	 * Get post by carousel slider ID
+	 * Get posts by carousel slider ID
 	 *
 	 * @param $carousel_id
 	 *
@@ -193,5 +193,144 @@ if ( ! function_exists( 'carousel_slider_posts' ) ) {
 		$posts = get_posts( $args );
 
 		return $posts;
+	}
+}
+
+if ( ! function_exists( 'carousel_slider_products' ) ) {
+	/**
+	 * Get products by carousel slider ID
+	 *
+	 * @param $carousel_id
+	 *
+	 * @return array
+	 */
+	function carousel_slider_products( $carousel_id ) {
+		$id            = $carousel_id;
+		$per_page      = intval( get_post_meta( $id, '_products_per_page', true ) );
+		$orderby       = get_post_meta( $id, '_product_orderby', true );
+		$order         = get_post_meta( $id, '_product_order', true );
+		$query_type    = get_post_meta( $id, '_product_query_type', true );
+		$query_type    = empty( $query_type ) ? 'query_porduct' : $query_type;
+		$product_query = get_post_meta( $id, '_product_query', true );
+
+		$args = array(
+			'post_type'          => 'product',
+			'post_status'        => 'publish',
+			'ignore_sticky_post' => 1,
+			'posts_per_page'     => $per_page
+		);
+
+		// Get products by product IDs
+		if ( $query_type == 'specific_products' ) {
+			$product_in = explode( ',', get_post_meta( $id, '_product_in', true ) );
+			$product_in = array_map( 'intval', $product_in );
+			$args       = array_merge( $args, array( 'post__in' => $product_in ) );
+			unset( $args['posts_per_page'] );
+
+			return get_posts( $args );
+		}
+
+		if ( $query_type == 'query_porduct' ) {
+
+			// Get features products
+			if ( $product_query == 'featured' ) {
+				$args = array_merge( $args, array(
+					'meta_key'   => '_featured',
+					'meta_value' => 'yes',
+					'orderby'    => 'date',
+					'order'      => 'desc'
+				) );
+
+				return get_posts( $args );
+			}
+
+			// Get recent products
+			if ( $product_query == 'recent' ) {
+				$args = array_merge( $args, array(
+					'ignore_sticky_posts' => 1,
+					'orderby'             => 'date',
+					'order'               => 'desc',
+					'meta_query'          => WC()->query->get_meta_query()
+				) );
+
+				return get_posts( $args );
+			}
+
+			// Get sale products
+			if ( $product_query == 'sale' ) {
+
+				$args = array_merge( $args, array(
+					'orderby'       => 'title',
+					'order'         => 'asc',
+					'no_found_rows' => 1,
+					'meta_query'    => WC()->query->get_meta_query(),
+					'post__in'      => array_merge( array( 0 ), wc_get_product_ids_on_sale() )
+				) );
+
+				return get_posts( $args );
+			}
+
+			// Get best_selling products
+			if ( $product_query == 'best_selling' ) {
+				$args = array(
+					'ignore_sticky_posts' => 1,
+					'meta_key'            => 'total_sales',
+					'orderby'             => 'meta_value_num',
+					'meta_query'          => WC()->query->get_meta_query()
+				);
+
+				return get_posts( $args );
+			}
+
+			// Get top_rated products
+			if ( $product_query == 'top_rated' ) {
+
+				add_filter( 'posts_clauses', array( WC()->query, 'order_by_rating_post_clauses' ) );
+				$args = array_merge( $args, array(
+					'no_found_rows' => 1,
+					'meta_query'    => WC()->query->get_meta_query(),
+				) );
+
+				return get_posts( $args );
+			}
+
+		}
+
+		// Get posts by post catagories IDs
+		if ( $query_type == 'product_categories' ) {
+			$product_categories = get_post_meta( $id, '_product_categories', true );
+			$args               = array_merge( $args, array(
+				'tax_query' => array(
+					array(
+						'taxonomy' => 'product_cat',
+						'field'    => 'term_id',
+						'terms'    => explode( ",", $product_categories ),
+						'operator' => 'IN',
+					),
+				),
+			) );
+
+			return get_posts( $args );
+		}
+
+		// Get posts by post tags IDs
+		if ( $query_type == 'product_tags' ) {
+			$product_tags = get_post_meta( $id, '_product_tags', true );
+			$product_tags = array_map( 'intval', explode( ',', $product_tags ) );
+			$args         = array_merge( $args, array(
+				'tax_query' => array(
+					array(
+						'taxonomy' => 'product_tag',
+						'field'    => 'term_id',
+						'terms'    => $product_tags,
+						'operator' => 'IN',
+					),
+				),
+			) );
+
+			return get_posts( $args );
+		}
+
+		return array();
 	}
 }
