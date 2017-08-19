@@ -23,7 +23,7 @@ class CarouselSliderStructuredData {
 	 */
 	public function __construct() {
 		add_action( 'carousel_slider_image_gallery_loop', array( $this, 'generate_image_data' ) );
-		// add_action( 'carousel_slider_post_loop', array( $this, 'generate_post_data' ) );
+		add_action( 'carousel_slider_post_loop', array( $this, 'generate_post_data' ) );
 		add_action( 'carousel_slider_product_loop', array( $this, 'generate_product_data' ) );
 		// Output structured data.
 		add_action( 'wp_footer', array( $this, 'output_structured_data' ), 90 );
@@ -240,6 +240,7 @@ class CarouselSliderStructuredData {
 		if ( ! $_post instanceof WP_Post ) {
 			return;
 		}
+
 		$image = wp_get_attachment_image_src( get_post_thumbnail_id( $_post->ID ), 'normal' );
 
 		$json['@type'] = 'BlogPosting';
@@ -247,6 +248,12 @@ class CarouselSliderStructuredData {
 		$json['mainEntityOfPage'] = array(
 			'@type' => 'webpage',
 			'@id'   => esc_url( get_permalink( $_post->ID ) ),
+		);
+
+
+		$json['publisher'] = array(
+			'@type' => 'organization',
+			'name'  => get_bloginfo( 'name' ),
 		);
 
 		$json['author'] = array(
@@ -267,7 +274,9 @@ class CarouselSliderStructuredData {
 		$json['dateModified']  = get_the_modified_date( 'c', $_post );
 		$json['name']          = get_the_title( $_post );
 		$json['headline']      = $json['name'];
-		$json['description']   = get_the_excerpt( $_post );
+
+		$_excerpt = wp_trim_words( wp_strip_all_tags( $_post->post_content ), '20', ' ...' );
+		$json['description'] = $_excerpt;
 
 
 		$this->set_data( apply_filters( 'carousel_slider_structured_data_post', $json, $_post ) );
