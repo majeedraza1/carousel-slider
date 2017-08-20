@@ -11,31 +11,13 @@ if ( count( $images_ids ) < 1 ) {
 $_image_target            = get_post_meta( $id, '_image_target', true );
 $_image_target            = empty( $_image_target ) ? '_self' : $_image_target;
 $_image_size              = get_post_meta( $id, '_image_size', true );
-$_nav_color               = get_post_meta( $id, '_nav_color', true );
-$_nav_active_color        = get_post_meta( $id, '_nav_active_color', true );
 $_lazy_load_image         = get_post_meta( $id, '_lazy_load_image', true );
 $_show_attachment_title   = get_post_meta( $id, '_show_attachment_title', true );
 $_show_attachment_caption = get_post_meta( $id, '_show_attachment_caption', true );
 $_show_lightbox           = get_post_meta( $id, '_image_lightbox', true );
+
+carousel_slider_inline_style( $id );
 ?>
-<style>
-    #id-<?php echo $id; ?> .owl-dots .owl-dot span {
-        background-color: <?php echo $_nav_color; ?>
-    }
-
-    #id-<?php echo $id; ?> .owl-dots .owl-dot.active span,
-    #id-<?php echo $id; ?> .owl-dots .owl-dot:hover span {
-        background-color: <?php echo $_nav_active_color; ?>
-    }
-
-    #id-<?php echo $id; ?> .carousel-slider-nav-icon {
-        fill: <?php echo $_nav_color; ?>;
-    }
-
-    #id-<?php echo $id; ?> .carousel-slider-nav-icon:hover {
-        fill: <?php echo $_nav_active_color; ?>;
-    }
-</style>
 <div <?php echo join( " ", $this->carousel_options( $id ) ); ?>>
 	<?php
 	foreach ( $images_ids as $image_id ):

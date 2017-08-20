@@ -207,8 +207,6 @@ if ( ! function_exists( 'carousel_slider_products' ) ) {
 	function carousel_slider_products( $carousel_id ) {
 		$id            = $carousel_id;
 		$per_page      = intval( get_post_meta( $id, '_products_per_page', true ) );
-		$orderby       = get_post_meta( $id, '_product_orderby', true );
-		$order         = get_post_meta( $id, '_product_order', true );
 		$query_type    = get_post_meta( $id, '_product_query_type', true );
 		$query_type    = empty( $query_type ) ? 'query_porduct' : $query_type;
 		$product_query = get_post_meta( $id, '_product_query', true );
@@ -332,5 +330,74 @@ if ( ! function_exists( 'carousel_slider_products' ) ) {
 		}
 
 		return array();
+	}
+}
+
+if ( ! function_exists( 'carousel_slider_inline_style' ) ) {
+	function carousel_slider_inline_style( $carousel_id ) {
+		$id                      = $carousel_id;
+		$_nav_color              = get_post_meta( $id, '_nav_color', true );
+		$_nav_active_color       = get_post_meta( $id, '_nav_active_color', true );
+		$_post_height            = get_post_meta( $id, '_post_height', true );
+		$_product_title_color    = get_post_meta( $id, '_product_title_color', true );
+		$_product_btn_bg_color   = get_post_meta( $id, '_product_button_bg_color', true );
+		$_product_btn_text_color = get_post_meta( $id, '_product_button_text_color', true );
+
+		$slide_type = get_post_meta( $id, '_slide_type', true );
+		$slide_type = in_array( $slide_type, array(
+			'image-carousel',
+			'post-carousel',
+			'image-carousel-url',
+			'video-carousel',
+			'product-carousel'
+		) ) ? $slide_type : 'image-carousel';
+
+		?>
+        <style>
+            #id-<?php echo $id; ?> .owl-dots .owl-dot span {
+                background-color: <?php echo $_nav_color; ?>
+            }
+
+            #id-<?php echo $id; ?> .owl-dots .owl-dot.active span,
+            #id-<?php echo $id; ?> .owl-dots .owl-dot:hover span {
+                background-color: <?php echo $_nav_active_color; ?>
+            }
+
+            #id-<?php echo $id; ?> .carousel-slider-nav-icon {
+                fill: <?php echo $_nav_color; ?>;
+            }
+
+            #id-<?php echo $id; ?> .carousel-slider-nav-icon:hover {
+                fill: <?php echo $_nav_active_color; ?>;
+            }
+
+            <?php if ( $slide_type == 'post-carousel'): ?>
+
+            #id-<?php echo $id; ?> .carousel-slider__post {
+                height: <?php echo $_post_height; ?>px;
+            }
+
+            <?php elseif ( $slide_type == 'product-carousel'): ?>
+
+            #id-<?php echo $id; ?> .carousel-slider__product h3,
+            #id-<?php echo $id; ?> .carousel-slider__product .price {
+                color: <?php echo esc_attr($_product_title_color); ?>;
+            }
+
+            #id-<?php echo $id; ?> .carousel-slider__product a.add_to_cart_button,
+            #id-<?php echo $id; ?> .carousel-slider__product a.added_to_cart,
+            #id-<?php echo $id; ?> .carousel-slider__product a.quick_view,
+            #id-<?php echo $id; ?> .carousel-slider__product .onsale {
+                background-color: <?php echo esc_attr($_product_btn_bg_color); ?>;
+                color: <?php echo esc_attr($_product_btn_text_color); ?>;
+            }
+
+            #id-<?php echo $id; ?> .carousel-slider__product .star-rating {
+                color: <?php echo esc_attr($_product_btn_bg_color); ?>;
+            }
+
+            <?php endif; ?>
+        </style>
+		<?php
 	}
 }

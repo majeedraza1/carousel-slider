@@ -27,46 +27,8 @@ $_product_cart_btn   = get_post_meta( $id, '_product_cart_button', true );
 $_product_onsale     = get_post_meta( $id, '_product_onsale', true );
 $_product_wishlist   = get_post_meta( $id, '_product_wishlist', true );
 $_product_quick_view = get_post_meta( $id, '_product_quick_view', true );
-
-$_product_title_color    = get_post_meta( $id, '_product_title_color', true );
-$_product_btn_bg_color   = get_post_meta( $id, '_product_button_bg_color', true );
-$_product_btn_text_color = get_post_meta( $id, '_product_button_text_color', true );
+carousel_slider_inline_style( $id );
 ?>
-<style>
-    #id-<?php echo $id; ?> .owl-dots .owl-dot span {
-        background-color: <?php echo esc_attr($_nav_color); ?>
-    }
-
-    #id-<?php echo $id; ?> .owl-dots .owl-dot.active span,
-    #id-<?php echo $id; ?> .owl-dots .owl-dot:hover span {
-        background-color: <?php echo esc_attr($_nav_active_color); ?>
-    }
-
-    #id-<?php echo $id; ?> .carousel-slider-nav-icon {
-        fill: <?php echo esc_attr($_nav_color); ?>;
-    }
-
-    #id-<?php echo $id; ?> .carousel-slider-nav-icon:hover {
-        fill: <?php echo esc_attr($_nav_active_color); ?>;
-    }
-
-    #id-<?php echo $id; ?> .carousel-slider__product h3,
-    #id-<?php echo $id; ?> .carousel-slider__product .price {
-        color: <?php echo esc_attr($_product_title_color); ?>;
-    }
-
-    #id-<?php echo $id; ?> .carousel-slider__product a.add_to_cart_button,
-    #id-<?php echo $id; ?> .carousel-slider__product a.added_to_cart,
-    #id-<?php echo $id; ?> .carousel-slider__product a.quick_view,
-    #id-<?php echo $id; ?> .carousel-slider__product .onsale {
-        background-color: <?php echo esc_attr($_product_btn_bg_color); ?>;
-        color: <?php echo esc_attr($_product_btn_text_color); ?>;
-    }
-
-    #id-<?php echo $id; ?> .carousel-slider__product .star-rating {
-        color: <?php echo esc_attr($_product_btn_bg_color); ?>;
-    }
-</style>
 <div <?php echo join( " ", $this->carousel_options( $id ) ); ?>>
 	<?php foreach ( $posts as $post ): setup_postdata( $post ); ?>
 		<?php

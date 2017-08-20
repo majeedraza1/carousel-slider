@@ -110,6 +110,8 @@ Now you can use the following function at your theme template file replacing `YO
 * Tweak - Refactor code with WordPress coding style.
 * Fixed - get_product() deprecated notice on WooCommerce version 3
 * Fixed - Remove dependency over jquery.livequery.js
+* Added - JSON-LD structured data for post carousel.
+* Added - Added uninstall.php file to remove data on uninstall.
 
 = version 1.7.2 - 2017-04-07 =
 * New   - Structured data generator using JSON-LD format for Product Carousel and Gallery Image Carousel.

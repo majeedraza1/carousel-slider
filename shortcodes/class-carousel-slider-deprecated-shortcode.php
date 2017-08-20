@@ -7,7 +7,7 @@ if ( ! defined( 'WPINC' ) ) {
 if ( ! class_exists( 'Carousel_Slider_Deprecated_Shortcode' ) ):
 
 	class Carousel_Slider_Deprecated_Shortcode {
-		private $plugin_path;
+
 		protected static $instance = null;
 
 		/**
@@ -27,7 +27,6 @@ if ( ! class_exists( 'Carousel_Slider_Deprecated_Shortcode' ) ):
 		 * Carousel_Slider_Deprecated_Shortcode constructor.
 		 */
 		public function __construct() {
-			$this->plugin_path = CAROUSEL_SLIDER_PATH;
 			// Deprecated since version 1.6.0
 			add_shortcode( 'carousel', array( $this, 'carousel' ) );
 			add_shortcode( 'item', array( $this, 'item' ) );
@@ -64,7 +63,7 @@ if ( ! class_exists( 'Carousel_Slider_Deprecated_Shortcode' ) ):
 			), $atts ) );
 
 			ob_start();
-			require $this->plugin_path . '/templates/carousel.php';
+			require CAROUSEL_SLIDER_TEMPLATES . '/carousel.php';
 			$html = ob_get_contents();
 			ob_end_clean();
 
@@ -108,11 +107,7 @@ if ( ! class_exists( 'Carousel_Slider_Deprecated_Shortcode' ) ):
 		 * @return boolean
 		 */
 		private function is_valid_url( $url ) {
-			if ( filter_var( $url, FILTER_VALIDATE_URL ) ) {
-				return true;
-			}
-
-			return false;
+			return carousel_slider_is_url( $url );
 		}
 
 		/**

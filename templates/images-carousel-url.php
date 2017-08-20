@@ -12,25 +12,8 @@ $_lazy_load_image         = get_post_meta( $id, '_lazy_load_image', true );
 $_show_attachment_title   = get_post_meta( $id, '_show_attachment_title', true );
 $_show_attachment_caption = get_post_meta( $id, '_show_attachment_caption', true );
 $_images_urls             = get_post_meta( $id, '_images_urls', true );
+carousel_slider_inline_style( $id );
 ?>
-<style>
-    #id-<?php echo $id; ?> .owl-dots .owl-dot span {
-        background-color: <?php echo $_nav_color; ?>
-    }
-
-    #id-<?php echo $id; ?> .owl-dots .owl-dot.active span,
-    #id-<?php echo $id; ?> .owl-dots .owl-dot:hover span {
-        background-color: <?php echo $_nav_active_color; ?>
-    }
-
-    #id-<?php echo $id; ?> .carousel-slider-nav-icon {
-        fill: <?php echo $_nav_color; ?>;
-    }
-
-    #id-<?php echo $id; ?> .carousel-slider-nav-icon:hover {
-        fill: <?php echo $_nav_active_color; ?>;
-    }
-</style>
 <div <?php echo join( " ", $this->carousel_options( $id ) ); ?>>
 	<?php
 	foreach ( $_images_urls as $imageInfo ):

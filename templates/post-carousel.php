@@ -8,30 +8,8 @@ $_image_size       = get_post_meta( $id, '_image_size', true );
 $_nav_color        = get_post_meta( $id, '_nav_color', true );
 $_nav_active_color = get_post_meta( $id, '_nav_active_color', true );
 $_lazy_load_image  = get_post_meta( $id, '_lazy_load_image', true );
-$_post_height      = get_post_meta( $id, '_post_height', true );
+carousel_slider_inline_style( $id );
 ?>
-<style>
-    #id-<?php echo $id; ?> .owl-dots .owl-dot span {
-        background-color: <?php echo $_nav_color; ?>
-    }
-
-    #id-<?php echo $id; ?> .owl-dots .owl-dot.active span,
-    #id-<?php echo $id; ?> .owl-dots .owl-dot:hover span {
-        background-color: <?php echo $_nav_active_color; ?>
-    }
-
-    #id-<?php echo $id; ?> .carousel-slider-nav-icon {
-        fill: <?php echo $_nav_color; ?>;
-    }
-
-    #id-<?php echo $id; ?> .carousel-slider-nav-icon:hover {
-        fill: <?php echo $_nav_active_color; ?>;
-    }
-
-    #id-<?php echo $id; ?> .carousel-slider__post {
-        height: <?php echo $_post_height; ?>px;
-    }
-</style>
 <div <?php echo join( " ", $this->carousel_options( $id ) ); ?>>
 	<?php
 	$posts = carousel_slider_posts( $id );
