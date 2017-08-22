@@ -296,10 +296,18 @@ if ( ! class_exists( 'Carousel_Slider_Structured_Data' ) ):
 				global $product;
 			}
 
+			if ( version_compare( WC_VERSION, "3.0.0", ">=" ) ) {
+				$name      = $product->get_name();
+				$permalink = get_permalink( $product->get_id() );
+			} else {
+				$name      = get_the_title( $product->id );
+				$permalink = get_permalink( $product->id );
+			}
+
 			$markup['@type'] = 'Product';
-			$markup['@id']   = get_permalink( $product->get_id() );
+			$markup['@id']   = $permalink;
 			$markup['url']   = $markup['@id'];
-			$markup['name']  = $product->get_name();
+			$markup['name']  = $name;
 
 			$this->set_data( apply_filters( 'carousel_slider_structured_data_product', $markup, $product ) );
 		}
