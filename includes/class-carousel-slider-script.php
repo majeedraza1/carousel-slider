@@ -1,14 +1,14 @@
 <?php
-if ( ! class_exists( 'Carousel_Slider_Scripts' ) ):
+if ( ! class_exists( 'Carousel_Slider_Script' ) ):
 
-	class Carousel_Slider_Scripts {
+	class Carousel_Slider_Script {
 
 		protected static $instance = null;
 
 		/**
 		 * Ensures only one instance of this class is loaded or can be loaded.
 		 *
-		 * @return Carousel_Slider_Scripts
+		 * @return Carousel_Slider_Script
 		 */
 		public static function init() {
 			if ( is_null( self::$instance ) ) {
@@ -114,14 +114,14 @@ if ( ! class_exists( 'Carousel_Slider_Scripts' ) ):
 
                         $('body').find('.carousel-slider').each(function () {
                             var _this = $(this);
-                            var isVideo = _this.data('slide-type') == 'video-carousel' ? true : false;
+                            var isVideo = _this.data('slide-type') === 'video-carousel';
                             var videoWidth = isVideo ? _this.data('video-width') : false;
                             var videoHeight = isVideo ? _this.data('video-height') : false;
-                            var autoWidth = isVideo ? true : false;
+                            var autoWidth = isVideo;
 
                             if (jQuery().magnificPopup) {
-                                var popupType = _this.data('slide-type') == 'product-carousel' ? 'ajax' : 'image';
-                                var popupGallery = _this.data('slide-type') != 'product-carousel' ? true : false;
+                                var popupType = _this.data('slide-type') === 'product-carousel' ? 'ajax' : 'image';
+                                var popupGallery = _this.data('slide-type') !== 'product-carousel';
                                 $(this).find('.magnific-popup').magnificPopup({
                                     type: popupType,
                                     gallery: {
@@ -228,4 +228,4 @@ if ( ! class_exists( 'Carousel_Slider_Scripts' ) ):
 
 endif;
 
-Carousel_Slider_Scripts::init();
+Carousel_Slider_Script::init();
