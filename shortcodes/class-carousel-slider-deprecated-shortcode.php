@@ -118,9 +118,9 @@ if ( ! class_exists( 'Carousel_Slider_Deprecated_Shortcode' ) ):
 				printf(
 					'<div style="background-color: #ffdddd;border-left: 0.375rem solid #f44336; margin-bottom: 1rem;
     margin-top: 1rem;padding: 0.01rem 1rem;"><p><strong>%s</strong><br>%s<br>%s</p></div> ',
-					esc_html__( 'Admin Only Notice!', 'simple-flickr-widget' ),
-					esc_html__( 'From carousel slider version 1.6.0, [carousel] and [item] shortcode has been deprecated.', 'simple-flickr-widget' ),
-					esc_html__( 'Both [carousel] and [item] shortcode will be removed on carousel slider version 2.0.0', 'simple-flickr-widget' )
+					esc_html__( 'Admin Only Notice!', 'carousel-slider' ),
+					esc_html__( 'From carousel slider version 1.6.0, [carousel] and [item] shortcode has been deprecated.', 'carousel-slider' ),
+					esc_html__( 'Both [carousel] and [item] shortcode will be removed on carousel slider version 2.0.0', 'carousel-slider' )
 				);
 			}
 			?>
