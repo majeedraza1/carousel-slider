@@ -4,9 +4,9 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-if ( ! class_exists( 'CarouselSliderForm' ) ):
+if ( ! class_exists( 'Carousel_Slider_Form' ) ):
 
-	class CarouselSliderForm {
+	class Carousel_Slider_Form {
 
 		/**
 		 * Generate text field

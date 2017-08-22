@@ -1,14 +1,14 @@
 <?php
-if ( ! class_exists( 'CarouselSliderCredit' ) ):
+if ( ! class_exists( 'Carousel_Slider_Credit' ) ):
 
-	class CarouselSliderCredit {
+	class Carousel_Slider_Credit {
 
 		protected static $instance = null;
 
 		/**
 		 * Ensures only one instance of this class is loaded or can be loaded.
 		 *
-		 * @return CarouselSliderCredit
+		 * @return Carousel_Slider_Credit
 		 */
 		public static function init() {
 			if ( is_null( self::$instance ) ) {
@@ -49,4 +49,4 @@ if ( ! class_exists( 'CarouselSliderCredit' ) ):
 
 endif;
 
-CarouselSliderCredit::init();
+Carousel_Slider_Credit::init();

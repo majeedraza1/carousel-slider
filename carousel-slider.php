@@ -24,9 +24,9 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-if ( ! class_exists( 'CarouselSlider' ) ) {
+if ( ! class_exists( 'Carousel_Slider' ) ) {
 
-	final class CarouselSlider {
+	final class Carousel_Slider {
 		private $plugin_name = 'carousel-slider';
 		private $version = '1.7.3';
 
@@ -37,7 +37,7 @@ if ( ! class_exists( 'CarouselSlider' ) ) {
 		 * Ensures only one instance of Carousel_Slider is loaded or can be loaded.
 		 *
 		 * @since 1.6.0
-		 * @return CarouselSlider - Main instance
+		 * @return Carousel_Slider - Main instance
 		 */
 		public static function instance() {
 			if ( is_null( self::$instance ) ) {
@@ -149,4 +149,4 @@ if ( ! class_exists( 'CarouselSlider' ) ) {
  * then kicking off the plugin from this point in the file does
  * not affect the page life cycle.
  */
-CarouselSlider::instance();
+Carousel_Slider::instance();

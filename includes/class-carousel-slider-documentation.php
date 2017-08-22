@@ -4,16 +4,16 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-if ( ! class_exists( 'CarouselSliderDocumentation' ) ):
+if ( ! class_exists( 'Carousel_Slider_Documentation' ) ):
 
-	class CarouselSliderDocumentation {
+	class Carousel_Slider_Documentation {
 
 		protected static $instance = null;
 
 		/**
 		 * Ensures only one instance of this class is loaded or can be loaded.
 		 *
-		 * @return CarouselSliderDocumentation
+		 * @return Carousel_Slider_Documentation
 		 */
 		public static function init() {
 			if ( is_null( self::$instance ) ) {
@@ -39,10 +39,10 @@ if ( ! class_exists( 'CarouselSliderDocumentation' ) ):
 		}
 
 		public function submenu_page_callback() {
-			include_once CAROUSEL_SLIDER_TEMPLATES . '/documentation.php';
+			include_once CAROUSEL_SLIDER_TEMPLATES . '/admin/documentation.php';
 		}
 	}
 
 endif;
 
-CarouselSliderDocumentation::init();
+Carousel_Slider_Documentation::init();

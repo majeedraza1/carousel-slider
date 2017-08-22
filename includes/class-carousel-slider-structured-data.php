@@ -4,303 +4,307 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
 
-/**
- * Structured data's handler and generator using JSON-LD format.
- *
- * @class   Carousel_Slider_Structured_Data
- * @since   1.7.2
- * @author  Sayful Islam <sayful.islam001@gmail.com>
- */
-class CarouselSliderStructuredData {
-
-	protected static $instance = null;
-	private $_product_data = array();
-	private $_image_data = array();
-	private $_post_data = array();
+if ( ! class_exists( 'Carousel_Slider_Structured_Data' ) ):
 
 	/**
-	 * Constructor.
-	 */
-	public function __construct() {
-		add_action( 'carousel_slider_image_gallery_loop', array( $this, 'generate_image_data' ) );
-		add_action( 'carousel_slider_post_loop', array( $this, 'generate_post_data' ) );
-		add_action( 'carousel_slider_product_loop', array( $this, 'generate_product_data' ) );
-		// Output structured data.
-		add_action( 'wp_footer', array( $this, 'output_structured_data' ), 90 );
-	}
-
-	/**
-	 * Ensures only one instance of this class is loaded or can be loaded.
+	 * Structured data's handler and generator using JSON-LD format.
 	 *
-	 * @return CarouselSliderStructuredData
+	 * @class   Carousel_Slider_Structured_Data
+	 * @since   1.7.2
+	 * @author  Sayful Islam <sayful.islam001@gmail.com>
 	 */
-	public static function init() {
-		if ( is_null( self::$instance ) ) {
-			self::$instance = new self();
+	class Carousel_Slider_Structured_Data {
+
+		protected static $instance = null;
+		private $_product_data = array();
+		private $_image_data = array();
+		private $_post_data = array();
+
+		/**
+		 * Constructor.
+		 */
+		public function __construct() {
+			add_action( 'carousel_slider_image_gallery_loop', array( $this, 'generate_image_data' ) );
+			add_action( 'carousel_slider_post_loop', array( $this, 'generate_post_data' ) );
+			add_action( 'carousel_slider_product_loop', array( $this, 'generate_product_data' ) );
+			// Output structured data.
+			add_action( 'wp_footer', array( $this, 'output_structured_data' ), 90 );
 		}
 
-		return self::$instance;
-	}
+		/**
+		 * Ensures only one instance of this class is loaded or can be loaded.
+		 *
+		 * @return Carousel_Slider_Structured_Data
+		 */
+		public static function init() {
+			if ( is_null( self::$instance ) ) {
+				self::$instance = new self();
+			}
 
-	/**
-	 * Outputs structured data.
-	 *
-	 * Hooked into `wp_footer` action hook.
-	 */
-	public function output_structured_data() {
-		$data = $this->get_structured_product_data();
-		if ( $data ) {
-			echo '<script type="application/ld+json">' . wp_json_encode( $data ) . '</script>' . "\n";
+			return self::$instance;
 		}
-		$gallery_data = $this->get_structured_image_data();
-		if ( $gallery_data ) {
-			echo '<script type="application/ld+json">' . wp_json_encode( $gallery_data ) . '</script>' . "\n";
+
+		/**
+		 * Outputs structured data.
+		 *
+		 * Hooked into `wp_footer` action hook.
+		 */
+		public function output_structured_data() {
+			$data = $this->get_structured_product_data();
+			if ( $data ) {
+				echo '<script type="application/ld+json">' . wp_json_encode( $data ) . '</script>' . "\n";
+			}
+			$gallery_data = $this->get_structured_image_data();
+			if ( $gallery_data ) {
+				echo '<script type="application/ld+json">' . wp_json_encode( $gallery_data ) . '</script>' . "\n";
+			}
+			$post_data = $this->get_structured_post_data();
+			if ( $post_data ) {
+				echo '<script type="application/ld+json">' . wp_json_encode( $post_data ) . '</script>' . "\n";
+			}
 		}
-		$post_data = $this->get_structured_post_data();
-		if ( $post_data ) {
-			echo '<script type="application/ld+json">' . wp_json_encode( $post_data ) . '</script>' . "\n";
+
+		/**
+		 * Structures and returns product data.
+		 * @return array
+		 */
+		private function get_structured_product_data() {
+			$data = array(
+				'@context' => 'http://schema.org/',
+				"@graph"   => $this->get_product_data()
+			);
+
+			return $this->get_product_data() ? $data : array();
 		}
-	}
 
-	/**
-	 * Structures and returns product data.
-	 * @return array
-	 */
-	private function get_structured_product_data() {
-		$data = array(
-			'@context' => 'http://schema.org/',
-			"@graph"   => $this->get_product_data()
-		);
+		/**
+		 * Gets product data.
+		 *
+		 * @return array
+		 */
+		private function get_product_data() {
+			return $this->_product_data;
+		}
 
-		return $this->get_product_data() ? $data : array();
-	}
+		/**
+		 * Structures and returns image data.
+		 * @return array
+		 */
+		private function get_structured_image_data() {
+			$data = array(
+				'@context'        => 'http://schema.org/',
+				"@type"           => "ImageGallery",
+				"associatedMedia" => $this->get_image_data()
+			);
 
-	/**
-	 * Gets product data.
-	 *
-	 * @return array
-	 */
-	private function get_product_data() {
-		return $this->_product_data;
-	}
+			return $this->get_image_data() ? $data : array();
+		}
 
-	/**
-	 * Structures and returns image data.
-	 * @return array
-	 */
-	private function get_structured_image_data() {
-		$data = array(
-			'@context'        => 'http://schema.org/',
-			"@type"           => "ImageGallery",
-			"associatedMedia" => $this->get_image_data()
-		);
+		/**
+		 * Get image data
+		 *
+		 * @return array
+		 */
+		private function get_image_data() {
+			return $this->_image_data;
+		}
 
-		return $this->get_image_data() ? $data : array();
-	}
+		private function get_structured_post_data() {
+			$data = array(
+				'@context' => 'http://schema.org/',
+				"@graph"   => $this->get_post_data()
+			);
 
-	/**
-	 * Get image data
-	 *
-	 * @return array
-	 */
-	private function get_image_data() {
-		return $this->_image_data;
-	}
+			return $this->get_post_data() ? $data : array();
+		}
 
-	private function get_structured_post_data() {
-		$data = array(
-			'@context' => 'http://schema.org/',
-			"@graph"   => $this->get_post_data()
-		);
+		private function get_post_data() {
+			return $this->_post_data;
+		}
 
-		return $this->get_post_data() ? $data : array();
-	}
+		/**
+		 * Generates Image structured data.
+		 *
+		 * Hooked into `carousel_slider_image_gallery_loop` action hook.
+		 *
+		 * @param WP_Post $_post Post data (default: null).
+		 */
+		public function generate_image_data( $_post ) {
+			$image                = wp_get_attachment_image_src( $_post->ID, 'full' );
+			$markup['@type']      = 'ImageObject';
+			$markup['contentUrl'] = $image[0];
+			$markup['name']       = $_post->post_title;
 
-	private function get_post_data() {
-		return $this->_post_data;
-	}
+			$this->set_data( apply_filters( 'carousel_slider_structured_data_image', $markup, $_post ) );
+		}
 
-	/**
-	 * Generates Image structured data.
-	 *
-	 * Hooked into `carousel_slider_image_gallery_loop` action hook.
-	 *
-	 * @param WP_Post $_post Post data (default: null).
-	 */
-	public function generate_image_data( $_post ) {
-		$image                = wp_get_attachment_image_src( $_post->ID, 'full' );
-		$markup['@type']      = 'ImageObject';
-		$markup['contentUrl'] = $image[0];
-		$markup['name']       = $_post->post_title;
+		/**
+		 * Sets data.
+		 *
+		 * @param  array $data Structured data.
+		 *
+		 * @return bool
+		 */
+		private function set_data( $data ) {
+			if ( ! isset( $data['@type'] ) || ! preg_match( '|^[a-zA-Z]{1,20}$|', $data['@type'] ) ) {
+				return false;
+			}
 
-		$this->set_data( apply_filters( 'carousel_slider_structured_data_image', $markup, $_post ) );
-	}
+			if ( $data['@type'] == 'ImageObject' ) {
+				if ( ! $this->maybe_image_added( $data['contentUrl'] ) ) {
+					$this->_image_data[] = $data;
+				}
+			}
 
-	/**
-	 * Sets data.
-	 *
-	 * @param  array $data Structured data.
-	 *
-	 * @return bool
-	 */
-	private function set_data( $data ) {
-		if ( ! isset( $data['@type'] ) || ! preg_match( '|^[a-zA-Z]{1,20}$|', $data['@type'] ) ) {
+			if ( $data['@type'] == 'Product' ) {
+				if ( ! $this->maybe_product_added( $data['@id'] ) ) {
+					$this->_product_data[] = $data;
+				}
+			}
+
+			if ( $data['@type'] == 'BlogPosting' ) {
+				if ( ! $this->maybe_post_added( $data['mainEntityOfPage']['@id'] ) ) {
+					$this->_post_data[] = $data;
+				}
+			}
+
+			return true;
+		}
+
+		/**
+		 * Check if image is already added to list
+		 *
+		 * @param  string $image_id
+		 *
+		 * @return boolean
+		 */
+		private function maybe_image_added( $image_id = null ) {
+			$image_data = $this->get_image_data();
+			if ( count( $image_data ) > 0 ) {
+				$image_data = array_map( function ( $data ) {
+					return $data['contentUrl'];
+				}, $image_data );
+
+				return in_array( $image_id, $image_data );
+			}
+
 			return false;
 		}
 
-		if ( $data['@type'] == 'ImageObject' ) {
-			if ( ! $this->maybe_image_added( $data['contentUrl'] ) ) {
-				$this->_image_data[] = $data;
+		/**
+		 * Check if product is already added to list
+		 *
+		 * @param  string $product_id
+		 *
+		 * @return boolean
+		 */
+		private function maybe_product_added( $product_id = null ) {
+			$product_data = $this->get_product_data();
+			if ( count( $product_data ) > 0 ) {
+				$product_data = array_map( function ( $data ) {
+					return $data['@id'];
+				}, $product_data );
+
+				return in_array( $product_id, $product_data );
 			}
+
+			return false;
 		}
 
-		if ( $data['@type'] == 'Product' ) {
-			if ( ! $this->maybe_product_added( $data['@id'] ) ) {
-				$this->_product_data[] = $data;
+		/**
+		 * Check if post is already added to list
+		 *
+		 * @param  string $post_id
+		 *
+		 * @return boolean
+		 */
+		private function maybe_post_added( $post_id ) {
+			$post_data = $this->get_post_data();
+			if ( count( $post_data ) > 0 ) {
+				$post_data = array_map( function ( $data ) {
+					return $data['mainEntityOfPage']['@id'];
+				}, $post_data );
+
+				return in_array( $post_id, $post_data );
 			}
+
+			return false;
 		}
 
-		if ( $data['@type'] == 'BlogPosting' ) {
-			if ( ! $this->maybe_post_added( $data['mainEntityOfPage']['@id'] ) ) {
-				$this->_post_data[] = $data;
+		/**
+		 * Generates post structured data.
+		 *
+		 * Hooked into `carousel_slider_post_loop` action hook.
+		 *
+		 * @param WP_Post $_post
+		 */
+		public function generate_post_data( $_post ) {
+			if ( ! $_post instanceof WP_Post ) {
+				return;
 			}
-		}
 
-		return true;
-	}
+			$image = wp_get_attachment_image_src( get_post_thumbnail_id( $_post->ID ), 'normal' );
 
-	/**
-	 * Check if image is already added to list
-	 *
-	 * @param  string $image_id
-	 *
-	 * @return boolean
-	 */
-	private function maybe_image_added( $image_id = null ) {
-		$image_data = $this->get_image_data();
-		if ( count( $image_data ) > 0 ) {
-			$image_data = array_map( function ( $data ) {
-				return $data['contentUrl'];
-			}, $image_data );
+			$json['@type'] = 'BlogPosting';
 
-			return in_array( $image_id, $image_data );
-		}
-
-		return false;
-	}
-
-	/**
-	 * Check if product is already added to list
-	 *
-	 * @param  string $product_id
-	 *
-	 * @return boolean
-	 */
-	private function maybe_product_added( $product_id = null ) {
-		$product_data = $this->get_product_data();
-		if ( count( $product_data ) > 0 ) {
-			$product_data = array_map( function ( $data ) {
-				return $data['@id'];
-			}, $product_data );
-
-			return in_array( $product_id, $product_data );
-		}
-
-		return false;
-	}
-
-	/**
-	 * Check if post is already added to list
-	 *
-	 * @param  string $post_id
-	 *
-	 * @return boolean
-	 */
-	private function maybe_post_added( $post_id ) {
-		$post_data = $this->get_post_data();
-		if ( count( $post_data ) > 0 ) {
-			$post_data = array_map( function ( $data ) {
-				return $data['mainEntityOfPage']['@id'];
-			}, $post_data );
-
-			return in_array( $post_id, $post_data );
-		}
-
-		return false;
-	}
-
-	/**
-	 * Generates post structured data.
-	 *
-	 * Hooked into `carousel_slider_post_loop` action hook.
-	 *
-	 * @param WP_Post $_post
-	 */
-	public function generate_post_data( $_post ) {
-		if ( ! $_post instanceof WP_Post ) {
-			return;
-		}
-
-		$image = wp_get_attachment_image_src( get_post_thumbnail_id( $_post->ID ), 'normal' );
-
-		$json['@type'] = 'BlogPosting';
-
-		$json['mainEntityOfPage'] = array(
-			'@type' => 'webpage',
-			'@id'   => esc_url( get_permalink( $_post->ID ) ),
-		);
-
-
-		$json['publisher'] = array(
-			'@type' => 'organization',
-			'name'  => get_bloginfo( 'name' ),
-		);
-
-		$json['author'] = array(
-			'@type' => 'person',
-			'name'  => get_the_author_meta( 'display_name', intval( $_post->post_author ) ),
-		);
-
-		if ( $image ) {
-			$json['image'] = array(
-				'@type'  => 'ImageObject',
-				'url'    => $image[0],
-				'width'  => $image[1],
-				'height' => $image[2],
+			$json['mainEntityOfPage'] = array(
+				'@type' => 'webpage',
+				'@id'   => esc_url( get_permalink( $_post->ID ) ),
 			);
+
+
+			$json['publisher'] = array(
+				'@type' => 'organization',
+				'name'  => get_bloginfo( 'name' ),
+			);
+
+			$json['author'] = array(
+				'@type' => 'person',
+				'name'  => get_the_author_meta( 'display_name', intval( $_post->post_author ) ),
+			);
+
+			if ( $image ) {
+				$json['image'] = array(
+					'@type'  => 'ImageObject',
+					'url'    => $image[0],
+					'width'  => $image[1],
+					'height' => $image[2],
+				);
+			}
+
+			$json['datePublished'] = get_post_time( 'c', false, $_post );
+			$json['dateModified']  = get_the_modified_date( 'c', $_post );
+			$json['name']          = get_the_title( $_post );
+			$json['headline']      = $json['name'];
+
+			$_excerpt            = wp_trim_words( wp_strip_all_tags( $_post->post_content ), '20', ' ...' );
+			$json['description'] = $_excerpt;
+
+
+			$this->set_data( apply_filters( 'carousel_slider_structured_data_post', $json, $_post ) );
 		}
 
-		$json['datePublished'] = get_post_time( 'c', false, $_post );
-		$json['dateModified']  = get_the_modified_date( 'c', $_post );
-		$json['name']          = get_the_title( $_post );
-		$json['headline']      = $json['name'];
+		/**
+		 * Generates Product structured data.
+		 *
+		 * Hooked into `carousel_slider_product_loop` action hook.
+		 *
+		 * @param WC_Product $product Product data (default: null).
+		 */
+		public function generate_product_data( $product = null ) {
+			if ( ! is_object( $product ) ) {
+				global $product;
+			}
 
-		$_excerpt = wp_trim_words( wp_strip_all_tags( $_post->post_content ), '20', ' ...' );
-		$json['description'] = $_excerpt;
+			$markup['@type'] = 'Product';
+			$markup['@id']   = get_permalink( $product->get_id() );
+			$markup['url']   = $markup['@id'];
+			$markup['name']  = $product->get_name();
 
-
-		$this->set_data( apply_filters( 'carousel_slider_structured_data_post', $json, $_post ) );
-	}
-
-	/**
-	 * Generates Product structured data.
-	 *
-	 * Hooked into `carousel_slider_product_loop` action hook.
-	 *
-	 * @param WC_Product $product Product data (default: null).
-	 */
-	public function generate_product_data( $product = null ) {
-		if ( ! is_object( $product ) ) {
-			global $product;
+			$this->set_data( apply_filters( 'carousel_slider_structured_data_product', $markup, $product ) );
 		}
-
-		$markup['@type'] = 'Product';
-		$markup['@id']   = get_permalink( $product->get_id() );
-		$markup['url']   = $markup['@id'];
-		$markup['name']  = $product->get_name();
-
-		$this->set_data( apply_filters( 'carousel_slider_structured_data_product', $markup, $product ) );
 	}
-}
 
-CarouselSliderStructuredData::init();
+endif;
+
+Carousel_Slider_Structured_Data::init();

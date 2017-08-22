@@ -1,14 +1,14 @@
 <?php
-if ( ! class_exists( 'CarouselSliderProduct' ) ):
+if ( ! class_exists( 'Carousel_Slider_Product' ) ):
 
-	class CarouselSliderProduct {
+	class Carousel_Slider_Product {
 
 		protected static $instance = null;
 
 		/**
 		 * Ensures only one instance of this class is loaded or can be loaded.
 		 *
-		 * @return CarouselSliderProduct
+		 * @return Carousel_Slider_Product
 		 */
 		public static function init() {
 			if ( is_null( self::$instance ) ) {
@@ -97,4 +97,4 @@ if ( ! class_exists( 'CarouselSliderProduct' ) ):
 
 endif;
 
-CarouselSliderProduct::init();
+Carousel_Slider_Product::init();

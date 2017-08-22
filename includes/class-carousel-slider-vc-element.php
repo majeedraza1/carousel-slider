@@ -4,16 +4,16 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-if ( ! class_exists( 'CarouselSliderVisualComposerElement' ) ):
+if ( ! class_exists( 'Carousel_Slider_Visual_Composer_Element' ) ):
 
-	class CarouselSliderVisualComposerElement {
+	class Carousel_Slider_Visual_Composer_Element {
 
 		protected static $instance = null;
 
 		/**
 		 * Ensures only one instance of this class is loaded or can be loaded.
 		 *
-		 * @return CarouselSliderVisualComposerElement
+		 * @return Carousel_Slider_Visual_Composer_Element
 		 */
 		public static function init() {
 			if ( is_null( self::$instance ) ) {
@@ -87,4 +87,4 @@ if ( ! class_exists( 'CarouselSliderVisualComposerElement' ) ):
 
 endif;
 
-CarouselSliderVisualComposerElement::init();
+Carousel_Slider_Visual_Composer_Element::init();

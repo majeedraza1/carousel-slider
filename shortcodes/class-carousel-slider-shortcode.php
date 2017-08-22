@@ -4,17 +4,15 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-if ( ! class_exists( 'CarouselSliderShortcode' ) ):
+if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 
-	class CarouselSliderShortcode {
-		private $plugin_path;
-		private $plugin_url;
+	class Carousel_Slider_Shortcode {
 		protected static $instance = null;
 
 		/**
 		 * Ensures only one instance of this class is loaded or can be loaded.
 		 *
-		 * @return CarouselSliderShortcode
+		 * @return Carousel_Slider_Shortcode
 		 */
 		public static function init() {
 			if ( is_null( self::$instance ) ) {
@@ -28,9 +26,6 @@ if ( ! class_exists( 'CarouselSliderShortcode' ) ):
 		 * CarouselSliderShortcode constructor.
 		 */
 		public function __construct() {
-			$this->plugin_path = CAROUSEL_SLIDER_PATH;
-			$this->plugin_url  = CAROUSEL_SLIDER_URL;
-
 			add_shortcode( 'carousel_slide', array( $this, 'carousel_slide' ) );
 		}
 
@@ -233,4 +228,4 @@ if ( ! class_exists( 'CarouselSliderShortcode' ) ):
 
 endif;
 
-CarouselSliderShortcode::init();
+Carousel_Slider_Shortcode::init();

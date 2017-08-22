@@ -334,6 +334,11 @@ if ( ! function_exists( 'carousel_slider_products' ) ) {
 }
 
 if ( ! function_exists( 'carousel_slider_inline_style' ) ) {
+	/**
+	 * Get carousel slider inline style
+	 *
+	 * @param $carousel_id
+	 */
 	function carousel_slider_inline_style( $carousel_id ) {
 		$id                      = $carousel_id;
 		$_nav_color              = get_post_meta( $id, '_nav_color', true );

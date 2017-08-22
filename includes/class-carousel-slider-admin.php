@@ -4,16 +4,31 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-if ( ! class_exists( 'CarouselSliderAdmin' ) ):
+if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 
-	class CarouselSliderAdmin {
+	class Carousel_Slider_Admin {
+
 		private $form;
+		protected static $instance = null;
 
 		/**
-		 * CarouselSliderAdmin constructor.
+		 * Ensures only one instance of this class is loaded or can be loaded.
+		 *
+		 * @return Carousel_Slider_Admin
+		 */
+		public static function init() {
+			if ( is_null( self::$instance ) ) {
+				self::$instance = new self();
+			}
+
+			return self::$instance;
+		}
+
+		/**
+		 * Carousel_Slider_Admin constructor.
 		 */
 		public function __construct() {
-			$this->form        = new CarouselSliderForm();
+			$this->form = new Carousel_Slider_Form();
 
 			add_action( 'init', array( $this, 'carousel_post_type' ) );
 			add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
@@ -378,4 +393,4 @@ if ( ! class_exists( 'CarouselSliderAdmin' ) ):
 
 endif;
 
-new CarouselSliderAdmin();
+Carousel_Slider_Admin::init();
