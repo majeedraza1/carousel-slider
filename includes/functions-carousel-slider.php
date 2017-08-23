@@ -103,6 +103,10 @@ if ( ! function_exists( 'carousel_slider_is_woocommerce_active' ) ) {
 			return true;
 		}
 
+		if ( defined( 'WC_VERSION' ) || defined( 'WOOCOMMERCE_VERSION' ) ) {
+			return true;
+		}
+
 		return false;
 	}
 }
