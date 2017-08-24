@@ -243,13 +243,13 @@ if ( ! class_exists( 'Carousel_Slider_Structured_Data' ) ):
 				return;
 			}
 
-			$image = wp_get_attachment_image_src( get_post_thumbnail_id( $_post->ID ), 'normal' );
+			$image = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), 'normal' );
 
 			$json['@type'] = 'BlogPosting';
 
 			$json['mainEntityOfPage'] = array(
 				'@type' => 'webpage',
-				'@id'   => esc_url( get_permalink( $_post->ID ) ),
+				'@id'   => get_the_permalink(),
 			);
 
 
@@ -260,7 +260,7 @@ if ( ! class_exists( 'Carousel_Slider_Structured_Data' ) ):
 
 			$json['author'] = array(
 				'@type' => 'person',
-				'name'  => get_the_author_meta( 'display_name', intval( $_post->post_author ) ),
+				'name'  => get_the_author(),
 			);
 
 			if ( $image ) {
@@ -272,13 +272,11 @@ if ( ! class_exists( 'Carousel_Slider_Structured_Data' ) ):
 				);
 			}
 
-			$json['datePublished'] = get_post_time( 'c', false, $_post );
-			$json['dateModified']  = get_the_modified_date( 'c', $_post );
-			$json['name']          = get_the_title( $_post );
+			$json['datePublished'] = get_post_time( 'c' );
+			$json['dateModified']  = get_the_modified_date( 'c' );
+			$json['name']          = get_the_title();
 			$json['headline']      = $json['name'];
-
-			$_excerpt            = wp_trim_words( wp_strip_all_tags( $_post->post_content ), '20', ' ...' );
-			$json['description'] = $_excerpt;
+			$json['description']   = get_the_excerpt();
 
 
 			$this->set_data( apply_filters( 'carousel_slider_structured_data_post', $json, $_post ) );
