@@ -2,15 +2,13 @@ const gulp = require('gulp');
 const sass = require('gulp-sass');
 const concat = require('gulp-concat');
 const uglify = require('gulp-uglify');
-const livereload = require('gulp-livereload');
 
 gulp.task('scss', function () {
     gulp.src('./assets/scss/*.scss')
         .pipe(sass({
             outputStyle: 'compressed'
         }).on('error', sass.logError))
-        .pipe(gulp.dest('./assets/css'))
-        .pipe(livereload());
+        .pipe(gulp.dest('./assets/css'));
 });
 
 gulp.task('js', function () {
@@ -19,12 +17,10 @@ gulp.task('js', function () {
         .pipe(gulp.dest('./assets/js'))
         .pipe(concat('admin.min.js'))
         .pipe(uglify())
-        .pipe(gulp.dest('./assets/js'))
-        .pipe(livereload());
+        .pipe(gulp.dest('./assets/js'));
 });
 
 gulp.task('watch', function () {
-    livereload.listen();
     gulp.watch('./assets/scss/*.scss', ['scss']);
     gulp.watch('./assets/js/src/*.js', ['js']);
 });

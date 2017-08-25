@@ -106,12 +106,13 @@ Now you can use the following function at your theme template file replacing `YO
 
 == Changelog ==
 
-= Master =
+= version 1.7.3 - 2017-08-25 =
 * Added - JSON-LD structured data for post carousel.
 * Added - Added uninstall.php file to remove data on uninstall.
+* Added - Added admin only notice for deprecated shortcode.
 * Fixed - get_product() deprecated notice on WooCommerce version 3
 * Fixed - Fixed error on WooCommerce version 2.6.* and 2.5.*
-* Tweak - Remove dependency over jquery.livequery.js
+* Tweak - Remove dependency over jquery.livequery.js and update admin javascript.
 * Tweak - Refactor code with WordPress coding style.
 
 = version 1.7.2 - 2017-04-07 =
