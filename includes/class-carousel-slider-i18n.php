@@ -17,6 +17,7 @@ if ( ! class_exists( 'Carousel_Slider_i8n' ) ):
 
 	class Carousel_Slider_i8n {
 		protected static $instance = null;
+		protected $plugin_name = 'carousel-slider';
 
 		/**
 		 * Ensures only one instance of this class is loaded or can be loaded.
@@ -40,7 +41,7 @@ if ( ! class_exists( 'Carousel_Slider_i8n' ) ):
 		 */
 		public function load_textdomain() {
 			$locale_file = sprintf( '%1$s-%2$s.mo', 'carousel-slider', get_locale() );
-			$global_file = join( DIRECTORY_SEPARATOR, [ WP_LANG_DIR, 'carousel-slider', $locale_file ] );
+			$global_file = join( DIRECTORY_SEPARATOR, array( WP_LANG_DIR, 'carousel-slider', $locale_file ) );
 
 			// Look in global /wp-content/languages/carousel-slider folder
 			if ( file_exists( $global_file ) ) {

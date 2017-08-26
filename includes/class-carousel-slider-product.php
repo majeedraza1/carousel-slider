@@ -41,7 +41,7 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ):
                 <div class="images">
 					<?php echo get_the_post_thumbnail( $product->get_id(), 'medium_large' ); ?>
 					<?php if ( $product->is_on_sale() ) : ?>
-						<?php echo apply_filters( 'woocommerce_sale_flash', '<span class="onsale">' . __( 'Sale!', 'carousel-slider' ) . '</span>', $post, $product ); ?>
+						<?php echo apply_filters( 'woocommerce_sale_flash', '<span class="onsale">' . __( 'Sale!', 'carousel-slider' ) . '</span>', $product ); ?>
 					<?php endif; ?>
                 </div>
 
