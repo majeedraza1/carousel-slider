@@ -182,13 +182,7 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 
 			global $post;
 			$slide_type = get_post_meta( $post->ID, '_slide_type', true );
-			$slide_type = in_array( $slide_type, array(
-				'image-carousel',
-				'post-carousel',
-				'image-carousel-url',
-				'video-carousel',
-				'product-carousel'
-			) ) ? $slide_type : 'image-carousel';
+			$slide_type = in_array( $slide_type, carousel_slider_slide_type() ) ? $slide_type : 'image-carousel';
 
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/types.php';
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/images-media.php';
@@ -196,6 +190,7 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/post-carousel.php';
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/product-carousel.php';
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/video-carousel.php';
+			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/content-carousel.php';
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/images-settings.php';
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/general.php';
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/navigation.php';

@@ -410,3 +410,21 @@ if ( ! function_exists( 'carousel_slider_inline_style' ) ) {
 		<?php
 	}
 }
+
+if ( ! function_exists( 'carousel_slider_slide_type' ) ) {
+	/**
+	 * Get carousel slider available slide type
+	 *
+	 * @return array
+	 */
+	function carousel_slider_slide_type() {
+		return array(
+			'image-carousel',
+			'post-carousel',
+			'image-carousel-url',
+			'video-carousel',
+			'product-carousel',
+			'content-carousel'
+		);
+	}
+}

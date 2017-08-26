@@ -22,6 +22,9 @@
             <option value="product-carousel" <?php echo $slide_type == 'product-carousel' ? 'selected' : ''; ?> <?php echo $disabled; ?>>
 				<?php esc_html_e( 'WooCommerce Product Carousel', 'carousel-slider' ); ?>
             </option>
+            <option value="content-carousel"<?php echo $slide_type == 'content-carousel' ? 'selected' : ''; ?>>
+		        <?php esc_html_e( 'Content Carousel', 'carousel-slider' ); ?>
+            </option>
         </select>
     </div>
 </div>

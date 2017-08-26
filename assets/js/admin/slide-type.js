@@ -8,6 +8,7 @@
         section_post_query = $('#section_post_query'),
         section_video_settings = $('#section_video_settings'),
         section_product_query = $('#section_product_query'),
+        section_content_carousel = $('#section_content_carousel'),
         // Slide Type -- Post
         _post_query_type = $('#_post_query_type'),
         _post_date_after = $('#field-_post_date_after'),
@@ -32,6 +33,7 @@
         section_post_query.hide('fast');
         section_video_settings.hide('fast');
         section_product_query.hide('fast');
+        section_content_carousel.hide('fast');
 
         if (this.value === 'image-carousel') {
             section_images_settings.slideDown();
@@ -49,6 +51,9 @@
         }
         if (this.value === 'product-carousel') {
             section_product_query.slideDown();
+        }
+        if (this.value === 'content-carousel') {
+            section_content_carousel.slideDown();
         }
     });
 
