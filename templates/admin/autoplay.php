@@ -22,7 +22,7 @@
 			$this->form->number( array(
 				'id'   => '_autoplay_speed',
 				'name' => esc_html__( 'Autoplay Speed', 'carousel-slider' ),
-				'desc' => esc_html__( 'Autoplay speen in millisecond. Default: 500', 'carousel-slider' ),
+				'desc' => esc_html__( 'Autoplay speed in millisecond. Default: 500', 'carousel-slider' ),
 				'std'  => 500
 			) );
 			$this->form->checkbox( array(

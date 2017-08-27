@@ -27,6 +27,22 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
 		 */
 		public function add_meta_boxes() {
 			add_meta_box(
+				"carousel-slider-navigation-settings",
+				__( "Navigation Settings", 'carousel-slider' ),
+				array( $this, 'navigation_settings_callback' ),
+				$this->post_type,
+				"side",
+				"low"
+			);
+			add_meta_box(
+				"carousel-slider-autoplay-settings",
+				__( "Autoplay Settings", 'carousel-slider' ),
+				array( $this, 'autoplay_settings_callback' ),
+				$this->post_type,
+				"side",
+				"low"
+			);
+			add_meta_box(
 				"carousel-slider-responsive-settings",
 				__( "Responsive Settings", 'carousel-slider' ),
 				array( $this, 'responsive_settings_callback' ),
@@ -36,18 +52,128 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
 			);
 		}
 
+		public function navigation_settings_callback( $post ) {
+			$_nav_button       = get_post_meta( $post->ID, '_nav_button', true );
+			$_nav_button       = in_array( $_nav_button, array( 'on', 'off' ) ) ? $_nav_button : 'on';
+			$_dot_nav          = get_post_meta( $post->ID, '_dot_nav', true );
+			$_dot_nav          = in_array( $_dot_nav, array( 'on', 'off' ) ) ? $_dot_nav : 'off';
+			$_nav_color        = get_post_meta( $post->ID, '_nav_color', true );
+			$_nav_color        = empty( $_nav_color ) ? '#f1f1f1' : $_nav_color;
+			$_nav_active_color = get_post_meta( $post->ID, '_nav_active_color', true );
+			$_nav_active_color = empty( $_nav_active_color ) ? '#00d1b2' : $_nav_active_color;
+			?>
+            <p>
+                <label for="_nav_button">
+                    <input type="hidden" name="carousel_slider[_nav_button]" value="off">
+                    <input type="checkbox" value="on" id="_nav_button" name="carousel_slider[_nav_button]"
+						<?php checked( $_nav_button, 'on' ); ?>>
+					<?php esc_html_e( 'Enable next/prev navigation icons', 'carousel-slider' ); ?>
+                </label>
+            </p>
+            <p>
+                <label for="_dot_nav">
+                    <input type="hidden" name="carousel_slider[_dot_nav]" value="off">
+                    <input type="checkbox" value="on" name="carousel_slider[_dot_nav]" id="_dot_nav"
+						<?php checked( $_dot_nav, 'on' ); ?>>
+					<?php esc_html_e( 'Enable dots navigation', 'carousel-slider' ); ?>
+                </label>
+            </p>
+            <p>
+                <label for="_nav_color">
+                    <strong><?php esc_html_e( 'Navigation & Dots Color', 'carousel-slider' ); ?></strong>
+                </label>
+                <span class="cs-tooltip"
+                      title="<?php esc_html_e( 'Pick a color for navigation and dots.', 'carousel-slider' ); ?>"></span>
+                <br>
+                <input type="text" class="colorpicker" value="<?php echo $_nav_color; ?>" id="_nav_color"
+                       name="carousel_slider[_nav_color]" data-default-color="#f1f1f1">
+            </p>
+            <p>
+                <label for="_nav_active_color">
+                    <strong><?php esc_html_e( 'Navigation & Dots Hover Color', 'carousel-slider' ); ?></strong>
+                </label>
+                <span class="cs-tooltip"
+                      title="<?php esc_html_e( 'Pick a color for navigation and dots for active and hover effect.', 'carousel-slider' ); ?>"></span>
+                <br>
+                <input type="text" class="colorpicker" value="<?php echo $_nav_active_color; ?>" id="_nav_active_color"
+                       name="carousel_slider[_nav_active_color]" data-default-color="#00d1b2">
+            </p>
+			<?php
+		}
+
+		/**
+		 * @param WP_Post $post
+		 */
+		public function autoplay_settings_callback( $post ) {
+			$_autoplay         = get_post_meta( $post->ID, '_autoplay', true );
+			$_autoplay         = in_array( $_autoplay, array( 'on', 'off' ) ) ? $_autoplay : 'on';
+			$_autoplay_pause   = get_post_meta( $post->ID, '_autoplay_pause', true );
+			$_autoplay_pause   = in_array( $_autoplay_pause, array( 'on', 'off' ) ) ? $_autoplay : 'off';
+			$_autoplay_timeout = get_post_meta( $post->ID, '_autoplay_timeout', true );
+			$_autoplay_timeout = $_autoplay_timeout ? absint( $_autoplay_timeout ) : 5000;
+			$_autoplay_speed   = get_post_meta( $post->ID, '_autoplay_speed', true );
+			$_autoplay_speed   = $_autoplay_speed ? absint( $_autoplay_speed ) : 500;
+			?>
+            <p>
+                <label for="_autoplay">
+                    <input type="hidden" name="carousel_slider[_autoplay]" value="off">
+                    <input type="checkbox" value="on" id="_autoplay" name="carousel_slider[_autoplay]"
+						<?php checked( $_autoplay, 'on' ); ?>>
+					<?php esc_html_e( 'Enable autoplay', 'carousel-slider' ); ?>
+                </label>
+            </p>
+            <p>
+                <label for="_autoplay_pause">
+                    <input type="hidden" name="carousel_slider[_autoplay_pause]" value="off">
+                    <input type="checkbox" value="on" name="carousel_slider[_autoplay_pause]" id="_autoplay_pause"
+						<?php checked( $_autoplay_pause, 'on' ); ?>>
+					<?php esc_html_e( 'Pause autoplay on mouse hover', 'carousel-slider' ); ?>
+                </label>
+            </p>
+            <p>
+                <label for="_autoplay_timeout">
+                    <strong><?php esc_html_e( 'Autoplay Timeout', 'carousel-slider' ); ?></strong>
+                </label>
+                <input type="number" name="carousel_slider[_autoplay_timeout]" id="_autoplay_timeout" class="small-text"
+                       value="<?php echo $_autoplay_timeout; ?>">
+                <span class="cs-tooltip"
+                      title="<?php esc_html_e( 'Automatic play interval timeout in millisecond. Default: 5000', 'carousel-slider' ); ?>"></span>
+            </p><!-- Autoplay Timeout -->
+            <p>
+                <label for="_autoplay_speed">
+                    <strong><?php esc_html_e( 'Autoplay Speed', 'carousel-slider' ); ?></strong>
+                </label>
+                <input type="number" name="carousel_slider[_autoplay_speed]" id="_autoplay_speed" class="small-text"
+                       value="<?php echo $_autoplay_speed; ?>">
+                <span class="cs-tooltip"
+                      title="<?php esc_html_e( 'Automatic play speed in millisecond. Default: 500', 'carousel-slider' ); ?>"></span>
+            </p><!-- Columns -->
+			<?php
+		}
+
 		/**
 		 * Renders the meta box.
 		 *
 		 * @param WP_Post $post
 		 */
 		public function responsive_settings_callback( $post ) {
-			$_items               = absint( get_post_meta( $post->ID, '_items', true ) );
-			$_items_desktop       = absint( get_post_meta( $post->ID, '_items_desktop', true ) );
-			$_items_small_desktop = absint( get_post_meta( $post->ID, '_items_small_desktop', true ) );
-			$_items_tablet        = absint( get_post_meta( $post->ID, '_items_portrait_tablet', true ) );
-			$_items_small_tablet  = absint( get_post_meta( $post->ID, '_items_small_portrait_tablet', true ) );
-			$_items_mobile        = absint( get_post_meta( $post->ID, '_items_portrait_mobile', true ) );
+			$_items = get_post_meta( $post->ID, '_items', true );
+			$_items = $_items ? absint( $_items ) : 4;
+
+			$_items_desktop = get_post_meta( $post->ID, '_items_desktop', true );
+			$_items_desktop = $_items_desktop ? absint( $_items_desktop ) : 4;
+
+			$_items_small_desktop = get_post_meta( $post->ID, '_items_small_desktop', true );
+			$_items_small_desktop = $_items_small_desktop ? absint( $_items_small_desktop ) : 4;
+
+			$_items_tablet = get_post_meta( $post->ID, '_items_portrait_tablet', true );
+			$_items_tablet = $_items_tablet ? absint( $_items_tablet ) : 3;
+
+			$_items_small_tablet = get_post_meta( $post->ID, '_items_small_portrait_tablet', true );
+			$_items_small_tablet = $_items_small_tablet ? absint( $_items_small_tablet ) : 2;
+
+			$_items_mobile = get_post_meta( $post->ID, '_items_portrait_mobile', true );
+			$_items_mobile = $_items_mobile ? absint( $_items_mobile ) : 1;
 			?>
             <p>
                 <label for="_items">

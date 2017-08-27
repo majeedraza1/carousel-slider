@@ -86,6 +86,13 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ):
 						true
 					);
 					wp_enqueue_script(
+						'tip-tip',
+						CAROUSEL_SLIDER_ASSETS . '/js/vendors/jquery.tipTip.min.js',
+						array( 'jquery' ),
+						CAROUSEL_SLIDER_VERSION,
+						true
+					);
+					wp_enqueue_script(
 						'carousel-slider-admin',
 						CAROUSEL_SLIDER_ASSETS . '/js/admin.min.js',
 						array(
@@ -94,7 +101,7 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ):
 							'jquery-ui-accordion',
 							'jquery-ui-datepicker',
 							'jquery-ui-sortable',
-							'jquery-ui-tooltip',
+							'tip-tip',
 							'select2'
 						),
 						CAROUSEL_SLIDER_VERSION,
