@@ -195,7 +195,7 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/general.php';
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/navigation.php';
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/autoplay.php';
-			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/responsive.php';
+			// require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/responsive.php';
 		}
 
 		/**
@@ -208,7 +208,7 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 				array( $this, 'render_meta_box_shortcode_info' ),
 				"carousels",
 				"side",
-				"low"
+				"high"
 			);
 		}
 

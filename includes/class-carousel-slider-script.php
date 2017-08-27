@@ -94,6 +94,7 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ):
 							'jquery-ui-accordion',
 							'jquery-ui-datepicker',
 							'jquery-ui-sortable',
+							'jquery-ui-tooltip',
 							'select2'
 						),
 						CAROUSEL_SLIDER_VERSION,

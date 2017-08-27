@@ -2,17 +2,19 @@
 .overflowHidden {
 	overflow: hidden;
 }
+
 .overflowVisible {
 	overflow: visible;
 }
+
 // Metabox fields
 .sp {
 	&-input-group {
 		margin-bottom: 10px;
 		&:after {
-			content:"";
-			display:table;
-			clear:both
+			content: "";
+			display: table;
+			clear: both
 		}
 	}
 
@@ -22,7 +24,8 @@
 			margin-right: 30px;
 		}
 	}
-	&-input-field {}
+	&-input-field {
+	}
 
 	&-input-label,
 	&-input-field {
@@ -46,8 +49,7 @@
 	}
 }
 
-
-@media only screen and (min-width: 600px ){
+@media only screen and (min-width: 600px) {
 	.sp {
 		&-input-label {
 			width: 40%;
@@ -58,7 +60,7 @@
 	}
 }
 
-@media only screen and (min-width: 783px ){
+@media only screen and (min-width: 783px) {
 	.sp-input-label {
 		width: 30%;
 	}
@@ -70,14 +72,14 @@
 	}
 }
 
-@media only screen and (min-width: 851px ){
+@media only screen and (min-width: 851px) {
 	.sp-input-label,
 	.sp-input-field {
 		width: 100%;
 	}
 }
 
-@media only screen and (min-width: 1200px ){
+@media only screen and (min-width: 1200px) {
 	.sp-input-label {
 		width: 40%;
 	}
@@ -86,7 +88,7 @@
 	}
 }
 
-@media only screen and (min-width: 1600px ){
+@media only screen and (min-width: 1600px) {
 	.sp-input-label {
 		width: 30%;
 	}
@@ -142,12 +144,11 @@
 				margin-right: 10px;
 				margin-bottom: 10px;
 				display: block;
-				box-shadow:0 2px 4px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+				box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 			}
 		}
 	}
 }
-
 
 // Hide Post carousel fields
 // Related fields will be open by jQuery
@@ -166,4 +167,13 @@
 #field-_product_tags,
 #field-_product_in {
 	display: none;
+}
+
+#carousel-slider-responsive-settings {
+	p {
+		overflow: hidden;
+	}
+	input.small-text {
+		float: right;
+	}
 }

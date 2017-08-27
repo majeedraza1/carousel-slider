@@ -1,6 +1,24 @@
 (function ($) {
     "use strict";
 
+    // Tooltip
+    $(".cs-tooltip").each(function () {
+        $(this).tooltip({
+            position: {
+                my: "center bottom-20",
+                at: "center top",
+                using: function (position, feedback) {
+                    $(this).css(position);
+                    $("<div>")
+                        .addClass("arrow")
+                        .addClass(feedback.vertical)
+                        .addClass(feedback.horizontal)
+                        .appendTo(this);
+                }
+            }
+        });
+    });
+
     // Select2
     $("select.select2").each(function () {
         $(this).select2();
@@ -38,6 +56,17 @@
 
     // Initializing WP Color Picker
     $('.colorpicker').each(function () {
-        $(this).wpColorPicker();
+        $(this).wpColorPicker({
+            palettes: [
+                '#2196F3', // Blue
+                '#009688', // Teal
+                '#4CAF50', // Green
+                '#F44336', // Red
+                '#FFEB3B', // Yellow
+                '#00D1B2', // Firoza
+                '#000000', // Blank
+                '#ffffff' // White
+            ]
+        });
     });
 })(jQuery);
