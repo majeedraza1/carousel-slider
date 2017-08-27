@@ -6,6 +6,9 @@
     <div class="shapla-toggle-inner">
         <div class="shapla-toggle-content">
             <button class="button carousel-slider__add-slide">Add Slide</button>
+            <div id="carouselSliderContentInside">
+
+            </div>
         </div>
     </div>
 </div>
