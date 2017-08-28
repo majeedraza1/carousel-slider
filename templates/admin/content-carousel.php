@@ -15,17 +15,22 @@
 					foreach ( $content_sliders as $slide_num => $content_slider ) {
 						$_to_word = str_replace( array( ' ', '-' ), '_', $num_to_word->convert( $slide_num ) );
 						?>
-                        <div style="margin-bottom: 1rem;">
-							<?php
-							wp_editor(
-								$content_slider['content'],
-								'carousel_slider_content_' . $_to_word,
-								array(
-									'textarea_name' => 'carousel_slider_content[' . $slide_num . '][content]',
-									'textarea_rows' => 5,
-								)
-							);
-							?>
+                        <div class="accordion">
+                            <div class="accordion-header">
+								<?php printf( '%s %s', esc_html__( 'Slide', 'carousel-slider' ), $slide_num + 1 ); ?>
+                            </div>
+                            <div class="accordion-content">
+								<?php
+								wp_editor(
+									$content_slider['content'],
+									'carousel_slider_content_' . $_to_word,
+									array(
+										'textarea_name' => 'carousel_slider_content[' . $slide_num . '][content]',
+										'textarea_rows' => 5,
+									)
+								);
+								?>
+                            </div>
                         </div>
 						<?php
 					}
