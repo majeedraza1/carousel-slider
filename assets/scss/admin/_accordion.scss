@@ -43,5 +43,9 @@
         box-sizing: border-box;
         max-height: 0;
         transition: max-height 0.2s ease-out;
+
+        &-inside {
+            padding: 1rem 0;
+        }
     }
 }

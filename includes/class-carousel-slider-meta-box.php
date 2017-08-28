@@ -27,6 +27,14 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
 		 */
 		public function add_meta_boxes() {
 			add_meta_box(
+				"carousel-slider-usages-info",
+				__( "Usage (Shortcode)", 'carousel-slider' ),
+				array( $this, 'usages_callback' ),
+				"carousels",
+				"side",
+				"high"
+			);
+			add_meta_box(
 				"carousel-slider-navigation-settings",
 				__( "Navigation Settings", 'carousel-slider' ),
 				array( $this, 'navigation_settings_callback' ),
@@ -50,6 +58,28 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
 				"side",
 				"low"
 			);
+		}
+
+		/**
+		 * Render short code meta box content
+		 *
+		 * @param WP_Post $post
+		 */
+		public function usages_callback( $post ) {
+			ob_start(); ?>
+            <p><strong>
+					<?php esc_html_e( 'Copy the following shortcode and paste in post or page where you want to show.', 'carousel-slider' ); ?>
+                </strong>
+            </p>
+            <input
+                    type="text"
+                    onmousedown="this.clicked = 1;"
+                    onfocus="if (!this.clicked) this.select(); else this.clicked = 2;"
+                    onclick="if (this.clicked === 2) this.select(); this.clicked = 0;"
+                    value="[carousel_slide id='<?php echo $post->ID; ?>']"
+                    style="background-color: #f1f1f1; width: 100%; padding: 8px;"
+            >
+			<?php echo ob_get_clean();
 		}
 
 		public function navigation_settings_callback( $post ) {

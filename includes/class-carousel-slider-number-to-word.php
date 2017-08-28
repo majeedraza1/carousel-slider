@@ -24,7 +24,10 @@ class Carousel_Slider_Number_To_Word {
 	 * @return string
 	 */
 	public function convert( $number ) {
-		list( $integer, $fraction ) = explode( ".", (string) $number );
+		$split_string = explode( ".", (string) $number );
+		$integer      = isset( $split_string[0] ) ? $split_string[0] : null;
+		$fraction     = isset( $split_string[1] ) ? $split_string[1] : null;
+		// list( $integer, $fraction ) = explode( ".", (string) $number );
 
 		$output = "";
 
@@ -75,42 +78,6 @@ class Carousel_Slider_Number_To_Word {
 	}
 
 	/**
-	 * Convert group into english word
-	 *
-	 * @param $index
-	 *
-	 * @return string
-	 */
-	private function convert_group( $index ) {
-		switch ( $index ) {
-			case 11:
-				return " decillion";
-			case 10:
-				return " nonillion";
-			case 9:
-				return " octillion";
-			case 8:
-				return " septillion";
-			case 7:
-				return " sextillion";
-			case 6:
-				return " quintrillion";
-			case 5:
-				return " quadrillion";
-			case 4:
-				return " trillion";
-			case 3:
-				return " billion";
-			case 2:
-				return " million";
-			case 1:
-				return " thousand";
-			case 0:
-				return "";
-		}
-	}
-
-	/**
 	 * Convert three digits into english word
 	 *
 	 * @param $digit1
@@ -140,6 +107,38 @@ class Carousel_Slider_Number_To_Word {
 		}
 
 		return $buffer;
+	}
+
+	/**
+	 * Convert single digit into english word
+	 *
+	 * @param $digit
+	 *
+	 * @return string
+	 */
+	private function convert_digit( $digit ) {
+		switch ( $digit ) {
+			case "0":
+				return "zero";
+			case "1":
+				return "one";
+			case "2":
+				return "two";
+			case "3":
+				return "three";
+			case "4":
+				return "four";
+			case "5":
+				return "five";
+			case "6":
+				return "six";
+			case "7":
+				return "seven";
+			case "8":
+				return "eight";
+			case "9":
+				return "nine";
+		}
 	}
 
 	/**
@@ -217,34 +216,38 @@ class Carousel_Slider_Number_To_Word {
 	}
 
 	/**
-	 * Convert single digit into english word
+	 * Convert group into english word
 	 *
-	 * @param $digit
+	 * @param $index
 	 *
 	 * @return string
 	 */
-	private function convert_digit( $digit ) {
-		switch ( $digit ) {
-			case "0":
-				return "zero";
-			case "1":
-				return "one";
-			case "2":
-				return "two";
-			case "3":
-				return "three";
-			case "4":
-				return "four";
-			case "5":
-				return "five";
-			case "6":
-				return "six";
-			case "7":
-				return "seven";
-			case "8":
-				return "eight";
-			case "9":
-				return "nine";
+	private function convert_group( $index ) {
+		switch ( $index ) {
+			case 11:
+				return " decillion";
+			case 10:
+				return " nonillion";
+			case 9:
+				return " octillion";
+			case 8:
+				return " septillion";
+			case 7:
+				return " sextillion";
+			case 6:
+				return " quintrillion";
+			case 5:
+				return " quadrillion";
+			case 4:
+				return " trillion";
+			case 3:
+				return " billion";
+			case 2:
+				return " million";
+			case 1:
+				return " thousand";
+			case 0:
+				return "";
 		}
 	}
 }

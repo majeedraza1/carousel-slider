@@ -7,7 +7,7 @@
     overflow: visible;
 }
 
-// Metabox fields
+// Meta box fields
 .sp {
     &-input-group {
         margin-bottom: 10px;
@@ -176,5 +176,54 @@
     }
     input.small-text {
         float: right;
+    }
+}
+
+// Content Carousel Meta
+.accordion {
+    .slide_bg_wrapper {
+        display: flex;
+        padding: 1rem 0;
+    }
+    .slide_thumb {
+        position: relative;
+        float: left;
+        margin-right: 1rem;
+        border: solid 1px #e0e0e0;
+        padding: 5px;
+
+        > div {
+            height: 150px;
+            width: 150px;
+            background-color: #f1f1f1;
+            background-repeat: no-repeat;
+            background-position: top left;
+            background-size: 100% auto;
+        }
+
+        > span {
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            line-height: 14px;
+            padding: 3px 3px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #ffffff;
+            cursor: pointer;
+            transition: all .3s ease-in-out;
+        }
+    }
+
+    .slide_image_settings_line {
+        display: block;
+        margin: 0.5rem 0;
+
+        > span {
+            width: 150px;
+            display: inline-block;
+        }
     }
 }

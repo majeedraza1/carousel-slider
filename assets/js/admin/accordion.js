@@ -6,8 +6,10 @@
 
         if (parseInt(panel.css('max-height')) > 0) {
             panel.css('max-height', '0');
+            panel.css('overflow', 'hidden');
         } else {
             panel.css('max-height', panel.prop('scrollHeight') + "px");
+            panel.css('overflow', 'visible');
         }
     });
 })(jQuery);

@@ -32,7 +32,6 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 
 			add_action( 'init', array( $this, 'carousel_post_type' ) );
 			add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
-			add_action( 'add_meta_boxes', array( $this, 'shortcode_usage_info' ) );
 			add_filter( 'manage_edit-carousels_columns', array( $this, 'columns_head' ) );
 			add_filter( 'manage_carousels_posts_custom_column', array( $this, 'columns_content' ), 10, 2 );
 			add_action( 'save_post', array( $this, 'save_meta_box' ) );
@@ -92,14 +91,13 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 		/**
 		 * Hide view and quick edit from carousel slider admin
 		 *
-		 * @param $actions
-		 * @param $post
+		 * @param array $actions
+		 * @param WP_Post $post
 		 *
 		 * @return mixed
 		 */
 		public function post_row_actions( $actions, $post ) {
-			global $current_screen;
-			if ( $current_screen->post_type != 'carousels' ) {
+			if ( $post->post_type != 'carousels' ) {
 				return $actions;
 			}
 
@@ -175,7 +173,9 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 		}
 
 		/**
-		 * Load metabox content
+		 * Load meta box content
+		 *
+		 * @param WP_Post $post
 		 */
 		public function carousel_slider_meta_boxes( $post ) {
 			wp_nonce_field( 'carousel_slider_nonce', '_carousel_slider_nonce' );
@@ -195,40 +195,6 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 			// require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/navigation.php';
 			// require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/autoplay.php';
 			// require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/responsive.php';
-		}
-
-		/**
-		 * Metabox for shortcode information
-		 */
-		public function shortcode_usage_info() {
-			add_meta_box(
-				"carousel-slider-shortcode-info",
-				__( "Usage (Shortcode)", 'carousel-slider' ),
-				array( $this, 'render_meta_box_shortcode_info' ),
-				"carousels",
-				"side",
-				"high"
-			);
-		}
-
-		/**
-		 * Render shortcode metabox content
-		 */
-		public function render_meta_box_shortcode_info() {
-			ob_start(); ?>
-            <p><strong>
-					<?php esc_html_e( 'Copy the following shortcode and paste in post or page where you want to show.', 'carousel-slider' ); ?>
-                </strong>
-            </p>
-            <input
-                    type="text"
-                    onmousedown="this.clicked = 1;"
-                    onfocus="if (!this.clicked) this.select(); else this.clicked = 2;"
-                    onclick="if (this.clicked === 2) this.select(); this.clicked = 0;"
-                    value="[carousel_slide id='<?php echo get_the_ID(); ?>']"
-                    style="background-color: #f1f1f1; width: 100%; padding: 8px;"
-            >
-			<?php echo ob_get_clean();
 		}
 
 		/**
@@ -350,7 +316,7 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 		 * Adding our custom fields to the $form_fields array
 		 *
 		 * @param array $form_fields
-		 * @param object $post
+		 * @param WP_Post $post
 		 *
 		 * @return array
 		 */
