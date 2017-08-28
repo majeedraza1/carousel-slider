@@ -88,6 +88,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		 */
 		public function includes() {
 			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-i18n.php';
+			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-number-to-word.php';
 			require_once CAROUSEL_SLIDER_INCLUDES . '/functions-carousel-slider.php';
 			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-activator.php';
 			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-product.php';

@@ -216,9 +216,6 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ):
                     </div>
                 </div>
             </template>
-            <template id="carouselSliderContentTemplate" style="display: none;">
-				<?php wp_editor( '', 'carousel_slider_content_og' ); ?>
-            </template>
 			<?php
 		}
 

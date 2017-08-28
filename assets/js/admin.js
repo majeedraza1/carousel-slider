@@ -1,6 +1,5 @@
 (function ($) {
     "use strict";
-    var template = $('#carouselSliderContentTemplate');
 
     $('.carousel-slider__add-slide').on('click', function (e) {
         e.preventDefault();
@@ -10,10 +9,10 @@
             method: 'POST',
             data: {
                 action: 'add_content_slide',
-                editor_id: 1
+                post_id: $(this).data('post-id')
             },
-            success: function (response) {
-                $('#carouselSliderContentInside').append(response);
+            success: function () {
+                $('form#post').submit();
             }
         });
 
