@@ -214,6 +214,10 @@
             color: #ffffff;
             cursor: pointer;
             transition: all .3s ease-in-out;
+
+            &.hidden {
+                display: none !important;
+            }
         }
     }
 
@@ -226,4 +230,8 @@
             display: inline-block;
         }
     }
+}
+
+.wp-picker-container .iris-picker {
+    z-index: 100000;
 }
