@@ -115,7 +115,7 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
                 <span class="cs-tooltip"
                       title="<?php esc_html_e( 'Pick a color for navigation and dots.', 'carousel-slider' ); ?>"></span>
                 <br>
-                <input type="text" class="colorpicker" value="<?php echo $_nav_color; ?>" id="_nav_color"
+                <input type="text" class="color-picker" value="<?php echo $_nav_color; ?>" id="_nav_color"
                        name="carousel_slider[_nav_color]" data-default-color="#f1f1f1">
             </p>
             <p>
@@ -125,7 +125,7 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
                 <span class="cs-tooltip"
                       title="<?php esc_html_e( 'Pick a color for navigation and dots for active and hover effect.', 'carousel-slider' ); ?>"></span>
                 <br>
-                <input type="text" class="colorpicker" value="<?php echo $_nav_active_color; ?>" id="_nav_active_color"
+                <input type="text" class="color-picker" value="<?php echo $_nav_active_color; ?>" id="_nav_active_color"
                        name="carousel_slider[_nav_active_color]" data-default-color="#00d1b2">
             </p>
 			<?php

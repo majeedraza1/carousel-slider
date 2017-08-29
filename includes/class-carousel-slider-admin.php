@@ -220,6 +220,10 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 				return;
 			}
 
+			if ( isset( $_POST['carousel_slider_content'] ) ) {
+				$this->update_content_slider( $post_id );
+			}
+
 			foreach ( $_POST['carousel_slider'] as $key => $val ) {
 				if ( is_array( $val ) ) {
 					$val = implode( ',', $val );
@@ -348,6 +352,28 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 			}
 
 			return $post;
+		}
+
+		/**
+		 * Update content slider
+		 *
+		 * @param int $post_id
+		 */
+		private function update_content_slider( $post_id ) {
+			$_content_slides = $_POST['carousel_slider_content'];
+			$_slides         = array_map( function ( $slide ) {
+				$_slide = array(
+					'content'         => wp_filter_post_kses( $slide['content'] ),
+					'img_id'          => intval( $slide['img_id'] ),
+					'img_bg_position' => sanitize_text_field( $slide['img_bg_position'] ),
+					'img_bg_size'     => sanitize_text_field( $slide['img_bg_size'] ),
+					'bg_color'        => carousel_slider_sanitize_color( $slide['bg_color'] ),
+				);
+
+				return $_slide;
+			}, $_content_slides );
+
+			update_post_meta( $post_id, '_content_slider', $_slides );
 		}
 	}
 

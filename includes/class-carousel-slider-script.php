@@ -93,11 +93,18 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ):
 						true
 					);
 					wp_enqueue_script(
+						'wp-color-picker-alpha',
+						CAROUSEL_SLIDER_ASSETS . '/js/vendors/wp-color-picker-alpha.min.js',
+						array( 'wp-color-picker' ),
+						'1.2.2',
+						true
+					);
+					wp_enqueue_script(
 						'carousel-slider-admin',
 						CAROUSEL_SLIDER_ASSETS . '/js/admin.min.js',
 						array(
 							'jquery',
-							'wp-color-picker',
+							'wp-color-picker-alpha',
 							'jquery-ui-accordion',
 							'jquery-ui-datepicker',
 							'jquery-ui-sortable',

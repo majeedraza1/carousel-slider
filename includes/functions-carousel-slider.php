@@ -18,6 +18,56 @@ if ( ! function_exists( 'carousel_slider_is_url' ) ) {
 	}
 }
 
+if ( ! function_exists( 'carousel_slider_sanitize_color' ) ) {
+	/**
+	 * Sanitizes a Hex, RGB or RGBA color
+	 *
+	 * @param $color
+	 *
+	 * @return mixed|string
+	 */
+	function carousel_slider_sanitize_color( $color ) {
+		if ( '' === $color ) {
+			return '';
+		}
+
+		// Trim unneeded whitespace
+		$color = str_replace( ' ', '', $color );
+
+		// If this is hex color, validate and return it
+		if ( 1 === preg_match( '|^#([A-Fa-f0-9]{3}){1,2}$|', $color ) ) {
+			return $color;
+		}
+
+		// If this is rgb, validate and return it
+		if ( 'rgb(' === substr( $color, 0, 4 ) ) {
+			sscanf( $color, 'rgb(%d,%d,%d)', $red, $green, $blue );
+
+			if ( ( $red >= 0 && $red <= 255 ) &&
+			     ( $green >= 0 && $green <= 255 ) &&
+			     ( $blue >= 0 && $blue <= 255 )
+			) {
+				return "rgb({$red},{$green},{$blue})";
+			}
+		}
+
+		// If this is rgba, validate and return it
+		if ( 'rgba(' === substr( $color, 0, 5 ) ) {
+			sscanf( $color, 'rgba(%d,%d,%d,%f)', $red, $green, $blue, $alpha );
+
+			if ( ( $red >= 0 && $red <= 255 ) &&
+			     ( $green >= 0 && $green <= 255 ) &&
+			     ( $blue >= 0 && $blue <= 255 ) &&
+			     $alpha >= 0 && $alpha <= 1
+			) {
+				return "rgba({$red},{$green},{$blue},{$alpha})";
+			}
+		}
+
+		return '';
+	}
+}
+
 if ( ! function_exists( 'carousel_slider_get_meta' ) ) {
 	/**
 	 * Get post meta by id and key
@@ -426,5 +476,44 @@ if ( ! function_exists( 'carousel_slider_slide_type' ) ) {
 			'product-carousel',
 			'content-carousel'
 		);
+	}
+}
+
+if ( ! function_exists( 'carousel_slider_background_position' ) ) {
+	function carousel_slider_background_position( $key_only = false ) {
+		$positions = array(
+			'left top'      => 'left top',
+			'left center'   => 'left center',
+			'left bottom'   => 'left bottom',
+			'center top'    => 'center top',
+			'center center' => 'center', // Default
+			'center bottom' => 'center bottom',
+			'right top'     => 'right top',
+			'right center'  => 'right center',
+			'right bottom'  => 'right bottom',
+		);
+		if ( $key_only ) {
+			return array_keys( $positions );
+		}
+
+		return $positions;
+	}
+}
+
+if ( ! function_exists( 'carousel_slider_background_size' ) ) {
+	function carousel_slider_background_size( $key_only = false ) {
+		$sizes = array(
+			'auto'      => 'auto',
+			'contain'   => 'contain', // Default
+			'cover'     => 'cover',
+			'100% 100%' => '100%',
+			'100% auto' => '100% width',
+			'auto 100%' => '100% height',
+		);
+		if ( $key_only ) {
+			return array_keys( $sizes );
+		}
+
+		return $sizes;
 	}
 }

@@ -14,6 +14,14 @@
 				if ( is_array( $content_sliders ) && count( $content_sliders ) > 0 ) {
 					foreach ( $content_sliders as $slide_num => $content_slider ) {
 						$_to_word = str_replace( array( ' ', '-' ), '_', $num_to_word->convert( $slide_num ) );
+
+						$_all_bg_position = carousel_slider_background_position();
+						$_all_bg_size     = carousel_slider_background_size();
+						$_content         = isset( $content_slider['content'] ) ? $content_slider['content'] : '';
+						$_img_id          = ! empty( $content_slider['img_id'] ) ? absint( $content_slider['img_id'] ) : 0;
+						$_img_bg_position = ! empty( $content_slider['img_bg_position'] ) ? esc_attr( $content_slider['img_bg_position'] ) : 'center center';
+						$_img_bg_size     = ! empty( $content_slider['img_bg_size'] ) ? esc_attr( $content_slider['img_bg_size'] ) : 'contain';
+						$_bg_color        = ! empty( $content_slider['bg_color'] ) ? esc_attr( $content_slider['bg_color'] ) : '#f1f1f1';
 						?>
                         <div class="accordion">
                             <div class="accordion-header">
@@ -23,7 +31,7 @@
                                 <div class="accordion-content-inside">
 									<?php
 									wp_editor(
-										$content_slider['content'],
+										$_content,
 										'carousel_slider_content_' . $_to_word,
 										array(
 											'textarea_name' => 'carousel_slider_content[' . $slide_num . '][content]',
@@ -43,39 +51,52 @@
 
                                             <div class="slide_image_settings_line">
                                                 <button class="button slide_image_add">Set Background Image</button>
-                                                <input type="hidden" name="img_id" value="0">
+                                                <input type="hidden"
+                                                       name="carousel_slider_content[<?php echo $slide_num; ?>][img_id]"
+                                                       value="<?php echo $_img_id; ?>">
                                             </div>
 
                                             <div class="slide_image_settings_line">
                                                 <span>Background Position:</span>
-                                                <select name="img_bg_position">
-                                                    <option value="left top">Top Left</option>
-                                                    <option value="center top">Top Center</option>
-                                                    <option value="right top">Top Right</option>
-                                                    <option value="left center">Center Left</option>
-                                                    <option value="center center">Center</option>
-                                                    <option value="right center">Center Right</option>
-                                                    <option value="left bottom">Bottom Left</option>
-                                                    <option value="center bottom">Bottom Center</option>
-                                                    <option value="right bottom">Bottom Right</option>
+                                                <select name="carousel_slider_content[<?php echo $slide_num; ?>][img_bg_position]">
+													<?php
+													foreach ( $_all_bg_position as $key => $label ) {
+														$selected = $key == $_img_bg_position ? 'selected' : '';
+														printf(
+															'<option value="%s" %s>%s</option>',
+															$key,
+															$selected,
+															$label
+														);
+													}
+													?>
                                                 </select>
                                             </div>
 
                                             <div class="slide_image_settings_line">
                                                 <span>Background Size:</span>
-                                                <select name="img_bg_Size">
-                                                    <option value="auto">no resize</option>
-                                                    <option value="contain" selected="">contain</option>
-                                                    <option value="cover">cover</option>
-                                                    <option value="100% 100%">100%</option>
-                                                    <option value="100% auto">100% width</option>
-                                                    <option value="auto 100%">100% height</option>
+                                                <select name="carousel_slider_content[<?php echo $slide_num; ?>][img_bg_size]">
+													<?php
+													foreach ( $_all_bg_size as $key => $label ) {
+														$selected = $key == $_img_bg_size ? 'selected' : '';
+														printf(
+															'<option value="%s" %s>%s</option>',
+															$key,
+															$selected,
+															$label
+														);
+													}
+													?>
                                                 </select>
                                             </div>
 
                                             <div class="slide_image_settings_line">
                                                 <span>Background Color:</span>
-                                                <input type="text" name="bg_color" class="colorpicker" value="#f4cccc">
+                                                <input type="text"
+                                                       name="carousel_slider_content[<?php echo $slide_num; ?>][bg_color]"
+                                                       class="color-picker"
+                                                       value="<?php echo $_bg_color; ?>"
+                                                       data-alpha="true" data-default-color="#f1f1f1">
                                             </div>
                                         </div>
 

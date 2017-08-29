@@ -58,7 +58,7 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ):
 			$std_value = isset( $args['std'] ) ? $args['std'] : '';
 
 			echo $this->field_before( $args );
-			echo sprintf( '<input type="text" class="colorpicker" value="%1$s" id="%2$s" name="%3$s" data-default-color="%4$s">', $value, $args['id'], $name, $std_value );
+			echo sprintf( '<input type="text" class="color-picker" value="%1$s" id="%2$s" name="%3$s" data-default-color="%4$s">', $value, $args['id'], $name, $std_value );
 			echo $this->field_after();
 		}
 

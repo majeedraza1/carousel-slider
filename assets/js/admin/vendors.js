@@ -42,7 +42,7 @@
     });
 
     // Initializing WP Color Picker
-    $('.colorpicker').each(function () {
+    $('.color-picker').each(function () {
         $(this).wpColorPicker({
             palettes: [
                 '#2196F3', // Blue

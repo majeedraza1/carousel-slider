@@ -39,19 +39,19 @@ if ( ! class_exists( 'Carousel_Slider_Content_Carousel' ) ):
 		private function content_slide_default() {
 			$data = array(
 				'content'          => '',
-				'bg_color'         => '',
+				'bg_color'         => 'rgba(0,0,0,0.6)',
 				'img_id'           => '',
-				'img_bg_position'  => '',
-				'img_bg_Size'      => '',
+				'img_bg_position'  => 'center center',
+				'img_bg_size'      => 'contain',
 				'link_url'         => '',
 				'link_target'      => '',
-				'popup_type'       => '', // Image, Video, HTML
+				'popup_type'       => 'image', // Image, Video, HTML
 				'popup_img_id'     => '',
 				'popup_img_title'  => '',
 				'popup_video_id'   => '',
 				'popup_video_type' => '',
 				'popup_html'       => '',
-				'popup_bg_color'   => '',
+				'popup_bg_color'   => 'rgba(0,0,0,0.6)',
 				'popup_width'      => '',
 			);
 
