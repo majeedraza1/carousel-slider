@@ -45,13 +45,7 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 			$id = intval( $attributes['id'] );
 
 			$slide_type = get_post_meta( $id, '_slide_type', true );
-			$slide_type = in_array( $slide_type, array(
-				'image-carousel',
-				'post-carousel',
-				'image-carousel-url',
-				'video-carousel',
-				'product-carousel'
-			) ) ? $slide_type : 'image-carousel';
+			$slide_type = in_array( $slide_type, carousel_slider_slide_type() ) ? $slide_type : 'image-carousel';
 
 			if ( $slide_type == 'post-carousel' ) {
 				ob_start();
@@ -96,6 +90,15 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 				ob_end_clean();
 
 				return apply_filters( 'carousel_slider_product_carousel', $html, $id );
+			}
+
+			if ( $slide_type == 'content-carousel' ) {
+				ob_start();
+				require CAROUSEL_SLIDER_TEMPLATES . '/content-carousel.php';
+				$html = ob_get_contents();
+				ob_end_clean();
+
+				return apply_filters( 'carousel_slider_content_carousel', $html, $id );
 			}
 
 			return '';
