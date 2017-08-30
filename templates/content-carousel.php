@@ -28,7 +28,7 @@ $content_sliders = get_post_meta( $id, '_content_slider', true );
 		}
 
 		echo '<div class="carousel-slider__content" style="' . $canvas_style . '">';
-		echo $slide['content'];
+		echo wpautop( $slide['content'] );
 		echo '</div>';
 	endforeach;
 	?>
