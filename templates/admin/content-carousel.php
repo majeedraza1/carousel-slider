@@ -114,7 +114,7 @@
                                                 <span><?php esc_html_e( 'Background Color:', 'carousel-slider' ); ?></span>
                                                 <input type="text"
                                                        name="carousel_slider_content[<?php echo $slide_num; ?>][bg_color]"
-                                                       class="color-picker"
+                                                       class="slide-color-picker"
                                                        value="<?php echo $_bg_color; ?>"
                                                        data-alpha="true" data-default-color="#f1f1f1">
                                             </div>

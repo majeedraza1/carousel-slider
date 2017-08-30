@@ -121,6 +121,27 @@
         slideCanvas.css('background-size', _val);
     });
 
+    // Background Color
+    $('.slide-color-picker').each(function () {
+        section = $(this).closest('.slide_bg_wrapper');
+        slideCanvas = section.find('.content_slide_canvas');
+        $(this).wpColorPicker({
+            palettes: [
+                '#2196F3', // Blue
+                '#009688', // Teal
+                '#4CAF50', // Green
+                '#F44336', // Red
+                '#FFEB3B', // Yellow
+                '#00D1B2', // Firoza
+                '#000000', // Blank
+                '#ffffff' // White
+            ],
+            change: function (event, ui) {
+                slideCanvas.css('background-color', ui.color.toString());
+            }
+        });
+    });
+
 })(jQuery);
 (function ($) {
     "use strict";
