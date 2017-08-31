@@ -1,0 +1,18 @@
+<svg style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink">
+    <symbol id="icon-trash" viewBox="0 0 20 20">
+        <path d="M12 4h3c0.55 0 1 0.45 1 1v1h-13v-1c0-0.55 0.45-1 1-1h3c0.23-1.14 1.29-2 2.5-2s2.27 0.86 2.5 2zM8 4h3c-0.21-0.58-0.85-1-1.5-1s-1.29 0.42-1.5 1zM4 7h11v10c0 0.55-0.45 1-1 1h-9c-0.55 0-1-0.45-1-1v-10zM7 16v-7h-1v7h1zM10 16v-7h-1v7h1zM13 16v-7h-1v7h1z"></path>
+    </symbol>
+    <symbol id="icon-angle-down" viewBox="0 0 20 20">
+        <path d="M5 6l5 5 5-5 2 1-7 7-7-7z"></path>
+    </symbol>
+    <symbol id="icon-angle-up" viewBox="0 0 20 20">
+        <path d="M15 14l-5-5-5 5-2-1 7-7 7 7z"></path>
+    </symbol>
+    <symbol id="icon-angle-down-alt" viewBox="0 0 20 20">
+        <path d="M9 2h2v12l4-4 2 1-7 7-7-7 2-1 4 4v-12z"></path>
+    </symbol>
+    <symbol id="icon-angle-up-alt" viewBox="0 0 20 20">
+        <path d="M11 18h-2v-12l-4 4-2-1 7-7 7 7-2 1-4-4v12z"></path>
+    </symbol>
+</svg>

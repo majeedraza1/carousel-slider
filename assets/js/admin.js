@@ -32,13 +32,108 @@
             method: 'POST',
             data: {
                 action: 'add_content_slide',
+                task: 'add-slide',
                 post_id: $(this).data('post-id')
             },
             success: function () {
-                $('form#post').submit();
+                window.location.reload(true);
             }
         });
+    });
 
+    // Delete a slide
+    body.on('click', '.carousel_slider__delete_slide', function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: ajaxurl,
+            method: 'POST',
+            data: {
+                action: 'add_content_slide',
+                task: 'delete-slide',
+                post_id: $(this).data('post-id'),
+                slide_pos: $(this).data('slide-pos')
+            },
+            success: function () {
+                window.location.reload(true);
+            }
+        });
+    });
+
+    // Move slide to top
+    body.on('click', '.carousel_slider__move_top', function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: ajaxurl,
+            method: 'POST',
+            data: {
+                action: 'add_content_slide',
+                task: 'move-slide-top',
+                post_id: $(this).data('post-id'),
+                slide_pos: $(this).data('slide-pos')
+            },
+            success: function () {
+                window.location.reload(true);
+            }
+        });
+    });
+
+    // Move slide up
+    body.on('click', '.carousel_slider__move_up', function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: ajaxurl,
+            method: 'POST',
+            data: {
+                action: 'add_content_slide',
+                task: 'move-slide-up',
+                post_id: $(this).data('post-id'),
+                slide_pos: $(this).data('slide-pos')
+            },
+            success: function () {
+                window.location.reload(true);
+            }
+        });
+    });
+
+    // Move slide down
+    body.on('click', '.carousel_slider__move_down', function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: ajaxurl,
+            method: 'POST',
+            data: {
+                action: 'add_content_slide',
+                task: 'move-slide-down',
+                post_id: $(this).data('post-id'),
+                slide_pos: $(this).data('slide-pos')
+            },
+            success: function () {
+                window.location.reload(true);
+            }
+        });
+    });
+
+    // Move slide to bottom
+    body.on('click', '.carousel_slider__move_bottom', function (e) {
+        e.preventDefault();
+
+        $.ajax({
+            url: ajaxurl,
+            method: 'POST',
+            data: {
+                action: 'add_content_slide',
+                task: 'move-slide-bottom',
+                post_id: $(this).data('post-id'),
+                slide_pos: $(this).data('slide-pos')
+            },
+            success: function () {
+                window.location.reload(true);
+            }
+        });
     });
 
     // Add slide image
