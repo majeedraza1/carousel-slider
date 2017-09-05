@@ -37,12 +37,13 @@
 							$canvas_style .= 'background-image: url(' . $_img_src[0] . ')';
 						}
 						?>
-                        <div class="accordion">
-                            <div class="accordion-header">
+                        <div class="shapla-toggle shapla-toggle--normal" data-id="closed">
+                            <div class="shapla-toggle-title">
 								<?php printf( '%s %s', esc_html__( 'Slide', 'carousel-slider' ), $slide_num + 1 ); ?>
                             </div>
-                            <div class="accordion-content">
-                                <div class="accordion-content-inside">
+                            <div class="shapla-toggle-inner">
+                                <div class="shapla-toggle-content">
+
                                     <div class="carousel_slider__slide_actions">
 
                                         <button class="button carousel_slider__delete_slide"
@@ -103,85 +104,99 @@
 
                                     </div>
                                     <div class="clear" style="width: 100%; margin-bottom: 1rem; height: 1px;"></div>
-									<?php
-									wp_editor(
-										$_content,
-										'carousel_slider_content_' . $_to_word,
-										array(
-											'textarea_name' => 'carousel_slider_content[' . $slide_num . '][content]',
-											'textarea_rows' => 7,
-										)
-									);
-									?>
-                                    <div class="slide_bg_wrapper">
-                                        <div class="slide-media-left">
-                                            <div class="slide_thumb">
-                                                <div class="content_slide_canvas"
-                                                     style="<?php echo $canvas_style; ?>"></div>
-                                                <span class="delete-bg-img<?php echo ! $_have_img ? ' hidden' : ''; ?>"
-                                                      title="<?php esc_html_e( 'Delete the background image for this slide', 'carousel-slider' ); ?>">&times;</span>
+
+                                    <div class="shapla-section shapla-tabs shapla-tabs--stroke">
+                                        <div class="shapla-tab-inner">
+                                            <ul class="shapla-nav shapla-clearfix">
+                                                <li><a href="#carousel-slider-tab-content">Content</a></li>
+                                                <li><a href="#carousel-slider-tab-background">Background</a></li>
+                                            </ul>
+                                            <div id="carousel-slider-tab-content" class="shapla-tab">
+												<?php
+												wp_editor(
+													$_content,
+													'carousel_slider_content_' . $_to_word,
+													array(
+														'textarea_name' => 'carousel_slider_content[' . $slide_num . '][content]',
+														'textarea_rows' => 10,
+													)
+												);
+												?>
+                                            </div>
+                                            <div id="carousel-slider-tab-background" class="shapla-tab tab-background">
+                                                <div class="slide_bg_wrapper">
+                                                    <div class="slide-media-left">
+                                                        <div class="slide_thumb">
+                                                            <div class="content_slide_canvas"
+                                                                 style="<?php echo $canvas_style; ?>"></div>
+                                                            <span class="delete-bg-img<?php echo ! $_have_img ? ' hidden' : ''; ?>"
+                                                                  title="<?php esc_html_e( 'Delete the background image for this slide', 'carousel-slider' ); ?>">&times;</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="slide-media-right">
+
+                                                        <div class="slide_image_settings_line">
+                                                            <a href="<?php echo esc_url( $upload_link ); ?>"
+                                                               data-title="<?php esc_html_e( 'Select or Upload Slide Background Image', 'carousel-slider' ); ?>"
+                                                               data-button-text="<?php esc_html_e( 'Set Background Image', 'carousel-slider' ); ?>"
+                                                               class="button slide_image_add"><?php esc_html_e( 'Set Background Image', 'carousel-slider' ); ?></a>
+                                                            <input type="hidden"
+                                                                   class="background_image_id"
+                                                                   name="carousel_slider_content[<?php echo $slide_num; ?>][img_id]"
+                                                                   value="<?php echo $_img_id; ?>">
+                                                        </div>
+
+                                                        <div class="slide_image_settings_line">
+                                                            <span><?php esc_html_e( 'Background Position:', 'carousel-slider' ); ?></span>
+                                                            <select class="background_image_position"
+                                                                    name="carousel_slider_content[<?php echo $slide_num; ?>][img_bg_position]">
+																<?php
+																foreach ( $_all_bg_position as $key => $label ) {
+																	$selected = $key == $_img_bg_position ? 'selected' : '';
+																	printf(
+																		'<option value="%s" %s>%s</option>',
+																		$key,
+																		$selected,
+																		$label
+																	);
+																}
+																?>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="slide_image_settings_line">
+                                                            <span><?php esc_html_e( 'Background Size:', 'carousel-slider' ); ?></span>
+                                                            <select class="background_image_size"
+                                                                    name="carousel_slider_content[<?php echo $slide_num; ?>][img_bg_size]">
+																<?php
+																foreach ( $_all_bg_size as $key => $label ) {
+																	$selected = $key == $_img_bg_size ? 'selected' : '';
+																	printf(
+																		'<option value="%s" %s>%s</option>',
+																		$key,
+																		$selected,
+																		$label
+																	);
+																}
+																?>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="slide_image_settings_line">
+                                                            <span><?php esc_html_e( 'Background Color:', 'carousel-slider' ); ?></span>
+                                                            <input type="text"
+                                                                   name="carousel_slider_content[<?php echo $slide_num; ?>][bg_color]"
+                                                                   class="slide-color-picker"
+                                                                   value="<?php echo $_bg_color; ?>"
+                                                                   data-alpha="true" data-default-color="#f1f1f1">
+                                                        </div>
+                                                    </div>
+
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="slide-media-right">
-
-                                            <div class="slide_image_settings_line">
-                                                <a href="<?php echo esc_url( $upload_link ); ?>"
-                                                   data-title="<?php esc_html_e( 'Select or Upload Slide Background Image', 'carousel-slider' ); ?>"
-                                                   data-button-text="<?php esc_html_e( 'Set Background Image', 'carousel-slider' ); ?>"
-                                                   class="button slide_image_add"><?php esc_html_e( 'Set Background Image', 'carousel-slider' ); ?></a>
-                                                <input type="hidden"
-                                                       class="background_image_id"
-                                                       name="carousel_slider_content[<?php echo $slide_num; ?>][img_id]"
-                                                       value="<?php echo $_img_id; ?>">
-                                            </div>
-
-                                            <div class="slide_image_settings_line">
-                                                <span><?php esc_html_e( 'Background Position:', 'carousel-slider' ); ?></span>
-                                                <select class="background_image_position"
-                                                        name="carousel_slider_content[<?php echo $slide_num; ?>][img_bg_position]">
-													<?php
-													foreach ( $_all_bg_position as $key => $label ) {
-														$selected = $key == $_img_bg_position ? 'selected' : '';
-														printf(
-															'<option value="%s" %s>%s</option>',
-															$key,
-															$selected,
-															$label
-														);
-													}
-													?>
-                                                </select>
-                                            </div>
-
-                                            <div class="slide_image_settings_line">
-                                                <span><?php esc_html_e( 'Background Size:', 'carousel-slider' ); ?></span>
-                                                <select class="background_image_size"
-                                                        name="carousel_slider_content[<?php echo $slide_num; ?>][img_bg_size]">
-													<?php
-													foreach ( $_all_bg_size as $key => $label ) {
-														$selected = $key == $_img_bg_size ? 'selected' : '';
-														printf(
-															'<option value="%s" %s>%s</option>',
-															$key,
-															$selected,
-															$label
-														);
-													}
-													?>
-                                                </select>
-                                            </div>
-
-                                            <div class="slide_image_settings_line">
-                                                <span><?php esc_html_e( 'Background Color:', 'carousel-slider' ); ?></span>
-                                                <input type="text"
-                                                       name="carousel_slider_content[<?php echo $slide_num; ?>][bg_color]"
-                                                       class="slide-color-picker"
-                                                       value="<?php echo $_bg_color; ?>"
-                                                       data-alpha="true" data-default-color="#f1f1f1">
-                                            </div>
-                                        </div>
-
                                     </div>
+
                                     <div class="clear"></div>
                                 </div>
                             </div>

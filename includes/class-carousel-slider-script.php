@@ -108,6 +108,7 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ):
 							'jquery-ui-accordion',
 							'jquery-ui-datepicker',
 							'jquery-ui-sortable',
+							'jquery-ui-tabs',
 							'tip-tip',
 							'select2'
 						),

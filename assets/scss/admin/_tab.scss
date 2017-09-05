@@ -1,0 +1,79 @@
+/* Tabs */
+$accent: #323232;
+
+.shapla-nav {
+	list-style: none !important;
+	margin: 0;
+	padding: 0;
+
+	&:before,
+	&:after {
+		display: table;
+		content: ' ';
+	}
+
+	&:after {
+		clear: both;
+	}
+
+	li {
+		float: left;
+		position: relative;
+		margin: 0 1px -1px 0 !important;
+		z-index: 1;
+		outline: 0;
+	}
+	a {
+		text-decoration: none;
+		display: block;
+		padding: 15px 10px;
+		line-height: 1;
+		outline: 0;
+	}
+}
+
+.shapla-tab {
+	margin: 0 0 2em 0;
+	padding: 21px 20px 20px 20px;
+
+	p:first-of-type {
+		margin-top: 0;
+	}
+	p:last-of-type {
+		margin-bottom: 0;
+	}
+}
+
+.shapla-tabs--normal {
+	.shapla-nav {
+		a {
+			background: $accent;
+			color: #fff;
+		}
+		.ui-tabs-active a {
+			background: #f1f1f1;
+			color: $accent;
+			outline: 0;
+		}
+	}
+	.shapla-tab {
+		background: #f1f1f1;
+	}
+}
+
+.shapla-tabs--stroke {
+	.shapla-nav li {
+		margin: 0 -1px 0 0 !important;
+	}
+	.shapla-nav a {
+		border: 1px solid $accent;
+		color: $accent;
+	}
+	.shapla-nav .ui-tabs-active a {
+		border-bottom-color: white;
+	}
+	.shapla-tab {
+		border: 1px solid $accent;
+		margin-top: -1px;
+	}
+}
