@@ -5,13 +5,73 @@
     Video Format
     Video Max Height
     
-    Destination URL
-    Link Target
+    Slide Background
+        Enable Background Overlay
+        Background Overlay Color
+        
+    Slide Content
+        Title
+        Description
+        Button Text
+        Button URL
+        Link Target
+        Apply Link On
+            Whole Site
+            Button Only
     
-    Action Buttons:
-        Delete Slide
-        Move Up
-        Move Down
-        Move to Top
-        Move to Bottom
+    Slide Style
+        Horizontal Position
+            Left, Center, Right
+        Vertical Position
+            Top, Middle, Bottom
+        Text Align
+            Left, Center, Right
+        Content Color
     
+    Global Content Slider Style
+        Slide Height (px,em,vh)
+        Slides
+            Content Width
+            Padding
+            Horizontal Position
+                Left, Center, Right
+            Vertical Position
+                Top, Middle, Bottom
+            Text Align
+                Left, Center, Right
+        Title
+            Spacing/Gutter
+            Text Color
+            Size
+            Font Family
+            Font Weight
+            Transform
+            Style
+            Line Height
+            Letter spacing
+        Description
+            Same as Title
+        Button
+            Size
+            Border Width
+            Border Radius
+            Color
+                Text, Background, Border
+            Color : Hover
+                Text, Background, Border
+        
+        Navigation
+            Arrows
+                Arrows Position
+                    Inside, Outside
+                Arrows Size
+                Arrows Color
+                Arrows Visibility
+                    Always, Hover on Slide
+            Dots
+                Dots Position
+                    Inside, Outside
+                Dots Size
+                Dots Color
+                Dots Visibility
+                    Always, Hover on Slide
