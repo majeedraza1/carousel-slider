@@ -83,51 +83,144 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
 		}
 
 		public function navigation_settings_callback( $post ) {
-			$_nav_button       = get_post_meta( $post->ID, '_nav_button', true );
-			$_nav_button       = in_array( $_nav_button, array( 'on', 'off' ) ) ? $_nav_button : 'on';
-			$_dot_nav          = get_post_meta( $post->ID, '_dot_nav', true );
-			$_dot_nav          = in_array( $_dot_nav, array( 'on', 'off' ) ) ? $_dot_nav : 'off';
-			$_nav_color        = get_post_meta( $post->ID, '_nav_color', true );
-			$_nav_color        = empty( $_nav_color ) ? '#f1f1f1' : $_nav_color;
+			$_nav_button = get_post_meta( $post->ID, '_nav_button', true );
+			$_nav_button = in_array( $_nav_button, array( 'on', 'off', 'always' ) ) ? $_nav_button : 'on';
+
+			$_dot_nav = get_post_meta( $post->ID, '_dot_nav', true );
+			$_dot_nav = in_array( $_dot_nav, array( 'on', 'off' ) ) ? $_dot_nav : 'off';
+
+			$_slide_by = get_post_meta( $post->ID, '_slide_by', true );
+			$_slide_by = empty( $_slide_by ) ? 1 : $_slide_by;
+
+			$_nav_color = get_post_meta( $post->ID, '_nav_color', true );
+			$_nav_color = empty( $_nav_color ) ? '#f1f1f1' : $_nav_color;
+
 			$_nav_active_color = get_post_meta( $post->ID, '_nav_active_color', true );
 			$_nav_active_color = empty( $_nav_active_color ) ? '#00d1b2' : $_nav_active_color;
 			?>
             <p>
                 <label for="_nav_button">
-                    <input type="hidden" name="carousel_slider[_nav_button]" value="off">
-                    <input type="checkbox" value="on" id="_nav_button" name="carousel_slider[_nav_button]"
-						<?php checked( $_nav_button, 'on' ); ?>>
-					<?php esc_html_e( 'Enable next/prev navigation icons', 'carousel-slider' ); ?>
+                    <strong><?php esc_html_e( 'Show Arrow Nav', 'carousel-slider' ); ?></strong>
                 </label>
-            </p>
+                <select name="carousel_slider[_nav_button]" id="_nav_button" class="small-text">
+                    <option value="off" <?php selected( $_nav_button, 'off' ); ?>><?php esc_html_e( 'Never', 'carousel-slider' ); ?></option>
+                    <option value="on" <?php selected( $_nav_button, 'on' ); ?>><?php esc_html_e( 'Mouse Over', 'carousel-slider' ); ?></option>
+                    <option value="always" <?php selected( $_nav_button, 'always' ); ?>
+                            disabled><?php esc_html_e( 'Always', 'carousel-slider' ); ?></option>
+                </select>
+                <span class="cs-tooltip"
+                      title="<?php esc_html_e( 'Choose when to show arrow navigator.', 'carousel-slider' ); ?>"></span>
+            </p><!-- Show Arrow Nav -->
+            <p>
+                <label for="_slide_by">
+                    <strong><?php esc_html_e( 'Arrow Steps', 'carousel-slider' ); ?></strong>
+                </label>
+                <input class="small-text" id="_slide_by" name="carousel_slider[_slide_by]" type="text"
+                       value="<?php echo esc_attr( $_slide_by ); ?>">
+                <span class="cs-tooltip"
+                      title="<?php esc_html_e( 'Steps to go for each navigation request. Write "page" with inverted comma to slide by page.', 'carousel-slider' ); ?>"></span>
+            </p><!-- Arrow Steps -->
+            <p>
+                <label for="_arrow_position">
+                    <strong><?php esc_html_e( 'Arrow Position', 'carousel-slider' ); ?></strong>
+                </label>
+                <select name="carousel_slider[_arrow_position]" id="_arrow_position" class="small-text" disabled>
+                    <option value="Outside"><?php esc_html_e( 'Outside', 'carousel-slider' ); ?></option>
+                    <option value="Inside"><?php esc_html_e( 'Inside', 'carousel-slider' ); ?></option>
+                </select>
+                <span class="cs-tooltip"
+                      title="<?php esc_html_e( 'Choose where to show arrow. Inside slider or outside slider.', 'carousel-slider' ); ?>"></span>
+            </p><!-- Arrow Position -->
+            <p>
+                <label for="_arrow_size">
+                    <strong><?php esc_html_e( 'Arrow Size', 'carousel-slider' ); ?></strong>
+                </label>
+                <input class="small-text" id="_arrow_size" name="carousel_slider[_arrow_size]" type="number" disabled
+                       value="48">
+                <span class="cs-tooltip"
+                      title="<?php esc_html_e( 'Enter arrow size in pixels.', 'carousel-slider' ); ?>"></span>
+            </p><!-- Arrow Size -->
+
+            <hr>
             <p>
                 <label for="_dot_nav">
-                    <input type="hidden" name="carousel_slider[_dot_nav]" value="off">
-                    <input type="checkbox" value="on" name="carousel_slider[_dot_nav]" id="_dot_nav"
-						<?php checked( $_dot_nav, 'on' ); ?>>
-					<?php esc_html_e( 'Enable dots navigation', 'carousel-slider' ); ?>
+                    <strong><?php esc_html_e( 'Show Bullet Nav', 'carousel-slider' ); ?></strong>
                 </label>
-            </p>
+                <select name="carousel_slider[_dot_nav]" id="_dot_nav" class="small-text">
+                    <option value="off" <?php selected( $_dot_nav, 'off' ); ?>><?php esc_html_e( 'Never', 'carousel-slider' ); ?></option>
+                    <option value="on" <?php selected( $_dot_nav, 'on' ); ?>><?php esc_html_e( 'Always', 'carousel-slider' ); ?></option>
+                    <option value="hover" <?php selected( $_nav_button, 'hover' ); ?>
+                            disabled><?php esc_html_e( 'Mouse Over', 'carousel-slider' ); ?></option>
+                </select>
+                <span class="cs-tooltip"
+                      title="<?php esc_html_e( 'Choose when to show bullet navigator.', 'carousel-slider' ); ?>"></span>
+            </p><!-- Show Bullet Nav -->
+            <p>
+                <label for="_bullet_position">
+                    <strong><?php esc_html_e( 'Bullet Position', 'carousel-slider' ); ?></strong>
+                </label>
+                <select name="carousel_slider[_bullet_position]" id="_bullet_position" class="small-text" disabled>
+                    <option value="left"><?php esc_html_e( 'Left', 'carousel-slider' ); ?></option>
+                    <option value="center"><?php esc_html_e( 'Center', 'carousel-slider' ); ?></option>
+                    <option value="right"><?php esc_html_e( 'Right', 'carousel-slider' ); ?></option>
+                </select>
+                <span class="cs-tooltip"
+                      title="<?php esc_html_e( 'Choose where to show bullets.', 'carousel-slider' ); ?>"></span>
+            </p><!-- Arrow Position -->
+            <p>
+                <label for="_bullet_size">
+                    <strong><?php esc_html_e( 'Bullet Size', 'carousel-slider' ); ?></strong>
+                </label>
+                <input class="small-text" id="_bullet_size" name="carousel_slider[_bullet_size]" type="number" disabled
+                       value="10">
+                <span class="cs-tooltip"
+                      title="<?php esc_html_e( 'Enter bullet size in pixels.', 'carousel-slider' ); ?>"></span>
+            </p><!-- Arrow Size -->
+
+            <hr>
+            <p>
+                <label for="_arrow_background_color">
+                    <strong><?php esc_html_e( 'Arrows Background Color', 'carousel-slider' ); ?></strong>
+                </label>
+                <span class="cs-tooltip"
+                      title="<?php esc_html_e( 'Pick a color for arrows.', 'carousel-slider' ); ?>"></span>
+                <br>
+                <input type="text" class="color-picker" value="" id="_arrow_background_color" disabled
+                       name="carousel_slider[_arrow_background_color]" data-alpha="true"
+                       data-default-color="rgba(0,0,0,0.01)">
+            </p><!-- Arrows Background Color -->
+            <p>
+                <label for="_arrow_background_hover_color">
+                    <strong><?php esc_html_e( 'Arrows Background Hover Color', 'carousel-slider' ); ?></strong>
+                </label>
+                <span class="cs-tooltip"
+                      title="<?php esc_html_e( 'Pick a color for arrows for active and hover effect.', 'carousel-slider' ); ?>"></span>
+                <br>
+                <input type="text" class="color-picker" value="" id="_arrow_background_hover_color" disabled
+                       name="carousel_slider[_arrow_background_hover_color]" data-alpha="true"
+                       data-default-color="rgba(0,0,0,0.01)">
+            </p><!-- Arrows Background Color -->
             <p>
                 <label for="_nav_color">
-                    <strong><?php esc_html_e( 'Navigation & Dots Color', 'carousel-slider' ); ?></strong>
+                    <strong><?php esc_html_e( 'Arrows & Dots Color', 'carousel-slider' ); ?></strong>
                 </label>
                 <span class="cs-tooltip"
                       title="<?php esc_html_e( 'Pick a color for navigation and dots.', 'carousel-slider' ); ?>"></span>
                 <br>
                 <input type="text" class="color-picker" value="<?php echo $_nav_color; ?>" id="_nav_color"
                        name="carousel_slider[_nav_color]" data-default-color="#f1f1f1">
-            </p>
+            </p><!-- Arrows & Dots Color -->
+
             <p>
                 <label for="_nav_active_color">
-                    <strong><?php esc_html_e( 'Navigation & Dots Hover Color', 'carousel-slider' ); ?></strong>
+                    <strong><?php esc_html_e( 'Arrows & Dots Hover Color', 'carousel-slider' ); ?></strong>
                 </label>
                 <span class="cs-tooltip"
                       title="<?php esc_html_e( 'Pick a color for navigation and dots for active and hover effect.', 'carousel-slider' ); ?>"></span>
                 <br>
                 <input type="text" class="color-picker" value="<?php echo $_nav_active_color; ?>" id="_nav_active_color"
                        name="carousel_slider[_nav_active_color]" data-default-color="#00d1b2">
-            </p>
+            </p><!-- Arrows & Dots Hover Color -->
 			<?php
 		}
 

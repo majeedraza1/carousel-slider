@@ -9,7 +9,7 @@ $content_sliders = get_post_meta( $id, '_content_slider', true );
 ?>
 <div <?php echo join( " ", $this->carousel_options( $id ) ); ?>>
 	<?php
-	foreach ( $content_sliders as $slide ):
+	foreach ( $content_sliders as $slide_id => $slide ):
 
 		$_img_bg_position = ! empty( $slide['img_bg_position'] ) ? esc_attr( $slide['img_bg_position'] ) : 'center center';
 		$_img_bg_size     = ! empty( $slide['img_bg_size'] ) ? esc_attr( $slide['img_bg_size'] ) : 'contain';
@@ -27,7 +27,7 @@ $content_sliders = get_post_meta( $id, '_content_slider', true );
 			$canvas_style .= 'background-image: url(' . $_img_src[0] . ')';
 		}
 
-		echo '<div class="carousel-slider__content" style="' . $canvas_style . '">';
+		echo '<div id="carousel-slider-item-' . $id . '-' . $slide_id . '" class="carousel-slider__content" style="' . $canvas_style . '">';
 		echo wpautop( $slide['content'] );
 		echo '</div>';
 	endforeach;

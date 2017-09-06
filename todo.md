@@ -1,10 +1,4 @@
 #Content Slider
-    Background Video
-        From Media
-        From Youtube
-    Video Format
-    Video Max Height
-    
     Slide Background
         Enable Background Overlay
         Background Overlay Color
@@ -59,19 +53,3 @@
                 Text, Background, Border
             Color : Hover
                 Text, Background, Border
-        
-        Navigation
-            Arrows
-                Arrows Position
-                    Inside, Outside
-                Arrows Size
-                Arrows Color
-                Arrows Visibility
-                    Always, Hover on Slide
-            Dots
-                Dots Position
-                    Inside, Outside
-                Dots Size
-                Dots Color
-                Dots Visibility
-                    Always, Hover on Slide

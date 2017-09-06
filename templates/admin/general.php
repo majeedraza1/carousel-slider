@@ -20,12 +20,6 @@
 				'desc'  => esc_html__( 'Check to enable image lazy load.', 'carousel-slider' ),
 				'std'   => 'off'
 			) );
-			$this->form->text( array(
-				'id'   => '_slide_by',
-				'name' => esc_html__( 'Slide By', 'carousel-slider' ),
-				'desc' => esc_html__( 'Navigation slide by x number. Write "page" with inverted comma to slide by page. Default value is 1.', 'carousel-slider' ),
-				'std'  => 1
-			) );
 			$this->form->number( array(
 				'id'   => '_margin_right',
 				'name' => esc_html__( 'Margin Right(px) on item.', 'carousel-slider' ),

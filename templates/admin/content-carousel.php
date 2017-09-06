@@ -108,8 +108,12 @@
                                     <div class="shapla-section shapla-tabs shapla-tabs--stroke">
                                         <div class="shapla-tab-inner">
                                             <ul class="shapla-nav shapla-clearfix">
-                                                <li><a href="#carousel-slider-tab-content">Content</a></li>
-                                                <li><a href="#carousel-slider-tab-background">Background</a></li>
+                                                <li>
+                                                    <a href="#carousel-slider-tab-content"><?php esc_html_e( 'Slide Content', 'carousel-slider' ); ?></a>
+                                                </li>
+                                                <li>
+                                                    <a href="#carousel-slider-tab-background"><?php esc_html_e( 'Slide Background', 'carousel-slider' ); ?></a>
+                                                </li>
                                             </ul>
                                             <div id="carousel-slider-tab-content" class="shapla-tab">
 												<?php
