@@ -125,6 +125,14 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ):
 		public function inline_script() {
 			if ( $this->should_load_scripts() ):
 				?>
+                <svg width="1" height="1">
+                    <symbol id="icon-arrow-left" viewBox="0 0 20 20">
+                        <path d="M14 5l-5 5 5 5-1 2-7-7 7-7z"></path>
+                    </symbol>
+                    <symbol id="icon-arrow-right" viewBox="0 0 20 20">
+                        <path d="M6 15l5-5-5-5 1-2 7 7-7 7z"></path>
+                    </symbol>
+                </svg>
                 <script type="text/javascript">
                     jQuery(document).ready(function ($) {
 
@@ -167,7 +175,10 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ):
                                     videoWidth: videoWidth,
                                     videoHeight: videoHeight,
                                     autoWidth: autoWidth,
-                                    navText: [_this.data('nav-previous-icon'), _this.data('nav-next-icon')],
+                                    navText: [
+                                        '<svg class="carousel-slider-nav-icon" width="48" height="48"><use xlink:href="#icon-arrow-left"></use></svg>',
+                                        '<svg class="carousel-slider-nav-icon" width="48" height="48"><use xlink:href="#icon-arrow-right"></use></svg>'
+                                    ],
                                     responsive: {
                                         320: {items: _this.data('colums-mobile')},
                                         600: {items: _this.data('colums-small-tablet')},

@@ -114,10 +114,32 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 		private function carousel_options( $id ) {
 			$_nav_color        = get_post_meta( $id, '_nav_color', true );
 			$_nav_active_color = get_post_meta( $id, '_nav_active_color', true );
+			$_nav_button       = get_post_meta( $id, '_nav_button', true );
+			$_arrow_position   = get_post_meta( $id, '_arrow_position', true );
+
+			$class = 'owl-carousel carousel-slider';
+
+			$class .= ' dots-outside';
+			$class .= ' dots-visible-always';
+
+
+			if ( $_arrow_position == 'inside' ) {
+				$class .= ' arrows-inside';
+			}else{
+				$class .= ' arrows-outside';
+			}
+
+			if ( $_nav_button == 'always' ) {
+				$class .= ' arrows-visible-always';
+			} elseif ( $_nav_button == 'off' ) {
+				$class .= ' arrows-hidden';
+			} else {
+				$class .= ' arrows-visible-hover';
+			}
 
 			$options_array = array(
 				'id'                        => 'id-' . $id,
-				'class'                     => 'owl-carousel carousel-slider',
+				'class'                     => $class,
 				// General
 				'data-slide-type'           => $this->get_meta( $id, '_slide_type', 'image-carousel' ),
 				'data-margin'               => $this->get_meta( $id, '_margin_right', '10' ),
@@ -127,8 +149,6 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 				// Navigation
 				'data-dots'                 => $this->get_meta( $id, '_dot_nav', 'false' ),
 				'data-nav'                  => $this->get_meta( $id, '_nav_button', 'false' ),
-				'data-nav-previous-icon'    => $this->nav_previous_icon(),
-				'data-nav-next-icon'        => $this->nav_next_icon(),
 				// Video
 				'data-video-width'          => $this->get_meta( $id, '_video_width', 'false' ),
 				'data-video-height'         => $this->get_meta( $id, '_video_height', 'false' ),
@@ -207,24 +227,6 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 			}
 
 			return;
-		}
-
-		/**
-		 * Previous navigation icon
-		 *
-		 * @return string
-		 */
-		public function nav_previous_icon() {
-			return '<svg class="carousel-slider-nav-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="48" viewBox="0 0 11 28"><path d="M9.8 8.5c0 0.1-0.1 0.3-0.2 0.4l-6.1 6.1 6.1 6.1c0.1 0.1 0.2 0.2 0.2 0.4s-0.1 0.3-0.2 0.4l-0.8 0.8c-0.1 0.1-0.2 0.2-0.4 0.2s-0.3-0.1-0.4-0.2l-7.3-7.3c-0.1-0.1-0.2-0.2-0.2-0.4s0.1-0.3 0.2-0.4l7.3-7.3c0.1-0.1 0.2-0.2 0.4-0.2s0.3 0.1 0.4 0.2l0.8 0.8c0.1 0.1 0.2 0.2 0.2 0.4z"/></svg>';
-		}
-
-		/**
-		 * Next navigation icon
-		 *
-		 * @return string
-		 */
-		public function nav_next_icon() {
-			return '<svg class="carousel-slider-nav-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="48" viewBox="0 0 9 28"><path d="M9.3 15c0 0.1-0.1 0.3-0.2 0.4l-7.3 7.3c-0.1 0.1-0.2 0.2-0.4 0.2s-0.3-0.1-0.4-0.2l-0.8-0.8c-0.1-0.1-0.2-0.2-0.2-0.4 0-0.1 0.1-0.3 0.2-0.4l6.1-6.1-6.1-6.1c-0.1-0.1-0.2-0.2-0.2-0.4s0.1-0.3 0.2-0.4l0.8-0.8c0.1-0.1 0.2-0.2 0.4-0.2s0.3 0.1 0.4 0.2l7.3 7.3c0.1 0.1 0.2 0.2 0.2 0.4z"/></svg>';
 		}
 
 	}

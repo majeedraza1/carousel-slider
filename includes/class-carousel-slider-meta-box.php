@@ -97,6 +97,9 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
 
 			$_nav_active_color = get_post_meta( $post->ID, '_nav_active_color', true );
 			$_nav_active_color = empty( $_nav_active_color ) ? '#00d1b2' : $_nav_active_color;
+
+			$_arrow_position = get_post_meta( $post->ID, '_arrow_position', true );
+			$_arrow_position = empty( $_arrow_position ) ? 'outside' : $_arrow_position;
 			?>
             <p>
                 <label for="_nav_button">
@@ -105,8 +108,7 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
                 <select name="carousel_slider[_nav_button]" id="_nav_button" class="small-text">
                     <option value="off" <?php selected( $_nav_button, 'off' ); ?>><?php esc_html_e( 'Never', 'carousel-slider' ); ?></option>
                     <option value="on" <?php selected( $_nav_button, 'on' ); ?>><?php esc_html_e( 'Mouse Over', 'carousel-slider' ); ?></option>
-                    <option value="always" <?php selected( $_nav_button, 'always' ); ?>
-                            disabled><?php esc_html_e( 'Always', 'carousel-slider' ); ?></option>
+                    <option value="always" <?php selected( $_nav_button, 'always' ); ?>><?php esc_html_e( 'Always', 'carousel-slider' ); ?></option>
                 </select>
                 <span class="cs-tooltip"
                       title="<?php esc_html_e( 'Choose when to show arrow navigator.', 'carousel-slider' ); ?>"></span>
@@ -124,9 +126,9 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
                 <label for="_arrow_position">
                     <strong><?php esc_html_e( 'Arrow Position', 'carousel-slider' ); ?></strong>
                 </label>
-                <select name="carousel_slider[_arrow_position]" id="_arrow_position" class="small-text" disabled>
-                    <option value="Outside"><?php esc_html_e( 'Outside', 'carousel-slider' ); ?></option>
-                    <option value="Inside"><?php esc_html_e( 'Inside', 'carousel-slider' ); ?></option>
+                <select name="carousel_slider[_arrow_position]" id="_arrow_position" class="small-text">
+                    <option value="outside" <?php selected( $_arrow_position, 'outside' ); ?>><?php esc_html_e( 'Outside', 'carousel-slider' ); ?></option>
+                    <option value="inside" <?php selected( $_arrow_position, 'inside' ); ?>><?php esc_html_e( 'Inside', 'carousel-slider' ); ?></option>
                 </select>
                 <span class="cs-tooltip"
                       title="<?php esc_html_e( 'Choose where to show arrow. Inside slider or outside slider.', 'carousel-slider' ); ?>"></span>

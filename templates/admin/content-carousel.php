@@ -23,7 +23,7 @@
 						$_content         = isset( $content_slider['content'] ) ? $content_slider['content'] : '';
 						$_img_bg_position = ! empty( $content_slider['img_bg_position'] ) ? esc_attr( $content_slider['img_bg_position'] ) : 'center center';
 						$_img_bg_size     = ! empty( $content_slider['img_bg_size'] ) ? esc_attr( $content_slider['img_bg_size'] ) : 'contain';
-						$_bg_color        = ! empty( $content_slider['bg_color'] ) ? esc_attr( $content_slider['bg_color'] ) : '#f1f1f1';
+						$_bg_color        = ! empty( $content_slider['bg_color'] ) ? esc_attr( $content_slider['bg_color'] ) : '';
 						$_img_id          = ! empty( $content_slider['img_id'] ) ? absint( $content_slider['img_id'] ) : 0;
 						$_img_src         = wp_get_attachment_image_src( $_img_id, 'full' );
 						$_have_img        = is_array( $_img_src );
@@ -192,7 +192,8 @@
                                                                    name="carousel_slider_content[<?php echo $slide_num; ?>][bg_color]"
                                                                    class="slide-color-picker"
                                                                    value="<?php echo $_bg_color; ?>"
-                                                                   data-alpha="true" data-default-color="#f1f1f1">
+                                                                   data-alpha="true"
+                                                                   data-default-color="rgba(255,255,255,0.5)">
                                                         </div>
                                                     </div>
 

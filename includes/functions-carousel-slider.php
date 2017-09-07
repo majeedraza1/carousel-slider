@@ -41,7 +41,7 @@ if ( ! function_exists( 'carousel_slider_sanitize_color' ) ) {
 
 		// If this is rgb, validate and return it
 		if ( 'rgb(' === substr( $color, 0, 4 ) ) {
-			sscanf( $color, 'rgb(%d,%d,%d)', $red, $green, $blue );
+			list( $red, $green, $blue ) = sscanf( $color, 'rgb(%d,%d,%d)' );
 
 			if ( ( $red >= 0 && $red <= 255 ) &&
 			     ( $green >= 0 && $green <= 255 ) &&
@@ -53,7 +53,7 @@ if ( ! function_exists( 'carousel_slider_sanitize_color' ) ) {
 
 		// If this is rgba, validate and return it
 		if ( 'rgba(' === substr( $color, 0, 5 ) ) {
-			sscanf( $color, 'rgba(%d,%d,%d,%f)', $red, $green, $blue, $alpha );
+			list( $red, $green, $blue, $alpha ) = sscanf( $color, 'rgba(%d,%d,%d,%f)' );
 
 			if ( ( $red >= 0 && $red <= 255 ) &&
 			     ( $green >= 0 && $green <= 255 ) &&
@@ -401,15 +401,10 @@ if ( ! function_exists( 'carousel_slider_inline_style' ) ) {
 		$_product_title_color    = get_post_meta( $id, '_product_title_color', true );
 		$_product_btn_bg_color   = get_post_meta( $id, '_product_button_bg_color', true );
 		$_product_btn_text_color = get_post_meta( $id, '_product_button_text_color', true );
+		$content_sliders         = get_post_meta( $id, '_content_slider', true );
 
 		$slide_type = get_post_meta( $id, '_slide_type', true );
-		$slide_type = in_array( $slide_type, array(
-			'image-carousel',
-			'post-carousel',
-			'image-carousel-url',
-			'video-carousel',
-			'product-carousel'
-		) ) ? $slide_type : 'image-carousel';
+		$slide_type = in_array( $slide_type, carousel_slider_slide_type() ) ? $slide_type : 'image-carousel';
 
 		?>
         <style>
@@ -480,6 +475,11 @@ if ( ! function_exists( 'carousel_slider_slide_type' ) ) {
 }
 
 if ( ! function_exists( 'carousel_slider_background_position' ) ) {
+	/**
+	 * @param bool $key_only
+	 *
+	 * @return array
+	 */
 	function carousel_slider_background_position( $key_only = false ) {
 		$positions = array(
 			'left top'      => 'left top',
@@ -501,6 +501,11 @@ if ( ! function_exists( 'carousel_slider_background_position' ) ) {
 }
 
 if ( ! function_exists( 'carousel_slider_background_size' ) ) {
+	/**
+	 * @param bool $key_only
+	 *
+	 * @return array
+	 */
 	function carousel_slider_background_size( $key_only = false ) {
 		$sizes = array(
 			'auto'      => 'auto',
