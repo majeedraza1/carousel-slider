@@ -116,25 +116,43 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 			$_nav_active_color = get_post_meta( $id, '_nav_active_color', true );
 			$_nav_button       = get_post_meta( $id, '_nav_button', true );
 			$_arrow_position   = get_post_meta( $id, '_arrow_position', true );
+			$_dot_nav          = get_post_meta( $id, '_dot_nav', true );
+			$_bullet_position  = get_post_meta( $id, '_bullet_position', true );
 
 			$class = 'owl-carousel carousel-slider';
 
-			$class .= ' dots-outside';
-			$class .= ' dots-visible-always';
-
-
+			// Arrows position
 			if ( $_arrow_position == 'inside' ) {
 				$class .= ' arrows-inside';
-			}else{
+			} else {
 				$class .= ' arrows-outside';
 			}
 
+			// Arrows visibility
 			if ( $_nav_button == 'always' ) {
 				$class .= ' arrows-visible-always';
 			} elseif ( $_nav_button == 'off' ) {
 				$class .= ' arrows-hidden';
 			} else {
 				$class .= ' arrows-visible-hover';
+			}
+
+			// Dots visibility
+			if ( $_dot_nav == 'on' ) {
+				$class .= ' dots-visible-always';
+			} elseif ( $_dot_nav == 'off' ) {
+				$class .= ' dots-hidden';
+			} else {
+				$class .= ' dots-visible-hover';
+			}
+
+			// Dots position
+			if ( $_bullet_position == 'left' ) {
+				$class .= ' dots-left';
+			} elseif ( $_bullet_position == 'right' ) {
+				$class .= ' dots-right';
+			} else {
+				$class .= ' dots-center';
 			}
 
 			$options_array = array(

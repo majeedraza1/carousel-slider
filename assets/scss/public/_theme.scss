@@ -56,11 +56,11 @@
     &.arrows-outside {
         .owl-nav {
             .owl-prev {
-                left: -50px;
+                left: -48px;
             }
 
             .owl-next {
-                right: -50px;
+                right: -48px;
             }
         }
     }
@@ -92,6 +92,46 @@
                     background-color: $background-hover-color;
                 }
             }
+        }
+    }
+
+    // Dots positions
+    &.dots-center {
+        .owl-dots {
+            text-align: center;
+        }
+    }
+    &.dots-left {
+        .owl-dots {
+            text-align: left;
+
+            &:first-child {
+                span {
+                    margin-left: 0;
+                }
+            }
+        }
+    }
+    &.dots-right {
+        .owl-dots {
+            text-align: right;
+
+            &:last-child {
+                span {
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+
+    // Dots visibility
+    &.dots-visible-hover {
+        .owl-dots {
+            opacity: 0;
+        }
+
+        &:hover .owl-dots {
+            opacity: 1;
         }
     }
 

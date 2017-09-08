@@ -116,7 +116,6 @@ echo do_shortcode('[carousel_slide id='YOUR_SLIDER_ID']");
 * Added - Arrow Nav: Position (Inside or Outside)
 * Added - Arrow Nav: Custom Size
 * Tweak - Arrow Nav: Always visibility
-* Added - Arrow Nav: Background and background hover color
 * Added - Bullet Nav: Position (Left, Center or Right)
 * Added - Bullet Nav: Custom Size
 * Tweak - Arrow Nav: Option to enable visibility only on hover

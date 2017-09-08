@@ -406,53 +406,82 @@ if ( ! function_exists( 'carousel_slider_inline_style' ) ) {
 		$slide_type = get_post_meta( $id, '_slide_type', true );
 		$slide_type = in_array( $slide_type, carousel_slider_slide_type() ) ? $slide_type : 'image-carousel';
 
-		?>
-        <style>
-            #id-<?php echo $id; ?> .owl-dots .owl-dot span {
-                background-color: <?php echo $_nav_color; ?>
+		$_arrow_size = get_post_meta( $id, '_arrow_size', true );
+		$_arrow_size = empty( $_arrow_size ) ? 48 : absint( $_arrow_size );
+
+		$_bullet_size = get_post_meta( $id, '_bullet_size', true );
+		$_bullet_size = empty( $_bullet_size ) ? 10 : absint( $_bullet_size );
+
+		echo "<style>";
+
+		// Arrows Nav
+		echo "
+            #id-{$id} .carousel-slider-nav-icon {
+                fill: {$_nav_color}
             }
-
-            #id-<?php echo $id; ?> .owl-dots .owl-dot.active span,
-            #id-<?php echo $id; ?> .owl-dots .owl-dot:hover span {
-                background-color: <?php echo $_nav_active_color; ?>
+            #id-{$id} .carousel-slider-nav-icon:hover {
+                fill: {$_nav_active_color}
             }
-
-            #id-<?php echo $id; ?> .carousel-slider-nav-icon {
-                fill: <?php echo $_nav_color; ?>;
+            #id-{$id} .owl-prev,
+            #id-{$id} .owl-next,
+            #id-{$id} .carousel-slider-nav-icon {
+                height: {$_arrow_size}px;
+                width: {$_arrow_size}px
             }
-
-            #id-<?php echo $id; ?> .carousel-slider-nav-icon:hover {
-                fill: <?php echo $_nav_active_color; ?>;
+            #id-{$id}.arrows-outside .owl-prev {
+                left: -{$_arrow_size}px
             }
-
-            <?php if ( $slide_type == 'post-carousel'): ?>
-
-            #id-<?php echo $id; ?> .carousel-slider__post {
-                height: <?php echo $_post_height; ?>px;
+            #id-{$id}.arrows-outside .owl-next {
+                right: -{$_arrow_size}px
             }
+        ";
 
-            <?php elseif ( $slide_type == 'product-carousel'): ?>
-
-            #id-<?php echo $id; ?> .carousel-slider__product h3,
-            #id-<?php echo $id; ?> .carousel-slider__product .price {
-                color: <?php echo esc_attr($_product_title_color); ?>;
+		// Dots Nav
+		echo "
+		    #id-{$id} .owl-dots .owl-dot span {
+                background-color: {$_nav_color};
+                width: {$_bullet_size}px;
+                height: {$_bullet_size}px;
             }
-
-            #id-<?php echo $id; ?> .carousel-slider__product a.add_to_cart_button,
-            #id-<?php echo $id; ?> .carousel-slider__product a.added_to_cart,
-            #id-<?php echo $id; ?> .carousel-slider__product a.quick_view,
-            #id-<?php echo $id; ?> .carousel-slider__product .onsale {
-                background-color: <?php echo esc_attr($_product_btn_bg_color); ?>;
-                color: <?php echo esc_attr($_product_btn_text_color); ?>;
+            #id-{$id} .owl-dots .owl-dot.active span,
+            #id-{$id} .owl-dots .owl-dot:hover span {
+                background-color: {$_nav_active_color}
             }
+		";
 
-            #id-<?php echo $id; ?> .carousel-slider__product .star-rating {
-                color: <?php echo esc_attr($_product_btn_bg_color); ?>;
-            }
+		// Post Carousel Slider
+		if ( $slide_type == 'post-carousel' ) {
 
-            <?php endif; ?>
-        </style>
-		<?php
+			echo "
+                #id-{$id} .carousel-slider__post {
+                    height: {$_post_height}px
+                }
+            ";
+		}
+
+		// Product Carousel Slider
+		if ( $slide_type == 'product-carousel' ) {
+			echo "
+		        #id-{$id} .carousel-slider__product h3,
+                #id-{$id} .carousel-slider__product .price {
+                    color: {$_product_title_color};
+                }
+
+                #id-{$id} .carousel-slider__product a.add_to_cart_button,
+                #id-{$id} .carousel-slider__product a.added_to_cart,
+                #id-{$id} .carousel-slider__product a.quick_view,
+                #id-{$id} .carousel-slider__product .onsale {
+                    background-color: {$_product_btn_bg_color};
+                    color: {$_product_btn_text_color};
+                }
+
+                #id-{$id} .carousel-slider__product .star-rating {
+                    color: {$_product_btn_bg_color};
+                }
+		    ";
+		}
+
+		echo "</style>";
 	}
 }
 
@@ -465,10 +494,10 @@ if ( ! function_exists( 'carousel_slider_slide_type' ) ) {
 	function carousel_slider_slide_type() {
 		return array(
 			'image-carousel',
-			'post-carousel',
 			'image-carousel-url',
-			'video-carousel',
+			'post-carousel',
 			'product-carousel',
+			'video-carousel',
 			'content-carousel'
 		);
 	}

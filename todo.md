@@ -1,7 +1,4 @@
 #Content Slider
-    Slide Background
-        Enable Background Overlay
-        Background Overlay Color
         
     Slide Content
         Title

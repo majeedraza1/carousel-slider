@@ -1,5 +1,7 @@
 <?php
+
 if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
+
 	class Carousel_Slider_Meta_Box {
 
 		protected static $instance = null;
@@ -87,7 +89,7 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
 			$_nav_button = in_array( $_nav_button, array( 'on', 'off', 'always' ) ) ? $_nav_button : 'on';
 
 			$_dot_nav = get_post_meta( $post->ID, '_dot_nav', true );
-			$_dot_nav = in_array( $_dot_nav, array( 'on', 'off' ) ) ? $_dot_nav : 'off';
+			$_dot_nav = in_array( $_dot_nav, array( 'on', 'off', 'hover' ) ) ? $_dot_nav : 'off';
 
 			$_slide_by = get_post_meta( $post->ID, '_slide_by', true );
 			$_slide_by = empty( $_slide_by ) ? 1 : $_slide_by;
@@ -100,6 +102,15 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
 
 			$_arrow_position = get_post_meta( $post->ID, '_arrow_position', true );
 			$_arrow_position = empty( $_arrow_position ) ? 'outside' : $_arrow_position;
+
+			$_arrow_size = get_post_meta( $post->ID, '_arrow_size', true );
+			$_arrow_size = empty( $_arrow_size ) ? 48 : absint( $_arrow_size );
+
+			$_bullet_size = get_post_meta( $post->ID, '_bullet_size', true );
+			$_bullet_size = empty( $_bullet_size ) ? 10 : absint( $_bullet_size );
+
+			$_bullet_position = get_post_meta( $post->ID, '_bullet_position', true );
+			$_bullet_position = empty( $_bullet_position ) ? 'center' : $_bullet_position;
 			?>
             <p>
                 <label for="_nav_button">
@@ -137,8 +148,8 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
                 <label for="_arrow_size">
                     <strong><?php esc_html_e( 'Arrow Size', 'carousel-slider' ); ?></strong>
                 </label>
-                <input class="small-text" id="_arrow_size" name="carousel_slider[_arrow_size]" type="number" disabled
-                       value="48">
+                <input class="small-text" id="_arrow_size" name="carousel_slider[_arrow_size]" type="number"
+                       value="<?php echo $_arrow_size; ?>">
                 <span class="cs-tooltip"
                       title="<?php esc_html_e( 'Enter arrow size in pixels.', 'carousel-slider' ); ?>"></span>
             </p><!-- Arrow Size -->
@@ -151,8 +162,7 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
                 <select name="carousel_slider[_dot_nav]" id="_dot_nav" class="small-text">
                     <option value="off" <?php selected( $_dot_nav, 'off' ); ?>><?php esc_html_e( 'Never', 'carousel-slider' ); ?></option>
                     <option value="on" <?php selected( $_dot_nav, 'on' ); ?>><?php esc_html_e( 'Always', 'carousel-slider' ); ?></option>
-                    <option value="hover" <?php selected( $_nav_button, 'hover' ); ?>
-                            disabled><?php esc_html_e( 'Mouse Over', 'carousel-slider' ); ?></option>
+                    <option value="hover" <?php selected( $_dot_nav, 'hover' ); ?>><?php esc_html_e( 'Mouse Over', 'carousel-slider' ); ?></option>
                 </select>
                 <span class="cs-tooltip"
                       title="<?php esc_html_e( 'Choose when to show bullet navigator.', 'carousel-slider' ); ?>"></span>
@@ -161,10 +171,10 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
                 <label for="_bullet_position">
                     <strong><?php esc_html_e( 'Bullet Position', 'carousel-slider' ); ?></strong>
                 </label>
-                <select name="carousel_slider[_bullet_position]" id="_bullet_position" class="small-text" disabled>
-                    <option value="left"><?php esc_html_e( 'Left', 'carousel-slider' ); ?></option>
-                    <option value="center"><?php esc_html_e( 'Center', 'carousel-slider' ); ?></option>
-                    <option value="right"><?php esc_html_e( 'Right', 'carousel-slider' ); ?></option>
+                <select name="carousel_slider[_bullet_position]" id="_bullet_position" class="small-text">
+                    <option value="left" <?php selected( $_bullet_position, 'left' ); ?>><?php esc_html_e( 'Left', 'carousel-slider' ); ?></option>
+                    <option value="center" <?php selected( $_bullet_position, 'center' ); ?>><?php esc_html_e( 'Center', 'carousel-slider' ); ?></option>
+                    <option value="right" <?php selected( $_bullet_position, 'right' ); ?>><?php esc_html_e( 'Right', 'carousel-slider' ); ?></option>
                 </select>
                 <span class="cs-tooltip"
                       title="<?php esc_html_e( 'Choose where to show bullets.', 'carousel-slider' ); ?>"></span>
@@ -173,35 +183,13 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
                 <label for="_bullet_size">
                     <strong><?php esc_html_e( 'Bullet Size', 'carousel-slider' ); ?></strong>
                 </label>
-                <input class="small-text" id="_bullet_size" name="carousel_slider[_bullet_size]" type="number" disabled
-                       value="10">
+                <input class="small-text" id="_bullet_size" name="carousel_slider[_bullet_size]" type="number"
+                       value="<?php echo $_bullet_size; ?>">
                 <span class="cs-tooltip"
                       title="<?php esc_html_e( 'Enter bullet size in pixels.', 'carousel-slider' ); ?>"></span>
             </p><!-- Arrow Size -->
 
             <hr>
-            <p>
-                <label for="_arrow_background_color">
-                    <strong><?php esc_html_e( 'Arrows Background Color', 'carousel-slider' ); ?></strong>
-                </label>
-                <span class="cs-tooltip"
-                      title="<?php esc_html_e( 'Pick a color for arrows.', 'carousel-slider' ); ?>"></span>
-                <br>
-                <input type="text" class="color-picker" value="" id="_arrow_background_color" disabled
-                       name="carousel_slider[_arrow_background_color]" data-alpha="true"
-                       data-default-color="rgba(0,0,0,0.01)">
-            </p><!-- Arrows Background Color -->
-            <p>
-                <label for="_arrow_background_hover_color">
-                    <strong><?php esc_html_e( 'Arrows Background Hover Color', 'carousel-slider' ); ?></strong>
-                </label>
-                <span class="cs-tooltip"
-                      title="<?php esc_html_e( 'Pick a color for arrows for active and hover effect.', 'carousel-slider' ); ?>"></span>
-                <br>
-                <input type="text" class="color-picker" value="" id="_arrow_background_hover_color" disabled
-                       name="carousel_slider[_arrow_background_hover_color]" data-alpha="true"
-                       data-default-color="rgba(0,0,0,0.01)">
-            </p><!-- Arrows Background Color -->
             <p>
                 <label for="_nav_color">
                     <strong><?php esc_html_e( 'Arrows & Dots Color', 'carousel-slider' ); ?></strong>
@@ -210,7 +198,7 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
                       title="<?php esc_html_e( 'Pick a color for navigation and dots.', 'carousel-slider' ); ?>"></span>
                 <br>
                 <input type="text" class="color-picker" value="<?php echo $_nav_color; ?>" id="_nav_color"
-                       name="carousel_slider[_nav_color]" data-default-color="#f1f1f1">
+                       name="carousel_slider[_nav_color]" data-alpha="true" data-default-color="#f1f1f1">
             </p><!-- Arrows & Dots Color -->
 
             <p>
@@ -221,7 +209,7 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
                       title="<?php esc_html_e( 'Pick a color for navigation and dots for active and hover effect.', 'carousel-slider' ); ?>"></span>
                 <br>
                 <input type="text" class="color-picker" value="<?php echo $_nav_active_color; ?>" id="_nav_active_color"
-                       name="carousel_slider[_nav_active_color]" data-default-color="#00d1b2">
+                       name="carousel_slider[_nav_active_color]" data-alpha="true" data-default-color="#00d1b2">
             </p><!-- Arrows & Dots Hover Color -->
 			<?php
 		}
