@@ -1,18 +1,18 @@
 === Carousel Slider ===
 Contributors: sayful
 Tags: woocommerce, shortcode, images, carousel, carousel slider, image carousel, product carousel, slider, owl carousel
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3LZWQTHEVYWCY
 Requires at least: 4.5
 Tested up to: 4.8
+Requires PHP: 5.3
 Stable tag: 1.7.4
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License: GPLv3
+License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
-The Easiest Way to Create SEO friendly Image, Logo, Video, Post and Product Carousel.
+Create SEO friendly Image, Logo, Video, Post, WooCommerce Product and HTML Content Carousel.
 
 == Description ==
 
-**The Easiest Way to Create SEO friendly Image, Logo, Video, Post and Product Carousel.**
+**Create SEO friendly Image, Logo, Video, Post, WooCommerce Product and HTML Content Carousel.**
 Carousel Slider is a touch enabled WordPress plugin that lets you create highly customizable, stylish responsive carousel slider. With Carousel Slider, you can create image carousel using media gallery or custom url, post carousel, video carousel. We have integrated [Owl Carousel 2](http://www.owlcarousel.owlgraphic.com/) into our plugin for the ultimate device support.
 
 **If you like this plugin, please give us [5 star](https://wordpress.org/support/plugin/carousel-slider/reviews/?rate=5#new-post) to encourage for future improvement.**
@@ -105,6 +105,20 @@ Now you can use the following function at your theme template file replacing `YO
 7. Front-end example of image lightbox.
 
 == Changelog ==
+
+= version 1.8.0-rc1 - 2017-09-08 =
+* Added - Arrow Nav: Position (Inside or Outside)
+* Added - Arrow Nav: Custom Size
+* Tweak - Arrow Nav: Always visibility
+* Added - Bullet Nav: Position (Left, Center or Right)
+* Added - Bullet Nav: Custom Size
+* Tweak - Arrow Nav: Option to enable visibility only on hover
+* Tweak - Alpha color picker for choosing color
+* Added - Content Carousel/Slider
+* Added - Content Carousel: Add unlimited number of slide
+* Added - Content Carousel: Delete and sort(up, down, top, bottom) slide
+* Added - Content Carousel: Slide background with color, image and more
+* Added - Content Carousel: Slide content with wp_editor()
 
 = version 1.7.4 - 2017-08-26 =
 * Fixed - Fixed syntax error for short array syntax on PHP 5.3

@@ -9,13 +9,12 @@
  * Requires at least: 4.4
  * Tested up to: 4.8
  *
- * License: GPLv2 or later
- * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
- *
  * Text Domain: carousel-slider
- * Domain Path: /languages/
  *
- * @package CarouselSlider
+ * License: GPLv3
+ * License URI: https://www.gnu.org/licenses/gpl-3.0.txt
+ *
+ * @package Carousel_Slider
  * @author Sayful Islam
  */
 
@@ -28,7 +27,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 
 	final class Carousel_Slider {
 		private $plugin_name = 'carousel-slider';
-		private $version = '1.7.3';
+		private $version = '1.7.4';
 
 		protected static $instance = null;
 

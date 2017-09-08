@@ -8,11 +8,11 @@
 **License:** GPLv3  
 **License URI:** http://www.gnu.org/licenses/gpl-3.0.html  
 
-The Easiest Way to Create SEO friendly Image, Logo, Video, Post, Product Carousel and Content Carousel.
+Create SEO friendly Image, Logo, Video, Post, WooCommerce Product and HTML Content Carousel.
 
 ## Description
 
-**The Easiest Way to Create SEO friendly Image, Logo, Video, Post and Product Carousel.**
+**Create SEO friendly Image, Logo, Video, Post, WooCommerce Product and HTML Content Carousel.**
 Carousel Slider is a touch enabled WordPress plugin that lets you create highly customizable, stylish responsive carousel slider. With Carousel Slider, you can create image carousel using media gallery or custom url, post carousel, video carousel. We have integrated [Owl Carousel 2](http://www.owlcarousel.owlgraphic.com/) into our plugin for the ultimate device support.
 
 **If you like this plugin, please give us [5 star](https://wordpress.org/support/plugin/carousel-slider/reviews/?rate=5#new-post) to encourage for future improvement.**
@@ -100,19 +100,9 @@ Now you can use the following function at your theme template file replacing `YO
 echo do_shortcode('[carousel_slide id='YOUR_SLIDER_ID']");
 ```
 
-## Screenshots
-
-1. Carousel slider admin page
-2. Front-end example of posts carousel slider.
-3. Front-end example of videos carousel slider.
-4. Front-end example of images carousel slider.
-5. Front-end example of products carousel slider.
-6. Front-end example of products Quick View.
-7. Front-end example of image lightbox.
-
 ## Changelog
 
-##### Version 1.8.0-dev
+##### Version 1.8.0-rc1
 * Added - Arrow Nav: Position (Inside or Outside)
 * Added - Arrow Nav: Custom Size
 * Tweak - Arrow Nav: Always visibility
