@@ -117,15 +117,109 @@
                                             </ul>
                                             <div id="carousel-slider-tab-content" class="shapla-tab">
 												<?php
-												wp_editor(
-													$_content,
-													'carousel_slider_content_' . $_to_word,
-													array(
-														'textarea_name' => 'carousel_slider_content[' . $slide_num . '][content]',
-														'textarea_rows' => 10,
-													)
-												);
+												//												wp_editor(
+												//													$_content,
+												//													'carousel_slider_content_' . $_to_word,
+												//													array(
+												//														'textarea_name' => 'carousel_slider_content[' . $slide_num . '][content]',
+												//														'textarea_rows' => 10,
+												//													)
+												//												);
 												?>
+
+                                                <div class="sp-input-group" id="field-_content_alignment">
+                                                    <div class="sp-input-label">
+                                                        <label for="_content_alignment"><?php esc_html_e( 'Content Alignment', 'carousel-slider' ); ?></label>
+                                                        <p class="sp-input-desc"><?php esc_html_e( 'Select how the heading, caption and buttons will be aligned', 'carousel-slider' ); ?></p>
+                                                    </div>
+                                                    <div class="sp-input-field">
+                                                        <select name="carousel_slider_content[<?php echo $slide_num; ?>][content_alignment]"
+                                                                id="_content_alignment" class="sp-input-text">
+                                                            <option value="left">Left</option>
+                                                            <option value="center">Center</option>
+                                                            <option value="right">Right</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="sp-input-group" id="field-_slide_heading">
+                                                    <div class="sp-input-label">
+                                                        <label for="_slide_heading"><?php esc_html_e( 'Slide Heading', 'carousel-slider' ); ?></label>
+                                                        <p class="sp-input-desc"><?php esc_html_e( 'Enter the heading for your slide. This field can take HTML markup.', 'carousel-slider' ); ?></p>
+                                                    </div>
+                                                    <div class="sp-input-field">
+                                                        <textarea
+                                                                name="carousel_slider_content[<?php echo $slide_num; ?>][slide_heading]"
+                                                                id="_slide_heading" cols="30" rows="3"
+                                                                class="regular-text"></textarea>
+                                                    </div>
+                                                </div>
+
+                                                <div class="sp-input-group" id="field-_heading_font_size">
+                                                    <div class="sp-input-label">
+                                                        <label for="_heading_font_size"><?php esc_html_e( 'Heading Font Size', 'carousel-slider' ); ?></label>
+                                                        <p class="sp-input-desc"><?php esc_html_e( 'Enter heading font size without px unit. In pixels, ex: 50 instead of 50px. Default: 60', 'carousel-slider' ); ?></p>
+                                                    </div>
+                                                    <div class="sp-input-field">
+                                                        <input type="number" id="_heading_font_size"
+                                                               class="regular-text"
+                                                               name="carousel_slider_content[<?php echo $slide_num; ?>][heading_font_size]">
+                                                    </div>
+                                                </div>
+
+                                                <div class="sp-input-group" id="field-_heading_color">
+                                                    <div class="sp-input-label">
+                                                        <label for="_heading_color"><?php esc_html_e( 'Heading Color', 'carousel-slider' ); ?></label>
+                                                        <p class="sp-input-desc"><?php esc_html_e( 'Select a color for the heading font. Default: #fff', 'carousel-slider' ); ?></p>
+                                                    </div>
+                                                    <div class="sp-input-field">
+                                                        <input type="text" id="_heading_color"
+                                                               class="color-picker"
+                                                               data-default-color="#ffffff"
+                                                               name="carousel_slider_content[<?php echo $slide_num; ?>][heading_color]">
+                                                    </div>
+                                                </div>
+
+                                                <div class="sp-input-group" id="field-_heading_background">
+                                                    <div class="sp-input-label">
+                                                        <label for="_heading_background"><?php esc_html_e( 'Heading Background', 'carousel-slider' ); ?></label>
+                                                        <p class="sp-input-desc"><?php esc_html_e( 'Select this option if you would like a semi-transparent background behind your heading.', 'carousel-slider' ); ?></p>
+                                                    </div>
+                                                    <div class="sp-input-field">
+                                                        <select name="carousel_slider_content[<?php echo $slide_num; ?>][heading_background]"
+                                                                id="_heading_background" class="sp-input-text">
+                                                            <option value="yes">Yes</option>
+                                                            <option value="no">No</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="sp-input-group" id="field-_heading_background_color">
+                                                    <div class="sp-input-label">
+                                                        <label for="_heading_background_color"><?php esc_html_e( 'Heading Background Color', 'carousel-slider' ); ?></label>
+                                                        <p class="sp-input-desc"><?php esc_html_e( 'Select a color for the heading background. Default: rgba(0,0,0, 0.4)', 'carousel-slider' ); ?></p>
+                                                    </div>
+                                                    <div class="sp-input-field">
+                                                        <input type="text" id="_heading_background_color"
+                                                               class="color-picker" data-alpha="true"
+                                                               data-default-color="rgba(0,0,0, 0.4)"
+                                                               name="carousel_slider_content[<?php echo $slide_num; ?>][heading_background_color]">
+                                                    </div>
+                                                </div>
+
+                                                <div class="sp-input-group" id="field-_slide_description">
+                                                    <div class="sp-input-label">
+                                                        <label for="_slide_description"><?php esc_html_e( 'Slide Description', 'carousel-slider' ); ?></label>
+                                                        <p class="sp-input-desc"><?php esc_html_e( 'Enter the description for your slide. This field can take HTML markup.', 'carousel-slider' ); ?></p>
+                                                    </div>
+                                                    <div class="sp-input-field">
+                                                        <textarea
+                                                                name="carousel_slider_content[<?php echo $slide_num; ?>][slide_description]"
+                                                                id="_slide_description" cols="30" rows="5"
+                                                                class="regular-text"></textarea>
+                                                    </div>
+                                                </div>
+
                                             </div>
                                             <div id="carousel-slider-tab-background" class="shapla-tab tab-background">
                                                 <div class="slide_bg_wrapper">
