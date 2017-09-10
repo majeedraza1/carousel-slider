@@ -1,24 +1,5 @@
-#Content Slider
-        
-    Slide Content
-        Title
-        Description
-        Button Text
-        Button URL
-        Link Target
-        Apply Link On
-            Whole Site
-            Button Only
-    
-    Slide Style
-        Horizontal Position
-            Left, Center, Right
-        Vertical Position
-            Top, Middle, Bottom
-        Text Align
-            Left, Center, Right
-        Content Color
-    
+# Content Slider
+
     Global Content Slider Style
         Slide Height (px,em,vh)
         Slides
