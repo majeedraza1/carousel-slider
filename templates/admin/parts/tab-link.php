@@ -44,7 +44,7 @@
             <label for="_button_one"><?php esc_html_e( 'Button', 'carousel-slider' ); ?></label>
         </div>
         <div class="sp-input-field">
-            <button class="button"><?php esc_html_e( 'Add button', 'carousel-slider' ); ?></button>
+            <button class="button" data-toggle="modal" data-target="#addContentButton"><?php esc_html_e( 'Add button', 'carousel-slider' ); ?></button>
         </div>
     </div>
 

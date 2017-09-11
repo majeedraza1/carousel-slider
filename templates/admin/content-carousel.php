@@ -163,7 +163,7 @@
     </div>
 </div>
 
-<svg width="1" height="1">
+<svg width="1" height="1" style="display: none;">
     <symbol id="icon-trash" viewBox="0 0 20 20">
         <path d="M12 4h3c0.55 0 1 0.45 1 1v1h-13v-1c0-0.55 0.45-1 1-1h3c0.23-1.14 1.29-2 2.5-2s2.27 0.86 2.5 2zM8 4h3c-0.21-0.58-0.85-1-1.5-1s-1.29 0.42-1.5 1zM4 7h11v10c0 0.55-0.45 1-1 1h-9c-0.55 0-1-0.45-1-1v-10zM7 16v-7h-1v7h1zM10 16v-7h-1v7h1zM13 16v-7h-1v7h1z"></path>
     </symbol>
@@ -180,3 +180,75 @@
         <path d="M11 18h-2v-12l-4 4-2-1 7-7 7 7-2 1-4-4v12z"></path>
     </symbol>
 </svg>
+
+
+<div id="addContentButton" class="modal">
+    <div class="modal-background"></div>
+    <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Button</p>
+            <button class="delete-icon" data-dismiss="modal"></button>
+        </header>
+
+        <section class="modal-card-body">
+            <table id="shapla-sc-form-table" class="form-table">
+
+                <tr>
+                    <th scope="row"><label for="_button_text">Button Text</label></th>
+                    <td>
+                        <input class="widefat" name="_button_text" id="_button_text" value="" type="text">
+                        <span class="description">Add the button text</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><label for="_button_url">Button URL</label></th>
+                    <td>
+                        <input class="widefat" name="_button_url" id="_button_url" value="" type="url">
+                        <span class="description">Add the button‘s url e.g. http://example.com</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><label for="_button_target">Open Button Link In</label></th>
+                    <td>
+                        <select class="widefat" name="_button_target" id="_button_target">
+                            <option value="_blank">New Window</option>
+                            <option value="_self">Same window</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><label for="_button_type">Button Type</label></th>
+                    <td>
+                        <select class="widefat" name="_button_type" id="_button_type">
+                            <option value="normal">Normal</option>
+                            <option value="stroke">Stroke</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><label for="_button_size">Button Size</label></th>
+                    <td>
+                        <select class="widefat" name="_button_size" id="_button_size">
+                            <option value="large">Large</option>
+                            <option value="medium">Medium</option>
+                            <option value="small">Small</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><label for="_button_color">Button Color</label></th>
+                    <td>
+                        <input type="text" name="_button_color" id="_button_color" class="color-picker"
+                               data-alpha="true" data-default-color="#f44336">
+                    </td>
+                </tr>
+
+            </table>
+        </section>
+
+        <footer class="modal-card-foot">
+            <a class="button button-primary">Add Button</a>
+            <a class="button" data-dismiss="modal">Cancel</a>
+        </footer>
+    </div>
+</div>

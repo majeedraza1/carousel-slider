@@ -6,6 +6,7 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
 
 		protected static $instance = null;
 		private $post_type = 'carousels';
+		private $form;
 
 		/**
 		 * Ensures only one instance of this class is loaded or can be loaded.
@@ -60,6 +61,22 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
 				"side",
 				"low"
 			);
+			add_meta_box(
+				"carousel-slider-general-settings",
+				__( "General Settings", 'carousel-slider' ),
+				array( $this, 'general_settings_callback' ),
+				$this->post_type,
+				"advanced",
+				"low"
+			);
+		}
+
+		/**
+		 * @param WP_Post $post
+		 */
+		public function general_settings_callback( $post ) {
+			$this->form = new Carousel_Slider_Form();
+			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/general.php';
 		}
 
 		/**
@@ -229,19 +246,25 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
 			?>
             <p>
                 <label for="_autoplay">
-                    <input type="hidden" name="carousel_slider[_autoplay]" value="off">
-                    <input type="checkbox" value="on" id="_autoplay" name="carousel_slider[_autoplay]"
-						<?php checked( $_autoplay, 'on' ); ?>>
-					<?php esc_html_e( 'Enable autoplay', 'carousel-slider' ); ?>
+                    <strong><?php esc_html_e( 'AutoPlay', 'carousel-slider' ); ?></strong>
                 </label>
+                <select name="carousel_slider[_autoplay]" id="_autoplay" class="small-text">
+                    <option value="on" <?php selected( $_autoplay, 'on' ); ?>><?php esc_html_e( 'Enable', 'carousel-slider' ); ?></option>
+                    <option value="off" <?php selected( $_autoplay, 'off' ); ?>><?php esc_html_e( 'Disable', 'carousel-slider' ); ?></option>
+                </select>
+                <span class="cs-tooltip"
+                      title="<?php esc_html_e( 'Choose whether slideshow should play automatically.', 'carousel-slider' ); ?>"></span>
             </p>
             <p>
                 <label for="_autoplay_pause">
-                    <input type="hidden" name="carousel_slider[_autoplay_pause]" value="off">
-                    <input type="checkbox" value="on" name="carousel_slider[_autoplay_pause]" id="_autoplay_pause"
-						<?php checked( $_autoplay_pause, 'on' ); ?>>
-					<?php esc_html_e( 'Pause autoplay on mouse hover', 'carousel-slider' ); ?>
+                    <strong><?php esc_html_e( 'Pause On Hover', 'carousel-slider' ); ?></strong>
                 </label>
+                <select name="carousel_slider[_autoplay_pause]" id="_autoplay_pause" class="small-text">
+                    <option value="on" <?php selected( $_autoplay_pause, 'on' ); ?>><?php esc_html_e( 'Enable', 'carousel-slider' ); ?></option>
+                    <option value="off" <?php selected( $_autoplay_pause, 'off' ); ?>><?php esc_html_e( 'Disable', 'carousel-slider' ); ?></option>
+                </select>
+                <span class="cs-tooltip"
+                      title="<?php esc_html_e( 'Pause automatic play on mouse hover.', 'carousel-slider' ); ?>"></span>
             </p>
             <p>
                 <label for="_autoplay_timeout">
