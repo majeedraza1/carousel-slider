@@ -40,42 +40,60 @@ $content_sliders = get_post_meta( $id, '_content_slider', true );
 			$canvas_style .= 'background-image: url(' . $_img_src[0] . ')';
 		}
 
+		$content_inner_style = $_bg_color ? 'background-color: ' . $_bg_color . ';' : '';
+
 		$content_style = '';
-		if ( $_bg_color ) {
-			$content_style .= 'background-color: ' . $_bg_color . ';';
+		if ( $_content_alignment == 'left' ) {
+			$content_style = 'align-items: flex-start;';
+		} elseif ( $_content_alignment == 'right' ) {
+			$content_style = 'align-items: flex-end;';
+		} else {
+			$content_style = 'align-items: center;';
 		}
 
-		$html = '<div id="slide-item-' . $id . '-' . $slide_id . '" class="carousel-slider__content" style="' . $canvas_style . '">';
-		$html .= '<div class="slide-content-inner" style="' . $content_style . '">';
+		$html = '<div class="carousel-slider__content" id="slide-item-' . $id . '-' . $slide_id . '" style="' . $canvas_style . '">';
+		$html .= '<div class="slide-content-inner" style="' . $content_inner_style . '">';
+		$html .= '<div class="slide-content" style="' . $content_style . '">';
 
 		// Slide heading
-		$heading_style = '';
-		$heading_style .= 'margin: 0;padding:0;display:inline-flex;';
-		$heading_style .= 'font-size: ' . $_heading_font_size . ';';
-		$heading_style .= 'color: ' . $_heading_color . ';';
+		$heading_style         = '';
+		$heading_wrapper_style = '';
+		$heading_style         .= 'font-size: ' . $_heading_font_size . ';';
+		$heading_style         .= 'color: ' . $_heading_color . ';';
 		if ( ! empty( $_heading_bg_color ) ) {
-			$heading_style .= 'background-color: ' . $_heading_bg_color . ';';
+			$heading_wrapper_style .= 'background-color: ' . $_heading_bg_color . ';';
+			$heading_wrapper_style .= 'padding: 0 1rem;';
 		}
 
-		$html .= '<div class="heading" style="margin: 0 0 1rem">';
-		$html .= '<h2 style="' . $heading_style . '">' . wp_kses_post( $_slide_heading ) . "</h2>";
-		$html .= '</div>';
+		if ( $_slide_heading ) {
+			$html .= '<div class="heading">';
+			$html .= '<div class="heading-title-wrapper" style="' . $heading_wrapper_style . '">';
+			$html .= '<h2 class="heading-title" style="' . $heading_style . '">' . wp_kses_post( $_slide_heading ) . "</h2>";
+			$html .= '</div>';
+			$html .= '</div>';
+		}
 
 		// Slide description
-		$desc_style = '';
-		$desc_style .= 'margin: 0;padding:0;display:inline-flex;';
-		$desc_style .= 'font-size: ' . $_desc_font_size . ';';
-		$desc_style .= 'color: ' . $_desc_color . ';';
+		$desc_style         = '';
+		$desc_wrapper_style = '';
+		$desc_style         .= 'font-size: ' . $_desc_font_size . ';';
+		$desc_style         .= 'color: ' . $_desc_color . ';';
 		if ( ! empty( $_desc_bg_color ) ) {
-			$desc_style .= 'background-color: ' . $_desc_bg_color . ';';
+			$desc_wrapper_style .= 'background-color: ' . $_desc_bg_color . ';';
+			$desc_wrapper_style .= 'padding: 0 1rem;';
 		}
 
-		$html .= '<div class="description">';
-		$html .= '<h3 style="' . $desc_style . '">' . wp_kses_post( $_slide_heading ) . "</h3>";
-		$html .= '</div>';
+		if ( $_slide_description ) {
+			$html .= '<div class="description">';
+			$html .= '<div class="description-title-wrapper" style="' . $desc_wrapper_style . '">';
+			$html .= '<h3 class="description-title" style="' . $desc_style . '">' . wp_kses_post( $_slide_description ) . "</h3>";
+			$html .= '</div>';
+			$html .= '</div>';
+		}
 
-		$html .= '</div>';
-		$html .= '</div>';
+		$html .= '</div>'; // .slide-content
+		$html .= '</div>'; // .slide-content-inner
+		$html .= '</div>'; // .carousel-slider__content
 
 		echo apply_filters( 'carousel_slider_content', $html, $slide_id, $slide );
 	endforeach;
