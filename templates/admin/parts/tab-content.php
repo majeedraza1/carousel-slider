@@ -7,7 +7,8 @@
         </div>
         <div class="sp-input-field">
             <textarea name="carousel_slider_content[<?php echo $slide_num; ?>][slide_heading]"
-                      id="_slide_heading" cols="30" rows="3" class="regular-text"></textarea>
+                      id="_slide_heading" cols="30" rows="3"
+                      class="regular-text"><?php echo esc_textarea( $_slide_heading ); ?></textarea>
         </div>
     </div>
 
@@ -18,7 +19,8 @@
         </div>
         <div class="sp-input-field">
         <textarea name="carousel_slider_content[<?php echo $slide_num; ?>][slide_description]"
-                  id="_slide_description" cols="30" rows="5" class="regular-text"></textarea>
+                  id="_slide_description" cols="30" rows="5"
+                  class="regular-text"><?php echo esc_textarea( $_slide_description ); ?></textarea>
         </div>
     </div><!-- Slide Description -->
 

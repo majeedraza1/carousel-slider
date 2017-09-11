@@ -363,11 +363,26 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 			$_content_slides = $_POST['carousel_slider_content'];
 			$_slides         = array_map( function ( $slide ) {
 				$_slide = array(
-					'content'         => wp_filter_post_kses( $slide['content'] ),
-					'img_id'          => intval( $slide['img_id'] ),
-					'img_bg_position' => sanitize_text_field( $slide['img_bg_position'] ),
-					'img_bg_size'     => sanitize_text_field( $slide['img_bg_size'] ),
-					'bg_color'        => carousel_slider_sanitize_color( $slide['bg_color'] ),
+					// Slide Content
+					'slide_heading'                => wp_kses_post( $slide['slide_heading'] ),
+					'slide_description'            => wp_kses_post( $slide['slide_description'] ),
+					// Slide Background
+					'img_id'                       => intval( $slide['img_id'] ),
+					'img_bg_position'              => sanitize_text_field( $slide['img_bg_position'] ),
+					'img_bg_size'                  => sanitize_text_field( $slide['img_bg_size'] ),
+					'bg_color'                     => carousel_slider_sanitize_color( $slide['bg_color'] ),
+					// Slide Style
+					'content_alignment'            => sanitize_text_field( $slide['content_alignment'] ),
+					'heading_font_size'            => sanitize_text_field( $slide['heading_font_size'] ),
+					'heading_color'                => carousel_slider_sanitize_color( $slide['heading_color'] ),
+					'heading_background_color'     => carousel_slider_sanitize_color( $slide['heading_background_color'] ),
+					'description_font_size'        => sanitize_text_field( $slide['description_font_size'] ),
+					'description_color'            => carousel_slider_sanitize_color( $slide['description_color'] ),
+					'description_background_color' => carousel_slider_sanitize_color( $slide['description_background_color'] ),
+					// Slide Link
+					'link_type'                    => sanitize_text_field( $slide['link_type'] ),
+					'slide_link'                   => esc_url_raw( $slide['slide_link'] ),
+					'link_target'                  => sanitize_text_field( $slide['link_target'] ),
 				);
 
 				return $_slide;

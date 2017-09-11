@@ -8,9 +8,9 @@
         <div class="sp-input-field">
             <select name="carousel_slider_content[<?php echo $slide_num; ?>][content_alignment]"
                     id="_content_alignment" class="sp-input-text">
-                <option value="left">Left</option>
-                <option value="center">Center</option>
-                <option value="right">Right</option>
+                <option value="left" <?php selected( $_content_alignment, 'left' ); ?>>Left</option>
+                <option value="center" <?php selected( $_content_alignment, 'center' ); ?>>Center</option>
+                <option value="right" <?php selected( $_content_alignment, 'right' ); ?>>Right</option>
             </select>
         </div>
     </div>
@@ -21,8 +21,8 @@
             <p class="sp-input-desc"><?php esc_html_e( 'Enter heading font size without px unit. In pixels, ex: 50 instead of 50px. Default: 60', 'carousel-slider' ); ?></p>
         </div>
         <div class="sp-input-field">
-            <input type="number" id="_heading_font_size"
-                   class="regular-text"
+            <input type="text" id="_heading_font_size"
+                   class="regular-text" value="<?php echo $_heading_font_size; ?>"
                    name="carousel_slider_content[<?php echo $slide_num; ?>][heading_font_size]">
         </div>
     </div>
@@ -35,7 +35,7 @@
         <div class="sp-input-field">
             <input type="text" id="_heading_color"
                    class="color-picker"
-                   data-default-color="#ffffff" data-alpha="true"
+                   data-default-color="#ffffff" data-alpha="true" value="<?php echo $_heading_color; ?>"
                    name="carousel_slider_content[<?php echo $slide_num; ?>][heading_color]">
         </div>
     </div>
@@ -48,7 +48,7 @@
         <div class="sp-input-field">
             <input type="text" id="_heading_background_color"
                    class="color-picker" data-alpha="true"
-                   data-default-color="rgba(0,0,0, 0.4)"
+                   data-default-color="rgba(0,0,0, 0.4)" value="<?php echo $_heading_bg_color; ?>"
                    name="carousel_slider_content[<?php echo $slide_num; ?>][heading_background_color]">
         </div>
     </div>
@@ -59,8 +59,8 @@
             <p class="sp-input-desc"><?php esc_html_e( 'Enter description font size without px unit. In pixels, ex: 20 instead of 20px. Default: 24', 'carousel-slider' ); ?></p>
         </div>
         <div class="sp-input-field">
-            <input type="number" id="_description_font_size"
-                   class="regular-text"
+            <input type="text" id="_description_font_size"
+                   class="regular-text" value="<?php echo $_desc_font_size; ?>"
                    name="carousel_slider_content[<?php echo $slide_num; ?>][description_font_size]">
         </div>
     </div><!-- Description Font Size -->
@@ -72,7 +72,7 @@
         </div>
         <div class="sp-input-field">
             <input type="text" id="_description_color"
-                   class="color-picker"
+                   class="color-picker" value="<?php echo $_desc_color; ?>"
                    data-default-color="#ffffff" data-alpha="true"
                    name="carousel_slider_content[<?php echo $slide_num; ?>][description_color]">
         </div>
@@ -86,7 +86,7 @@
         <div class="sp-input-field">
             <input type="text" id="_description_background_color"
                    class="color-picker" data-alpha="true"
-                   data-default-color="rgba(0,0,0, 0.4)"
+                   data-default-color="rgba(0,0,0, 0.4)" value="<?php echo $_desc_bg_color; ?>"
                    name="carousel_slider_content[<?php echo $slide_num; ?>][description_background_color]">
         </div>
     </div>
