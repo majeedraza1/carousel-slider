@@ -2,11 +2,13 @@
     "use strict";
 
     var body = $('body'),
+        contentButtonModal = $('#contentButtonModal'),
         frame,
         section,
         imgIdInput,
         slideCanvas,
-        delImgLink;
+        delImgLink,
+        buttonConfig;
 
     // Add new content slide
     body.on('click', '.carousel-slider__add-slide', function (e) {
@@ -199,6 +201,55 @@
         section = $(this).closest('.slide_bg_wrapper');
         slideCanvas = section.find('.content_slide_canvas');
         slideCanvas.css('background-size', _val);
+    });
+
+    // Add Button Style to Modal for Edit
+    $('.addContentButton').on('click', function (e) {
+        e.preventDefault();
+
+        buttonConfig = $(this).closest('.button_config');
+        var button_text = buttonConfig.find('.button_text').val();
+        var button_url = buttonConfig.find('.button_url').val();
+        var button_target = buttonConfig.find('.button_target').val();
+        var button_type = buttonConfig.find('.button_type').val();
+        var button_size = buttonConfig.find('.button_size').val();
+        var button_color = buttonConfig.find('.button_color').val();
+
+        contentButtonModal.find('#_button_text').val(button_text);
+        contentButtonModal.find('#_button_url').val(button_url);
+        contentButtonModal.find('#_button_target').val(button_target);
+        contentButtonModal.find('#_button_type').val(button_type);
+        contentButtonModal.find('#_button_size').val(button_size);
+        contentButtonModal.find('#_button_color').val(button_color);
+
+        contentButtonModal.addClass('is-active');
+    });
+
+    // Save Button style from modal form
+    $('#saveContentButton').on('click', function (e) {
+        e.preventDefault();
+
+        if (!buttonConfig) {
+            contentButtonModal.removeClass('is-active');
+            return false;
+        }
+
+        var button_text = contentButtonModal.find('#_button_text').val();
+        var button_url = contentButtonModal.find('#_button_url').val();
+        var button_target = contentButtonModal.find('#_button_target').val();
+        var button_type = contentButtonModal.find('#_button_type').val();
+        var button_size = contentButtonModal.find('#_button_size').val();
+        var button_color = contentButtonModal.find('#_button_color').val();
+
+        buttonConfig.find('.button_text').val(button_text);
+        buttonConfig.find('.button_url').val(button_url);
+        buttonConfig.find('.button_target').val(button_target);
+        buttonConfig.find('.button_type').val(button_type);
+        buttonConfig.find('.button_size').val(button_size);
+        buttonConfig.find('.button_color').val(button_color);
+
+        contentButtonModal.removeClass('is-active');
+
     });
 
     // Background Color

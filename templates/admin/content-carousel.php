@@ -44,6 +44,20 @@
 						$_desc_color        = ! empty( $content_slider['description_color'] ) ? esc_attr( $content_slider['description_color'] ) : '#ffffff';
 						$_desc_bg_color     = ! empty( $content_slider['description_background_color'] ) ? esc_attr( $content_slider['description_background_color'] ) : '';
 
+						$_btn_1_text   = ! empty( $content_slider['button_one_text'] ) ? esc_attr( $content_slider['button_one_text'] ) : '';
+						$_btn_1_url    = ! empty( $content_slider['button_one_url'] ) ? esc_attr( $content_slider['button_one_url'] ) : '';
+						$_btn_1_target = ! empty( $content_slider['button_one_target'] ) ? esc_attr( $content_slider['button_one_target'] ) : '';
+						$_btn_1_type   = ! empty( $content_slider['button_one_type'] ) ? esc_attr( $content_slider['button_one_type'] ) : '';
+						$_btn_1_size   = ! empty( $content_slider['button_one_size'] ) ? esc_attr( $content_slider['button_one_size'] ) : '';
+						$_btn_1_color  = ! empty( $content_slider['button_one_color'] ) ? esc_attr( $content_slider['button_one_color'] ) : '';
+
+						$_btn_2_text   = ! empty( $content_slider['button_two_text'] ) ? esc_attr( $content_slider['button_two_text'] ) : '';
+						$_btn_2_url    = ! empty( $content_slider['button_two_url'] ) ? esc_attr( $content_slider['button_two_url'] ) : '';
+						$_btn_2_target = ! empty( $content_slider['button_two_target'] ) ? esc_attr( $content_slider['button_two_target'] ) : '';
+						$_btn_2_type   = ! empty( $content_slider['button_two_type'] ) ? esc_attr( $content_slider['button_two_type'] ) : '';
+						$_btn_2_size   = ! empty( $content_slider['button_two_size'] ) ? esc_attr( $content_slider['button_two_size'] ) : '';
+						$_btn_2_color  = ! empty( $content_slider['button_two_color'] ) ? esc_attr( $content_slider['button_two_color'] ) : '';
+
 
 						// Canvas style
 						$canvas_style = 'background-repeat: no-repeat;';
@@ -179,66 +193,80 @@
     <symbol id="icon-angle-up-alt" viewBox="0 0 20 20">
         <path d="M11 18h-2v-12l-4 4-2-1 7-7 7 7-2 1-4-4v12z"></path>
     </symbol>
+    <symbol id="icon-plus" viewBox="0 0 20 20">
+        <rect x="0" fill="none" width="20" height="20"/>
+        <g>
+            <path d="M17 9v2h-6v6H9v-6H3V9h6V3h2v6h6z"/>
+        </g>
+    </symbol>
 </svg>
 
 
-<div id="addContentButton" class="modal">
+<div id="contentButtonModal" class="modal">
     <div class="modal-background"></div>
     <div class="modal-card">
         <header class="modal-card-head">
-            <p class="modal-card-title">Button</p>
+            <p class="modal-card-title"><?php esc_html_e( 'Button', 'carousel-slider' ); ?></p>
             <button class="delete-icon" data-dismiss="modal"></button>
         </header>
 
         <section class="modal-card-body">
-            <table id="shapla-sc-form-table" class="form-table">
+            <table id="button-form-table" class="form-table">
 
                 <tr>
-                    <th scope="row"><label for="_button_text">Button Text</label></th>
+                    <th scope="row"><label
+                                for="_button_text"><?php esc_html_e( 'Button Text', 'carousel-slider' ); ?></label></th>
                     <td>
-                        <input class="widefat" name="_button_text" id="_button_text" value="" type="text">
-                        <span class="description">Add the button text</span>
+                        <input class="widefat" id="_button_text" value="" type="text">
+                        <span class="description"><?php esc_html_e( 'Add the button text', 'carousel-slider' ); ?></span>
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="_button_url">Button URL</label></th>
+                    <th scope="row"><label
+                                for="_button_url"><?php esc_html_e( 'Button URL', 'carousel-slider' ); ?></label></th>
                     <td>
-                        <input class="widefat" name="_button_url" id="_button_url" value="" type="url">
-                        <span class="description">Add the button‘s url e.g. http://example.com</span>
+                        <input class="widefat" id="_button_url" value="" type="url">
+                        <span class="description"><?php esc_html_e( 'Add the button url e.g. http://example.com', 'carousel-slider' ); ?></span>
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="_button_target">Open Button Link In</label></th>
+                    <th scope="row"><label
+                                for="_button_target"><?php esc_html_e( 'Open Button Link In', 'carousel-slider' ); ?></label>
+                    </th>
                     <td>
-                        <select class="widefat" name="_button_target" id="_button_target">
-                            <option value="_blank">New Window</option>
-                            <option value="_self">Same window</option>
+                        <select class="widefat" id="_button_target">
+                            <option value="_blank"><?php esc_html_e( 'New Window', 'carousel-slider' ); ?></option>
+                            <option value="_self"><?php esc_html_e( 'Same window', 'carousel-slider' ); ?></option>
                         </select>
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="_button_type">Button Type</label></th>
+                    <th scope="row"><label
+                                for="_button_type"><?php esc_html_e( 'Button Type', 'carousel-slider' ); ?></label></th>
                     <td>
-                        <select class="widefat" name="_button_type" id="_button_type">
-                            <option value="normal">Normal</option>
-                            <option value="stroke">Stroke</option>
+                        <select class="widefat" id="_button_type">
+                            <option value="normal"><?php esc_html_e( 'Normal', 'carousel-slider' ); ?></option>
+                            <option value="stroke"><?php esc_html_e( 'Stroke', 'carousel-slider' ); ?></option>
                         </select>
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="_button_size">Button Size</label></th>
+                    <th scope="row"><label
+                                for="_button_size"><?php esc_html_e( 'Button Size', 'carousel-slider' ); ?></label></th>
                     <td>
-                        <select class="widefat" name="_button_size" id="_button_size">
-                            <option value="large">Large</option>
-                            <option value="medium">Medium</option>
-                            <option value="small">Small</option>
+                        <select class="widefat" id="_button_size">
+                            <option value="large"><?php esc_html_e( 'Large', 'carousel-slider' ); ?></option>
+                            <option value="medium"><?php esc_html_e( 'Medium', 'carousel-slider' ); ?></option>
+                            <option value="small"><?php esc_html_e( 'Small', 'carousel-slider' ); ?></option>
                         </select>
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="_button_color">Button Color</label></th>
+                    <th scope="row"><label
+                                for="_button_color"><?php esc_html_e( 'Button Color', 'carousel-slider' ); ?></label>
+                    </th>
                     <td>
-                        <input type="text" name="_button_color" id="_button_color" class="color-picker"
+                        <input type="text" id="_button_color" class="color-picker"
                                data-alpha="true" data-default-color="#f44336">
                     </td>
                 </tr>
@@ -247,8 +275,9 @@
         </section>
 
         <footer class="modal-card-foot">
-            <a class="button button-primary">Add Button</a>
-            <a class="button" data-dismiss="modal">Cancel</a>
+            <a class="button button-primary"
+               id="saveContentButton"><?php esc_html_e( 'Add Button', 'carousel-slider' ); ?></a>
+            <a class="button" data-dismiss="modal"><?php esc_html_e( 'Cancel', 'carousel-slider' ); ?></a>
         </footer>
     </div>
 </div>

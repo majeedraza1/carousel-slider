@@ -383,6 +383,20 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 					'link_type'                    => sanitize_text_field( $slide['link_type'] ),
 					'slide_link'                   => esc_url_raw( $slide['slide_link'] ),
 					'link_target'                  => sanitize_text_field( $slide['link_target'] ),
+					// Slide Button #1
+					'button_one_text'              => sanitize_text_field( $slide['button_one_text'] ),
+					'button_one_url'               => esc_url_raw( $slide['button_one_url'] ),
+					'button_one_target'            => sanitize_text_field( $slide['button_one_target'] ),
+					'button_one_type'              => sanitize_text_field( $slide['button_one_type'] ),
+					'button_one_size'              => sanitize_text_field( $slide['button_one_size'] ),
+					'button_one_color'             => carousel_slider_sanitize_color( $slide['button_one_color'] ),
+					// Slide Button #2
+					'button_two_text'              => sanitize_text_field( $slide['button_two_text'] ),
+					'button_two_url'               => esc_url_raw( $slide['button_two_url'] ),
+					'button_two_target'            => sanitize_text_field( $slide['button_two_target'] ),
+					'button_two_type'              => sanitize_text_field( $slide['button_two_type'] ),
+					'button_two_size'              => sanitize_text_field( $slide['button_two_size'] ),
+					'button_two_color'             => carousel_slider_sanitize_color( $slide['button_two_color'] ),
 				);
 
 				return $_slide;

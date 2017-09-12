@@ -41,10 +41,57 @@
 
     <div class="sp-input-group" id="field-_button_one">
         <div class="sp-input-label">
-            <label for="_button_one"><?php esc_html_e( 'Button', 'carousel-slider' ); ?></label>
+            <label for="_button_one"><?php esc_html_e( 'Button #1', 'carousel-slider' ); ?></label>
         </div>
         <div class="sp-input-field">
-            <button class="button" data-toggle="modal" data-target="#addContentButton"><?php esc_html_e( 'Add button', 'carousel-slider' ); ?></button>
+            <div class="button_config">
+                <button class="button addContentButton"
+                        title="<?php esc_html_e( 'Add or Edit Button', 'carousel-slider' ); ?>">
+                    <svg class="icon icon-plus" width="20" height="26">
+                        <use xlink:href="#icon-plus"></use>
+                    </svg>
+                </button>
+                <input type="hidden" name="carousel_slider_content[<?php echo $slide_num; ?>][button_one_text]"
+                       class="button_text" value="<?php echo $_btn_1_text; ?>">
+                <input type="hidden" name="carousel_slider_content[<?php echo $slide_num; ?>][button_one_url]"
+                       class="button_url" value="<?php echo $_btn_1_url; ?>">
+                <input type="hidden" name="carousel_slider_content[<?php echo $slide_num; ?>][button_one_target]"
+                       class="button_target" value="<?php echo $_btn_1_target; ?>">
+                <input type="hidden" name="carousel_slider_content[<?php echo $slide_num; ?>][button_one_type]"
+                       class="button_type" value="<?php echo $_btn_1_type; ?>">
+                <input type="hidden" name="carousel_slider_content[<?php echo $slide_num; ?>][button_one_size]"
+                       class="button_size" value="<?php echo $_btn_1_size; ?>">
+                <input type="hidden" name="carousel_slider_content[<?php echo $slide_num; ?>][button_one_color]"
+                       class="button_color" value="<?php echo $_btn_1_color; ?>">
+            </div>
+        </div>
+    </div>
+
+    <div class="sp-input-group" id="field-_button_two">
+        <div class="sp-input-label">
+            <label for="_button_two"><?php esc_html_e( 'Button #2', 'carousel-slider' ); ?></label>
+        </div>
+        <div class="sp-input-field">
+            <div class="button_config">
+                <button class="button addContentButton"
+                        title="<?php esc_html_e( 'Add or Edit Button', 'carousel-slider' ); ?>">
+                    <svg class="icon icon-plus" width="20" height="26">
+                        <use xlink:href="#icon-plus"></use>
+                    </svg>
+                </button>
+                <input type="hidden" name="carousel_slider_content[<?php echo $slide_num; ?>][button_two_text]"
+                       class="button_text" value="<?php echo $_btn_2_text; ?>">
+                <input type="hidden" name="carousel_slider_content[<?php echo $slide_num; ?>][button_two_url]"
+                       class="button_url" value="<?php echo $_btn_2_url; ?>">
+                <input type="hidden" name="carousel_slider_content[<?php echo $slide_num; ?>][button_two_target]"
+                       class="button_target" value="<?php echo $_btn_2_target; ?>">
+                <input type="hidden" name="carousel_slider_content[<?php echo $slide_num; ?>][button_two_type]"
+                       class="button_type" value="<?php echo $_btn_2_type; ?>">
+                <input type="hidden" name="carousel_slider_content[<?php echo $slide_num; ?>][button_two_size]"
+                       class="button_size" value="<?php echo $_btn_2_size; ?>">
+                <input type="hidden" name="carousel_slider_content[<?php echo $slide_num; ?>][button_two_color]"
+                       class="button_color" value="<?php echo $_btn_2_color; ?>">
+            </div>
         </div>
     </div>
 
