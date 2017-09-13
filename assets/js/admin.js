@@ -466,7 +466,7 @@
     // Open modal
     $(document).on('click', '[data-toggle="modal"]', function (e) {
         e.preventDefault();
-        // $($(this).data('target')).addClass('is-active');
+        $($(this).data('target')).addClass('is-active');
     });
 
     // Close modal
