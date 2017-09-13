@@ -8,7 +8,11 @@
             <button class="button carousel-slider__add-slide" data-post-id="<?php echo $post->ID; ?>">Add Slide</button>
             <div id="carouselSliderContentInside">
 				<?php
-				$content_sliders = get_post_meta( $post->ID, '_content_slider', true );
+				$content_sliders  = get_post_meta( $post->ID, '_content_slider', true );
+				$content_settings = get_post_meta( $post->ID, '_content_slider_settings', true );
+				$_slide_height    = isset( $content_settings['slide_height'] ) ? $content_settings['slide_height'] : '400px';
+				$_content_width   = isset( $content_settings['content_width'] ) ? $content_settings['content_width'] : '850px';
+				$_slide_animation = isset( $content_settings['slide_animation'] ) ? $content_settings['slide_animation'] : 'fadeOut';
 				// Get WordPress media upload URL
 				$upload_link = esc_url( get_upload_iframe_src( 'image', $post->ID ) );
 				$num_to_word = new Carousel_Slider_Number_To_Word;
@@ -16,7 +20,7 @@
 				if ( is_array( $content_sliders ) && count( $content_sliders ) > 0 ) {
 					$total_sliders = count( $content_sliders );
 					foreach ( $content_sliders as $slide_num => $content_slider ) {
-						$_to_word = str_replace( array( ' ', '-' ), '_', $num_to_word->convert( $slide_num ) );
+						$_to_word = str_replace( array( ' ', ' - ' ), '_', $num_to_word->convert( $slide_num ) );
 
 
 						$_all_bg_position = carousel_slider_background_position();
@@ -172,6 +176,39 @@
 					}
 				}
 				?>
+            </div>
+
+            <div class="content_settings">
+                <div class="sp-input-group" id="field-_content_slide_height">
+                    <div class="sp-input-label">
+                        <label for="_content_slide_height"><?php esc_html_e( 'Slide Height', 'carousel-slider' ); ?></label>
+                        <p class="sp-input-desc"><?php esc_html_e( 'Enter a px, em, rem or vh value for slide height. ex: 100vh', 'carousel-slider' ); ?></p>
+                    </div>
+                    <div class="sp-input-field">
+                        <input type="text" name="content_settings[slide_height]" id="_content_slide_height"
+                               class="sp-input-text" value="<?php echo $_slide_height; ?>">
+                    </div>
+                </div>
+                <div class="sp-input-group" id="field-_content_slide_height">
+                    <div class="sp-input-label">
+                        <label for="_content_slide_height"><?php esc_html_e( 'Slider Content Max Width', 'carousel-slider' ); ?></label>
+                        <p class="sp-input-desc"><?php esc_html_e( 'Enter a px, em, rem or % value for slide height. ex: 960px', 'carousel-slider' ); ?></p>
+                    </div>
+                    <div class="sp-input-field">
+                        <input type="text" name="content_settings[content_width]" id="_content_content_width"
+                               class="sp-input-text" value="<?php echo $_content_width; ?>">
+                    </div>
+                </div>
+                <div class="sp-input-group" id="field-_content_slide_animation">
+                    <div class="sp-input-label">
+                        <label for="_content_slide_animation"><?php esc_html_e( 'Slider Animation', 'carousel-slider' ); ?></label>
+                        <p class="sp-input-desc"><?php printf( esc_html__( 'Enter CSS class for animation. %1$sfadeOut%2$s value is the only built-in CSS animate style.', 'carousel-slider' ), '<strong>', '</strong>' ); ?></p>
+                    </div>
+                    <div class="sp-input-field">
+                        <input type="text" name="content_settings[slide_animation]" id="_content_slide_animation"
+                               class="sp-input-text" value="<?php echo $_slide_animation; ?>">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
