@@ -125,7 +125,7 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ):
 		public function inline_script() {
 			if ( $this->should_load_scripts() ):
 				?>
-                <svg width="1" height="1">
+                <svg width="1" height="1" style="display: none;">
                     <symbol id="icon-arrow-left" viewBox="0 0 20 20">
                         <path d="M14 5l-5 5 5 5-1 2-7-7 7-7z"></path>
                     </symbol>
