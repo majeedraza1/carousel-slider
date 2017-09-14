@@ -133,4 +133,15 @@
             opacity: 1;
         }
     }
+
+    // Dots shape
+    &.dots-circle {
+        .owl-dots {
+            .owl-dot {
+                span {
+                    border-radius: 9999px;
+                }
+            }
+        }
+    }
 }

@@ -128,6 +128,9 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
 
 			$_bullet_position = get_post_meta( $post->ID, '_bullet_position', true );
 			$_bullet_position = empty( $_bullet_position ) ? 'center' : $_bullet_position;
+
+			$_bullet_shape = get_post_meta( $post->ID, '_bullet_shape', true );
+			$_bullet_shape = empty( $_bullet_shape ) ? 'square' : $_bullet_shape;
 			?>
             <p>
                 <label for="_nav_button">
@@ -205,6 +208,17 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
                 <span class="cs-tooltip"
                       title="<?php esc_html_e( 'Enter bullet size in pixels.', 'carousel-slider' ); ?>"></span>
             </p><!-- Arrow Size -->
+            <p>
+                <label for="_bullet_shape">
+                    <strong><?php esc_html_e( 'Bullet Shape', 'carousel-slider' ); ?></strong>
+                </label>
+                <select name="carousel_slider[_bullet_shape]" id="_bullet_shape" class="small-text">
+                    <option value="square" <?php selected( $_bullet_shape, 'square' ); ?>><?php esc_html_e( 'Square', 'carousel-slider' ); ?></option>
+                    <option value="circle" <?php selected( $_bullet_shape, 'circle' ); ?>><?php esc_html_e( 'Circle', 'carousel-slider' ); ?></option>
+                </select>
+                <span class="cs-tooltip"
+                      title="<?php esc_html_e( 'Choose bullet nav shape.', 'carousel-slider' ); ?>"></span>
+            </p><!-- Arrow Position -->
 
             <hr>
             <p>

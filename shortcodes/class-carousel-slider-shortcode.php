@@ -118,6 +118,7 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 			$_arrow_position   = get_post_meta( $id, '_arrow_position', true );
 			$_dot_nav          = get_post_meta( $id, '_dot_nav', true );
 			$_bullet_position  = get_post_meta( $id, '_bullet_position', true );
+			$_bullet_shape     = get_post_meta( $id, '_bullet_shape', true );
 
 			$class = 'owl-carousel carousel-slider';
 
@@ -153,6 +154,13 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 				$class .= ' dots-right';
 			} else {
 				$class .= ' dots-center';
+			}
+
+			// Dots shape
+			if ( $_bullet_shape == 'circle' ) {
+				$class .= ' dots-circle';
+			} else {
+				$class .= ' dots-square';
 			}
 
 			$options_array = array(
