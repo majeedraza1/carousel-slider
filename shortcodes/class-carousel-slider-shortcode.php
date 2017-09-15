@@ -49,7 +49,7 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 
 			if ( $slide_type == 'post-carousel' ) {
 				ob_start();
-				require CAROUSEL_SLIDER_TEMPLATES . '/post-carousel.php';
+				require CAROUSEL_SLIDER_TEMPLATES . '/public/post-carousel.php';
 				$html = ob_get_contents();
 				ob_end_clean();
 
@@ -58,7 +58,7 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 
 			if ( $slide_type == 'video-carousel' ) {
 				ob_start();
-				require CAROUSEL_SLIDER_TEMPLATES . '/video-carousel.php';
+				require CAROUSEL_SLIDER_TEMPLATES . '/public/video-carousel.php';
 				$html = ob_get_contents();
 				ob_end_clean();
 
@@ -67,7 +67,7 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 
 			if ( $slide_type == 'image-carousel-url' ) {
 				ob_start();
-				require CAROUSEL_SLIDER_TEMPLATES . '/images-carousel-url.php';
+				require CAROUSEL_SLIDER_TEMPLATES . '/public/images-carousel-url.php';
 				$html = ob_get_contents();
 				ob_end_clean();
 
@@ -76,7 +76,7 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 
 			if ( $slide_type == 'image-carousel' ) {
 				ob_start();
-				require CAROUSEL_SLIDER_TEMPLATES . '/images-carousel.php';
+				require CAROUSEL_SLIDER_TEMPLATES . '/public/images-carousel.php';
 				$html = ob_get_contents();
 				ob_end_clean();
 
@@ -85,7 +85,7 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 
 			if ( $slide_type == 'product-carousel' ) {
 				ob_start();
-				require CAROUSEL_SLIDER_TEMPLATES . '/product-carousel.php';
+				require CAROUSEL_SLIDER_TEMPLATES . '/public/product-carousel.php';
 				$html = ob_get_contents();
 				ob_end_clean();
 
@@ -94,7 +94,7 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 
 			if ( $slide_type == 'content-carousel' ) {
 				ob_start();
-				require CAROUSEL_SLIDER_TEMPLATES . '/content-carousel.php';
+				require CAROUSEL_SLIDER_TEMPLATES . '/public/content-carousel.php';
 				$html = ob_get_contents();
 				ob_end_clean();
 

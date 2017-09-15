@@ -378,9 +378,11 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 					// Slide Style
 					'content_alignment'            => sanitize_text_field( $slide['content_alignment'] ),
 					'heading_font_size'            => sanitize_text_field( $slide['heading_font_size'] ),
+					'heading_gutter'               => sanitize_text_field( $slide['heading_gutter'] ),
 					'heading_color'                => carousel_slider_sanitize_color( $slide['heading_color'] ),
 					'heading_background_color'     => carousel_slider_sanitize_color( $slide['heading_background_color'] ),
 					'description_font_size'        => sanitize_text_field( $slide['description_font_size'] ),
+					'description_gutter'           => sanitize_text_field( $slide['description_gutter'] ),
 					'description_color'            => carousel_slider_sanitize_color( $slide['description_color'] ),
 					'description_background_color' => carousel_slider_sanitize_color( $slide['description_background_color'] ),
 					// Slide Link
@@ -393,6 +395,7 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 					'button_one_target'            => sanitize_text_field( $slide['button_one_target'] ),
 					'button_one_type'              => sanitize_text_field( $slide['button_one_type'] ),
 					'button_one_size'              => sanitize_text_field( $slide['button_one_size'] ),
+					'button_one_bg_color'          => carousel_slider_sanitize_color( $slide['button_one_bg_color'] ),
 					'button_one_color'             => carousel_slider_sanitize_color( $slide['button_one_color'] ),
 					// Slide Button #2
 					'button_two_text'              => sanitize_text_field( $slide['button_two_text'] ),
@@ -400,6 +403,7 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 					'button_two_target'            => sanitize_text_field( $slide['button_two_target'] ),
 					'button_two_type'              => sanitize_text_field( $slide['button_two_type'] ),
 					'button_two_size'              => sanitize_text_field( $slide['button_two_size'] ),
+					'button_two_bg_color'          => carousel_slider_sanitize_color( $slide['button_two_bg_color'] ),
 					'button_two_color'             => carousel_slider_sanitize_color( $slide['button_two_color'] ),
 				);
 

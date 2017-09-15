@@ -16,13 +16,15 @@ $settings        = get_post_meta( $id, '_content_slider_settings', true );
 		$_slide_heading     = isset( $slide['slide_heading'] ) ? $slide['slide_heading'] : '';
 		$_slide_description = isset( $slide['slide_description'] ) ? $slide['slide_description'] : '';
 		// Slide Style
-		$_content_alignment = ! empty( $slide['content_alignment'] ) ? esc_attr( $slide['content_alignment'] ) : 'left';
-		$_heading_font_size = ! empty( $slide['heading_font_size'] ) ? esc_attr( $slide['heading_font_size'] ) : '60px';
-		$_heading_color     = ! empty( $slide['heading_color'] ) ? esc_attr( $slide['heading_color'] ) : '#ffffff';
-		$_heading_bg_color  = ! empty( $slide['heading_background_color'] ) ? esc_attr( $slide['heading_background_color'] ) : '';
-		$_desc_font_size    = ! empty( $slide['description_font_size'] ) ? esc_attr( $slide['description_font_size'] ) : '24px';
-		$_desc_color        = ! empty( $slide['description_color'] ) ? esc_attr( $slide['description_color'] ) : '#ffffff';
-		$_desc_bg_color     = ! empty( $slide['description_background_color'] ) ? esc_attr( $slide['description_background_color'] ) : '';
+		$_content_alignment  = ! empty( $slide['content_alignment'] ) ? esc_attr( $slide['content_alignment'] ) : 'left';
+		$_heading_font_size  = ! empty( $slide['heading_font_size'] ) ? esc_attr( $slide['heading_font_size'] ) : '60px';
+		$_heading_gutter     = ! empty( $slide['heading_gutter'] ) ? esc_attr( $slide['heading_gutter'] ) : '1rem';
+		$_heading_color      = ! empty( $slide['heading_color'] ) ? esc_attr( $slide['heading_color'] ) : '#ffffff';
+		$_heading_bg_color   = ! empty( $slide['heading_background_color'] ) ? esc_attr( $slide['heading_background_color'] ) : '';
+		$_desc_font_size     = ! empty( $slide['description_font_size'] ) ? esc_attr( $slide['description_font_size'] ) : '24px';
+		$_description_gutter = ! empty( $slide['description_gutter'] ) ? esc_attr( $slide['description_gutter'] ) : '1rem';
+		$_desc_color         = ! empty( $slide['description_color'] ) ? esc_attr( $slide['description_color'] ) : '#ffffff';
+		$_desc_bg_color      = ! empty( $slide['description_background_color'] ) ? esc_attr( $slide['description_background_color'] ) : '';
 
 		// Slide Background
 		$_img_bg_position = ! empty( $slide['img_bg_position'] ) ? esc_attr( $slide['img_bg_position'] ) : 'center center';
@@ -39,20 +41,22 @@ $settings        = get_post_meta( $id, '_content_slider_settings', true );
 			array( '_self', '_blank' ) ) ? esc_url( $slide['link_target'] ) : '_self';
 
 		// Slide Button One
-		$_btn_1_text   = ! empty( $slide['button_one_text'] ) ? esc_attr( $slide['button_one_text'] ) : '';
-		$_btn_1_url    = ! empty( $slide['button_one_url'] ) ? esc_url( $slide['button_one_url'] ) : '';
-		$_btn_1_target = ! empty( $slide['button_one_target'] ) ? esc_attr( $slide['button_one_target'] ) : '';
-		$_btn_1_type   = ! empty( $slide['button_one_type'] ) ? esc_attr( $slide['button_one_type'] ) : '';
-		$_btn_1_size   = ! empty( $slide['button_one_size'] ) ? esc_attr( $slide['button_one_size'] ) : '';
-		$_btn_1_color  = ! empty( $slide['button_one_color'] ) ? carousel_slider_sanitize_color( $slide['button_one_color'] ) : '';
+		$_btn_1_text     = ! empty( $slide['button_one_text'] ) ? esc_attr( $slide['button_one_text'] ) : '';
+		$_btn_1_url      = ! empty( $slide['button_one_url'] ) ? esc_url( $slide['button_one_url'] ) : '';
+		$_btn_1_target   = ! empty( $slide['button_one_target'] ) ? esc_attr( $slide['button_one_target'] ) : '_self';
+		$_btn_1_type     = ! empty( $slide['button_one_type'] ) ? esc_attr( $slide['button_one_type'] ) : 'normal';
+		$_btn_1_size     = ! empty( $slide['button_one_size'] ) ? esc_attr( $slide['button_one_size'] ) : 'medium';
+		$_btn_1_bg_color = ! empty( $slide['button_one_bg_color'] ) ? carousel_slider_sanitize_color( $slide['button_one_bg_color'] ) : '#00d1b2';
+		$_btn_1_color    = ! empty( $slide['button_one_color'] ) ? carousel_slider_sanitize_color( $slide['button_one_color'] ) : '#ffffff';
 
 		// Slide Button Two
-		$_btn_2_text   = ! empty( $slide['button_two_text'] ) ? esc_attr( $slide['button_two_text'] ) : '';
-		$_btn_2_url    = ! empty( $slide['button_two_url'] ) ? esc_url( $slide['button_two_url'] ) : '';
-		$_btn_2_target = ! empty( $slide['button_two_target'] ) ? esc_attr( $slide['button_two_target'] ) : '';
-		$_btn_2_type   = ! empty( $slide['button_two_type'] ) ? esc_attr( $slide['button_two_type'] ) : '';
-		$_btn_2_size   = ! empty( $slide['button_two_size'] ) ? esc_attr( $slide['button_two_size'] ) : '';
-		$_btn_2_color  = ! empty( $slide['button_two_color'] ) ? carousel_slider_sanitize_color( $slide['button_two_color'] ) : '';
+		$_btn_2_text     = ! empty( $slide['button_two_text'] ) ? esc_attr( $slide['button_two_text'] ) : '';
+		$_btn_2_url      = ! empty( $slide['button_two_url'] ) ? esc_url( $slide['button_two_url'] ) : '';
+		$_btn_2_target   = ! empty( $slide['button_two_target'] ) ? esc_attr( $slide['button_two_target'] ) : '_self';
+		$_btn_2_size     = ! empty( $slide['button_two_size'] ) ? esc_attr( $slide['button_two_size'] ) : 'medium';
+		$_btn_2_type     = ! empty( $slide['button_two_type'] ) ? esc_attr( $slide['button_two_type'] ) : 'normal';
+		$_btn_2_bg_color = ! empty( $slide['button_two_bg_color'] ) ? carousel_slider_sanitize_color( $slide['button_two_bg_color'] ) : '#00d1b2';
+		$_btn_2_color    = ! empty( $slide['button_two_color'] ) ? carousel_slider_sanitize_color( $slide['button_two_color'] ) : '#ffffff';
 
 		// Slide background style
 		$canvas_style = '';
@@ -98,6 +102,8 @@ $settings        = get_post_meta( $id, '_content_slider_settings', true );
 				$heading_wrapper_style .= 'padding: 0 1rem;';
 			}
 
+			$heading_wrapper_style .= 'margin-bottom: ' . $_heading_gutter . ';';
+
 			$html .= '<div class="heading">';
 			$html .= '<div class="heading-title-wrapper" style="' . $heading_wrapper_style . '">';
 			$html .= '<h2 class="heading-title" style="' . $heading_style . '">' . wp_kses_post( $_slide_heading ) . "</h2>";
@@ -111,6 +117,8 @@ $settings        = get_post_meta( $id, '_content_slider_settings', true );
 			$desc_wrapper_style = '';
 			$desc_style         .= 'font-size: ' . $_desc_font_size . ';';
 			$desc_style         .= 'color: ' . $_desc_color . ';';
+
+			$desc_wrapper_style .= 'margin-bottom: ' . $_description_gutter . ';';
 			if ( ! empty( $_desc_bg_color ) ) {
 				$desc_wrapper_style .= 'background-color: ' . $_desc_bg_color . ';';
 				$desc_wrapper_style .= 'padding: 0 1rem;';
@@ -130,16 +138,20 @@ $settings        = get_post_meta( $id, '_content_slider_settings', true );
 			// Slide Button #1
 			if ( carousel_slider_is_url( $_btn_1_url ) ) {
 				$_btn_1_class = 'button cs-button';
+				$_btn_1_class .= ' cs-button-' . $slide_id . '-1';
 				$_btn_1_class .= ' cs-button--' . $_btn_1_type;
 				$_btn_1_class .= ' cs-button--' . $_btn_1_size;
 
 				$html .= '<span class="buttons-wrapper-one">';
-				$html .= '<a class="' . $_btn_1_class . '" href="' . $_btn_1_url . '" target="' . $_btn_1_target . '">' . esc_attr( $_btn_1_text ) . "</a>";
+				$html .= '<a class="' . $_btn_1_class . '" data-btn-type="' . $_btn_1_type . '" data-btn-bg-color="' .
+				         $_btn_1_bg_color . '" data-btn-color="' . $_btn_1_color . '" href="' .
+				         $_btn_1_url . '" target="' . $_btn_1_target . '">' . esc_attr( $_btn_1_text ) . "</a>";
 				$html .= '</span>';
 			}
 			// Slide Button #2
 			if ( carousel_slider_is_url( $_btn_2_url ) ) {
 				$_btn_2_class = 'button cs-button';
+				$_btn_2_class .= ' cs-button-' . $slide_id . '-2';
 				$_btn_2_class .= ' cs-button--' . $_btn_2_type;
 				$_btn_2_class .= ' cs-button--' . $_btn_2_size;
 

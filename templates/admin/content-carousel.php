@@ -40,27 +40,31 @@
 						$_slide_link  = ! empty( $content_slider['slide_link'] ) ? esc_url( $content_slider['slide_link'] ) : '';
 						$_link_target = ! empty( $content_slider['link_target'] ) ? esc_attr( $content_slider['link_target'] ) : '_blank';
 						// Slide Style
-						$_content_alignment = ! empty( $content_slider['content_alignment'] ) ? esc_attr( $content_slider['content_alignment'] ) : 'left';
-						$_heading_font_size = ! empty( $content_slider['heading_font_size'] ) ? esc_attr( $content_slider['heading_font_size'] ) : '60px';
-						$_heading_color     = ! empty( $content_slider['heading_color'] ) ? esc_attr( $content_slider['heading_color'] ) : '#ffffff';
-						$_heading_bg_color  = ! empty( $content_slider['heading_background_color'] ) ? esc_attr( $content_slider['heading_background_color'] ) : '';
-						$_desc_font_size    = ! empty( $content_slider['description_font_size'] ) ? esc_attr( $content_slider['description_font_size'] ) : '24px';
-						$_desc_color        = ! empty( $content_slider['description_color'] ) ? esc_attr( $content_slider['description_color'] ) : '#ffffff';
-						$_desc_bg_color     = ! empty( $content_slider['description_background_color'] ) ? esc_attr( $content_slider['description_background_color'] ) : '';
+						$_content_alignment  = ! empty( $content_slider['content_alignment'] ) ? esc_attr( $content_slider['content_alignment'] ) : 'left';
+						$_heading_font_size  = ! empty( $content_slider['heading_font_size'] ) ? esc_attr( $content_slider['heading_font_size'] ) : '60px';
+						$_heading_gutter     = ! empty( $content_slider['heading_gutter'] ) ? esc_attr( $content_slider['heading_gutter'] ) : '1rem';
+						$_heading_color      = ! empty( $content_slider['heading_color'] ) ? esc_attr( $content_slider['heading_color'] ) : '#ffffff';
+						$_heading_bg_color   = ! empty( $content_slider['heading_background_color'] ) ? esc_attr( $content_slider['heading_background_color'] ) : '';
+						$_desc_font_size     = ! empty( $content_slider['description_font_size'] ) ? esc_attr( $content_slider['description_font_size'] ) : '24px';
+						$_description_gutter = ! empty( $content_slider['description_gutter'] ) ? esc_attr( $content_slider['description_gutter'] ) : '1rem';
+						$_desc_color         = ! empty( $content_slider['description_color'] ) ? esc_attr( $content_slider['description_color'] ) : '#ffffff';
+						$_desc_bg_color      = ! empty( $content_slider['description_background_color'] ) ? esc_attr( $content_slider['description_background_color'] ) : '';
 
-						$_btn_1_text   = ! empty( $content_slider['button_one_text'] ) ? esc_attr( $content_slider['button_one_text'] ) : '';
-						$_btn_1_url    = ! empty( $content_slider['button_one_url'] ) ? esc_attr( $content_slider['button_one_url'] ) : '';
-						$_btn_1_target = ! empty( $content_slider['button_one_target'] ) ? esc_attr( $content_slider['button_one_target'] ) : '';
-						$_btn_1_type   = ! empty( $content_slider['button_one_type'] ) ? esc_attr( $content_slider['button_one_type'] ) : '';
-						$_btn_1_size   = ! empty( $content_slider['button_one_size'] ) ? esc_attr( $content_slider['button_one_size'] ) : '';
-						$_btn_1_color  = ! empty( $content_slider['button_one_color'] ) ? esc_attr( $content_slider['button_one_color'] ) : '';
+						$_btn_1_text     = ! empty( $content_slider['button_one_text'] ) ? esc_attr( $content_slider['button_one_text'] ) : '';
+						$_btn_1_url      = ! empty( $content_slider['button_one_url'] ) ? esc_attr( $content_slider['button_one_url'] ) : '';
+						$_btn_1_target   = ! empty( $content_slider['button_one_target'] ) ? esc_attr( $content_slider['button_one_target'] ) : '_self';
+						$_btn_1_type     = ! empty( $content_slider['button_one_type'] ) ? esc_attr( $content_slider['button_one_type'] ) : 'normal';
+						$_btn_1_size     = ! empty( $content_slider['button_one_size'] ) ? esc_attr( $content_slider['button_one_size'] ) : 'medium';
+						$_btn_1_bg_color = ! empty( $content_slider['button_one_bg_color'] ) ? esc_attr( $content_slider['button_one_bg_color'] ) : '#00d1b2';
+						$_btn_1_color    = ! empty( $content_slider['button_one_color'] ) ? esc_attr( $content_slider['button_one_color'] ) : '#ffffff';
 
-						$_btn_2_text   = ! empty( $content_slider['button_two_text'] ) ? esc_attr( $content_slider['button_two_text'] ) : '';
-						$_btn_2_url    = ! empty( $content_slider['button_two_url'] ) ? esc_attr( $content_slider['button_two_url'] ) : '';
-						$_btn_2_target = ! empty( $content_slider['button_two_target'] ) ? esc_attr( $content_slider['button_two_target'] ) : '';
-						$_btn_2_type   = ! empty( $content_slider['button_two_type'] ) ? esc_attr( $content_slider['button_two_type'] ) : '';
-						$_btn_2_size   = ! empty( $content_slider['button_two_size'] ) ? esc_attr( $content_slider['button_two_size'] ) : '';
-						$_btn_2_color  = ! empty( $content_slider['button_two_color'] ) ? esc_attr( $content_slider['button_two_color'] ) : '';
+						$_btn_2_text     = ! empty( $content_slider['button_two_text'] ) ? esc_attr( $content_slider['button_two_text'] ) : '';
+						$_btn_2_url      = ! empty( $content_slider['button_two_url'] ) ? esc_attr( $content_slider['button_two_url'] ) : '';
+						$_btn_2_target   = ! empty( $content_slider['button_two_target'] ) ? esc_attr( $content_slider['button_two_target'] ) : '_self';
+						$_btn_2_type     = ! empty( $content_slider['button_two_type'] ) ? esc_attr( $content_slider['button_two_type'] ) : 'normal';
+						$_btn_2_size     = ! empty( $content_slider['button_two_size'] ) ? esc_attr( $content_slider['button_two_size'] ) : 'medium';
+						$_btn_2_bg_color = ! empty( $content_slider['button_two_bg_color'] ) ? esc_attr( $content_slider['button_two_bg_color'] ) : '#00d1b2';
+						$_btn_2_color    = ! empty( $content_slider['button_two_color'] ) ? esc_attr( $content_slider['button_two_color'] ) : '#ffffff';
 
 
 						// Canvas style
@@ -148,10 +152,10 @@
                                                     <a href="#carousel-slider-tab-content"><?php esc_html_e( 'Slide Content', 'carousel-slider' ); ?></a>
                                                 </li>
                                                 <li>
-                                                    <a href="#carousel-slider-tab-link"><?php esc_html_e( 'Slide Link', 'carousel-slider' ); ?></a>
+                                                    <a href="#carousel-slider-tab-background"><?php esc_html_e( 'Slide Background', 'carousel-slider' ); ?></a>
                                                 </li>
                                                 <li>
-                                                    <a href="#carousel-slider-tab-background"><?php esc_html_e( 'Slide Background', 'carousel-slider' ); ?></a>
+                                                    <a href="#carousel-slider-tab-link"><?php esc_html_e( 'Slide Link', 'carousel-slider' ); ?></a>
                                                 </li>
                                                 <li>
                                                     <a href="#carousel-slider-tab-style"><?php esc_html_e( 'Slide Style', 'carousel-slider' ); ?></a>
@@ -230,91 +234,4 @@
     <symbol id="icon-angle-up-alt" viewBox="0 0 20 20">
         <path d="M11 18h-2v-12l-4 4-2-1 7-7 7 7-2 1-4-4v12z"></path>
     </symbol>
-    <symbol id="icon-plus" viewBox="0 0 20 20">
-        <rect x="0" fill="none" width="20" height="20"/>
-        <g>
-            <path d="M17 9v2h-6v6H9v-6H3V9h6V3h2v6h6z"/>
-        </g>
-    </symbol>
 </svg>
-
-
-<div id="contentButtonModal" class="modal">
-    <div class="modal-background"></div>
-    <div class="modal-card">
-        <header class="modal-card-head">
-            <p class="modal-card-title"><?php esc_html_e( 'Button', 'carousel-slider' ); ?></p>
-            <button class="delete-icon" data-dismiss="modal"></button>
-        </header>
-
-        <section class="modal-card-body">
-            <table id="button-form-table" class="form-table">
-
-                <tr>
-                    <th scope="row"><label
-                                for="_button_text"><?php esc_html_e( 'Button Text', 'carousel-slider' ); ?></label></th>
-                    <td>
-                        <input class="widefat" id="_button_text" value="" type="text">
-                        <span class="description"><?php esc_html_e( 'Add the button text', 'carousel-slider' ); ?></span>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row"><label
-                                for="_button_url"><?php esc_html_e( 'Button URL', 'carousel-slider' ); ?></label></th>
-                    <td>
-                        <input class="widefat" id="_button_url" value="" type="url">
-                        <span class="description"><?php esc_html_e( 'Add the button url e.g. http://example.com', 'carousel-slider' ); ?></span>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row"><label
-                                for="_button_target"><?php esc_html_e( 'Open Button Link In', 'carousel-slider' ); ?></label>
-                    </th>
-                    <td>
-                        <select class="widefat" id="_button_target">
-                            <option value="_blank"><?php esc_html_e( 'New Window', 'carousel-slider' ); ?></option>
-                            <option value="_self"><?php esc_html_e( 'Same window', 'carousel-slider' ); ?></option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row"><label
-                                for="_button_type"><?php esc_html_e( 'Button Type', 'carousel-slider' ); ?></label></th>
-                    <td>
-                        <select class="widefat" id="_button_type">
-                            <option value="normal"><?php esc_html_e( 'Normal', 'carousel-slider' ); ?></option>
-                            <option value="stroke"><?php esc_html_e( 'Stroke', 'carousel-slider' ); ?></option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row"><label
-                                for="_button_size"><?php esc_html_e( 'Button Size', 'carousel-slider' ); ?></label></th>
-                    <td>
-                        <select class="widefat" id="_button_size">
-                            <option value="large"><?php esc_html_e( 'Large', 'carousel-slider' ); ?></option>
-                            <option value="medium"><?php esc_html_e( 'Medium', 'carousel-slider' ); ?></option>
-                            <option value="small"><?php esc_html_e( 'Small', 'carousel-slider' ); ?></option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row"><label
-                                for="_button_color"><?php esc_html_e( 'Button Color', 'carousel-slider' ); ?></label>
-                    </th>
-                    <td>
-                        <input type="text" id="_button_color" class="color-picker"
-                               data-alpha="true" data-default-color="#f44336">
-                    </td>
-                </tr>
-
-            </table>
-        </section>
-
-        <footer class="modal-card-foot">
-            <a class="button button-primary"
-               id="saveContentButton"><?php esc_html_e( 'Add Button', 'carousel-slider' ); ?></a>
-            <a class="button" data-dismiss="modal"><?php esc_html_e( 'Cancel', 'carousel-slider' ); ?></a>
-        </footer>
-    </div>
-</div>

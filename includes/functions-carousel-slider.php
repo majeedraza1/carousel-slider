@@ -412,7 +412,7 @@ if ( ! function_exists( 'carousel_slider_inline_style' ) ) {
 		$_bullet_size = get_post_meta( $id, '_bullet_size', true );
 		$_bullet_size = empty( $_bullet_size ) ? 10 : absint( $_bullet_size );
 
-		echo "<style>";
+		echo "<style type=\"text/css\">";
 
 		// Arrows Nav
 		echo "
@@ -479,6 +479,65 @@ if ( ! function_exists( 'carousel_slider_inline_style' ) ) {
                     color: {$_product_btn_bg_color};
                 }
 		    ";
+		}
+
+		// Content Carousel
+		if ( $slide_type == 'content-carousel' && $content_sliders ) {
+			foreach ( $content_sliders as $slide_id => $slide ) {
+				if ( isset( $slide['link_type'] ) && ( $slide['link_type'] == 'button' ) ) {
+
+					$_btn_1_type     = ! empty( $slide['button_one_type'] ) ? esc_attr( $slide['button_one_type'] ) : 'normal';
+					$_btn_1_bg_color = ! empty( $slide['button_one_bg_color'] ) ? carousel_slider_sanitize_color( $slide['button_one_bg_color'] ) : '#00d1b2';
+					$_btn_1_color    = ! empty( $slide['button_one_color'] ) ? carousel_slider_sanitize_color( $slide['button_one_color'] ) : '#ffffff';
+
+					if ( $_btn_1_type == 'stroke' ) {
+						echo "
+						#id-{$id} .cs-button-{$slide_id}-1 {
+							border: 1px solid {$_btn_1_bg_color};
+							background-color: transparent;
+							color: {$_btn_1_bg_color};
+						}
+						#id-{$id} .cs-button-{$slide_id}-1:hover {
+							border: 1px solid {$_btn_1_bg_color};
+							background-color: {$_btn_1_bg_color};
+							color: {$_btn_1_color};
+						}
+					";
+					} else {
+						echo "
+						#id-{$id} .cs-button-{$slide_id}-1 {
+							background-color: {$_btn_1_bg_color};
+							color: {$_btn_1_color};
+						}
+					";
+					}
+
+					$_btn_2_type     = ! empty( $slide['button_two_type'] ) ? esc_attr( $slide['button_two_type'] ) : 'normal';
+					$_btn_2_bg_color = ! empty( $slide['button_two_bg_color'] ) ? carousel_slider_sanitize_color( $slide['button_two_bg_color'] ) : '#00d1b2';
+					$_btn_2_color    = ! empty( $slide['button_two_color'] ) ? carousel_slider_sanitize_color( $slide['button_two_color'] ) : '#ffffff';
+					if ( $_btn_2_type == 'stroke' ) {
+						echo "
+						#id-{$id} .cs-button-{$slide_id}-2 {
+							border: 1px solid {$_btn_2_bg_color};
+							background-color: transparent;
+							color: {$_btn_2_bg_color};
+						}
+						#id-{$id} .cs-button-{$slide_id}-2:hover {
+							border: 1px solid {$_btn_2_bg_color};
+							background-color: {$_btn_2_bg_color};
+							color: {$_btn_2_color};
+						}
+					";
+					} else {
+						echo "
+						#id-{$id} .cs-button-{$slide_id}-2 {
+							background-color: {$_btn_2_bg_color};
+							color: {$_btn_2_color};
+						}
+					";
+					}
+				}
+			}
 		}
 
 		echo "</style>";

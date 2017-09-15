@@ -27,6 +27,17 @@
         </div>
     </div>
 
+    <div class="sp-input-group" id="field-_heading_gutter">
+        <div class="sp-input-label">
+            <label for="_heading_gutter"><?php esc_html_e( 'Spacing/Gutter', 'carousel-slider' ); ?></label>
+            <p class="sp-input-desc"><?php esc_html_e( 'Enter gutter (space between description and heading) in px, em or rem, ex: 3rem', 'carousel-slider' ); ?></p>
+        </div>
+        <div class="sp-input-field">
+            <input id="_heading_gutter" class="regular-text" value="<?php echo $_heading_gutter; ?>"
+                   name="carousel_slider_content[<?php echo $slide_num; ?>][heading_gutter]">
+        </div>
+    </div>
+
     <div class="sp-input-group" id="field-_heading_color">
         <div class="sp-input-label">
             <label for="_heading_color"><?php esc_html_e( 'Heading Color', 'carousel-slider' ); ?></label>
@@ -64,6 +75,17 @@
                    name="carousel_slider_content[<?php echo $slide_num; ?>][description_font_size]">
         </div>
     </div><!-- Description Font Size -->
+
+    <div class="sp-input-group" id="field-_description_gutter">
+        <div class="sp-input-label">
+            <label for="_description_gutter"><?php esc_html_e( 'Description Spacing/Gutter', 'carousel-slider' ); ?></label>
+            <p class="sp-input-desc"><?php esc_html_e( 'Enter gutter (space between description and buttons) in px, em or rem, ex: 3rem', 'carousel-slider' ); ?></p>
+        </div>
+        <div class="sp-input-field">
+            <input id="_description_gutter" class="regular-text" value="<?php echo $_description_gutter; ?>"
+                   name="carousel_slider_content[<?php echo $slide_num; ?>][description_gutter]">
+        </div>
+    </div>
 
     <div class="sp-input-group" id="field-_description_color">
         <div class="sp-input-label">
