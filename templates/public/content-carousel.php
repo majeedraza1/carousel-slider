@@ -78,8 +78,15 @@ $settings        = get_post_meta( $id, '_content_slider_settings', true );
 			$content_style .= 'align-items: center;';
 		}
 
+		$slide_padding   = isset( $settings['slide_padding'] ) && is_array( $settings['slide_padding'] ) ? $settings['slide_padding'] : array();
+		$_padding_top    = isset( $slide_padding['top'] ) ? esc_attr( $slide_padding['top'] ) : '1rem';
+		$_padding_right  = isset( $slide_padding['right'] ) ? esc_attr( $slide_padding['right'] ) : '3rem';
+		$_padding_bottom = isset( $slide_padding['bottom'] ) ? esc_attr( $slide_padding['bottom'] ) : '1rem';
+		$_padding_left   = isset( $slide_padding['left'] ) ? esc_attr( $slide_padding['left'] ) : '3rem';
+
 		$content_style .= isset( $settings['slide_height'] ) ? 'min-height: ' . $settings['slide_height'] . ';' : '';
 		$content_style .= isset( $settings['content_width'] ) ? 'max-width: ' . $settings['content_width'] . ';' : '850px';
+		$content_style .= 'padding: ' . $_padding_top . ' ' . $_padding_right . ' ' . $_padding_bottom . ' ' . $_padding_left . '';
 
 		$html = '';
 

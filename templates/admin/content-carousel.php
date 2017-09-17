@@ -13,6 +13,9 @@
 				$_slide_height    = isset( $content_settings['slide_height'] ) ? $content_settings['slide_height'] : '400px';
 				$_content_width   = isset( $content_settings['content_width'] ) ? $content_settings['content_width'] : '850px';
 				$_slide_animation = isset( $content_settings['slide_animation'] ) ? $content_settings['slide_animation'] : 'fadeOut';
+				$_slide_padding   = isset( $content_settings['slide_padding'] ) ? $content_settings['slide_padding'] : array();
+
+
 				// Get WordPress media upload URL
 				$upload_link = esc_url( get_upload_iframe_src( 'image', $post->ID ) );
 				$num_to_word = new Carousel_Slider_Number_To_Word;
@@ -215,6 +218,29 @@
                     <div class="sp-input-field">
                         <input type="text" name="content_settings[slide_animation]" id="_content_slide_animation"
                                class="sp-input-text" value="<?php echo $_slide_animation; ?>">
+                    </div>
+                </div>
+                <div class="sp-input-group" id="field-_content_slide_padding">
+                    <div class="sp-input-label">
+                        <label for="_content_slide_padding"><?php esc_html_e( 'Slider Padding', 'carousel-slider' ); ?></label>
+                        <p class="sp-input-desc"><?php esc_html_e( 'Enter padding around slide in px, em or rem.', 'carousel-slider' ); ?></p>
+                    </div>
+                    <div class="sp-input-field">
+                        <span class="dashicons dashicons-arrow-up-alt"></span>
+                        <input name="content_settings[slide_padding][top]" class="spacing-text" placeholder="Top"
+                               value="<?php echo isset( $_slide_padding['top'] ) ? $_slide_padding['top'] : '1rem'; ?>">
+
+                        <span class="dashicons dashicons-arrow-right-alt"></span>
+                        <input name="content_settings[slide_padding][right]" class="spacing-text" placeholder="Right"
+                               value="<?php echo isset( $_slide_padding['right'] ) ? $_slide_padding['right'] : '3rem'; ?>">
+
+                        <span class="dashicons dashicons-arrow-down-alt"></span>
+                        <input name="content_settings[slide_padding][bottom]" class="spacing-text" placeholder="Bottom"
+                               value="<?php echo isset( $_slide_padding['bottom'] ) ? $_slide_padding['bottom'] : '1rem'; ?>">
+
+                        <span class="dashicons dashicons-arrow-left-alt"></span>
+                        <input name="content_settings[slide_padding][left]" class="spacing-text" placeholder="Left"
+                               value="<?php echo isset( $_slide_padding['left'] ) ? $_slide_padding['left'] : '3rem'; ?>">
                     </div>
                 </div>
             </div>
