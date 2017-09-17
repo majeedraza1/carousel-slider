@@ -67,6 +67,31 @@
                 </div>
             </div><!-- Button Size -->
 
+
+            <div class="sp-input-group" id="field-button_two_border_width">
+                <div class="sp-input-label">
+                    <label for="button_two_border_width"><?php esc_html_e( 'Border Width', 'carousel-slider' ); ?></label>
+                    <p class="sp-input-desc"><?php esc_html_e( 'Enter border width in pixel. e.g. 2px', 'carousel-slider' ); ?></p>
+                </div>
+                <div class="sp-input-field">
+                    <input name="carousel_slider_content[<?php echo $slide_num; ?>][button_two_border_width]"
+                           id="button_two_border_width" class="sp-input-text"
+                           value="<?php echo $_btn_2_border_width; ?>">
+                </div>
+            </div><!-- Border Width -->
+
+            <div class="sp-input-group" id="field-button_two_border_radius">
+                <div class="sp-input-label">
+                    <label for="button_two_border_radius"><?php esc_html_e( 'Border Radius', 'carousel-slider' ); ?></label>
+                    <p class="sp-input-desc"><?php esc_html_e( 'Enter border radius in pixel. e.g. 3px', 'carousel-slider' ); ?></p>
+                </div>
+                <div class="sp-input-field">
+                    <input name="carousel_slider_content[<?php echo $slide_num; ?>][button_two_border_radius]"
+                           id="button_two_border_radius" class="sp-input-text"
+                           value="<?php echo $_btn_2_border_radius; ?>">
+                </div>
+            </div><!-- Border Radius -->
+
             <div class="sp-input-group" id="field-button_two_bg_color">
                 <div class="sp-input-label">
                     <label for="button_two_bg_color"><?php esc_html_e( 'Button Color', 'carousel-slider' ); ?></label>

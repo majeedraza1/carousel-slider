@@ -395,6 +395,8 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 					'button_one_target'            => sanitize_text_field( $slide['button_one_target'] ),
 					'button_one_type'              => sanitize_text_field( $slide['button_one_type'] ),
 					'button_one_size'              => sanitize_text_field( $slide['button_one_size'] ),
+					'button_one_border_width'      => sanitize_text_field( $slide['button_one_border_width'] ),
+					'button_one_border_radius'     => sanitize_text_field( $slide['button_one_border_radius'] ),
 					'button_one_bg_color'          => carousel_slider_sanitize_color( $slide['button_one_bg_color'] ),
 					'button_one_color'             => carousel_slider_sanitize_color( $slide['button_one_color'] ),
 					// Slide Button #2
@@ -403,6 +405,8 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 					'button_two_target'            => sanitize_text_field( $slide['button_two_target'] ),
 					'button_two_type'              => sanitize_text_field( $slide['button_two_type'] ),
 					'button_two_size'              => sanitize_text_field( $slide['button_two_size'] ),
+					'button_two_border_width'      => sanitize_text_field( $slide['button_two_border_width'] ),
+					'button_two_border_radius'     => sanitize_text_field( $slide['button_two_border_radius'] ),
 					'button_two_bg_color'          => carousel_slider_sanitize_color( $slide['button_two_bg_color'] ),
 					'button_two_color'             => carousel_slider_sanitize_color( $slide['button_two_color'] ),
 				);

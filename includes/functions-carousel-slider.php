@@ -486,19 +486,22 @@ if ( ! function_exists( 'carousel_slider_inline_style' ) ) {
 			foreach ( $content_sliders as $slide_id => $slide ) {
 				if ( isset( $slide['link_type'] ) && ( $slide['link_type'] == 'button' ) ) {
 
-					$_btn_1_type     = ! empty( $slide['button_one_type'] ) ? esc_attr( $slide['button_one_type'] ) : 'normal';
-					$_btn_1_bg_color = ! empty( $slide['button_one_bg_color'] ) ? carousel_slider_sanitize_color( $slide['button_one_bg_color'] ) : '#00d1b2';
-					$_btn_1_color    = ! empty( $slide['button_one_color'] ) ? carousel_slider_sanitize_color( $slide['button_one_color'] ) : '#ffffff';
+					$_btn_1_type          = ! empty( $slide['button_one_type'] ) ? esc_attr( $slide['button_one_type'] ) : 'normal';
+					$_btn_1_bg_color      = ! empty( $slide['button_one_bg_color'] ) ? carousel_slider_sanitize_color( $slide['button_one_bg_color'] ) : '#00d1b2';
+					$_btn_1_color         = ! empty( $slide['button_one_color'] ) ? carousel_slider_sanitize_color( $slide['button_one_color'] ) : '#ffffff';
+					$_btn_1_border_width  = ! empty( $slide['button_one_border_width'] ) ? esc_attr( $slide['button_one_border_width'] ) : '0px';
+					$_btn_1_border_radius = ! empty( $slide['button_one_border_radius'] ) ? esc_attr( $slide['button_one_border_radius'] ) : '3px';
 
 					if ( $_btn_1_type == 'stroke' ) {
 						echo "
 						#id-{$id} .cs-button-{$slide_id}-1 {
-							border: 1px solid {$_btn_1_bg_color};
+							border: {$_btn_1_border_width} solid {$_btn_1_bg_color};
+							border-radius: {$_btn_1_border_radius};
 							background-color: transparent;
 							color: {$_btn_1_bg_color};
 						}
 						#id-{$id} .cs-button-{$slide_id}-1:hover {
-							border: 1px solid {$_btn_1_bg_color};
+							border: {$_btn_1_border_width} solid {$_btn_1_bg_color};
 							background-color: {$_btn_1_bg_color};
 							color: {$_btn_1_color};
 						}
@@ -507,23 +510,28 @@ if ( ! function_exists( 'carousel_slider_inline_style' ) ) {
 						echo "
 						#id-{$id} .cs-button-{$slide_id}-1 {
 							background-color: {$_btn_1_bg_color};
+							border: {$_btn_1_border_width} solid {$_btn_1_bg_color};
+							border-radius: {$_btn_1_border_radius};
 							color: {$_btn_1_color};
 						}
 					";
 					}
 
-					$_btn_2_type     = ! empty( $slide['button_two_type'] ) ? esc_attr( $slide['button_two_type'] ) : 'normal';
-					$_btn_2_bg_color = ! empty( $slide['button_two_bg_color'] ) ? carousel_slider_sanitize_color( $slide['button_two_bg_color'] ) : '#00d1b2';
-					$_btn_2_color    = ! empty( $slide['button_two_color'] ) ? carousel_slider_sanitize_color( $slide['button_two_color'] ) : '#ffffff';
+					$_btn_2_type          = ! empty( $slide['button_two_type'] ) ? esc_attr( $slide['button_two_type'] ) : 'normal';
+					$_btn_2_bg_color      = ! empty( $slide['button_two_bg_color'] ) ? carousel_slider_sanitize_color( $slide['button_two_bg_color'] ) : '#00d1b2';
+					$_btn_2_color         = ! empty( $slide['button_two_color'] ) ? carousel_slider_sanitize_color( $slide['button_two_color'] ) : '#ffffff';
+					$_btn_2_border_width  = ! empty( $slide['button_two_border_width'] ) ? esc_attr( $slide['button_two_border_width'] ) : '0px';
+					$_btn_2_border_radius = ! empty( $slide['button_two_border_radius'] ) ? esc_attr( $slide['button_two_border_radius'] ) : '3px';
 					if ( $_btn_2_type == 'stroke' ) {
 						echo "
 						#id-{$id} .cs-button-{$slide_id}-2 {
-							border: 1px solid {$_btn_2_bg_color};
+							border: {$_btn_2_border_width} solid {$_btn_2_bg_color};
+							border-radius: {$_btn_2_border_radius};
 							background-color: transparent;
 							color: {$_btn_2_bg_color};
 						}
 						#id-{$id} .cs-button-{$slide_id}-2:hover {
-							border: 1px solid {$_btn_2_bg_color};
+							border: {$_btn_2_border_width} solid {$_btn_2_bg_color};
 							background-color: {$_btn_2_bg_color};
 							color: {$_btn_2_color};
 						}
@@ -532,6 +540,8 @@ if ( ! function_exists( 'carousel_slider_inline_style' ) ) {
 						echo "
 						#id-{$id} .cs-button-{$slide_id}-2 {
 							background-color: {$_btn_2_bg_color};
+							border: {$_btn_2_border_width} solid {$_btn_2_bg_color};
+							border-radius: {$_btn_2_border_radius};
 							color: {$_btn_2_color};
 						}
 					";

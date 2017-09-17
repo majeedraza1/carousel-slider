@@ -50,21 +50,25 @@
 						$_desc_color         = ! empty( $content_slider['description_color'] ) ? esc_attr( $content_slider['description_color'] ) : '#ffffff';
 						$_desc_bg_color      = ! empty( $content_slider['description_background_color'] ) ? esc_attr( $content_slider['description_background_color'] ) : '';
 
-						$_btn_1_text     = ! empty( $content_slider['button_one_text'] ) ? esc_attr( $content_slider['button_one_text'] ) : '';
-						$_btn_1_url      = ! empty( $content_slider['button_one_url'] ) ? esc_attr( $content_slider['button_one_url'] ) : '';
-						$_btn_1_target   = ! empty( $content_slider['button_one_target'] ) ? esc_attr( $content_slider['button_one_target'] ) : '_self';
-						$_btn_1_type     = ! empty( $content_slider['button_one_type'] ) ? esc_attr( $content_slider['button_one_type'] ) : 'normal';
-						$_btn_1_size     = ! empty( $content_slider['button_one_size'] ) ? esc_attr( $content_slider['button_one_size'] ) : 'medium';
-						$_btn_1_bg_color = ! empty( $content_slider['button_one_bg_color'] ) ? esc_attr( $content_slider['button_one_bg_color'] ) : '#00d1b2';
-						$_btn_1_color    = ! empty( $content_slider['button_one_color'] ) ? esc_attr( $content_slider['button_one_color'] ) : '#ffffff';
+						$_btn_1_text          = ! empty( $content_slider['button_one_text'] ) ? esc_attr( $content_slider['button_one_text'] ) : '';
+						$_btn_1_url           = ! empty( $content_slider['button_one_url'] ) ? esc_attr( $content_slider['button_one_url'] ) : '';
+						$_btn_1_target        = ! empty( $content_slider['button_one_target'] ) ? esc_attr( $content_slider['button_one_target'] ) : '_self';
+						$_btn_1_type          = ! empty( $content_slider['button_one_type'] ) ? esc_attr( $content_slider['button_one_type'] ) : 'normal';
+						$_btn_1_size          = ! empty( $content_slider['button_one_size'] ) ? esc_attr( $content_slider['button_one_size'] ) : 'medium';
+						$_btn_1_bg_color      = ! empty( $content_slider['button_one_bg_color'] ) ? esc_attr( $content_slider['button_one_bg_color'] ) : '#00d1b2';
+						$_btn_1_color         = ! empty( $content_slider['button_one_color'] ) ? esc_attr( $content_slider['button_one_color'] ) : '#ffffff';
+						$_btn_1_border_width  = ! empty( $content_slider['button_one_border_width'] ) ? esc_attr( $content_slider['button_one_border_width'] ) : '0px';
+						$_btn_1_border_radius = ! empty( $content_slider['button_one_border_radius'] ) ? esc_attr( $content_slider['button_one_border_radius'] ) : '3px';
 
-						$_btn_2_text     = ! empty( $content_slider['button_two_text'] ) ? esc_attr( $content_slider['button_two_text'] ) : '';
-						$_btn_2_url      = ! empty( $content_slider['button_two_url'] ) ? esc_attr( $content_slider['button_two_url'] ) : '';
-						$_btn_2_target   = ! empty( $content_slider['button_two_target'] ) ? esc_attr( $content_slider['button_two_target'] ) : '_self';
-						$_btn_2_type     = ! empty( $content_slider['button_two_type'] ) ? esc_attr( $content_slider['button_two_type'] ) : 'normal';
-						$_btn_2_size     = ! empty( $content_slider['button_two_size'] ) ? esc_attr( $content_slider['button_two_size'] ) : 'medium';
-						$_btn_2_bg_color = ! empty( $content_slider['button_two_bg_color'] ) ? esc_attr( $content_slider['button_two_bg_color'] ) : '#00d1b2';
-						$_btn_2_color    = ! empty( $content_slider['button_two_color'] ) ? esc_attr( $content_slider['button_two_color'] ) : '#ffffff';
+						$_btn_2_text          = ! empty( $content_slider['button_two_text'] ) ? esc_attr( $content_slider['button_two_text'] ) : '';
+						$_btn_2_url           = ! empty( $content_slider['button_two_url'] ) ? esc_attr( $content_slider['button_two_url'] ) : '';
+						$_btn_2_target        = ! empty( $content_slider['button_two_target'] ) ? esc_attr( $content_slider['button_two_target'] ) : '_self';
+						$_btn_2_type          = ! empty( $content_slider['button_two_type'] ) ? esc_attr( $content_slider['button_two_type'] ) : 'normal';
+						$_btn_2_size          = ! empty( $content_slider['button_two_size'] ) ? esc_attr( $content_slider['button_two_size'] ) : 'medium';
+						$_btn_2_bg_color      = ! empty( $content_slider['button_two_bg_color'] ) ? esc_attr( $content_slider['button_two_bg_color'] ) : '#00d1b2';
+						$_btn_2_color         = ! empty( $content_slider['button_two_color'] ) ? esc_attr( $content_slider['button_two_color'] ) : '#ffffff';
+						$_btn_2_border_width  = ! empty( $content_slider['button_two_border_width'] ) ? esc_attr( $content_slider['button_two_border_width'] ) : '0px';
+						$_btn_2_border_radius = ! empty( $content_slider['button_two_border_radius'] ) ? esc_attr( $content_slider['button_two_border_radius'] ) : '3px';
 
 
 						// Canvas style
