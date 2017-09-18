@@ -84,6 +84,9 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 			}
 
 			if ( $slide_type == 'product-carousel' ) {
+
+				// return $this->product_categories( $id );
+
 				ob_start();
 				require CAROUSEL_SLIDER_TEMPLATES . '/public/product-carousel.php';
 				$html = ob_get_contents();
@@ -255,6 +258,40 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 			return;
 		}
 
+		private function product_categories( $id = 0, $atts = array() ) {
+
+			$product_categories = get_terms( array(
+				'taxonomy'   => 'product_cat',
+				'hide_empty' => true,
+				'orderby'    => 'name',
+				'order'      => 'ASC',
+			) );
+
+			$options = $this->carousel_options( $id );
+			$options = join( " ", $options );
+
+			ob_start();
+			if ( $product_categories ) {
+				echo '<div' . $options . '>';
+
+				foreach ( $product_categories as $category ) {
+					echo '<div class="product">';
+					do_action( 'woocommerce_before_subcategory', $category );
+					do_action( 'woocommerce_before_subcategory_title', $category );
+					do_action( 'woocommerce_shop_loop_subcategory_title', $category );
+					do_action( 'woocommerce_after_subcategory_title', $category );
+					do_action( 'woocommerce_after_subcategory', $category );
+					echo '</div>';
+				}
+
+				echo '</div>';
+			}
+
+			$html = ob_get_contents();
+			ob_end_clean();
+
+			return $html;
+		}
 	}
 
 endif;
