@@ -85,7 +85,19 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 
 			if ( $slide_type == 'product-carousel' ) {
 
-				// return $this->product_categories( $id );
+				$query_type    = get_post_meta( $id, '_product_query_type', true );
+				$query_type    = empty( $query_type ) ? 'query_porduct' : $query_type;
+				$product_query = get_post_meta( $id, '_product_query', true );
+
+				if ( $query_type == 'query_porduct' && $product_query == 'product_categories_list' ) {
+					ob_start();
+
+					echo $this->product_categories( $id );
+					$html = ob_get_contents();
+					ob_end_clean();
+
+					return apply_filters( 'carousel_slider_product_carousel', $html, $id );
+				}
 
 				ob_start();
 				require CAROUSEL_SLIDER_TEMPLATES . '/public/product-carousel.php';
@@ -96,6 +108,7 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 			}
 
 			if ( $slide_type == 'content-carousel' ) {
+
 				ob_start();
 				require CAROUSEL_SLIDER_TEMPLATES . '/public/content-carousel.php';
 				$html = ob_get_contents();
@@ -258,21 +271,27 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 			return;
 		}
 
-		private function product_categories( $id = 0, $atts = array() ) {
+		private function product_categories( $id = 0, $args = array() ) {
 
-			$product_categories = get_terms( array(
+			$default = array(
 				'taxonomy'   => 'product_cat',
 				'hide_empty' => true,
 				'orderby'    => 'name',
 				'order'      => 'ASC',
-			) );
+			);
+
+			$args = wp_parse_args( $args, $default );
+
+			$product_categories = get_terms( $args );
 
 			$options = $this->carousel_options( $id );
 			$options = join( " ", $options );
 
 			ob_start();
+			carousel_slider_inline_style( $id );
 			if ( $product_categories ) {
-				echo '<div' . $options . '>';
+				echo '<div ' . $options . '>';
+
 
 				foreach ( $product_categories as $category ) {
 					echo '<div class="product">';

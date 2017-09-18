@@ -22,11 +22,12 @@
 				'name'    => esc_html__( 'Choose Query', 'carousel-slider' ),
 				'std'     => 'featured',
 				'options' => array(
-					'featured'     => esc_html__( 'Featured Products', 'carousel-slider' ),
-					'recent'       => esc_html__( 'Recent Products', 'carousel-slider' ),
-					'sale'         => esc_html__( 'Sale Products', 'carousel-slider' ),
-					'best_selling' => esc_html__( 'Best-Selling Products', 'carousel-slider' ),
-					'top_rated'    => esc_html__( 'Top Rated Products', 'carousel-slider' ),
+					'featured'                => esc_html__( 'Featured Products', 'carousel-slider' ),
+					'recent'                  => esc_html__( 'Recent Products', 'carousel-slider' ),
+					'sale'                    => esc_html__( 'Sale Products', 'carousel-slider' ),
+					'best_selling'            => esc_html__( 'Best-Selling Products', 'carousel-slider' ),
+					'top_rated'               => esc_html__( 'Top Rated Products', 'carousel-slider' ),
+					'product_categories_list' => esc_html__( 'Product Categories List', 'carousel-slider' ),
 				),
 			) );
 			$this->form->post_terms( array(
