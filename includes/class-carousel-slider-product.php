@@ -92,6 +92,130 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ):
 			<?php
 			wp_die();
 		}
+
+		/**
+		 * Get Recent Products
+		 *
+		 * @param array $args
+		 *
+		 * @return array
+		 */
+		public function recent_products( $args = array() ) {
+
+			$defaults = array(
+				'posts_per_page' => 12,
+				'orderby'        => 'date',
+				'order'          => 'desc',
+			);
+
+			$args = wp_parse_args( $args, $defaults );
+
+			$query_args = array(
+				'post_type'           => 'product',
+				'post_status'         => 'publish',
+				'ignore_sticky_posts' => 1,
+				'posts_per_page'      => $args['posts_per_page'],
+				'orderby'             => $args['orderby'],
+				'order'               => $args['order'],
+				'meta_query'          => WC()->query->get_meta_query(),
+				'tax_query'           => WC()->query->get_tax_query(),
+			);
+
+			return get_posts( $query_args );
+		}
+
+		/**
+		 * List best selling products on sale.
+		 *
+		 * @param array $args
+		 *
+		 * @return array
+		 */
+		public function best_selling_products( $args = array() ) {
+
+			$defaults = array(
+				'posts_per_page' => 12,
+			);
+
+			$args = wp_parse_args( $args, $defaults );
+
+			$query_args = array(
+				'post_type'           => 'product',
+				'post_status'         => 'publish',
+				'ignore_sticky_posts' => 1,
+				'posts_per_page'      => $args['posts_per_page'],
+				'meta_key'            => 'total_sales',
+				'orderby'             => 'meta_value_num',
+				'meta_query'          => WC()->query->get_meta_query(),
+				'tax_query'           => WC()->query->get_tax_query(),
+			);
+
+			return get_posts( $query_args );
+		}
+
+		/**
+		 * Get WooCommerce featured products
+		 *
+		 * Works with WooCommerce Version 3.0
+		 *
+		 * @param array $args
+		 *
+		 * @return array
+		 */
+		public function featured_products( $args = array() ) {
+
+			$defaults = array(
+				'posts_per_page' => 12,
+				'orderby'        => 'date',
+				'order'          => 'desc',
+			);
+
+			$args = wp_parse_args( $args, $defaults );
+
+			$meta_query  = WC()->query->get_meta_query();
+			$tax_query   = WC()->query->get_tax_query();
+			$tax_query[] = array(
+				'taxonomy' => 'product_visibility',
+				'field'    => 'name',
+				'terms'    => 'featured',
+				'operator' => 'IN',
+			);
+
+			$query_args = array(
+				'post_type'           => 'product',
+				'post_status'         => 'publish',
+				'ignore_sticky_posts' => 1,
+				'posts_per_page'      => $args['posts_per_page'],
+				'orderby'             => $args['orderby'],
+				'order'               => $args['order'],
+				'meta_query'          => $meta_query,
+				'tax_query'           => $tax_query,
+			);
+
+			return get_posts( $query_args );
+		}
+
+
+		/**
+		 * List all (or limited) product categories.
+		 *
+		 * @param array $args
+		 *
+		 * @return array|int|WP_Error
+		 */
+		public function product_categories( $args = array() ) {
+
+			$default = array(
+				'taxonomy'   => 'product_cat',
+				'hide_empty' => 1,
+				'orderby'    => 'name',
+				'order'      => 'ASC',
+			);
+
+			$args = wp_parse_args( $args, $default );
+
+			return get_terms( $args );
+		}
 	}
 
 

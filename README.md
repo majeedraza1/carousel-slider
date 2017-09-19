@@ -102,7 +102,7 @@ echo do_shortcode('[carousel_slide id='YOUR_SLIDER_ID']");
 
 ## Changelog
 
-##### Version 1.8.0-rc1
+##### Version 1.8.0-rc2
 * Added - Arrow Nav: Position (Inside or Outside)
 * Added - Arrow Nav: Custom Size
 * Tweak - Arrow Nav: Always visibility
@@ -115,6 +115,7 @@ echo do_shortcode('[carousel_slide id='YOUR_SLIDER_ID']");
 * Added - Content Carousel: Delete and sort(up, down, top, bottom) slide
 * Added - Content Carousel: Slide background with color, image and more
 * Added - Content Carousel: Slide content with wp_editor()
+* Added - WooCommerce product categories list carousel.
 
 
 ##### Version 1.7.4 (updated on 2017-08-26)

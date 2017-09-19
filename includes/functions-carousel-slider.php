@@ -265,6 +265,8 @@ if ( ! function_exists( 'carousel_slider_products' ) ) {
 		$query_type    = empty( $query_type ) ? 'query_porduct' : $query_type;
 		$product_query = get_post_meta( $id, '_product_query', true );
 
+		$product_carousel = new Carousel_Slider_Product();
+
 		$args = array(
 			'post_type'          => 'product',
 			'post_status'        => 'publish',
@@ -286,26 +288,17 @@ if ( ! function_exists( 'carousel_slider_products' ) ) {
 
 			// Get features products
 			if ( $product_query == 'featured' ) {
-				$args = array_merge( $args, array(
-					'meta_key'   => '_featured',
-					'meta_value' => 'yes',
-					'orderby'    => 'date',
-					'order'      => 'desc'
-				) );
+				return $product_carousel->featured_products( $args );
+			}
 
-				return get_posts( $args );
+			// Get best_selling products
+			if ( $product_query == 'best_selling' ) {
+				return $product_carousel->best_selling_products( $args );
 			}
 
 			// Get recent products
 			if ( $product_query == 'recent' ) {
-				$args = array_merge( $args, array(
-					'ignore_sticky_posts' => 1,
-					'orderby'             => 'date',
-					'order'               => 'desc',
-					'meta_query'          => WC()->query->get_meta_query()
-				) );
-
-				return get_posts( $args );
+				return $product_carousel->recent_products( $args );
 			}
 
 			// Get sale products
@@ -318,18 +311,6 @@ if ( ! function_exists( 'carousel_slider_products' ) ) {
 					'meta_query'    => WC()->query->get_meta_query(),
 					'post__in'      => array_merge( array( 0 ), wc_get_product_ids_on_sale() )
 				) );
-
-				return get_posts( $args );
-			}
-
-			// Get best_selling products
-			if ( $product_query == 'best_selling' ) {
-				$args = array(
-					'ignore_sticky_posts' => 1,
-					'meta_key'            => 'total_sales',
-					'orderby'             => 'meta_value_num',
-					'meta_query'          => WC()->query->get_meta_query()
-				);
 
 				return get_posts( $args );
 			}

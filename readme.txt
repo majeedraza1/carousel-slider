@@ -119,6 +119,7 @@ Now you can use the following function at your theme template file replacing `YO
 * Added - Content Carousel: Delete and sort(up, down, top, bottom) slide
 * Added - Content Carousel: Slide background with color, image and more
 * Added - Content Carousel: Slide content with wp_editor()
+* Added - WooCommerce product categories list carousel.
 
 = version 1.7.4 - 2017-08-26 =
 * Fixed - Fixed syntax error for short array syntax on PHP 5.3
