@@ -143,22 +143,6 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ):
                             var videoHeight = isVideo ? _this.data('video-height') : false;
                             var autoWidth = isVideo;
 
-                            if (jQuery().magnificPopup) {
-                                var popupType = _this.data('slide-type') === 'product-carousel' ? 'ajax' : 'image';
-                                var popupGallery = _this.data('slide-type') !== 'product-carousel';
-                                $(this).find('.magnific-popup').magnificPopup({
-                                    type: popupType,
-                                    gallery: {
-                                        enabled: popupGallery
-                                    },
-                                    zoom: {
-                                        enabled: popupGallery,
-                                        duration: 300,
-                                        easing: 'ease-in-out'
-                                    }
-                                });
-                            }
-
                             if (jQuery().owlCarousel) {
                                 _this.owlCarousel({
                                     nav: _this.data('nav'),
@@ -186,6 +170,22 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ):
                                         993: {items: _this.data('colums-small-desktop')},
                                         1200: {items: _this.data('colums-desktop')},
                                         1921: {items: _this.data('colums')}
+                                    }
+                                });
+                            }
+
+                            if (jQuery().magnificPopup) {
+                                var popupType = _this.data('slide-type') === 'product-carousel' ? 'ajax' : 'image';
+                                var popupGallery = _this.data('slide-type') !== 'product-carousel';
+                                $(this).find('.magnific-popup').magnificPopup({
+                                    type: popupType,
+                                    gallery: {
+                                        enabled: popupGallery
+                                    },
+                                    zoom: {
+                                        enabled: popupGallery,
+                                        duration: 300,
+                                        easing: 'ease-in-out'
                                     }
                                 });
                             }

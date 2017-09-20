@@ -70,25 +70,37 @@ carousel_slider_inline_style( $id );
 			}
 			// Show Price
 			if ( $_product_price == 'on' ) {
-				echo '<span class="price">' . $product->get_price_html() . '</span>';
+				$price_html = '<span class="price">' . $product->get_price_html() . '</span>';
+				echo apply_filters( 'carousel_slider_product_price', $price_html, $product );
 			}
 			// Show button
 			if ( $_product_cart_btn == 'on' ) {
-				echo '<div style="clear: both;"></div>';
+				$button_html = '<div style="clear: both;"></div>';
+				ob_start();
 				if ( function_exists( 'woocommerce_template_loop_add_to_cart' ) ) {
 					woocommerce_template_loop_add_to_cart();
 				}
+				$button_html .= ob_get_contents();
+				ob_end_clean();
+				echo apply_filters( 'carousel_slider_product_add_to_cart', $button_html, $product );
 			}
 
 			if ( $_product_quick_view == 'on' ) {
 				wp_enqueue_script( 'magnific-popup' );
-				$ajax_url = wp_nonce_url( add_query_arg( array(
+				$ajax_url        = wp_nonce_url( add_query_arg( array(
 					'ajax'       => 'true',
 					'action'     => 'carousel_slider_quick_view',
 					'product_id' => $post->ID,
 					'slide_id'   => $id
 				), admin_url( 'admin-ajax.php' ) ), 'carousel_slider_quick_view' );
-				echo sprintf( '<a class="magnific-popup button quick_view" href="%1$s" data-product-id="%2$s">%3$s</a>', $ajax_url, $post->ID, __( 'Quick View', 'carousel-slider' ) );
+				$quick_view_html = '<div style="clear: both;"></div>';
+				$quick_view_html .= sprintf(
+					'<a class="magnific-popup button quick_view" href="%1$s" data-product-id="%2$s">%3$s</a>',
+					$ajax_url,
+					$post->ID,
+					__( 'Quick View', 'carousel-slider' )
+				);
+				echo apply_filters( 'carousel_slider_product_quick_view', $quick_view_html, $product );
 			}
 
 			// WooCommerce Wishlist
