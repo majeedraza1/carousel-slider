@@ -41,7 +41,7 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ):
 				'owl-carousel',
 				CAROUSEL_SLIDER_ASSETS . '/js/vendors/owl.carousel.min.js',
 				array( 'jquery' ),
-				'2.2.0',
+				'2.2.1',
 				true
 			);
 			wp_register_script(

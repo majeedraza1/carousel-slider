@@ -107,6 +107,7 @@ Now you can use the following function at your theme template file replacing `YO
 == Changelog ==
 
 = version 1.8.0-rc1 - 2017-09-08 =
+* Tweak - Update owlCarousel to version 2.2.1
 * Added - Arrow Nav: Position (Inside or Outside)
 * Added - Arrow Nav: Custom Size
 * Tweak - Arrow Nav: Always visibility
