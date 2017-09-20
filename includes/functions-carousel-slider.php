@@ -267,22 +267,7 @@ if ( ! function_exists( 'carousel_slider_products' ) ) {
 
 		$product_carousel = new Carousel_Slider_Product();
 
-		$args = array(
-			'post_type'          => 'product',
-			'post_status'        => 'publish',
-			'ignore_sticky_post' => 1,
-			'posts_per_page'     => $per_page
-		);
-
-		// Get products by product IDs
-		if ( $query_type == 'specific_products' ) {
-			$product_in = explode( ',', get_post_meta( $id, '_product_in', true ) );
-			$product_in = array_map( 'intval', $product_in );
-			$args       = array_merge( $args, array( 'post__in' => $product_in ) );
-			unset( $args['posts_per_page'] );
-
-			return get_posts( $args );
-		}
+		$args = array( 'posts_per_page' => $per_page );
 
 		if ( $query_type == 'query_porduct' ) {
 
@@ -303,65 +288,37 @@ if ( ! function_exists( 'carousel_slider_products' ) ) {
 
 			// Get sale products
 			if ( $product_query == 'sale' ) {
-
-				$args = array_merge( $args, array(
-					'orderby'       => 'title',
-					'order'         => 'asc',
-					'no_found_rows' => 1,
-					'meta_query'    => WC()->query->get_meta_query(),
-					'post__in'      => array_merge( array( 0 ), wc_get_product_ids_on_sale() )
-				) );
-
-				return get_posts( $args );
+				return $product_carousel->sale_products( $args );
 			}
 
 			// Get top_rated products
 			if ( $product_query == 'top_rated' ) {
-
-				add_filter( 'posts_clauses', array( WC()->query, 'order_by_rating_post_clauses' ) );
-				$args = array_merge( $args, array(
-					'no_found_rows' => 1,
-					'meta_query'    => WC()->query->get_meta_query(),
-				) );
-
-				return get_posts( $args );
+				return $product_carousel->top_rated_products( $args );
 			}
-
 		}
 
-		// Get posts by post catagories IDs
-		if ( $query_type == 'product_categories' ) {
-			$product_categories = get_post_meta( $id, '_product_categories', true );
-			$args               = array_merge( $args, array(
-				'tax_query' => array(
-					array(
-						'taxonomy' => 'product_cat',
-						'field'    => 'term_id',
-						'terms'    => explode( ",", $product_categories ),
-						'operator' => 'IN',
-					),
-				),
-			) );
+		// Get products by product IDs
+		if ( $query_type == 'specific_products' ) {
+			$product_in = get_post_meta( $id, '_product_in', true );
+			$product_in = array_map( 'intval', explode( ',', $product_in ) );
 
-			return get_posts( $args );
+			return $product_carousel->products( array( 'post__in' => $product_in ) );
+		}
+
+		// Get posts by post categories IDs
+		if ( $query_type == 'product_categories' ) {
+			$product_cat_ids = get_post_meta( $id, '_product_categories', true );
+			$product_cat_ids = array_map( 'intval', explode( ",", $product_cat_ids ) );
+
+			return $product_carousel->products_by_categories( $product_cat_ids, $per_page );
 		}
 
 		// Get posts by post tags IDs
 		if ( $query_type == 'product_tags' ) {
 			$product_tags = get_post_meta( $id, '_product_tags', true );
 			$product_tags = array_map( 'intval', explode( ',', $product_tags ) );
-			$args         = array_merge( $args, array(
-				'tax_query' => array(
-					array(
-						'taxonomy' => 'product_tag',
-						'field'    => 'term_id',
-						'terms'    => $product_tags,
-						'operator' => 'IN',
-					),
-				),
-			) );
 
-			return get_posts( $args );
+			return $product_carousel->products_by_tags( $product_tags, $per_page );
 		}
 
 		return array();
