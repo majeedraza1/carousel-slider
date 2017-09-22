@@ -6,7 +6,12 @@ if ( ! defined( 'WPINC' ) ) {
 
 if ( ! carousel_slider_is_woocommerce_active() ) {
 	if ( current_user_can( 'manage_options' ) ) {
-		echo sprintf( esc_html__( 'Carousel Slider needs %s to work for products carousel.', 'carousel-slider' ), sprintf( '<a href="https://wordpress.org/plugins/woocommerce/" target="_blank" >%s</a>', __( 'WooCommerce', 'carousel-slider' ) ) );
+		printf(
+			esc_html__( 'Carousel Slider needs %s to work for products carousel.', 'carousel-slider' ),
+			sprintf( '<a href="https://wordpress.org/plugins/woocommerce/" target="_blank" >%s</a>',
+				__( 'WooCommerce', 'carousel-slider' )
+			)
+		);
 	}
 
 	return;

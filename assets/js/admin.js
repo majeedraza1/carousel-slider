@@ -529,6 +529,7 @@
         }
         if (this.value === 'product-carousel') {
             section_product_query.slideDown();
+            _product_query.show();
         }
         if (this.value === 'content-carousel') {
             section_content_carousel.slideDown();
@@ -581,7 +582,7 @@
 
     // Slide Type -- Product Carousel
     if (slide_type.val() === 'product-carousel') {
-        var _productQueryType = _product_query_type.val();
+        var _productQueryType = $('#_product_query_type').val();
         if (_productQueryType === 'query_porduct') {
             _product_query.show();
         }

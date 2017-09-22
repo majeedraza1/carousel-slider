@@ -99,7 +99,22 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ):
 		}
 
 		/**
+		 * Get WooCommerce version
+		 *
+		 * @return string
+		 */
+		private function wc_version() {
+			if ( defined( 'WC_VERSION' ) ) {
+				return WC_VERSION;
+			}
+
+			return '0.0.0';
+		}
+
+		/**
 		 * List multiple products by product ids
+		 *
+		 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*
 		 *
 		 * @param array $args
 		 *
@@ -123,14 +138,19 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ):
 				'order'               => $args['order'],
 				'post__in'            => $args['post__in'],
 				'meta_query'          => WC()->query->get_meta_query(),
-				'tax_query'           => WC()->query->get_tax_query(),
 			);
+
+			if ( version_compare( $this->wc_version(), '2.7.0', '>=' ) ) {
+				$query_args['tax_query'] = WC()->query->get_tax_query();
+			}
 
 			return get_posts( $query_args );
 		}
 
 		/**
 		 * Get Recent Products
+		 *
+		 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*
 		 *
 		 * @param array $args
 		 *
@@ -154,14 +174,19 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ):
 				'orderby'             => $args['orderby'],
 				'order'               => $args['order'],
 				'meta_query'          => WC()->query->get_meta_query(),
-				'tax_query'           => WC()->query->get_tax_query(),
 			);
+
+			if ( version_compare( $this->wc_version(), '2.7.0', '>=' ) ) {
+				$query_args['tax_query'] = WC()->query->get_tax_query();
+			}
 
 			return get_posts( $query_args );
 		}
 
 		/**
 		 * List best selling products on sale.
+		 *
+		 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*
 		 *
 		 * @param array $args
 		 *
@@ -183,8 +208,11 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ):
 				'meta_key'            => 'total_sales',
 				'orderby'             => 'meta_value_num',
 				'meta_query'          => WC()->query->get_meta_query(),
-				'tax_query'           => WC()->query->get_tax_query(),
 			);
+
+			if ( version_compare( $this->wc_version(), '2.7.0', '>=' ) ) {
+				$query_args['tax_query'] = WC()->query->get_tax_query();
+			}
 
 			return get_posts( $query_args );
 		}
@@ -192,7 +220,7 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ):
 		/**
 		 * Get WooCommerce featured products
 		 *
-		 * Works with WooCommerce Version 3.0
+		 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*
 		 *
 		 * @param array $args
 		 *
@@ -208,14 +236,14 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ):
 
 			$args = wp_parse_args( $args, $defaults );
 
-			$meta_query  = WC()->query->get_meta_query();
-			$tax_query   = WC()->query->get_tax_query();
-			$tax_query[] = array(
-				'taxonomy' => 'product_visibility',
-				'field'    => 'name',
-				'terms'    => 'featured',
-				'operator' => 'IN',
-			);
+			$meta_query = WC()->query->get_meta_query();
+
+			if ( version_compare( $this->wc_version(), '2.7.0', '<' ) ) {
+				$meta_query[] = array(
+					'key'   => '_featured',
+					'value' => 'yes'
+				);
+			}
 
 			$query_args = array(
 				'post_type'           => 'product',
@@ -225,14 +253,27 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ):
 				'orderby'             => $args['orderby'],
 				'order'               => $args['order'],
 				'meta_query'          => $meta_query,
-				'tax_query'           => $tax_query,
 			);
+
+			if ( version_compare( $this->wc_version(), '2.7.0', '>=' ) ) {
+				$tax_query               = WC()->query->get_tax_query();
+				$tax_query[]             = array(
+					'taxonomy' => 'product_visibility',
+					'field'    => 'name',
+					'terms'    => 'featured',
+					'operator' => 'IN',
+				);
+				$query_args['tax_query'] = $tax_query;
+			}
+
 
 			return get_posts( $query_args );
 		}
 
 		/**
 		 * List all products on sale.
+		 *
+		 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*
 		 *
 		 * @param array $args
 		 *
@@ -255,15 +296,20 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ):
 				'post_status'    => 'publish',
 				'post_type'      => 'product',
 				'meta_query'     => WC()->query->get_meta_query(),
-				'tax_query'      => WC()->query->get_tax_query(),
 				'post__in'       => array_merge( array( 0 ), wc_get_product_ids_on_sale() ),
 			);
+
+			if ( version_compare( $this->wc_version(), '2.7.0', '>=' ) ) {
+				$query_args['tax_query'] = WC()->query->get_tax_query();
+			}
 
 			return get_posts( $query_args );
 		}
 
 		/**
 		 * Get top rated products
+		 *
+		 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*
 		 *
 		 * @param array $args
 		 *
@@ -278,6 +324,26 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ):
 
 			$args = wp_parse_args( $args, $defaults );
 
+			if ( version_compare( $this->wc_version(), '2.7.0', '>=' ) ) {
+				$query_args = array(
+					'posts_per_page' => $args['posts_per_page'],
+					'no_found_rows'  => 1,
+					'post_status'    => 'publish',
+					'post_type'      => 'product',
+					'meta_key'       => '_wc_average_rating',
+					'orderby'        => 'meta_value_num',
+					'order'          => 'DESC',
+					'meta_query'     => WC()->query->get_meta_query(),
+					'tax_query'      => WC()->query->get_tax_query(),
+				);
+				$_posts     = new WP_Query( $query_args );
+
+				return $_posts->posts;
+			}
+
+			// For WooCommerce version is less than 2.7.0
+			add_filter( 'posts_clauses', array( WC()->query, 'order_by_rating_post_clauses' ) );
+
 			$query_args = array(
 				'post_type'           => 'product',
 				'post_status'         => 'publish',
@@ -286,15 +352,21 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ):
 				'order'               => $args['order'],
 				'posts_per_page'      => $args['posts_per_page'],
 				'meta_query'          => WC()->query->get_meta_query(),
-				'tax_query'           => WC()->query->get_tax_query(),
 			);
 
-			return get_posts( $query_args );
+
+			$_posts = new WP_Query( $query_args );
+
+			remove_filter( 'posts_clauses', array( WC()->query, 'order_by_rating_post_clauses' ) );
+
+			return $_posts->posts;
 		}
 
 
 		/**
 		 * List all (or limited) product categories.
+		 *
+		 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*
 		 *
 		 * @param array $args
 		 *
@@ -315,7 +387,9 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ):
 		}
 
 		/**
-		 * Get products from categories ids
+		 * Get products by categories ids
+		 *
+		 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*
 		 *
 		 * @param array $cat_ids
 		 * @param int $per_page
@@ -341,6 +415,16 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ):
 			return get_posts( $args );
 		}
 
+		/**
+		 * Get products by tags ids
+		 *
+		 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*
+		 *
+		 * @param array $cat_ids
+		 * @param int $per_page
+		 *
+		 * @return array
+		 */
 		public function products_by_tags( $cat_ids = array(), $per_page = 12 ) {
 			$args = array(
 				'post_type'          => 'product',

@@ -122,6 +122,8 @@ Now you can use the following function at your theme template file replacing `YO
 * Added - Content Carousel: Slide content with wp_editor()
 * Added - WooCommerce product categories list carousel.
 * Fixed - Popup does not work sometimes
+* Fixed - Features products is now working on WooCommerce version 3
+* Fixed - Top rated products is now working properly
 
 = version 1.7.4 - 2017-08-26 =
 * Fixed - Fixed syntax error for short array syntax on PHP 5.3
