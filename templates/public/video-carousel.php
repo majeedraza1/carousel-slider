@@ -13,12 +13,14 @@ $_video_urls       = array_filter( explode( ',', $this->get_meta( $id, '_video_u
 if ( count( $_video_urls ) < 1 ) {
 	return;
 }
-carousel_slider_inline_style( $id );
 ?>
-<div <?php echo join( " ", $this->carousel_options( $id ) ); ?>>
-	<?php
-	foreach ( $_video_urls as $url ) {
-		echo $this->video_url( $url );
-	}
-	?>
+<div class="carousel-slider-outer carousel-slider-outer-videos carousel-slider-outer-<?php echo $id; ?>">
+	<?php carousel_slider_inline_style( $id ); ?>
+    <div <?php echo join( " ", $this->carousel_options( $id ) ); ?>>
+		<?php
+		foreach ( $_video_urls as $url ) {
+			echo $this->video_url( $url );
+		}
+		?>
+    </div>
 </div>

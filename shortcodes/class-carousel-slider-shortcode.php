@@ -271,30 +271,30 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 			return;
 		}
 
-		private function product_categories( $id = 0, $args = array() ) {
+		/**
+		 * Get product categories list carousel
+		 *
+		 * @param int $id
+		 *
+		 * @return string
+		 */
+		private function product_categories( $id = 0 ) {
 
-			$default = array(
-				'taxonomy'   => 'product_cat',
-				'hide_empty' => true,
-				'orderby'    => 'name',
-				'order'      => 'ASC',
-			);
-
-			$args = wp_parse_args( $args, $default );
-
-			$product_categories = get_terms( $args );
+			$product_carousel   = new Carousel_Slider_Product();
+			$product_categories = $product_carousel->product_categories();
 
 			$options = $this->carousel_options( $id );
 			$options = join( " ", $options );
 
 			ob_start();
-			carousel_slider_inline_style( $id );
 			if ( $product_categories ) {
+				echo '<div class="carousel-slider-outer carousel-slider-outer-products carousel-slider-outer-' . $id . '">';
+				carousel_slider_inline_style( $id );
 				echo '<div ' . $options . '>';
 
 
 				foreach ( $product_categories as $category ) {
-					echo '<div class="product">';
+					echo '<div class="product carousel-slider__product">';
 					do_action( 'woocommerce_before_subcategory', $category );
 					do_action( 'woocommerce_before_subcategory_title', $category );
 					do_action( 'woocommerce_shop_loop_subcategory_title', $category );
@@ -303,6 +303,7 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 					echo '</div>';
 				}
 
+				echo '</div>';
 				echo '</div>';
 			}
 

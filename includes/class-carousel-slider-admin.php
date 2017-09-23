@@ -422,7 +422,6 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 			$_settings = array(
 				'slide_height'    => sanitize_text_field( $setting['slide_height'] ),
 				'content_width'   => sanitize_text_field( $setting['content_width'] ),
-				'slide_animation' => sanitize_text_field( $setting['slide_animation'] ),
 				'slide_padding'   => array(
 					'top'    => sanitize_text_field( $setting['slide_padding']['top'] ),
 					'right'  => sanitize_text_field( $setting['slide_padding']['right'] ),

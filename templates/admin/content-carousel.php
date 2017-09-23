@@ -210,16 +210,6 @@
                                class="sp-input-text" value="<?php echo $_content_width; ?>">
                     </div>
                 </div>
-                <div class="sp-input-group" id="field-_content_slide_animation">
-                    <div class="sp-input-label">
-                        <label for="_content_slide_animation"><?php esc_html_e( 'Slider Animation', 'carousel-slider' ); ?></label>
-                        <p class="sp-input-desc"><?php printf( esc_html__( 'Enter CSS class for animation. %1$sfadeOut%2$s value is the only built-in CSS animate style.', 'carousel-slider' ), '<strong>', '</strong>' ); ?></p>
-                    </div>
-                    <div class="sp-input-field">
-                        <input type="text" name="content_settings[slide_animation]" id="_content_slide_animation"
-                               class="sp-input-text" value="<?php echo $_slide_animation; ?>">
-                    </div>
-                </div>
                 <div class="sp-input-group" id="field-_content_slide_padding">
                     <div class="sp-input-label">
                         <label for="_content_slide_padding"><?php esc_html_e( 'Slider Padding', 'carousel-slider' ); ?></label>
