@@ -45,7 +45,7 @@ if ( ! class_exists( 'Carousel_Slider_Visual_Composer_Element' ) ):
 				"description" => __( "Place Carousel Slider.", 'carousel-slider' ),
 				"base"        => "carousel_slide",
 				"controls"    => "full",
-				"icon"        => plugins_url( 'assets/img/icon-images.svg', dirname( __FILE__ ) ),
+				"icon"        => CAROUSEL_SLIDER_ASSETS . '/img/logo.svg',
 				"category"    => __( 'Content', 'carousel-slider' ),
 				"params"      => array(
 					array(
@@ -67,8 +67,9 @@ if ( ! class_exists( 'Carousel_Slider_Visual_Composer_Element' ) ):
 		 */
 		private function carousels_list() {
 			$carousels = get_posts( array(
-				'post_type'   => 'carousels',
-				'post_status' => 'publish',
+				'post_type'      => 'carousels',
+				'post_status'    => 'publish',
+				'posts_per_page' => - 1,
 			) );
 
 			if ( count( $carousels ) < 1 ) {

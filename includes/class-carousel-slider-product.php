@@ -1,6 +1,7 @@
 <?php
 /**!
- * @package Carousel_Slider_Product
+ * @package Carousel_Slider
+ * @subpackage Carousel_Slider_Product
  *
  * @method init()
  * @method quick_view()
@@ -114,7 +115,7 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ):
 		/**
 		 * List multiple products by product ids
 		 *
-		 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*
+		 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*, 3.1.*
 		 *
 		 * @param array $args
 		 *
@@ -150,7 +151,7 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ):
 		/**
 		 * Get Recent Products
 		 *
-		 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*
+		 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*, 3.1.*
 		 *
 		 * @param array $args
 		 *
@@ -186,7 +187,7 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ):
 		/**
 		 * List best selling products on sale.
 		 *
-		 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*
+		 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*, 3.1.*
 		 *
 		 * @param array $args
 		 *
@@ -220,7 +221,7 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ):
 		/**
 		 * Get WooCommerce featured products
 		 *
-		 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*
+		 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*, 3.1.*
 		 *
 		 * @param array $args
 		 *
@@ -273,7 +274,7 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ):
 		/**
 		 * List all products on sale.
 		 *
-		 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*
+		 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*, 3.1.*
 		 *
 		 * @param array $args
 		 *
@@ -309,7 +310,7 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ):
 		/**
 		 * Get top rated products
 		 *
-		 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*
+		 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*, 3.1.*
 		 *
 		 * @param array $args
 		 *
@@ -366,7 +367,7 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ):
 		/**
 		 * List all (or limited) product categories.
 		 *
-		 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*
+		 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*, 3.1.*
 		 *
 		 * @param array $args
 		 *
@@ -389,7 +390,7 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ):
 		/**
 		 * Get products by categories ids
 		 *
-		 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*
+		 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*, 3.1.*
 		 *
 		 * @param array $cat_ids
 		 * @param int $per_page
@@ -418,7 +419,7 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ):
 		/**
 		 * Get products by tags ids
 		 *
-		 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*
+		 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*, 3.1.*
 		 *
 		 * @param array $cat_ids
 		 * @param int $per_page
