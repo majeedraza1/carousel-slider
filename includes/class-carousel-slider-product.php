@@ -4,6 +4,8 @@
  * @subpackage Carousel_Slider_Product
  *
  * @method init()
+ * @method wish_list_button()
+ * @method quick_view_button()
  * @method quick_view()
  * @method products()
  * @method recent_products()
@@ -24,10 +26,73 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ):
 		 * Product carousel quick view
 		 */
 		public static function init() {
+			add_action( 'carousel_slider_after_shop_loop_item', array( __CLASS__, 'wish_list_button' ), 12, 2 );
+			add_action( 'carousel_slider_after_shop_loop_item', array( __CLASS__, 'quick_view_button' ), 10, 2 );
+
 			add_action( 'wp_ajax_carousel_slider_quick_view', array( __CLASS__, 'quick_view' ) );
 			add_action( 'wp_ajax_nopriv_carousel_slider_quick_view', array( __CLASS__, 'quick_view' ) );
 		}
 
+		/**
+		 * Show YITH Wishlist button on product slider
+		 *
+		 * @param WC_Product $product
+		 * @param $slider_id
+		 */
+		public static function wish_list_button( $product, $slider_id ) {
+			$_product_wish_list = get_post_meta( $slider_id, '_product_wishlist', true );
+
+			if ( version_compare( WC_VERSION, '2.7.0', '>=' ) ) {
+				$product_id = $product->get_id();
+			} else {
+				$product_id = $product->id;
+			}
+
+			if ( class_exists( 'YITH_WCWL' ) && $_product_wish_list == 'on' ) {
+				echo do_shortcode( '[yith_wcwl_add_to_wishlist product_id="' . $product_id . '"]' );
+			}
+		}
+
+		/**
+		 * Show quick view button on product slider
+		 *
+		 * @param WC_Product $product
+		 * @param $slider_id
+		 */
+		public static function quick_view_button( $product, $slider_id ) {
+			$_show_btn = get_post_meta( $slider_id, '_product_quick_view', true );
+
+			if ( $_show_btn == 'on' ) {
+
+				if ( version_compare( WC_VERSION, '2.7.0', '>=' ) ) {
+					$product_id = $product->get_id();
+				} else {
+					$product_id = $product->id;
+				}
+
+				wp_enqueue_script( 'magnific-popup' );
+
+				$ajax_url = wp_nonce_url( add_query_arg( array(
+					'ajax'       => 'true',
+					'action'     => 'carousel_slider_quick_view',
+					'product_id' => $product_id,
+					'slide_id'   => $slider_id
+				), admin_url( 'admin-ajax.php' ) ), 'carousel_slider_quick_view' );
+
+				$quick_view_html = '<div style="clear: both;"></div>';
+				$quick_view_html .= sprintf(
+					'<a class="magnific-popup button quick_view" href="%1$s" data-product-id="%2$s">%3$s</a>',
+					$ajax_url,
+					$product_id,
+					__( 'Quick View', 'carousel-slider' )
+				);
+				echo apply_filters( 'carousel_slider_product_quick_view', $quick_view_html, $product );
+			}
+		}
+
+		/**
+		 * Display quick view popup content
+		 */
 		public static function quick_view() {
 			if ( ! isset( $_GET['_wpnonce'], $_GET['product_id'], $_GET['slide_id'] ) ) {
 				wp_die();
