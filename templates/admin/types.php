@@ -23,7 +23,7 @@
 				<?php esc_html_e( 'WooCommerce Product Carousel', 'carousel-slider' ); ?>
             </option>
             <option value="content-carousel"<?php echo $slide_type == 'content-carousel' ? 'selected' : ''; ?>>
-		        <?php esc_html_e( 'Content Carousel', 'carousel-slider' ); ?>
+		        <?php esc_html_e( 'Hero Banner Slider (beta)', 'carousel-slider' ); ?>
             </option>
         </select>
     </div>

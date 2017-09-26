@@ -1,7 +1,7 @@
 <div data-id="open" id="section_content_carousel" class="shapla-toggle shapla-toggle--stroke"
      style="display: <?php echo $slide_type != 'content-carousel' ? 'none' : 'block'; ?>">
 	<span class="shapla-toggle-title">
-		<?php esc_html_e( 'Content Carousel/Slider', 'carousel-slider' ); ?>
+		<?php esc_html_e( 'Hero Banner Slider', 'carousel-slider' ); ?>
 	</span>
     <div class="shapla-toggle-inner">
         <div class="shapla-toggle-content">
@@ -156,10 +156,10 @@
 
                                             <ul class="shapla-nav shapla-clearfix">
                                                 <li>
-                                                    <a href="#carousel-slider-tab-content"><?php esc_html_e( 'Slide Content', 'carousel-slider' ); ?></a>
+                                                    <a href="#carousel-slider-tab-background"><?php esc_html_e( 'Slide Background', 'carousel-slider' ); ?></a>
                                                 </li>
                                                 <li>
-                                                    <a href="#carousel-slider-tab-background"><?php esc_html_e( 'Slide Background', 'carousel-slider' ); ?></a>
+                                                    <a href="#carousel-slider-tab-content"><?php esc_html_e( 'Slide Content', 'carousel-slider' ); ?></a>
                                                 </li>
                                                 <li>
                                                     <a href="#carousel-slider-tab-link"><?php esc_html_e( 'Slide Link', 'carousel-slider' ); ?></a>
