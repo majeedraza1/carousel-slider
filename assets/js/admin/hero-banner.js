@@ -273,4 +273,23 @@
         });
     });
 
+    // Slide Link
+    $(document).on('change', '.link_type', function (e) {
+        var _this = $(this);
+        var _val = _this.val();
+        var _tab = _this.closest('.tab-content-link');
+        var _linkFull = _tab.find('.ContentCarouselLinkFull');
+        var _linkBtn = _tab.find('.ContentCarouselLinkButtons');
+        if (_val === 'full') {
+            _linkBtn.hide();
+            _linkFull.show();
+        } else if (_val === 'button') {
+            _linkFull.hide();
+            _linkBtn.show();
+        } else {
+            _linkFull.hide();
+            _linkBtn.hide();
+        }
+    })
+
 })(jQuery);

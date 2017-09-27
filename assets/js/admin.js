@@ -288,6 +288,25 @@
         });
     });
 
+    // Slide Link
+    $(document).on('change', '.link_type', function (e) {
+        var _this = $(this);
+        var _val = _this.val();
+        var _tab = _this.closest('.tab-content-link');
+        var _linkFull = _tab.find('.ContentCarouselLinkFull');
+        var _linkBtn = _tab.find('.ContentCarouselLinkButtons');
+        if (_val === 'full') {
+            _linkBtn.hide();
+            _linkFull.show();
+        } else if (_val === 'button') {
+            _linkFull.hide();
+            _linkBtn.show();
+        } else {
+            _linkFull.hide();
+            _linkBtn.hide();
+        }
+    })
+
 })(jQuery);
 (function ($) {
     "use strict";
@@ -531,7 +550,7 @@
             section_product_query.slideDown();
             _product_query.show();
         }
-        if (this.value === 'content-carousel') {
+        if (this.value === 'hero-banner-slider') {
             section_content_carousel.slideDown();
         }
     });
@@ -582,7 +601,7 @@
 
     // Slide Type -- Product Carousel
     if (slide_type.val() === 'product-carousel') {
-        var _productQueryType = $('#_product_query_type').val();
+        var _productQueryType = _product_query_type.val();
         if (_productQueryType === 'query_porduct') {
             _product_query.show();
         }

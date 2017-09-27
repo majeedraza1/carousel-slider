@@ -420,7 +420,7 @@ if ( ! function_exists( 'carousel_slider_inline_style' ) ) {
 		}
 
 		// Content Carousel
-		if ( $slide_type == 'content-carousel' && $content_sliders ) {
+		if ( $slide_type == 'hero-banner-slider' && $content_sliders ) {
 			foreach ( $content_sliders as $slide_id => $slide ) {
 				if ( isset( $slide['link_type'] ) && ( $slide['link_type'] == 'button' ) ) {
 
@@ -505,7 +505,7 @@ if ( ! function_exists( 'carousel_slider_slide_type' ) ) {
 			'post-carousel',
 			'product-carousel',
 			'video-carousel',
-			'content-carousel'
+			'hero-banner-slider'
 		);
 	}
 }
@@ -545,8 +545,8 @@ if ( ! function_exists( 'carousel_slider_background_size' ) ) {
 	function carousel_slider_background_size( $key_only = false ) {
 		$sizes = array(
 			'auto'      => 'auto',
-			'contain'   => 'contain', // Default
-			'cover'     => 'cover',
+			'contain'   => 'contain',
+			'cover'     => 'cover', // Default
 			'100% 100%' => '100%',
 			'100% auto' => '100% width',
 			'auto 100%' => '100% height',

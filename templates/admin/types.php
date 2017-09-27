@@ -22,7 +22,7 @@
             <option value="product-carousel" <?php echo $slide_type == 'product-carousel' ? 'selected' : ''; ?> <?php echo $disabled; ?>>
 				<?php esc_html_e( 'WooCommerce Product Carousel', 'carousel-slider' ); ?>
             </option>
-            <option value="content-carousel"<?php echo $slide_type == 'content-carousel' ? 'selected' : ''; ?>>
+            <option value="hero-banner-slider"<?php echo $slide_type == 'hero-banner-slider' ? 'selected' : ''; ?>>
 		        <?php esc_html_e( 'Hero Banner Slider (beta)', 'carousel-slider' ); ?>
             </option>
         </select>

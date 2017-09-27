@@ -4,8 +4,10 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-$content_sliders = get_post_meta( $id, '_content_slider', true );
-$settings        = get_post_meta( $id, '_content_slider_settings', true );
+$content_sliders  = get_post_meta( $id, '_content_slider', true );
+$settings         = get_post_meta( $id, '_content_slider_settings', true );
+$_lazy_load_image = get_post_meta( $id, '_lazy_load_image', true );
+$_be_lazy         = in_array( $_lazy_load_image, array( 'on', 'off' ) ) ? $_lazy_load_image : 'on';
 ?>
 <div class="carousel-slider-outer carousel-slider-outer-contents carousel-slider-outer-<?php echo $id; ?>">
 	<?php carousel_slider_inline_style( $id ); ?>
@@ -64,7 +66,7 @@ $settings        = get_post_meta( $id, '_content_slider_settings', true );
 			$canvas_style .= 'background-repeat: no-repeat;';
 			$canvas_style .= 'background-position: ' . $_img_bg_position . ';';
 			$canvas_style .= 'background-size: ' . $_img_bg_size . ';';
-			if ( $_have_img ) {
+			if ( $_have_img && $_be_lazy == 'off' ) {
 				$canvas_style .= 'background-image: url(' . $_img_src[0] . ')';
 			}
 
@@ -95,7 +97,11 @@ $settings        = get_post_meta( $id, '_content_slider_settings', true );
 				$html .= '<a href="' . $_slide_link . '" target="' . $_link_target . '">';
 			}
 
-			$html .= '<div class="carousel-slider__content" id="slide-item-' . $id . '-' . $slide_id . '" style="' . $canvas_style . '">';
+			if ( $_be_lazy == 'on' ) {
+				$html .= '<div class="carousel-slider__content owl-lazy" data-src="' . $_img_src[0] . '" id="slide-item-' . $id . '-' . $slide_id . '" style="' . $canvas_style . '">';
+			} else {
+				$html .= '<div class="carousel-slider__content" id="slide-item-' . $id . '-' . $slide_id . '" style="' . $canvas_style . '">';
+			}
 			$html .= '<div class="slide-content-inner" style="' . $content_inner_style . '">';
 			$html .= '<div class="slide-content" style="' . $content_style . '">';
 

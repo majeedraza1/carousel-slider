@@ -1,5 +1,5 @@
 <div data-id="open" id="section_content_carousel" class="shapla-toggle shapla-toggle--stroke"
-     style="display: <?php echo $slide_type != 'content-carousel' ? 'none' : 'block'; ?>">
+     style="display: <?php echo $slide_type != 'hero-banner-slider' ? 'none' : 'block'; ?>">
 	<span class="shapla-toggle-title">
 		<?php esc_html_e( 'Hero Banner Slider', 'carousel-slider' ); ?>
 	</span>
@@ -33,7 +33,7 @@
 						$_slide_description = isset( $content_slider['slide_description'] ) ? $content_slider['slide_description'] : '';
 						// Slide Background
 						$_img_bg_position = ! empty( $content_slider['img_bg_position'] ) ? esc_attr( $content_slider['img_bg_position'] ) : 'center center';
-						$_img_bg_size     = ! empty( $content_slider['img_bg_size'] ) ? esc_attr( $content_slider['img_bg_size'] ) : 'contain';
+						$_img_bg_size     = ! empty( $content_slider['img_bg_size'] ) ? esc_attr( $content_slider['img_bg_size'] ) : 'cover';
 						$_bg_color        = ! empty( $content_slider['bg_color'] ) ? esc_attr( $content_slider['bg_color'] ) : '';
 						$_img_id          = ! empty( $content_slider['img_id'] ) ? absint( $content_slider['img_id'] ) : 0;
 						$_img_src         = wp_get_attachment_image_src( $_img_id, 'full' );
@@ -95,7 +95,8 @@
                                         <button class="button carousel_slider__delete_slide"
                                                 data-post-id="<?php echo $post->ID; ?>"
                                                 data-slide-pos="<?php echo $slide_num; ?>"
-                                                title="<?php esc_html_e( 'Delete current slide', 'carousel-slider' ); ?>"
+                                                title="<?php esc_html_e( 'Delete current slide',
+											        'carousel-slider' ); ?>"
                                         >
                                             <svg class="icon icon-trash" width="20" height="26">
                                                 <use xlink:href="#icon-trash"></use>
@@ -107,7 +108,8 @@
                                                 <button class="button carousel_slider__move_top"
                                                         data-post-id="<?php echo $post->ID; ?>"
                                                         data-slide-pos="<?php echo $slide_num; ?>"
-                                                        title="<?php esc_html_e( 'Move Slide to Top', 'carousel-slider' ); ?>"
+                                                        title="<?php esc_html_e( 'Move Slide to Top',
+													        'carousel-slider' ); ?>"
                                                 >
                                                     <svg class="icon icon-trash" width="20" height="26">
                                                         <use xlink:href="#icon-angle-up-alt"></use>
@@ -139,7 +141,8 @@
                                                 <button class="button carousel_slider__move_bottom"
                                                         data-post-id="<?php echo $post->ID; ?>"
                                                         data-slide-pos="<?php echo $slide_num; ?>"
-                                                        title="<?php esc_html_e( 'Move Slide to Bottom', 'carousel-slider' ); ?>"
+                                                        title="<?php esc_html_e( 'Move Slide to Bottom',
+													        'carousel-slider' ); ?>"
                                                 >
                                                     <svg class="icon icon-trash" width="20" height="26">
                                                         <use xlink:href="#icon-angle-down-alt"></use>
@@ -156,24 +159,28 @@
 
                                             <ul class="shapla-nav shapla-clearfix">
                                                 <li>
-                                                    <a href="#carousel-slider-tab-background"><?php esc_html_e( 'Slide Background', 'carousel-slider' ); ?></a>
+                                                    <a href="#carousel-slider-tab-background"><?php esc_html_e( 'Slide Background',
+															'carousel-slider' ); ?></a>
                                                 </li>
                                                 <li>
-                                                    <a href="#carousel-slider-tab-content"><?php esc_html_e( 'Slide Content', 'carousel-slider' ); ?></a>
+                                                    <a href="#carousel-slider-tab-content"><?php esc_html_e( 'Slide Content',
+															'carousel-slider' ); ?></a>
                                                 </li>
                                                 <li>
-                                                    <a href="#carousel-slider-tab-link"><?php esc_html_e( 'Slide Link', 'carousel-slider' ); ?></a>
+                                                    <a href="#carousel-slider-tab-link"><?php esc_html_e( 'Slide Link',
+															'carousel-slider' ); ?></a>
                                                 </li>
                                                 <li>
-                                                    <a href="#carousel-slider-tab-style"><?php esc_html_e( 'Slide Style', 'carousel-slider' ); ?></a>
+                                                    <a href="#carousel-slider-tab-style"><?php esc_html_e( 'Slide Style',
+															'carousel-slider' ); ?></a>
                                                 </li>
                                             </ul>
 
 											<?php
-											include CAROUSEL_SLIDER_TEMPLATES . '/admin/parts/tab-content.php';
-											include CAROUSEL_SLIDER_TEMPLATES . '/admin/parts/tab-link.php';
-											include CAROUSEL_SLIDER_TEMPLATES . '/admin/parts/tab-background.php';
-											include CAROUSEL_SLIDER_TEMPLATES . '/admin/parts/tab-style.php';
+											include CAROUSEL_SLIDER_TEMPLATES . '/admin/parts/hero-banner/tab-content.php';
+											include CAROUSEL_SLIDER_TEMPLATES . '/admin/parts/hero-banner/tab-link.php';
+											include CAROUSEL_SLIDER_TEMPLATES . '/admin/parts/hero-banner/tab-background.php';
+											include CAROUSEL_SLIDER_TEMPLATES . '/admin/parts/hero-banner/tab-style.php';
 											?>
 
                                         </div>
@@ -192,8 +199,10 @@
             <div class="content_settings">
                 <div class="sp-input-group" id="field-_content_slide_height">
                     <div class="sp-input-label">
-                        <label for="_content_slide_height"><?php esc_html_e( 'Slide Height', 'carousel-slider' ); ?></label>
-                        <p class="sp-input-desc"><?php esc_html_e( 'Enter a px, em, rem or vh value for slide height. ex: 100vh', 'carousel-slider' ); ?></p>
+                        <label for="_content_slide_height"><?php esc_html_e( 'Slide Height',
+								'carousel-slider' ); ?></label>
+                        <p class="sp-input-desc"><?php esc_html_e( 'Enter a px, em, rem or vh value for slide height. ex: 100vh',
+								'carousel-slider' ); ?></p>
                     </div>
                     <div class="sp-input-field">
                         <input type="text" name="content_settings[slide_height]" id="_content_slide_height"
@@ -202,8 +211,10 @@
                 </div>
                 <div class="sp-input-group" id="field-_content_slide_height">
                     <div class="sp-input-label">
-                        <label for="_content_slide_height"><?php esc_html_e( 'Slider Content Max Width', 'carousel-slider' ); ?></label>
-                        <p class="sp-input-desc"><?php esc_html_e( 'Enter a px, em, rem or % value for slide height. ex: 960px', 'carousel-slider' ); ?></p>
+                        <label for="_content_slide_height"><?php esc_html_e( 'Slider Content Max Width',
+								'carousel-slider' ); ?></label>
+                        <p class="sp-input-desc"><?php esc_html_e( 'Enter a px, em, rem or % value for slide height. ex: 960px',
+								'carousel-slider' ); ?></p>
                     </div>
                     <div class="sp-input-field">
                         <input type="text" name="content_settings[content_width]" id="_content_content_width"
@@ -212,8 +223,10 @@
                 </div>
                 <div class="sp-input-group" id="field-_content_slide_padding">
                     <div class="sp-input-label">
-                        <label for="_content_slide_padding"><?php esc_html_e( 'Slider Padding', 'carousel-slider' ); ?></label>
-                        <p class="sp-input-desc"><?php esc_html_e( 'Enter padding around slide in px, em or rem.', 'carousel-slider' ); ?></p>
+                        <label for="_content_slide_padding"><?php esc_html_e( 'Slider Padding',
+								'carousel-slider' ); ?></label>
+                        <p class="sp-input-desc"><?php esc_html_e( 'Enter padding around slide in px, em or rem.',
+								'carousel-slider' ); ?></p>
                     </div>
                     <div class="sp-input-field">
                         <span class="dashicons dashicons-arrow-up-alt"></span>

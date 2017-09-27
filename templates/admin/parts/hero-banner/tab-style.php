@@ -33,7 +33,7 @@
             <p class="sp-input-desc"><?php esc_html_e( 'Enter gutter (space between description and heading) in px, em or rem, ex: 3rem', 'carousel-slider' ); ?></p>
         </div>
         <div class="sp-input-field">
-            <input id="_heading_gutter" class="regular-text" value="<?php echo $_heading_gutter; ?>"
+            <input type="text" id="_heading_gutter" class="regular-text" value="<?php echo $_heading_gutter; ?>"
                    name="carousel_slider_content[<?php echo $slide_num; ?>][heading_gutter]">
         </div>
     </div>
@@ -82,7 +82,7 @@
             <p class="sp-input-desc"><?php esc_html_e( 'Enter gutter (space between description and buttons) in px, em or rem, ex: 3rem', 'carousel-slider' ); ?></p>
         </div>
         <div class="sp-input-field">
-            <input id="_description_gutter" class="regular-text" value="<?php echo $_description_gutter; ?>"
+            <input type="text" id="_description_gutter" class="regular-text" value="<?php echo $_description_gutter; ?>"
                    name="carousel_slider_content[<?php echo $slide_num; ?>][description_gutter]">
         </div>
     </div>

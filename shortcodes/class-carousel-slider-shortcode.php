@@ -107,13 +107,11 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 				return apply_filters( 'carousel_slider_product_carousel', $html, $id );
 			}
 
-			if ( $slide_type == 'content-carousel' ) {
-
+			if ( $slide_type == 'hero-banner-slider' ) {
 				ob_start();
-				require CAROUSEL_SLIDER_TEMPLATES . '/public/content-carousel.php';
+				require CAROUSEL_SLIDER_TEMPLATES . '/public/hero-banner-slider.php';
 				$html = ob_get_contents();
 				ob_end_clean();
-
 				return apply_filters( 'carousel_slider_content_carousel', $html, $id );
 			}
 
