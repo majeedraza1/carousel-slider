@@ -32,4 +32,3 @@ function carousel_slider_delete_plugin_data() {
 	}
 }
 
-carousel_slider_delete_plugin_data();

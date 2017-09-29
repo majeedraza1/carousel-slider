@@ -44,8 +44,8 @@
 
     <div class="ContentCarouselLinkButtons"
          style="display: <?php echo ( $_link_type == 'button' ) ? 'block' : 'none'; ?>">
-		<?php include CAROUSEL_SLIDER_TEMPLATES . '/admin/parts/tab-link-button-one.php';; ?>
-		<?php include CAROUSEL_SLIDER_TEMPLATES . '/admin/parts/tab-link-button-two.php';; ?>
+		<?php include CAROUSEL_SLIDER_TEMPLATES . '/admin/parts/hero-banner/tab-link-button-one.php';; ?>
+		<?php include CAROUSEL_SLIDER_TEMPLATES . '/admin/parts/hero-banner/tab-link-button-two.php';; ?>
     </div>
 
 </div>
