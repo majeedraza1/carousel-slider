@@ -4,18 +4,31 @@ Tags: woocommerce, shortcode, images, carousel, carousel slider, image carousel,
 Requires at least: 4.5
 Tested up to: 4.8
 Requires PHP: 5.3
-Stable tag: 1.7.4
+Stable tag: 1.8.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
-Create SEO friendly Image, Logo, Video, Post, WooCommerce Product and HTML Content Carousel.
+Create SEO friendly Image, Logo, Video, Post, WooCommerce Product Carousel and Slider.
 
 == Description ==
 
-**Create SEO friendly Image, Logo, Video, Post, WooCommerce Product and HTML Content Carousel.**
+**Create SEO friendly Image, Logo, Video, Post, WooCommerce Product Carousel and Slider.**
 Carousel Slider is a touch enabled WordPress plugin that lets you create highly customizable, stylish responsive carousel slider. With Carousel Slider, you can create image carousel using media gallery or custom url, post carousel, video carousel. We have integrated [Owl Carousel 2](http://www.owlcarousel.owlgraphic.com/) into our plugin for the ultimate device support.
 
+> Looking for a free minimal WordPress theme. Try [Shapla](https://wordpress.org/themes/shapla/)
+
+
 **If you like this plugin, please give us [5 star](https://wordpress.org/support/plugin/carousel-slider/reviews/?rate=5#new-post) to encourage for future improvement.**
+
+
+> What's new in version 1.8.0?
+
+> **Hero Banner Slider(beta)** with background image, title, description, call to action buttons and more
+> More control over Arrow Navigation
+> More control over Bullet/Dot Navigation
+> Alpha color picker for choosing color
+> WooCommerce product categories list carousel.
+> and more...
 
 = Full Feature Set =
 
@@ -106,24 +119,25 @@ Now you can use the following function at your theme template file replacing `YO
 
 == Changelog ==
 
-= version 1.8.0-rc1 - 2017-09-08 =
-* Tweak - Update owlCarousel to version 2.2.1
+= version 1.8.0 - 2017-09-30 =
+* Added - Hero banner slider(beta)
+* Added - Hero banner slider: Add unlimited number of slide
+* Added - Hero banner slider: Delete and sort(up, down, top, bottom) slide
+* Added - Hero banner slider: Slide background with color, image and more
+* Added - Hero banner slider: Slide title and description
+* Added - Hero banner slider: Up to two call to action buttons with full style
 * Added - Arrow Nav: Position (Inside or Outside)
 * Added - Arrow Nav: Custom Size
 * Tweak - Arrow Nav: Always visibility
 * Added - Bullet Nav: Position (Left, Center or Right)
 * Added - Bullet Nav: Custom Size
+* Added - Bullet Nav: Square or Circle Shape
 * Tweak - Arrow Nav: Option to enable visibility only on hover
 * Tweak - Alpha color picker for choosing color
-* Added - Content Carousel/Slider
-* Added - Content Carousel: Add unlimited number of slide
-* Added - Content Carousel: Delete and sort(up, down, top, bottom) slide
-* Added - Content Carousel: Slide background with color, image and more
-* Added - Content Carousel: Slide content with wp_editor()
 * Added - WooCommerce product categories list carousel.
-* Fixed - Popup does not work sometimes
-* Fixed - Features products is now working on WooCommerce version 3
-* Fixed - Top rated products is now working properly
+* Fixed - Fix featured and top rated products on WooCommerce 3.x.x
+* Fixed - Fix popup/modal not working always
+* Tweak - Update owlCarousel version 2.2.1
 
 = version 1.7.4 - 2017-08-26 =
 * Fixed - Fixed syntax error for short array syntax on PHP 5.3

@@ -44,11 +44,11 @@
 						$_link_target = ! empty( $content_slider['link_target'] ) ? esc_attr( $content_slider['link_target'] ) : '_blank';
 						// Slide Style
 						$_content_alignment  = ! empty( $content_slider['content_alignment'] ) ? esc_attr( $content_slider['content_alignment'] ) : 'left';
-						$_heading_font_size  = ! empty( $content_slider['heading_font_size'] ) ? esc_attr( $content_slider['heading_font_size'] ) : '60px';
+						$_heading_font_size  = ! empty( $content_slider['heading_font_size'] ) ? absint( $content_slider['heading_font_size'] ) : '60';
 						$_heading_gutter     = ! empty( $content_slider['heading_gutter'] ) ? esc_attr( $content_slider['heading_gutter'] ) : '1rem';
 						$_heading_color      = ! empty( $content_slider['heading_color'] ) ? esc_attr( $content_slider['heading_color'] ) : '#ffffff';
 						$_heading_bg_color   = ! empty( $content_slider['heading_background_color'] ) ? esc_attr( $content_slider['heading_background_color'] ) : '';
-						$_desc_font_size     = ! empty( $content_slider['description_font_size'] ) ? esc_attr( $content_slider['description_font_size'] ) : '24px';
+						$_desc_font_size     = ! empty( $content_slider['description_font_size'] ) ? absint( $content_slider['description_font_size'] ) : '24';
 						$_description_gutter = ! empty( $content_slider['description_gutter'] ) ? esc_attr( $content_slider['description_gutter'] ) : '1rem';
 						$_desc_color         = ! empty( $content_slider['description_color'] ) ? esc_attr( $content_slider['description_color'] ) : '#ffffff';
 						$_desc_bg_color      = ! empty( $content_slider['description_background_color'] ) ? esc_attr( $content_slider['description_background_color'] ) : '';

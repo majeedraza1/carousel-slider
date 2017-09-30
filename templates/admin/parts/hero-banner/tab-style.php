@@ -21,7 +21,7 @@
             <p class="sp-input-desc"><?php esc_html_e( 'Enter heading font size without px unit. In pixels, ex: 50 instead of 50px. Default: 60', 'carousel-slider' ); ?></p>
         </div>
         <div class="sp-input-field">
-            <input type="text" id="_heading_font_size"
+            <input type="number" id="_heading_font_size"
                    class="regular-text" value="<?php echo $_heading_font_size; ?>"
                    name="carousel_slider_content[<?php echo $slide_num; ?>][heading_font_size]">
         </div>
@@ -70,7 +70,7 @@
             <p class="sp-input-desc"><?php esc_html_e( 'Enter description font size without px unit. In pixels, ex: 20 instead of 20px. Default: 24', 'carousel-slider' ); ?></p>
         </div>
         <div class="sp-input-field">
-            <input type="text" id="_description_font_size"
+            <input type="number" id="_description_font_size"
                    class="regular-text" value="<?php echo $_desc_font_size; ?>"
                    name="carousel_slider_content[<?php echo $slide_num; ?>][description_font_size]">
         </div>

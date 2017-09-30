@@ -51,6 +51,13 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ):
 				'1.1.0',
 				true
 			);
+			wp_register_script(
+				'carousel-slider-hero',
+				CAROUSEL_SLIDER_ASSETS . '/js/public/script.js',
+				array(),
+				CAROUSEL_SLIDER_VERSION,
+				true
+			);
 
 			if ( $this->should_load_scripts() ) {
 				wp_enqueue_style( 'carousel-slider' );

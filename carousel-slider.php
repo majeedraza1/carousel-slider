@@ -3,9 +3,9 @@
  * Plugin Name: Carousel Slider
  * Plugin URI: http://wordpress.org/plugins/carousel-slider
  * Description: The Easiest Way to Create SEO friendly Image, Logo, Video, Post and WooCommerce Product Carousel.
- * Version: 1.7.4
+ * Version: 1.8.0
  * Author: Sayful Islam
- * Author URI: https://sayfulislam.com
+ * Author URI: https://github.com/sayful1
  * Requires at least: 4.4
  * Tested up to: 4.8
  *
@@ -27,7 +27,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 
 	final class Carousel_Slider {
 		private $plugin_name = 'carousel-slider';
-		private $version = '1.7.4';
+		private $version = '1.8.0';
 
 		protected static $instance = null;
 
@@ -60,14 +60,14 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		}
 
 		public function define_constants() {
-			define( 'CAROUSEL_SLIDER_VERSION', $this->version );
-			define( 'CAROUSEL_SLIDER_FILE', __FILE__ );
-			define( 'CAROUSEL_SLIDER_PATH', dirname( CAROUSEL_SLIDER_FILE ) );
-			define( 'CAROUSEL_SLIDER_INCLUDES', CAROUSEL_SLIDER_PATH . '/includes' );
-			define( 'CAROUSEL_SLIDER_TEMPLATES', CAROUSEL_SLIDER_PATH . '/templates' );
-			define( 'CAROUSEL_SLIDER_WIDGETS', CAROUSEL_SLIDER_PATH . '/widgets' );
-			define( 'CAROUSEL_SLIDER_URL', plugins_url( '', CAROUSEL_SLIDER_FILE ) );
-			define( 'CAROUSEL_SLIDER_ASSETS', CAROUSEL_SLIDER_URL . '/assets' );
+			$this->define( 'CAROUSEL_SLIDER_VERSION', $this->version );
+			$this->define( 'CAROUSEL_SLIDER_FILE', __FILE__ );
+			$this->define( 'CAROUSEL_SLIDER_PATH', dirname( CAROUSEL_SLIDER_FILE ) );
+			$this->define( 'CAROUSEL_SLIDER_INCLUDES', CAROUSEL_SLIDER_PATH . '/includes' );
+			$this->define( 'CAROUSEL_SLIDER_TEMPLATES', CAROUSEL_SLIDER_PATH . '/templates' );
+			$this->define( 'CAROUSEL_SLIDER_WIDGETS', CAROUSEL_SLIDER_PATH . '/widgets' );
+			$this->define( 'CAROUSEL_SLIDER_URL', plugins_url( '', CAROUSEL_SLIDER_FILE ) );
+			$this->define( 'CAROUSEL_SLIDER_ASSETS', CAROUSEL_SLIDER_URL . '/assets' );
 		}
 
 		/**

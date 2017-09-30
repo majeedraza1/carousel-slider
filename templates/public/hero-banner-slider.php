@@ -74,11 +74,11 @@ $_be_lazy         = in_array( $_lazy_load_image, array( 'on', 'off' ) ) ? $_lazy
 
 			$content_style = '';
 			if ( $_content_alignment == 'left' ) {
-				$content_style .= 'align-items: flex-start;';
+				$content_style .= '-webkit-align-items: flex-start; align-items: flex-start;';
 			} elseif ( $_content_alignment == 'right' ) {
-				$content_style .= 'align-items: flex-end;';
+				$content_style .= '-webkit-align-items: flex-end; align-items: flex-end;';
 			} else {
-				$content_style .= 'align-items: center;';
+				$content_style .= '-webkit-align-items: center; align-items: center;';
 			}
 
 			$slide_padding   = isset( $settings['slide_padding'] ) && is_array( $settings['slide_padding'] ) ? $settings['slide_padding'] : array();
@@ -120,7 +120,7 @@ $_be_lazy         = in_array( $_lazy_load_image, array( 'on', 'off' ) ) ? $_lazy
 
 				$html .= '<div class="heading">';
 				$html .= '<div class="heading-title-wrapper" style="' . $heading_wrapper_style . '">';
-				$html .= '<h2 class="heading-title" style="' . $heading_style . '">' . wp_kses_post( $_slide_heading ) . "</h2>";
+				$html .= '<h2 class="heading-title" data-font-size="' . absint( $_heading_font_size ) . '" style="' . $heading_style . '">' . wp_kses_post( $_slide_heading ) . "</h2>";
 				$html .= '</div>';
 				$html .= '</div>';
 			}
@@ -140,7 +140,7 @@ $_be_lazy         = in_array( $_lazy_load_image, array( 'on', 'off' ) ) ? $_lazy
 
 				$html .= '<div class="description">';
 				$html .= '<div class="description-title-wrapper" style="' . $desc_wrapper_style . '">';
-				$html .= '<h3 class="description-title" style="' . $desc_style . '">' . wp_kses_post( $_slide_description ) . "</h3>";
+				$html .= '<h3 class="description-title" data-font-size="' . absint( $_desc_font_size ) . '" style="' . $desc_style . '">' . wp_kses_post( $_slide_description ) . "</h3>";
 				$html .= '</div>';
 				$html .= '</div>';
 			}

@@ -102,20 +102,25 @@ echo do_shortcode('[carousel_slide id='YOUR_SLIDER_ID']");
 
 ## Changelog
 
-##### Version 1.8.0-rc2
+##### Version 1.8.0 (updated on 2017-09-30)
+* Added - Hero banner slider(beta)
+* Added - Hero banner slider: Add unlimited number of slide
+* Added - Hero banner slider: Delete and sort(up, down, top, bottom) slide
+* Added - Hero banner slider: Slide background with color, image and more
+* Added - Hero banner slider: Slide title and description
+* Added - Hero banner slider: Up to two call to action buttons with full style
 * Added - Arrow Nav: Position (Inside or Outside)
 * Added - Arrow Nav: Custom Size
 * Tweak - Arrow Nav: Always visibility
 * Added - Bullet Nav: Position (Left, Center or Right)
 * Added - Bullet Nav: Custom Size
+* Added - Bullet Nav: Square or Circle Shape
 * Tweak - Arrow Nav: Option to enable visibility only on hover
 * Tweak - Alpha color picker for choosing color
-* Added - Content Carousel/Slider
-* Added - Content Carousel: Add unlimited number of slide
-* Added - Content Carousel: Delete and sort(up, down, top, bottom) slide
-* Added - Content Carousel: Slide background with color, image and more
-* Added - Content Carousel: Slide content with wp_editor()
 * Added - WooCommerce product categories list carousel.
+* Fixed - Fix featured and top rated products on WooCommerce 3.x.x
+* Fixed - Fix popup/modal not working always
+* Tweak - Update owlCarousel version 2.2.1
 
 
 ##### Version 1.7.4 (updated on 2017-08-26)

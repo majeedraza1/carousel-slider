@@ -377,11 +377,11 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 					'bg_color'                     => carousel_slider_sanitize_color( $slide['bg_color'] ),
 					// Slide Style
 					'content_alignment'            => sanitize_text_field( $slide['content_alignment'] ),
-					'heading_font_size'            => sanitize_text_field( $slide['heading_font_size'] ),
+					'heading_font_size'            => intval( $slide['heading_font_size'] ),
 					'heading_gutter'               => sanitize_text_field( $slide['heading_gutter'] ),
 					'heading_color'                => carousel_slider_sanitize_color( $slide['heading_color'] ),
 					'heading_background_color'     => carousel_slider_sanitize_color( $slide['heading_background_color'] ),
-					'description_font_size'        => sanitize_text_field( $slide['description_font_size'] ),
+					'description_font_size'        => intval( $slide['description_font_size'] ),
 					'description_gutter'           => sanitize_text_field( $slide['description_gutter'] ),
 					'description_color'            => carousel_slider_sanitize_color( $slide['description_color'] ),
 					'description_background_color' => carousel_slider_sanitize_color( $slide['description_background_color'] ),
@@ -420,9 +420,9 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 		private function update_content_settings( $post_id ) {
 			$setting   = $_POST['content_settings'];
 			$_settings = array(
-				'slide_height'    => sanitize_text_field( $setting['slide_height'] ),
-				'content_width'   => sanitize_text_field( $setting['content_width'] ),
-				'slide_padding'   => array(
+				'slide_height'  => sanitize_text_field( $setting['slide_height'] ),
+				'content_width' => sanitize_text_field( $setting['content_width'] ),
+				'slide_padding' => array(
 					'top'    => sanitize_text_field( $setting['slide_padding']['top'] ),
 					'right'  => sanitize_text_field( $setting['slide_padding']['right'] ),
 					'bottom' => sanitize_text_field( $setting['slide_padding']['bottom'] ),
