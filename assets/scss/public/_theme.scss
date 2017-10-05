@@ -34,17 +34,6 @@
         }
     }
 
-    @media (max-width: 767px) {
-        &:hover {
-            .owl-nav {
-                display: none;
-            }
-        }
-        .owl-nav {
-            display: none;
-        }
-    }
-
     &.arrows-visible-always {
         .owl-prev,
         .owl-next {
