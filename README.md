@@ -102,6 +102,12 @@ echo do_shortcode('[carousel_slide id='YOUR_SLIDER_ID']");
 
 ## Changelog
 
+##### version 1.8.1 (updated on 2017-11-03)
+* Added - Auto Width: set item width according to its content width.
+* Added - Stage Padding: Stage padding option adds left and right padding style (in pixels) onto stage-wrapper.
+* Fixed - Carousel Slider widget only show latest five slider.
+* Fixed - arrows is showing on mobile device.
+
 ##### Version 1.8.0 (updated on 2017-09-30)
 * Added - Hero banner slider(beta)
 * Added - Hero banner slider: Add unlimited number of slide

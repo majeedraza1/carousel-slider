@@ -558,3 +558,22 @@ if ( ! function_exists( 'carousel_slider_background_size' ) ) {
 		return $sizes;
 	}
 }
+
+if ( ! function_exists( 'carousel_slider_default_settings' ) ) {
+	function carousel_slider_default_settings() {
+		$options = array(
+			'product_title_color'       => '#323232',
+			'product_button_bg_color'   => '#00d1b2',
+			'product_button_text_color' => '#f1f1f1',
+			'nav_color'                 => '#f1f1f1',
+			'nav_active_color'          => '#00d1b2',
+			'margin_right'              => 10,
+			'lazy_load_image'           => 'off',
+		);
+
+		$options = apply_filters( 'carousel_slider_default_settings', $options );
+		$options = json_decode( json_encode( $options ), false );
+
+		return $options;
+	}
+}

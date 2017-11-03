@@ -114,6 +114,7 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 				require CAROUSEL_SLIDER_TEMPLATES . '/public/hero-banner-slider.php';
 				$html = ob_get_contents();
 				ob_end_clean();
+
 				return apply_filters( 'carousel_slider_content_carousel', $html, $id );
 			}
 
@@ -188,6 +189,8 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 				'data-slide-by'             => $this->get_meta( $id, '_slide_by', '1' ),
 				'data-loop'                 => $this->get_meta( $id, '_inifnity_loop', 'true' ),
 				'data-lazy-load'            => $this->get_meta( $id, '_lazy_load_image', 'false' ),
+				'data-stage-padding'        => $this->get_meta( $id, '_stage_padding', '0' ),
+				'data-auto-width'           => $this->get_meta( $id, '_auto_width', 'false' ),
 				// Navigation
 				'data-dots'                 => $this->get_meta( $id, '_dot_nav', 'false' ),
 				'data-nav'                  => $this->get_meta( $id, '_nav_button', 'false' ),

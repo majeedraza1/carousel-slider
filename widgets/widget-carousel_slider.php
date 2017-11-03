@@ -89,8 +89,11 @@ class Carousel_Slider_Widget extends WP_Widget {
 	 */
 	private function carousels_list() {
 		$carousels = get_posts( array(
-			'post_type'   => 'carousels',
-			'post_status' => 'publish',
+			'post_type'      => 'carousels',
+			'post_status'    => 'publish',
+			'posts_per_page' => - 1,
+			'orderby'        => 'date',
+			'order'          => 'DESC',
 		) );
 
 		if ( count( $carousels ) < 1 ) {

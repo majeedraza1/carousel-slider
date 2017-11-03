@@ -73,6 +73,8 @@ if ( ! class_exists( 'Carousel_Slider_Deprecated_Shortcode' ) ):
 				'data-slide-by'             => $slide_by,
 				'data-loop'                 => $inifnity_loop,
 				'data-lazy-load'            => 'false',
+				'data-stage-padding'        => 0,
+				'data-auto-width'           => 'false',
 				// Navigation
 				'data-nav'                  => $navigation,
 				'data-dots'                 => $pagination,

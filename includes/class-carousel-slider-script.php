@@ -148,10 +148,14 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ):
                             var isVideo = _this.data('slide-type') === 'video-carousel';
                             var videoWidth = isVideo ? _this.data('video-width') : false;
                             var videoHeight = isVideo ? _this.data('video-height') : false;
-                            var autoWidth = isVideo;
+                            var autoWidth = _this.data('auto-width');
+                            var stagePadding = parseInt(_this.data('stage-padding'));
+                            autoWidth = isVideo ? isVideo : autoWidth;
+                            stagePadding = stagePadding > 0 ? stagePadding : 0;
 
                             if (jQuery().owlCarousel) {
                                 _this.owlCarousel({
+                                    stagePadding: stagePadding,
                                     nav: _this.data('nav'),
                                     dots: _this.data('dots'),
                                     margin: _this.data('margin'),
