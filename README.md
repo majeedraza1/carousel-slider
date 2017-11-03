@@ -4,7 +4,7 @@
 **Tags:** woocommerce, shortcode, images, carousel, carousel slider, image carousel, product carousel, slider, owl carousel  
 **Requires at least:** 4.5  
 **Tested up to:** 4.8  
-**Stable tag:** 1.7.4  
+**Stable tag:** 1.8.1  
 **License:** GPLv3  
 **License URI:** http://www.gnu.org/licenses/gpl-3.0.html  
 

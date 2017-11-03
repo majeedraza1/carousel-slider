@@ -3,7 +3,7 @@
  * Plugin Name: Carousel Slider
  * Plugin URI: http://wordpress.org/plugins/carousel-slider
  * Description: The Easiest Way to Create SEO friendly Image, Logo, Video, Post and WooCommerce Product Carousel.
- * Version: 1.8.0
+ * Version: 1.8.1
  * Author: Sayful Islam
  * Author URI: https://github.com/sayful1
  * Requires at least: 4.4
@@ -27,7 +27,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 
 	final class Carousel_Slider {
 		private $plugin_name = 'carousel-slider';
-		private $version = '1.8.0';
+		private $version = '1.8.1';
 
 		protected static $instance = null;
 

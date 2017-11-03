@@ -78,8 +78,6 @@ if ( ! class_exists( 'Carousel_Slider_Deprecated_Shortcode' ) ):
 				// Navigation
 				'data-nav'                  => $navigation,
 				'data-dots'                 => $pagination,
-				'data-nav-previous-icon'    => '<svg class="carousel-slider-nav-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="48" viewBox="0 0 11 28"><path d="M9.8 8.5c0 0.1-0.1 0.3-0.2 0.4l-6.1 6.1 6.1 6.1c0.1 0.1 0.2 0.2 0.2 0.4s-0.1 0.3-0.2 0.4l-0.8 0.8c-0.1 0.1-0.2 0.2-0.4 0.2s-0.3-0.1-0.4-0.2l-7.3-7.3c-0.1-0.1-0.2-0.2-0.2-0.4s0.1-0.3 0.2-0.4l7.3-7.3c0.1-0.1 0.2-0.2 0.4-0.2s0.3 0.1 0.4 0.2l0.8 0.8c0.1 0.1 0.2 0.2 0.2 0.4z"/></svg>',
-				'data-nav-next-icon'        => '<svg class="carousel-slider-nav-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="48" viewBox="0 0 9 28"><path d="M9.3 15c0 0.1-0.1 0.3-0.2 0.4l-7.3 7.3c-0.1 0.1-0.2 0.2-0.4 0.2s-0.3-0.1-0.4-0.2l-0.8-0.8c-0.1-0.1-0.2-0.2-0.2-0.4 0-0.1 0.1-0.3 0.2-0.4l6.1-6.1-6.1-6.1c-0.1-0.1-0.2-0.2-0.2-0.4s0.1-0.3 0.2-0.4l0.8-0.8c0.1-0.1 0.2-0.2 0.4-0.2s0.3 0.1 0.4 0.2l7.3 7.3c0.1 0.1 0.2 0.2 0.2 0.4z"/></svg>',
 				// Video
 				'data-video-width'          => 'false',
 				'data-video-height'         => 'false',
