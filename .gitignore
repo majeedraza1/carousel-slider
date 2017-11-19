@@ -3,3 +3,8 @@
 .idea/
 .sass-cache/
 node_modules/
+
+# Files
+assets/css/admin.css.map
+assets/css/style.css.map
+package-lock.json

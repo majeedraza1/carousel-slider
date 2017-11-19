@@ -3,8 +3,8 @@
 **Contributors:** sayful  
 **Tags:** woocommerce, shortcode, images, carousel, carousel slider, image carousel, product carousel, slider, owl carousel  
 **Requires at least:** 4.5  
-**Tested up to:** 4.8  
-**Stable tag:** 1.8.1  
+**Tested up to:** 4.9  
+**Stable tag:** 1.8.2  
 **License:** GPLv3  
 **License URI:** http://www.gnu.org/licenses/gpl-3.0.html  
 
@@ -101,6 +101,9 @@ echo do_shortcode('[carousel_slide id='YOUR_SLIDER_ID']");
 ```
 
 ## Changelog
+
+##### version 1.8.2 (updated on 2017-11-03)
+* Fixed - Fixed color overlapping issue on WordPress 3.9
 
 ##### version 1.8.1 (updated on 2017-11-03)
 * Added - Auto Width: set item width according to its content width.
