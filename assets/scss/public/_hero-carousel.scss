@@ -1,5 +1,4 @@
 .carousel-slider-hero {
-
     // Cell background
     &__cell__background {
         background-size: cover;
@@ -79,19 +78,30 @@
     }
 
     &__cell__heading {
-        font-size: 35px;
+        font-size: 40px;
         font-weight: bold;
         line-height: 1;
     }
 
     &__cell__description {
-        font-size: 17px;
+        font-size: 20px;
         line-height: 1.4;
     }
 
     &__cell__heading:not(:last-child),
     &__cell__description:not(:last-child) {
         margin-bottom: 30px;
+    }
+
+    &__cell__button__one {
+        margin-right: 5px;
+    }
+    &__cell__button__two {
+        margin-left: 5px;
+    }
+    &__cell__button__one,
+    &__cell__button__two {
+        display: inline-flex;
     }
 }
 
@@ -108,7 +118,7 @@
         }
     }
 
-    .carousel-slider--h-position {
+    &.carousel-slider--h-position {
         &-left {
             justify-content: flex-start;
         }
@@ -139,13 +149,13 @@
     }
 
     .carousel-slider-hero__cell__heading {
-        font-size: 23px;
+        font-size: 24px;
         line-height: 1;
         margin-bottom: 15px;
     }
 
     .carousel-slider-hero__cell__description {
-        font-size: 13px;
+        font-size: 14px;
         line-height: 1.4;
         margin-bottom: 15px;
     }

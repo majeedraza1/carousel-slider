@@ -32,26 +32,26 @@
 						$_slide_heading     = isset( $content_slider['slide_heading'] ) ? $content_slider['slide_heading'] : '';
 						$_slide_description = isset( $content_slider['slide_description'] ) ? $content_slider['slide_description'] : '';
 						// Slide Background
-						$_img_bg_position = ! empty( $content_slider['img_bg_position'] ) ? esc_attr( $content_slider['img_bg_position'] ) : 'center center';
-						$_img_bg_size     = ! empty( $content_slider['img_bg_size'] ) ? esc_attr( $content_slider['img_bg_size'] ) : 'cover';
-						$_bg_color        = ! empty( $content_slider['bg_color'] ) ? esc_attr( $content_slider['bg_color'] ) : '';
-						$_img_id          = ! empty( $content_slider['img_id'] ) ? absint( $content_slider['img_id'] ) : 0;
-						$_img_src         = wp_get_attachment_image_src( $_img_id, 'full' );
-						$_have_img        = is_array( $_img_src );
+						$_img_bg_position  = ! empty( $content_slider['img_bg_position'] ) ? esc_attr( $content_slider['img_bg_position'] ) : 'center center';
+						$_img_bg_size      = ! empty( $content_slider['img_bg_size'] ) ? esc_attr( $content_slider['img_bg_size'] ) : 'cover';
+						$_bg_color         = ! empty( $content_slider['bg_color'] ) ? esc_attr( $content_slider['bg_color'] ) : '';
+						$_img_id           = ! empty( $content_slider['img_id'] ) ? absint( $content_slider['img_id'] ) : 0;
+						$_ken_burns_effect = ! empty( $content_slider['ken_burns_effect'] ) ? esc_attr( $content_slider['ken_burns_effect'] ) : '';
+						$_bg_overlay       = ! empty( $content_slider['bg_overlay'] ) ? esc_attr( $content_slider['bg_overlay'] ) : '';
+						$_img_src          = wp_get_attachment_image_src( $_img_id, 'full' );
+						$_have_img         = is_array( $_img_src );
 						// Slide Link
 						$_link_type   = ! empty( $content_slider['link_type'] ) ? esc_attr( $content_slider['link_type'] ) : 'full';
 						$_slide_link  = ! empty( $content_slider['slide_link'] ) ? esc_url( $content_slider['slide_link'] ) : '';
 						$_link_target = ! empty( $content_slider['link_target'] ) ? esc_attr( $content_slider['link_target'] ) : '_blank';
 						// Slide Style
 						$_content_alignment  = ! empty( $content_slider['content_alignment'] ) ? esc_attr( $content_slider['content_alignment'] ) : 'left';
-						$_heading_font_size  = ! empty( $content_slider['heading_font_size'] ) ? absint( $content_slider['heading_font_size'] ) : '60';
-						$_heading_gutter     = ! empty( $content_slider['heading_gutter'] ) ? esc_attr( $content_slider['heading_gutter'] ) : '1rem';
+						$_heading_font_size  = ! empty( $content_slider['heading_font_size'] ) ? absint( $content_slider['heading_font_size'] ) : '40';
+						$_heading_gutter     = ! empty( $content_slider['heading_gutter'] ) ? esc_attr( $content_slider['heading_gutter'] ) : '30px';
 						$_heading_color      = ! empty( $content_slider['heading_color'] ) ? esc_attr( $content_slider['heading_color'] ) : '#ffffff';
-						$_heading_bg_color   = ! empty( $content_slider['heading_background_color'] ) ? esc_attr( $content_slider['heading_background_color'] ) : '';
-						$_desc_font_size     = ! empty( $content_slider['description_font_size'] ) ? absint( $content_slider['description_font_size'] ) : '24';
-						$_description_gutter = ! empty( $content_slider['description_gutter'] ) ? esc_attr( $content_slider['description_gutter'] ) : '1rem';
+						$_desc_font_size     = ! empty( $content_slider['description_font_size'] ) ? absint( $content_slider['description_font_size'] ) : '20';
+						$_description_gutter = ! empty( $content_slider['description_gutter'] ) ? esc_attr( $content_slider['description_gutter'] ) : '30px';
 						$_desc_color         = ! empty( $content_slider['description_color'] ) ? esc_attr( $content_slider['description_color'] ) : '#ffffff';
-						$_desc_bg_color      = ! empty( $content_slider['description_background_color'] ) ? esc_attr( $content_slider['description_background_color'] ) : '';
 
 						$_btn_1_text          = ! empty( $content_slider['button_one_text'] ) ? esc_attr( $content_slider['button_one_text'] ) : '';
 						$_btn_1_url           = ! empty( $content_slider['button_one_url'] ) ? esc_attr( $content_slider['button_one_url'] ) : '';

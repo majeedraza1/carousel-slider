@@ -51,19 +51,6 @@
         </div>
     </div>
 
-    <div class="sp-input-group" id="field-_heading_background_color">
-        <div class="sp-input-label">
-            <label for="_heading_background_color"><?php esc_html_e( 'Heading Background Color', 'carousel-slider' ); ?></label>
-            <p class="sp-input-desc"><?php esc_html_e( 'If you would like a semi-transparent background behind your heading, Choose from here. If you would not like, leave it blank. Default: rgba(0,0,0, 0.4)', 'carousel-slider' ); ?></p>
-        </div>
-        <div class="sp-input-field">
-            <input type="text" id="_heading_background_color"
-                   class="color-picker" data-alpha="true"
-                   data-default-color="rgba(0,0,0, 0.4)" value="<?php echo $_heading_bg_color; ?>"
-                   name="carousel_slider_content[<?php echo $slide_num; ?>][heading_background_color]">
-        </div>
-    </div>
-
     <div class="sp-input-group" id="field-_description_font_size">
         <div class="sp-input-label">
             <label for="_description_font_size"><?php esc_html_e( 'Description Font Size', 'carousel-slider' ); ?></label>
@@ -100,18 +87,6 @@
         </div>
     </div>
 
-    <div class="sp-input-group" id="field-_description_background_color">
-        <div class="sp-input-label">
-            <label for="_description_background_color"><?php esc_html_e( 'Description Background Color', 'carousel-slider' ); ?></label>
-            <p class="sp-input-desc"><?php esc_html_e( 'If you would like a semi-transparent background behind your description, Choose from here. If you would not like, leave it blank. Default: rgba(0,0,0, 0.4)', 'carousel-slider' ); ?></p>
-        </div>
-        <div class="sp-input-field">
-            <input type="text" id="_description_background_color"
-                   class="color-picker" data-alpha="true"
-                   data-default-color="rgba(0,0,0, 0.4)" value="<?php echo $_desc_bg_color; ?>"
-                   name="carousel_slider_content[<?php echo $slide_num; ?>][description_background_color]">
-        </div>
-    </div>
 
 </div>
 <!-- .tab-style -->

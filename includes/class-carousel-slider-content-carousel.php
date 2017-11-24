@@ -59,7 +59,7 @@ if ( ! class_exists( 'Carousel_Slider_Content_Carousel' ) ):
 				'bg_color'         => 'rgba(0,0,0,0.6)',
 				'img_id'           => '',
 				'img_bg_position'  => 'center center',
-				'img_bg_size'      => 'contain',
+				'img_bg_size'      => 'cover',
 				'link_url'         => '',
 				'link_target'      => '',
 				'popup_type'       => 'image', // Image, Video, HTML

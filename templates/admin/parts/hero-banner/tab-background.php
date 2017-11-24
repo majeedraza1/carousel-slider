@@ -52,10 +52,27 @@
             </div>
 
             <div class="slide_image_settings_line">
+                <span><?php esc_html_e( 'Ken Burns Effect:', 'carousel-slider' ); ?></span>
+                <select class="background_image_size"
+                        name="carousel_slider_content[<?php echo $slide_num; ?>][ken_burns_effect]">
+                    <option value="">None</option>
+                    <option value="zoom-in" <?php selected( 'zoom-in', $_ken_burns_effect ); ?>>Zoom In</option>
+                    <option value="zoom-out" <?php selected( 'zoom-out', $_ken_burns_effect ); ?>>Zoom Out</option>
+                </select>
+            </div>
+
+            <div class="slide_image_settings_line">
                 <span><?php esc_html_e( 'Background Color:', 'carousel-slider' ); ?></span>
                 <input type="text" name="carousel_slider_content[<?php echo $slide_num; ?>][bg_color]"
                        class="slide-color-picker" value="<?php echo $_bg_color; ?>"
                        data-alpha="true" data-default-color="rgba(255,255,255,0.5)">
+            </div>
+
+            <div class="slide_image_settings_line">
+                <span><?php esc_html_e( 'Background Overlay:', 'carousel-slider' ); ?></span>
+                <input type="text" name="carousel_slider_content[<?php echo $slide_num; ?>][bg_overlay]"
+                       class="slide-color-picker" value="<?php echo $_bg_overlay; ?>"
+                       data-alpha="true" data-default-color="rgba(0,0,0,0.5)">
             </div>
         </div>
 
