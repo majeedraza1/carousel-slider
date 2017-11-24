@@ -111,7 +111,7 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 
 				wp_enqueue_script( 'carousel-slider-hero' );
 				ob_start();
-				require CAROUSEL_SLIDER_TEMPLATES . '/public/hero-banner-slider.php';
+				require CAROUSEL_SLIDER_TEMPLATES . '/public/hero-slider.php';
 				$html = ob_get_contents();
 				ob_end_clean();
 

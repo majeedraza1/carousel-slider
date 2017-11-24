@@ -30,6 +30,8 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ):
 		 * Load frontend scripts
 		 */
 		public function frontend_scripts() {
+			$suffix = ( defined( "SCRIPT_DEBUG" ) && SCRIPT_DEBUG ) ? '' : '.min';
+
 			wp_register_style(
 				'carousel-slider',
 				CAROUSEL_SLIDER_ASSETS . '/css/style.css',
