@@ -7,6 +7,7 @@ if ( ! defined( 'WPINC' ) ) {
 if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 
 	class Carousel_Slider_Shortcode {
+
 		protected static $instance = null;
 
 		/**

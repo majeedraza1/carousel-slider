@@ -60,14 +60,15 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		}
 
 		public function define_constants() {
-			$this->define( 'CAROUSEL_SLIDER_VERSION', $this->version );
-			$this->define( 'CAROUSEL_SLIDER_FILE', __FILE__ );
-			$this->define( 'CAROUSEL_SLIDER_PATH', dirname( CAROUSEL_SLIDER_FILE ) );
-			$this->define( 'CAROUSEL_SLIDER_INCLUDES', CAROUSEL_SLIDER_PATH . '/includes' );
-			$this->define( 'CAROUSEL_SLIDER_TEMPLATES', CAROUSEL_SLIDER_PATH . '/templates' );
-			$this->define( 'CAROUSEL_SLIDER_WIDGETS', CAROUSEL_SLIDER_PATH . '/widgets' );
-			$this->define( 'CAROUSEL_SLIDER_URL', plugins_url( '', CAROUSEL_SLIDER_FILE ) );
-			$this->define( 'CAROUSEL_SLIDER_ASSETS', CAROUSEL_SLIDER_URL . '/assets' );
+			define( 'CAROUSEL_SLIDER_VERSION', $this->version );
+			define( 'CAROUSEL_SLIDER_FILE', __FILE__ );
+			define( 'CAROUSEL_SLIDER_PATH', dirname( CAROUSEL_SLIDER_FILE ) );
+			define( 'CAROUSEL_SLIDER_INCLUDES', CAROUSEL_SLIDER_PATH . '/includes' );
+			define( 'CAROUSEL_SLIDER_TEMPLATES', CAROUSEL_SLIDER_PATH . '/templates' );
+			define( 'CAROUSEL_SLIDER_WIDGETS', CAROUSEL_SLIDER_PATH . '/widgets' );
+			define( 'CAROUSEL_SLIDER_MODULES', CAROUSEL_SLIDER_PATH . '/modules' );
+			define( 'CAROUSEL_SLIDER_URL', plugins_url( '', CAROUSEL_SLIDER_FILE ) );
+			define( 'CAROUSEL_SLIDER_ASSETS', CAROUSEL_SLIDER_URL . '/assets' );
 		}
 
 		/**
@@ -113,6 +114,10 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-admin.php';
 			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-content-carousel.php';
 			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-meta-box.php';
+
+			// Hero Carousel
+			require_once CAROUSEL_SLIDER_MODULES . '/hero-carousel/class-meta-box.php';
+			require_once CAROUSEL_SLIDER_MODULES . '/hero-carousel/class-hero-carousel.php';
 		}
 
 		/**

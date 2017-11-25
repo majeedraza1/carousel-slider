@@ -34,7 +34,7 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 			add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 			add_filter( 'manage_edit-carousels_columns', array( $this, 'columns_head' ) );
 			add_filter( 'manage_carousels_posts_custom_column', array( $this, 'columns_content' ), 10, 2 );
-			add_action( 'save_post', array( $this, 'save_meta_box' ) );
+			add_action( 'save_post', array( $this, 'save_meta_box' ), 10, 3 );
 			add_action( 'wp_ajax_carousel_slider_save_images', array( $this, 'save_images' ) );
 
 			// Remove view and Quick Edit from Carousels
@@ -183,15 +183,17 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 			$slide_type = get_post_meta( $post->ID, '_slide_type', true );
 			$slide_type = in_array( $slide_type, carousel_slider_slide_type() ) ? $slide_type : 'image-carousel';
 
+
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/types.php';
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/images-media.php';
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/images-url.php';
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/post-carousel.php';
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/product-carousel.php';
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/video-carousel.php';
-			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/hero-banner-slider.php';
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/images-settings.php';
 
+			do_action( 'carousel_slider_meta_box', $post, $slide_type );
+			
 			// require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/navigation.php';
 			// require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/autoplay.php';
 			// require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/responsive.php';
@@ -200,10 +202,11 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 		/**
 		 * Save custom meta box
 		 *
-		 * @method save_meta_box
-		 * @param  int $post_id The post ID
+		 * @param int $post_id Post ID.
+		 * @param WP_Post $post Post object.
+		 * @param bool $update Whether this is an existing post being updated or not.
 		 */
-		public function save_meta_box( $post_id ) {
+		public function save_meta_box( $post_id, $post, $update ) {
 			if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 				return;
 			}
@@ -220,13 +223,7 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 				return;
 			}
 
-			if ( isset( $_POST['carousel_slider_content'] ) ) {
-				$this->update_content_slider( $post_id );
-			}
-
-			if ( isset( $_POST['content_settings'] ) ) {
-				$this->update_content_settings( $post_id );
-			}
+			do_action( 'carousel_slider_save_meta_box', $post_id, $post, $update );
 
 			foreach ( $_POST['carousel_slider'] as $key => $val ) {
 				if ( is_array( $val ) ) {
@@ -356,80 +353,6 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 			}
 
 			return $post;
-		}
-
-		/**
-		 * Update content slider
-		 *
-		 * @param int $post_id
-		 */
-		private function update_content_slider( $post_id ) {
-			$_content_slides = $_POST['carousel_slider_content'];
-			$_slides         = array_map( function ( $slide ) {
-				$_slide = array(
-					// Slide Content
-					'slide_heading'                => wp_kses_post( $slide['slide_heading'] ),
-					'slide_description'            => wp_kses_post( $slide['slide_description'] ),
-					// Slide Background
-					'img_id'                       => intval( $slide['img_id'] ),
-					'img_bg_position'              => sanitize_text_field( $slide['img_bg_position'] ),
-					'img_bg_size'                  => sanitize_text_field( $slide['img_bg_size'] ),
-					'ken_burns_effect'             => sanitize_text_field( $slide['ken_burns_effect'] ),
-					'bg_color'                     => carousel_slider_sanitize_color( $slide['bg_color'] ),
-					'bg_overlay'                   => carousel_slider_sanitize_color( $slide['bg_overlay'] ),
-					// Slide Style
-					'content_alignment'            => sanitize_text_field( $slide['content_alignment'] ),
-					'heading_font_size'            => intval( $slide['heading_font_size'] ),
-					'heading_gutter'               => sanitize_text_field( $slide['heading_gutter'] ),
-					'heading_color'                => carousel_slider_sanitize_color( $slide['heading_color'] ),
-					'description_font_size'        => intval( $slide['description_font_size'] ),
-					'description_gutter'           => sanitize_text_field( $slide['description_gutter'] ),
-					'description_color'            => carousel_slider_sanitize_color( $slide['description_color'] ),
-					// Slide Link
-					'link_type'                    => sanitize_text_field( $slide['link_type'] ),
-					'slide_link'                   => esc_url_raw( $slide['slide_link'] ),
-					'link_target'                  => sanitize_text_field( $slide['link_target'] ),
-					// Slide Button #1
-					'button_one_text'              => sanitize_text_field( $slide['button_one_text'] ),
-					'button_one_url'               => esc_url_raw( $slide['button_one_url'] ),
-					'button_one_target'            => sanitize_text_field( $slide['button_one_target'] ),
-					'button_one_type'              => sanitize_text_field( $slide['button_one_type'] ),
-					'button_one_size'              => sanitize_text_field( $slide['button_one_size'] ),
-					'button_one_border_width'      => sanitize_text_field( $slide['button_one_border_width'] ),
-					'button_one_border_radius'     => sanitize_text_field( $slide['button_one_border_radius'] ),
-					'button_one_bg_color'          => carousel_slider_sanitize_color( $slide['button_one_bg_color'] ),
-					'button_one_color'             => carousel_slider_sanitize_color( $slide['button_one_color'] ),
-					// Slide Button #2
-					'button_two_text'              => sanitize_text_field( $slide['button_two_text'] ),
-					'button_two_url'               => esc_url_raw( $slide['button_two_url'] ),
-					'button_two_target'            => sanitize_text_field( $slide['button_two_target'] ),
-					'button_two_type'              => sanitize_text_field( $slide['button_two_type'] ),
-					'button_two_size'              => sanitize_text_field( $slide['button_two_size'] ),
-					'button_two_border_width'      => sanitize_text_field( $slide['button_two_border_width'] ),
-					'button_two_border_radius'     => sanitize_text_field( $slide['button_two_border_radius'] ),
-					'button_two_bg_color'          => carousel_slider_sanitize_color( $slide['button_two_bg_color'] ),
-					'button_two_color'             => carousel_slider_sanitize_color( $slide['button_two_color'] ),
-				);
-
-				return $_slide;
-			}, $_content_slides );
-
-			update_post_meta( $post_id, '_content_slider', $_slides );
-		}
-
-		private function update_content_settings( $post_id ) {
-			$setting   = $_POST['content_settings'];
-			$_settings = array(
-				'slide_height'  => sanitize_text_field( $setting['slide_height'] ),
-				'content_width' => sanitize_text_field( $setting['content_width'] ),
-				'slide_padding' => array(
-					'top'    => sanitize_text_field( $setting['slide_padding']['top'] ),
-					'right'  => sanitize_text_field( $setting['slide_padding']['right'] ),
-					'bottom' => sanitize_text_field( $setting['slide_padding']['bottom'] ),
-					'left'   => sanitize_text_field( $setting['slide_padding']['left'] ),
-				),
-			);
-			update_post_meta( $post_id, '_content_slider_settings', $_settings );
 		}
 	}
 
