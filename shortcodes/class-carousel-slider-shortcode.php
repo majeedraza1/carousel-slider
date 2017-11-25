@@ -1,4 +1,5 @@
 <?php
+
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -45,8 +46,11 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 
 			$id = intval( $attributes['id'] );
 
-			$slide_type = get_post_meta( $id, '_slide_type', true );
-			$slide_type = in_array( $slide_type, carousel_slider_slide_type() ) ? $slide_type : 'image-carousel';
+			$slide_type    = get_post_meta( $id, '_slide_type', true );
+			$slide_type    = in_array( $slide_type, carousel_slider_slide_type() ) ? $slide_type : 'image-carousel';
+			$slide_options = $this->carousel_options( $id );
+
+			do_action( 'carousel_slider_view', $id, $slide_type, $slide_options );
 
 			if ( $slide_type == 'post-carousel' ) {
 				ob_start();
@@ -106,17 +110,6 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 				ob_end_clean();
 
 				return apply_filters( 'carousel_slider_product_carousel', $html, $id );
-			}
-
-			if ( $slide_type == 'hero-banner-slider' ) {
-
-				wp_enqueue_script( 'carousel-slider-hero' );
-				ob_start();
-				require CAROUSEL_SLIDER_TEMPLATES . '/public/hero-slider.php';
-				$html = ob_get_contents();
-				ob_end_clean();
-
-				return apply_filters( 'carousel_slider_content_carousel', $html, $id );
 			}
 
 			return '';

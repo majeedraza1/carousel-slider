@@ -112,12 +112,12 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-documentation.php';
 			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-form.php';
 			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-admin.php';
-			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-content-carousel.php';
 			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-meta-box.php';
 
 			// Hero Carousel
 			require_once CAROUSEL_SLIDER_MODULES . '/hero-carousel/class-meta-box.php';
 			require_once CAROUSEL_SLIDER_MODULES . '/hero-carousel/class-hero-carousel.php';
+			require_once CAROUSEL_SLIDER_MODULES . '/hero-carousel/class-ajax-action.php';
 		}
 
 		/**
@@ -127,6 +127,9 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 			require_once CAROUSEL_SLIDER_PATH . '/shortcodes/class-carousel-slider-shortcode.php';
 			require_once CAROUSEL_SLIDER_PATH . '/shortcodes/class-carousel-slider-deprecated-shortcode.php';
 			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-structured-data.php';
+
+			// Hero Carousel
+			require_once CAROUSEL_SLIDER_MODULES . '/hero-carousel/class-view.php';
 		}
 
 		/**

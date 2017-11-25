@@ -33,7 +33,7 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
 				"carousel-slider-usages-info",
 				__( "Usage (Shortcode)", 'carousel-slider' ),
 				array( $this, 'usages_callback' ),
-				"carousels",
+				$this->post_type,
 				"side",
 				"high"
 			);

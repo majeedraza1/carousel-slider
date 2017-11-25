@@ -49,15 +49,8 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ):
 			wp_register_script(
 				'magnific-popup',
 				CAROUSEL_SLIDER_ASSETS . '/js/vendors/jquery.magnific-popup.min.js',
-				array(),
+				array( 'jquery' ),
 				'1.1.0',
-				true
-			);
-			wp_register_script(
-				'carousel-slider-hero',
-				CAROUSEL_SLIDER_ASSETS . '/js/public/script.js',
-				array(),
-				CAROUSEL_SLIDER_VERSION,
 				true
 			);
 
@@ -104,7 +97,7 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ):
 					wp_enqueue_script(
 						'wp-color-picker-alpha',
 						CAROUSEL_SLIDER_ASSETS . '/js/vendors/wp-color-picker-alpha.min.js',
-						array( 'wp-color-picker' ),
+						array( 'jquery', 'wp-color-picker' ),
 						'1.2.2',
 						true
 					);

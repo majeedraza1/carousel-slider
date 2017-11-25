@@ -12,7 +12,7 @@ $_be_lazy         = in_array( $_lazy_load_image, array( 'on', 'off' ) ) ? $_lazy
 ?>
 <div class="carousel-slider-outer carousel-slider-outer-contents carousel-slider-outer-<?php echo $id; ?>">
 	<?php carousel_slider_inline_style( $id ); ?>
-    <div <?php echo join( " ", $this->carousel_options( $id ) ); ?>>
+    <div <?php echo join( " ", $slide_options ); ?>>
 		<?php
 		foreach (
 			$content_sliders

@@ -2,6 +2,11 @@
 
 namespace CarouselSlider\Modules\HeroCarousel;
 
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
 class HeroCarousel {
 
 	protected static $instance = null;
@@ -20,17 +25,15 @@ class HeroCarousel {
 	}
 
 	public function __construct() {
-		add_action( 'carousel_slider_save_meta_box', array( $this, 'save_meta_box' ), 10, 3 );
+		add_action( 'carousel_slider_save_meta_box', array( $this, 'save_meta_box' ) );
 	}
 
 	/**
 	 * Save hero carousel custom meta box
 	 *
 	 * @param int $post_id Post ID.
-	 * @param \WP_Post $post Post object.
-	 * @param bool $update Whether this is an existing post being updated or not.
 	 */
-	public function save_meta_box( $post_id, $post, $update ) {
+	public function save_meta_box( $post_id ) {
 
 		if ( isset( $_POST['carousel_slider_content'] ) ) {
 			$this->update_content_slider( $post_id );
