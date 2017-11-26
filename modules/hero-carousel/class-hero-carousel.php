@@ -25,7 +25,7 @@ class HeroCarousel {
 	}
 
 	public function __construct() {
-		add_filter( 'carousel_slider_slide_type', array( $this, 'add_hero_slide_type' ) );
+		add_filter( 'carousel_slider_slide_type', array( $this, 'add_hero_slide_type' ), 60 );
 		add_action( 'carousel_slider_save_meta_box', array( $this, 'save_meta_box' ) );
 	}
 

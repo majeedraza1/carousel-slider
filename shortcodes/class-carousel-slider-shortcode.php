@@ -52,23 +52,7 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 
 			do_action( 'carousel_slider_view', $id, $slide_type, $slide_options );
 
-			if ( $slide_type == 'post-carousel' ) {
-				ob_start();
-				require CAROUSEL_SLIDER_TEMPLATES . '/public/post-carousel.php';
-				$html = ob_get_contents();
-				ob_end_clean();
 
-				return apply_filters( 'carousel_slider_posts_carousel', $html, $id );
-			}
-
-			if ( $slide_type == 'video-carousel' ) {
-				ob_start();
-				require CAROUSEL_SLIDER_TEMPLATES . '/public/video-carousel.php';
-				$html = ob_get_contents();
-				ob_end_clean();
-
-				return apply_filters( 'carousel_slider_videos_carousel', $html, $id );
-			}
 
 			if ( $slide_type == 'image-carousel-url' ) {
 				ob_start();
@@ -246,31 +230,6 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 		 */
 		public function is_valid_url( $url ) {
 			return carousel_slider_is_url( $url );
-		}
-
-		/**
-		 * Convert url to youtube and vimeo video link
-		 *
-		 * @param $url
-		 *
-		 * @return string
-		 */
-		public function video_url( $url ) {
-			if ( ! $this->is_valid_url( $url ) ) {
-				return;
-			}
-
-			$url = esc_url( $url );
-
-			if ( strpos( $url, 'youtube.com' ) > 0 ) {
-				return '<div class="item-video"><a class="owl-video" href="' . $url . '"></a></div>';
-			}
-
-			if ( strpos( $url, 'vimeo.com' ) > 0 ) {
-				return '<div class="item-video"><a class="owl-video" href="' . $url . '"></a></div>';
-			}
-
-			return;
 		}
 
 		/**

@@ -183,20 +183,13 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 			$slide_type = get_post_meta( $post->ID, '_slide_type', true );
 			$slide_type = in_array( $slide_type, carousel_slider_slide_type() ) ? $slide_type : 'image-carousel';
 
-
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/types.php';
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/images-media.php';
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/images-url.php';
-			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/post-carousel.php';
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/product-carousel.php';
-			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/video-carousel.php';
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/images-settings.php';
 
 			do_action( 'carousel_slider_meta_box', $post, $slide_type );
-			
-			// require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/navigation.php';
-			// require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/autoplay.php';
-			// require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/responsive.php';
 		}
 
 		/**
@@ -234,18 +227,6 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 					$val = 'zero';
 				}
 				update_post_meta( $post_id, $key, sanitize_text_field( $val ) );
-			}
-
-			if ( ! isset( $_POST['carousel_slider']['_post_categories'] ) ) {
-				update_post_meta( $post_id, '_post_categories', '' );
-			}
-
-			if ( ! isset( $_POST['carousel_slider']['_post_tags'] ) ) {
-				update_post_meta( $post_id, '_post_tags', '' );
-			}
-
-			if ( ! isset( $_POST['carousel_slider']['_post_in'] ) ) {
-				update_post_meta( $post_id, '_post_in', '' );
 			}
 
 			if ( isset( $_POST['_images_urls'] ) ) {

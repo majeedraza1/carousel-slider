@@ -107,6 +107,16 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 			require_once CAROUSEL_SLIDER_MODULES . '/hero-carousel/class-hero-carousel.php';
 			require_once CAROUSEL_SLIDER_MODULES . '/hero-carousel/class-ajax-action.php';
 			require_once CAROUSEL_SLIDER_MODULES . '/hero-carousel/class-view.php';
+
+			// Post Carousel
+			require_once CAROUSEL_SLIDER_MODULES . '/post-carousel/class-meta-box.php';
+			require_once CAROUSEL_SLIDER_MODULES . '/post-carousel/class-post-carousel.php';
+			require_once CAROUSEL_SLIDER_MODULES . '/post-carousel/class-view.php';
+
+			// Video Carousel
+			require_once CAROUSEL_SLIDER_MODULES . '/video-carousel/class-meta-box.php';
+			require_once CAROUSEL_SLIDER_MODULES . '/video-carousel/class-video-carousel.php';
+			require_once CAROUSEL_SLIDER_MODULES . '/video-carousel/class-view.php';
 		}
 
 		/**

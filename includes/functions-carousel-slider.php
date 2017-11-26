@@ -504,8 +504,6 @@ if ( ! function_exists( 'carousel_slider_slide_type' ) ) {
 		$types = apply_filters( 'carousel_slider_slide_type', array(
 			'image-carousel'     => __( 'Image Carousel - from Media Library', 'carousel-slider' ),
 			'image-carousel-url' => __( 'Image Carousel - from URL', 'carousel-slider' ),
-			'post-carousel'      => __( 'Post Carousel', 'carousel-slider' ),
-			'video-carousel'     => __( 'Video Carousel', 'carousel-slider' ),
 			'product-carousel'   => __( 'WooCommerce Product Carousel', 'carousel-slider' ),
 		) );
 
