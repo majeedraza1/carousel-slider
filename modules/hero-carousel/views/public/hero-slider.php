@@ -8,17 +8,14 @@ $content_sliders  = get_post_meta( $id, '_content_slider', true );
 $settings         = get_post_meta( $id, '_content_slider_settings', true );
 $_lazy_load_image = get_post_meta( $id, '_lazy_load_image', true );
 $_be_lazy         = in_array( $_lazy_load_image, array( 'on', 'off' ) ) ? $_lazy_load_image : 'on';
+$slide_options    = join( " ", carousel_slider_array_to_attribute( $slide_options ) );
 
 ?>
 <div class="carousel-slider-outer carousel-slider-outer-contents carousel-slider-outer-<?php echo $id; ?>">
 	<?php carousel_slider_inline_style( $id ); ?>
-    <div <?php echo join( " ", $slide_options ); ?>>
+    <div <?php echo $slide_options; ?>>
 		<?php
-		foreach (
-			$content_sliders
-
-			as $slide_id => $slide
-		):
+		foreach ( $content_sliders as $slide_id => $slide ):
 
 			$html = '';
 

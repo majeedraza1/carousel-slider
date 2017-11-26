@@ -1,3 +1,9 @@
+<?php
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+?>
 <div id="carousel-slider-tab-style" class="shapla-tab tab-style">
 
     <div class="sp-input-group" id="field-_content_alignment">

@@ -1,3 +1,9 @@
+<?php
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+?>
 <div id="carousel-slider-tab-background" class="shapla-tab tab-background">
     <div class="slide_bg_wrapper">
         <div class="slide-media-left">

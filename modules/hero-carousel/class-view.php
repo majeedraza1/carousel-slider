@@ -41,11 +41,11 @@ class View {
 		if ( 'hero-banner-slider' == $slide_type ) {
 
 			ob_start();
-			require CAROUSEL_SLIDER_TEMPLATES . '/public/hero-slider.php';
+			require CAROUSEL_SLIDER_MODULES . '/hero-carousel/views/public/hero-slider.php';
 			$html = ob_get_contents();
 			ob_end_clean();
 
-			echo apply_filters( 'carousel_slider_content_carousel', $html, $id, $slide_options );
+			echo apply_filters( 'carousel_slider_hero_carousel', $html, $id, $slide_options );
 		}
 	}
 }

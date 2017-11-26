@@ -32,11 +32,13 @@ class MetaBox {
 	}
 
 	/**
+	 * Add Hero slider meta box content
+	 *
 	 * @param \WP_Post $post
 	 * @param string $slide_type
 	 */
 	public function meta_box_content( $post, $slide_type ) {
-		require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/hero-banner-slider.php';
+		require_once CAROUSEL_SLIDER_MODULES . '/hero-carousel/views/admin/hero-carousel.php';
 	}
 }
 

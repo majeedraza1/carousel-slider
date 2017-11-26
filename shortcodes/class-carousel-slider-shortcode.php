@@ -48,7 +48,7 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 
 			$slide_type    = get_post_meta( $id, '_slide_type', true );
 			$slide_type    = in_array( $slide_type, carousel_slider_slide_type() ) ? $slide_type : 'image-carousel';
-			$slide_options = $this->carousel_options( $id );
+			$slide_options = $this->carousel_options( $id, true );
 
 			do_action( 'carousel_slider_view', $id, $slide_type, $slide_options );
 
@@ -118,11 +118,12 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 		/**
 		 * Generate carousel options for slider
 		 *
-		 * @param $id
+		 * @param int $id Carousel Slider ID
+		 * @param bool $assoc When TRUE, returned objects will be converted into associative arrays.
 		 *
 		 * @return array
 		 */
-		private function carousel_options( $id ) {
+		private function carousel_options( $id, $assoc = false ) {
 			$_nav_color        = get_post_meta( $id, '_nav_color', true );
 			$_nav_active_color = get_post_meta( $id, '_nav_active_color', true );
 			$_nav_button       = get_post_meta( $id, '_nav_button', true );
@@ -204,6 +205,10 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 				'data-colums-small-tablet'  => $this->get_meta( $id, '_items_small_portrait_tablet', '2' ),
 				'data-colums-mobile'        => $this->get_meta( $id, '_items_portrait_mobile', '1' ),
 			);
+
+			if ( $assoc ) {
+				return $options_array;
+			}
 
 			return $this->array_to_data( $options_array );
 		}

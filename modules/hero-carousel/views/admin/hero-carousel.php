@@ -1,3 +1,9 @@
+<?php
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+?>
 <div data-id="open" id="section_content_carousel" class="shapla-toggle shapla-toggle--stroke"
      style="display: <?php echo $slide_type != 'hero-banner-slider' ? 'none' : 'block'; ?>">
 	<span class="shapla-toggle-title">
@@ -177,10 +183,10 @@
                                             </ul>
 
 											<?php
-											include CAROUSEL_SLIDER_TEMPLATES . '/admin/parts/hero-banner/tab-content.php';
-											include CAROUSEL_SLIDER_TEMPLATES . '/admin/parts/hero-banner/tab-link.php';
-											include CAROUSEL_SLIDER_TEMPLATES . '/admin/parts/hero-banner/tab-background.php';
-											include CAROUSEL_SLIDER_TEMPLATES . '/admin/parts/hero-banner/tab-style.php';
+											include CAROUSEL_SLIDER_MODULES . '/hero-carousel/views/admin/_tab-content.php';
+											include CAROUSEL_SLIDER_MODULES . '/hero-carousel/views/admin/_tab-link.php';
+											include CAROUSEL_SLIDER_MODULES . '/hero-carousel/views/admin/_tab-background.php';
+											include CAROUSEL_SLIDER_MODULES . '/hero-carousel/views/admin/_tab-style.php';
 											?>
 
                                         </div>
