@@ -12,10 +12,11 @@ $_lazy_load_image         = get_post_meta( $id, '_lazy_load_image', true );
 $_show_attachment_title   = get_post_meta( $id, '_show_attachment_title', true );
 $_show_attachment_caption = get_post_meta( $id, '_show_attachment_caption', true );
 $_images_urls             = get_post_meta( $id, '_images_urls', true );
+$slide_options            = join( " ", carousel_slider_array_to_attribute( $slide_options ) );
 ?>
 <div class="carousel-slider-outer carousel-slider-outer-images carousel-slider-outer-<?php echo $id; ?>">
 	<?php carousel_slider_inline_style( $id ); ?>
-    <div <?php echo join( " ", $this->carousel_options( $id ) ); ?>>
+    <div <?php echo $slide_options; ?>>
 		<?php
 		foreach ( $_images_urls as $imageInfo ):
 

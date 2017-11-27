@@ -122,8 +122,13 @@ class Carousel_Slider_Widget extends WP_Widget {
 
 		return $old_instance;
 	}
+
+	/**
+	 * Register current widget
+	 */
+	public static function register() {
+		register_widget( __CLASS__ );
+	}
 }
 
-add_action( 'widgets_init', function () {
-	register_widget( 'Carousel_Slider_Widget' );
-} );
+add_action( 'widgets_init', array( 'Carousel_Slider_Widget', 'register' ) );

@@ -184,12 +184,12 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 			$slide_type = in_array( $slide_type, carousel_slider_slide_type() ) ? $slide_type : 'image-carousel';
 
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/types.php';
-			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/images-media.php';
-			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/images-url.php';
-			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/product-carousel.php';
-			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/images-settings.php';
 
 			do_action( 'carousel_slider_meta_box', $post, $slide_type );
+
+			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/images-media.php';
+			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/images-settings.php';
+			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/product-carousel.php';
 		}
 
 		/**
@@ -228,10 +228,6 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 				}
 				update_post_meta( $post_id, $key, sanitize_text_field( $val ) );
 			}
-
-			if ( isset( $_POST['_images_urls'] ) ) {
-				$this->save_images_urls( $post_id );
-			}
 		}
 
 		/**
@@ -265,37 +261,6 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 			echo $thumbs_output;
 
 			die();
-		}
-
-		/**
-		 * Save images urls
-		 *
-		 * @param  integer $post_id
-		 *
-		 * @return void
-		 */
-		private function save_images_urls( $post_id ) {
-			if ( ! isset( $_POST['_images_urls'] ) ) {
-				return;
-			}
-			$url      = $_POST['_images_urls']['url'];
-			$title    = $_POST['_images_urls']['title'];
-			$caption  = $_POST['_images_urls']['caption'];
-			$alt      = $_POST['_images_urls']['alt'];
-			$link_url = $_POST['_images_urls']['link_url'];
-
-			$urls = array();
-
-			for ( $i = 0; $i < count( $url ); $i ++ ) {
-				$urls[] = array(
-					'url'      => esc_url_raw( $url[ $i ] ),
-					'title'    => sanitize_text_field( $title[ $i ] ),
-					'caption'  => sanitize_text_field( $caption[ $i ] ),
-					'alt'      => sanitize_text_field( $alt[ $i ] ),
-					'link_url' => esc_url_raw( $link_url[ $i ] ),
-				);
-			}
-			update_post_meta( $post_id, '_images_urls', $urls );
 		}
 
 		/**

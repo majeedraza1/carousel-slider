@@ -54,14 +54,6 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 
 
 
-			if ( $slide_type == 'image-carousel-url' ) {
-				ob_start();
-				require CAROUSEL_SLIDER_TEMPLATES . '/public/images-carousel-url.php';
-				$html = ob_get_contents();
-				ob_end_clean();
-
-				return apply_filters( 'carousel_slider_link_images_carousel', $html, $id );
-			}
 
 			if ( $slide_type == 'image-carousel' ) {
 				ob_start();

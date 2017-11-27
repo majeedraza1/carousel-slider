@@ -27,9 +27,25 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 
 	final class Carousel_Slider {
 		private $plugin_name = 'carousel-slider';
+
+		/**
+		 * Plugin version
+		 *
+		 * @var string
+		 */
 		private $version = '1.8.2';
 
-		protected static $instance = null;
+		/**
+		 * Minimum PHP version required
+		 *
+		 * @var string
+		 */
+		private $min_php = '5.3.0';
+
+		/**
+		 * @var object
+		 */
+		protected static $instance;
 
 		/**
 		 * Main Carousel_Slider Instance
@@ -50,6 +66,13 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		 * Carousel_Slider constructor.
 		 */
 		public function __construct() {
+			// dry check on older PHP versions, if found deactivate itself with an error
+			register_activation_hook( __FILE__, array( $this, 'auto_deactivate' ) );
+
+			if ( ! $this->is_supported_php() ) {
+				return;
+			}
+
 			$this->define_constants();
 			$this->includes();
 
@@ -65,7 +88,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 			define( 'CAROUSEL_SLIDER_PATH', dirname( CAROUSEL_SLIDER_FILE ) );
 			define( 'CAROUSEL_SLIDER_INCLUDES', CAROUSEL_SLIDER_PATH . '/includes' );
 			define( 'CAROUSEL_SLIDER_TEMPLATES', CAROUSEL_SLIDER_PATH . '/templates' );
-			define( 'CAROUSEL_SLIDER_WIDGETS', CAROUSEL_SLIDER_PATH . '/widgets' );
+			define( 'CAROUSEL_SLIDER_WIDGETS', CAROUSEL_SLIDER_INCLUDES . '/widgets' );
 			define( 'CAROUSEL_SLIDER_MODULES', CAROUSEL_SLIDER_PATH . '/modules' );
 			define( 'CAROUSEL_SLIDER_URL', plugins_url( '', CAROUSEL_SLIDER_FILE ) );
 			define( 'CAROUSEL_SLIDER_ASSETS', CAROUSEL_SLIDER_URL . '/assets' );
@@ -117,6 +140,11 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 			require_once CAROUSEL_SLIDER_MODULES . '/video-carousel/class-meta-box.php';
 			require_once CAROUSEL_SLIDER_MODULES . '/video-carousel/class-video-carousel.php';
 			require_once CAROUSEL_SLIDER_MODULES . '/video-carousel/class-view.php';
+
+			// Image Carousel from URL
+			require_once CAROUSEL_SLIDER_MODULES . '/image-carousel-url/class-meta-box.php';
+			require_once CAROUSEL_SLIDER_MODULES . '/image-carousel-url/class-image-carousel-url.php';
+			require_once CAROUSEL_SLIDER_MODULES . '/image-carousel-url/class-view.php';
 		}
 
 		/**
@@ -135,8 +163,8 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		 * Load front facing files
 		 */
 		public function frontend_includes() {
-			require_once CAROUSEL_SLIDER_PATH . '/shortcodes/class-carousel-slider-shortcode.php';
-			require_once CAROUSEL_SLIDER_PATH . '/shortcodes/class-carousel-slider-deprecated-shortcode.php';
+			require_once CAROUSEL_SLIDER_INCLUDES . '/shortcodes/class-carousel-slider-shortcode.php';
+			require_once CAROUSEL_SLIDER_INCLUDES . '/shortcodes/class-carousel-slider-deprecated-shortcode.php';
 			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-structured-data.php';
 		}
 
@@ -156,6 +184,45 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		public function deactivation() {
 			do_action( 'carousel_slider_deactivation' );
 			flush_rewrite_rules();
+		}
+
+		/**
+		 * Bail out if the php version is lower than
+		 *
+		 * @return void
+		 */
+		public function auto_deactivate() {
+
+			if ( $this->is_supported_php() ) {
+				return;
+			}
+
+			deactivate_plugins( basename( __FILE__ ) );
+
+			$error = __( '<h2>An Error Occurred</h2>', 'carousel-slider' );
+			$error .= __( '<p>Your installed PHP Version is: ', 'carousel-slider' ) . PHP_VERSION . '</p>';
+			$error .= __( '<p>The <strong>Carousel Slider</strong> plugin requires PHP version <strong>', 'carousel-slider' ) . $this->min_php . __( '</strong> or greater', 'carousel-slider' );
+			$error .= __( '<p>The version of your PHP is ', 'carousel-slider' ) . '<a href="http://php.net/supported-versions.php" target="_blank"><strong>' . __( 'unsupported and old', 'carousel-slider' ) . '</strong></a>.';
+			$error .= __( 'You should update your PHP software or contact your host regarding this matter.</p>', 'carousel-slider' );
+
+			wp_die(
+				$error,
+				__( 'Plugin Activation Error', 'carousel-slider' ),
+				array( 'response' => 200, 'back_link' => true )
+			);
+		}
+
+		/**
+		 * Check if the PHP version is supported
+		 *
+		 * @return bool
+		 */
+		private function is_supported_php() {
+			if ( version_compare( PHP_VERSION, $this->min_php, '>=' ) ) {
+				return true;
+			}
+
+			return false;
 		}
 	}
 }
