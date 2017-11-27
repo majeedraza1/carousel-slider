@@ -16,10 +16,11 @@ $_show_attachment_title   = get_post_meta( $id, '_show_attachment_title', true )
 $_show_attachment_caption = get_post_meta( $id, '_show_attachment_caption', true );
 $_show_lightbox           = get_post_meta( $id, '_image_lightbox', true );
 
+$slide_options = join( " ", carousel_slider_array_to_attribute( $slide_options ) );
 ?>
 <div class="carousel-slider-outer carousel-slider-outer-images carousel-slider-outer-<?php echo $id; ?>">
 	<?php carousel_slider_inline_style( $id ); ?>
-    <div <?php echo join( " ", $this->carousel_options( $id ) ); ?>>
+    <div <?php echo $slide_options; ?>>
 		<?php
 		foreach ( $images_ids as $image_id ):
 

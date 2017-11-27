@@ -501,10 +501,7 @@ if ( ! function_exists( 'carousel_slider_slide_type' ) ) {
 	 * @return array
 	 */
 	function carousel_slider_slide_type( $key_only = true ) {
-		$types = apply_filters( 'carousel_slider_slide_type', array(
-			'image-carousel'   => __( 'Image Carousel - from Media Library', 'carousel-slider' ),
-			'product-carousel' => __( 'WooCommerce Product Carousel', 'carousel-slider' ),
-		) );
+		$types = apply_filters( 'carousel_slider_slide_type', array() );
 
 		if ( $key_only ) {
 			return array_keys( $types );

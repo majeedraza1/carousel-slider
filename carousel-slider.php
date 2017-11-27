@@ -26,6 +26,12 @@ if ( ! defined( 'WPINC' ) ) {
 if ( ! class_exists( 'Carousel_Slider' ) ) {
 
 	final class Carousel_Slider {
+
+		/**
+		 * Plugin name slug
+		 *
+		 * @var string
+		 */
 		private $plugin_name = 'carousel-slider';
 
 		/**
@@ -119,11 +125,17 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 			require_once CAROUSEL_SLIDER_WIDGETS . '/widget-carousel_slider.php';
 
 			if ( is_admin() ) {
-				$this->admin_includes();
+				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-credit.php';
+				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-vc-element.php';
+				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-documentation.php';
+				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-form.php';
+				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-admin.php';
+				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-meta-box.php';
 			}
-			if ( ! is_admin() ) {
-				$this->frontend_includes();
-			}
+
+			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-structured-data.php';
+			require_once CAROUSEL_SLIDER_INCLUDES . '/shortcodes/class-carousel-slider-shortcode.php';
+			require_once CAROUSEL_SLIDER_INCLUDES . '/shortcodes/class-carousel-slider-deprecated-shortcode.php';
 
 			// Hero Carousel
 			require_once CAROUSEL_SLIDER_MODULES . '/hero-carousel/class-meta-box.php';
@@ -141,31 +153,20 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 			require_once CAROUSEL_SLIDER_MODULES . '/video-carousel/class-video-carousel.php';
 			require_once CAROUSEL_SLIDER_MODULES . '/video-carousel/class-view.php';
 
+			// Image Carousel from Media
+			require_once CAROUSEL_SLIDER_MODULES . '/image-carousel/class-meta-box.php';
+			require_once CAROUSEL_SLIDER_MODULES . '/image-carousel/class-image-carousel.php';
+			require_once CAROUSEL_SLIDER_MODULES . '/image-carousel/class-view.php';
+
 			// Image Carousel from URL
 			require_once CAROUSEL_SLIDER_MODULES . '/image-carousel-url/class-meta-box.php';
 			require_once CAROUSEL_SLIDER_MODULES . '/image-carousel-url/class-image-carousel-url.php';
 			require_once CAROUSEL_SLIDER_MODULES . '/image-carousel-url/class-view.php';
-		}
 
-		/**
-		 * Include admin files
-		 */
-		public function admin_includes() {
-			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-credit.php';
-			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-vc-element.php';
-			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-documentation.php';
-			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-form.php';
-			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-admin.php';
-			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-meta-box.php';
-		}
-
-		/**
-		 * Load front facing files
-		 */
-		public function frontend_includes() {
-			require_once CAROUSEL_SLIDER_INCLUDES . '/shortcodes/class-carousel-slider-shortcode.php';
-			require_once CAROUSEL_SLIDER_INCLUDES . '/shortcodes/class-carousel-slider-deprecated-shortcode.php';
-			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-structured-data.php';
+			// Product from URL
+			require_once CAROUSEL_SLIDER_MODULES . '/product-carousel/class-meta-box.php';
+			require_once CAROUSEL_SLIDER_MODULES . '/product-carousel/class-product-carousel.php';
+			require_once CAROUSEL_SLIDER_MODULES . '/product-carousel/class-view.php';
 		}
 
 		/**

@@ -1,6 +1,6 @@
 <?php
 
-namespace CarouselSlider\Modules\ImageCarouselURL;
+namespace CarouselSlider\Modules\ImageCarousel;
 
 class View {
 
@@ -34,13 +34,13 @@ class View {
 	 */
 	public function carousel_view( $id, $slide_type, $slide_options ) {
 
-		if ( $slide_type == 'image-carousel-url' ) {
+		if ( $slide_type == 'image-carousel' ) {
 			ob_start();
-			require CAROUSEL_SLIDER_MODULES . '/image-carousel-url/views/public/images-carousel-url.php';
+			require CAROUSEL_SLIDER_MODULES . '/image-carousel/views/public/images-carousel.php';
 			$html = ob_get_contents();
 			ob_end_clean();
 
-			echo apply_filters( 'carousel_slider_link_images_carousel', $html, $id, $slide_options );
+			echo apply_filters( 'carousel_slider_gallery_images_carousel', $html, $id, $slide_options );
 		}
 	}
 }

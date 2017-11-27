@@ -32,10 +32,11 @@ $_product_cart_btn   = get_post_meta( $id, '_product_cart_button', true );
 $_product_onsale     = get_post_meta( $id, '_product_onsale', true );
 $_product_wishlist   = get_post_meta( $id, '_product_wishlist', true );
 $_product_quick_view = get_post_meta( $id, '_product_quick_view', true );
+$slide_options       = join( " ", carousel_slider_array_to_attribute( $slide_options ) );
 ?>
 <div class="carousel-slider-outer carousel-slider-outer-products carousel-slider-outer-<?php echo $id; ?>">
 	<?php carousel_slider_inline_style( $id ); ?>
-    <div <?php echo join( " ", $this->carousel_options( $id ) ); ?>>
+    <div <?php echo $slide_options; ?>>
 		<?php foreach ( $posts as $post ): setup_postdata( $post ); ?>
 			<?php
 			$product = wc_get_product( $post->ID );

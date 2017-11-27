@@ -44,62 +44,22 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 				return '';
 			}
 
-			$id = intval( $attributes['id'] );
-
+			$id            = intval( $attributes['id'] );
 			$slide_type    = get_post_meta( $id, '_slide_type', true );
 			$slide_type    = in_array( $slide_type, carousel_slider_slide_type() ) ? $slide_type : 'image-carousel';
-			$slide_options = $this->carousel_options( $id, true );
+			$slide_options = $this->carousel_options( $id );
 
 			do_action( 'carousel_slider_view', $id, $slide_type, $slide_options );
-
-
-
-
-			if ( $slide_type == 'image-carousel' ) {
-				ob_start();
-				require CAROUSEL_SLIDER_TEMPLATES . '/public/images-carousel.php';
-				$html = ob_get_contents();
-				ob_end_clean();
-
-				return apply_filters( 'carousel_slider_gallery_images_carousel', $html, $id );
-			}
-
-			if ( $slide_type == 'product-carousel' ) {
-
-				$query_type    = get_post_meta( $id, '_product_query_type', true );
-				$query_type    = empty( $query_type ) ? 'query_porduct' : $query_type;
-				$product_query = get_post_meta( $id, '_product_query', true );
-
-				if ( $query_type == 'query_porduct' && $product_query == 'product_categories_list' ) {
-					ob_start();
-
-					echo $this->product_categories( $id );
-					$html = ob_get_contents();
-					ob_end_clean();
-
-					return apply_filters( 'carousel_slider_product_carousel', $html, $id );
-				}
-
-				ob_start();
-				require CAROUSEL_SLIDER_TEMPLATES . '/public/product-carousel.php';
-				$html = ob_get_contents();
-				ob_end_clean();
-
-				return apply_filters( 'carousel_slider_product_carousel', $html, $id );
-			}
-
-			return '';
 		}
 
 		/**
 		 * Generate carousel options for slider
 		 *
 		 * @param int $id Carousel Slider ID
-		 * @param bool $assoc When TRUE, returned objects will be converted into associative arrays.
 		 *
 		 * @return array
 		 */
-		private function carousel_options( $id, $assoc = false ) {
+		private function carousel_options( $id ) {
 			$_nav_color        = get_post_meta( $id, '_nav_color', true );
 			$_nav_active_color = get_post_meta( $id, '_nav_active_color', true );
 			$_nav_button       = get_post_meta( $id, '_nav_button', true );
@@ -182,11 +142,7 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 				'data-colums-mobile'        => $this->get_meta( $id, '_items_portrait_mobile', '1' ),
 			);
 
-			if ( $assoc ) {
-				return $options_array;
-			}
-
-			return $this->array_to_data( $options_array );
+			return $options_array;
 		}
 
 		/**
@@ -200,70 +156,6 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 		 */
 		public function get_meta( $id, $key, $default = null ) {
 			return carousel_slider_get_meta( $id, $key, $default );
-		}
-
-		/**
-		 * Convert array to html data attribute
-		 *
-		 * @param $array
-		 *
-		 * @return array
-		 */
-		public function array_to_data( $array ) {
-			return carousel_slider_array_to_attribute( $array );
-		}
-
-		/**
-		 * Check if url is valid as per RFC 2396 Generic Syntax
-		 *
-		 * @param  string $url
-		 *
-		 * @return boolean
-		 */
-		public function is_valid_url( $url ) {
-			return carousel_slider_is_url( $url );
-		}
-
-		/**
-		 * Get product categories list carousel
-		 *
-		 * @param int $id
-		 *
-		 * @return string
-		 */
-		private function product_categories( $id = 0 ) {
-
-			$product_carousel   = new Carousel_Slider_Product();
-			$product_categories = $product_carousel->product_categories();
-
-			$options = $this->carousel_options( $id );
-			$options = join( " ", $options );
-
-			ob_start();
-			if ( $product_categories ) {
-				echo '<div class="carousel-slider-outer carousel-slider-outer-products carousel-slider-outer-' . $id . '">';
-				carousel_slider_inline_style( $id );
-				echo '<div ' . $options . '>';
-
-
-				foreach ( $product_categories as $category ) {
-					echo '<div class="product carousel-slider__product">';
-					do_action( 'woocommerce_before_subcategory', $category );
-					do_action( 'woocommerce_before_subcategory_title', $category );
-					do_action( 'woocommerce_shop_loop_subcategory_title', $category );
-					do_action( 'woocommerce_after_subcategory_title', $category );
-					do_action( 'woocommerce_after_subcategory', $category );
-					echo '</div>';
-				}
-
-				echo '</div>';
-				echo '</div>';
-			}
-
-			$html = ob_get_contents();
-			ob_end_clean();
-
-			return $html;
 		}
 	}
 

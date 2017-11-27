@@ -187,9 +187,7 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 
 			do_action( 'carousel_slider_meta_box', $post, $slide_type );
 
-			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/images-media.php';
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/images-settings.php';
-			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/product-carousel.php';
 		}
 
 		/**

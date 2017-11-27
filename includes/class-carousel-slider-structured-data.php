@@ -24,6 +24,9 @@ if ( ! class_exists( 'Carousel_Slider_Structured_Data' ) ):
 		 * Constructor.
 		 */
 		public function __construct() {
+			if ( is_admin() ) {
+				return;
+			}
 			add_action( 'carousel_slider_image_gallery_loop', array( $this, 'generate_image_data' ) );
 			add_action( 'carousel_slider_post_loop', array( $this, 'generate_post_data' ) );
 			add_action( 'carousel_slider_product_loop', array( $this, 'generate_product_data' ) );
