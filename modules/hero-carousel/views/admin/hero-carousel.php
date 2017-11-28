@@ -32,8 +32,22 @@ if ( ! defined( 'WPINC' ) ) {
 						$_to_word = str_replace( array( ' ', ' - ' ), '_', $num_to_word->convert( $slide_num ) );
 
 
-						$_all_bg_position = carousel_slider_background_position();
-						$_all_bg_size     = carousel_slider_background_size();
+						$_all_bg_position = array(
+							'left top'      => 'left top',
+							'left center'   => 'left center',
+							'left bottom'   => 'left bottom',
+							'center top'    => 'center top',
+							'center center' => 'center', // Default
+							'center bottom' => 'center bottom',
+							'right top'     => 'right top',
+							'right center'  => 'right center',
+							'right bottom'  => 'right bottom',
+						);
+						$_all_bg_size     = array(
+							'auto'    => 'auto',
+							'contain' => 'contain',
+							'cover'   => 'cover', // Default
+						);
 						// Slide Content
 						$_slide_heading     = isset( $content_slider['slide_heading'] ) ? $content_slider['slide_heading'] : '';
 						$_slide_description = isset( $content_slider['slide_description'] ) ? $content_slider['slide_description'] : '';

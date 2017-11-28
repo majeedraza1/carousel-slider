@@ -35,13 +35,12 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 		 * A shortcode for rendering the carousel slide.
 		 *
 		 * @param  array $attributes Shortcode attributes.
-		 * @param  string $content The text content for shortcode. Not used.
 		 *
-		 * @return string  The shortcode output
+		 * @return void The shortcode output
 		 */
-		public function carousel_slide( $attributes, $content = null ) {
+		public function carousel_slide( $attributes ) {
 			if ( empty( $attributes['id'] ) ) {
-				return '';
+				return;
 			}
 
 			$id            = intval( $attributes['id'] );

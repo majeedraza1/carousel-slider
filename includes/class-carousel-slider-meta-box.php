@@ -22,6 +22,7 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
 		}
 
 		public function __construct() {
+			$this->form = new Carousel_Slider_Form();
 			add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 		}
 
@@ -75,8 +76,57 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
 		 * @param WP_Post $post
 		 */
 		public function general_settings_callback( $post ) {
-			$this->form = new Carousel_Slider_Form();
-			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/general.php';
+			$this->form->image_sizes( array(
+				'id'   => esc_html__( '_image_size', 'carousel-slider' ),
+				'name' => esc_html__( 'Carousel Image size', 'carousel-slider' ),
+				'desc' => sprintf(
+					esc_html__( 'Choose "original uploaded image" for full size image or your desired image size for carousel image. You can change the default size for thumbnail, medium and large from %1$s Settings >> Media %2$s.', 'carousel-slider' ),
+					'<a target="_blank" href="' . admin_url( 'options-media.php' ) . '">',
+					'</a>'
+				),
+			) );
+			$this->form->select( array(
+				'id'      => '_lazy_load_image',
+				'name'    => esc_html__( 'Lazy Loading', 'carousel-slider' ),
+				'desc'    => esc_html__( 'Enable image with lazy loading.', 'carousel-slider' ),
+				'std'     => carousel_slider_default_settings()->lazy_load_image,
+				'options' => array(
+					'on'  => esc_html__( 'Enable' ),
+					'off' => esc_html__( 'Disable' ),
+				),
+			) );
+			$this->form->number( array(
+				'id'   => '_margin_right',
+				'name' => esc_html__( 'Item Spacing.', 'carousel-slider' ),
+				'desc' => esc_html__( 'Space between two slide. Enter 10 for 10px', 'carousel-slider' ),
+				'std'  => carousel_slider_default_settings()->margin_right
+			) );
+			$this->form->select( array(
+				'id'      => '_inifnity_loop',
+				'name'    => esc_html__( 'Infinity loop', 'carousel-slider' ),
+				'desc'    => esc_html__( 'Enable or disable loop(circular) of carousel.', 'carousel-slider' ),
+				'std'     => 'on',
+				'options' => array(
+					'on'  => esc_html__( 'Enable' ),
+					'off' => esc_html__( 'Disable' ),
+				),
+			) );
+			$this->form->number( array(
+				'id'   => '_stage_padding',
+				'name' => esc_html__( 'Stage Padding', 'carousel-slider' ),
+				'desc' => esc_html__( 'Add left and right padding on carousel slider stage wrapper.', 'carousel-slider' ),
+				'std'  => '0',
+			) );
+			$this->form->select( array(
+				'id'      => '_auto_width',
+				'name'    => esc_html__( 'Auto Width', 'carousel-slider' ),
+				'desc'    => esc_html__( 'Set item width according to its content width. Use width style on item to get the result you want. ', 'carousel-slider' ),
+				'std'     => 'off',
+				'options' => array(
+					'on'  => esc_html__( 'Enable' ),
+					'off' => esc_html__( 'Disable' ),
+				),
+			) );
 		}
 
 		/**
@@ -102,9 +152,6 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
 		}
 
 		public function navigation_settings_callback( $post ) {
-			$_nav_button = get_post_meta( $post->ID, '_nav_button', true );
-			$_nav_button = in_array( $_nav_button, array( 'on', 'off', 'always' ) ) ? $_nav_button : 'on';
-
 			$_dot_nav = get_post_meta( $post->ID, '_dot_nav', true );
 			$_dot_nav = in_array( $_dot_nav, array( 'on', 'off', 'hover' ) ) ? $_dot_nav : 'off';
 
@@ -131,19 +178,21 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
 
 			$_bullet_shape = get_post_meta( $post->ID, '_bullet_shape', true );
 			$_bullet_shape = empty( $_bullet_shape ) ? 'square' : $_bullet_shape;
+
+			$this->form->select( array(
+				'id'      => '_nav_button',
+				'name'    => esc_html__( 'Show Arrow Nav', 'carousel-slider' ),
+				'desc'    => esc_html__( 'Choose when to show arrow navigator.', 'carousel-slider' ),
+				'std'     => 'on',
+				'class'   => 'small-text',
+				'context' => 'side',
+				'options' => array(
+					'off'    => esc_html__( 'Never', 'carousel-slider' ),
+					'on'     => esc_html__( 'Mouse Over', 'carousel-slider' ),
+					'always' => esc_html__( 'Always', 'carousel-slider' ),
+				),
+			) );
 			?>
-            <p>
-                <label for="_nav_button">
-                    <strong><?php esc_html_e( 'Show Arrow Nav', 'carousel-slider' ); ?></strong>
-                </label>
-                <select name="carousel_slider[_nav_button]" id="_nav_button" class="small-text">
-                    <option value="off" <?php selected( $_nav_button, 'off' ); ?>><?php esc_html_e( 'Never', 'carousel-slider' ); ?></option>
-                    <option value="on" <?php selected( $_nav_button, 'on' ); ?>><?php esc_html_e( 'Mouse Over', 'carousel-slider' ); ?></option>
-                    <option value="always" <?php selected( $_nav_button, 'always' ); ?>><?php esc_html_e( 'Always', 'carousel-slider' ); ?></option>
-                </select>
-                <span class="cs-tooltip"
-                      title="<?php esc_html_e( 'Choose when to show arrow navigator.', 'carousel-slider' ); ?>"></span>
-            </p><!-- Show Arrow Nav -->
             <p>
                 <label for="_slide_by">
                     <strong><?php esc_html_e( 'Arrow Steps', 'carousel-slider' ); ?></strong>
@@ -251,56 +300,46 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
 		 * @param WP_Post $post
 		 */
 		public function autoplay_settings_callback( $post ) {
-			$_autoplay         = get_post_meta( $post->ID, '_autoplay', true );
-			$_autoplay         = in_array( $_autoplay, array( 'on', 'off' ) ) ? $_autoplay : 'on';
-			$_autoplay_pause   = get_post_meta( $post->ID, '_autoplay_pause', true );
-			$_autoplay_pause   = in_array( $_autoplay_pause, array( 'on', 'off' ) ) ? $_autoplay : 'off';
-			$_autoplay_timeout = get_post_meta( $post->ID, '_autoplay_timeout', true );
-			$_autoplay_timeout = $_autoplay_timeout ? absint( $_autoplay_timeout ) : 5000;
-			$_autoplay_speed   = get_post_meta( $post->ID, '_autoplay_speed', true );
-			$_autoplay_speed   = $_autoplay_speed ? absint( $_autoplay_speed ) : 500;
-			?>
-            <p>
-                <label for="_autoplay">
-                    <strong><?php esc_html_e( 'AutoPlay', 'carousel-slider' ); ?></strong>
-                </label>
-                <select name="carousel_slider[_autoplay]" id="_autoplay" class="small-text">
-                    <option value="on" <?php selected( $_autoplay, 'on' ); ?>><?php esc_html_e( 'Enable', 'carousel-slider' ); ?></option>
-                    <option value="off" <?php selected( $_autoplay, 'off' ); ?>><?php esc_html_e( 'Disable', 'carousel-slider' ); ?></option>
-                </select>
-                <span class="cs-tooltip"
-                      title="<?php esc_html_e( 'Choose whether slideshow should play automatically.', 'carousel-slider' ); ?>"></span>
-            </p>
-            <p>
-                <label for="_autoplay_pause">
-                    <strong><?php esc_html_e( 'Pause On Hover', 'carousel-slider' ); ?></strong>
-                </label>
-                <select name="carousel_slider[_autoplay_pause]" id="_autoplay_pause" class="small-text">
-                    <option value="on" <?php selected( $_autoplay_pause, 'on' ); ?>><?php esc_html_e( 'Enable', 'carousel-slider' ); ?></option>
-                    <option value="off" <?php selected( $_autoplay_pause, 'off' ); ?>><?php esc_html_e( 'Disable', 'carousel-slider' ); ?></option>
-                </select>
-                <span class="cs-tooltip"
-                      title="<?php esc_html_e( 'Pause automatic play on mouse hover.', 'carousel-slider' ); ?>"></span>
-            </p>
-            <p>
-                <label for="_autoplay_timeout">
-                    <strong><?php esc_html_e( 'Autoplay Timeout', 'carousel-slider' ); ?></strong>
-                </label>
-                <input type="number" name="carousel_slider[_autoplay_timeout]" id="_autoplay_timeout" class="small-text"
-                       value="<?php echo $_autoplay_timeout; ?>">
-                <span class="cs-tooltip"
-                      title="<?php esc_html_e( 'Automatic play interval timeout in millisecond. Default: 5000', 'carousel-slider' ); ?>"></span>
-            </p><!-- Autoplay Timeout -->
-            <p>
-                <label for="_autoplay_speed">
-                    <strong><?php esc_html_e( 'Autoplay Speed', 'carousel-slider' ); ?></strong>
-                </label>
-                <input type="number" name="carousel_slider[_autoplay_speed]" id="_autoplay_speed" class="small-text"
-                       value="<?php echo $_autoplay_speed; ?>">
-                <span class="cs-tooltip"
-                      title="<?php esc_html_e( 'Automatic play speed in millisecond. Default: 500', 'carousel-slider' ); ?>"></span>
-            </p><!-- Columns -->
-			<?php
+			$this->form->select( array(
+				'id'      => '_autoplay',
+				'name'    => esc_html__( 'AutoPlay', 'carousel-slider' ),
+				'desc'    => esc_html__( 'Choose whether slideshow should play automatically.', 'carousel-slider' ),
+				'std'     => 'on',
+				'class'   => 'small-text',
+				'context' => 'side',
+				'options' => array(
+					'on'  => esc_html__( 'Enable', 'carousel-slider' ),
+					'off' => esc_html__( 'Disable', 'carousel-slider' ),
+				),
+			) );
+			$this->form->select( array(
+				'id'      => '_autoplay_pause',
+				'name'    => esc_html__( 'Pause On Hover', 'carousel-slider' ),
+				'desc'    => esc_html__( 'Pause automatic play on mouse hover.', 'carousel-slider' ),
+				'std'     => 'on',
+				'class'   => 'small-text',
+				'context' => 'side',
+				'options' => array(
+					'on'  => esc_html__( 'Enable', 'carousel-slider' ),
+					'off' => esc_html__( 'Disable', 'carousel-slider' ),
+				),
+			) );
+			$this->form->number( array(
+				'id'      => '_autoplay_timeout',
+				'name'    => esc_html__( 'Autoplay Timeout', 'carousel-slider' ),
+				'desc'    => esc_html__( 'Automatic play interval timeout in millisecond. Default: 5000', 'carousel-slider' ),
+				'std'     => 5000,
+				'class'   => 'small-text',
+				'context' => 'side',
+			) );
+			$this->form->number( array(
+				'id'      => '_autoplay_speed',
+				'name'    => esc_html__( 'Autoplay Speed', 'carousel-slider' ),
+				'desc'    => esc_html__( 'Automatic play speed in millisecond. Default: 500', 'carousel-slider' ),
+				'std'     => 500,
+				'class'   => 'small-text',
+				'context' => 'side',
+			) );
 		}
 
 		/**
@@ -309,85 +348,54 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
 		 * @param WP_Post $post
 		 */
 		public function responsive_settings_callback( $post ) {
-			$_items = get_post_meta( $post->ID, '_items', true );
-			$_items = $_items ? absint( $_items ) : 4;
-
-			$_items_desktop = get_post_meta( $post->ID, '_items_desktop', true );
-			$_items_desktop = $_items_desktop ? absint( $_items_desktop ) : 4;
-
-			$_items_small_desktop = get_post_meta( $post->ID, '_items_small_desktop', true );
-			$_items_small_desktop = $_items_small_desktop ? absint( $_items_small_desktop ) : 4;
-
-			$_items_tablet = get_post_meta( $post->ID, '_items_portrait_tablet', true );
-			$_items_tablet = $_items_tablet ? absint( $_items_tablet ) : 3;
-
-			$_items_small_tablet = get_post_meta( $post->ID, '_items_small_portrait_tablet', true );
-			$_items_small_tablet = $_items_small_tablet ? absint( $_items_small_tablet ) : 2;
-
-			$_items_mobile = get_post_meta( $post->ID, '_items_portrait_mobile', true );
-			$_items_mobile = $_items_mobile ? absint( $_items_mobile ) : 1;
-			?>
-            <p>
-                <label for="_items">
-                    <strong><?php esc_html_e( 'Columns', 'carousel-slider' ); ?></strong>
-                </label>
-                <input type="number" name="carousel_slider[_items]" id="_items" class="small-text"
-                       value="<?php echo $_items; ?>">
-                <span class="cs-tooltip"
-                      title="<?php esc_html_e( 'The number of items you want to see on the Extra Large Desktop Layout (Screens size greater than 1921 pixels DP)', 'carousel-slider' ); ?>"></span>
-            </p><!-- Columns -->
-            <p>
-                <label for="_items_desktop">
-                    <strong><?php esc_html_e( 'Columns : Desktop', 'carousel-slider' ); ?></strong>
-                </label>
-                <input type="number" name="carousel_slider[_items_desktop]" id="_items_desktop" class="small-text"
-                       value="<?php echo $_items_desktop; ?>">
-                <span class="cs-tooltip"
-                      title="<?php esc_html_e( 'The number of items you want to see on the Desktop Layout (Screens size from 1200 pixels DP to 1920 pixels DP)', 'carousel-slider' ); ?>"></span>
-            </p><!-- Columns : Desktop -->
-            <p>
-                <label for="_items_small_desktop">
-                    <strong><?php esc_html_e( 'Columns : Small Desktop', 'carousel-slider' ); ?></strong>
-                </label>
-                <input type="number" name="carousel_slider[_items_small_desktop]" id="_items_small_desktop"
-                       class="small-text"
-                       value="<?php echo $_items_small_desktop; ?>">
-                <span class="cs-tooltip"
-                      title="<?php esc_html_e( 'The number of items you want to see on the Small Desktop Layout (Screens size from 993 pixels DP to 1199 pixels DP)', 'carousel-slider' ); ?>"></span>
-            </p><!-- Columns : Small Desktop -->
-            <p>
-                <label for="_items_portrait_tablet">
-                    <strong><?php esc_html_e( 'Columns : Tablet', 'carousel-slider' ); ?></strong>
-                </label>
-                <input type="number" name="carousel_slider[_items_portrait_tablet]" id="_items_portrait_tablet"
-                       class="small-text"
-                       value="<?php echo $_items_tablet; ?>">
-                <span class="cs-tooltip"
-                      title="<?php esc_html_e( 'The number of items you want to see on the Tablet Layout (Screens size from 768 pixels DP to 992 pixels DP)', 'carousel-slider' ); ?>"></span>
-            </p><!-- Columns : Tablet -->
-            <p>
-                <label for="_items_small_portrait_tablet">
-                    <strong><?php esc_html_e( 'Columns : Small Tablet', 'carousel-slider' ); ?></strong>
-                </label>
-                <input type="number" name="carousel_slider[_items_small_portrait_tablet]"
-                       id="_items_small_portrait_tablet"
-                       class="small-text"
-                       value="<?php echo $_items_small_tablet; ?>">
-                <span class="cs-tooltip"
-                      title="<?php esc_html_e( 'The number of items you want to see on the Small Tablet Layout(Screens size from 600 pixels DP to 767 pixels DP)', 'carousel-slider' ); ?>"></span>
-            </p><!-- Columns : Small Tablet -->
-            <p>
-                <label for="_items_portrait_mobile">
-                    <strong><?php esc_html_e( 'Columns : Mobile', 'carousel-slider' ); ?></strong>
-                </label>
-                <input type="number" name="carousel_slider[_items_portrait_mobile]"
-                       id="_items_portrait_mobile"
-                       class="small-text"
-                       value="<?php echo $_items_mobile; ?>">
-                <span class="cs-tooltip"
-                      title="<?php esc_html_e( 'The number of items you want to see on the Mobile Layout (Screens size from 320 pixels DP to 599 pixels DP)', 'carousel-slider' ); ?>"></span>
-            </p><!-- Columns : Mobile -->
-			<?php
+			$this->form->number( array(
+				'id'      => '_items',
+				'name'    => esc_html__( 'Columns', 'carousel-slider' ),
+				'desc'    => esc_html__( 'The number of items you want to see on the Extra Large Desktop Layout (Screens size greater than 1921 pixels DP)', 'carousel-slider' ),
+				'std'     => 4,
+				'class'   => 'small-text',
+				'context' => 'side',
+			) );
+			$this->form->number( array(
+				'id'      => '_items_desktop',
+				'name'    => esc_html__( 'Columns : Desktop', 'carousel-slider' ),
+				'desc'    => esc_html__( 'The number of items you want to see on the Desktop Layout (Screens size from 1200 pixels DP to 1920 pixels DP)', 'carousel-slider' ),
+				'std'     => 4,
+				'class'   => 'small-text',
+				'context' => 'side',
+			) );
+			$this->form->number( array(
+				'id'      => '_items_small_desktop',
+				'name'    => esc_html__( 'Columns : Small Desktop', 'carousel-slider' ),
+				'desc'    => esc_html__( 'The number of items you want to see on the Small Desktop Layout (Screens size from 993 pixels DP to 1199 pixels DP)', 'carousel-slider' ),
+				'std'     => 4,
+				'class'   => 'small-text',
+				'context' => 'side',
+			) );
+			$this->form->number( array(
+				'id'      => '_items_portrait_tablet',
+				'name'    => esc_html__( 'Columns : Tablet', 'carousel-slider' ),
+				'desc'    => esc_html__( 'The number of items you want to see on the Tablet Layout (Screens size from 768 pixels DP to 992 pixels DP)', 'carousel-slider' ),
+				'std'     => 3,
+				'class'   => 'small-text',
+				'context' => 'side',
+			) );
+			$this->form->number( array(
+				'id'      => '_items_small_portrait_tablet',
+				'name'    => esc_html__( 'Columns : Small Tablet', 'carousel-slider' ),
+				'desc'    => esc_html__( 'The number of items you want to see on the Small Tablet Layout(Screens size from 600 pixels DP to 767 pixels DP)', 'carousel-slider' ),
+				'std'     => 2,
+				'class'   => 'small-text',
+				'context' => 'side',
+			) );
+			$this->form->number( array(
+				'id'      => '_items_portrait_mobile',
+				'name'    => esc_html__( 'Columns : Mobile', 'carousel-slider' ),
+				'desc'    => esc_html__( 'The number of items you want to see on the Mobile Layout (Screens size from 320 pixels DP to 599 pixels DP)', 'carousel-slider' ),
+				'std'     => 1,
+				'class'   => 'small-text',
+				'context' => 'side',
+			) );
 		}
 	}
 endif;

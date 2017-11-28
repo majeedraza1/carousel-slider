@@ -120,17 +120,16 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-number-to-word.php';
 			require_once CAROUSEL_SLIDER_INCLUDES . '/functions-carousel-slider.php';
 			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-activator.php';
-			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-product.php';
-			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-script.php';
 			require_once CAROUSEL_SLIDER_WIDGETS . '/widget-carousel_slider.php';
+			require_once CAROUSEL_SLIDER_INCLUDES . '/class-script.php';
 
 			if ( is_admin() ) {
-				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-credit.php';
-				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-vc-element.php';
-				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-documentation.php';
 				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-form.php';
+				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-vc-element.php';
 				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-admin.php';
 				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-meta-box.php';
+				require_once CAROUSEL_SLIDER_INCLUDES . '/class-credit.php';
+				require_once CAROUSEL_SLIDER_INCLUDES . '/class-documentation.php';
 			}
 
 			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-structured-data.php';
@@ -163,7 +162,8 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 			require_once CAROUSEL_SLIDER_MODULES . '/image-carousel-url/class-image-carousel-url.php';
 			require_once CAROUSEL_SLIDER_MODULES . '/image-carousel-url/class-view.php';
 
-			// Product from URL
+			// Product Carousel
+			require_once CAROUSEL_SLIDER_MODULES . '/product-carousel/class-product.php';
 			require_once CAROUSEL_SLIDER_MODULES . '/product-carousel/class-meta-box.php';
 			require_once CAROUSEL_SLIDER_MODULES . '/product-carousel/class-product-carousel.php';
 			require_once CAROUSEL_SLIDER_MODULES . '/product-carousel/class-view.php';

@@ -8,13 +8,12 @@ $_image_size       = get_post_meta( $id, '_image_size', true );
 $_nav_color        = get_post_meta( $id, '_nav_color', true );
 $_nav_active_color = get_post_meta( $id, '_nav_active_color', true );
 $_lazy_load_image  = get_post_meta( $id, '_lazy_load_image', true );
-$slide_options    = join( " ", carousel_slider_array_to_attribute( $slide_options ) );
+$slide_options     = join( " ", carousel_slider_array_to_attribute( $slide_options ) );
 ?>
 <div class="carousel-slider-outer carousel-slider-outer-posts carousel-slider-outer-<?php echo $id; ?>">
 	<?php carousel_slider_inline_style( $id ); ?>
     <div <?php echo $slide_options; ?>>
 		<?php
-		$posts = carousel_slider_posts( $id );
 		foreach ( $posts as $_post ):
 			global $post;
 			$post = $_post;

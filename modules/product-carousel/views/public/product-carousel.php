@@ -17,9 +17,6 @@ if ( ! carousel_slider_is_woocommerce_active() ) {
 	return;
 }
 
-$posts = carousel_slider_products( $id );
-
-
 $_image_size       = get_post_meta( $id, '_image_size', true );
 $_nav_color        = get_post_meta( $id, '_nav_color', true );
 $_nav_active_color = get_post_meta( $id, '_nav_active_color', true );
