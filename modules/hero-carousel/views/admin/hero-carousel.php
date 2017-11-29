@@ -24,13 +24,10 @@ if ( ! defined( 'WPINC' ) ) {
 
 				// Get WordPress media upload URL
 				$upload_link = esc_url( get_upload_iframe_src( 'image', $post->ID ) );
-				$num_to_word = new Carousel_Slider_Number_To_Word;
 
 				if ( is_array( $content_sliders ) && count( $content_sliders ) > 0 ) {
 					$total_sliders = count( $content_sliders );
 					foreach ( $content_sliders as $slide_num => $content_slider ) {
-						$_to_word = str_replace( array( ' ', ' - ' ), '_', $num_to_word->convert( $slide_num ) );
-
 
 						$_all_bg_position = array(
 							'left top'      => 'left top',

@@ -18,7 +18,7 @@ class PostCarousel {
 	}
 
 	public function __construct() {
-		add_filter( 'carousel_slider_slide_type', array( $this, 'add_post_slide_type' ), 50 );
+		add_filter( 'carousel_slider_slide_type', array( $this, 'add_post_slide_type' ), 30 );
 		add_action( 'carousel_slider_save_meta_box', array( $this, 'save_meta_box' ) );
 	}
 

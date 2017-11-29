@@ -18,7 +18,7 @@ class ImageCarousel {
 	}
 
 	public function __construct() {
-		add_filter( 'carousel_slider_slide_type', array( $this, 'add_post_slide_type' ), 20 );
+		add_filter( 'carousel_slider_slide_type', array( $this, 'add_post_slide_type' ), 10 );
 		add_action( 'carousel_slider_save_meta_box', array( $this, 'save_meta_box' ) );
 	}
 

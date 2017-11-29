@@ -47,14 +47,14 @@ class Script {
 		);
 		wp_register_script(
 			'owl-carousel',
-			CAROUSEL_SLIDER_ASSETS . '/js/vendors/owl.carousel.min.js',
+			CAROUSEL_SLIDER_ASSETS . '/js/vendors/owl-carousel/owl.carousel' . $suffix . '.js',
 			array( 'jquery' ),
 			'2.2.1',
 			true
 		);
 		wp_register_script(
 			'magnific-popup',
-			CAROUSEL_SLIDER_ASSETS . '/js/vendors/jquery.magnific-popup.min.js',
+			CAROUSEL_SLIDER_ASSETS . '/js/vendors/magnific-popup/jquery.magnific-popup' . $suffix . '.js',
 			array( 'jquery' ),
 			'1.1.0',
 			true
@@ -74,6 +74,7 @@ class Script {
 	public function admin_scripts( $hook ) {
 		global $post;
 
+		$suffix       = ( defined( "SCRIPT_DEBUG" ) && SCRIPT_DEBUG ) ? '' : '.min';
 		$_is_carousel = is_a( $post, 'WP_Post' ) && ( 'carousels' == $post->post_type );
 		$_is_doc      = ( 'carousels_page_carousel-slider-documentation' == $hook );
 
@@ -92,28 +93,28 @@ class Script {
 		);
 		wp_enqueue_script(
 			'select2',
-			CAROUSEL_SLIDER_ASSETS . '/js/vendors/select2.min.js',
+			CAROUSEL_SLIDER_ASSETS . '/js/vendors/select2/select2' . $suffix . '.js',
 			array( 'jquery' ),
-			'4.0.3',
+			'4.0.5',
 			true
 		);
 		wp_enqueue_script(
 			'tip-tip',
-			CAROUSEL_SLIDER_ASSETS . '/js/vendors/jquery.tipTip.min.js',
+			CAROUSEL_SLIDER_ASSETS . '/js/vendors/jquery-tiptip/jquery.tipTip' . $suffix . '.js',
 			array( 'jquery' ),
-			CAROUSEL_SLIDER_VERSION,
+			'1.3',
 			true
 		);
 		wp_enqueue_script(
 			'wp-color-picker-alpha',
-			CAROUSEL_SLIDER_ASSETS . '/js/vendors/wp-color-picker-alpha.min.js',
+			CAROUSEL_SLIDER_ASSETS . '/js/vendors/wp-color-picker-alpha/wp-color-picker-alpha' . $suffix . '.js',
 			array( 'jquery', 'wp-color-picker' ),
-			'1.2.2',
+			'2.1.3',
 			true
 		);
 		wp_enqueue_script(
 			'carousel-slider-admin',
-			CAROUSEL_SLIDER_ASSETS . '/js/admin.min.js',
+			CAROUSEL_SLIDER_ASSETS . '/js/admin' . $suffix . '.js',
 			array(
 				'jquery',
 				'wp-color-picker-alpha',

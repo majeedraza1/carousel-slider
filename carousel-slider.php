@@ -9,6 +9,9 @@
  * Requires at least: 4.4
  * Tested up to: 4.9
  *
+ * WC requires at least: 3.0.0
+ * WC tested up to: 3.2
+ *
  * Text Domain: carousel-slider
  *
  * License: GPLv3
@@ -116,25 +119,23 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		 * Include admin and front facing files
 		 */
 		public function includes() {
-			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-i18n.php';
-			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-number-to-word.php';
-			require_once CAROUSEL_SLIDER_INCLUDES . '/functions-carousel-slider.php';
-			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-activator.php';
-			require_once CAROUSEL_SLIDER_WIDGETS . '/widget-carousel_slider.php';
+			require_once CAROUSEL_SLIDER_INCLUDES . '/class-i18n.php';
+			require_once CAROUSEL_SLIDER_INCLUDES . '/functions.php';
+			require_once CAROUSEL_SLIDER_INCLUDES . '/class-activator.php';
 			require_once CAROUSEL_SLIDER_INCLUDES . '/class-script.php';
+			require_once CAROUSEL_SLIDER_WIDGETS . '/widget-carousel_slider.php';
 
-			if ( is_admin() ) {
-				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-form.php';
-				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-vc-element.php';
-				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-admin.php';
-				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-meta-box.php';
-				require_once CAROUSEL_SLIDER_INCLUDES . '/class-credit.php';
-				require_once CAROUSEL_SLIDER_INCLUDES . '/class-documentation.php';
-			}
+			// Admin related files
+			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-form.php';
+			require_once CAROUSEL_SLIDER_INCLUDES . '/class-admin.php';
+			require_once CAROUSEL_SLIDER_INCLUDES . '/class-meta-box.php';
+			require_once CAROUSEL_SLIDER_INCLUDES . '/class-vc-element.php';
+			require_once CAROUSEL_SLIDER_INCLUDES . '/class-credit.php';
+			require_once CAROUSEL_SLIDER_INCLUDES . '/class-documentation.php';
 
-			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-structured-data.php';
+			// Public facing script
+			require_once CAROUSEL_SLIDER_INCLUDES . '/class-structured-data.php';
 			require_once CAROUSEL_SLIDER_INCLUDES . '/shortcodes/class-carousel-slider-shortcode.php';
-			require_once CAROUSEL_SLIDER_INCLUDES . '/shortcodes/class-carousel-slider-deprecated-shortcode.php';
 
 			// Hero Carousel
 			require_once CAROUSEL_SLIDER_MODULES . '/hero-carousel/class-meta-box.php';

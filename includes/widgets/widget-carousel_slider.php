@@ -1,4 +1,5 @@
 <?php
+
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -48,7 +49,7 @@ class Carousel_Slider_Widget extends WP_Widget {
 	 *
 	 * @param array $instance Current settings.
 	 *
-	 * @return string
+	 * @return void
 	 */
 	public function form( $instance ) {
 		$carousels   = $this->carousels_list();

@@ -25,7 +25,7 @@ class HeroCarousel {
 	}
 
 	public function __construct() {
-		add_filter( 'carousel_slider_slide_type', array( $this, 'add_hero_slide_type' ), 60 );
+		add_filter( 'carousel_slider_slide_type', array( $this, 'add_hero_slide_type' ), 50 );
 		add_action( 'carousel_slider_save_meta_box', array( $this, 'save_meta_box' ) );
 	}
 
@@ -37,7 +37,7 @@ class HeroCarousel {
 	 * @return mixed
 	 */
 	public function add_hero_slide_type( $slide_type ) {
-		$slide_type['hero-banner-slider'] = __( 'Hero Banner Slider', 'carousel-slider' );
+		$slide_type['hero-banner-slider'] = __( 'Hero Carousel', 'carousel-slider' );
 
 		return $slide_type;
 	}
