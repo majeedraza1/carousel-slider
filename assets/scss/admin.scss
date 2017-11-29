@@ -9,11 +9,4 @@
 @import 'admin/modal';
 @import 'admin/tooltip';
 @import 'admin/tab';
-@import 'admin/documentation';
-
-// Hide Preview button
-.post-type-carousels {
-    #minor-publishing {
-        display: none;
-    }
-}
+//@import 'admin/color-picker';

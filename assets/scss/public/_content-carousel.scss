@@ -1,0 +1,46 @@
+.carousel-slider__content {
+
+    .slide-content-inner {
+        padding: 0;
+    }
+
+    .slide-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 0 auto;
+        padding: 1rem;
+        max-width: 1140px;
+        min-height: 300px;
+    }
+
+    .heading,
+    .description {
+        &-title-wrapper {
+            display: inline-flex;
+            padding: 0;
+        }
+
+        &-title {
+            margin: 0;
+            padding: 0;
+        }
+    }
+
+    .buttons-wrapper {
+
+        &-one {
+            margin-right: 0.5rem;
+        }
+
+        &-two {
+            margin-left: 0.5rem;
+        }
+
+    }
+
+    img {
+        max-width: 100%;
+        width: auto !important;
+    }
+}
