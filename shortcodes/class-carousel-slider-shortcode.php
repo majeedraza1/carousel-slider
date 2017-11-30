@@ -109,7 +109,6 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 
 			if ( $slide_type == 'hero-banner-slider' ) {
 
-				wp_enqueue_script( 'carousel-slider-hero' );
 				ob_start();
 				require CAROUSEL_SLIDER_TEMPLATES . '/public/hero-banner-slider.php';
 				$html = ob_get_contents();

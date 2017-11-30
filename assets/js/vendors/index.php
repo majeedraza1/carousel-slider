@@ -1,2 +1,0 @@
-<?php
-// Code is Poetry

@@ -1,69 +1,60 @@
 (function ($) {
-    'use strict';
+    $('body').find('.carousel-slider').each(function () {
+        var _this = $(this);
+        var isVideo = _this.data('slide-type') === 'video-carousel';
+        var videoWidth = isVideo ? _this.data('video-width') : false;
+        var videoHeight = isVideo ? _this.data('video-height') : false;
+        var autoWidth = _this.data('auto-width');
+        var stagePadding = parseInt(_this.data('stage-padding'));
+        autoWidth = isVideo ? isVideo : autoWidth;
+        stagePadding = stagePadding > 0 ? stagePadding : 0;
 
-    var mobile = 767,
-        tablet = 768,
-        desktop = 1025,
-        minHeadingFont = 20,
-        minDescFont = 16,
-        heading,
-        headingFontSize = 60,
-        headingFontSizeNum = 60,
-        description,
-        descriptionFontSize = 24,
-        descriptionFontSizeNum = 24;
-
-
-    function scaleSliderText() {
-        var windowW = $(window).width();
-
-        $('.carousel-slider .slide-content').each(function () {
-
-            heading = $(this).find('.heading-title');
-            headingFontSize = heading.data('font-size');
-            headingFontSizeNum = parseInt(headingFontSize);
-
-            if (headingFontSizeNum) {
-                if (windowW <= mobile) {
-                    headingFontSize = headingFontSizeNum / 3;
-                    headingFontSize = headingFontSize < minHeadingFont ? minHeadingFont : headingFontSize;
-                    heading.css('font-size', headingFontSize + 'px');
+        if (jQuery().owlCarousel) {
+            _this.owlCarousel({
+                stagePadding: stagePadding,
+                nav: _this.data('nav'),
+                dots: _this.data('dots'),
+                margin: _this.data('margin'),
+                loop: _this.data('loop'),
+                autoplay: _this.data('autoplay'),
+                autoplayTimeout: _this.data('autoplay-timeout'),
+                autoplaySpeed: _this.data('autoplay-speed'),
+                autoplayHoverPause: _this.data('autoplay-hover-pause'),
+                slideBy: _this.data('slide-by'),
+                lazyLoad: _this.data('lazy-load'),
+                video: isVideo,
+                videoWidth: videoWidth,
+                videoHeight: videoHeight,
+                autoWidth: autoWidth,
+                navText: [
+                    '<svg class="carousel-slider-nav-icon" viewBox="0 0 20 20"><path d="M14 5l-5 5 5 5-1 2-7-7 7-7z"></path></use></svg>',
+                    '<svg class="carousel-slider-nav-icon" viewBox="0 0 20 20"><path d="M6 15l5-5-5-5 1-2 7 7-7 7z"></path></svg>'
+                ],
+                responsive: {
+                    320: {items: _this.data('colums-mobile')},
+                    600: {items: _this.data('colums-small-tablet')},
+                    768: {items: _this.data('colums-tablet')},
+                    993: {items: _this.data('colums-small-desktop')},
+                    1200: {items: _this.data('colums-desktop')},
+                    1921: {items: _this.data('colums')}
                 }
-                if (windowW >= tablet && windowW < desktop) {
-                    headingFontSize = headingFontSizeNum / 2;
-                    headingFontSize = headingFontSize < minHeadingFont ? minHeadingFont : headingFontSize;
-                    heading.css('font-size', headingFontSize + 'px');
-                }
-                if (windowW >= desktop) {
-                    heading.css('font-size', headingFontSize + 'px');
-                }
-            }
+            });
+        }
 
-            description = $(this).find('.description-title');
-            descriptionFontSize = description.data('font-size');
-            descriptionFontSizeNum = parseInt(descriptionFontSize);
-
-            if (descriptionFontSizeNum) {
-                if (windowW <= mobile) {
-                    descriptionFontSize = descriptionFontSizeNum / 3;
-                    descriptionFontSize = descriptionFontSize < minDescFont ? minDescFont : descriptionFontSize;
-                    description.css('font-size', descriptionFontSize + 'px');
+        if (jQuery().magnificPopup) {
+            var popupType = _this.data('slide-type') === 'product-carousel' ? 'ajax' : 'image';
+            var popupGallery = _this.data('slide-type') !== 'product-carousel';
+            $(this).find('.magnific-popup').magnificPopup({
+                type: popupType,
+                gallery: {
+                    enabled: popupGallery
+                },
+                zoom: {
+                    enabled: popupGallery,
+                    duration: 300,
+                    easing: 'ease-in-out'
                 }
-                if (windowW >= tablet && windowW < desktop) {
-                    descriptionFontSize = descriptionFontSizeNum / 2;
-                    descriptionFontSize = descriptionFontSize < minDescFont ? minDescFont : descriptionFontSize;
-                    description.css('font-size', descriptionFontSize + 'px');
-                }
-                if (windowW >= desktop) {
-                    description.css('font-size', descriptionFontSize + 'px');
-                }
-            }
-        });
-    }
-
-
-    window.addEventListener("load", scaleSliderText);
-    window.addEventListener("resize", scaleSliderText);
-    window.addEventListener("orientationchange", scaleSliderText);
-
+            });
+        }
+    });
 })(jQuery);
