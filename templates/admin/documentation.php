@@ -4,55 +4,9 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 ?>
-<style type="text/css">
-    .carousel_slider_iframe {
-        position: relative;
-        padding-bottom: 56.25%; /* height / width * 100 */
-        padding-top: 25px;
-        height: 0;
-    }
-
-    .carousel_slider_iframe > iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-    }
-
-    .carousel_slider_columns {
-        display: flex;
-        flex-wrap: wrap;
-        box-sizing: border-box;
-    }
-
-    .carousel_slider_column {
-        flex: 0 0 100%;
-        padding: 1rem;
-        box-sizing: border-box;
-    }
-
-    @media screen and (min-width: 601px) {
-        .carousel_slider_column {
-            flex: 0 0 50%;
-        }
-    }
-
-    @media screen and (min-width: 1025px) {
-        .carousel_slider_column {
-            flex: 0 0 33.333333%;
-        }
-    }
-
-    @media screen and (min-width: 1400px) {
-        .carousel_slider_column {
-            flex: 0 0 25%;
-        }
-    }
-</style>
 <div class="wrap">
     <h1 class="wp-heading">
-        <?php esc_html_e( 'Carousel Slider Documentation', 'carousel-slider' ); ?>
+		<?php esc_html_e( 'Carousel Slider Documentation', 'carousel-slider' ); ?>
     </h1>
     <hr class="clear">
     <div class="postbox">

@@ -24,6 +24,11 @@ if ( ! class_exists( 'Carousel_Slider_Content_Carousel' ) ):
 		}
 
 		public function add_slide_template() {
+
+			if ( ! isset( $_POST['post_id'] ) ) {
+				$this->send_json( __( 'Required attribute is not set properly.', 'carousel-slider' ), 422 );
+			}
+
 			$post_id   = absint( $_POST['post_id'] );
 			$task      = isset( $_POST['task'] ) ? esc_attr( $_POST['task'] ) : 'add-slide';
 			$slide_pos = isset( $_POST['slide_pos'] ) ? absint( $_POST['slide_pos'] ) : null;
@@ -49,27 +54,57 @@ if ( ! class_exists( 'Carousel_Slider_Content_Carousel' ) ):
 				$slider = $this->move_slide_bottom( $slider, $slide_pos, $post_id );
 			}
 
-			echo isset( $slider ) ? json_encode( $slider ) : '';
-			wp_die();
+			if ( isset( $slider ) ) {
+				$this->send_json( $slider );
+			}
+
+			$this->send_json( __( 'Required action is unauthorized.', 'carousel-slider' ), 401 );
 		}
 
 		private function content_slide_default() {
 			$data = array(
-				'content'          => '',
-				'bg_color'         => 'rgba(0,0,0,0.6)',
-				'img_id'           => '',
-				'img_bg_position'  => 'center center',
-				'img_bg_size'      => 'contain',
-				'link_url'         => '',
-				'link_target'      => '',
-				'popup_type'       => 'image', // Image, Video, HTML
-				'popup_img_id'     => '',
-				'popup_img_title'  => '',
-				'popup_video_id'   => '',
-				'popup_video_type' => '',
-				'popup_html'       => '',
-				'popup_bg_color'   => 'rgba(0,0,0,0.6)',
-				'popup_width'      => '',
+				// Slide Content
+				'slide_heading'            => 'Slide Heading',
+				'slide_description'        => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas, magnam!',
+				// Slide Background
+				'img_id'                   => '',
+				'img_bg_position'          => 'center center',
+				'img_bg_size'              => 'cover',
+				'bg_color'                 => 'rgba(0,0,0,0.6)',
+				'ken_burns_effect'         => '',
+				'bg_overlay'               => '',
+				// Slide Style
+				'content_alignment'        => 'center',
+				'heading_font_size'        => '40',
+				'heading_gutter'           => '30px',
+				'heading_color'            => '#ffffff',
+				'description_font_size'    => '20',
+				'description_gutter'       => '30px',
+				'description_color'        => '#ffffff',
+				// Slide Link
+				'link_type'                => 'none',
+				'slide_link'               => '',
+				'link_target'              => '_self',
+				// Slide Button #1
+				'button_one_text'          => '',
+				'button_one_url'           => '',
+				'button_one_target'        => '_self',
+				'button_one_type'          => 'stroke',
+				'button_one_size'          => 'medium',
+				'button_one_border_width'  => '3px',
+				'button_one_border_radius' => '0px',
+				'button_one_bg_color'      => '#ffffff',
+				'button_one_color'         => '#323232',
+				// Slide Button #2
+				'button_two_text'          => '',
+				'button_two_url'           => '',
+				'button_two_target'        => '_self',
+				'button_two_type'          => 'stroke',
+				'button_two_size'          => 'medium',
+				'button_two_border_width'  => '3px',
+				'button_two_border_radius' => '0px',
+				'button_two_bg_color'      => '#ffffff',
+				'button_two_color'         => '#323232',
 			);
 
 			return $data;
@@ -191,6 +226,20 @@ if ( ! class_exists( 'Carousel_Slider_Content_Carousel' ) ):
 			}
 
 			return $slider;
+		}
+
+		/**
+		 * Send json response with status code
+		 *
+		 * @param string $response
+		 * @param int $status_code
+		 */
+		private function send_json( $response, $status_code = 200 ) {
+			@header( 'Content-Type: application/json; charset=' . get_option( 'blog_charset' ) );
+			status_header( $status_code );
+
+			echo wp_json_encode( $response );
+			die;
 		}
 	}
 
