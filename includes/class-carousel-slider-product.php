@@ -18,6 +18,11 @@
  * @method products_by_tags()
  */
 
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
 if ( ! class_exists( 'Carousel_Slider_Product' ) ):
 
 	class Carousel_Slider_Product {
@@ -26,8 +31,8 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ):
 		 * Product carousel quick view
 		 */
 		public static function init() {
-			add_action( 'carousel_slider_after_shop_loop_item', array( __CLASS__, 'wish_list_button' ), 12, 2 );
-			add_action( 'carousel_slider_after_shop_loop_item', array( __CLASS__, 'quick_view_button' ), 10, 2 );
+			add_action( 'carousel_slider_after_shop_loop_item', array( __CLASS__, 'quick_view_button' ), 10, 3 );
+			add_action( 'carousel_slider_after_shop_loop_item', array( __CLASS__, 'wish_list_button' ), 12, 3 );
 
 			add_action( 'wp_ajax_carousel_slider_quick_view', array( __CLASS__, 'quick_view' ) );
 			add_action( 'wp_ajax_nopriv_carousel_slider_quick_view', array( __CLASS__, 'quick_view' ) );
@@ -37,15 +42,16 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ):
 		 * Show YITH Wishlist button on product slider
 		 *
 		 * @param WC_Product $product
+		 * @param WP_Post $post
 		 * @param $slider_id
 		 */
-		public static function wish_list_button( $product, $slider_id ) {
+		public static function wish_list_button( $product, $post, $slider_id ) {
 			$_product_wish_list = get_post_meta( $slider_id, '_product_wishlist', true );
 
-			if ( version_compare( WC_VERSION, '2.7.0', '>=' ) ) {
+			if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.7.0', '>=' ) ) {
 				$product_id = $product->get_id();
 			} else {
-				$product_id = $product->id;
+				$product_id = $post->ID;
 			}
 
 			if ( class_exists( 'YITH_WCWL' ) && $_product_wish_list == 'on' ) {
@@ -57,17 +63,18 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ):
 		 * Show quick view button on product slider
 		 *
 		 * @param WC_Product $product
+		 * @param WP_Post $post
 		 * @param $slider_id
 		 */
-		public static function quick_view_button( $product, $slider_id ) {
+		public static function quick_view_button( $product, $post, $slider_id ) {
 			$_show_btn = get_post_meta( $slider_id, '_product_quick_view', true );
 
 			if ( $_show_btn == 'on' ) {
 
-				if ( version_compare( WC_VERSION, '2.7.0', '>=' ) ) {
+				if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.7.0', '>=' ) ) {
 					$product_id = $product->get_id();
 				} else {
-					$product_id = $product->id;
+					$product_id = $post->ID;
 				}
 
 				wp_enqueue_script( 'magnific-popup' );

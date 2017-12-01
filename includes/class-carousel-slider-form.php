@@ -4,7 +4,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-if ( ! class_exists( 'Carousel_Slider_Form' ) ):
+if ( ! class_exists( 'Carousel_Slider_Form' ) ) {
 
 	class Carousel_Slider_Form {
 
@@ -19,10 +19,11 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ):
 			}
 
 			list( $name, $value ) = $this->field_common( $args );
+			$class = isset( $args['class'] ) ? esc_attr( $args['class'] ) : 'sp-input-text';
 
 			echo $this->field_before( $args );
-			echo sprintf( '<input type="text" class="sp-input-text" value="%1$s" id="%2$s" name="%3$s">', $value, $args['id'], $name );
-			echo $this->field_after();
+			echo sprintf( '<input type="text" class="' . $class . '" value="%1$s" id="%2$s" name="%3$s">', $value, $args['id'], $name );
+			echo $this->field_after( $args );
 		}
 
 		/**
@@ -41,7 +42,7 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ):
 
 			echo $this->field_before( $args );
 			echo sprintf( '<textarea class="sp-input-textarea" id="%2$s" name="%3$s" cols="%4$d" rows="%5$d">%1$s</textarea>', esc_textarea( $value ), $args['id'], $name, $cols, $rows );
-			echo $this->field_after();
+			echo $this->field_after( $args );
 		}
 
 		/**
@@ -59,7 +60,7 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ):
 
 			echo $this->field_before( $args );
 			echo sprintf( '<input type="text" class="color-picker" value="%1$s" id="%2$s" name="%3$s" data-alpha="true" data-default-color="%4$s">', $value, $args['id'], $name, $std_value );
-			echo $this->field_after();
+			echo $this->field_after( $args );
 		}
 
 		/**
@@ -77,7 +78,7 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ):
 
 			echo $this->field_before( $args );
 			echo sprintf( '<input type="text" class="sp-input-text datepicker" value="%1$s" id="%2$s" name="%3$s">', $value, $args['id'], $name, $std_value );
-			echo $this->field_after();
+			echo $this->field_after( $args );
 		}
 
 		/**
@@ -91,12 +92,11 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ):
 			}
 
 			list( $name, $value ) = $this->field_common( $args );
-			$min = isset( $args['min'] ) ? $args['min'] : null;
-			$max = isset( $args['max'] ) ? $args['max'] : null;
+			$class = isset( $args['class'] ) ? esc_attr( $args['class'] ) : 'sp-input-text';
 
 			echo $this->field_before( $args );
-			echo sprintf( '<input type="number" class="sp-input-text" value="%1$s" id="%2$s" name="%3$s">', $value, $args['id'], $name );
-			echo $this->field_after();
+			echo sprintf( '<input type="number" class="' . $class . '" value="%1$s" id="%2$s" name="%3$s">', $value, $args['id'], $name );
+			echo $this->field_after( $args );
 		}
 
 		/**
@@ -115,8 +115,8 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ):
 
 			echo $this->field_before( $args );
 			echo sprintf( '<input type="hidden" name="%1$s" value="off">', $name );
-			echo sprintf( '<label for="%2$s"><input type="checkbox" %4$s value="on" id="%2$s" name="%1$s">%3$s</label>', $name, $args['id'], $label, $checked );
-			echo $this->field_after();
+			echo sprintf( '<label for="%2$s"><input type="checkbox" ' . $checked . ' value="on" id="%2$s" name="%1$s">%3$s</label>', $name, $args['id'], $label );
+			echo $this->field_after( $args );
 		}
 
 		/**
@@ -130,17 +130,17 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ):
 			}
 
 			list( $name, $value ) = $this->field_common( $args );
-			$checked  = ( $value == 'on' ) ? ' checked' : '';
 			$multiple = isset( $args['multiple'] ) ? 'multiple' : '';
+			$class    = isset( $args['class'] ) ? esc_attr( $args['class'] ) : 'select2 sp-input-text';
 
 			echo $this->field_before( $args );
-			echo sprintf( '<select name="%1$s" id="%2$s" class="select2 sp-input-text" %3$s>', $name, $args['id'], $multiple );
+			echo sprintf( '<select name="%1$s" id="%2$s" class="' . $class . '" %3$s>', $name, $args['id'], $multiple );
 			foreach ( $args['options'] as $key => $option ) {
 				$selected = ( $value == $key ) ? ' selected="selected"' : '';
-				echo sprintf( '<option value="%1$s" %3$s>%2$s</option>', $key, $option, $selected );
+				echo '<option value="' . $key . '" ' . $selected . '>' . $option . '</option>';
 			}
 			echo '</select>';
-			echo $this->field_after();
+			echo $this->field_after( $args );
 		}
 
 		/**
@@ -160,7 +160,7 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ):
 			$post_type = isset( $args['post_type'] ) ? $args['post_type'] : 'post';
 
 			echo $this->field_before( $args );
-			echo sprintf( '<select name="%1$s" id="%2$s" class="select2 sp-input-text" %3$s>', $name, $args['id'], $multiple );
+			echo '<select name="' . $name . '" id="' . $args['id'] . '" class="select2 sp-input-text" ' . $multiple . '>';
 			$posts = get_posts( array(
 				'post_type'      => $post_type,
 				'post_status'    => 'publish',
@@ -169,10 +169,10 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ):
 
 			foreach ( $posts as $post ) {
 				$selected = in_array( $post->ID, $value ) ? ' selected="selected"' : '';
-				echo sprintf( '<option value="%1$s" %3$s>%2$s</option>', $post->ID, $post->post_title, $selected );
+				echo '<option value="' . $post->ID . '" ' . $selected . '>' . $post->post_title . '</option>';
 			}
 			echo '</select>';
-			echo $this->field_after();
+			echo $this->field_after( $args );
 		}
 
 		/**
@@ -215,7 +215,7 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ):
 			);
 			$html .= sprintf( '<ul class="carousel_slider_gallery_list">%s</ul>', $output );
 			$html .= '</div>';
-			$html .= $this->field_after();
+			$html .= $this->field_after( $args );
 			echo $html;
 		}
 
@@ -228,7 +228,12 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ):
 			if ( ! isset( $args['id'], $args['name'] ) ) {
 				return;
 			}
-			list( $name, $value ) = $this->field_common( $args );
+
+			global $post;
+
+			$std_value = isset( $args['std'] ) ? $args['std'] : '';
+			$meta      = get_post_meta( $post->ID, $args['id'], true );
+			$value     = ! empty( $meta ) ? $meta : $std_value;
 
 			$btn_text = $value ? __( 'Edit URLs', 'carousel-slider' ) : __( 'Add URLs', 'carousel-slider' );
 
@@ -237,11 +242,11 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ):
 			$html .= '<ul class="carousel_slider_url_images_list">';
 			if ( is_array( $value ) && count( $value ) > 0 ) {
 				foreach ( $value as $image ) {
-					$html .= sprintf( '<li><img src="%s" alt="%s" width="75" height="75"></li>', $image['url'], $image['alt'] );
+					$html .= '<li><img src="' . $image['url'] . '" alt="' . $image['alt'] . '" width="75" height="75"></li>';
 				}
 			}
 			$html .= '</ul>';
-			$html .= $this->field_after();
+			$html .= $this->field_after( $args );
 			echo $html;
 		}
 
@@ -255,7 +260,7 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ):
 			echo $this->field_before( $args );
 			echo sprintf( '<input type="text" class="sp-input-text" value="%1$s" id="%2$s" name="%3$s">', $value, $args['id'], $name );
 			echo sprintf( '<input type="button" class="button" id="carousel_slider_video_btn" value="%s">', __( 'Browse', 'carousel-slider' ) );
-			echo $this->field_after();
+			echo $this->field_after( $args );
 		}
 
 		/**
@@ -281,7 +286,7 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ):
 					$height = get_option( "{$_size}_size_h" );
 					$crop   = (bool) get_option( "{$_size}_crop" ) ? 'hard' : 'soft';
 
-					$sizes[ $_size ] = "{$_size} - {$width}x{$height}";
+					$sizes[ $_size ] = "{$_size} - $crop:{$width}x{$height}";
 
 				} elseif ( isset( $_wp_additional_image_sizes[ $_size ] ) ) {
 
@@ -289,7 +294,7 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ):
 					$height = $_wp_additional_image_sizes[ $_size ]['height'];
 					$crop   = $_wp_additional_image_sizes[ $_size ]['crop'] ? 'hard' : 'soft';
 
-					$sizes[ $_size ] = "{$_size} - {$width}x{$height}";
+					$sizes[ $_size ] = "{$_size} - $crop:{$width}x{$height}";
 				}
 			}
 
@@ -297,13 +302,13 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ):
 
 
 			echo $this->field_before( $args );
-			echo sprintf( '<select name="%1$s" id="%2$s" class="select2 sp-input-text">', $name, $args['id'] );
+			echo '<select name="' . $name . '" id="' . $args['id'] . '" class="select2 sp-input-text">';
 			foreach ( $sizes as $key => $option ) {
 				$selected = ( $value == $key ) ? ' selected="selected"' : '';
-				echo sprintf( '<option value="%1$s" %3$s>%2$s</option>', $key, $option, $selected );
+				echo '<option value="' . $key . '" ' . $selected . '>' . $option . '</option>';
 			}
 			echo '</select>';
-			echo $this->field_after();
+			echo $this->field_after( $args );
 		}
 
 		/**
@@ -332,16 +337,15 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ):
 
 			echo $this->field_before( $args );
 
-			echo sprintf( '<select name="%1$s" id="%2$s" class="select2 sp-input-text" %3$s>', $name, $args['id'], $multiple );
-
+			echo '<select name="' . $name . '" id="' . $args['id'] . '" class="select2 sp-input-text" ' . $multiple . '>';
 			foreach ( $terms as $term ) {
 				$title    = sprintf( '%s (%s)', $term->name, $term->count );
 				$selected = in_array( $term->term_id, $value ) ? ' selected="selected"' : '';
-				echo sprintf( '<option value="%1$s" %3$s>%2$s</option>', $term->term_id, $title, $selected );
+				echo '<option value="' . $term->term_id . '" ' . $selected . '>' . $title . '</option>';
 			}
 			echo '</select>';
 
-			echo $this->field_after();
+			echo $this->field_after( $args );
 		}
 
 		/**
@@ -378,26 +382,45 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ):
 		 * @return string
 		 */
 		private function field_before( $args ) {
-			$table = sprintf( '<div class="sp-input-group" id="field-%s">', $args['id'] );
-			$table .= sprintf( '<div class="sp-input-label">' );
-			$table .= sprintf( '<label for="%1$s">%2$s</label>', $args['id'], $args['name'] );
+			$_normal = sprintf( '<div class="sp-input-group" id="field-%s">', $args['id'] );
+			$_normal .= sprintf( '<div class="sp-input-label">' );
+			$_normal .= sprintf( '<label for="%1$s">%2$s</label>', $args['id'], $args['name'] );
 			if ( ! empty( $args['desc'] ) ) {
-				$table .= sprintf( '<p class="sp-input-desc">%s</p>', $args['desc'] );
+				$_normal .= sprintf( '<p class="sp-input-desc">%s</p>', $args['desc'] );
 			}
-			$table .= '</div>';
-			$table .= sprintf( '<div class="sp-input-field">' );
+			$_normal .= '</div>';
+			$_normal .= sprintf( '<div class="sp-input-field">' );
 
-			return $table;
+			if ( isset( $args['context'] ) && 'side' == $args['context'] ) {
+				$_side = '<p id="field-' . $args['id'] . '">';
+				$_side .= '<label for="' . $args['id'] . '"><strong>' . $args['name'] . '</strong></label>';
+
+				return $_side;
+			}
+
+			return $_normal;
 		}
 
 		/**
 		 * Generate field after template
 		 *
+		 * @param array $args
+		 *
 		 * @return string
 		 */
-		private function field_after() {
+		private function field_after( $args = array() ) {
+
+			if ( isset( $args['context'] ) && 'side' == $args['context'] ) {
+				$_side = '';
+				if ( ! empty( $args['desc'] ) ) {
+					$_side .= '<span class="cs-tooltip" title="' . esc_attr( $args['desc'] ) . '"></span>';
+				}
+				$_side .= '</p>';
+
+				return $_side;
+			}
+
 			return '</div></div>';
 		}
 	}
-
-endif;
+}

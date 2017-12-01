@@ -1,3 +1,9 @@
+<?php
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+?>
 <div data-id="open" class="shapla-toggle shapla-toggle--stroke">
 	<span class="shapla-toggle-title">
 		<?php esc_html_e( 'Responsive Settings', 'carousel-slider' ); ?>

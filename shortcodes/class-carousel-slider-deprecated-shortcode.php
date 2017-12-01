@@ -151,7 +151,7 @@ if ( ! class_exists( 'Carousel_Slider_Deprecated_Shortcode' ) ):
 			), $attributes ) );
 
 			if ( ! $this->is_valid_url( $img_link ) ) {
-				return;
+				return '';
 			}
 
 			if ( $this->is_valid_url( $href ) ) {

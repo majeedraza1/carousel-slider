@@ -48,7 +48,7 @@ class Carousel_Slider_Widget extends WP_Widget {
 	 *
 	 * @param array $instance Current settings.
 	 *
-	 * @return string
+	 * @return void
 	 */
 	public function form( $instance ) {
 		$carousels   = $this->carousels_list();
@@ -122,8 +122,10 @@ class Carousel_Slider_Widget extends WP_Widget {
 
 		return $old_instance;
 	}
+
+	public static function register() {
+		register_widget( __CLASS__ );
+	}
 }
 
-add_action( 'widgets_init', function () {
-	register_widget( 'Carousel_Slider_Widget' );
-} );
+add_action( 'widgets_init', array( 'Carousel_Slider_Widget', 'register' ) );

@@ -9,6 +9,9 @@
  * Requires at least: 4.4
  * Tested up to: 4.9
  *
+ * WC requires at least: 2.5
+ * WC tested up to: 3.2
+ *
  * Text Domain: carousel-slider
  *
  * License: GPLv3
@@ -27,10 +30,31 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 
 	final class Carousel_Slider {
 
+		/**
+		 * Plugin name slug
+		 *
+		 * @var string
+		 */
 		private $plugin_name = 'carousel-slider';
+
+		/**
+		 * Plugin version
+		 *
+		 * @var string
+		 */
 		private $version = '1.8.2';
 
-		protected static $instance = null;
+		/**
+		 * Minimum PHP version required
+		 *
+		 * @var string
+		 */
+		private $min_php = '5.3.0';
+
+		/**
+		 * @var object
+		 */
+		protected static $instance;
 
 		/**
 		 * Main Carousel_Slider Instance
@@ -96,12 +120,12 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 
 			if ( is_admin() ) {
 				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-credit.php';
-				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-vc-element.php';
 				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-documentation.php';
+				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-vc-element.php';
 				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-form.php';
 				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-admin.php';
-				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-content-carousel.php';
 				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-meta-box.php';
+				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-hero-carousel.php';
 			}
 
 			require_once CAROUSEL_SLIDER_PATH . '/shortcodes/class-carousel-slider-shortcode.php';

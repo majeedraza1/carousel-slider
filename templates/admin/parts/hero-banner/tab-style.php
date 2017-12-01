@@ -1,7 +1,7 @@
 <?php
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
-    die;
+	die;
 }
 ?>
 <div id="carousel-slider-tab-style" class="shapla-tab tab-style">

@@ -1,3 +1,9 @@
+<?php
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+?>
 <div data-id="open" id="section_post_query" class="shapla-toggle shapla-toggle--stroke"
      style="display: <?php echo $slide_type != 'post-carousel' ? 'none' : 'block'; ?>">
 	<span class="shapla-toggle-title">

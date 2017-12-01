@@ -1,4 +1,9 @@
 <?php
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
 if ( ! class_exists( 'Carousel_Slider_Script' ) ):
 
 	class Carousel_Slider_Script {

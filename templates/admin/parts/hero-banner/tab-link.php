@@ -1,3 +1,9 @@
+<?php
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+?>
 <div id="carousel-slider-tab-link" class="shapla-tab tab-content-link">
 
     <div class="sp-input-group" id="field-_link_type">

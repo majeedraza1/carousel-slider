@@ -33,11 +33,10 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 		 * A shortcode for rendering the carousel slide.
 		 *
 		 * @param  array $attributes Shortcode attributes.
-		 * @param  string $content The text content for shortcode. Not used.
 		 *
 		 * @return string  The shortcode output
 		 */
-		public function carousel_slide( $attributes, $content = null ) {
+		public function carousel_slide( $attributes ) {
 			if ( empty( $attributes['id'] ) ) {
 				return '';
 			}
@@ -114,7 +113,7 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 				$html = ob_get_contents();
 				ob_end_clean();
 
-				return apply_filters( 'carousel_slider_content_carousel', $html, $id );
+				return apply_filters( 'Carousel_Slider_Hero_Carousel', $html, $id );
 			}
 
 			return '';
@@ -128,13 +127,11 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 		 * @return array
 		 */
 		private function carousel_options( $id ) {
-			$_nav_color        = get_post_meta( $id, '_nav_color', true );
-			$_nav_active_color = get_post_meta( $id, '_nav_active_color', true );
-			$_nav_button       = get_post_meta( $id, '_nav_button', true );
-			$_arrow_position   = get_post_meta( $id, '_arrow_position', true );
-			$_dot_nav          = get_post_meta( $id, '_dot_nav', true );
-			$_bullet_position  = get_post_meta( $id, '_bullet_position', true );
-			$_bullet_shape     = get_post_meta( $id, '_bullet_shape', true );
+			$_nav_button      = get_post_meta( $id, '_nav_button', true );
+			$_arrow_position  = get_post_meta( $id, '_arrow_position', true );
+			$_dot_nav         = get_post_meta( $id, '_dot_nav', true );
+			$_bullet_position = get_post_meta( $id, '_bullet_position', true );
+			$_bullet_shape    = get_post_meta( $id, '_bullet_shape', true );
 
 			$class = 'owl-carousel carousel-slider';
 
@@ -257,7 +254,7 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 		 */
 		public function video_url( $url ) {
 			if ( ! $this->is_valid_url( $url ) ) {
-				return;
+				return '';
 			}
 
 			$url = esc_url( $url );
@@ -270,7 +267,7 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 				return '<div class="item-video"><a class="owl-video" href="' . $url . '"></a></div>';
 			}
 
-			return;
+			return '';
 		}
 
 		/**

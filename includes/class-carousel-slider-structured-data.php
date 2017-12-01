@@ -21,17 +21,6 @@ if ( ! class_exists( 'Carousel_Slider_Structured_Data' ) ):
 		private $_post_data = array();
 
 		/**
-		 * Constructor.
-		 */
-		public function __construct() {
-			add_action( 'carousel_slider_image_gallery_loop', array( $this, 'generate_image_data' ) );
-			add_action( 'carousel_slider_post_loop', array( $this, 'generate_post_data' ) );
-			add_action( 'carousel_slider_product_loop', array( $this, 'generate_product_data' ) );
-			// Output structured data.
-			add_action( 'wp_footer', array( $this, 'output_structured_data' ), 90 );
-		}
-
-		/**
 		 * Ensures only one instance of this class is loaded or can be loaded.
 		 *
 		 * @return Carousel_Slider_Structured_Data
@@ -42,6 +31,17 @@ if ( ! class_exists( 'Carousel_Slider_Structured_Data' ) ):
 			}
 
 			return self::$instance;
+		}
+
+		/**
+		 * Constructor.
+		 */
+		public function __construct() {
+			add_action( 'carousel_slider_image_gallery_loop', array( $this, 'generate_image_data' ) );
+			add_action( 'carousel_slider_post_loop', array( $this, 'generate_post_data' ) );
+			add_action( 'carousel_slider_product_loop', array( $this, 'generate_product_data' ), 10, 2 );
+			// Output structured data.
+			add_action( 'wp_footer', array( $this, 'output_structured_data' ), 90 );
 		}
 
 		/**
@@ -288,18 +288,19 @@ if ( ! class_exists( 'Carousel_Slider_Structured_Data' ) ):
 		 * Hooked into `carousel_slider_product_loop` action hook.
 		 *
 		 * @param WC_Product $product Product data (default: null).
+		 * @param WP_Post $post
 		 */
-		public function generate_product_data( $product = null ) {
-			if ( ! is_object( $product ) ) {
-				global $product;
+		public function generate_product_data( $product, $post ) {
+			if ( ! $product instanceof WC_Product ) {
+				return;
 			}
 
-			if ( version_compare( WC_VERSION, "3.0.0", ">=" ) ) {
+			if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, "3.0.0", ">=" ) ) {
 				$name      = $product->get_name();
 				$permalink = get_permalink( $product->get_id() );
 			} else {
-				$name      = get_the_title( $product->id );
-				$permalink = get_permalink( $product->id );
+				$name      = get_the_title( $post->ID );
+				$permalink = get_permalink( $post->ID );
 			}
 
 			$markup['@type'] = 'Product';

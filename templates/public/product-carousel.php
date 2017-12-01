@@ -39,7 +39,7 @@ $_product_quick_view = get_post_meta( $id, '_product_quick_view', true );
 		<?php foreach ( $posts as $post ): setup_postdata( $post ); ?>
 			<?php
 			$product = wc_get_product( $post->ID );
-			do_action( 'carousel_slider_product_loop', $product );
+			do_action( 'carousel_slider_product_loop', $product, $post );
 			?>
             <div class="product carousel-slider__product">
 				<?php

@@ -132,6 +132,7 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 		 * @param $post_id
 		 */
 		public function columns_content( $column, $post_id ) {
+			$slide_types = carousel_slider_slide_type( false );
 			switch ( $column ) {
 
 				case 'usage':
@@ -145,12 +146,11 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
                             style="background-color: #f1f1f1;min-width: 250px;padding: 5px 8px;"
                     >
 					<?php
-
 					break;
 
 				case 'slide_type':
 					$slide_type = get_post_meta( get_the_ID(), '_slide_type', true );
-					echo ucwords( str_replace( '-', ' ', $slide_type ) );
+					echo isset( $slide_types[ $slide_type ] ) ? esc_attr( $slide_types[ $slide_type ] ) : '';
 
 					break;
 				default :

@@ -1,4 +1,8 @@
 <?php
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
 
 if ( ! function_exists( 'carousel_slider_is_url' ) ) {
 	/**
@@ -496,17 +500,25 @@ if ( ! function_exists( 'carousel_slider_slide_type' ) ) {
 	/**
 	 * Get carousel slider available slide type
 	 *
+	 * @param bool $key_only
+	 *
 	 * @return array
 	 */
-	function carousel_slider_slide_type() {
-		return array(
-			'image-carousel',
-			'image-carousel-url',
-			'post-carousel',
-			'product-carousel',
-			'video-carousel',
-			'hero-banner-slider'
-		);
+	function carousel_slider_slide_type( $key_only = true ) {
+		$types = apply_filters( 'carousel_slider_slide_type', array(
+			'image-carousel'     => __( 'Image Carousel', 'carousel-slider' ),
+			'image-carousel-url' => __( 'Image Carousel (URL)', 'carousel-slider' ),
+			'post-carousel'      => __( 'Post Carousel', 'carousel-slider' ),
+			'product-carousel'   => __( 'Product Carousel', 'carousel-slider' ),
+			'video-carousel'     => __( 'Video Carousel', 'carousel-slider' ),
+			'hero-banner-slider' => __( 'Hero Carousel', 'carousel-slider' ),
+		) );
+
+		if ( $key_only ) {
+			return array_keys( $types );
+		}
+
+		return $types;
 	}
 }
 

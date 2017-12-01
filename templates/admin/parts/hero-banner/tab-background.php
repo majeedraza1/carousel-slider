@@ -1,7 +1,7 @@
 <?php
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
-  die;
+	die;
 }
 ?>
 <div id="carousel-slider-tab-background" class="shapla-tab tab-background">
@@ -30,17 +30,17 @@ if ( ! defined( 'WPINC' ) ) {
                 <span><?php esc_html_e( 'Background Position:', 'carousel-slider' ); ?></span>
                 <select class="background_image_position"
                         name="carousel_slider_content[<?php echo $slide_num; ?>][img_bg_position]">
-          <?php
-          foreach ( $_all_bg_position as $key => $label ) {
-            $selected = $key == $_img_bg_position ? 'selected' : '';
-            printf(
-              '<option value="%s" %s>%s</option>',
-              $key,
-              $selected,
-              $label
-            );
-          }
-          ?>
+					<?php
+					foreach ( $_all_bg_position as $key => $label ) {
+						$selected = $key == $_img_bg_position ? 'selected' : '';
+						printf(
+							'<option value="%s" %s>%s</option>',
+							$key,
+							$selected,
+							$label
+						);
+					}
+					?>
                 </select>
             </div>
 
@@ -48,12 +48,12 @@ if ( ! defined( 'WPINC' ) ) {
                 <span><?php esc_html_e( 'Background Size:', 'carousel-slider' ); ?></span>
                 <select class="background_image_size"
                         name="carousel_slider_content[<?php echo $slide_num; ?>][img_bg_size]">
-          <?php
-          foreach ( $_all_bg_size as $key => $label ) {
-            $selected = $key == $_img_bg_size ? 'selected' : '';
-            printf( '<option value="%s" %s>%s</option>', $key, $selected, $label );
-          }
-          ?>
+					<?php
+					foreach ( $_all_bg_size as $key => $label ) {
+						$selected = $key == $_img_bg_size ? 'selected' : '';
+						printf( '<option value="%s" %s>%s</option>', $key, $selected, $label );
+					}
+					?>
                 </select>
             </div>
 

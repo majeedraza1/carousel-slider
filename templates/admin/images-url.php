@@ -1,4 +1,9 @@
 <?php
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
 $_images_urls = get_post_meta( $post->ID, '_images_urls', true );
 $btn_text     = $_images_urls ? 'Edit URLs' : 'Add URLs';
 ?>

@@ -102,6 +102,14 @@ echo do_shortcode('[carousel_slide id='YOUR_SLIDER_ID']");
 
 ## Changelog
 
+##### version 1.8.3 ( updated 2017-12-01)
+* Added - Background Overlay color for hero carousel.
+* Added - Ken Burns Effect for hero carousel.
+* Tweak - Update hero carousel style.
+* Removed - Heading and Description background color.
+* Dev - Load non-minified version when script debug is enabled.
+* Dev - Update core code.
+
 ##### version 1.8.2 (updated on 2017-11-03)
 * Fixed - Fixed color overlapping issue on WordPress 3.9
 

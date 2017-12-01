@@ -119,6 +119,14 @@ Now you can use the following function at your theme template file replacing `YO
 
 == Changelog ==
 
+= version 1.8.3 - 2017-12-01 =
+* Added - Background Overlay color for hero carousel.
+* Added - Ken Burns Effect for hero carousel.
+* Tweak - Update hero carousel style.
+* Removed - Heading and Description background color.
+* Dev - Load non-minified version when script debug is enabled.
+* Dev - Update core code.
+
 = version 1.8.2 - 2017-11-03 =
 * Fixed - Fixed color overlapping issue on WordPress 3.9
 

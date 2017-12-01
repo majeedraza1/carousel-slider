@@ -1,4 +1,11 @@
-<?php $img_settings = ( $slide_type == 'image-carousel' ) || ( $slide_type == 'image-carousel-url' ) ? true : false; ?>
+<?php
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
+
+$img_settings = ( $slide_type == 'image-carousel' ) || ( $slide_type == 'image-carousel-url' ) ? true : false;
+?>
 <div data-id="open" id="section_images_general_settings" class="shapla-toggle shapla-toggle--stroke"
      style="display: <?php echo ! $img_settings ? 'none' : 'block'; ?>">
 	<span class="shapla-toggle-title">

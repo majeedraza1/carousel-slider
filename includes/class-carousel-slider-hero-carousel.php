@@ -1,15 +1,19 @@
 <?php
+// If this file is called directly, abort.
+if ( ! defined( 'WPINC' ) ) {
+	die;
+}
 
-if ( ! class_exists( 'Carousel_Slider_Content_Carousel' ) ):
+if ( ! class_exists( 'Carousel_Slider_Hero_Carousel' ) ):
 
-	class Carousel_Slider_Content_Carousel {
+	class Carousel_Slider_Hero_Carousel {
 
 		protected static $instance = null;
 
 		/**
 		 * Ensures only one instance of this class is loaded or can be loaded.
 		 *
-		 * @return Carousel_Slider_Content_Carousel
+		 * @return Carousel_Slider_Hero_Carousel
 		 */
 		public static function init() {
 			if ( is_null( self::$instance ) ) {
@@ -245,4 +249,4 @@ if ( ! class_exists( 'Carousel_Slider_Content_Carousel' ) ):
 
 endif;
 
-Carousel_Slider_Content_Carousel::init();
+Carousel_Slider_Hero_Carousel::init();
