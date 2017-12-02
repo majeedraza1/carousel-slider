@@ -4,7 +4,7 @@ Tags: woocommerce, shortcode, images, carousel, carousel slider, image carousel,
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.3
-Stable tag: 1.8.2
+Stable tag: 1.8.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -21,9 +21,9 @@ Carousel Slider is a touch enabled WordPress plugin that lets you create highly 
 **If you like this plugin, please give us [5 star](https://wordpress.org/support/plugin/carousel-slider/reviews/?rate=5#new-post) to encourage for future improvement.**
 
 
-> What's new in version 1.8.0?
+> What's new in version 1.8?
 
-> **Hero Banner Slider(beta)** with background image, title, description, call to action buttons and more
+> **Hero Banner Slider** with background image, title, description, call to action buttons and more
 > More control over Arrow Navigation
 > More control over Bullet/Dot Navigation
 > Alpha color picker for choosing color

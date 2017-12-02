@@ -76,7 +76,7 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ):
 				'wp-color-picker-alpha' => array(
 					'src'        => CAROUSEL_SLIDER_ASSETS . '/lib/wp-color-picker-alpha/wp-color-picker-alpha' . $suffix . '.js',
 					'dependency' => array( 'jquery', 'wp-color-picker' ),
-					'version'    => '1.3',
+					'version'    => '2.1.3',
 					'in_footer'  => true,
 				),
 				'carousel-slider-admin' => array(
@@ -155,6 +155,8 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ):
 			?>
             <script type="text/javascript">
                 (function ($) {
+                    'use strict';
+
                     $('body').find('.carousel-slider').each(function () {
                         var _this = $(this);
                         var isVideo = _this.data('slide-type') === 'video-carousel';
