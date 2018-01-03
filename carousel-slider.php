@@ -117,6 +117,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-product.php';
 			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-script.php';
 			require_once CAROUSEL_SLIDER_WIDGETS . '/widget-carousel_slider.php';
+			require_once CAROUSEL_SLIDER_PATH . '/elementor/class-carousel-slider-elementor.php';
 
 			if ( is_admin() ) {
 				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-credit.php';
