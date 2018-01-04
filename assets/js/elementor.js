@@ -28,14 +28,21 @@
 
     var CarouselSliderTestimonialCarousel = function ($scope, $) {
 
-        var slider_elem = $scope.find('.elementor-slides').eq(0);
+        var slider_elem = $scope.find('.elementor-main-swiper').eq(0);
         var settings = slider_elem.data('settings');
 
         console.log(slider_elem);
+        console.log(settings);
 
         var selectors = {
             mainSwiper: '.elementor-main-swiper',
             swiperSlide: '.swiper-slide'
+        };
+
+        var slidesPerView = {
+            desktop: 3,
+            tablet: 2,
+            mobile: 1
         };
 
 
