@@ -102,6 +102,9 @@ echo do_shortcode('[carousel_slide id='YOUR_SLIDER_ID']");
 
 ## Changelog
 
+##### version 1.9.0 ( Master)
+* Added - Hero Carousel element for Elementor Page Builder.
+
 ##### version 1.8.3 ( updated 2017-12-01)
 * Added - Background Overlay color for hero carousel.
 * Added - Ken Burns Effect for hero carousel.

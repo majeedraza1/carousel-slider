@@ -18,9 +18,7 @@ class Carousel_Slider_Elementor {
 
 	public function __construct() {
 		add_action( 'elementor/widgets/widgets_registered', array( $this, 'init_widgets' ) );
-
 		add_action( 'elementor/frontend/before_enqueue_scripts', array( $this, 'frontend_scripts' ) );
-//		add_action( 'elementor/frontend/after_register_styles', array( $this, 'register_frontend_styles' ) );
 		add_action( 'elementor/frontend/after_enqueue_styles', array( $this, 'enqueue_frontend_styles' ) );
 	}
 
@@ -34,7 +32,9 @@ class Carousel_Slider_Elementor {
 			1
 		);
 
-		require_once 'elements/hero-slider/hero-slider.php';
+		require_once 'modules/hero-carousel/hero-carousel.php';
+		require_once 'modules/testimonial-carousel/testimonial-carousel.php';
+		require_once 'modules/media-carousel/media-carousel.php';
 	}
 
 	public function frontend_scripts() {
@@ -48,13 +48,13 @@ class Carousel_Slider_Elementor {
 		);
 	}
 
-	public function register_frontend_styles() {
-	}
-
 	public function enqueue_frontend_styles() {
 		wp_enqueue_style(
 			'elementor-carousel-slider',
-			CAROUSEL_SLIDER_ASSETS . '/css/elementor.css'
+			CAROUSEL_SLIDER_ASSETS . '/css/elementor.css',
+			[],
+			CAROUSEL_SLIDER_VERSION,
+			'all'
 		);
 	}
 }
