@@ -753,6 +753,27 @@ class Carousel_Slider_Testimonial_Slider extends Widget_Base {
 	protected function render() {
 		$settings = $this->get_active_settings();
 
+		$_desktop              = ! empty( $settings['slides_per_view'] ) ? intval( $settings['slides_per_view'] ) : 1;
+		$_tablet               = ! empty( $settings['slides_per_view_tablet'] ) ? intval( $settings['slides_per_view_tablet'] ) : $_desktop;
+		$_mobile               = ! empty( $settings['slides_per_view_mobile'] ) ? intval( $settings['slides_per_view_mobile'] ) : $_tablet;
+		$_show_arrows          = ( isset( $settings['show_arrows'] ) && 'yes' == $settings['show_arrows'] ) ? true : false;
+		$_speed                = ! empty( $settings['speed'] ) ? intval( $settings['speed'] ) : 500;
+		$_autoplay             = ( isset( $settings['autoplay'] ) && 'yes' == $settings['autoplay'] ) ? true : false;
+		$_autoplay_speed       = ! empty( $settings['autoplay_speed'] ) ? intval( $settings['autoplay_speed'] ) : 5000;
+		$_pause_on_interaction = ( isset( $settings['pause_on_interaction'] ) && 'yes' == $settings['pause_on_interaction'] ) ? true : false;
+
+
+		$slides_per_view = [
+			'desktop'              => $_desktop,
+			'tablet'               => $_tablet,
+			'mobile'               => $_mobile,
+			'show_arrows'          => $_show_arrows,
+			'speed'                => $_speed,
+			'autoplay'             => $_autoplay,
+			'autoplay_speed'       => $_autoplay_speed,
+			'pause_on_interaction' => $_pause_on_interaction,
+		];
+
 		$default_settings = [
 			'container_class' => 'elementor-main-swiper',
 			'video_play_icon' => true,
