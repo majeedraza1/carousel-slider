@@ -46,7 +46,15 @@
         };
 
 
-        new Swiper(selectors.mainSwiper);
+        new Swiper('.elementor-main-swiper', {
+            pagination: {
+                el: '.swiper-pagination'
+            },
+            navigation: {
+                nextEl: '.elementor-swiper-button-next',
+                prevEl: '.elementor-swiper-button-prev'
+            }
+        });
     };
 
     // Make sure you run this code under Elementor..
