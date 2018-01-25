@@ -78,9 +78,6 @@ if ( ! class_exists( 'Carousel_Slider_Deprecated_Shortcode' ) ):
 				// Navigation
 				'data-nav'                  => $navigation,
 				'data-dots'                 => $pagination,
-				// Video
-				'data-video-width'          => 'false',
-				'data-video-height'         => 'false',
 				// Autoplay
 				'data-autoplay'             => $auto_play,
 				'data-autoplay-timeout'     => $autoplay_timeout,

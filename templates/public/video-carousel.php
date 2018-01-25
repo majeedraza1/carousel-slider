@@ -4,13 +4,7 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-$_nav_color        = get_post_meta( $id, '_nav_color', true );
-$_nav_active_color = get_post_meta( $id, '_nav_active_color', true );
-$_video_width      = $this->get_meta( $id, '_video_width' );
-$_video_height     = $this->get_meta( $id, '_video_height' );
-$_video_urls       = array_filter( explode( ',', $this->get_meta( $id, '_video_url' ) ) );
-
-if ( count( $_video_urls ) < 1 ) {
+if ( count( $urls ) < 1 ) {
 	return;
 }
 ?>
@@ -18,8 +12,18 @@ if ( count( $_video_urls ) < 1 ) {
 	<?php carousel_slider_inline_style( $id ); ?>
     <div <?php echo join( " ", $this->carousel_options( $id ) ); ?>>
 		<?php
-		foreach ( $_video_urls as $url ) {
-			echo $this->video_url( $url );
+		foreach ( $urls as $url ) {
+			?>
+            <div class="carousel-slider-item-video">
+                <div class="carousel-slider-video-wrapper">
+                    <a class="magnific-popup" href="<?php echo $url['url']; ?>">
+                        <div class="carousel-slider-video-play-icon"></div>
+                        <div class="carousel-slider-video-overlay"></div>
+                        <img class="owl-lazy" data-src="<?php echo $url['thumbnail']['large']; ?>"/>
+                    </a>
+                </div>
+            </div>
+			<?php
 		}
 		?>
     </div>

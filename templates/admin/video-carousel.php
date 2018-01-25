@@ -21,18 +21,6 @@ if ( ! defined( 'WPINC' ) ) {
 					'https://www.youtube.com/watch?v=O4-EM32h7b4,https://www.youtube.com/watch?v=72IO4gzB8mU,https://vimeo.com/193773669,https://vimeo.com/193517656'
 				),
 			) );
-			$this->form->number( array(
-				'id'   => '_video_width',
-				'name' => esc_html__( 'Video Width', 'carousel-slider' ),
-				'std'  => 560,
-				'desc' => esc_html__( 'Enter video width in numbers.', 'carousel-slider' ),
-			) );
-			$this->form->number( array(
-				'id'   => '_video_height',
-				'name' => esc_html__( 'Video Height', 'carousel-slider' ),
-				'std'  => 315,
-				'desc' => esc_html__( 'Enter video height in numbers.', 'carousel-slider' ),
-			) );
 			?>
         </div>
     </div>

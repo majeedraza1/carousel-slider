@@ -119,6 +119,12 @@ Now you can use the following function at your theme template file replacing `YO
 
 == Changelog ==
 
+= version 1.8.4 - 2018-01-25 =
+* Added - Add content animation for hero carouse slider.
+* Fixed - Open Slide Link In New Window issue
+* Removed - Fixed Width and Height for video carousel.
+* Added - Add lightbox support for video carousel
+
 = version 1.8.3 - 2017-12-01 =
 * Added - Background Overlay color for hero carousel.
 * Added - Ken Burns Effect for hero carousel.
