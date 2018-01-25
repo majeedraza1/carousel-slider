@@ -10,10 +10,16 @@ $_lazy_load_image = get_post_meta( $id, '_lazy_load_image', true );
 $_be_lazy         = in_array( $_lazy_load_image, array( 'on', 'off' ) ) ? $_lazy_load_image : 'on';
 $slide_options    = join( " ", $this->carousel_options( $id ) );
 
+if ( empty( $settings['content_animation'] ) ) {
+	$content_animation = '';
+} else {
+	$content_animation = esc_attr( $settings['content_animation'] );
+}
+
 ?>
 <div class="carousel-slider-outer carousel-slider-outer-contents carousel-slider-outer-<?php echo $id; ?>">
 	<?php carousel_slider_inline_style( $id ); ?>
-    <div <?php echo $slide_options; ?>>
+    <div <?php echo $slide_options; ?> data-animation="<?php echo $content_animation; ?>">
 		<?php
 		foreach ( $content_sliders as $slide_id => $slide ):
 

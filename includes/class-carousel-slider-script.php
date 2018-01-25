@@ -109,7 +109,8 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ):
 			);
 
 			foreach ( $scripts as $handle => $script ) {
-				wp_register_script( $handle, $script['src'], $script['dependency'], $script['version'], $script['in_footer'] );
+				wp_register_script( $handle, $script['src'], $script['dependency'], $script['version'],
+					$script['in_footer'] );
 			}
 		}
 
@@ -197,6 +198,22 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ):
                                     1921: {items: _this.data('colums')}
                                 }
                             });
+
+                            if ('hero-banner-slider' === _this.data('slide-type')) {
+                                var animation = _this.data('animation');
+                                if (animation.length) {
+                                    _this.on('change.owl.carousel', function () {
+                                        var sliderContent = _this.find('.carousel-slider-hero__cell__content');
+                                        sliderContent.removeClass('animated' + ' ' + animation).hide();
+                                    });
+                                    _this.on('changed.owl.carousel', function (e) {
+                                        setTimeout(function () {
+                                            var current = $(e.target).find('.carousel-slider-hero__cell__content').eq(e.item.index);
+                                            current.show().addClass('animated' + ' ' + animation);
+                                        }, _this.data('autoplay-speed'));
+                                    });
+                                }
+                            }
                         }
 
                         if (jQuery().magnificPopup) {

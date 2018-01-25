@@ -331,9 +331,11 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 		public function attachment_fields_to_edit( $form_fields, $post ) {
 			$form_fields["carousel_slider_link_url"]["label"]      = __( "Link to URL", "carousel-slider" );
 			$form_fields["carousel_slider_link_url"]["input"]      = "textarea";
-			$form_fields["carousel_slider_link_url"]["value"]      = get_post_meta( $post->ID, "_carousel_slider_link_url", true );
+			$form_fields["carousel_slider_link_url"]["value"]      = get_post_meta( $post->ID,
+				"_carousel_slider_link_url", true );
 			$form_fields["carousel_slider_link_url"]["extra_rows"] = array(
-				'carouselSliderInfo' => __( '"Link to URL" only works on Carousel Slider for linking image to a custom url.', 'carousel-slider' ),
+				'carouselSliderInfo' => __( '"Link to URL" only works on Carousel Slider for linking image to a custom url.',
+					'carousel-slider' ),
 			);
 
 			return $form_fields;
@@ -420,9 +422,10 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 		private function update_content_settings( $post_id ) {
 			$setting   = $_POST['content_settings'];
 			$_settings = array(
-				'slide_height'  => sanitize_text_field( $setting['slide_height'] ),
-				'content_width' => sanitize_text_field( $setting['content_width'] ),
-				'slide_padding' => array(
+				'slide_height'      => sanitize_text_field( $setting['slide_height'] ),
+				'content_width'     => sanitize_text_field( $setting['content_width'] ),
+				'content_animation' => sanitize_text_field( $setting['content_animation'] ),
+				'slide_padding'     => array(
 					'top'    => sanitize_text_field( $setting['slide_padding']['top'] ),
 					'right'  => sanitize_text_field( $setting['slide_padding']['right'] ),
 					'bottom' => sanitize_text_field( $setting['slide_padding']['bottom'] ),

@@ -14,12 +14,13 @@ if ( ! defined( 'WPINC' ) ) {
             <button class="button carousel-slider__add-slide" data-post-id="<?php echo $post->ID; ?>">Add Slide</button>
             <div id="carouselSliderContentInside">
 				<?php
-				$content_sliders  = get_post_meta( $post->ID, '_content_slider', true );
-				$content_settings = get_post_meta( $post->ID, '_content_slider_settings', true );
-				$_slide_height    = isset( $content_settings['slide_height'] ) ? $content_settings['slide_height'] : '400px';
-				$_content_width   = isset( $content_settings['content_width'] ) ? $content_settings['content_width'] : '850px';
-				$_slide_animation = isset( $content_settings['slide_animation'] ) ? $content_settings['slide_animation'] : 'fadeOut';
-				$_slide_padding   = isset( $content_settings['slide_padding'] ) ? $content_settings['slide_padding'] : array();
+				$content_sliders    = get_post_meta( $post->ID, '_content_slider', true );
+				$content_settings   = get_post_meta( $post->ID, '_content_slider_settings', true );
+				$_slide_height      = isset( $content_settings['slide_height'] ) ? $content_settings['slide_height'] : '400px';
+				$_content_width     = isset( $content_settings['content_width'] ) ? $content_settings['content_width'] : '850px';
+				$_slide_animation   = isset( $content_settings['slide_animation'] ) ? $content_settings['slide_animation'] : 'fadeOut';
+				$_slide_padding     = isset( $content_settings['slide_padding'] ) ? $content_settings['slide_padding'] : array();
+				$_content_animation = isset( $content_settings['content_animation'] ) ? $content_settings['content_animation'] : '';
 
 
 				// Get WordPress media upload URL
@@ -236,6 +237,35 @@ if ( ! defined( 'WPINC' ) ) {
                     <div class="sp-input-field">
                         <input type="text" name="content_settings[content_width]" id="_content_content_width"
                                class="sp-input-text" value="<?php echo $_content_width; ?>">
+                    </div>
+                </div>
+				<?php
+				$animations = [
+					''            => esc_html__( 'None', 'carousel-slider' ),
+					'fadeInDown'  => esc_html__( 'Fade In Down', 'carousel-slider' ),
+					'fadeInUp'    => esc_html__( 'Fade In Up', 'carousel-slider' ),
+					'fadeInRight' => esc_html__( 'Fade In Right', 'carousel-slider' ),
+					'fadeInLeft'  => esc_html__( 'Fade In Left', 'carousel-slider' ),
+					'zoomIn'      => esc_html__( 'Zoom In', 'carousel-slider' ),
+				];
+				?>
+                <div class="sp-input-group" id="field-_content_animation">
+                    <div class="sp-input-label">
+                        <label for="_content_animation"><?php esc_html_e( 'Content Animation',
+								'carousel-slider' ); ?></label>
+                        <p class="sp-input-desc"><?php esc_html_e( 'Select slide content animation.',
+								'carousel-slider' ); ?></p>
+                    </div>
+                    <div class="sp-input-field">
+                        <select name="content_settings[content_animation]" id="_content_animation"
+                                class="sp-input-text">
+							<?php
+							foreach ( $animations as $animation_slug => $animation ) {
+								$__selected = selected( $_content_animation, $animation_slug, false );
+								echo '<option value="' . $animation_slug . '" ' . $__selected . '>' . $animation . '</option>';
+							}
+							?>
+                        </select>
                     </div>
                 </div>
                 <div class="sp-input-group" id="field-_content_slide_padding">
