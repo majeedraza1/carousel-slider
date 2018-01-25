@@ -23,7 +23,7 @@ $slide_options    = join( " ", $this->carousel_options( $id ) );
 				array( 'full', 'button' ) ) ? $slide['link_type'] : 'full';
 			$_slide_link  = ! empty( $slide['slide_link'] ) ? esc_url( $slide['slide_link'] ) : '';
 			$_link_target = ! empty( $slide['link_target'] ) && in_array( $slide['link_target'],
-				array( '_self', '_blank' ) ) ? esc_url( $slide['link_target'] ) : '_self';
+				array( '_self', '_blank' ) ) ? esc_attr( $slide['link_target'] ) : '_self';
 
 			$_cell_style = '';
 			$_cell_style .= isset( $settings['slide_height'] ) ? 'height: ' . $settings['slide_height'] . ';' : '';
