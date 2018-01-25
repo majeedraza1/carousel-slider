@@ -68,8 +68,6 @@ if ( ! class_exists( 'Carousel_Slider_Activator' ) ):
 					update_post_meta( $id, '_lazy_load_image', $_lazy_load );
 					update_post_meta( $id, '_items_desktop', $_items_desktop );
 					update_post_meta( $id, '_slide_type', 'image-carousel' );
-					update_post_meta( $id, '_video_width', '560' );
-					update_post_meta( $id, '_video_height', '315' );
 				}
 			}
 		}

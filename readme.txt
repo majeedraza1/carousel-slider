@@ -4,7 +4,7 @@ Tags: woocommerce, shortcode, images, carousel, carousel slider, image carousel,
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.3
-Stable tag: 1.8.3
+Stable tag: 1.8.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -33,6 +33,7 @@ Carousel Slider is a touch enabled WordPress plugin that lets you create highly 
 = Full Feature Set =
 
 * **Multiple types carousel**, images from media gallery, images from URL, videos from youtube and vimeo, posts, and WooCommerce products carousel slider
+* **Hero slider** with background image, title, description, call to action buttons and more
 * **Posts carousel**, support Specific posts, Post Categories, Post Tags, Posts per page, Date range query and ordering
 * **Video carousel**, support custom height and width (Currently only support video from Youtube and Vimeo)
 * **WooCommerce Product carousel**, support Product Categories, Product Tags, Specific Products, Featured Products, Recent Products, Sale Products, Best-Selling Products, Top Rated Products
