@@ -4,7 +4,7 @@ Tags: woocommerce, shortcode, images, carousel, carousel slider, image carousel,
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.3
-Stable tag: 1.8.4
+Stable tag: 1.8.5
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -119,6 +119,9 @@ Now you can use the following function at your theme template file replacing `YO
 7. Front-end example of image lightbox.
 
 == Changelog ==
+
+= version 1.8.5 - 2018-01-31 =
+* Fixed - Fixed syntax error for short array syntax on PHP 5.3
 
 = version 1.8.4 - 2018-01-25 =
 * Added - Add content animation for hero carouse slider.

@@ -327,7 +327,7 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 		 * @return array
 		 */
 		public function get_video_url( array $video_urls ) {
-			$_url = [];
+			$_url = array();
 			foreach ( $video_urls as $video_url ) {
 				if ( ! filter_var( $video_url, FILTER_VALIDATE_URL ) ) {
 					continue;
@@ -338,30 +338,30 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 				if ( false !== strpos( $video_url, 'youtube.com' ) ) {
 					$provider  = 'youtube';
 					$video_id  = $this->get_youtube_id_from_url( $video_url );
-					$thumbnail = [
+					$thumbnail = array(
 						'large'  => 'https://img.youtube.com/vi/' . $video_id . '/hqdefault.jpg',
 						'medium' => 'https://img.youtube.com/vi/' . $video_id . '/mqdefault.jpg',
 						'small'  => 'https://img.youtube.com/vi/' . $video_id . '/sddefault.jpg',
-					];
+					);
 
 				} elseif ( false !== strpos( $video_url, 'vimeo.com' ) ) {
 					$provider  = 'vimeo';
 					$video_id  = $this->get_vimeo_id_from_url( $video_url );
 					$response  = wp_remote_get( "https://vimeo.com/api/v2/video/$video_id.json" );
 					$thumbnail = json_decode( wp_remote_retrieve_body( $response ), true );
-					$thumbnail = [
+					$thumbnail = array(
 						'large'  => isset( $thumbnail[0]['thumbnail_large'] ) ? $thumbnail[0]['thumbnail_large'] : null,
 						'medium' => isset( $thumbnail[0]['thumbnail_medium'] ) ? $thumbnail[0]['thumbnail_medium'] : null,
 						'small'  => isset( $thumbnail[0]['thumbnail_small'] ) ? $thumbnail[0]['thumbnail_small'] : null,
-					];
+					);
 				}
 
-				$_url[] = [
+				$_url[] = array(
 					'provider'  => $provider,
 					'url'       => $video_url,
 					'video_id'  => $video_id,
 					'thumbnail' => $thumbnail,
-				];
+				);
 			}
 
 			return $_url;
