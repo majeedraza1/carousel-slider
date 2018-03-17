@@ -14,6 +14,14 @@ if ( ! defined( 'WPINC' ) ) {
             <div class="carousel_slider_columns">
                 <div class="carousel_slider_column">
                     <div class="carousel_slider_iframe">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/_hVsamgr1k4" frameborder="0"
+                                allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    </div>
+                    <label><?php esc_html_e( 'Hero Image Carousel', 'carousel-slider' ); ?></label>
+                    <p class="description"><?php esc_html_e( 'Hero carousel demo.', 'carousel-slider' ); ?></p>
+                </div>
+                <div class="carousel_slider_column">
+                    <div class="carousel_slider_iframe">
                         <iframe width="1280" height="720"
                                 src="https://www.youtube.com/embed/ZzI1JhElrxc"
                                 frameborder="0"

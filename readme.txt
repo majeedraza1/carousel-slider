@@ -4,7 +4,7 @@ Tags: woocommerce, shortcode, images, carousel, carousel slider, image carousel,
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.3
-Stable tag: 1.8.5
+Stable tag: 1.8.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -19,16 +19,6 @@ Carousel Slider is a touch enabled WordPress plugin that lets you create highly 
 
 
 **If you like this plugin, please give us [5 star](https://wordpress.org/support/plugin/carousel-slider/reviews/?rate=5#new-post) to encourage for future improvement.**
-
-
-> What's new in version 1.8?
-
-> **Hero Banner Slider** with background image, title, description, call to action buttons and more
-> More control over Arrow Navigation
-> More control over Bullet/Dot Navigation
-> Alpha color picker for choosing color
-> WooCommerce product categories list carousel.
-> and more...
 
 = Full Feature Set =
 
@@ -48,6 +38,9 @@ Carousel Slider is a touch enabled WordPress plugin that lets you create highly 
 * Lazy load images
 * Support image title, caption, link url
 * and more options
+
+= Hero Image Slider =
+https://www.youtube.com/watch?v=_hVsamgr1k4
 
 = Images Carousel using gallery images =
 https://www.youtube.com/watch?v=ZzI1JhElrxc
@@ -119,6 +112,11 @@ Now you can use the following function at your theme template file replacing `YO
 7. Front-end example of image lightbox.
 
 == Changelog ==
+
+= version 1.8.6 - 2018-03-17 =
+* Dev - Update Owl Carousel from version 2.2.1 to version 2.3.2
+* Tweak - Update Owl Carousel style for new version.
+* Added - Added video description for hero carousel on readme.txt file and Documentation admin menu.
 
 = version 1.8.5 - 2018-01-31 =
 * Fixed - Fixed syntax error for short array syntax on PHP 5.3
