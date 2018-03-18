@@ -44,9 +44,15 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ):
 					'version'    => CAROUSEL_SLIDER_VERSION,
 					'media'      => 'all',
 				),
+				'cs-color-picker'       => array(
+					'src'        => CAROUSEL_SLIDER_ASSETS . '/lib/colorpicker/css/colorpicker.css',
+					'dependency' => array(),
+					'version'    => CAROUSEL_SLIDER_VERSION,
+					'media'      => 'all',
+				),
 				'carousel-slider-admin' => array(
 					'src'        => CAROUSEL_SLIDER_ASSETS . '/css/admin.css',
-					'dependency' => array( 'wp-color-picker' ),
+					'dependency' => array( 'wp-color-picker', 'cs-color-picker' ),
 					'version'    => CAROUSEL_SLIDER_VERSION,
 					'media'      => 'all',
 				),
@@ -79,6 +85,22 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ):
 					'version'    => '2.1.3',
 					'in_footer'  => true,
 				),
+				'cs-color-picker'       => array(
+					'src'        => CAROUSEL_SLIDER_ASSETS . '/lib/colorpicker/js/colorpicker.js',
+					'dependency' => array( 'jquery' ),
+					'version'    => '1.1.0',
+					'in_footer'  => true,
+				),
+				'cs-gradient-picker'    => array(
+					'src'        => CAROUSEL_SLIDER_ASSETS . '/lib/gradient-picker/jquery.gradientPicker.js',
+					'dependency' => array(
+						'jquery',
+						'cs-color-picker',
+						'jquery-ui-draggable'
+					),
+					'version'    => '1.1.0',
+					'in_footer'  => true,
+				),
 				'carousel-slider-admin' => array(
 					'src'        => CAROUSEL_SLIDER_ASSETS . '/js/admin' . $suffix . '.js',
 					'dependency' => array(
@@ -90,6 +112,7 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ):
 						'jquery-ui-sortable',
 						'jquery-ui-tabs',
 						'jquery-tiptip',
+						'cs-gradient-picker',
 					),
 					'version'    => CAROUSEL_SLIDER_VERSION,
 					'in_footer'  => true,

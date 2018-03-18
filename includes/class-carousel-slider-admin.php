@@ -380,6 +380,7 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 					'ken_burns_effect'         => sanitize_text_field( $slide['ken_burns_effect'] ),
 					'bg_color'                 => carousel_slider_sanitize_color( $slide['bg_color'] ),
 					'bg_overlay'               => carousel_slider_sanitize_color( $slide['bg_overlay'] ),
+					'bg_gradient_color'        => $slide['bg_gradient_color'],
 					// Slide Style
 					'content_alignment'        => sanitize_text_field( $slide['content_alignment'] ),
 					'heading_font_size'        => intval( $slide['heading_font_size'] ),

@@ -7,31 +7,56 @@ if ( ! defined( 'WPINC' ) ) {
 <div id="carousel-slider-tab-background" class="shapla-tab tab-background">
 	<?php
 	$this->form->buttonset( array(
-		'group'    => 'carousel_slider_content',
-		'position' => $slide_num,
-		'meta_key' => '_content_slider',
-		'id'       => 'background_type',
-		'name'     => esc_html__( 'Background Type:', 'carousel-slider' ),
-		'desc'     => esc_html__( 'Choose slide background type.', 'carousel-slider' ),
-		'std'      => 'classic',
-		'options'  => array(
+		'group'       => 'carousel_slider_content',
+		'position'    => $slide_num,
+		'meta_key'    => '_content_slider',
+		'id'          => 'background_type',
+		'input_class' => 'background_type',
+		'name'        => esc_html__( 'Background Type:', 'carousel-slider' ),
+		'desc'        => esc_html__( 'Choose slide background type.', 'carousel-slider' ),
+		'std'         => 'classic',
+		'options'     => array(
 			'classic'  => esc_html__( 'Classic', 'carousel-slider' ),
 			'gradient' => esc_html__( 'Gradient', 'carousel-slider' ),
 		),
 	) );
 	?>
-    <div class="slide_bg_wrapper">
-        <div class="slide-media-left">
-            <div class="slide_thumb">
-                <div class="content_slide_canvas"
-                     style="<?php echo $canvas_style; ?>"></div>
-                <span class="delete-bg-img<?php echo ! $_have_img ? ' hidden' : ''; ?>"
-                      title="<?php esc_html_e( 'Delete the background image for this slide', 'carousel-slider' ); ?>">&times;</span>
+    <div class="gradient_background_type"
+         style="display: <?php echo ( 'gradient' == $_background_type ) ? 'block' : 'none'; ?>">
+        <div class="slide_bg_wrapper">
+            <div class="slide-media-left">
+                <div class="slide_thumb">
+                    <div class="content_slide_canvas gradient_canvas"></div>
+                </div>
+            </div>
+            <div class="slide-media-right">
+				<?php
+				$this->form->gradient_color( array(
+					'group'       => 'carousel_slider_content',
+					'position'    => $slide_num,
+					'meta_key'    => '_content_slider',
+					'id'          => 'bg_gradient_color',
+					'input_class' => 'bg_gradient_color',
+					'name'        => esc_html__( 'Background Colors:', 'carousel-slider' ),
+					'desc'        => esc_html__( 'Choose slide background colors.', 'carousel-slider' ),
+					'std'         => '["#0fb8ad 0%", "#1fc8db 51%", "#2cb5e8 75%"]',
+				) );
+				?>
             </div>
         </div>
-        <div class="slide-media-right">
-            <div class="classic_background_type"
-                 style="display: <?php echo ( 'classic' == $_background_type ) ? 'block' : 'none'; ?>">
+    </div>
+    <div class="classic_background_type"
+         style="display: <?php echo ( 'classic' == $_background_type ) ? 'block' : 'none'; ?>">
+        <div class="slide_bg_wrapper">
+            <div class="slide-media-left">
+                <div class="slide_thumb">
+                    <div class="content_slide_canvas"
+                         style="<?php echo $canvas_style; ?>"></div>
+                    <span class="delete-bg-img<?php echo ! $_have_img ? ' hidden' : ''; ?>"
+                          title="<?php esc_html_e( 'Delete the background image for this slide', 'carousel-slider' ); ?>">&times;</span>
+                </div>
+            </div>
+            <div class="slide-media-right">
 
                 <div class="slide_image_settings_line">
                     <a href="<?php echo esc_url( $upload_link ); ?>"

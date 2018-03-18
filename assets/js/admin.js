@@ -25,6 +25,50 @@
         delImgLink,
         buttonConfig;
 
+    // Background Type
+    $(document).on('click', '.background_type', function (e) {
+        var _this = $(this),
+            _val = _this.val(),
+            _tab_bg = _this.closest('.tab-background'),
+            _classic_bg = _tab_bg.find('.classic_background_type'),
+            _gradient_bg = _tab_bg.find('.gradient_background_type');
+
+        if ('classic' === _val) {
+            _classic_bg.css('display', 'block');
+        } else {
+            _classic_bg.css('display', 'none');
+        }
+
+        if ('gradient' === _val) {
+            _gradient_bg.css('display', 'block');
+        } else {
+            _gradient_bg.css('display', 'none');
+        }
+    });
+
+    $('.gradient-color-picker').each(function () {
+        var _this = $(this),
+            _tab_bg = _this.closest('.tab-background'),
+            _wrapper = _this.closest('.gradient-color-wrapper'),
+            _direction = _wrapper.find('.gradient-color-direction'),
+            _colors = _wrapper.find('.gradient-color-colors'),
+            _type = _wrapper.find('.gradient-color-type'),
+            _points = _this.data('points'),
+            _preview = _tab_bg.find('.gradient_canvas');
+
+        $(this).gradientPicker({
+            fillDirection: _direction.val(),
+            type: _type.val(),
+            controlPoints: _points,
+            change: function (points, styles) {
+                _colors.val(JSON.stringify(points));
+                for (var i = 0; i < styles.length; ++i) {
+                    _preview.css("background-image", styles[i]);
+                }
+            }
+        });
+    });
+
     // Add new content slide
     body.on('click', '.carousel-slider__add-slide', function (e) {
         e.preventDefault();

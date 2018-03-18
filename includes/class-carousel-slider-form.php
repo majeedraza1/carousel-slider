@@ -64,24 +64,6 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ) {
 		}
 
 		/**
-		 * Generate gradient color picker
-		 *
-		 * @param array $args
-		 */
-		public function gradient_color( array $args ) {
-			if ( ! isset( $args['id'], $args['name'] ) ) {
-				return;
-			}
-
-			list( $name, $value ) = $this->field_common( $args );
-			$std_value = isset( $args['std'] ) ? $args['std'] : '';
-
-			echo $this->field_before( $args );
-			echo sprintf( '<input type="text" class="color-picker" value="%1$s" id="%2$s" name="%3$s" data-alpha="true" data-default-color="%4$s">', $value, $args['id'], $name, $std_value );
-			echo $this->field_after( $args );
-		}
-
-		/**
 		 * Generate date picker field
 		 *
 		 * @param array $args
@@ -183,16 +165,75 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ) {
 				$value = ! empty( $meta[ $args['position'] ][ $args['id'] ] ) ? $meta[ $args['position'] ][ $args['id'] ] : $std_value;
 			}
 
+			$input_class = empty( $args['input_class'] ) ? 'switch-input' : 'switch-input ' . $args['input_class'];
+
 			echo $this->field_before( $args );
 
 			echo '<div class="buttonset">';
 			foreach ( $args['options'] as $key => $option ) {
 				$checked  = ( $value == $key ) ? ' checked="checked"' : '';
 				$input_id = sprintf( '%s_%s', $args['id'], $key );
-				echo '<input class="switch-input" id="' . $input_id . '" type="radio" value="' . $key . '"
+				echo '<input class="' . $input_class . '" id="' . $input_id . '" type="radio" value="' . $key . '"
                        name="' . $name . '" ' . $checked . '>';
 				echo '<label class="switch-label switch-label-on" for="' . $input_id . '">' . $option . '</label></input>';
 			}
+			echo '</div>';
+
+			echo $this->field_after( $args );
+		}
+
+		/**
+		 * Generate gradient color picker
+		 *
+		 * @param array $args
+		 */
+		public function gradient_color( array $args ) {
+			/** @var \WP_Post $post */
+			global $post;
+			// Meta Name
+			$group = isset( $args['group'] ) ? $args['group'] : 'carousel_slider';
+			$name  = sprintf( '%s[%s]', $group, $args['id'] );
+
+			// Meta Value
+			$std_value = isset( $args['std'] ) ? $args['std'] : '';
+			$meta      = get_post_meta( $post->ID, $args['id'], true );
+			$value     = ! empty( $meta ) ? $meta : $std_value;
+
+			if ( isset( $args['position'], $args['meta_key'] ) ) {
+				$name = sprintf( '%s[%s][%s]', $group, $args['position'], $args['id'] );
+
+				$meta  = get_post_meta( $post->ID, $args['meta_key'], true );
+				$value = ! empty( $meta[ $args['position'] ][ $args['id'] ] ) ? $meta[ $args['position'] ][ $args['id'] ] : $std_value;
+			}
+
+			$name_colors = $name . '[colors]';
+			$name_type   = $name . '[type]';
+			$name_angle  = $name . '[angle]';
+			$value_color = isset( $value['colors'] ) ? $value['colors'] : '';
+			$value_type  = isset( $value['type'] ) ? $value['type'] : 'linear';
+			$value_angle = isset( $value['angle'] ) ? intval( $value['angle'] ) : '0';
+
+			$array_value = json_decode( $value_color, true );
+			if ( is_array( $array_value ) && count( $array_value ) > 0 ) {
+				$n_value = array();
+				foreach ( $array_value as $_value ) {
+					$n_value[] = sprintf( '%s %s%%', $_value['color'], round( $_value['position'] * 100 ) );
+				}
+				$colors = json_encode( $n_value );
+			}
+
+
+			$std_value   = isset( $args['std'] ) ? $args['std'] : '["#0fb8ad 0%", "#1fc8db 51%", "#2cb5e8 75%"]';
+			$colors      = empty( $colors ) ? $std_value : $colors;
+			$input_class = empty( $args['input_class'] ) ? 'gradient-color-colors' : 'gradient-color-colors ' . $args['input_class'];
+
+			echo $this->field_before( $args );
+
+			echo '<div class="gradient-color-wrapper">';
+			echo '<input type="hidden" name="' . $name_angle . '" class="gradient-color-angle" value="' . $value_angle . '" />';
+			echo '<input type="hidden" name="' . $name_type . '" class="gradient-color-type" value="' . $value_type . '" />';
+			echo '<input type="hidden" name="' . $name_colors . '" class="' . $input_class . '" value="' . $value_color . '" />';
+			echo '<div class="gradient-color-picker" data-points=\'' . $colors . '\'></div>';
 			echo '</div>';
 
 			echo $this->field_after( $args );
