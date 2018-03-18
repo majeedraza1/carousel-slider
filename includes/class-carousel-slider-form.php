@@ -18,11 +18,11 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ) {
 				return;
 			}
 
-			list( $name, $value ) = $this->field_common( $args );
+			list( $name, $value, $input_id ) = $this->field_common( $args );
 			$class = isset( $args['class'] ) ? esc_attr( $args['class'] ) : 'sp-input-text';
 
 			echo $this->field_before( $args );
-			echo sprintf( '<input type="text" class="' . $class . '" value="%1$s" id="%2$s" name="%3$s">', $value, $args['id'], $name );
+			echo sprintf( '<input type="text" class="' . $class . '" value="%1$s" id="' . $input_id . '" name="%3$s">', $value, $args['id'], $name );
 			echo $this->field_after( $args );
 		}
 
@@ -32,16 +32,20 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ) {
 		 * @param array $args
 		 */
 		public function textarea( array $args ) {
+			global $post;
+
 			if ( ! isset( $args['id'], $args['name'] ) ) {
 				return;
 			}
 
-			list( $name, $value ) = $this->field_common( $args );
+			list( $name, $value, $input_id ) = $this->field_common( $args );
 			$cols = isset( $args['cols'] ) ? $args['cols'] : 35;
 			$rows = isset( $args['rows'] ) ? $args['rows'] : 6;
 
+			$class = empty( $args['input_class'] ) ? 'sp-input-textarea' : 'sp-input-textarea ' . esc_attr( $args['input_class'] );
+
 			echo $this->field_before( $args );
-			echo sprintf( '<textarea class="sp-input-textarea" id="%2$s" name="%3$s" cols="%4$d" rows="%5$d">%1$s</textarea>', esc_textarea( $value ), $args['id'], $name, $cols, $rows );
+			echo sprintf( '<textarea class="' . $class . '" id="' . $input_id . '" name="%3$s" cols="%4$d" rows="%5$d">%1$s</textarea>', esc_textarea( $value ), $args['id'], $name, $cols, $rows );
 			echo $this->field_after( $args );
 		}
 
@@ -55,11 +59,11 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ) {
 				return;
 			}
 
-			list( $name, $value ) = $this->field_common( $args );
+			list( $name, $value, $input_id ) = $this->field_common( $args );
 			$std_value = isset( $args['std'] ) ? $args['std'] : '';
 
 			echo $this->field_before( $args );
-			echo sprintf( '<input type="text" class="color-picker" value="%1$s" id="%2$s" name="%3$s" data-alpha="true" data-default-color="%4$s">', $value, $args['id'], $name, $std_value );
+			echo sprintf( '<input type="text" class="color-picker" value="%1$s" id="' . $input_id . '" name="%3$s" data-alpha="true" data-default-color="%4$s">', $value, $args['id'], $name, $std_value );
 			echo $this->field_after( $args );
 		}
 
@@ -91,11 +95,11 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ) {
 				return;
 			}
 
-			list( $name, $value ) = $this->field_common( $args );
+			list( $name, $value, $input_id ) = $this->field_common( $args );
 			$class = isset( $args['class'] ) ? esc_attr( $args['class'] ) : 'sp-input-text';
 
 			echo $this->field_before( $args );
-			echo sprintf( '<input type="number" class="' . $class . '" value="%1$s" id="%2$s" name="%3$s">', $value, $args['id'], $name );
+			echo '<input type="number" class="' . $class . '" value="' . $value . '" id="' . $input_id . '" name="' . $name . '">';
 			echo $this->field_after( $args );
 		}
 
@@ -147,32 +151,20 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ) {
 		 * @param array $args
 		 */
 		public function buttonset( array $args ) {
-			/** @var \WP_Post $post */
-			global $post;
-			// Meta Name
-			$group = isset( $args['group'] ) ? $args['group'] : 'carousel_slider';
-			$name  = sprintf( '%s[%s]', $group, $args['id'] );
-
-			// Meta Value
-			$std_value = isset( $args['std'] ) ? $args['std'] : '';
-			$meta      = get_post_meta( $post->ID, $args['id'], true );
-			$value     = ! empty( $meta ) ? $meta : $std_value;
-
-			if ( isset( $args['position'], $args['meta_key'] ) ) {
-				$name = sprintf( '%s[%s][%s]', $group, $args['position'], $args['id'] );
-
-				$meta  = get_post_meta( $post->ID, $args['meta_key'], true );
-				$value = ! empty( $meta[ $args['position'] ][ $args['id'] ] ) ? $meta[ $args['position'] ][ $args['id'] ] : $std_value;
-			}
-
+			list( $name, $value ) = $this->field_common( $args );
 			$input_class = empty( $args['input_class'] ) ? 'switch-input' : 'switch-input ' . $args['input_class'];
+			$group       = isset( $args['group'] ) ? $args['group'] : 'carousel_slider';
 
 			echo $this->field_before( $args );
 
 			echo '<div class="buttonset">';
 			foreach ( $args['options'] as $key => $option ) {
 				$checked  = ( $value == $key ) ? ' checked="checked"' : '';
-				$input_id = sprintf( '%s_%s', $args['id'], $key );
+				$input_id = sprintf( '%s_%s_%s', $group, $args['id'], $key );
+
+				if ( isset( $args['position'] ) ) {
+					$input_id = sprintf( '%s_%s', $input_id, intval( $args['position'] ) );
+				}
 				echo '<input class="' . $input_class . '" id="' . $input_id . '" type="radio" value="' . $key . '"
                        name="' . $name . '" ' . $checked . '>';
 				echo '<label class="switch-label switch-label-on" for="' . $input_id . '">' . $option . '</label></input>';
@@ -463,11 +455,24 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ) {
 			$meta      = get_post_meta( $post->ID, $args['id'], true );
 			$value     = ! empty( $meta ) ? $meta : $std_value;
 
+			// ID
+			$id = sprintf( '%s_%s', $group, $args['id'] );
+
+			if ( isset( $args['position'], $args['meta_key'] ) ) {
+				$group = isset( $args['group'] ) ? $args['group'] : 'carousel_slider';
+				$name  = sprintf( '%s[%s][%s]', $group, $args['position'], $args['id'] );
+
+				$meta  = get_post_meta( $post->ID, $args['meta_key'], true );
+				$value = ! empty( $meta[ $args['position'] ][ $args['id'] ] ) ? $meta[ $args['position'] ][ $args['id'] ] : $std_value;
+
+				$id = sprintf( '%s_%s_%s', $group, $args['id'], $args['position'] );
+			}
+
 			if ( $value == 'zero' ) {
 				$value = 0;
 			}
 
-			return array( $name, $value );
+			return array( $name, $value, $id );
 		}
 
 		/**
@@ -478,9 +483,16 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ) {
 		 * @return string
 		 */
 		private function field_before( $args ) {
+			$group    = isset( $args['group'] ) ? $args['group'] : 'carousel_slider';
+			$input_id = sprintf( '%s_%s', $group, $args['id'] );
+
+			if ( isset( $args['position'], $args['meta_key'] ) ) {
+				$input_id = sprintf( '%s_%s_%s', $group, $args['id'], $args['position'] );
+			}
+
 			$_normal = sprintf( '<div class="sp-input-group" id="field-%s">', $args['id'] );
 			$_normal .= sprintf( '<div class="sp-input-label">' );
-			$_normal .= sprintf( '<label for="%1$s">%2$s</label>', $args['id'], $args['name'] );
+			$_normal .= sprintf( '<label for="%1$s">%2$s</label>', $input_id, $args['name'] );
 			if ( ! empty( $args['desc'] ) ) {
 				$_normal .= sprintf( '<p class="sp-input-desc">%s</p>', $args['desc'] );
 			}

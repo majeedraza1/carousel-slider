@@ -113,6 +113,11 @@ Now you can use the following function at your theme template file replacing `YO
 
 == Changelog ==
 
+= version 1.9.0 - 2018-03-## =
+* Added - Added gradient background for hero carousel slider.
+* Dev - Added Buttonset field type.
+* Dev - Added gradient color picker.
+
 = version 1.8.6 - 2018-03-17 =
 * Dev - Update Owl Carousel from version 2.2.1 to version 2.3.2
 * Tweak - Update Owl Carousel style for new version.

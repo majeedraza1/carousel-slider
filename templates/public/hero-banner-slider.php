@@ -41,6 +41,7 @@ if ( empty( $settings['content_animation'] ) ) {
 			}
 
 			// Slide Background
+			$_background_type  = ! empty( $slide['background_type'] ) ? esc_attr( $slide['background_type'] ) : 'classic';
 			$_img_bg_position  = ! empty( $slide['img_bg_position'] ) ? esc_attr( $slide['img_bg_position'] ) : 'center center';
 			$_img_bg_size      = ! empty( $slide['img_bg_size'] ) ? esc_attr( $slide['img_bg_size'] ) : 'contain';
 			$_bg_color         = ! empty( $slide['bg_color'] ) ? esc_attr( $slide['bg_color'] ) : '';
@@ -50,15 +51,38 @@ if ( empty( $settings['content_animation'] ) ) {
 			$_img_src          = wp_get_attachment_image_src( $_img_id, 'full' );
 			$_have_img         = is_array( $_img_src );
 
+			if ( 'gradient' == $_background_type ) {
+				$_gradient        = ! empty( $slide['bg_gradient_color'] ) ? $slide['bg_gradient_color'] : [];
+				$_gradient_angle  = isset( $_gradient['angle'] ) ? intval( $_gradient['angle'] ) . 'deg' : '0deg';
+				$_gradient_type   = isset( $_gradient['type'] ) ? esc_attr( $_gradient['type'] ) : 'linear';
+				$_gradient_colors = isset( $_gradient['colors'] ) ? json_decode( $_gradient['colors'], true ) : [];
+				$n_value          = array();
+				foreach ( $_gradient_colors as $_value ) {
+					$n_value[] = sprintf( '%s %s%%', $_value['color'], round( $_value['position'] * 100 ) );
+				}
+
+				$_gradient_image = sprintf(
+					'%1$s-gradient(%2$s, %3$s);',
+					$_gradient_type,
+					$_gradient_angle,
+					implode( ', ', $n_value )
+				);
+			}
+
+
 			// Slide background
 			$_slide_bg_style = '';
 			$_slide_bg_style .= 'background-position: ' . $_img_bg_position . ';';
 			$_slide_bg_style .= 'background-size: ' . $_img_bg_size . ';';
-			if ( $_have_img && $_be_lazy == 'off' ) {
+			if ( 'classic' == $_background_type && $_have_img && $_be_lazy == 'off' ) {
 				$_slide_bg_style .= 'background-image: url(' . $_img_src[0] . ');';
 			}
 			if ( ! empty( $_bg_color ) ) {
 				$_slide_bg_style .= 'background-color: ' . $_bg_color . ';';
+			}
+
+			if ( 'gradient' == $_background_type && isset( $_gradient_image ) ) {
+				$_slide_bg_style .= 'background-image: ' . $_gradient_image . ';';
 			}
 
 			// Background class
@@ -70,7 +94,7 @@ if ( empty( $settings['content_animation'] ) ) {
 				$_slide_bg_class .= ' carousel-slider-hero-ken-out';
 			}
 
-			if ( $_be_lazy == 'on' ) {
+			if ( 'classic' == $_background_type && $_be_lazy == 'on' ) {
 				$html .= '<div class="' . $_slide_bg_class . ' owl-lazy" data-src="' . $_img_src[0] . '" id="slide-item-' . $id . '-' . $slide_id . '" style="' . $_slide_bg_style . '"></div>';
 			} else {
 				$html .= '<div class="' . $_slide_bg_class . '" id="slide-item-' . $id . '-' . $slide_id . '" style="' . $_slide_bg_style . '"></div>';
