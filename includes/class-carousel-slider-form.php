@@ -96,7 +96,7 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ) {
 			}
 
 			list( $name, $value, $input_id ) = $this->field_common( $args );
-			$class = isset( $args['class'] ) ? esc_attr( $args['class'] ) : 'sp-input-text';
+			$class = isset( $args['input_class'] ) ? esc_attr( $args['input_class'] ) : 'sp-input-text';
 
 			echo $this->field_before( $args );
 			echo '<input type="number" class="' . $class . '" value="' . $value . '" id="' . $input_id . '" name="' . $name . '">';
@@ -135,7 +135,7 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ) {
 
 			list( $name, $value ) = $this->field_common( $args );
 			$multiple = isset( $args['multiple'] ) ? 'multiple' : '';
-			$class    = isset( $args['class'] ) ? esc_attr( $args['class'] ) : 'select2 sp-input-text';
+			$class    = isset( $args['input_class'] ) ? esc_attr( $args['input_class'] ) : 'select2 sp-input-text';
 
 			echo $this->field_before( $args );
 			echo sprintf( '<select name="%1$s" id="%2$s" class="' . $class . '" %3$s>', $name, $args['id'], $multiple );
@@ -203,7 +203,7 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ) {
 			$name_angle  = $name . '[angle]';
 			$value_color = isset( $value['colors'] ) ? $value['colors'] : '';
 			$value_type  = isset( $value['type'] ) ? $value['type'] : 'linear';
-			$value_angle = isset( $value['angle'] ) ? intval( $value['angle'] ) : '0';
+			$value_angle = isset( $value['angle'] ) ? intval( $value['angle'] ) : '270';
 
 			$array_value = json_decode( $value_color, true );
 			if ( is_array( $array_value ) && count( $array_value ) > 0 ) {
@@ -437,6 +437,48 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ) {
 		}
 
 		/**
+		 * @param array $args
+		 */
+		public function spacing( array $args ) {
+			list( $name, $value, $input_id ) = $this->field_common( $args );
+
+			$std = isset( $args['std'] ) ? $args['std'] : [];
+
+			echo $this->field_before( $args );
+
+			// Top
+			if ( isset( $std['top'] ) ) {
+				$top_name  = $name . "[top]";
+				$top_value = isset( $value['top'] ) ? esc_attr( $value['top'] ) : $std['top'];
+				echo '<span class="dashicons dashicons-arrow-up-alt"></span>';
+				echo '<input name="' . $top_name . '" class="spacing-text" placeholder="Top" value="' . $top_value . '" />';
+			}
+			// Right
+			if ( isset( $std['right'] ) ) {
+				$right_name  = $name . "[right]";
+				$right_value = isset( $value['right'] ) ? esc_attr( $value['right'] ) : $std['right'];
+				echo '<span class="dashicons dashicons-arrow-right-alt"></span>';
+				echo '<input name="' . $right_name . '" class="spacing-text" placeholder="Right" value="' . $right_value . '" />';
+			}
+			// Bottom
+			if ( isset( $std['bottom'] ) ) {
+				$bottom_name  = $name . "[bottom]";
+				$bottom_value = isset( $value['bottom'] ) ? esc_attr( $value['bottom'] ) : $std['bottom'];
+				echo '<span class="dashicons dashicons-arrow-down-alt"></span>';
+				echo '<input name="' . $bottom_name . '" class="spacing-text" placeholder="Bottom" value="' . $bottom_value . '" />';
+			}
+			// Bottom
+			if ( isset( $std['left'] ) ) {
+				$left_name  = $name . "[left]";
+				$left_value = isset( $value['left'] ) ? esc_attr( $value['left'] ) : $std['left'];
+				echo '<span class="dashicons dashicons-arrow-left-alt"></span>';
+				echo '<input name="' . $left_name . '" class="spacing-text" placeholder="Left" value="' . $left_value . '" />';
+			}
+
+			echo $this->field_after( $args );
+		}
+
+		/**
 		 * Generate field name and field value
 		 *
 		 * @param $args
@@ -458,14 +500,15 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ) {
 			// ID
 			$id = sprintf( '%s_%s', $group, $args['id'] );
 
-			if ( isset( $args['position'], $args['meta_key'] ) ) {
-				$group = isset( $args['group'] ) ? $args['group'] : 'carousel_slider';
-				$name  = sprintf( '%s[%s][%s]', $group, $args['position'], $args['id'] );
-
+			if ( isset( $args['meta_key'] ) ) {
 				$meta  = get_post_meta( $post->ID, $args['meta_key'], true );
-				$value = ! empty( $meta[ $args['position'] ][ $args['id'] ] ) ? $meta[ $args['position'] ][ $args['id'] ] : $std_value;
+				$value = ! empty( $meta[ $args['id'] ] ) ? $meta[ $args['id'] ] : $std_value;
 
-				$id = sprintf( '%s_%s_%s', $group, $args['id'], $args['position'] );
+				if ( isset( $args['position'] ) ) {
+					$id    = sprintf( '%s_%s_%s', $group, $args['id'], $args['position'] );
+					$name  = sprintf( '%s[%s][%s]', $group, $args['position'], $args['id'] );
+					$value = ! empty( $meta[ $args['position'] ][ $args['id'] ] ) ? $meta[ $args['position'] ][ $args['id'] ] : $std_value;
+				}
 			}
 
 			if ( $value == 'zero' ) {
@@ -500,8 +543,8 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ) {
 			$_normal .= sprintf( '<div class="sp-input-field">' );
 
 			if ( isset( $args['context'] ) && 'side' == $args['context'] ) {
-				$_side = '<p id="field-' . $args['id'] . '">';
-				$_side .= '<label for="' . $args['id'] . '"><strong>' . $args['name'] . '</strong></label>';
+				$_side = '<p id="field-' . $input_id . '">';
+				$_side .= '<label for="' . $input_id . '"><strong>' . $args['name'] . '</strong></label>';
 
 				return $_side;
 			}
