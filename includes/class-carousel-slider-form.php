@@ -64,6 +64,24 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ) {
 		}
 
 		/**
+		 * Generate gradient color picker
+		 *
+		 * @param array $args
+		 */
+		public function gradient_color( array $args ) {
+			if ( ! isset( $args['id'], $args['name'] ) ) {
+				return;
+			}
+
+			list( $name, $value ) = $this->field_common( $args );
+			$std_value = isset( $args['std'] ) ? $args['std'] : '';
+
+			echo $this->field_before( $args );
+			echo sprintf( '<input type="text" class="color-picker" value="%1$s" id="%2$s" name="%3$s" data-alpha="true" data-default-color="%4$s">', $value, $args['id'], $name, $std_value );
+			echo $this->field_after( $args );
+		}
+
+		/**
 		 * Generate date picker field
 		 *
 		 * @param array $args
@@ -140,6 +158,43 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ) {
 				echo '<option value="' . $key . '" ' . $selected . '>' . $option . '</option>';
 			}
 			echo '</select>';
+			echo $this->field_after( $args );
+		}
+
+		/**
+		 * @param array $args
+		 */
+		public function buttonset( array $args ) {
+			/** @var \WP_Post $post */
+			global $post;
+			// Meta Name
+			$group = isset( $args['group'] ) ? $args['group'] : 'carousel_slider';
+			$name  = sprintf( '%s[%s]', $group, $args['id'] );
+
+			// Meta Value
+			$std_value = isset( $args['std'] ) ? $args['std'] : '';
+			$meta      = get_post_meta( $post->ID, $args['id'], true );
+			$value     = ! empty( $meta ) ? $meta : $std_value;
+
+			if ( isset( $args['position'], $args['meta_key'] ) ) {
+				$name = sprintf( '%s[%s][%s]', $group, $args['position'], $args['id'] );
+
+				$meta  = get_post_meta( $post->ID, $args['meta_key'], true );
+				$value = ! empty( $meta[ $args['position'] ][ $args['id'] ] ) ? $meta[ $args['position'] ][ $args['id'] ] : $std_value;
+			}
+
+			echo $this->field_before( $args );
+
+			echo '<div class="buttonset">';
+			foreach ( $args['options'] as $key => $option ) {
+				$checked  = ( $value == $key ) ? ' checked="checked"' : '';
+				$input_id = sprintf( '%s_%s', $args['id'], $key );
+				echo '<input class="switch-input" id="' . $input_id . '" type="radio" value="' . $key . '"
+                       name="' . $name . '" ' . $checked . '>';
+				echo '<label class="switch-label switch-label-on" for="' . $input_id . '">' . $option . '</label></input>';
+			}
+			echo '</div>';
+
 			echo $this->field_after( $args );
 		}
 

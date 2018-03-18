@@ -7,7 +7,7 @@
     "email": "sayful.islam001@gmail.com",
     "url": "https://profiles.wordpress.org/sayful"
   },
-  "license": "GPLv3",
+  "license": "GPL-3.0-only",
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-autoprefixer": "^4.0.0",

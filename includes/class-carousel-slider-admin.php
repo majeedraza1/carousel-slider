@@ -373,6 +373,7 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 					'slide_heading'            => wp_kses_post( $slide['slide_heading'] ),
 					'slide_description'        => wp_kses_post( $slide['slide_description'] ),
 					// Slide Background
+					'background_type'          => sanitize_text_field( $slide['background_type'] ),
 					'img_id'                   => intval( $slide['img_id'] ),
 					'img_bg_position'          => sanitize_text_field( $slide['img_bg_position'] ),
 					'img_bg_size'              => sanitize_text_field( $slide['img_bg_size'] ),
