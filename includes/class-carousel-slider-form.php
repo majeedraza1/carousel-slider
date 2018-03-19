@@ -442,7 +442,7 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ) {
 		public function spacing( array $args ) {
 			list( $name, $value, $input_id ) = $this->field_common( $args );
 
-			$std = isset( $args['std'] ) ? $args['std'] : [];
+			$std = isset( $args['std'] ) ? $args['std'] : array();
 
 			echo $this->field_before( $args );
 
