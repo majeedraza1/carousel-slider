@@ -19,7 +19,7 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ) {
 			}
 
 			list( $name, $value, $input_id ) = $this->field_common( $args );
-			$class = isset( $args['class'] ) ? esc_attr( $args['class'] ) : 'sp-input-text';
+			$class = isset( $args['input_class'] ) ? esc_attr( $args['input_class'] ) : 'sp-input-text';
 
 			echo $this->field_before( $args );
 			echo sprintf( '<input type="text" class="' . $class . '" value="%1$s" id="' . $input_id . '" name="%3$s">', $value, $args['id'], $name );
@@ -451,28 +451,28 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ) {
 				$top_name  = $name . "[top]";
 				$top_value = isset( $value['top'] ) ? esc_attr( $value['top'] ) : $std['top'];
 				echo '<span class="dashicons dashicons-arrow-up-alt"></span>';
-				echo '<input name="' . $top_name . '" class="spacing-text" placeholder="Top" value="' . $top_value . '" />';
+				echo '<input type="text" name="' . $top_name . '" class="spacing-text" placeholder="Top" value="' . $top_value . '" />';
 			}
 			// Right
 			if ( isset( $std['right'] ) ) {
 				$right_name  = $name . "[right]";
 				$right_value = isset( $value['right'] ) ? esc_attr( $value['right'] ) : $std['right'];
 				echo '<span class="dashicons dashicons-arrow-right-alt"></span>';
-				echo '<input name="' . $right_name . '" class="spacing-text" placeholder="Right" value="' . $right_value . '" />';
+				echo '<input type="text" name="' . $right_name . '" class="spacing-text" placeholder="Right" value="' . $right_value . '" />';
 			}
 			// Bottom
 			if ( isset( $std['bottom'] ) ) {
 				$bottom_name  = $name . "[bottom]";
 				$bottom_value = isset( $value['bottom'] ) ? esc_attr( $value['bottom'] ) : $std['bottom'];
 				echo '<span class="dashicons dashicons-arrow-down-alt"></span>';
-				echo '<input name="' . $bottom_name . '" class="spacing-text" placeholder="Bottom" value="' . $bottom_value . '" />';
+				echo '<input type="text" name="' . $bottom_name . '" class="spacing-text" placeholder="Bottom" value="' . $bottom_value . '" />';
 			}
 			// Bottom
 			if ( isset( $std['left'] ) ) {
 				$left_name  = $name . "[left]";
 				$left_value = isset( $value['left'] ) ? esc_attr( $value['left'] ) : $std['left'];
 				echo '<span class="dashicons dashicons-arrow-left-alt"></span>';
-				echo '<input name="' . $left_name . '" class="spacing-text" placeholder="Left" value="' . $left_value . '" />';
+				echo '<input type="text" name="' . $left_name . '" class="spacing-text" placeholder="Left" value="' . $left_value . '" />';
 			}
 
 			echo $this->field_after( $args );
@@ -546,6 +546,10 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ) {
 				$_side = '<p id="field-' . $input_id . '">';
 				$_side .= '<label for="' . $input_id . '"><strong>' . $args['name'] . '</strong></label>';
 
+				if ( isset( $args['type'] ) && 'color' == $args['type'] ) {
+					$_side .= '<span class="cs-tooltip" title="' . esc_attr( $args['desc'] ) . '"></span><br>';
+				}
+
 				return $_side;
 			}
 
@@ -565,6 +569,10 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ) {
 				$_side = '';
 				if ( ! empty( $args['desc'] ) ) {
 					$_side .= '<span class="cs-tooltip" title="' . esc_attr( $args['desc'] ) . '"></span>';
+				}
+				// For Color reset tooltip
+				if ( isset( $args['type'] ) && 'color' == $args['type'] ) {
+					$_side = '';
 				}
 				$_side .= '</p>';
 

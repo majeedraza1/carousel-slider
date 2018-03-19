@@ -60,13 +60,13 @@ if ( ! defined( 'WPINC' ) ) {
 				'std'  => 12,
 				'desc' => esc_html__( 'How many post you want to show on carousel slide.', 'carousel-slider' ),
 			) );
-			$this->form->select( array(
+			$this->form->buttonset( array(
 				'id'      => '_post_order',
 				'name'    => esc_html__( 'Order', 'carousel-slider' ),
 				'std'     => 'DESC',
 				'options' => array(
-					'ASC'  => esc_html__( 'Ascending Order', 'carousel-slider' ),
-					'DESC' => esc_html__( 'Descending Order', 'carousel-slider' ),
+					'ASC'  => esc_html__( 'Ascending', 'carousel-slider' ),
+					'DESC' => esc_html__( 'Descending', 'carousel-slider' ),
 				),
 			) );
 			$this->form->select( array(

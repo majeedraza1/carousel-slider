@@ -191,8 +191,6 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/video-carousel.php';
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/hero-banner-slider.php';
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/images-settings.php';
-
-			// require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/navigation.php';
 		}
 
 		/**

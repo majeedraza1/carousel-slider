@@ -12,7 +12,7 @@ $this->form->image_sizes( array(
 		'<a target="_blank" href="' . get_admin_url() . 'options-media.php">', '</a>'
 	),
 ) );
-$this->form->select( array(
+$this->form->buttonset( array(
 	'id'      => '_lazy_load_image',
 	'name'    => esc_html__( 'Lazy Loading', 'carousel-slider' ),
 	'desc'    => esc_html__( 'Enable image with lazy loading.', 'carousel-slider' ),
@@ -28,7 +28,7 @@ $this->form->number( array(
 	'desc' => esc_html__( 'Space between two slide. Enter 10 for 10px', 'carousel-slider' ),
 	'std'  => carousel_slider_default_settings()->margin_right
 ) );
-$this->form->select( array(
+$this->form->buttonset( array(
 	'id'      => '_inifnity_loop',
 	'name'    => esc_html__( 'Infinity loop', 'carousel-slider' ),
 	'desc'    => esc_html__( 'Enable or disable loop(circular) of carousel.', 'carousel-slider' ),
@@ -44,7 +44,7 @@ $this->form->number( array(
 	'desc' => esc_html__( 'Add left and right padding on carousel slider stage wrapper.', 'carousel-slider' ),
 	'std'  => '0',
 ) );
-$this->form->select( array(
+$this->form->buttonset( array(
 	'id'      => '_auto_width',
 	'name'    => esc_html__( 'Auto Width', 'carousel-slider' ),
 	'desc'    => esc_html__( 'Set item width according to its content width. Use width style on item to get the result you want. ', 'carousel-slider' ),
