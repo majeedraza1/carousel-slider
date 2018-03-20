@@ -151,6 +151,37 @@ if ( ! class_exists( 'Carousel_Slider_Setting' ) ) {
 			return $settings;
 		}
 
+		public static function responsive( $slider_id ) {
+			$responsive = array(
+				array(
+					'breakpoint' => 300,
+					'items'      => intval( get_post_meta( $slider_id, '_items_portrait_mobile', true ) ),
+				),
+				array(
+					'breakpoint' => 600,
+					'items'      => intval( get_post_meta( $slider_id, '_items_small_portrait_tablet', true ) ),
+				),
+				array(
+					'breakpoint' => 769,
+					'items'      => intval( get_post_meta( $slider_id, '_items_portrait_tablet', true ) ),
+				),
+				array(
+					'breakpoint' => 1024,
+					'items'      => intval( get_post_meta( $slider_id, '_items_small_desktop', true ) ),
+				),
+				array(
+					'breakpoint' => 1216,
+					'items'      => intval( get_post_meta( $slider_id, '_items_desktop', true ) ),
+				),
+				array(
+					'breakpoint' => 1408,
+					'items'      => intval( get_post_meta( $slider_id, '_items', true ) ),
+				),
+			);
+
+			return $responsive;
+		}
+
 		/**
 		 * Get css class for slider
 		 *

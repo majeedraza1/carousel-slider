@@ -108,7 +108,7 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
 		}
 
 		public function navigation_settings_callback() {
-			 require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/navigation.php';
+			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/navigation.php';
 		}
 
 		/**
@@ -120,8 +120,11 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
 
 		/**
 		 * Renders the meta box.
+		 *
+		 * @param $post
 		 */
-		public function responsive_settings_callback() {
+		public function responsive_settings_callback( $post ) {
+			$_settings = Carousel_Slider_Setting::responsive( $post->ID );
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/responsive.php';
 		}
 	}

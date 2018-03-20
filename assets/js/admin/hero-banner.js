@@ -11,7 +11,7 @@
         buttonConfig;
 
     // Background Type
-    $(document).on('click', '.background_type', function (e) {
+    $(document).on('click', '.background_type', function () {
         var _this = $(this),
             _val = _this.val(),
             _tab_bg = _this.closest('.tab-background'),
@@ -318,7 +318,7 @@
     });
 
     // Slide Link
-    $(document).on('change', '.link_type', function (e) {
+    $(document).on('change', '.link_type', function () {
         var _this = $(this);
         var _val = _this.val();
         var _tab = _this.closest('.tab-content-link');
@@ -334,6 +334,6 @@
             _linkFull.hide();
             _linkBtn.hide();
         }
-    })
+    });
 
 })(jQuery);

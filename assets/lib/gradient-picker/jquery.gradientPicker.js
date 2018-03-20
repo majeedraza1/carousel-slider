@@ -1,5 +1,5 @@
 /**
- @author Matt Crinklaw-Vogt (tantaman)
+ * @author Matt Crinklaw-Vogt (tantaman)
  */
 (function ($) {
     if (!$.event.special.destroyed) {
