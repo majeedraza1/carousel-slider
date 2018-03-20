@@ -1,7 +1,5 @@
 <?php
 
-namespace CarouselSlider;
-
 class Carousel_Slider_Magnific_Popup {
 
 	/**

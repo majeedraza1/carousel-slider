@@ -19,7 +19,11 @@ if ( empty( $settings['content_animation'] ) ) {
 ?>
 <div class="carousel-slider-outer carousel-slider-outer-contents carousel-slider-outer-<?php echo $id; ?>">
 	<?php carousel_slider_inline_style( $id ); ?>
-    <div <?php echo $slide_options; ?> data-animation="<?php echo $content_animation; ?>">
+    <div id="id-<?php echo esc_attr( $id ); ?>" class="<?php echo esc_attr( $class ); ?>"
+         data-slide_type="<?php echo esc_attr( $slide_type ); ?>"
+         data-owl_carousel='<?php echo json_encode( $owl_options ); ?>'
+         data-magnific_popup='<?php echo json_encode( $magnific_popup ); ?>'
+         data-animation="<?php echo $content_animation; ?>">
 		<?php
 		foreach ( $content_sliders as $slide_id => $slide ):
 
@@ -52,10 +56,10 @@ if ( empty( $settings['content_animation'] ) ) {
 			$_have_img         = is_array( $_img_src );
 
 			if ( 'gradient' == $_background_type ) {
-				$_gradient        = ! empty( $slide['bg_gradient_color'] ) ? $slide['bg_gradient_color'] : [];
+				$_gradient        = ! empty( $slide['bg_gradient_color'] ) ? $slide['bg_gradient_color'] : array();
 				$_gradient_angle  = isset( $_gradient['angle'] ) ? intval( $_gradient['angle'] ) . 'deg' : '0deg';
 				$_gradient_type   = isset( $_gradient['type'] ) ? esc_attr( $_gradient['type'] ) : 'linear';
-				$_gradient_colors = isset( $_gradient['colors'] ) ? json_decode( $_gradient['colors'], true ) : [];
+				$_gradient_colors = isset( $_gradient['colors'] ) ? json_decode( $_gradient['colors'], true ) : array();
 				$n_value          = array();
 				foreach ( $_gradient_colors as $_value ) {
 					$n_value[] = sprintf( '%s %s%%', $_value['color'], round( $_value['position'] * 100 ) );

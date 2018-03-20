@@ -35,7 +35,10 @@ $_product_quick_view = get_post_meta( $id, '_product_quick_view', true );
 ?>
 <div class="carousel-slider-outer carousel-slider-outer-products carousel-slider-outer-<?php echo $id; ?>">
 	<?php carousel_slider_inline_style( $id ); ?>
-    <div <?php echo join( " ", $this->carousel_options( $id ) ); ?>>
+    <div id="id-<?php echo esc_attr( $id ); ?>" class="<?php echo esc_attr( $class ); ?>"
+         data-slide_type="<?php echo esc_attr( $slide_type ); ?>"
+         data-owl_carousel='<?php echo json_encode( $owl_options ); ?>'
+         data-magnific_popup='<?php echo json_encode( $magnific_popup ); ?>'>
 		<?php foreach ( $posts as $post ): setup_postdata( $post ); ?>
 			<?php
 			$product = wc_get_product( $post->ID );

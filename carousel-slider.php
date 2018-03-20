@@ -114,6 +114,8 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-i18n.php';
 			require_once CAROUSEL_SLIDER_INCLUDES . '/functions-carousel-slider.php';
 			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-setting.php';
+			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-owl-carousel.php';
+			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-magnific-popup.php';
 			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-activator.php';
 			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-product.php';
 			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-script.php';

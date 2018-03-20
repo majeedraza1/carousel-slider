@@ -41,12 +41,7 @@ if ( ! class_exists( 'Carousel_Slider_Setting' ) ) {
 				'loop'                 => self::checked( $meta['_inifnity_loop'] ),
 				'auto_width'           => self::checked( $meta['_auto_width'] ),
 				// Responsive
-				'full_hd'              => isset( $meta['_items'] ) ? intval( $meta['_items'] ) : 4,
-				'wide_screen'          => isset( $meta['_items_desktop'] ) ? intval( $meta['_items_desktop'] ) : 4,
-				'desktop'              => isset( $meta['_items_small_desktop'] ) ? intval( $meta['_items_small_desktop'] ) : 4,
-				'tablet'               => isset( $meta['_items_portrait_tablet'] ) ? intval( $meta['_items_portrait_tablet'] ) : 3,
-				'small_tablet'         => isset( $meta['_items_small_portrait_tablet'] ) ? intval( $meta['_items_small_portrait_tablet'] ) : 2,
-				'mobile'               => isset( $meta['_items_portrait_mobile'] ) ? intval( $meta['_items_portrait_mobile'] ) : 1,
+				'responsive'           => self::responsive( $slider_id ),
 				// Automatic play
 				'autoplay'             => self::checked( $meta['_autoplay'] ),
 				'autoplay_hover_pause' => self::checked( $meta['_autoplay_pause'] ),
@@ -54,12 +49,12 @@ if ( ! class_exists( 'Carousel_Slider_Setting' ) ) {
 				'autoplay_speed'       => isset( $meta['_autoplay_speed'] ) ? intval( $meta['_autoplay_speed'] ) : 500,
 				// Navigation
 				'arrow'                => isset( $meta['_nav_button'] ) && in_array( $meta['_nav_button'],
-					$nav_visibility ) ? $meta['_nav_button'] : 'always',
+					array( 'off', 'on', 'always' ) ) ? $meta['_nav_button'] : 'always',
 				'arrow_steps'          => isset( $meta['_slide_by'] ) && 'page' == $meta['_slide_by'] ? 'page' : intval( $meta['_slide_by'] ),
 				'arrow_position'       => isset( $meta['_arrow_position'] ) && 'outside' == $meta['_arrow_position'] ? 'outside' : 'inside',
 				'arrow_size'           => isset( $meta['_arrow_size'] ) ? intval( $meta['_arrow_size'] ) : 48,
 				'bullet'               => isset( $meta['_dot_nav'] ) && in_array( $meta['_dot_nav'],
-					$nav_visibility ) ? $meta['_dot_nav'] : 'always',
+					array( 'off', 'on', 'hover' ) ) ? $meta['_dot_nav'] : 'hover',
 				'bullet_position'      => isset( $meta['_bullet_position'] ) ? esc_attr( $meta['_bullet_position'] ) : 'center',
 				'bullet_size'          => isset( $meta['_bullet_size'] ) ? intval( $meta['_bullet_size'] ) : 10,
 				'bullet_shape'         => isset( $meta['_bullet_shape'] ) && 'circle' == $meta['_bullet_shape'] ? 'circle' : 'square',
@@ -207,7 +202,7 @@ if ( ! class_exists( 'Carousel_Slider_Setting' ) ) {
 		 */
 		private static function css_class( $settings ) {
 			$setting = $settings['settings'];
-			$class   = array( 'carousel-slider' );
+			$class   = array( 'carousel-slider', 'owl-carousel' );
 
 			// Arrows position
 			if ( 'inside' == $setting['arrow_position'] ) {

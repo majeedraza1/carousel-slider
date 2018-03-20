@@ -43,8 +43,12 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 
 			$id = intval( $attributes['id'] );
 
-			$slide_type = get_post_meta( $id, '_slide_type', true );
-			$slide_type = in_array( $slide_type, carousel_slider_slide_type() ) ? $slide_type : 'image-carousel';
+			$slide_type     = get_post_meta( $id, '_slide_type', true );
+			$slide_type     = in_array( $slide_type, carousel_slider_slide_type() ) ? $slide_type : 'image-carousel';
+			$options        = Carousel_Slider_Setting::get( $id );
+			$class          = implode( ' ', $options['class'] );
+			$owl_options    = Carousel_Slider_Owl_Carousel::settings( $options );
+			$magnific_popup = Carousel_Slider_Magnific_Popup::settings( $options );
 
 			if ( $slide_type == 'post-carousel' ) {
 				ob_start();

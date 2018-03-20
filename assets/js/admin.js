@@ -557,8 +557,6 @@
 
         _clone.find('input').val('');
         _row.after(_clone);
-
-        console.log(_clone);
     });
 
 })(jQuery, window, document);
