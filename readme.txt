@@ -115,6 +115,7 @@ Now you can use the following function at your theme template file replacing `YO
 
 = version 1.9.0 - 2018-03-## =
 * Added - Added gradient background for hero carousel slider.
+* Added - More control over responsive breakpoint and number of items on each breakpoint.
 * Dev - Added Buttonset field type.
 * Dev - Added gradient color picker.
 

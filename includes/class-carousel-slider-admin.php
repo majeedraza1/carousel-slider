@@ -225,14 +225,11 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 			}
 
 			foreach ( $_POST['carousel_slider'] as $key => $val ) {
-				if ( is_array( $val ) ) {
-					$val = implode( ',', $val );
-				}
 
 				if ( $key == '_margin_right' && $val == 0 ) {
 					$val = 'zero';
 				}
-				update_post_meta( $post_id, $key, sanitize_text_field( $val ) );
+				update_post_meta( $post_id, $key, self::sanitize_value( $val ) );
 			}
 
 			if ( ! isset( $_POST['carousel_slider']['_post_categories'] ) ) {
@@ -431,6 +428,33 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 				),
 			);
 			update_post_meta( $post_id, '_content_slider_settings', $_settings );
+		}
+
+		/**
+		 * Sanitize meta value
+		 *
+		 * @param $input
+		 *
+		 * @return array|string
+		 */
+		private static function sanitize_value( $input ) {
+			// Initialize the new array that will hold the sanitize values
+			$new_input = array();
+
+			if ( is_array( $input ) ) {
+				// Loop through the input and sanitize each of the values
+				foreach ( $input as $key => $value ) {
+					if ( is_array( $value ) ) {
+						$new_input[ $key ] = self::sanitize_value( $value );
+					} else {
+						$new_input[ $key ] = sanitize_text_field( $value );
+					}
+				}
+			} else {
+				return sanitize_text_field( $input );
+			}
+
+			return $new_input;
 		}
 	}
 
