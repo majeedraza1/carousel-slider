@@ -65,12 +65,12 @@ if ( empty( $settings['content_animation'] ) ) {
 					$n_value[] = sprintf( '%s %s%%', $_value['color'], round( $_value['position'] * 100 ) );
 				}
 
-				$_gradient_image = sprintf(
-					'%1$s-gradient(%2$s, %3$s);',
-					$_gradient_type,
-					$_gradient_angle,
-					implode( ', ', $n_value )
-				);
+				if ( 'linear' == $_gradient_type ) {
+					$_gradient_image = sprintf( 'linear-gradient(%1$s, %2$s);',
+						$_gradient_angle, implode( ', ', $n_value ) );
+				} else {
+					$_gradient_image = sprintf( 'radial-gradient(%s);', implode( ', ', $n_value ) );
+				}
 			}
 
 

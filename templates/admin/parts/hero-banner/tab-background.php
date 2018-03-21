@@ -32,13 +32,13 @@ if ( ! defined( 'WPINC' ) ) {
             <div class="slide-media-right">
 				<?php
 				$this->form->gradient_color( array(
+					'id'          => 'bg_gradient_color',
 					'group'       => 'carousel_slider_content',
 					'position'    => $slide_num,
 					'meta_key'    => '_content_slider',
-					'id'          => 'bg_gradient_color',
 					'input_class' => 'bg_gradient_color',
-					'name'        => esc_html__( 'Background Colors:', 'carousel-slider' ),
-					'desc'        => esc_html__( 'Choose slide background colors.', 'carousel-slider' ),
+					'name'        => esc_html__( 'Gradient Background:', 'carousel-slider' ),
+					'desc'        => esc_html__( 'The angles 0deg, 180deg, 270deg, and 90deg are equivalent to the values to top, to bottom, to left, and to right respectively.', 'carousel-slider' ),
 					'std'         => '["#0fb8ad 0%", "#1fc8db 51%", "#2cb5e8 75%"]',
 				) );
 				?>
