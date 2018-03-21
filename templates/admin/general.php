@@ -22,11 +22,17 @@ $this->form->buttonset( array(
 		'off' => esc_html__( 'Disable' ),
 	),
 ) );
-$this->form->number( array(
-	'id'   => '_margin_right',
-	'name' => esc_html__( 'Item Spacing.', 'carousel-slider' ),
-	'desc' => esc_html__( 'Space between two slide. Enter 10 for 10px', 'carousel-slider' ),
-	'std'  => carousel_slider_default_settings()->margin_right
+$this->form->slider( array(
+	'id'      => '_margin_right',
+	'name'    => esc_html__( 'Item Spacing.', 'carousel-slider' ),
+	'desc'    => esc_html__( 'Space between two slide.', 'carousel-slider' ),
+	'std'     => carousel_slider_default_settings()->margin_right,
+	'choices' => array(
+		'min'    => 0,
+		'max'    => 200,
+		'step'   => 1,
+		'suffix' => 'px',
+	)
 ) );
 $this->form->buttonset( array(
 	'id'      => '_inifnity_loop',
@@ -38,11 +44,17 @@ $this->form->buttonset( array(
 		'off' => esc_html__( 'Disable' ),
 	),
 ) );
-$this->form->number( array(
-	'id'   => '_stage_padding',
-	'name' => esc_html__( 'Stage Padding', 'carousel-slider' ),
-	'desc' => esc_html__( 'Add left and right padding on carousel slider stage wrapper.', 'carousel-slider' ),
-	'std'  => '0',
+$this->form->slider( array(
+	'id'      => '_stage_padding',
+	'name'    => esc_html__( 'Stage Padding', 'carousel-slider' ),
+	'desc'    => esc_html__( 'Add left and right padding on carousel slider stage wrapper.', 'carousel-slider' ),
+	'std'     => '0',
+	'choices' => array(
+		'min'    => 0,
+		'max'    => 200,
+		'step'   => 1,
+		'suffix' => 'px',
+	)
 ) );
 $this->form->buttonset( array(
 	'id'      => '_auto_width',

@@ -338,6 +338,9 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ) {
 			echo $html;
 		}
 
+		/**
+		 * @param array $args
+		 */
 		public function file( array $args ) {
 			if ( ! isset( $args['id'], $args['name'] ) ) {
 				return;
@@ -474,6 +477,48 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ) {
 				echo '<span class="dashicons dashicons-arrow-left-alt"></span>';
 				echo '<input type="text" name="' . $left_name . '" class="spacing-text" placeholder="Left" value="' . $left_value . '" />';
 			}
+
+			echo $this->field_after( $args );
+		}
+
+		/**
+		 * @param array $args
+		 */
+		public function slider( array $args ) {
+
+			list( $name, $value, $input_id ) = $this->field_common( $args );
+
+			$default = isset( $args['std'] ) ? intval( $args['std'] ) : 0;
+			$min     = isset( $args['choices']['min'] ) ? intval( $args['choices']['min'] ) : 0;
+			$max     = isset( $args['choices']['max'] ) ? intval( $args['choices']['max'] ) : 0;
+			$step    = isset( $args['choices']['step'] ) ? intval( $args['choices']['step'] ) : 1;
+
+			echo $this->field_before( $args );
+
+			?>
+            <div class="carousel-slider-range-wrapper">
+                <input type="range"
+                       id="<?php echo esc_attr( $input_id ); ?>"
+                       name="<?php echo esc_attr( $name ); ?>"
+                       min="<?php echo $min; ?>"
+                       max="<?php echo $max ? $max : '' ?>"
+                       step="<?php echo $step ? $step : '' ?>"
+                       value="<?php echo $value; ?>"
+                       data-reset_value="<?php echo $default; ?>"/>
+                <div class="range-value">
+                    <span class="value"><?php echo $value; ?></span>
+					<?php
+					if ( ! empty( $args['choices']['suffix'] ) ) {
+						echo esc_attr( $args['choices']['suffix'] );
+					}
+					?>
+                </div>
+                <div class="carousel-slider-range-reset"
+                     title="<?php esc_attr_e( 'Reset to default value', 'carousel-slider' ); ?>">
+                    <span class="dashicons dashicons-image-rotate"></span>
+                </div>
+            </div>
+			<?php
 
 			echo $this->field_after( $args );
 		}
