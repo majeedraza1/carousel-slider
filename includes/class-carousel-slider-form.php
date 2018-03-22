@@ -158,7 +158,8 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ) {
 
 			echo '<div class="buttonset">';
 			foreach ( $args['options'] as $key => $option ) {
-				$checked = ( $value == $key ) ? ' checked="checked"' : '';
+				$input_id = $input_id . '_' . $key;
+				$checked  = ( $value == $key ) ? ' checked="checked"' : '';
 				echo '<input class="' . $input_class . '" id="' . $input_id . '" type="radio" value="' . $key . '"
                        name="' . $name . '" ' . $checked . '>';
 				echo '<label class="switch-label switch-label-on" for="' . $input_id . '">' . $option . '</label></input>';
@@ -220,44 +221,45 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ) {
 				'radial' => esc_html__( 'Radial', 'carousel-slider' ),
 			);
 
-			echo '<div class="gradient-color-wrapper">';
-			echo '<input type="hidden" name="' . $name_angle . '" class="gradient-color-angle" value="' . $value_angle . '" />';
-			echo '<input type="hidden" name="' . $name_type . '" class="gradient-color-type" value="' . $value_type . '" />';
 			?>
-            <strong><?php esc_html_e( 'Colors', 'carousel-slider' ); ?></strong>
-            <input type="hidden" name="<?php echo $name_colors; ?>" class="<?php echo $input_class; ?>"
-                   value="<?php echo $value_color; ?>"/>
-            <div class="gradient-color-picker" data-points='<?php echo $colors; ?>'></div>
-            <br>
-            <strong><?php esc_html_e( 'Type', 'carousel-slider' ); ?></strong>
-            <div class="buttonset">
-				<?php
-				foreach ( $types as $type_slug => $type_title ) {
-					?>
-                    <input type="radio" id="<?php echo $input_id . '_type_' . $type_slug; ?>"
-                           class="switch-input gradient-color-type" name="<?php echo $name_type; ?>"
-                           value="<?php echo $type_slug; ?>" <?php checked( $type_slug, $value_type ) ?>>
-                    <label class="switch-label"
-                           for="<?php echo $input_id . '_type_' . $type_slug; ?>"><?php echo $type_title; ?></label>
-					<?php
-				}
-				?>
-            </div>
-            <br>
-            <div class="carousel-slider-range-wrapper gradient-color-angle">
-                <strong><?php esc_html_e( 'Angle', 'carousel-slider' ); ?></strong>
-                <input type="range" name="<?php echo esc_attr( $name_angle ); ?>" min="0" max="360" step="1"
-                       value="<?php echo $value_angle; ?>" data-reset_value="270" class="gradient-color-angle">
-                <div class="range-value">
-                    <span class="value"><?php echo intval( $value_angle ); ?></span>
-                    deg
+            <div class="gradient-color-wrapper">
+                <div class="gradient-color-picker-wrapper">
+                    <strong><?php esc_html_e( 'Colors', 'carousel-slider' ); ?></strong>
+                    <input type="hidden" name="<?php echo $name_colors; ?>" class="<?php echo $input_class; ?>"
+                           value="<?php echo $value_color; ?>"/>
+                    <div class="gradient-color-picker" data-points='<?php echo $colors; ?>'></div>
                 </div>
-                <div class="carousel-slider-range-reset" title="Reset to default value">
-                    <span class="dashicons dashicons-image-rotate"></span>
+                <div class="gradient-color-type-wrapper">
+                    <strong><?php esc_html_e( 'Type', 'carousel-slider' ); ?></strong>
+                    <div class="buttonset">
+						<?php
+						foreach ( $types as $type_slug => $type_title ) {
+							?>
+                            <input type="radio" id="<?php echo $input_id . '_type_' . $type_slug; ?>"
+                                   class="switch-input gradient-color-type" name="<?php echo $name_type; ?>"
+                                   value="<?php echo $type_slug; ?>" <?php checked( $type_slug, $value_type ) ?>>
+                            <label class="switch-label"
+                                   for="<?php echo $input_id . '_type_' . $type_slug; ?>"><?php echo $type_title; ?></label>
+							<?php
+						}
+						?>
+                    </div>
+                </div>
+                <div class="carousel-slider-range-wrapper"
+                     style="display: <?php echo ( 'linear' == $value_type ) ? 'block' : 'none'; ?>;">
+                    <strong><?php esc_html_e( 'Angle', 'carousel-slider' ); ?></strong>
+                    <input type="range" name="<?php echo esc_attr( $name_angle ); ?>" min="0" max="360" step="1"
+                           value="<?php echo $value_angle; ?>" data-reset_value="270" class="gradient-color-angle">
+                    <div class="range-value">
+                        <span class="value"><?php echo intval( $value_angle ); ?></span> deg
+                    </div>
+                    <div class="carousel-slider-range-reset"
+                         title="<?php esc_attr_e( 'Reset to default value', 'carousel-slider' ) ?>">
+                        <span class="dashicons dashicons-image-rotate"></span>
+                    </div>
                 </div>
             </div>
 			<?php
-			echo '</div>';
 
 			echo $this->field_after( $args );
 		}

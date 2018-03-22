@@ -1,5 +1,19 @@
 .gradient-color-wrapper {
 	position: relative;
+
+	strong {
+		display: block;
+		width: 100%;
+		margin-bottom: 0.5rem;
+	}
+}
+
+.gradient-color-picker-wrapper,
+.gradient-color-type-wrapper,
+.carousel-slider-range-wrapper {
+	display: block;
+	width: 100%;
+	margin-bottom: 0.5rem;
 }
 
 .gradient-color-picker {
