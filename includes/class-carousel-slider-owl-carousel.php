@@ -20,6 +20,11 @@ class Carousel_Slider_Owl_Carousel {
 			'autoWidth'          => $setting['auto_width'],
 		);
 
+		if ( isset( $settings['total_slide'] ) && $settings['total_slide'] <= 1 ) {
+			$owl_setting['mouseDrag'] = false;
+			$owl_setting['touchDrag'] = false;
+		}
+
 
 		$_responsive = array();
 		foreach ( $setting['responsive'] as $item ) {

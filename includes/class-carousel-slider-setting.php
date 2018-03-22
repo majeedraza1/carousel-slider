@@ -29,8 +29,9 @@ if ( ! class_exists( 'Carousel_Slider_Setting' ) ) {
 				carousel_slider_slide_type() ) ? esc_attr( $meta['_slide_type'] ) : 'image-carousel';
 
 			$settings             = array(
-				'slide_id'   => $slider_id,
-				'slide_type' => $slide_type,
+				'slide_id'    => $slider_id,
+				'slide_type'  => $slide_type,
+				'total_slide' => 0,
 			);
 			$settings['settings'] = array(
 				// General
@@ -68,30 +69,42 @@ if ( ! class_exists( 'Carousel_Slider_Setting' ) ) {
 					'content'  => isset( $meta['_content_slider'] ) ? $meta['_content_slider'] : array(),
 					'settings' => isset( $meta['_content_slider_settings'] ) ? $meta['_content_slider_settings'] : array(),
 				);
+				$settings['total_slide']   = count( $settings['hero_carousel']['content'] );
 			}
 
 			// Video Carousel
 			if ( 'video-carousel' == $slide_type ) {
+				$video_url  = isset( $meta['_video_url'] ) ? esc_attr( $meta['_video_url'] ) : null;
+				$video_urls = explode( ',', $video_url );
+				$video_urls = is_array( $video_urls ) ? array_map( 'esc_url', $video_urls ) : array();
+
 				$settings['video_carousel'] = array(
-					'video_url' => isset( $meta['_video_url'] ) ? $meta['_video_url'] : null,
+					'video_url' => $video_urls,
 				);
+				$settings['total_slide']    = count( $video_urls );
 			}
 
 			// Image Carousel
 			if ( 'image-carousel' == $slide_type ) {
+				$image_ids = isset( $meta['_wpdh_image_ids'] ) ? esc_attr( $meta['_wpdh_image_ids'] ) : null;
+				$image_ids = explode( ',', $image_ids );
+				$image_ids = is_array( $image_ids ) ? array_map( 'intval', $image_ids ) : array();
+
 				$settings['image_carousel'] = array(
-					'image_ids'          => isset( $meta['_wpdh_image_ids'] ) ? esc_attr( $meta['_wpdh_image_ids'] ) : null,
+					'image_ids'          => $image_ids,
 					'image_target'       => isset( $meta['_image_target'] ) && '_blank' == $meta['_image_target'] ? '_blank' : '_self',
 					'show_image_title'   => self::checked( $meta['_show_attachment_title'] ),
 					'show_image_caption' => self::checked( $meta['_show_attachment_caption'] ),
 					'image_lightbox'     => self::checked( $meta['_image_lightbox'] ),
 				);
+				$settings['total_slide']    = count( $image_ids );
 			}
 
 			// Image Carousel from URL
 			if ( 'image-carousel-url' == $slide_type ) {
+				$images_urls                    = isset( $meta['_images_urls'] ) ? $meta['_images_urls'] : array();
 				$settings['image_carousel_url'] = array(
-					'images_urls'        => isset( $meta['_images_urls'] ) ? $meta['_images_urls'] : array(),
+					'images_urls'        => $images_urls,
 					'show_image_title'   => self::checked( $meta['_show_attachment_title'] ),
 					'show_image_caption' => self::checked( $meta['_show_attachment_caption'] ),
 					'image_target'       => self::choices( $meta['_image_target'], array(
@@ -99,6 +112,7 @@ if ( ! class_exists( 'Carousel_Slider_Setting' ) ) {
 						'_blank'
 					), '_self' ),
 				);
+				$settings['total_slide']        = count( $images_urls );
 			}
 
 			// Post Carousel
@@ -114,6 +128,7 @@ if ( ! class_exists( 'Carousel_Slider_Setting' ) ) {
 					'post_orderby'     => isset( $meta['_post_orderby'] ) ? $meta['_post_orderby'] : 'ID',
 					'post_height'      => isset( $meta['_post_height'] ) ? intval( $meta['_post_height'] ) : 450,
 				);
+				$settings['total_slide']   = 4;
 			}
 
 			// Product Carousel
@@ -139,6 +154,7 @@ if ( ! class_exists( 'Carousel_Slider_Setting' ) ) {
 					'product_button_bg_color'   => self::color( $meta['_product_button_bg_color'], $_color_button ),
 					'product_button_text_color' => self::color( $meta['_product_button_text_color'], $_color_button_text ),
 				);
+				$settings['total_slide']      = 4;
 			}
 
 			$settings['class'] = self::css_class( $settings );
