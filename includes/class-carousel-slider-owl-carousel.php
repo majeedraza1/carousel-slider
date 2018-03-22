@@ -7,8 +7,8 @@ class Carousel_Slider_Owl_Carousel {
 
 		$owl_setting = array(
 			'stagePadding'       => $setting['stage_padding'],
-			'nav'                => ( 'never' != $setting['arrow'] ),
-			'dots'               => ( 'never' != $setting['bullet'] ),
+			'nav'                => ( 'off' != $setting['arrow'] ),
+			'dots'               => ( 'off' != $setting['bullet'] ),
 			'margin'             => $setting['gutter'],
 			'loop'               => $setting['loop'],
 			'autoplay'           => $setting['autoplay'],

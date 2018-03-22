@@ -356,6 +356,7 @@ if ( ! function_exists( 'carousel_slider_inline_style' ) ) {
 
 		echo "<style type=\"text/css\">";
 
+		ob_start();
 		// Arrows Nav
 		echo "
             #id-{$id} .carousel-slider-nav-icon {
@@ -492,7 +493,11 @@ if ( ! function_exists( 'carousel_slider_inline_style' ) ) {
 			}
 		}
 
-		echo "</style>";
+		$styles = ob_get_clean();
+
+		echo carousel_slider_minify_css( $styles, false );
+
+		echo "</style>" . PHP_EOL;
 	}
 }
 
@@ -587,5 +592,51 @@ if ( ! function_exists( 'carousel_slider_default_settings' ) ) {
 		$options = json_decode( json_encode( $options ), false );
 
 		return $options;
+	}
+}
+
+if ( ! function_exists( 'carousel_slider_minify_css' ) ) {
+	/**
+	 * Minify CSS
+	 *
+	 * @param string $content
+	 * @param bool $newline
+	 *
+	 * @return string
+	 */
+	function carousel_slider_minify_css( $content = '', $newline = true ) {
+		// Strip comments
+		$content = preg_replace( '!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $content );
+		// remove leading & trailing whitespace
+		$content = preg_replace( '/^\s*/m', '', $content );
+		$content = preg_replace( '/\s*$/m', '', $content );
+
+		// replace newlines with a single space
+		$content = preg_replace( '/\s+/', ' ', $content );
+
+		// remove whitespace around meta characters
+		// inspired by stackoverflow.com/questions/15195750/minify-compress-css-with-regex
+		$content = preg_replace( '/\s*([\*$~^|]?+=|[{};,>~]|!important\b)\s*/', '$1', $content );
+		$content = preg_replace( '/([\[(:])\s+/', '$1', $content );
+		$content = preg_replace( '/\s+([\]\)])/', '$1', $content );
+		$content = preg_replace( '/\s+(:)(?![^\}]*\{)/', '$1', $content );
+
+		// whitespace around + and - can only be stripped inside some pseudo-
+		// classes, like `:nth-child(3+2n)`
+		// not in things like `calc(3px + 2px)`, shorthands like `3px -2px`, or
+		// selectors like `div.weird- p`
+		$pseudos = array( 'nth-child', 'nth-last-child', 'nth-last-of-type', 'nth-of-type' );
+		$content = preg_replace( '/:(' . implode( '|', $pseudos ) . ')\(\s*([+-]?)\s*(.+?)\s*([+-]?)\s*(.*?)\s*\)/',
+			':$1($2$3$4$5)', $content );
+
+		// remove semicolon/whitespace followed by closing bracket
+		$content = str_replace( ';}', '}', $content );
+
+		// Add new line after closing bracket
+		if ( $newline ) {
+			$content = str_replace( '}', '}' . PHP_EOL, $content );
+		}
+
+		return trim( $content );
 	}
 }

@@ -22,7 +22,6 @@ if ( empty( $settings['content_animation'] ) ) {
     <div id="id-<?php echo esc_attr( $id ); ?>" class="<?php echo esc_attr( $class ); ?>"
          data-slide_type="<?php echo esc_attr( $slide_type ); ?>"
          data-owl_carousel='<?php echo json_encode( $owl_options ); ?>'
-         data-magnific_popup='<?php echo json_encode( $magnific_popup ); ?>'
          data-animation="<?php echo $content_animation; ?>">
 		<?php
 		foreach ( $content_sliders as $slide_id => $slide ):
