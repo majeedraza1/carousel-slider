@@ -46,27 +46,64 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 		}
 
 		/**
+		 * @param $post_id
+		 */
+		private static function update_responsive_setting( $post_id ) {
+			$settings = empty( $_POST['_responsive_settings'] ) ? array() : $_POST['_responsive_settings'];
+			$output   = array();
+			foreach ( $settings as $setting ) {
+				$output[] = array(
+					'breakpoint' => sanitize_text_field( $setting['breakpoint'] ),
+					'items'      => intval( $setting['items'] ),
+				);
+			}
+
+			array_multisort( array_column( $output, 'breakpoint' ), SORT_ASC, $output );
+
+			if ( empty( $output ) ) {
+				$output[] = array(
+					'breakpoint' => 300,
+					'items'      => 1,
+				);
+			}
+
+			update_post_meta( $post_id, '_responsive_settings', $output );
+		}
+
+		/**
+		 * @param array $array
+		 * @param array $cols
+		 *
+		 * @return array
+		 */
+		private static function array_msort( $array, $cols ) {
+			array_multisort( array_column( $array, 'breakpoint' ), SORT_ASC, $array );
+
+			return $array;
+		}
+
+		/**
 		 * Carousel slider post type
 		 */
 		public function carousel_post_type() {
 			$labels = array(
-				'name'               => _x( 'Slides', 'Post Type General Name', 'carousel-slider' ),
-				'singular_name'      => _x( 'Slide', 'Post Type Singular Name', 'carousel-slider' ),
+				'name'               => _x( 'Sliders', 'Post Type General Name', 'carousel-slider' ),
+				'singular_name'      => _x( 'Slider', 'Post Type Singular Name', 'carousel-slider' ),
 				'menu_name'          => __( 'Carousel Slider', 'carousel-slider' ),
-				'parent_item_colon'  => __( 'Parent Slide:', 'carousel-slider' ),
-				'all_items'          => __( 'All Slides', 'carousel-slider' ),
-				'view_item'          => __( 'View Slide', 'carousel-slider' ),
-				'add_new_item'       => __( 'Add New Slide', 'carousel-slider' ),
+				'parent_item_colon'  => __( 'Parent Slider:', 'carousel-slider' ),
+				'all_items'          => __( 'All Sliders', 'carousel-slider' ),
+				'view_item'          => __( 'View Slider', 'carousel-slider' ),
+				'add_new_item'       => __( 'Add New Slider', 'carousel-slider' ),
 				'add_new'            => __( 'Add New', 'carousel-slider' ),
-				'edit_item'          => __( 'Edit Slide', 'carousel-slider' ),
-				'update_item'        => __( 'Update Slide', 'carousel-slider' ),
-				'search_items'       => __( 'Search Slide', 'carousel-slider' ),
+				'edit_item'          => __( 'Edit Slider', 'carousel-slider' ),
+				'update_item'        => __( 'Update Slider', 'carousel-slider' ),
+				'search_items'       => __( 'Search Slider', 'carousel-slider' ),
 				'not_found'          => __( 'Not found', 'carousel-slider' ),
 				'not_found_in_trash' => __( 'Not found in Trash', 'carousel-slider' ),
 			);
 			$args   = array(
-				'label'               => __( 'Slide', 'carousel-slider' ),
-				'description'         => __( 'The easiest way to create carousel slide', 'carousel-slider' ),
+				'label'               => __( 'Slider', 'carousel-slider' ),
+				'description'         => __( 'The easiest way to create carousel slider', 'carousel-slider' ),
 				'labels'              => $labels,
 				'supports'            => array( 'title' ),
 				'hierarchical'        => false,
@@ -82,7 +119,7 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 				'exclude_from_search' => true,
 				'publicly_queryable'  => true,
 				'rewrite'             => false,
-				'capability_type'     => 'post',
+				'capability_type'     => 'page',
 			);
 
 			register_post_type( 'carousels', $args );
@@ -203,16 +240,19 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 			if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 				return;
 			}
+
 			// Check if nonce is set.
 			if ( ! isset( $_POST['_carousel_slider_nonce'], $_POST['carousel_slider'] ) ) {
 				return;
 			}
+
 			// Check if nonce is valid.
 			if ( ! wp_verify_nonce( $_POST['_carousel_slider_nonce'], 'carousel_slider_nonce' ) ) {
 				return;
 			}
+
 			// Check if user has permissions to save data.
-			if ( ! current_user_can( 'edit_post', $post_id ) ) {
+			if ( ! current_user_can( 'edit_page', $post_id ) ) {
 				return;
 			}
 
@@ -224,8 +264,10 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 				$this->update_content_settings( $post_id );
 			}
 
-			foreach ( $_POST['carousel_slider'] as $key => $val ) {
+			// Update responsive settings
+			self::update_responsive_setting( $post_id );
 
+			foreach ( $_POST['carousel_slider'] as $key => $val ) {
 				if ( $key == '_margin_right' && $val == 0 ) {
 					$val = 'zero';
 				}
