@@ -36,6 +36,14 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
 		 */
 		public function add_meta_boxes() {
 			add_meta_box(
+				"carousel-slider-meta-boxes",
+				__( "Carousel Slider", 'carousel-slider' ),
+				array( $this, 'carousel_slider_meta_boxes' ),
+				"carousels",
+				"normal",
+				"high"
+			);
+			add_meta_box(
 				"carousel-slider-usages-info",
 				__( "Usage (Shortcode)", 'carousel-slider' ),
 				array( $this, 'usages_callback' ),
@@ -78,11 +86,61 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
 		}
 
 		/**
+		 * Load meta box content
+		 *
+		 * @param WP_Post $post
+		 */
+		public function carousel_slider_meta_boxes( $post ) {
+			wp_nonce_field( 'carousel_slider_nonce', '_carousel_slider_nonce' );
+
+			$slide_type = get_post_meta( $post->ID, '_slide_type', true );
+			$slide_type = in_array( $slide_type, carousel_slider_slide_type() ) ? $slide_type : 'image-carousel';
+
+			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/types.php';
+			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/images-media.php';
+			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/images-url.php';
+			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/post-carousel.php';
+			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/product-carousel.php';
+			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/video-carousel.php';
+			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/hero-banner-slider.php';
+			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/images-settings.php';
+		}
+
+		/**
+		 * Renders the meta box.
+		 *
 		 * @param WP_Post $post
 		 */
 		public function general_settings_callback( $post ) {
-			$this->form = new Carousel_Slider_Form();
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/general.php';
+		}
+
+		/**
+		 * Renders the meta box.
+		 *
+		 * @param WP_Post $post
+		 */
+		public function navigation_settings_callback( $post ) {
+			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/navigation.php';
+		}
+
+		/**
+		 * Renders the meta box.
+		 *
+		 * @param WP_Post $post
+		 */
+		public function autoplay_settings_callback( $post ) {
+			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/autoplay.php';
+		}
+
+		/**
+		 * Renders the meta box.
+		 *
+		 * @param WP_Post $post
+		 */
+		public function responsive_settings_callback( $post ) {
+			$_settings = Carousel_Slider_Setting::responsive( $post->ID );
+			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/responsive.php';
 		}
 
 		/**
@@ -105,27 +163,6 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
                     style="background-color: #f1f1f1; width: 100%; padding: 8px;"
             >
 			<?php echo ob_get_clean();
-		}
-
-		public function navigation_settings_callback() {
-			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/navigation.php';
-		}
-
-		/**
-		 * @param WP_Post $post
-		 */
-		public function autoplay_settings_callback( $post ) {
-			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/autoplay.php';
-		}
-
-		/**
-		 * Renders the meta box.
-		 *
-		 * @param $post
-		 */
-		public function responsive_settings_callback( $post ) {
-			$_settings = Carousel_Slider_Setting::responsive( $post->ID );
-			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/responsive.php';
 		}
 	}
 endif;

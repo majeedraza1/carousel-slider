@@ -31,7 +31,6 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 			$this->form = new Carousel_Slider_Form();
 
 			add_action( 'init', array( $this, 'carousel_post_type' ) );
-			add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 			add_filter( 'manage_edit-carousels_columns', array( $this, 'columns_head' ) );
 			add_filter( 'manage_carousels_posts_custom_column', array( $this, 'columns_content' ), 10, 2 );
 			add_action( 'save_post', array( $this, 'save_meta_box' ) );
@@ -196,41 +195,6 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 				default :
 					break;
 			}
-		}
-
-		/**
-		 * Add carousel slider meta box
-		 */
-		public function add_meta_boxes() {
-			add_meta_box(
-				"carousel-slider-meta-boxes",
-				__( "Carousel Slider", 'carousel-slider' ),
-				array( $this, 'carousel_slider_meta_boxes' ),
-				"carousels",
-				"normal",
-				"high"
-			);
-		}
-
-		/**
-		 * Load meta box content
-		 *
-		 * @param WP_Post $post
-		 */
-		public function carousel_slider_meta_boxes( $post ) {
-			wp_nonce_field( 'carousel_slider_nonce', '_carousel_slider_nonce' );
-
-			$slide_type = get_post_meta( $post->ID, '_slide_type', true );
-			$slide_type = in_array( $slide_type, carousel_slider_slide_type() ) ? $slide_type : 'image-carousel';
-
-			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/types.php';
-			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/images-media.php';
-			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/images-url.php';
-			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/post-carousel.php';
-			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/product-carousel.php';
-			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/video-carousel.php';
-			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/hero-banner-slider.php';
-			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/images-settings.php';
 		}
 
 		/**

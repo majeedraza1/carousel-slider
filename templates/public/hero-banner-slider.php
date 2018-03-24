@@ -4,17 +4,11 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-$content_sliders  = get_post_meta( $id, '_content_slider', true );
-$settings         = get_post_meta( $id, '_content_slider_settings', true );
-$_lazy_load_image = get_post_meta( $id, '_lazy_load_image', true );
-$_be_lazy         = in_array( $_lazy_load_image, array( 'on', 'off' ) ) ? $_lazy_load_image : 'on';
-$slide_options    = join( " ", $this->carousel_options( $id ) );
-
-if ( empty( $settings['content_animation'] ) ) {
-	$content_animation = '';
-} else {
-	$content_animation = esc_attr( $settings['content_animation'] );
-}
+$content_sliders   = get_post_meta( $id, '_content_slider', true );
+$settings          = get_post_meta( $id, '_content_slider_settings', true );
+$_lazy_load_image  = get_post_meta( $id, '_lazy_load_image', true );
+$_be_lazy          = in_array( $_lazy_load_image, array( 'on', 'off' ) ) ? $_lazy_load_image : 'on';
+$content_animation = empty( $settings['content_animation'] ) ? '' : esc_attr( $settings['content_animation'] );
 
 ?>
 <div class="carousel-slider-outer carousel-slider-outer-contents carousel-slider-outer-<?php echo $id; ?>">
