@@ -7,12 +7,12 @@ if ( ! defined( 'WPINC' ) ) {
 if ( ! empty( $_settings ) ) {
 	?>
     <p class="description">
-		<?php esc_html__( 'Enter screen size on BreakPoint and number of items you want to show this BreakPoint. Create as many BreakPoint as you need.', 'carousel-slider' ); ?>
+		<?php esc_html_e( 'Enter minimum screen size on Breakpoint and number of items you want to show that Breakpoint. Create as many Breakpoint as you need.', 'carousel-slider' ); ?>
     </p>
     <table class="form-breakpoint-table">
         <thead>
         <tr>
-            <th class="col-breakpoint"><?php esc_html_e( 'BreakPoint', 'carousel-slider' ); ?></th>
+            <th class="col-breakpoint"><?php esc_html_e( 'Breakpoint', 'carousel-slider' ); ?></th>
             <th class="col-items"><?php esc_html_e( 'Items', 'carousel-slider' ); ?></th>
             <th class="col-actions"></th>
         </tr>

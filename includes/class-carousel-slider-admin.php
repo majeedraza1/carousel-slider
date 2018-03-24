@@ -52,8 +52,11 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 			$settings = empty( $_POST['_responsive_settings'] ) ? array() : $_POST['_responsive_settings'];
 			$output   = array();
 			foreach ( $settings as $setting ) {
+				if ( intval( $setting['breakpoint'] ) < 1 || intval( $setting['items'] ) < 1 ) {
+					continue;
+				}
 				$output[] = array(
-					'breakpoint' => sanitize_text_field( $setting['breakpoint'] ),
+					'breakpoint' => intval( $setting['breakpoint'] ),
 					'items'      => intval( $setting['items'] ),
 				);
 			}

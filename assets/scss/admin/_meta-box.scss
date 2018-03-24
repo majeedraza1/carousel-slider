@@ -8,44 +8,46 @@
 }
 
 // Meta box fields
-.sp {
-	&-input-group {
-		margin-bottom: 15px;
-		&:after {
-			content: "";
-			display: table;
-			clear: both
-		}
-	}
+.sp-input-group {
+	margin-bottom: 15px;
 
-	&-input-label {
-		label {
-			font-weight: 600;
-			margin-right: 30px;
-		}
+	&:after {
+		content: "";
+		display: table;
+		clear: both
 	}
-	&-input-field {
-	}
+}
 
-	&-input-label,
-	&-input-field {
-		float: left;
-		width: 100%;
+.sp-input-label {
+	label {
+		font-weight: 600;
+		margin-right: 30px;
 	}
-	&-input-desc {
-		color: #999;
-		font-size: 0.9em;
-		line-height: 1.3em;
-		margin: 10px 30px 10px 0;
-	}
-	&-input-text {
-		width: 100%;
-		padding: 8px 8px 8px 16px;
-		height: 35px !important;
+}
 
-		option {
-			padding: 8px 4px;
-		}
+.sp-input-field {
+}
+
+.sp-input-label,
+.sp-input-field {
+	float: left;
+	width: 100%;
+}
+
+.sp-input-desc {
+	color: #999;
+	font-size: 0.9em;
+	line-height: 1.5em;
+	margin: 10px 30px 10px 0;
+}
+
+.sp-input-text {
+	width: 100%;
+	padding: 8px 8px 8px 16px;
+	height: 35px !important;
+
+	option {
+		padding: 8px 4px;
 	}
 }
 
@@ -54,13 +56,11 @@
 }
 
 @media only screen and (min-width: 600px) {
-	.sp {
-		&-input-label {
-			width: 40%;
-		}
-		&-input-field {
-			width: 60%;
-		}
+	.sp-input-label {
+		width: 40%;
+	}
+	.sp-input-field {
+		width: 60%;
 	}
 }
 
@@ -98,6 +98,23 @@
 	}
 	.sp-input-field {
 		width: 70%;
+	}
+}
+
+#side-sortables {
+	.sp-input-group {
+		border-bottom: 1px solid rgba(#000, 0.02);
+		padding-bottom: 15px;
+
+		&:last-child {
+			border-bottom: none;
+			padding-bottom: 0;
+		}
+	}
+
+	.sp-input-label,
+	.sp-input-field {
+		width: 100%;
 	}
 }
 
@@ -164,7 +181,7 @@
 	display: none;
 }
 
-// Hide Post carousel fields
+// Hide Product carousel fields
 // Related fields will be open by jQuery
 #field-_product_query,
 #field-_product_categories,

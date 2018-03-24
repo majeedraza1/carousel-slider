@@ -226,7 +226,7 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ) {
                 <div class="gradient-color-picker-wrapper">
                     <strong><?php esc_html_e( 'Colors', 'carousel-slider' ); ?></strong>
                     <input type="hidden" name="<?php echo $name_colors; ?>" class="<?php echo $input_class; ?>"
-                           value="<?php echo $value_color; ?>"/>
+                           value='<?php echo $value_color; ?>'/>
                     <div class="gradient-color-picker" data-points='<?php echo $colors; ?>'></div>
                 </div>
                 <div class="gradient-color-type-wrapper">
