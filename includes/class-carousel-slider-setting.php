@@ -46,8 +46,8 @@ if ( ! class_exists( 'Carousel_Slider_Setting' ) ) {
 				// Automatic play
 				'autoplay'             => self::checked( $meta['_autoplay'] ),
 				'autoplay_hover_pause' => self::checked( $meta['_autoplay_pause'] ),
-				'autoplay_timeout'     => isset( $meta['_autoplay_timeout'] ) ? intval( $meta['_autoplay_timeout'] ) : 5000,
-				'autoplay_speed'       => isset( $meta['_autoplay_speed'] ) ? intval( $meta['_autoplay_speed'] ) : 500,
+				'autoplay_timeout'     => self::number( $meta['_autoplay_timeout'], 5000 ),
+				'autoplay_speed'       => self::number( $meta['_autoplay_speed'], 500 ),
 				// Navigation
 				'arrow'                => isset( $meta['_nav_button'] ) && in_array( $meta['_nav_button'],
 					array( 'off', 'on', 'always' ) ) ? $meta['_nav_button'] : 'always',
@@ -162,6 +162,40 @@ if ( ! class_exists( 'Carousel_Slider_Setting' ) ) {
 			return $settings;
 		}
 
+		public static function navigation( $slider_id ) {
+			$_nav_button      = get_post_meta( $slider_id, '_nav_button', true );
+			$_nav_button      = in_array( $_nav_button, array( 'off', 'on', 'always' ) ) ? $_nav_button : 'always';
+			$_slide_by        = get_post_meta( $slider_id, '_slide_by', true );
+			$_slide_by        = ( 'page' == $_slide_by ) ? 'page' : intval( $_slide_by );
+			$_arrow_position  = get_post_meta( $slider_id, '_arrow_position', true );
+			$_arrow_position  = ( 'outside' == $_arrow_position ) ? 'outside' : 'inside';
+			$_arrow_size      = get_post_meta( $slider_id, '_arrow_size', true );
+			$_dot_nav         = get_post_meta( $slider_id, '_dot_nav', true );
+			$_dot_nav         = in_array( $_dot_nav, array( 'off', 'on', 'hover' ) ) ? $_dot_nav : 'hover';
+			$_bullet_position = get_post_meta( $slider_id, '_bullet_position', true );
+			$_bullet_size     = get_post_meta( $slider_id, '_bullet_size', true );
+			$_bullet_shape    = get_post_meta( $slider_id, '_bullet_shape', true );
+			$_bullet_shape    = ( 'circle' == $_bullet_shape ) ? 'circle' : 'square';
+
+			$default = array(
+				'arrow'            => $_nav_button,
+				'arrow_steps'      => $_slide_by,
+				'arrow_position'   => $_arrow_position,
+				'arrow_size'       => ! empty( $_arrow_size ) ? intval( $_arrow_size ) : 48,
+				'bullet'           => $_dot_nav,
+				'bullet_position'  => ! empty( $_bullet_position ) ? esc_attr( $_bullet_position ) : 'center',
+				'bullet_size'      => isset( $_bullet_size ) ? intval( $_bullet_size ) : 10,
+				'bullet_shape'     => $_bullet_shape,
+				'nav_color'        => isset( $meta['_nav_color'] ) ? carousel_slider_sanitize_color( $meta['_nav_color'] ) : carousel_slider_default_settings()->nav_color,
+				'nav_active_color' => isset( $meta['_nav_active_color'] ) ? carousel_slider_sanitize_color( $meta['_nav_active_color'] ) : carousel_slider_default_settings()->nav_active_color,
+			);
+		}
+
+		/**
+		 * @param $slider_id
+		 *
+		 * @return array
+		 */
 		public static function responsive( $slider_id ) {
 			$_items               = get_post_meta( $slider_id, '_items', true );
 			$_responsive_settings = get_post_meta( $slider_id, '_responsive_settings', true );
@@ -277,6 +311,20 @@ if ( ! class_exists( 'Carousel_Slider_Setting' ) ) {
 			}
 
 			return in_array( $value, $settings ) ? $value : $default;
+		}
+
+		/**
+		 * @param $value
+		 * @param int $default
+		 *
+		 * @return int|mixed|string
+		 */
+		private static function number( $value, $default = 0 ) {
+			if ( empty( $value ) ) {
+				return intval( $default );
+			}
+
+			return intval( $value );
 		}
 
 		/**
