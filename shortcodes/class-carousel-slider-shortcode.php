@@ -132,7 +132,6 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 			$product_carousel   = new Carousel_Slider_Product();
 			$product_categories = $product_carousel->product_categories();
 
-
 			$options                = Carousel_Slider_Setting::get( $id );
 			$options['total_slide'] = count( $product_categories );
 			$class                  = implode( ' ', $options['class'] );
