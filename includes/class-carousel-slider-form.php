@@ -478,37 +478,54 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ) {
 		public function spacing( array $args ) {
 			list( $name, $value, $input_id ) = $this->field_common( $args );
 
-			$std = isset( $args['std'] ) ? $args['std'] : array();
+			$default = isset( $args['std'] ) ? $args['std'] : array();
 
 			echo $this->field_before( $args );
 
 			// Top
-			if ( isset( $std['top'] ) ) {
+			if ( isset( $default['top'] ) ) {
 				$top_name  = $name . "[top]";
-				$top_value = isset( $value['top'] ) ? esc_attr( $value['top'] ) : $std['top'];
-				echo '<span class="dashicons dashicons-arrow-up-alt"></span>';
-				echo '<input type="text" name="' . $top_name . '" class="spacing-text" placeholder="Top" value="' . $top_value . '" />';
+				$top_value = isset( $value['top'] ) ? esc_attr( $value['top'] ) : $default['top'];
+				?>
+                <div class="carousel-slider-dimension">
+                    <span class="add-on"><i class="dashicons dashicons-arrow-up-alt"></i></span>
+                    <input type="text" name="<?php echo $top_name; ?>" value="<?php echo $top_value; ?>">
+                </div>
+				<?php
 			}
+
 			// Right
-			if ( isset( $std['right'] ) ) {
+			if ( isset( $default['right'] ) ) {
 				$right_name  = $name . "[right]";
-				$right_value = isset( $value['right'] ) ? esc_attr( $value['right'] ) : $std['right'];
-				echo '<span class="dashicons dashicons-arrow-right-alt"></span>';
-				echo '<input type="text" name="' . $right_name . '" class="spacing-text" placeholder="Right" value="' . $right_value . '" />';
+				$right_value = isset( $value['right'] ) ? esc_attr( $value['right'] ) : $default['right'];
+				?>
+                <div class="carousel-slider-dimension">
+                    <span class="add-on"><i class="dashicons dashicons-arrow-right-alt"></i></span>
+                    <input type="text" name="<?php echo $right_name; ?>" value="<?php echo $right_value; ?>">
+                </div>
+				<?php
 			}
 			// Bottom
-			if ( isset( $std['bottom'] ) ) {
+			if ( isset( $default['bottom'] ) ) {
 				$bottom_name  = $name . "[bottom]";
-				$bottom_value = isset( $value['bottom'] ) ? esc_attr( $value['bottom'] ) : $std['bottom'];
-				echo '<span class="dashicons dashicons-arrow-down-alt"></span>';
-				echo '<input type="text" name="' . $bottom_name . '" class="spacing-text" placeholder="Bottom" value="' . $bottom_value . '" />';
+				$bottom_value = isset( $value['bottom'] ) ? esc_attr( $value['bottom'] ) : $default['bottom'];
+				?>
+                <div class="carousel-slider-dimension">
+                    <span class="add-on"><i class="dashicons dashicons-arrow-down-alt"></i></span>
+                    <input type="text" name="<?php echo $bottom_name; ?>" value="<?php echo $bottom_value; ?>">
+                </div>
+				<?php
 			}
 			// Bottom
-			if ( isset( $std['left'] ) ) {
+			if ( isset( $default['left'] ) ) {
 				$left_name  = $name . "[left]";
-				$left_value = isset( $value['left'] ) ? esc_attr( $value['left'] ) : $std['left'];
-				echo '<span class="dashicons dashicons-arrow-left-alt"></span>';
-				echo '<input type="text" name="' . $left_name . '" class="spacing-text" placeholder="Left" value="' . $left_value . '" />';
+				$left_value = isset( $value['left'] ) ? esc_attr( $value['left'] ) : $default['left'];
+				?>
+                <div class="carousel-slider-dimension">
+                    <span class="add-on"><i class="dashicons dashicons-arrow-left-alt"></i></span>
+                    <input type="text" name="<?php echo $left_name; ?>" value="<?php echo $left_value; ?>">
+                </div>
+				<?php
 			}
 
 			echo $this->field_after( $args );

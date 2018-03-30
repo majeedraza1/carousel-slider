@@ -210,7 +210,7 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ):
                         if (jQuery().magnificPopup) {
                             var _magnific_popup = _this.data('magnific_popup');
                             if (typeof _magnific_popup !== "undefined") {
-                                $(this).find('.magnific-popup').magnificPopup(_magnific_popup);
+                                $(this).magnificPopup(_magnific_popup);
                             }
                         }
                     });

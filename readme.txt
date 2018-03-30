@@ -4,7 +4,7 @@ Tags: woocommerce, shortcode, images, carousel, carousel slider, image carousel,
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.3
-Stable tag: 1.8.6
+Stable tag: 1.9.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -39,7 +39,7 @@ Carousel Slider is a touch enabled WordPress plugin that lets you create highly 
 * Support image title, caption, link url
 * and more options
 
-= Hero Image Slider =
+= Hero Slider =
 https://www.youtube.com/watch?v=_hVsamgr1k4
 
 = Images Carousel using gallery images =

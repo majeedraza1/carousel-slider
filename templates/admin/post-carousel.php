@@ -54,11 +54,16 @@ if ( ! defined( 'WPINC' ) ) {
 				'name'     => esc_html__( 'Specific posts', 'carousel-slider' ),
 				'desc'     => esc_html__( 'Select posts that you want to show as slider. Select at least 5 posts', 'carousel-slider' ),
 			) );
-			$this->form->number( array(
-				'id'   => '_posts_per_page',
-				'name' => esc_html__( 'Posts per page', 'carousel-slider' ),
-				'std'  => 12,
-				'desc' => esc_html__( 'How many post you want to show on carousel slide.', 'carousel-slider' ),
+			$this->form->slider( array(
+				'id'      => '_posts_per_page',
+				'name'    => esc_html__( 'Posts per page', 'carousel-slider' ),
+				'desc'    => esc_html__( 'How many post you want to show on carousel slide.', 'carousel-slider' ),
+				'std'     => 12,
+				'choices' => array(
+					'min'  => 1,
+					'max'  => 50,
+					'step' => 1,
+				),
 			) );
 			$this->form->buttonset( array(
 				'id'      => '_post_order',

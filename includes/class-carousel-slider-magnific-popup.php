@@ -31,9 +31,7 @@ class Carousel_Slider_Magnific_Popup {
 		}
 
 		if ( 'video-carousel' == $slide_type ) {
-			$setting = array(
-				'type' => 'iframe',
-			);
+			$setting['type'] = 'iframe';
 		}
 
 		return $setting;

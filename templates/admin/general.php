@@ -18,8 +18,8 @@ $this->form->buttonset( array(
 	'desc'    => esc_html__( 'Enable image with lazy loading.', 'carousel-slider' ),
 	'std'     => carousel_slider_default_settings()->lazy_load_image,
 	'options' => array(
-		'on'  => esc_html__( 'Enable' ),
-		'off' => esc_html__( 'Disable' ),
+		'on'  => esc_html__( 'Enable', 'carousel-slider' ),
+		'off' => esc_html__( 'Disable', 'carousel-slider' ),
 	),
 ) );
 $this->form->slider( array(
@@ -40,8 +40,8 @@ $this->form->buttonset( array(
 	'desc'    => esc_html__( 'Enable or disable loop(circular) of carousel.', 'carousel-slider' ),
 	'std'     => 'on',
 	'options' => array(
-		'on'  => esc_html__( 'Enable' ),
-		'off' => esc_html__( 'Disable' ),
+		'on'  => esc_html__( 'Enable', 'carousel-slider' ),
+		'off' => esc_html__( 'Disable', 'carousel-slider' ),
 	),
 ) );
 $this->form->slider( array(
@@ -62,7 +62,7 @@ $this->form->buttonset( array(
 	'desc'    => esc_html__( 'Set item width according to its content width. Use width style on item to get the result you want. ', 'carousel-slider' ),
 	'std'     => 'off',
 	'options' => array(
-		'on'  => esc_html__( 'Enable' ),
-		'off' => esc_html__( 'Disable' ),
+		'on'  => esc_html__( 'Enable', 'carousel-slider' ),
+		'off' => esc_html__( 'Disable', 'carousel-slider' ),
 	),
 ) );
