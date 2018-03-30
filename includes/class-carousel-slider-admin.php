@@ -382,7 +382,17 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ):
 					'ken_burns_effect'         => sanitize_text_field( $slide['ken_burns_effect'] ),
 					'bg_color'                 => carousel_slider_sanitize_color( $slide['bg_color'] ),
 					'bg_overlay'               => carousel_slider_sanitize_color( $slide['bg_overlay'] ),
+					// Gradient Background
 					'bg_gradient_color'        => $slide['bg_gradient_color'],
+					// Video Background
+					'video_url'                => $slide['video_url'],
+					'aspect_ratio'             => $slide['aspect_ratio'],
+					'display_mode'             => $slide['display_mode'],
+					'video_overlay_color'      => carousel_slider_sanitize_color( $slide['video_overlay_color'] ),
+					'mute_video'               => $slide['mute_video'],
+					'autoplay_video'           => $slide['autoplay_video'],
+					'loop_video'               => $slide['loop_video'],
+					'hide_video_controls'      => $slide['hide_video_controls'],
 					// Slide Style
 					'content_alignment'        => sanitize_text_field( $slide['content_alignment'] ),
 					'heading_font_size'        => intval( $slide['heading_font_size'] ),

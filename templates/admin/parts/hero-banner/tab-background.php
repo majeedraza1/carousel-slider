@@ -18,9 +18,102 @@ if ( ! defined( 'WPINC' ) ) {
 		'options'     => array(
 			'classic'  => esc_html__( 'Classic', 'carousel-slider' ),
 			'gradient' => esc_html__( 'Gradient', 'carousel-slider' ),
+			'video'    => esc_html__( 'video', 'carousel-slider' ),
 		),
 	) );
 	?>
+    <div class="video_background_type"
+         style="display: <?php echo ( 'video' == $_background_type ) ? 'block' : 'none'; ?>">
+		<?php
+		$this->form->text( array(
+			'group'    => 'carousel_slider_content',
+			'position' => $slide_num,
+			'meta_key' => '_content_slider',
+			'id'       => 'video_url',
+			'name'     => esc_html__( 'Video URL:', 'carousel-slider' ),
+			'desc'     => esc_html__( 'Enter Youtube or Vimeo video URL.', 'carousel-slider' ),
+		) );
+		$this->form->text( array(
+			'group'    => 'carousel_slider_content',
+			'position' => $slide_num,
+			'meta_key' => '_content_slider',
+			'id'       => 'aspect_ratio',
+			'std'      => '16:9',
+			'name'     => esc_html__( 'Video Aspect Ratio:', 'carousel-slider' ),
+			'desc'     => esc_html__( 'The video will be resized to maintain this aspect ratio, this is to prevent the video from showing any black bars. Enter an aspect ratio here such as: "16:9", "4:3" or "16:10". The default is "16:9"', 'carousel-slider' ),
+		) );
+		$this->form->buttonset( array(
+			'group'    => 'carousel_slider_content',
+			'position' => $slide_num,
+			'meta_key' => '_content_slider',
+			'id'       => 'display_mode',
+			'name'     => esc_html__( 'Video Display Mode:', 'carousel-slider' ),
+			'desc'     => esc_html__( 'If set to cover, the video will fill the entire slider area. If set to contain, the video will display such that both its width and its height can fit inside the slider area.', 'carousel-slider' ),
+			'std'      => 'cover',
+			'options'  => array(
+				'cover'   => esc_html__( 'Cover', 'carousel-slider' ),
+				'contain' => esc_html__( 'Contain', 'carousel-slider' ),
+			),
+		) );
+		$this->form->color( array(
+			'group'    => 'carousel_slider_content',
+			'position' => $slide_num,
+			'meta_key' => '_content_slider',
+			'id'       => 'video_overlay_color',
+			'std'      => 'rgba(0,0,0,0.2)',
+			'name'     => esc_html__( 'Video Color Overlay:', 'carousel-slider' ),
+			'desc'     => esc_html__( 'Select a color to show over the video as an overlay.', 'carousel-slider' ),
+		) );
+		$this->form->buttonset( array(
+			'group'    => 'carousel_slider_content',
+			'position' => $slide_num,
+			'meta_key' => '_content_slider',
+			'id'       => 'mute_video',
+			'name'     => esc_html__( 'Mute Video:', 'carousel-slider' ),
+			'std'      => 'yes',
+			'options'  => array(
+				'yes' => esc_html__( 'Yes', 'carousel-slider' ),
+				'no'  => esc_html__( 'No', 'carousel-slider' ),
+			),
+		) );
+		$this->form->buttonset( array(
+			'group'    => 'carousel_slider_content',
+			'position' => $slide_num,
+			'meta_key' => '_content_slider',
+			'id'       => 'autoplay_video',
+			'name'     => esc_html__( 'Autoplay Video:', 'carousel-slider' ),
+			'std'      => 'yes',
+			'options'  => array(
+				'yes' => esc_html__( 'Yes', 'carousel-slider' ),
+				'no'  => esc_html__( 'No', 'carousel-slider' ),
+			),
+		) );
+		$this->form->buttonset( array(
+			'group'    => 'carousel_slider_content',
+			'position' => $slide_num,
+			'meta_key' => '_content_slider',
+			'id'       => 'loop_video',
+			'name'     => esc_html__( 'Loop Video:', 'carousel-slider' ),
+			'std'      => 'yes',
+			'options'  => array(
+				'yes' => esc_html__( 'Yes', 'carousel-slider' ),
+				'no'  => esc_html__( 'No', 'carousel-slider' ),
+			),
+		) );
+		$this->form->buttonset( array(
+			'group'    => 'carousel_slider_content',
+			'position' => $slide_num,
+			'meta_key' => '_content_slider',
+			'id'       => 'hide_video_controls',
+			'name'     => esc_html__( 'Hide Video Controls:', 'carousel-slider' ),
+			'std'      => 'yes',
+			'options'  => array(
+				'yes' => esc_html__( 'Yes', 'carousel-slider' ),
+				'no'  => esc_html__( 'No', 'carousel-slider' ),
+			),
+		) );
+		?>
+    </div>
     <div class="gradient_background_type"
          style="display: <?php echo ( 'gradient' == $_background_type ) ? 'block' : 'none'; ?>">
         <div class="slide_bg_wrapper">
