@@ -93,8 +93,40 @@ $content_animation = empty( $settings['content_animation'] ) ? '' : esc_attr( $s
 
 			if ( 'classic' == $_background_type && $_be_lazy == 'on' ) {
 				$html .= '<div class="' . $_slide_bg_class . ' owl-lazy" data-src="' . $_img_src[0] . '" id="slide-item-' . $id . '-' . $slide_id . '" style="' . $_slide_bg_style . '"></div>';
-			} else {
+			} elseif ( in_array( $_background_type, array( 'classic', 'gradient' ) ) ) {
 				$html .= '<div class="' . $_slide_bg_class . '" id="slide-item-' . $id . '-' . $slide_id . '" style="' . $_slide_bg_style . '"></div>';
+			}
+
+			// Video Background
+			if ( 'video' == $_background_type ) {
+				$video_url           = isset( $slide['video_url'] ) ? esc_url( $slide['video_url'] ) : '';
+				$aspect_ratio        = isset( $slide['aspect_ratio'] ) ? esc_url( $slide['aspect_ratio'] ) : '';
+				$display_mode        = isset( $slide['display_mode'] ) ? esc_url( $slide['display_mode'] ) : '';
+				$video_overlay_color = isset( $slide['video_overlay_color'] ) ? esc_url( $slide['video_overlay_color'] ) : '';
+				$mute_video          = isset( $slide['mute_video'] ) ? esc_url( $slide['mute_video'] ) : '';
+				$autoplay_video      = isset( $slide['autoplay_video'] ) ? esc_url( $slide['autoplay_video'] ) : '';
+				$loop_video          = isset( $slide['loop_video'] ) ? esc_url( $slide['loop_video'] ) : '';
+				$hide_video_controls = isset( $slide['hide_video_controls'] ) ? esc_url( $slide['hide_video_controls'] ) : '';
+				$youtube_id          = $this->get_youtube_id_from_url( $video_url );
+
+				$video_src = add_query_arg( array(
+					'autoplay'       => 1, // play automatically once the player has loaded
+					'controls'       => 0, // Player controls do not display in the player
+					'loop'           => 1, // play the video again and again
+					'modestbranding' => 1, // prevent the YouTube logo from displaying in the control bar
+					'enablejsapi'    => 1, // Enable JavaScript Player API calls
+					'origin'         => site_url(), // provides an extra security measure for the IFrame API
+					'playlist'       => $youtube_id, // Set only current video only in playlist
+					'showinfo'       => 0, // Hide video title and uploader before the video starts playing
+					'rel'            => 0, // Hide related videos when playback of the initial video ends
+					'vq'             => 'hd720',
+				), 'http://www.youtube.com/embed/' . $youtube_id );
+
+				$html .= '<div class="carousel-slider-hero__cell__background carousel-slider-has-video" id="slide-item-' . $id . '-' . $slide_id . '" style="' . $_slide_bg_style . '">';
+				$html .= '<div class="video-wrapper">';
+				$html .= '<iframe height="100%" width="100%" src="' . esc_url_raw( $video_src ) . '"></iframe>';
+				$html .= '</div>';
+				$html .= '</div>';
 			}
 
 			// Cell Inner
