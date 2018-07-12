@@ -334,6 +334,9 @@ if ( ! class_exists( 'Carousel_Slider_Form' ) ) {
 				$terms = get_terms( $taxonomy );
 			}
 
+			if ( is_wp_error( $terms ) ) {
+				$terms = array();
+			}
 
 			echo $this->field_before( $args );
 

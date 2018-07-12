@@ -26,16 +26,29 @@ if ( ! defined( 'WPINC' ) ) {
 if ( ! class_exists( 'Carousel_Slider_Product' ) ):
 
 	class Carousel_Slider_Product {
+		private static $instance;
 
 		/**
 		 * Product carousel quick view
 		 */
 		public static function init() {
-			add_action( 'carousel_slider_after_shop_loop_item', array( __CLASS__, 'quick_view_button' ), 10, 3 );
-			add_action( 'carousel_slider_after_shop_loop_item', array( __CLASS__, 'wish_list_button' ), 12, 3 );
+			if ( is_null( self::$instance ) ) {
+				self::$instance = new self();
 
-			add_action( 'wp_ajax_carousel_slider_quick_view', array( __CLASS__, 'quick_view' ) );
-			add_action( 'wp_ajax_nopriv_carousel_slider_quick_view', array( __CLASS__, 'quick_view' ) );
+				add_action( 'carousel_slider_after_shop_loop_item', array(
+					self::$instance,
+					'quick_view_button'
+				), 10, 3 );
+				add_action( 'carousel_slider_after_shop_loop_item', array(
+					self::$instance,
+					'wish_list_button'
+				), 12, 3 );
+
+				add_action( 'wp_ajax_carousel_slider_quick_view', array( self::$instance, 'quick_view' ) );
+				add_action( 'wp_ajax_nopriv_carousel_slider_quick_view', array( self::$instance, 'quick_view' ) );
+			}
+
+			return self::$instance;
 		}
 
 		/**
@@ -151,7 +164,7 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ):
                     <div class="description">
 						<?php
 						echo '<div style="clear: both;"></div>';
-						echo apply_filters( 'woocommerce_short_description', $product->post->post_excerpt );
+						echo apply_filters( 'woocommerce_short_description', $product->get_description() );
 						?>
                     </div>
 

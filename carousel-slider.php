@@ -3,14 +3,14 @@
  * Plugin Name: Carousel Slider
  * Plugin URI: http://wordpress.org/plugins/carousel-slider
  * Description: The Easiest Way to Create SEO friendly Image, Logo, Video, Post and WooCommerce Product Carousel.
- * Version: 1.8.8
+ * Version: 1.8.9
  * Author: Sayful Islam
  * Author URI: https://sayfulislam.com
  * Requires at least: 4.4
  * Tested up to: 4.9
  *
  * WC requires at least: 2.5
- * WC tested up to: 3.3
+ * WC tested up to: 3.4
  *
  * Text Domain: carousel-slider
  *
@@ -42,7 +42,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		 *
 		 * @var string
 		 */
-		private $version = '1.8.8';
+		private $version = '1.8.9';
 
 		/**
 		 * Minimum PHP version required
@@ -66,24 +66,31 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		public static function instance() {
 			if ( is_null( self::$instance ) ) {
 				self::$instance = new self();
+
+				self::$instance->define_constants();
+
+				// Check if PHP version is supported for our plugin
+				if ( ! self::$instance->is_supported_php() ) {
+					register_activation_hook( __FILE__, array( self::$instance, 'auto_deactivate' ) );
+					add_action( 'admin_notices', array( self::$instance, 'php_version_notice' ) );
+
+					return self::$instance;
+				}
+
+				self::$instance->includes();
+
+				register_activation_hook( __FILE__, array( self::$instance, 'activation' ) );
+				register_deactivation_hook( __FILE__, array( self::$instance, 'deactivation' ) );
+
+				do_action( 'carousel_slider_init' );
 			}
 
 			return self::$instance;
 		}
 
 		/**
-		 * Carousel_Slider constructor.
+		 * Define plugin constants
 		 */
-		public function __construct() {
-			$this->define_constants();
-			$this->includes();
-
-			register_activation_hook( __FILE__, array( $this, 'activation' ) );
-			register_deactivation_hook( __FILE__, array( $this, 'deactivation' ) );
-
-			do_action( 'carousel_slider_init' );
-		}
-
 		public function define_constants() {
 			define( 'CAROUSEL_SLIDER_VERSION', $this->version );
 			define( 'CAROUSEL_SLIDER_FILE', __FILE__ );
@@ -118,7 +125,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-script.php';
 			require_once CAROUSEL_SLIDER_WIDGETS . '/widget-carousel_slider.php';
 
-			if ( is_admin() ) {
+			if ( $this->is_request( 'admin' ) ) {
 				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-credit.php';
 				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-documentation.php';
 				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-vc-element.php';
@@ -149,6 +156,93 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		public function deactivation() {
 			do_action( 'carousel_slider_deactivation' );
 			flush_rewrite_rules();
+		}
+
+		/**
+		 * Show notice about PHP version
+		 *
+		 * @return void
+		 */
+		public function php_version_notice() {
+
+			if ( $this->is_supported_php() || ! current_user_can( 'manage_options' ) ) {
+				return;
+			}
+
+			$error = __( 'Your installed PHP Version is: ', 'carousel-slider' ) . PHP_VERSION . '. ';
+			$error .= sprintf( __( 'The Carousel Slider plugin requires PHP version %s or greater.',
+				'carousel-slider' ), $this->min_php );
+			?>
+            <div class="error">
+                <p><?php printf( $error ); ?></p>
+            </div>
+			<?php
+		}
+
+		/**
+		 * Bail out if the php version is lower than
+		 *
+		 * @return void
+		 */
+		public function auto_deactivate() {
+			if ( $this->is_supported_php() ) {
+				return;
+			}
+
+			deactivate_plugins( plugin_basename( __FILE__ ) );
+
+			$error = '<h1>' . __( 'An Error Occurred', 'carousel-slider' ) . '</h1>';
+			$error .= '<h2>' . __( 'Your installed PHP Version is: ', 'carousel-slider' ) . PHP_VERSION . '</h2>';
+			$error .= '<p>' . sprintf( __( 'The Carousel Slider plugin requires PHP version %s or greater',
+					'carousel-slider' ), $this->min_php ) . '</p>';
+			$error .= '<p>' . sprintf( __( 'The version of your PHP is %s unsupported and old %s. ',
+					'carousel-slider' ),
+					'<a href="http://php.net/supported-versions.php" target="_blank"><strong>',
+					'</strong></a>'
+				);
+			$error .= __( 'You should update your PHP software or contact your host regarding this matter.',
+					'carousel-slider' ) . '</p>';
+
+			wp_die( $error, __( 'Plugin Activation Error', 'carousel-slider' ), array( 'back_link' => true ) );
+		}
+
+		/**
+		 * What type of request is this?
+		 *
+		 * @param  string $type admin, ajax, cron or frontend.
+		 *
+		 * @return bool
+		 */
+		public function is_request( $type ) {
+			switch ( $type ) {
+				case 'admin':
+					return is_admin();
+				case 'ajax':
+					return defined( 'DOING_AJAX' );
+				case 'cron':
+					return defined( 'DOING_CRON' );
+				case 'frontend':
+					return ( ! is_admin() || defined( 'DOING_AJAX' ) ) && ! defined( 'DOING_CRON' );
+			}
+
+			return false;
+		}
+
+		/**
+		 * Check if the PHP version is supported
+		 *
+		 * @param null $min_php
+		 *
+		 * @return bool
+		 */
+		private function is_supported_php( $min_php = null ) {
+			$min_php = $min_php ? $min_php : $this->min_php;
+
+			if ( version_compare( PHP_VERSION, $min_php, '<=' ) ) {
+				return false;
+			}
+
+			return true;
 		}
 	}
 }

@@ -4,7 +4,7 @@ Tags: woocommerce, shortcode, images, carousel, carousel slider, image carousel,
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.3
-Stable tag: 1.8.8
+Stable tag: 1.8.9
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -112,6 +112,12 @@ Now you can use the following function at your theme template file replacing `YO
 7. Front-end example of image lightbox.
 
 == Changelog ==
+
+= version 1.8.9 - 2018-07-12 =
+* Tweak - Update Owl Carousel version to v2.3.4 as fix rewind issue.
+* Tweak - Transfer inline script to external file so that it should not conflict when combine scripts.
+* Fixed - PHP notice of terms if WooCommerce is not installed.
+* Dev - Tested with WooCommerce version 3.4
 
 = version 1.8.8 - 2018-04-18 =
 * Fixed - Roll back to Owl Carousel version 2.2.1 as new version has a bug relating to rewind feature that creates conflict with previous version.
