@@ -3,6 +3,7 @@
 namespace CarouselSlider\Display;
 
 use CarouselSlider\Product;
+use CarouselSlider\Supports\DynamicStyle;
 use CarouselSlider\Supports\MagnificPopup;
 use CarouselSlider\Supports\OwlCarousel;
 use CarouselSlider\Supports\Setting;
@@ -145,7 +146,7 @@ class Shortcode {
 		ob_start();
 		if ( $product_categories ) {
 			echo '<div class="carousel-slider-outer carousel-slider-outer-products carousel-slider-outer-' . $id . '">';
-			carousel_slider_inline_style( $id );
+			DynamicStyle::generate( $id );
 			?>
         <div id="id-<?php echo esc_attr( $id ); ?>" class="<?php echo esc_attr( $class ); ?>"
              data-slide_type="product-carousel" data-owl_carousel='<?php echo json_encode( $owl_options ); ?>'>

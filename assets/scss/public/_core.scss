@@ -3,40 +3,48 @@
 	display: none;
 	width: 100%;
 	-webkit-tap-highlight-color: transparent;
+	/* position relative and z-index fix webkit rendering fonts issue */
 	position: relative;
 	z-index: 1;
 
 	.owl-stage {
 		position: relative;
+		-ms-touch-action: pan-Y;
 		touch-action: manipulation;
-		backface-visibility: hidden;
+		-moz-backface-visibility: hidden; /* fix firefox animation glitch */
+	}
 
-		&:after {
-			content: ".";
-			display: block;
-			clear: both;
-			visibility: hidden;
-			line-height: 0;
-			height: 0;
-		}
+	.owl-stage:after {
+		content: ".";
+		display: block;
+		clear: both;
+		visibility: hidden;
+		line-height: 0;
+		height: 0;
 	}
 
 	.owl-stage-outer {
 		position: relative;
 		overflow: hidden;
-		transform: translate3d(0px, 0px, 0px);
+		/* fix for flashing background */
+		-webkit-transform: translate3d(0px, 0px, 0px);
 	}
-	.owl-carousel .owl-wrapper,
-	.owl-carousel .owl-item {
-		backface-visibility: hidden;
-		transform: translate3d(0, 0, 0);
+
+	.owl-wrapper,
+	.owl-item {
+		-webkit-backface-visibility: hidden;
+		-moz-backface-visibility: hidden;
+		-ms-backface-visibility: hidden;
+		-webkit-transform: translate3d(0, 0, 0);
+		-moz-transform: translate3d(0, 0, 0);
+		-ms-transform: translate3d(0, 0, 0);
 	}
 
 	.owl-item {
 		position: relative;
 		min-height: 1px;
 		float: left;
-		backface-visibility: hidden;
+		-webkit-backface-visibility: hidden;
 		-webkit-tap-highlight-color: transparent;
 		-webkit-touch-callout: none;
 	}
@@ -53,9 +61,14 @@
 	.owl-nav .owl-prev,
 	.owl-nav .owl-next,
 	.owl-dot {
-		cursor: hand;
+		cursor: pointer;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
 		user-select: none;
 	}
+
 	.owl-nav button.owl-prev,
 	.owl-nav button.owl-next,
 	button.owl-dot {
@@ -84,7 +97,10 @@
 	}
 
 	&.owl-drag .owl-item {
-		touch-action: none;
+		touch-action: pan-y;
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
 		user-select: none;
 	}
 

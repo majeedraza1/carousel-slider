@@ -24,7 +24,6 @@ class Script {
 			add_action( 'wp_loaded', array( self::$instance, 'register_scripts' ) );
 
 			add_action( 'wp_enqueue_scripts', array( self::$instance, 'frontend_scripts' ), 15 );
-			add_action( 'wp_footer', array( self::$instance, 'inline_script' ), 30 );
 
 			add_action( 'admin_enqueue_scripts', array( self::$instance, 'admin_scripts' ), 10 );
 			add_action( 'admin_footer', array( self::$instance, 'gallery_url_template' ), 5 );
@@ -34,8 +33,6 @@ class Script {
 	}
 
 	public function register_styles() {
-		$suffix = ( defined( "SCRIPT_DEBUG" ) && SCRIPT_DEBUG ) ? '' : '.min';
-
 		$styles = array(
 			'carousel-slider'       => array(
 				'src'        => CAROUSEL_SLIDER_ASSETS . '/css/style.css',
@@ -128,6 +125,12 @@ class Script {
 				'version'    => '1.1.0',
 				'in_footer'  => true,
 			),
+			'carousel-slider'       => array(
+				'src'        => CAROUSEL_SLIDER_ASSETS . '/js/script' . $suffix . '.js',
+				'dependency' => array( 'jquery', 'owl-carousel', 'magnific-popup' ),
+				'version'    => CAROUSEL_SLIDER_VERSION,
+				'in_footer'  => true,
+			),
 		);
 
 		foreach ( $scripts as $handle => $script ) {
@@ -146,6 +149,7 @@ class Script {
 
 		wp_enqueue_style( 'carousel-slider' );
 		wp_enqueue_script( 'owl-carousel' );
+		wp_enqueue_script( 'carousel-slider' );
 	}
 
 	/**
@@ -166,56 +170,6 @@ class Script {
 		wp_enqueue_media();
 		wp_enqueue_style( 'carousel-slider-admin' );
 		wp_enqueue_script( 'carousel-slider-admin' );
-	}
-
-	/**
-	 * Load front end inline script
-	 */
-	public function inline_script() {
-		if ( ! $this->should_load_scripts() ) {
-			return;
-		}
-		?>
-        <script type="text/javascript">
-            (function ($) {
-                'use strict';
-
-                $('body').find('.carousel-slider').each(function () {
-                    var _this = $(this);
-
-                    if (jQuery().owlCarousel) {
-                        var _owl_options = _this.data('owl_carousel');
-                        if (typeof _owl_options !== "undefined") {
-                            _this.owlCarousel(_owl_options);
-                        }
-
-                        if ('hero-banner-slider' === _this.data('slide_type')) {
-                            var animation = _this.data('animation');
-                            if (animation.length) {
-                                _this.on('change.owl.carousel', function () {
-                                    var sliderContent = _this.find('.carousel-slider-hero__cell__content');
-                                    sliderContent.removeClass('animated' + ' ' + animation).hide();
-                                });
-                                _this.on('changed.owl.carousel', function (e) {
-                                    setTimeout(function () {
-                                        var current = $(e.target).find('.carousel-slider-hero__cell__content').eq(e.item.index);
-                                        current.show().addClass('animated' + ' ' + animation);
-                                    }, _this.data('autoplay-speed'));
-                                });
-                            }
-                        }
-                    }
-
-                    if (jQuery().magnificPopup) {
-                        var _magnific_popup = _this.data('magnific_popup');
-                        if (typeof _magnific_popup !== "undefined") {
-                            $(this).magnificPopup(_magnific_popup);
-                        }
-                    }
-                });
-            })(jQuery);
-        </script>
-		<?php
 	}
 
 	/**
@@ -269,8 +223,7 @@ class Script {
 	private function should_load_scripts() {
 		global $post;
 		$load_scripts = is_active_widget( false, false, 'widget_carousel_slider', true ) ||
-		                ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'carousel_slide' ) ) ||
-		                ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'carousel' ) );
+		                ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'carousel_slide' ) );
 
 		return apply_filters( 'carousel_slider_load_scripts', $load_scripts );
 	}

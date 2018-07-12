@@ -1,5 +1,6 @@
 <?php
 
+use CarouselSlider\Supports\DynamicStyle;
 use CarouselSlider\Supports\Utils;
 
 // If this file is called directly, abort.
@@ -21,7 +22,7 @@ if ( ! Utils::is_woocommerce_active() ) {
 }
 ?>
 <div class="products carousel-slider-outer carousel-slider-outer-products carousel-slider-outer-<?php echo $id; ?>">
-	<?php carousel_slider_inline_style( $id ); ?>
+	<?php DynamicStyle::generate( $id ); ?>
     <div <?php echo join( " ", $this->carousel_options( $id ) ); ?>>
 		<?php
 		global $post;

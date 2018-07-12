@@ -1,5 +1,6 @@
 <?php
 
+use CarouselSlider\Supports\DynamicStyle;
 use CarouselSlider\Supports\Utils;
 
 // If this file is called directly, abort.
@@ -37,7 +38,7 @@ $_product_wishlist   = get_post_meta( $id, '_product_wishlist', true );
 $_product_quick_view = get_post_meta( $id, '_product_quick_view', true );
 ?>
 <div class="carousel-slider-outer carousel-slider-outer-products carousel-slider-outer-<?php echo $id; ?>">
-	<?php carousel_slider_inline_style( $id ); ?>
+	<?php DynamicStyle::generate( $id ); ?>
     <div id="id-<?php echo esc_attr( $id ); ?>" class="<?php echo esc_attr( $class ); ?>"
          data-slide_type="<?php echo esc_attr( $slide_type ); ?>"
          data-owl_carousel='<?php echo json_encode( $owl_options ); ?>'

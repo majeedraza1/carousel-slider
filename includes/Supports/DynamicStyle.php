@@ -1,20 +1,15 @@
 <?php
 
-use CarouselSlider\Supports\Utils;
+namespace CarouselSlider\Supports;
 
-// If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-	die;
-}
-
-if ( ! function_exists( 'carousel_slider_inline_style' ) ) {
+class DynamicStyle {
 	/**
-	 * Get carousel slider inline style
+	 * Generate dynamic style for slider
 	 *
-	 * @param $carousel_id
+	 * @param int $id
+	 * @param bool $echo
 	 */
-	function carousel_slider_inline_style( $carousel_id ) {
-		$id                      = $carousel_id;
+	public static function generate( $id = 0, $echo = true ) {
 		$_nav_color              = get_post_meta( $id, '_nav_color', true );
 		$_nav_active_color       = get_post_meta( $id, '_nav_active_color', true );
 		$_post_height            = get_post_meta( $id, '_post_height', true );
@@ -31,8 +26,6 @@ if ( ! function_exists( 'carousel_slider_inline_style' ) ) {
 
 		$_bullet_size = get_post_meta( $id, '_bullet_size', true );
 		$_bullet_size = empty( $_bullet_size ) ? 10 : absint( $_bullet_size );
-
-		echo "<style type=\"text/css\">";
 
 		ob_start();
 		// Arrows Nav
@@ -173,8 +166,14 @@ if ( ! function_exists( 'carousel_slider_inline_style' ) ) {
 
 		$styles = ob_get_clean();
 
-		echo Utils::minify_css( $styles, false );
+		$style = "<style type=\"text/css\">";
+		$style .= Utils::minify_css( $styles, false );
+		$style .= "</style>" . PHP_EOL;
 
-		echo "</style>" . PHP_EOL;
+		if ( ! $echo ) {
+			return $style;
+		}
+
+		echo $style;
 	}
 }

@@ -120,6 +120,7 @@ Now you can use the following function at your theme template file replacing `YO
 * Dev - Added gradient color picker.
 * Dev - Add option to pass owl-carousel options as data-*
 * Dev - Add option to pass magnifig-popup options as data-*
+* Dev - Update Owl Carousel from version 2.3.2 to version 2.3.4
 
 = version 1.8.6 - 2018-03-17 =
 * Dev - Update Owl Carousel from version 2.2.1 to version 2.3.2

@@ -87,13 +87,10 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 					return self::$instance;
 				}
 
-				// Register autoload for plugin classes
-				self::$instance->register_autoload();
-
 				add_action( 'plugins_loaded', array( self::$instance, 'load_textdomain' ) );
 
-				// Include plugin classes
-				self::$instance->includes();
+				// Register autoload for plugin classes
+				self::$instance->register_autoload();
 
 				// initialize the classes
 				self::$instance->init_classes();
@@ -164,7 +161,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		 *
 		 * @return void
 		 */
-		public function init_classes() {
+		private function init_classes() {
 			if ( $this->is_request( 'admin' ) ) {
 				$this->container['admin']         = \CarouselSlider\Admin\Admin::init();
 				$this->container['meta']          = \CarouselSlider\Admin\MetaBox::init();
@@ -184,13 +181,6 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 			$this->container['script']    = \CarouselSlider\Script::init();
 
 			add_action( 'widgets_init', array( 'CarouselSlider\Widgets\CarouselSlider', 'register' ) );
-		}
-
-		/**
-		 * Include admin and front facing files
-		 */
-		private function includes() {
-			require_once CAROUSEL_SLIDER_INCLUDES . '/functions-carousel-slider.php';
 		}
 
 		/**
