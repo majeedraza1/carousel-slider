@@ -16,6 +16,12 @@ if ( ! defined( 'WPINC' ) ) {
 				<?php
 				$content_sliders    = get_post_meta( $post->ID, '_content_slider', true );
 				$content_settings   = get_post_meta( $post->ID, '_content_slider_settings', true );
+				$_slide_height      = isset( $content_settings['slide_height'] ) ? $content_settings['slide_height'] : '400px';
+				$_content_width     = isset( $content_settings['content_width'] ) ? $content_settings['content_width'] : '850px';
+				$_slide_animation   = isset( $content_settings['slide_animation'] ) ? $content_settings['slide_animation'] : 'fadeOut';
+				$_slide_padding     = isset( $content_settings['slide_padding'] ) ? $content_settings['slide_padding'] : array();
+				$_content_animation = isset( $content_settings['content_animation'] ) ? $content_settings['content_animation'] : '';
+
 
 				// Get WordPress media upload URL
 				$upload_link = esc_url( get_upload_iframe_src( 'image', $post->ID ) );
@@ -44,7 +50,6 @@ if ( ! defined( 'WPINC' ) ) {
 						$_slide_heading     = isset( $content_slider['slide_heading'] ) ? $content_slider['slide_heading'] : '';
 						$_slide_description = isset( $content_slider['slide_description'] ) ? $content_slider['slide_description'] : '';
 						// Slide Background
-						$_background_type  = ! empty( $content_slider['background_type'] ) ? esc_attr( $content_slider['background_type'] ) : 'classic';
 						$_img_bg_position  = ! empty( $content_slider['img_bg_position'] ) ? esc_attr( $content_slider['img_bg_position'] ) : 'center center';
 						$_img_bg_size      = ! empty( $content_slider['img_bg_size'] ) ? esc_attr( $content_slider['img_bg_size'] ) : 'cover';
 						$_bg_color         = ! empty( $content_slider['bg_color'] ) ? esc_attr( $content_slider['bg_color'] ) : '';
@@ -210,53 +215,84 @@ if ( ! defined( 'WPINC' ) ) {
             </div>
 
             <div class="content_settings">
+                <div class="sp-input-group" id="field-_content_slide_height">
+                    <div class="sp-input-label">
+                        <label for="_content_slide_height"><?php esc_html_e( 'Slide Height',
+								'carousel-slider' ); ?></label>
+                        <p class="sp-input-desc"><?php esc_html_e( 'Enter a px, em, rem or vh value for slide height. ex: 100vh',
+								'carousel-slider' ); ?></p>
+                    </div>
+                    <div class="sp-input-field">
+                        <input type="text" name="content_settings[slide_height]" id="_content_slide_height"
+                               class="sp-input-text" value="<?php echo $_slide_height; ?>">
+                    </div>
+                </div>
+                <div class="sp-input-group" id="field-_content_slide_height">
+                    <div class="sp-input-label">
+                        <label for="_content_slide_height"><?php esc_html_e( 'Slider Content Max Width',
+								'carousel-slider' ); ?></label>
+                        <p class="sp-input-desc"><?php esc_html_e( 'Enter a px, em, rem or % value for slide height. ex: 960px',
+								'carousel-slider' ); ?></p>
+                    </div>
+                    <div class="sp-input-field">
+                        <input type="text" name="content_settings[content_width]" id="_content_content_width"
+                               class="sp-input-text" value="<?php echo $_content_width; ?>">
+                    </div>
+                </div>
 				<?php
-				$this->form->text( array(
-					'id'       => 'slide_height',
-					'group'    => 'content_settings',
-					'meta_key' => '_content_slider_settings',
-					'std'      => '400px',
-					'name'     => esc_html__( 'Slide Height', 'carousel-slider' ),
-					'desc'     => esc_html__( 'Enter a px, em, rem or vh value for slide height. ex: 100vh', 'carousel-slider' ),
-				) );
-				$this->form->text( array(
-					'id'       => 'content_width',
-					'group'    => 'content_settings',
-					'meta_key' => '_content_slider_settings',
-					'std'      => '850px',
-					'name'     => esc_html__( 'Slider Content Max Width', 'carousel-slider' ),
-					'desc'     => esc_html__( 'Enter a px, em, rem or vh value for slide maximum width. ex: 960px', 'carousel-slider' ),
-				) );
-				$this->form->select( array(
-					'id'       => 'content_animation',
-					'group'    => 'content_settings',
-					'meta_key' => '_content_slider_settings',
-					'std'      => 'fadeOut',
-					'name'     => esc_html__( 'Content Animation', 'carousel-slider' ),
-					'desc'     => esc_html__( 'Choose slide content animation.', 'carousel-slider' ),
-					'options'  => array(
-						''            => esc_html__( 'None', 'carousel-slider' ),
-						'fadeInDown'  => esc_html__( 'Fade In Down', 'carousel-slider' ),
-						'fadeInUp'    => esc_html__( 'Fade In Up', 'carousel-slider' ),
-						'fadeInRight' => esc_html__( 'Fade In Right', 'carousel-slider' ),
-						'fadeInLeft'  => esc_html__( 'Fade In Left', 'carousel-slider' ),
-						'zoomIn'      => esc_html__( 'Zoom In', 'carousel-slider' ),
-					),
-				) );
-				$this->form->spacing( array(
-					'id'       => 'slide_padding',
-					'group'    => 'content_settings',
-					'meta_key' => '_content_slider_settings',
-					'name'     => esc_html__( 'Slider Padding', 'carousel-slider' ),
-					'desc'     => esc_html__( 'Enter padding around slide in px, em or rem.', 'carousel-slider' ),
-					'std'      => array(
-						'top'    => '1rem',
-						'right'  => '3rem',
-						'bottom' => '1rem',
-						'left'   => '3rem',
-					),
-				) );
+				$animations = [
+					''            => esc_html__( 'None', 'carousel-slider' ),
+					'fadeInDown'  => esc_html__( 'Fade In Down', 'carousel-slider' ),
+					'fadeInUp'    => esc_html__( 'Fade In Up', 'carousel-slider' ),
+					'fadeInRight' => esc_html__( 'Fade In Right', 'carousel-slider' ),
+					'fadeInLeft'  => esc_html__( 'Fade In Left', 'carousel-slider' ),
+					'zoomIn'      => esc_html__( 'Zoom In', 'carousel-slider' ),
+				];
 				?>
+                <div class="sp-input-group" id="field-_content_animation">
+                    <div class="sp-input-label">
+                        <label for="_content_animation"><?php esc_html_e( 'Content Animation',
+								'carousel-slider' ); ?></label>
+                        <p class="sp-input-desc"><?php esc_html_e( 'Select slide content animation.',
+								'carousel-slider' ); ?></p>
+                    </div>
+                    <div class="sp-input-field">
+                        <select name="content_settings[content_animation]" id="_content_animation"
+                                class="sp-input-text">
+							<?php
+							foreach ( $animations as $animation_slug => $animation ) {
+								$__selected = selected( $_content_animation, $animation_slug, false );
+								echo '<option value="' . $animation_slug . '" ' . $__selected . '>' . $animation . '</option>';
+							}
+							?>
+                        </select>
+                    </div>
+                </div>
+                <div class="sp-input-group" id="field-_content_slide_padding">
+                    <div class="sp-input-label">
+                        <label for="_content_slide_padding"><?php esc_html_e( 'Slider Padding',
+								'carousel-slider' ); ?></label>
+                        <p class="sp-input-desc"><?php esc_html_e( 'Enter padding around slide in px, em or rem.',
+								'carousel-slider' ); ?></p>
+                    </div>
+                    <div class="sp-input-field">
+                        <span class="dashicons dashicons-arrow-up-alt"></span>
+                        <input name="content_settings[slide_padding][top]" class="spacing-text" placeholder="Top"
+                               value="<?php echo isset( $_slide_padding['top'] ) ? $_slide_padding['top'] : '1rem'; ?>">
+
+                        <span class="dashicons dashicons-arrow-right-alt"></span>
+                        <input name="content_settings[slide_padding][right]" class="spacing-text" placeholder="Right"
+                               value="<?php echo isset( $_slide_padding['right'] ) ? $_slide_padding['right'] : '3rem'; ?>">
+
+                        <span class="dashicons dashicons-arrow-down-alt"></span>
+                        <input name="content_settings[slide_padding][bottom]" class="spacing-text" placeholder="Bottom"
+                               value="<?php echo isset( $_slide_padding['bottom'] ) ? $_slide_padding['bottom'] : '1rem'; ?>">
+
+                        <span class="dashicons dashicons-arrow-left-alt"></span>
+                        <input name="content_settings[slide_padding][left]" class="spacing-text" placeholder="Left"
+                               value="<?php echo isset( $_slide_padding['left'] ) ? $_slide_padding['left'] : '3rem'; ?>">
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -4,7 +4,7 @@ Tags: woocommerce, shortcode, images, carousel, carousel slider, image carousel,
 Requires at least: 4.5
 Tested up to: 4.9
 Requires PHP: 5.3
-Stable tag: 1.9.0
+Stable tag: 1.8.8
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -39,7 +39,7 @@ Carousel Slider is a touch enabled WordPress plugin that lets you create highly 
 * Support image title, caption, link url
 * and more options
 
-= Hero Slider =
+= Hero Image Slider =
 https://www.youtube.com/watch?v=_hVsamgr1k4
 
 = Images Carousel using gallery images =
@@ -113,14 +113,11 @@ Now you can use the following function at your theme template file replacing `YO
 
 == Changelog ==
 
-= version 1.9.0 - 2018-03-## =
-* Added - Added gradient background for hero carousel slider.
-* Added - More control over responsive breakpoint and number of items on each breakpoint.
-* Dev - Added Buttonset field type.
-* Dev - Added gradient color picker.
-* Dev - Add option to pass owl-carousel options as data-*
-* Dev - Add option to pass magnifig-popup options as data-*
-* Dev - Update Owl Carousel from version 2.3.2 to version 2.3.4
+= version 1.8.8 - 2018-04-18 =
+* Fixed - Roll back to Owl Carousel version 2.2.1 as new version has a bug relating to rewind feature that creates conflict with previous version.
+
+= version 1.8.7 - 2018-03-26 =
+* Fixed - Navigation is now showing when set always.
 
 = version 1.8.6 - 2018-03-17 =
 * Dev - Update Owl Carousel from version 2.2.1 to version 2.3.2

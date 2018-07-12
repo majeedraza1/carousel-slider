@@ -1,8 +1,4 @@
 <?php
-
-use CarouselSlider\Supports\DynamicStyle;
-use CarouselSlider\Supports\Utils;
-
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -14,13 +10,10 @@ $_nav_active_color = get_post_meta( $id, '_nav_active_color', true );
 $_lazy_load_image  = get_post_meta( $id, '_lazy_load_image', true );
 ?>
 <div class="carousel-slider-outer carousel-slider-outer-posts carousel-slider-outer-<?php echo $id; ?>">
-	<?php DynamicStyle::generate( $id ); ?>
-    <div id="id-<?php echo esc_attr( $id ); ?>" class="<?php echo esc_attr( $class ); ?>"
-         data-slide_type="<?php echo esc_attr( $slide_type ); ?>"
-         data-owl_carousel='<?php echo json_encode( $owl_options ); ?>'
-         data-magnific_popup='<?php echo json_encode( $magnific_popup ); ?>'>
+	<?php carousel_slider_inline_style( $id ); ?>
+    <div <?php echo join( " ", $this->carousel_options( $id ) ); ?>>
 		<?php
-		$posts = Utils::get_posts( $id );
+		$posts = carousel_slider_posts( $id );
 		foreach ( $posts as $_post ):
 			global $post;
 			$post = $_post;
@@ -42,12 +35,10 @@ $_lazy_load_image  = get_post_meta( $id, '_lazy_load_image', true );
 
 				if ( $_lazy_load_image == 'on' ) {
 
-					$html .= sprintf( '<a href="%s" class="carousel-slider__post-image owl-lazy" data-src="%s"></a>',
-						$_permalink, $image_src[0] );
+					$html .= sprintf( '<a href="%s" class="carousel-slider__post-image owl-lazy" data-src="%s"></a>', $_permalink, $image_src[0] );
 				} else {
 
-					$html .= sprintf( '<a href="%s" class="carousel-slider__post-image" style="background-image: url(%s)"></a>',
-						$_permalink, $image_src[0] );
+					$html .= sprintf( '<a href="%s" class="carousel-slider__post-image" style="background-image: url(%s)"></a>', $_permalink, $image_src[0] );
 				}
 
 			} else {
@@ -56,8 +47,7 @@ $_lazy_load_image  = get_post_meta( $id, '_lazy_load_image', true );
 			}
 
 			// Post Title
-			$html .= sprintf( '<a class="carousel-slider__post-title" href="%s"><h1>%s</h1></a>', $_permalink,
-				$post->post_title );
+			$html .= sprintf( '<a class="carousel-slider__post-title" href="%s"><h1>%s</h1></a>', $_permalink, $post->post_title );
 			$html .= '</div>'; // End Post Header
 			$html .= '<div class="carousel-slider__post-excerpt">' . $_excerpt . '</div>';
 			$html .= '<footer class="carousel-slider__post-meta">';

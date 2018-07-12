@@ -25,34 +25,6 @@
         delImgLink,
         buttonConfig;
 
-    // Background Type
-    $(document).on('click', '.background_type', function () {
-        var _this = $(this),
-            _val = _this.val(),
-            _tab_bg = _this.closest('.tab-background'),
-            _classic_bg = _tab_bg.find('.classic_background_type'),
-            _video_bg = _tab_bg.find('.video_background_type'),
-            _gradient_bg = _tab_bg.find('.gradient_background_type');
-
-        if ('classic' === _val) {
-            _classic_bg.css('display', 'block');
-            _gradient_bg.css('display', 'none');
-            _video_bg.css('display', 'none');
-        } else if ('gradient' === _val) {
-            _gradient_bg.css('display', 'block');
-            _classic_bg.css('display', 'none');
-            _video_bg.css('display', 'none');
-        } else if ('video' === _val) {
-            _video_bg.css('display', 'block');
-            _gradient_bg.css('display', 'none');
-            _classic_bg.css('display', 'none');
-        } else {
-            _classic_bg.css('display', 'none');
-            _gradient_bg.css('display', 'none');
-            _video_bg.css('display', 'none');
-        }
-    });
-
     // Add new content slide
     body.on('click', '.carousel-slider__add-slide', function (e) {
         e.preventDefault();
@@ -317,7 +289,7 @@
     });
 
     // Slide Link
-    $(document).on('change', '.link_type', function () {
+    $(document).on('change', '.link_type', function (e) {
         var _this = $(this);
         var _val = _this.val();
         var _tab = _this.closest('.tab-content-link');
@@ -333,70 +305,7 @@
             _linkFull.hide();
             _linkBtn.hide();
         }
-    });
-
-})(jQuery);
-(function ($) {
-    'use strict';
-
-    $('.gradient-color-picker').each(function () {
-        var _this = $(this),
-            _tab_bg = _this.closest('.tab-background'),
-            _wrapper = _this.closest('.gradient-color-wrapper'),
-            _angle = _wrapper.find('.gradient-color-angle'),
-            _colors = _wrapper.find('.gradient-color-colors'),
-            _type = _wrapper.find('.gradient-color-type:checked'),
-            _points = _this.data('points'),
-            _preview = _tab_bg.find('.gradient_canvas');
-
-        $(this).gradientPicker({
-            fillDirection: _angle.val() + 'deg',
-            type: _type.val(),
-            controlPoints: _points,
-            change: function (points, styles) {
-                _colors.val(JSON.stringify(points));
-                for (var i = 0; i < styles.length; ++i) {
-                    _preview.css("background-image", styles[i]);
-                }
-            }
-        });
-    });
-
-    $('.gradient-color-type').on('change', function () {
-        var _this = $(this),
-            _wrapper = _this.closest('.gradient-color-wrapper'),
-            _rangeWrapper = _wrapper.find('.carousel-slider-range-wrapper');
-
-        if ('linear' === _this.val()) {
-            _rangeWrapper.css('display', 'block');
-        } else {
-            _rangeWrapper.css('display', 'none');
-        }
     })
-})(jQuery);
-
-(function ($) {
-    'use strict';
-
-    var value, thisInput, inputDefault;
-
-    // Update the text value
-    $('input[type=range]').on('mousedown', function () {
-        value = $(this).val();
-        $(this).mousemove(function () {
-            value = $(this).val();
-            $(this).closest('.carousel-slider-range-wrapper').find('.range-value .value').text(value);
-        });
-    });
-
-    // Handle the reset button
-    $('.carousel-slider-range-reset').click(function () {
-        thisInput = $(this).closest('.carousel-slider-range-wrapper').find('input');
-        inputDefault = thisInput.data('reset_value');
-        thisInput.val(inputDefault);
-        thisInput.change();
-        $(this).closest('.carousel-slider-range-wrapper').find('.range-value .value').text(inputDefault);
-    });
 
 })(jQuery);
 (function ($) {
@@ -586,53 +495,6 @@
     });
 
 })(jQuery);
-(function ($, window, document) {
-    'use strict';
-
-    /**
-     * Update responsive settings name attribute
-     */
-    function updateNameAttributes() {
-        $('.form-breakpoint-table tbody').find('tr').each(function (index) {
-            var _tr = $(this),
-                breakpoint = _tr.find('.input-responsive-breakpoint'),
-                items = _tr.find('.input-responsive-items'),
-                breakpointName = '_responsive_settings[' + index + '][breakpoint]',
-                itemsName = '_responsive_settings[' + index + '][items]';
-
-            breakpoint.attr('name', breakpointName);
-            items.attr('name', itemsName);
-        });
-    }
-
-    $(document).on('click', '.delete-breakpoint', function (e) {
-        e.preventDefault();
-        var _rows = $('.form-breakpoint-table tbody').find('tr');
-
-        if (_rows.length === 1) {
-            window.alert('At least one breakpoint is required.');
-        } else if (_rows.length > 1) {
-            if (window.confirm('Are you sure?')) {
-                $(this).closest('tr').remove();
-            }
-
-            updateNameAttributes();
-        }
-    });
-
-    $(document).on('click', '.add-breakpoint', function (e) {
-        e.preventDefault();
-        var _this = $(this),
-            _row = _this.closest('tr'),
-            _clone = _row.clone();
-
-        _clone.find('input').val('');
-        _row.after(_clone);
-
-        updateNameAttributes();
-    });
-
-})(jQuery, window, document);
 (function ($) {
     "use strict";
 

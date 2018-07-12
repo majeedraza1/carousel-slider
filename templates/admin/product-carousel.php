@@ -1,7 +1,4 @@
 <?php
-
-use CarouselSlider\Supports\Utils;
-
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -58,115 +55,83 @@ if ( ! defined( 'WPINC' ) ) {
 				'post_type' => 'product',
 				'multiple'  => true,
 				'name'      => esc_html__( 'Specific products', 'carousel-slider' ),
-				'desc'      => esc_html__( 'Select products that you want to show as slider. Select at least 5 products',
-					'carousel-slider' ),
+				'desc'      => esc_html__( 'Select products that you want to show as slider. Select at least 5 products', 'carousel-slider' ),
 			) );
-			$this->form->slider( array(
-				'id'      => '_products_per_page',
-				'name'    => esc_html__( 'Product per page', 'carousel-slider' ),
-				'desc'    => esc_html__( 'How many products you want to show on carousel slide.', 'carousel-slider' ),
-				'std'     => 12,
-				'choices' => array(
-					'min'  => 1,
-					'max'  => 50,
-					'step' => 1,
-				),
+			$this->form->number( array(
+				'id'   => '_products_per_page',
+				'name' => esc_html__( 'Product per page', 'carousel-slider' ),
+				'std'  => 12,
+				'desc' => esc_html__( 'How many products you want to show on carousel slide.', 'carousel-slider' ),
 			) );
-			$this->form->buttonset( array(
-				'id'      => '_product_title',
-				'name'    => esc_html__( 'Show Title', 'carousel-slider' ),
-				'desc'    => esc_html__( 'Check to show product title.', 'carousel-slider' ),
-				'std'     => 'on',
-				'options' => array(
-					'on'  => esc_html__( 'Show', 'carousel-slider' ),
-					'off' => esc_html__( 'Hide', 'carousel-slider' ),
-				),
+			$this->form->checkbox( array(
+				'id'    => '_product_title',
+				'name'  => esc_html__( 'Show Title', 'carousel-slider' ),
+				'label' => esc_html__( 'Show Title.', 'carousel-slider' ),
+				'desc'  => esc_html__( 'Check to show product title.', 'carousel-slider' ),
+				'std'   => 'on'
 			) );
-			$this->form->buttonset( array(
-				'id'      => '_product_rating',
-				'name'    => esc_html__( 'Show Rating', 'carousel-slider' ),
-				'desc'    => esc_html__( 'Check to show product rating.', 'carousel-slider' ),
-				'std'     => 'on',
-				'options' => array(
-					'on'  => esc_html__( 'Show', 'carousel-slider' ),
-					'off' => esc_html__( 'Hide', 'carousel-slider' ),
-				),
+			$this->form->checkbox( array(
+				'id'    => '_product_rating',
+				'name'  => esc_html__( 'Show Rating', 'carousel-slider' ),
+				'label' => esc_html__( 'Show Rating.', 'carousel-slider' ),
+				'desc'  => esc_html__( 'Check to show product rating.', 'carousel-slider' ),
+				'std'   => 'on'
 			) );
-			$this->form->buttonset( array(
-				'id'      => '_product_price',
-				'name'    => esc_html__( 'Show Price', 'carousel-slider' ),
-				'desc'    => esc_html__( 'Check to show product price.', 'carousel-slider' ),
-				'std'     => 'on',
-				'options' => array(
-					'on'  => esc_html__( 'Show', 'carousel-slider' ),
-					'off' => esc_html__( 'Hide', 'carousel-slider' ),
-				),
+			$this->form->checkbox( array(
+				'id'    => '_product_price',
+				'name'  => esc_html__( 'Show Price', 'carousel-slider' ),
+				'label' => esc_html__( 'Show Price.', 'carousel-slider' ),
+				'desc'  => esc_html__( 'Check to show product price.', 'carousel-slider' ),
+				'std'   => 'on'
 			) );
-			$this->form->buttonset( array(
-				'id'      => '_product_cart_button',
-				'name'    => esc_html__( 'Show Cart Button', 'carousel-slider' ),
-				'desc'    => esc_html__( 'Check to show product add to cart button.', 'carousel-slider' ),
-				'std'     => 'on',
-				'options' => array(
-					'on'  => esc_html__( 'Show', 'carousel-slider' ),
-					'off' => esc_html__( 'Hide', 'carousel-slider' ),
-				),
+			$this->form->checkbox( array(
+				'id'    => '_product_cart_button',
+				'name'  => esc_html__( 'Show Cart Button', 'carousel-slider' ),
+				'label' => esc_html__( 'Show Cart Button.', 'carousel-slider' ),
+				'desc'  => esc_html__( 'Check to show product add to cart button.', 'carousel-slider' ),
+				'std'   => 'on'
 			) );
-			$this->form->buttonset( array(
-				'id'      => '_product_onsale',
-				'name'    => esc_html__( 'Show Sale Tag', 'carousel-slider' ),
-				'desc'    => esc_html__( 'Check to show product sale tag for onsale products.', 'carousel-slider' ),
-				'std'     => 'on',
-				'options' => array(
-					'on'  => esc_html__( 'Show', 'carousel-slider' ),
-					'off' => esc_html__( 'Hide', 'carousel-slider' ),
-				),
+			$this->form->checkbox( array(
+				'id'    => '_product_onsale',
+				'name'  => esc_html__( 'Show Sale Tag', 'carousel-slider' ),
+				'label' => esc_html__( 'Show Sale Tag', 'carousel-slider' ),
+				'desc'  => esc_html__( 'Check to show product sale tag for onsale products.', 'carousel-slider' ),
+				'std'   => 'on'
 			) );
-			$this->form->buttonset( array(
-				'id'      => '_product_wishlist',
-				'name'    => esc_html__( 'Show Wishlist Button', 'carousel-slider' ),
-				'desc'    => sprintf( esc_html__( 'Check to show wishlist button. This feature needs %s plugin to be installed.',
-					'carousel-slider' ),
-					sprintf( '<a href="https://wordpress.org/plugins/yith-woocommerce-wishlist/" target="_blank" >%s</a>',
-						__( 'YITH WooCommerce Wishlist', 'carousel-slider' ) ) ),
-				'std'     => 'off',
-				'options' => array(
-					'on'  => esc_html__( 'Show', 'carousel-slider' ),
-					'off' => esc_html__( 'Hide', 'carousel-slider' ),
-				),
+			$this->form->checkbox( array(
+				'id'    => '_product_wishlist',
+				'name'  => esc_html__( 'Show Wishlist Button', 'carousel-slider' ),
+				'label' => esc_html__( 'Show Wishlist Button', 'carousel-slider' ),
+				'std'   => 'off',
+				'desc'  => sprintf( esc_html__( 'Check to show wishlist button. This feature needs %s plugin to be installed.', 'carousel-slider' ), sprintf( '<a href="https://wordpress.org/plugins/yith-woocommerce-wishlist/" target="_blank" >%s</a>', __( 'YITH WooCommerce Wishlist', 'carousel-slider' ) ) ),
 			) );
-			$this->form->buttonset( array(
-				'id'      => '_product_quick_view',
-				'name'    => esc_html__( 'Show Quick View', 'carousel-slider' ),
-				'desc'    => esc_html__( 'Check to show quick view button.', 'carousel-slider' ),
-				'std'     => 'on',
-				'options' => array(
-					'on'  => esc_html__( 'Show', 'carousel-slider' ),
-					'off' => esc_html__( 'Hide', 'carousel-slider' ),
-				),
+			$this->form->checkbox( array(
+				'id'    => '_product_quick_view',
+				'name'  => esc_html__( 'Show Quick View', 'carousel-slider' ),
+				'label' => esc_html__( 'Show Quick View', 'carousel-slider' ),
+				'desc'  => esc_html__( 'Check to show quick view button.', 'carousel-slider' ),
+				'std'   => 'on'
 			) );
 			$this->form->color( array(
 				'id'   => '_product_title_color',
 				'type' => 'color',
 				'name' => esc_html__( 'Title Color', 'carousel-slider' ),
-				'desc' => esc_html__( 'Pick a color for product title. This color will also apply to sale tag and price.',
-					'carousel-slider' ),
-				'std'  => Utils::get_default_setting( 'product_title_color' ),
+				'desc' => esc_html__( 'Pick a color for product title. This color will also apply to sale tag and price.', 'carousel-slider' ),
+				'std'  => carousel_slider_default_settings()->product_title_color,
 			) );
 			$this->form->color( array(
 				'id'   => '_product_button_bg_color',
 				'type' => 'color',
 				'name' => esc_html__( 'Button Background Color', 'carousel-slider' ),
-				'desc' => esc_html__( 'Pick a color for button background color. This color will also apply to product rating.',
-					'carousel-slider' ),
-				'std'  => Utils::get_default_setting( 'product_button_bg_color' )
+				'desc' => esc_html__( 'Pick a color for button background color. This color will also apply to product rating.', 'carousel-slider' ),
+				'std'  => carousel_slider_default_settings()->product_button_bg_color
 			) );
 			$this->form->color( array(
 				'id'   => '_product_button_text_color',
 				'type' => 'color',
 				'name' => esc_html__( 'Button Text Color', 'carousel-slider' ),
 				'desc' => esc_html__( 'Pick a color for button text color.', 'carousel-slider' ),
-				'std'  => Utils::get_default_setting( 'product_button_text_color' )
+				'std'  => carousel_slider_default_settings()->product_button_text_color
 			) );
 			?>
         </div>

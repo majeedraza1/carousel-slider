@@ -10,34 +10,6 @@
         delImgLink,
         buttonConfig;
 
-    // Background Type
-    $(document).on('click', '.background_type', function () {
-        var _this = $(this),
-            _val = _this.val(),
-            _tab_bg = _this.closest('.tab-background'),
-            _classic_bg = _tab_bg.find('.classic_background_type'),
-            _video_bg = _tab_bg.find('.video_background_type'),
-            _gradient_bg = _tab_bg.find('.gradient_background_type');
-
-        if ('classic' === _val) {
-            _classic_bg.css('display', 'block');
-            _gradient_bg.css('display', 'none');
-            _video_bg.css('display', 'none');
-        } else if ('gradient' === _val) {
-            _gradient_bg.css('display', 'block');
-            _classic_bg.css('display', 'none');
-            _video_bg.css('display', 'none');
-        } else if ('video' === _val) {
-            _video_bg.css('display', 'block');
-            _gradient_bg.css('display', 'none');
-            _classic_bg.css('display', 'none');
-        } else {
-            _classic_bg.css('display', 'none');
-            _gradient_bg.css('display', 'none');
-            _video_bg.css('display', 'none');
-        }
-    });
-
     // Add new content slide
     body.on('click', '.carousel-slider__add-slide', function (e) {
         e.preventDefault();
@@ -302,7 +274,7 @@
     });
 
     // Slide Link
-    $(document).on('change', '.link_type', function () {
+    $(document).on('change', '.link_type', function (e) {
         var _this = $(this);
         var _val = _this.val();
         var _tab = _this.closest('.tab-content-link');
@@ -318,6 +290,6 @@
             _linkFull.hide();
             _linkBtn.hide();
         }
-    });
+    })
 
 })(jQuery);

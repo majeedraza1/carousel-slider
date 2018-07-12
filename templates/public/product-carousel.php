@@ -1,14 +1,10 @@
 <?php
-
-use CarouselSlider\Supports\DynamicStyle;
-use CarouselSlider\Supports\Utils;
-
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-if ( ! Utils::is_woocommerce_active() ) {
+if ( ! carousel_slider_is_woocommerce_active() ) {
 	if ( current_user_can( 'manage_options' ) ) {
 		printf(
 			esc_html__( 'Carousel Slider needs %s to work for products carousel.', 'carousel-slider' ),
@@ -21,7 +17,7 @@ if ( ! Utils::is_woocommerce_active() ) {
 	return;
 }
 
-$posts = Utils::get_products( $id );
+$posts = carousel_slider_products( $id );
 
 
 $_image_size       = get_post_meta( $id, '_image_size', true );
@@ -38,11 +34,8 @@ $_product_wishlist   = get_post_meta( $id, '_product_wishlist', true );
 $_product_quick_view = get_post_meta( $id, '_product_quick_view', true );
 ?>
 <div class="carousel-slider-outer carousel-slider-outer-products carousel-slider-outer-<?php echo $id; ?>">
-	<?php DynamicStyle::generate( $id ); ?>
-    <div id="id-<?php echo esc_attr( $id ); ?>" class="<?php echo esc_attr( $class ); ?>"
-         data-slide_type="<?php echo esc_attr( $slide_type ); ?>"
-         data-owl_carousel='<?php echo json_encode( $owl_options ); ?>'
-         data-magnific_popup='<?php echo json_encode( $magnific_popup ); ?>'>
+	<?php carousel_slider_inline_style( $id ); ?>
+    <div <?php echo join( " ", $this->carousel_options( $id ) ); ?>>
 		<?php foreach ( $posts as $post ): setup_postdata( $post ); ?>
 			<?php
 			$product = wc_get_product( $post->ID );
@@ -65,8 +58,7 @@ $_product_quick_view = get_post_meta( $id, '_product_quick_view', true );
 
 				// Show title
 				if ( $_product_title == 'on' ) {
-					echo sprintf( '<a href="%1$s"><h3>%2$s</h3></a>', get_the_permalink( $post->ID ),
-						get_the_title( $post->ID ) );
+					echo sprintf( '<a href="%1$s"><h3>%2$s</h3></a>', get_the_permalink( $post->ID ), get_the_title( $post->ID ) );
 				}
 
 				// Show Rating
@@ -80,8 +72,7 @@ $_product_quick_view = get_post_meta( $id, '_product_quick_view', true );
 				}
 				// Sale Product batch
 				if ( $product->is_on_sale() && $_product_onsale == 'on' ) {
-					echo apply_filters( 'woocommerce_sale_flash',
-						'<span class="onsale">' . __( 'Sale!', 'carousel-slider' ) . '</span>', $product );
+					echo apply_filters( 'woocommerce_sale_flash', '<span class="onsale">' . __( 'Sale!', 'carousel-slider' ) . '</span>', $product );
 				}
 				// Show Price
 				if ( $_product_price == 'on' ) {

@@ -1,7 +1,4 @@
 <?php
-
-use CarouselSlider\Supports\DynamicStyle;
-
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -21,11 +18,8 @@ $_show_lightbox           = get_post_meta( $id, '_image_lightbox', true );
 
 ?>
 <div class="carousel-slider-outer carousel-slider-outer-images carousel-slider-outer-<?php echo $id; ?>">
-	<?php DynamicStyle::generate( $id ); ?>
-    <div id="id-<?php echo esc_attr( $id ); ?>" class="<?php echo esc_attr( $class ); ?>"
-         data-slide_type="<?php echo esc_attr( $slide_type ); ?>"
-         data-owl_carousel='<?php echo json_encode( $owl_options ); ?>'
-         data-magnific_popup='<?php echo json_encode( $magnific_popup ); ?>'>
+	<?php carousel_slider_inline_style( $id ); ?>
+    <div <?php echo join( " ", $this->carousel_options( $id ) ); ?>>
 		<?php
 		foreach ( $images_ids as $image_id ):
 

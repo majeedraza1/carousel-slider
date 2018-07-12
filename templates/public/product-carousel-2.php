@@ -1,14 +1,10 @@
 <?php
-
-use CarouselSlider\Supports\DynamicStyle;
-use CarouselSlider\Supports\Utils;
-
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-if ( ! Utils::is_woocommerce_active() ) {
+if ( ! carousel_slider_is_woocommerce_active() ) {
 	if ( current_user_can( 'manage_options' ) ) {
 		printf(
 			esc_html__( 'Carousel Slider needs %s to work for products carousel.', 'carousel-slider' ),
@@ -22,12 +18,12 @@ if ( ! Utils::is_woocommerce_active() ) {
 }
 ?>
 <div class="products carousel-slider-outer carousel-slider-outer-products carousel-slider-outer-<?php echo $id; ?>">
-	<?php DynamicStyle::generate( $id ); ?>
+	<?php carousel_slider_inline_style( $id ); ?>
     <div <?php echo join( " ", $this->carousel_options( $id ) ); ?>>
 		<?php
 		global $post;
 		global $product;
-		$posts = Utils::get_products( $id );
+		$posts = carousel_slider_products( $id );
 
 		foreach ( $posts as $post ):
 			setup_postdata( $post );
