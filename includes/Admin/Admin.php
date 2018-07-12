@@ -3,6 +3,7 @@
 namespace CarouselSlider\Admin;
 
 use CarouselSlider\Supports\Form;
+use CarouselSlider\Supports\Utils;
 use WP_Post;
 
 // If this file is called directly, abort.
@@ -176,7 +177,7 @@ class Admin {
 	 * @param $post_id
 	 */
 	public function columns_content( $column, $post_id ) {
-		$slide_types = carousel_slider_slide_type( false );
+		$slide_types = Utils::get_slide_types( false );
 		switch ( $column ) {
 
 			case 'usage':
@@ -385,15 +386,15 @@ class Admin {
 				'img_bg_position'          => sanitize_text_field( $slide['img_bg_position'] ),
 				'img_bg_size'              => sanitize_text_field( $slide['img_bg_size'] ),
 				'ken_burns_effect'         => sanitize_text_field( $slide['ken_burns_effect'] ),
-				'bg_color'                 => carousel_slider_sanitize_color( $slide['bg_color'] ),
-				'bg_overlay'               => carousel_slider_sanitize_color( $slide['bg_overlay'] ),
+				'bg_color'                 => Utils::sanitize_color( $slide['bg_color'] ),
+				'bg_overlay'               => Utils::sanitize_color( $slide['bg_overlay'] ),
 				// Gradient Background
 				'bg_gradient_color'        => $slide['bg_gradient_color'],
 				// Video Background
 				'video_url'                => $slide['video_url'],
 				'aspect_ratio'             => $slide['aspect_ratio'],
 				'display_mode'             => $slide['display_mode'],
-				'video_overlay_color'      => carousel_slider_sanitize_color( $slide['video_overlay_color'] ),
+				'video_overlay_color'      => Utils::sanitize_color( $slide['video_overlay_color'] ),
 				'mute_video'               => $slide['mute_video'],
 				'autoplay_video'           => $slide['autoplay_video'],
 				'loop_video'               => $slide['loop_video'],
@@ -402,10 +403,10 @@ class Admin {
 				'content_alignment'        => sanitize_text_field( $slide['content_alignment'] ),
 				'heading_font_size'        => intval( $slide['heading_font_size'] ),
 				'heading_gutter'           => sanitize_text_field( $slide['heading_gutter'] ),
-				'heading_color'            => carousel_slider_sanitize_color( $slide['heading_color'] ),
+				'heading_color'            => Utils::sanitize_color( $slide['heading_color'] ),
 				'description_font_size'    => intval( $slide['description_font_size'] ),
 				'description_gutter'       => sanitize_text_field( $slide['description_gutter'] ),
-				'description_color'        => carousel_slider_sanitize_color( $slide['description_color'] ),
+				'description_color'        => Utils::sanitize_color( $slide['description_color'] ),
 				// Slide Link
 				'link_type'                => sanitize_text_field( $slide['link_type'] ),
 				'slide_link'               => esc_url_raw( $slide['slide_link'] ),
@@ -418,8 +419,8 @@ class Admin {
 				'button_one_size'          => sanitize_text_field( $slide['button_one_size'] ),
 				'button_one_border_width'  => sanitize_text_field( $slide['button_one_border_width'] ),
 				'button_one_border_radius' => sanitize_text_field( $slide['button_one_border_radius'] ),
-				'button_one_bg_color'      => carousel_slider_sanitize_color( $slide['button_one_bg_color'] ),
-				'button_one_color'         => carousel_slider_sanitize_color( $slide['button_one_color'] ),
+				'button_one_bg_color'      => Utils::sanitize_color( $slide['button_one_bg_color'] ),
+				'button_one_color'         => Utils::sanitize_color( $slide['button_one_color'] ),
 				// Slide Button #2
 				'button_two_text'          => sanitize_text_field( $slide['button_two_text'] ),
 				'button_two_url'           => esc_url_raw( $slide['button_two_url'] ),
@@ -428,8 +429,8 @@ class Admin {
 				'button_two_size'          => sanitize_text_field( $slide['button_two_size'] ),
 				'button_two_border_width'  => sanitize_text_field( $slide['button_two_border_width'] ),
 				'button_two_border_radius' => sanitize_text_field( $slide['button_two_border_radius'] ),
-				'button_two_bg_color'      => carousel_slider_sanitize_color( $slide['button_two_bg_color'] ),
-				'button_two_color'         => carousel_slider_sanitize_color( $slide['button_two_color'] ),
+				'button_two_bg_color'      => Utils::sanitize_color( $slide['button_two_bg_color'] ),
+				'button_two_color'         => Utils::sanitize_color( $slide['button_two_color'] ),
 			);
 
 			return $_slide;

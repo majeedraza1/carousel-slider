@@ -3,6 +3,7 @@
 namespace CarouselSlider\Admin;
 
 use CarouselSlider\Supports\Form;
+use CarouselSlider\Supports\Utils;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -97,7 +98,7 @@ class MetaBox {
 		wp_nonce_field( 'carousel_slider_nonce', '_carousel_slider_nonce' );
 
 		$slide_type = get_post_meta( $post->ID, '_slide_type', true );
-		$slide_type = in_array( $slide_type, carousel_slider_slide_type() ) ? $slide_type : 'image-carousel';
+		$slide_type = in_array( $slide_type, Utils::get_slide_types() ) ? $slide_type : 'image-carousel';
 
 		require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/types.php';
 		require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/images-media.php';
@@ -154,7 +155,8 @@ class MetaBox {
 	public function usages_callback( $post ) {
 		ob_start(); ?>
         <p><strong>
-				<?php esc_html_e( 'Copy the following shortcode and paste in post or page where you want to show.', 'carousel-slider' ); ?>
+				<?php esc_html_e( 'Copy the following shortcode and paste in post or page where you want to show.',
+					'carousel-slider' ); ?>
             </strong>
         </p>
         <input

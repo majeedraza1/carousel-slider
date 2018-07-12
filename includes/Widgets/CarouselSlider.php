@@ -1,10 +1,13 @@
 <?php
+
+namespace CarouselSlider\Widgets;
+
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-class Carousel_Slider_Widget extends WP_Widget {
+class CarouselSlider extends \WP_Widget {
 
 	/**
 	 * Sets up the widgets name etc
@@ -12,7 +15,8 @@ class Carousel_Slider_Widget extends WP_Widget {
 	public function __construct() {
 		$widget_ops = array(
 			'classname'   => 'widget_carousel_slider',
-			'description' => __( 'The easiest way to create image, video, post and WooCommerce product carousel.', 'carousel-slider' ),
+			'description' => __( 'The easiest way to create image, video, post and WooCommerce product carousel.',
+				'carousel-slider' ),
 		);
 		parent::__construct( 'widget_carousel_slider', __( 'Carousel Slider', 'carousel-slider' ), $widget_ops );
 	}
@@ -57,8 +61,10 @@ class Carousel_Slider_Widget extends WP_Widget {
 
 		if ( count( $carousels ) > 0 ) {
 
-			printf( '<p><label for="%1$s">%2$s</label>', $this->get_field_id( 'title' ), __( 'Title (optional):', 'carousel-slider' ) );
-			printf( '<input type="text" class="widefat" id="%1$s" name="%2$s" value="%3$s" /></p>', $this->get_field_id( 'title' ), $this->get_field_name( 'title' ), $title );
+			printf( '<p><label for="%1$s">%2$s</label>', $this->get_field_id( 'title' ),
+				__( 'Title (optional):', 'carousel-slider' ) );
+			printf( '<input type="text" class="widefat" id="%1$s" name="%2$s" value="%3$s" /></p>',
+				$this->get_field_id( 'title' ), $this->get_field_name( 'title' ), $title );
 
 			printf( '<p><label>%s</label>', __( 'Choose Slide', 'carousel-slider' ) );
 			printf( '<select class="widefat" name="%s">', $this->get_field_name( 'carousel_id' ) );
@@ -123,9 +129,10 @@ class Carousel_Slider_Widget extends WP_Widget {
 		return $old_instance;
 	}
 
+	/**
+	 * Register a widget
+	 */
 	public static function register() {
 		register_widget( __CLASS__ );
 	}
 }
-
-add_action( 'widgets_init', array( 'Carousel_Slider_Widget', 'register' ) );

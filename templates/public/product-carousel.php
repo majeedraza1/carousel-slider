@@ -1,10 +1,13 @@
 <?php
+
+use CarouselSlider\Supports\Utils;
+
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-if ( ! carousel_slider_is_woocommerce_active() ) {
+if ( ! Utils::is_woocommerce_active() ) {
 	if ( current_user_can( 'manage_options' ) ) {
 		printf(
 			esc_html__( 'Carousel Slider needs %s to work for products carousel.', 'carousel-slider' ),
@@ -17,7 +20,7 @@ if ( ! carousel_slider_is_woocommerce_active() ) {
 	return;
 }
 
-$posts = carousel_slider_products( $id );
+$posts = Utils::get_products( $id );
 
 
 $_image_size       = get_post_meta( $id, '_image_size', true );
@@ -61,7 +64,8 @@ $_product_quick_view = get_post_meta( $id, '_product_quick_view', true );
 
 				// Show title
 				if ( $_product_title == 'on' ) {
-					echo sprintf( '<a href="%1$s"><h3>%2$s</h3></a>', get_the_permalink( $post->ID ), get_the_title( $post->ID ) );
+					echo sprintf( '<a href="%1$s"><h3>%2$s</h3></a>', get_the_permalink( $post->ID ),
+						get_the_title( $post->ID ) );
 				}
 
 				// Show Rating
@@ -75,7 +79,8 @@ $_product_quick_view = get_post_meta( $id, '_product_quick_view', true );
 				}
 				// Sale Product batch
 				if ( $product->is_on_sale() && $_product_onsale == 'on' ) {
-					echo apply_filters( 'woocommerce_sale_flash', '<span class="onsale">' . __( 'Sale!', 'carousel-slider' ) . '</span>', $product );
+					echo apply_filters( 'woocommerce_sale_flash',
+						'<span class="onsale">' . __( 'Sale!', 'carousel-slider' ) . '</span>', $product );
 				}
 				// Show Price
 				if ( $_product_price == 'on' ) {

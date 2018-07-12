@@ -1,4 +1,7 @@
 <?php
+
+use CarouselSlider\Supports\Utils;
+
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -31,7 +34,7 @@ $content_animation = empty( $settings['content_animation'] ) ? '' : esc_attr( $s
 			$_cell_style = '';
 			$_cell_style .= isset( $settings['slide_height'] ) ? 'height: ' . $settings['slide_height'] . ';' : '';
 
-			if ( $_link_type == 'full' && carousel_slider_is_url( $_slide_link ) ) {
+			if ( $_link_type == 'full' && Utils::is_url( $_slide_link ) ) {
 				$html .= '<a class="carousel-slider-hero__cell" style="' . $_cell_style . '" href="' . $_slide_link . '" target="' . $_link_target . '">';
 			} else {
 				$html .= '<div class="carousel-slider-hero__cell" style="' . $_cell_style . '">';
@@ -186,7 +189,7 @@ $content_animation = empty( $settings['content_animation'] ) ? '' : esc_attr( $s
 				$_btn_1_target = ! empty( $slide['button_one_target'] ) ? esc_attr( $slide['button_one_target'] ) : '_self';
 				$_btn_1_type   = ! empty( $slide['button_one_type'] ) ? esc_attr( $slide['button_one_type'] ) : 'normal';
 				$_btn_1_size   = ! empty( $slide['button_one_size'] ) ? esc_attr( $slide['button_one_size'] ) : 'medium';
-				if ( carousel_slider_is_url( $_btn_1_url ) ) {
+				if ( Utils::is_url( $_btn_1_url ) ) {
 					$_btn_1_class = 'button cs-hero-button';
 					$_btn_1_class .= ' cs-hero-button-' . $slide_id . '-1';
 					$_btn_1_class .= ' cs-hero-button-' . $_btn_1_type;
@@ -204,7 +207,7 @@ $content_animation = empty( $settings['content_animation'] ) ? '' : esc_attr( $s
 				$_btn_2_target = ! empty( $slide['button_two_target'] ) ? esc_attr( $slide['button_two_target'] ) : '_self';
 				$_btn_2_size   = ! empty( $slide['button_two_size'] ) ? esc_attr( $slide['button_two_size'] ) : 'medium';
 				$_btn_2_type   = ! empty( $slide['button_two_type'] ) ? esc_attr( $slide['button_two_type'] ) : 'normal';
-				if ( carousel_slider_is_url( $_btn_2_url ) ) {
+				if ( Utils::is_url( $_btn_2_url ) ) {
 					$_btn_2_class = 'button cs-hero-button';
 					$_btn_2_class .= ' cs-hero-button-' . $slide_id . '-2';
 					$_btn_2_class .= ' cs-hero-button-' . $_btn_2_type;
@@ -221,7 +224,7 @@ $content_animation = empty( $settings['content_animation'] ) ? '' : esc_attr( $s
 			$html .= '</div>'; // .carousel-slider-hero__cell__content
 			$html .= '</div>'; // .carousel-slider-hero__cell__inner
 
-			if ( $_link_type == 'full' && carousel_slider_is_url( $_slide_link ) ) {
+			if ( $_link_type == 'full' && Utils::is_url( $_slide_link ) ) {
 				$html .= '</a>'; // .carousel-slider-hero__cell
 			} else {
 				$html .= '</div>'; // .carousel-slider-hero__cell

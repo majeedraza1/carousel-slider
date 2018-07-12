@@ -1,4 +1,7 @@
 <?php
+
+use CarouselSlider\Supports\Utils;
+
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -21,7 +24,8 @@ $this->form->text( array(
 	'context'     => 'side',
 	'input_class' => 'small-text',
 	'name'        => esc_html__( 'Arrow Steps', 'carousel-slider' ),
-	'desc'        => esc_html__( 'Steps to go for each navigation request. Write "page" to slide by page.', 'carousel-slider' ),
+	'desc'        => esc_html__( 'Steps to go for each navigation request. Write "page" to slide by page.',
+		'carousel-slider' ),
 	'std'         => 1
 ) );
 $this->form->select( array(
@@ -102,7 +106,7 @@ $this->form->color( array(
 	'context' => 'side',
 	'name'    => esc_html__( 'Arrows &amp; Dots Color', 'carousel-slider' ),
 	'desc'    => esc_html__( 'Pick a color for navigation and dots.', 'carousel-slider' ),
-	'std'     => carousel_slider_default_settings()->nav_color,
+	'std'     => Utils::get_default_setting( 'nav_color' ),
 ) );
 $this->form->color( array(
 	'id'      => '_nav_active_color',
@@ -110,5 +114,5 @@ $this->form->color( array(
 	'context' => 'side',
 	'name'    => esc_html__( 'Arrows & Dots Hover Color', 'carousel-slider' ),
 	'desc'    => esc_html__( 'Pick a color for navigation and dots for active and hover effect.', 'carousel-slider' ),
-	'std'     => carousel_slider_default_settings()->nav_active_color,
+	'std'     => Utils::get_default_setting( 'nav_active_color' ),
 ) );

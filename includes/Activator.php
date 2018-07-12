@@ -14,14 +14,14 @@ if ( ! defined( 'WPINC' ) ) {
  * @since   1.6.0
  * @author  Sayful Islam <sayful.islam001@gmail.com>
  */
-class Carousel_Slider_Activator {
+class Activator {
 
 	protected static $instance = null;
 
 	/**
 	 * Ensures only one instance of this class is loaded or can be loaded.
 	 *
-	 * @return Carousel_Slider_Activator
+	 * @return Activator
 	 */
 	public static function init() {
 		if ( is_null( self::$instance ) ) {
@@ -73,5 +73,3 @@ class Carousel_Slider_Activator {
 		}
 	}
 }
-
-Carousel_Slider_Activator::init();

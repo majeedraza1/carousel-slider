@@ -174,8 +174,16 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 				$this->container['ajax-hero']     = \CarouselSlider\Admin\HeroCarousel::init();
 			}
 
-			$this->container['activator'] = \CarouselSlider\Carousel_Slider_Activator::init();
-			$this->container['product']   = \CarouselSlider\Carousel_Slider_Product::init();
+			if ( $this->is_request( 'frontend' ) ) {
+				$this->container['shortcode']       = \CarouselSlider\Display\Shortcode::init();
+				$this->container['structured-data'] = \CarouselSlider\Display\StructuredData::init();
+			}
+
+			$this->container['activator'] = \CarouselSlider\Activator::init();
+			$this->container['product']   = \CarouselSlider\Product::init();
+			$this->container['script']    = \CarouselSlider\Script::init();
+
+			add_action( 'widgets_init', array( 'CarouselSlider\Widgets\CarouselSlider', 'register' ) );
 		}
 
 		/**
@@ -183,12 +191,6 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		 */
 		private function includes() {
 			require_once CAROUSEL_SLIDER_INCLUDES . '/functions-carousel-slider.php';
-			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-script.php';
-			require_once CAROUSEL_SLIDER_WIDGETS . '/widget-carousel_slider.php';
-
-			require_once CAROUSEL_SLIDER_PATH . '/shortcodes/class-carousel-slider-shortcode.php';
-			require_once CAROUSEL_SLIDER_PATH . '/shortcodes/class-carousel-slider-deprecated-shortcode.php';
-			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-structured-data.php';
 		}
 
 		/**
@@ -234,7 +236,8 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 			}
 
 			$error = __( 'Your installed PHP Version is: ', 'carousel-slider' ) . PHP_VERSION . '. ';
-			$error .= sprintf( __( 'The Carousel Slider plugin requires PHP version %s or greater.', 'carousel-slider' ), $this->min_php );
+			$error .= sprintf( __( 'The Carousel Slider plugin requires PHP version %s or greater.',
+				'carousel-slider' ), $this->min_php );
 			?>
             <div class="error">
                 <p><?php printf( $error ); ?></p>

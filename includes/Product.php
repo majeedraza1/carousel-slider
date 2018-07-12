@@ -27,7 +27,7 @@ if ( ! defined( 'WPINC' ) ) {
 }
 
 
-class Carousel_Slider_Product {
+class Product {
 
 	private static $instance;
 

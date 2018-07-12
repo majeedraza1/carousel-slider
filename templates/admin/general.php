@@ -1,4 +1,7 @@
 <?php
+
+use CarouselSlider\Supports\Utils;
+
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -8,7 +11,8 @@ $this->form->image_sizes( array(
 	'id'   => esc_html__( '_image_size', 'carousel-slider' ),
 	'name' => esc_html__( 'Carousel Image size', 'carousel-slider' ),
 	'desc' => sprintf(
-		esc_html__( 'Choose "original uploaded image" for full size image or your desired image size for carousel image. You can change the default size for thumbnail, medium and large from %1$s Settings >> Media %2$s.', 'carousel-slider' ),
+		esc_html__( 'Choose "original uploaded image" for full size image or your desired image size for carousel image. You can change the default size for thumbnail, medium and large from %1$s Settings >> Media %2$s.',
+			'carousel-slider' ),
 		'<a target="_blank" href="' . get_admin_url() . 'options-media.php">', '</a>'
 	),
 ) );
@@ -16,7 +20,7 @@ $this->form->buttonset( array(
 	'id'      => '_lazy_load_image',
 	'name'    => esc_html__( 'Lazy Loading', 'carousel-slider' ),
 	'desc'    => esc_html__( 'Enable image with lazy loading.', 'carousel-slider' ),
-	'std'     => carousel_slider_default_settings()->lazy_load_image,
+	'std'     => Utils::get_default_setting( 'lazy_load_image' ),
 	'options' => array(
 		'on'  => esc_html__( 'Enable', 'carousel-slider' ),
 		'off' => esc_html__( 'Disable', 'carousel-slider' ),
@@ -26,7 +30,7 @@ $this->form->slider( array(
 	'id'      => '_margin_right',
 	'name'    => esc_html__( 'Item Spacing.', 'carousel-slider' ),
 	'desc'    => esc_html__( 'Space between two slide.', 'carousel-slider' ),
-	'std'     => carousel_slider_default_settings()->margin_right,
+	'std'     => Utils::get_default_setting( 'margin_right' ),
 	'choices' => array(
 		'min'    => 0,
 		'max'    => 200,
@@ -59,7 +63,8 @@ $this->form->slider( array(
 $this->form->buttonset( array(
 	'id'      => '_auto_width',
 	'name'    => esc_html__( 'Auto Width', 'carousel-slider' ),
-	'desc'    => esc_html__( 'Set item width according to its content width. Use width style on item to get the result you want. ', 'carousel-slider' ),
+	'desc'    => esc_html__( 'Set item width according to its content width. Use width style on item to get the result you want. ',
+		'carousel-slider' ),
 	'std'     => 'off',
 	'options' => array(
 		'on'  => esc_html__( 'Enable', 'carousel-slider' ),

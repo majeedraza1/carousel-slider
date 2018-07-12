@@ -23,7 +23,8 @@ class Form {
 		$class = isset( $args['input_class'] ) ? esc_attr( $args['input_class'] ) : 'sp-input-text';
 
 		echo $this->field_before( $args );
-		echo sprintf( '<input type="text" class="' . $class . '" value="%1$s" id="' . $input_id . '" name="%3$s">', $value, $args['id'], $name );
+		echo sprintf( '<input type="text" class="' . $class . '" value="%1$s" id="' . $input_id . '" name="%3$s">',
+			$value, $args['id'], $name );
 		echo $this->field_after( $args );
 	}
 
@@ -46,7 +47,8 @@ class Form {
 		$class = empty( $args['input_class'] ) ? 'sp-input-textarea' : 'sp-input-textarea ' . esc_attr( $args['input_class'] );
 
 		echo $this->field_before( $args );
-		echo sprintf( '<textarea class="' . $class . '" id="' . $input_id . '" name="%3$s" cols="%4$d" rows="%5$d">%1$s</textarea>', esc_textarea( $value ), $args['id'], $name, $cols, $rows );
+		echo sprintf( '<textarea class="' . $class . '" id="' . $input_id . '" name="%3$s" cols="%4$d" rows="%5$d">%1$s</textarea>',
+			esc_textarea( $value ), $args['id'], $name, $cols, $rows );
 		echo $this->field_after( $args );
 	}
 
@@ -64,7 +66,8 @@ class Form {
 		$std_value = isset( $args['std'] ) ? $args['std'] : '';
 
 		echo $this->field_before( $args );
-		echo sprintf( '<input type="text" class="color-picker" value="%1$s" id="' . $input_id . '" name="%3$s" data-alpha="true" data-default-color="%4$s">', $value, $args['id'], $name, $std_value );
+		echo sprintf( '<input type="text" class="color-picker" value="%1$s" id="' . $input_id . '" name="%3$s" data-alpha="true" data-default-color="%4$s">',
+			$value, $args['id'], $name, $std_value );
 		echo $this->field_after( $args );
 	}
 
@@ -82,7 +85,8 @@ class Form {
 		$std_value = isset( $args['std'] ) ? $args['std'] : '';
 
 		echo $this->field_before( $args );
-		echo sprintf( '<input type="text" class="sp-input-text datepicker" value="%1$s" id="%2$s" name="%3$s">', $value, $args['id'], $name, $std_value );
+		echo sprintf( '<input type="text" class="sp-input-text datepicker" value="%1$s" id="%2$s" name="%3$s">', $value,
+			$args['id'], $name, $std_value );
 		echo $this->field_after( $args );
 	}
 
@@ -120,7 +124,8 @@ class Form {
 
 		echo $this->field_before( $args );
 		echo sprintf( '<input type="hidden" name="%1$s" value="off">', $name );
-		echo sprintf( '<label for="%2$s"><input type="checkbox" ' . $checked . ' value="on" id="%2$s" name="%1$s">%3$s</label>', $name, $args['id'], $label );
+		echo sprintf( '<label for="%2$s"><input type="checkbox" ' . $checked . ' value="on" id="%2$s" name="%1$s">%3$s</label>',
+			$name, $args['id'], $label );
 		echo $this->field_after( $args );
 	}
 
@@ -322,7 +327,8 @@ class Form {
 
 		$html = $this->field_before( $args );
 		$html .= '<div class="carousel_slider_images">';
-		$html .= sprintf( '<input type="hidden" value="%1$s" id="_carousel_slider_images_ids" name="%2$s">', $value, $name );
+		$html .= sprintf( '<input type="hidden" value="%1$s" id="_carousel_slider_images_ids" name="%2$s">', $value,
+			$name );
 		$html .= sprintf(
 			'<a href="#" id="%1$s" class="button" data-id="%2$s" data-ids="%3$s" data-create="%5$s" data-edit="%6$s" data-save="%7$s" data-progress="%8$s" data-insert="%9$s">%4$s</a>',
 			'carousel_slider_gallery_btn',
@@ -383,8 +389,10 @@ class Form {
 		list( $name, $value ) = $this->field_common( $args );
 
 		echo $this->field_before( $args );
-		echo sprintf( '<input type="text" class="sp-input-text" value="%1$s" id="%2$s" name="%3$s">', $value, $args['id'], $name );
-		echo sprintf( '<input type="button" class="button" id="carousel_slider_video_btn" value="%s">', __( 'Browse', 'carousel-slider' ) );
+		echo sprintf( '<input type="text" class="sp-input-text" value="%1$s" id="%2$s" name="%3$s">', $value,
+			$args['id'], $name );
+		echo sprintf( '<input type="button" class="button" id="carousel_slider_video_btn" value="%s">',
+			__( 'Browse', 'carousel-slider' ) );
 		echo $this->field_after( $args );
 	}
 
@@ -449,7 +457,9 @@ class Form {
 		}
 		list( $name, $value ) = $this->field_common( $args );
 
-		$value    = explode( ',', strip_tags( rtrim( $value, ',' ) ) );
+		if ( is_string( $value ) ) {
+			$value = explode( ',', strip_tags( rtrim( $value, ',' ) ) );
+		}
 		$multiple = isset( $args['multiple'] ) ? 'multiple' : '';
 		$taxonomy = isset( $args['taxonomy'] ) ? $args['taxonomy'] : 'category';
 

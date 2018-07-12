@@ -27,7 +27,7 @@ class Setting {
 
 		$nav_visibility = array( 'never', 'hover', 'always' );
 		$slide_type     = isset( $meta['_slide_type'] ) && in_array( $meta['_slide_type'],
-			carousel_slider_slide_type() ) ? esc_attr( $meta['_slide_type'] ) : 'image-carousel';
+			Utils::get_slide_types() ) ? esc_attr( $meta['_slide_type'] ) : 'image-carousel';
 
 		$settings             = array(
 			'slide_id'    => $slider_id,
@@ -60,8 +60,8 @@ class Setting {
 			'bullet_position'      => isset( $meta['_bullet_position'] ) ? esc_attr( $meta['_bullet_position'] ) : 'center',
 			'bullet_size'          => isset( $meta['_bullet_size'] ) ? intval( $meta['_bullet_size'] ) : 10,
 			'bullet_shape'         => isset( $meta['_bullet_shape'] ) && 'circle' == $meta['_bullet_shape'] ? 'circle' : 'square',
-			'nav_color'            => isset( $meta['_nav_color'] ) ? carousel_slider_sanitize_color( $meta['_nav_color'] ) : carousel_slider_default_settings()->nav_color,
-			'nav_active_color'     => isset( $meta['_nav_active_color'] ) ? carousel_slider_sanitize_color( $meta['_nav_active_color'] ) : carousel_slider_default_settings()->nav_active_color,
+			'nav_color'            => isset( $meta['_nav_color'] ) ? Utils::sanitize_color( $meta['_nav_color'] ) : Utils::get_default_setting( 'nav_color' ),
+			'nav_active_color'     => isset( $meta['_nav_active_color'] ) ? Utils::sanitize_color( $meta['_nav_active_color'] ) : Utils::get_default_setting( 'nav_active_color' ),
 		);
 
 		// Content Slider
@@ -134,9 +134,9 @@ class Setting {
 
 		// Product Carousel
 		if ( 'product-carousel' == $slide_type ) {
-			$_color_title       = carousel_slider_default_settings()->product_title_color;
-			$_color_button      = carousel_slider_default_settings()->product_button_bg_color;
-			$_color_button_text = carousel_slider_default_settings()->product_button_text_color;
+			$_color_title       = Utils::get_default_setting( 'product_title_color' );
+			$_color_button      = Utils::get_default_setting( 'product_button_bg_color' );
+			$_color_button_text = Utils::get_default_setting( 'product_button_text_color' );
 
 			$settings['product_carousel'] = array(
 				'product_query_type'        => ! empty( $meta['_product_query_type'] ) ? esc_attr( $meta['_product_query_type'] ) : 'query_porduct',
@@ -164,8 +164,8 @@ class Setting {
 	}
 
 	public static function navigation( $slider_id ) {
-		$_nav_color_default       = carousel_slider_default_settings()->nav_color;
-		$nav_active_color_default = carousel_slider_default_settings()->nav_active_color;
+		$_nav_color_default       = Utils::get_default_setting( 'nav_color' );
+		$nav_active_color_default = Utils::get_default_setting( 'nav_active_color' );
 
 		$_nav_button       = get_post_meta( $slider_id, '_nav_button', true );
 		$_nav_button       = in_array( $_nav_button, array( 'off', 'on', 'always' ) ) ? $_nav_button : 'always';
@@ -346,7 +346,7 @@ class Setting {
 			return $default;
 		}
 
-		return carousel_slider_sanitize_color( $value );
+		return Utils::sanitize_color( $value );
 	}
 
 	/**
