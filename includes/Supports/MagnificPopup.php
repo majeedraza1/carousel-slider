@@ -1,6 +1,8 @@
 <?php
 
-class Carousel_Slider_Magnific_Popup {
+namespace CarouselSlider\Supports;
+
+class MagnificPopup {
 
 	/**
 	 * @param array $config

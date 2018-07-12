@@ -42,11 +42,11 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 			}
 
 			$id             = intval( $attributes['id'] );
-			$options        = Carousel_Slider_Setting::get( $id );
+			$options        = \CarouselSlider\Supports\Setting::get( $id );
 			$slide_type     = $options['slide_type'];
 			$class          = implode( ' ', $options['class'] );
-			$owl_options    = Carousel_Slider_Owl_Carousel::settings( $options );
-			$magnific_popup = Carousel_Slider_Magnific_Popup::settings( $options );
+			$owl_options    = \CarouselSlider\Supports\OwlCarousel::settings( $options );
+			$magnific_popup = \CarouselSlider\Supports\MagnificPopup::settings( $options );
 
 			if ( $slide_type == 'post-carousel' ) {
 				ob_start();
@@ -132,10 +132,10 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 			$product_carousel   = new Carousel_Slider_Product();
 			$product_categories = $product_carousel->product_categories();
 
-			$options                = Carousel_Slider_Setting::get( $id );
+			$options                = \CarouselSlider\Supports\Setting::get( $id );
 			$options['total_slide'] = count( $product_categories );
 			$class                  = implode( ' ', $options['class'] );
-			$owl_options            = Carousel_Slider_Owl_Carousel::settings( $options );
+			$owl_options            = \CarouselSlider\Supports\OwlCarousel::settings( $options );
 
 			ob_start();
 			if ( $product_categories ) {

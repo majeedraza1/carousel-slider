@@ -1,6 +1,8 @@
 <?php
 
-class Carousel_Slider_Owl_Carousel {
+namespace CarouselSlider\Supports;
+
+class OwlCarousel {
 
 	public static function settings( array $settings ) {
 		$setting = $settings['settings'];

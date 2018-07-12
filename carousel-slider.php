@@ -10,7 +10,7 @@
  * Tested up to: 4.9
  *
  * WC requires at least: 2.5
- * WC tested up to: 3.3
+ * WC tested up to: 3.4
  *
  * Text Domain: carousel-slider
  *
@@ -45,6 +45,13 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		private $version = '1.9.0';
 
 		/**
+		 * Holds various class instances
+		 *
+		 * @var array
+		 */
+		private $container = array();
+
+		/**
 		 * Minimum PHP version required
 		 *
 		 * @var string
@@ -52,9 +59,11 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		private $min_php = '5.3.0';
 
 		/**
-		 * @var object
+		 * The instance of the class
+		 *
+		 * @var Carousel_Slider
 		 */
-		protected static $instance;
+		private static $instance;
 
 		/**
 		 * Main Carousel_Slider Instance
@@ -66,24 +75,42 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		public static function instance() {
 			if ( is_null( self::$instance ) ) {
 				self::$instance = new self();
+
+				// Define plugin constants
+				self::$instance->define_constants();
+
+				// Check if PHP version is supported for our plugin
+				if ( ! self::$instance->is_supported_php() ) {
+					register_activation_hook( __FILE__, array( self::$instance, 'auto_deactivate' ) );
+					add_action( 'admin_notices', array( self::$instance, 'php_version_notice' ) );
+
+					return self::$instance;
+				}
+
+				// Register autoload for plugin classes
+				self::$instance->register_autoload();
+
+				add_action( 'plugins_loaded', array( self::$instance, 'load_textdomain' ) );
+
+				// Include plugin classes
+				self::$instance->includes();
+
+				// initialize the classes
+				self::$instance->init_classes();
+
+				// Register activation and deactivation hook
+				register_activation_hook( __FILE__, array( self::$instance, 'activation' ) );
+				register_deactivation_hook( __FILE__, array( self::$instance, 'deactivation' ) );
+
+				do_action( 'carousel_slider/init' );
 			}
 
 			return self::$instance;
 		}
 
 		/**
-		 * Carousel_Slider constructor.
+		 * Define plugin constant
 		 */
-		public function __construct() {
-			$this->define_constants();
-			$this->includes();
-
-			register_activation_hook( __FILE__, array( $this, 'activation' ) );
-			register_deactivation_hook( __FILE__, array( $this, 'deactivation' ) );
-
-			do_action( 'carousel_slider_init' );
-		}
-
 		public function define_constants() {
 			define( 'CAROUSEL_SLIDER_VERSION', $this->version );
 			define( 'CAROUSEL_SLIDER_FILE', __FILE__ );
@@ -96,44 +123,85 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		}
 
 		/**
-		 * Define constant if not already set.
-		 *
-		 * @param  string $name
-		 * @param  string|bool $value
+		 * Include classes
 		 */
-		private function define( $name, $value ) {
-			if ( ! defined( $name ) ) {
-				define( $name, $value );
+		private function register_autoload() {
+			spl_autoload_register( function ( $className ) {
+				if ( class_exists( $className ) ) {
+					return;
+				}
+
+				// project-specific namespace prefix
+				$prefix = 'CarouselSlider\\';
+
+				// base directory for the namespace prefix
+				$base_dir = CAROUSEL_SLIDER_INCLUDES . DIRECTORY_SEPARATOR;
+
+				// does the class use the namespace prefix?
+				$len = strlen( $prefix );
+				if ( strncmp( $prefix, $className, $len ) !== 0 ) {
+					// no, move to the next registered autoloader
+					return;
+				}
+
+				// get the relative class name
+				$relative_class = substr( $className, $len );
+
+				// replace the namespace prefix with the base directory, replace namespace
+				// separators with directory separators in the relative class name, append
+				// with .php
+				$file = $base_dir . str_replace( '\\', '/', $relative_class ) . '.php';
+
+				// if the file exists, require it
+				if ( file_exists( $file ) ) {
+					require_once $file;
+				}
+			} );
+		}
+
+		/**
+		 * Instantiate the required classes
+		 *
+		 * @return void
+		 */
+		public function init_classes() {
+			if ( $this->is_request( 'admin' ) ) {
+				$this->container['admin']         = \CarouselSlider\Admin\Admin::init();
+				$this->container['meta']          = \CarouselSlider\Admin\MetaBox::init();
+				$this->container['credit']        = \CarouselSlider\Admin\Credit::init();
+				$this->container['documentation'] = \CarouselSlider\Admin\Documentation::init();
+				$this->container['vc-element']    = \CarouselSlider\Admin\VisualComposerElement::init();
+				$this->container['ajax-hero']     = \CarouselSlider\Admin\HeroCarousel::init();
 			}
+
+			$this->container['activator'] = \CarouselSlider\Carousel_Slider_Activator::init();
+			$this->container['product']   = \CarouselSlider\Carousel_Slider_Product::init();
 		}
 
 		/**
 		 * Include admin and front facing files
 		 */
 		private function includes() {
-			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-i18n.php';
 			require_once CAROUSEL_SLIDER_INCLUDES . '/functions-carousel-slider.php';
-			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-setting.php';
-			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-owl-carousel.php';
-			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-magnific-popup.php';
-			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-activator.php';
-			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-product.php';
 			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-script.php';
 			require_once CAROUSEL_SLIDER_WIDGETS . '/widget-carousel_slider.php';
-
-			if ( is_admin() ) {
-				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-credit.php';
-				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-documentation.php';
-				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-vc-element.php';
-				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-form.php';
-				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-admin.php';
-				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-meta-box.php';
-				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-hero-carousel.php';
-			}
 
 			require_once CAROUSEL_SLIDER_PATH . '/shortcodes/class-carousel-slider-shortcode.php';
 			require_once CAROUSEL_SLIDER_PATH . '/shortcodes/class-carousel-slider-deprecated-shortcode.php';
 			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-structured-data.php';
+		}
+
+		/**
+		 * Load plugin textdomain
+		 */
+		public function load_textdomain() {
+			$locale_file = sprintf( '%1$s-%2$s.mo', 'carousel-slider', get_locale() );
+			$global_file = join( DIRECTORY_SEPARATOR, array( WP_LANG_DIR, 'carousel-slider', $locale_file ) );
+
+			// Look in global /wp-content/languages/carousel-slider folder
+			if ( file_exists( $global_file ) ) {
+				load_textdomain( $this->plugin_name, $global_file );
+			}
 		}
 
 		/**
@@ -152,6 +220,93 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		public function deactivation() {
 			do_action( 'carousel_slider_deactivation' );
 			flush_rewrite_rules();
+		}
+
+		/**
+		 * Show notice about PHP version
+		 *
+		 * @return void
+		 */
+		public function php_version_notice() {
+
+			if ( $this->is_supported_php() || ! current_user_can( 'manage_options' ) ) {
+				return;
+			}
+
+			$error = __( 'Your installed PHP Version is: ', 'carousel-slider' ) . PHP_VERSION . '. ';
+			$error .= sprintf( __( 'The Carousel Slider plugin requires PHP version %s or greater.', 'carousel-slider' ), $this->min_php );
+			?>
+            <div class="error">
+                <p><?php printf( $error ); ?></p>
+            </div>
+			<?php
+		}
+
+		/**
+		 * Bail out if the php version is lower than
+		 *
+		 * @return void
+		 */
+		public function auto_deactivate() {
+			if ( $this->is_supported_php() ) {
+				return;
+			}
+
+			deactivate_plugins( plugin_basename( __FILE__ ) );
+
+			$error = '<h1>' . __( 'An Error Occurred', 'carousel-slider' ) . '</h1>';
+			$error .= '<h2>' . __( 'Your installed PHP Version is: ', 'carousel-slider' ) . PHP_VERSION . '</h2>';
+			$error .= '<p>' . sprintf( __( 'The Dialog Contact Form plugin requires PHP version %s or greater',
+					'carousel-slider' ), $this->min_php ) . '</p>';
+			$error .= '<p>' . sprintf( __( 'The version of your PHP is %s unsupported and old %s. ',
+					'carousel-slider' ),
+					'<a href="http://php.net/supported-versions.php" target="_blank"><strong>',
+					'</strong></a>'
+				);
+			$error .= __( 'You should update your PHP software or contact your host regarding this matter.',
+					'carousel-slider' ) . '</p>';
+
+			wp_die( $error, __( 'Plugin Activation Error', 'carousel-slider' ), array( 'back_link' => true ) );
+		}
+
+		/**
+		 * What type of request is this?
+		 *
+		 * @param  string $type admin, ajax, cron or frontend.
+		 *
+		 * @return bool
+		 */
+		public function is_request( $type ) {
+			switch ( $type ) {
+				case 'admin':
+					return is_admin();
+				case 'ajax':
+					return defined( 'DOING_AJAX' );
+				case 'cron':
+					return defined( 'DOING_CRON' );
+				case 'frontend':
+					return ( ! is_admin() || defined( 'DOING_AJAX' ) ) && ! defined( 'DOING_CRON' );
+			}
+
+			return false;
+		}
+
+		/**
+		 * Check if the PHP version is supported
+		 *
+		 * @param null $min_php
+		 *
+		 * @return bool
+		 */
+		private function is_supported_php( $min_php = null ) {
+
+			$min_php = $min_php ? $min_php : $this->min_php;
+
+			if ( version_compare( PHP_VERSION, $min_php, '<=' ) ) {
+				return false;
+			}
+
+			return true;
 		}
 	}
 }
