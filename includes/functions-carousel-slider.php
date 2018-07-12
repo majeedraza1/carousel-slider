@@ -269,7 +269,7 @@ if ( ! function_exists( 'carousel_slider_products' ) ) {
 		$query_type    = empty( $query_type ) ? 'query_porduct' : $query_type;
 		$product_query = get_post_meta( $id, '_product_query', true );
 
-		$product_carousel = new Carousel_Slider_Product();
+		$product_carousel = new \CarouselSlider\Product();
 
 		$args = array( 'posts_per_page' => $per_page );
 
