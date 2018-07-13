@@ -95,8 +95,6 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 				// initialize the classes
 				self::$instance->init_classes();
 
-				self::$instance->includes();
-
 				register_activation_hook( __FILE__, array( self::$instance, 'activation' ) );
 				register_deactivation_hook( __FILE__, array( self::$instance, 'deactivation' ) );
 
@@ -143,7 +141,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 				// project-specific namespace prefix
 				$prefix = 'CarouselSlider\\';
 				// base directory for the namespace prefix
-				$base_dir = CAROUSEL_SLIDER_PATH . '/classes/';
+				$base_dir = CAROUSEL_SLIDER_INCLUDES . DIRECTORY_SEPARATOR;
 				// does the class use the namespace prefix?
 				$len = strlen( $prefix );
 				if ( strncmp( $prefix, $className, $len ) !== 0 ) {
@@ -171,6 +169,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		private function init_classes() {
 			$this->container['activator'] = \CarouselSlider\Activator::init();
 			$this->container['script']    = \CarouselSlider\Script::init();
+			$this->container['preview']   = \CarouselSlider\Display\Preview::init();
 			$this->container['product']   = \CarouselSlider\Product::init();
 
 			if ( $this->is_request( 'admin' ) ) {
@@ -186,17 +185,12 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 				$this->container['shortcode']       = \CarouselSlider\Display\Shortcode::init();
 			}
 
+			// Widgets
+			add_action( 'widgets_init', array( 'CarouselSlider\\Widgets\\CarouselSlider', 'register' ) );
+
 			// Product quick view
 			add_action( 'wp_ajax_carousel_slider_quick_view', array( 'CarouselSlider\\QuickView', 'product' ) );
 			add_action( 'wp_ajax_nopriv_carousel_slider_quick_view', array( 'CarouselSlider\\QuickView', 'product' ) );
-		}
-
-		/**
-		 * Include admin and front facing files
-		 */
-		private function includes() {
-			require_once CAROUSEL_SLIDER_INCLUDES . '/functions-carousel-slider.php';
-			require_once CAROUSEL_SLIDER_WIDGETS . '/widget-carousel_slider.php';
 		}
 
 		/**

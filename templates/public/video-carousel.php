@@ -1,4 +1,7 @@
 <?php
+
+use CarouselSlider\Supports\DynamicStyle;
+
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -9,7 +12,7 @@ if ( count( $urls ) < 1 ) {
 }
 ?>
 <div class="carousel-slider-outer carousel-slider-outer-videos carousel-slider-outer-<?php echo $id; ?>">
-	<?php carousel_slider_inline_style( $id ); ?>
+	<?php echo DynamicStyle::generate( $id ); ?>
     <div <?php echo join( " ", $this->carousel_options( $id ) ); ?>>
 		<?php
 		foreach ( $urls as $url ) {

@@ -1,4 +1,7 @@
 <?php
+
+use CarouselSlider\Supports\Utils;
+
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -117,21 +120,21 @@ if ( ! defined( 'WPINC' ) ) {
 				'type' => 'color',
 				'name' => esc_html__( 'Title Color', 'carousel-slider' ),
 				'desc' => esc_html__( 'Pick a color for product title. This color will also apply to sale tag and price.', 'carousel-slider' ),
-				'std'  => carousel_slider_default_settings()->product_title_color,
+				'std'  => Utils::get_default_setting( 'product_title_color' ),
 			) );
 			$this->form->color( array(
 				'id'   => '_product_button_bg_color',
 				'type' => 'color',
 				'name' => esc_html__( 'Button Background Color', 'carousel-slider' ),
 				'desc' => esc_html__( 'Pick a color for button background color. This color will also apply to product rating.', 'carousel-slider' ),
-				'std'  => carousel_slider_default_settings()->product_button_bg_color
+				'std'  => Utils::get_default_setting( 'product_button_bg_color' )
 			) );
 			$this->form->color( array(
 				'id'   => '_product_button_text_color',
 				'type' => 'color',
 				'name' => esc_html__( 'Button Text Color', 'carousel-slider' ),
 				'desc' => esc_html__( 'Pick a color for button text color.', 'carousel-slider' ),
-				'std'  => carousel_slider_default_settings()->product_button_text_color
+				'std'  => Utils::get_default_setting( 'product_button_text_color' )
 			) );
 			?>
         </div>

@@ -1,4 +1,7 @@
 <?php
+
+use CarouselSlider\Supports\Utils;
+
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -16,7 +19,7 @@ $this->form->select( array(
 	'id'      => '_lazy_load_image',
 	'name'    => esc_html__( 'Lazy Loading', 'carousel-slider' ),
 	'desc'    => esc_html__( 'Enable image with lazy loading.', 'carousel-slider' ),
-	'std'     => carousel_slider_default_settings()->lazy_load_image,
+	'std'     => Utils::get_default_setting( 'lazy_load_image' ),
 	'options' => array(
 		'on'  => esc_html__( 'Enable' ),
 		'off' => esc_html__( 'Disable' ),
@@ -26,7 +29,7 @@ $this->form->number( array(
 	'id'   => '_margin_right',
 	'name' => esc_html__( 'Item Spacing.', 'carousel-slider' ),
 	'desc' => esc_html__( 'Space between two slide. Enter 10 for 10px', 'carousel-slider' ),
-	'std'  => carousel_slider_default_settings()->margin_right
+	'std'  => Utils::get_default_setting( 'margin_right' )
 ) );
 $this->form->select( array(
 	'id'      => '_inifnity_loop',

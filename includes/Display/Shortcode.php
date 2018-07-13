@@ -2,6 +2,9 @@
 
 namespace CarouselSlider\Display;
 
+use CarouselSlider\Supports\DynamicStyle;
+use CarouselSlider\Supports\Utils;
+
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -40,7 +43,7 @@ class Shortcode {
 		$id = intval( $attributes['id'] );
 
 		$slide_type = get_post_meta( $id, '_slide_type', true );
-		$slide_type = in_array( $slide_type, carousel_slider_slide_type() ) ? $slide_type : 'image-carousel';
+		$slide_type = in_array( $slide_type, Utils::get_slide_types() ) ? $slide_type : 'image-carousel';
 
 		if ( $slide_type == 'post-carousel' ) {
 			ob_start();
@@ -220,7 +223,26 @@ class Shortcode {
 	 * @return string
 	 */
 	public function get_meta( $id, $key, $default = null ) {
-		return carousel_slider_get_meta( $id, $key, $default );
+		$meta = get_post_meta( $id, $key, true );
+
+		if ( empty( $meta ) && $default ) {
+			$meta = $default;
+		}
+
+		if ( $meta == 'zero' ) {
+			$meta = '0';
+		}
+		if ( $meta == 'on' ) {
+			$meta = 'true';
+		}
+		if ( $meta == 'off' ) {
+			$meta = 'false';
+		}
+		if ( $key == '_margin_right' && $meta == 0 ) {
+			$meta = '0';
+		}
+
+		return esc_attr( $meta );
 	}
 
 	/**
@@ -228,10 +250,36 @@ class Shortcode {
 	 *
 	 * @param $array
 	 *
-	 * @return array
+	 * @return array|string
 	 */
 	public function array_to_data( $array ) {
-		return carousel_slider_array_to_attribute( $array );
+		if ( ! is_array( $array ) ) {
+			return '';
+		}
+
+		$attribute = array_map( function ( $key, $value ) {
+			// If boolean value
+			if ( is_bool( $value ) ) {
+				if ( $value ) {
+
+					return sprintf( '%s="%s"', $key, 'true' );
+				} else {
+
+					return sprintf( '%s="%s"', $key, 'false' );
+				}
+			}
+			// If array value
+			if ( is_array( $value ) ) {
+
+				return sprintf( '%s="%s"', $key, implode( " ", $value ) );
+			}
+
+			// If string value
+			return sprintf( '%s="%s"', $key, esc_attr( $value ) );
+
+		}, array_keys( $array ), array_values( $array ) );
+
+		return $attribute;
 	}
 
 	/**
@@ -252,7 +300,7 @@ class Shortcode {
 		ob_start();
 		if ( $product_categories ) {
 			echo '<div class="carousel-slider-outer carousel-slider-outer-products carousel-slider-outer-' . $id . '">';
-			carousel_slider_inline_style( $id );
+			echo DynamicStyle::generate( $id );
 			echo '<div ' . $options . '>';
 
 

@@ -1,10 +1,14 @@
 <?php
+
+use CarouselSlider\Supports\DynamicStyle;
+use CarouselSlider\Supports\Utils;
+
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-if ( ! carousel_slider_is_woocommerce_active() ) {
+if ( ! Utils::is_woocommerce_active() ) {
 	if ( current_user_can( 'manage_options' ) ) {
 		printf(
 			esc_html__( 'Carousel Slider needs %s to work for products carousel.', 'carousel-slider' ),
@@ -17,7 +21,7 @@ if ( ! carousel_slider_is_woocommerce_active() ) {
 	return;
 }
 
-$posts = carousel_slider_products( $id );
+$posts = Utils::get_products( $id );
 
 
 $_image_size       = get_post_meta( $id, '_image_size', true );
@@ -34,7 +38,7 @@ $_product_wishlist   = get_post_meta( $id, '_product_wishlist', true );
 $_product_quick_view = get_post_meta( $id, '_product_quick_view', true );
 ?>
 <div class="carousel-slider-outer carousel-slider-outer-products carousel-slider-outer-<?php echo $id; ?>">
-	<?php carousel_slider_inline_style( $id ); ?>
+	<?php echo DynamicStyle::generate( $id ); ?>
     <div <?php echo join( " ", $this->carousel_options( $id ) ); ?>>
 		<?php foreach ( $posts as $post ): setup_postdata( $post ); ?>
 			<?php

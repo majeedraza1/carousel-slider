@@ -1,4 +1,8 @@
 <?php
+
+use CarouselSlider\Supports\DynamicStyle;
+use CarouselSlider\Supports\Utils;
+
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -10,10 +14,10 @@ $_nav_active_color = get_post_meta( $id, '_nav_active_color', true );
 $_lazy_load_image  = get_post_meta( $id, '_lazy_load_image', true );
 ?>
 <div class="carousel-slider-outer carousel-slider-outer-posts carousel-slider-outer-<?php echo $id; ?>">
-	<?php carousel_slider_inline_style( $id ); ?>
+	<?php echo DynamicStyle::generate( $id ); ?>
     <div <?php echo join( " ", $this->carousel_options( $id ) ); ?>>
 		<?php
-		$posts = carousel_slider_posts( $id );
+		$posts = Utils::get_posts( $id );
 		foreach ( $posts as $_post ):
 			global $post;
 			$post = $_post;

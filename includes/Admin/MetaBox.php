@@ -3,6 +3,8 @@
 namespace CarouselSlider\Admin;
 
 // If this file is called directly, abort.
+use CarouselSlider\Supports\Utils;
+
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
@@ -236,7 +238,7 @@ class MetaBox {
             <br>
             <input type="text" class="color-picker" value="<?php echo $_nav_color; ?>" id="_nav_color"
                    name="carousel_slider[_nav_color]" data-alpha="true"
-                   data-default-color="<?php echo carousel_slider_default_settings()->nav_color; ?>">
+                   data-default-color="<?php echo Utils::get_default_setting( 'nav_color' ); ?>">
         </p><!-- Arrows & Dots Color -->
 
         <p>
@@ -248,7 +250,7 @@ class MetaBox {
             <br>
             <input type="text" class="color-picker" value="<?php echo $_nav_active_color; ?>" id="_nav_active_color"
                    name="carousel_slider[_nav_active_color]" data-alpha="true"
-                   data-default-color="<?php echo carousel_slider_default_settings()->nav_active_color; ?>">
+                   data-default-color="<?php echo Utils::get_default_setting( 'nav_active_color' ); ?>">
         </p><!-- Arrows & Dots Hover Color -->
 		<?php
 	}
