@@ -3,8 +3,6 @@
 namespace CarouselSlider\Display;
 
 // Exit if accessed directly
-use CarouselSlider\Widgets\CarouselSlider;
-
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -55,12 +53,11 @@ class Preview {
 	 * @return string
 	 */
 	public static function template_include( $template ) {
-		if ( ! isset( $_GET['carousel_slider'], $_GET['slider_id'], $_GET['preview'] ) ) {
-			return $template;
-		}
-		if ( current_user_can( 'manage_options' ) ) {
-			wp_enqueue_script( 'jquery' );
-			$template = CAROUSEL_SLIDER_TEMPLATES . '/public/preview-slider.php';
+
+		if ( isset( $_GET['carousel_slider'], $_GET['slider_id'], $_GET['preview'] ) ) {
+			if ( current_user_can( 'manage_options' ) ) {
+				$template = CAROUSEL_SLIDER_TEMPLATES . '/public/preview-slider.php';
+			}
 		}
 
 		return $template;
