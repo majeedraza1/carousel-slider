@@ -119,19 +119,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		}
 
 		/**
-		 * Define constant if not already set.
-		 *
-		 * @param  string $name
-		 * @param  string|bool $value
-		 */
-		private function define( $name, $value ) {
-			if ( ! defined( $name ) ) {
-				define( $name, $value );
-			}
-		}
-
-		/**
-		 * Include classes
+		 * Register autoload class
 		 */
 		private function register_autoload() {
 			spl_autoload_register( function ( $className ) {

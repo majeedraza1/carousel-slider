@@ -2,10 +2,10 @@
 
 namespace CarouselSlider\Admin;
 
-// If this file is called directly, abort.
 use CarouselSlider\Supports\Utils;
 
-if ( ! defined( 'WPINC' ) ) {
+// If this file is called directly, abort.
+if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 

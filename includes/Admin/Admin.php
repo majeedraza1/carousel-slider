@@ -5,7 +5,7 @@ namespace CarouselSlider\Admin;
 use CarouselSlider\Supports\Utils;
 
 // If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 

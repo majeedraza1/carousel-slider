@@ -10,6 +10,10 @@
 @import 'public/content-carousel';
 @import 'public/image-carousel';
 @import 'public/button';
-
 @import 'public/magnific-popup';
 @import 'public/product_modal';
+
+// Hide Magnific Popup Counter
+.mfp-counter {
+	display: none !important;
+}

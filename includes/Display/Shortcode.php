@@ -6,7 +6,7 @@ use CarouselSlider\Supports\DynamicStyle;
 use CarouselSlider\Supports\Utils;
 
 // If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
@@ -116,7 +116,7 @@ class Shortcode {
 			$html = ob_get_contents();
 			ob_end_clean();
 
-			return apply_filters( 'Ajax', $html, $id );
+			return apply_filters( 'carousel_slider_hero_carousel', $html, $id );
 		}
 
 		return '';
