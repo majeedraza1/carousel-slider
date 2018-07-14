@@ -36,6 +36,10 @@ $slider_id = isset( $_GET['slider_id'] ) ? intval( $_GET['slider_id'] ) : 0;
                 margin-top: 0 !important;
             }
         }
+
+        #wpadminbar {
+            display: none;
+        }
     </style>
 </head>
 <body>

@@ -54,7 +54,7 @@ class Preview {
 	 */
 	public static function template_include( $template ) {
 
-		if ( isset( $_GET['carousel_slider'], $_GET['slider_id'], $_GET['preview'] ) ) {
+		if ( isset( $_GET['carousel_slider'], $_GET['slider_id'] ) ) {
 			if ( current_user_can( 'manage_options' ) ) {
 				$template = CAROUSEL_SLIDER_TEMPLATES . '/public/preview-slider.php';
 			}

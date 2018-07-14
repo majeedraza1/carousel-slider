@@ -97,7 +97,7 @@ class Script {
 			'owl-carousel'          => array(
 				'src'        => CAROUSEL_SLIDER_ASSETS . '/lib/owl-carousel/owl.carousel' . $suffix . '.js',
 				'dependency' => array( 'jquery' ),
-				'version'    => '2.2.1',
+				'version'    => '2.3.4',
 				'in_footer'  => true,
 			),
 			'magnific-popup'        => array(
@@ -109,7 +109,7 @@ class Script {
 			'carousel-slider'       => array(
 				'src'        => CAROUSEL_SLIDER_ASSETS . '/js/script' . $suffix . '.js',
 				'dependency' => array( 'jquery', 'owl-carousel', 'magnific-popup' ),
-				'version'    => '1.1.0',
+				'version'    => CAROUSEL_SLIDER_VERSION,
 				'in_footer'  => true,
 			),
 		);

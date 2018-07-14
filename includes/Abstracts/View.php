@@ -59,7 +59,7 @@ abstract class View {
 	 *
 	 * @return array
 	 */
-	protected function owl_options() {
+	public function owl_options() {
 		$owl_setting = array(
 			'stagePadding'       => $this->stage_padding(),
 			'nav'                => $this->is_nav_enabled(),
@@ -149,14 +149,19 @@ abstract class View {
 	}
 
 	protected function slider_wrapper_start() {
+		$id      = $this->get_slider_id();
+		$class   = $this->get_slider_class();
+		$options = wp_json_encode( $this->owl_options() );
+
 		$outer_classes = array(
 			'carousel-slider-outer',
 			'carousel-slider-' . $this->slider_type(),
-			'carousel-slider-' . $this->get_slider_id()
+			'carousel-slider-' . $id
 		);
 
 		$html = '<div class="' . implode( ' ', $outer_classes ) . '">';
-		$html .= '<div id="id-' . $this->get_slider_id() . '" class="' . $this->get_slider_class() . '">';
+		$html .= $this->dynamic_style();
+		$html .= "<div id='id-" . $id . "' class='" . $class . "' data-owl_carousel='" . $options . "'>";
 
 		return $html;
 	}
@@ -293,6 +298,8 @@ abstract class View {
 	 *******************************************************************************/
 
 	/**
+	 * Check if autoplay is enabled
+	 *
 	 * @return bool
 	 */
 	protected function autoplay() {
@@ -300,6 +307,8 @@ abstract class View {
 	}
 
 	/**
+	 * Check autoplay hover pause is enabled
+	 *
 	 * @return bool
 	 */
 	protected function autoplay_hover_pause() {
@@ -307,6 +316,8 @@ abstract class View {
 	}
 
 	/**
+	 * Get autoplay timeout
+	 *
 	 * @return int
 	 */
 	protected function autoplay_timeout() {
@@ -314,6 +325,8 @@ abstract class View {
 	}
 
 	/**
+	 * Get autoplay speed
+	 *
 	 * @return int
 	 */
 	protected function autoplay_speed() {
@@ -379,12 +392,22 @@ abstract class View {
 		return 'off' !== $this->get_meta( '_dot_nav' );
 	}
 
+	/**
+	 * Get arrow position
+	 *
+	 * @return string
+	 */
 	protected function arrow_position() {
 		$arrow_position = $this->get_meta( '_arrow_position', 'outside' );
 
 		return in_array( $arrow_position, array( 'inside', 'outside' ) ) ? $arrow_position : 'outside';
 	}
 
+	/**
+	 * Get arrow visibility
+	 *
+	 * @return string
+	 */
 	protected function arrow_visibility() {
 		$visibility = $this->get_meta( '_nav_button', 'on' );
 
@@ -399,12 +422,22 @@ abstract class View {
 		return 'never';
 	}
 
+	/**
+	 * Get dots position
+	 *
+	 * @return string
+	 */
 	protected function dots_position() {
 		$arrow_position = $this->get_meta( '_bullet_position', 'center' );
 
 		return in_array( $arrow_position, array( 'left', 'center', 'right' ) ) ? $arrow_position : 'center';
 	}
 
+	/**
+	 * Get dots visibility
+	 *
+	 * @return string
+	 */
 	protected function dots_visibility() {
 		$visibility = $this->get_meta( '_dot_nav', 'off' );
 
@@ -419,6 +452,11 @@ abstract class View {
 		return 'never';
 	}
 
+	/**
+	 * Get dots shape
+	 *
+	 * @return string
+	 */
 	protected function dots_shape() {
 		$arrow_position = $this->get_meta( '_bullet_shape', 'circle' );
 
