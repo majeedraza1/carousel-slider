@@ -39,7 +39,7 @@ class StructuredData {
 	 */
 	public function __construct() {
 		add_action( 'carousel_slider_image_gallery_loop', array( $this, 'generate_image_data' ) );
-		add_action( 'carousel_slider_post_loop', array( $this, 'generate_post_data' ) );
+		add_action( 'carousel_slider/loop/post', array( $this, 'generate_post_data' ) );
 		add_action( 'carousel_slider_product_loop', array( $this, 'generate_product_data' ), 10, 2 );
 		// Output structured data.
 		add_action( 'wp_footer', array( $this, 'output_structured_data' ), 90 );
@@ -128,7 +128,7 @@ class StructuredData {
 	 *
 	 * Hooked into `carousel_slider_image_gallery_loop` action hook.
 	 *
-	 * @param WP_Post $_post Post data (default: null).
+	 * @param \WP_Post $_post Post data (default: null).
 	 */
 	public function generate_image_data( $_post ) {
 		$image                = wp_get_attachment_image_src( $_post->ID, 'full' );
@@ -136,7 +136,7 @@ class StructuredData {
 		$markup['contentUrl'] = $image[0];
 		$markup['name']       = $_post->post_title;
 
-		$this->set_data( apply_filters( 'carousel_slider_structured_data_image', $markup, $_post ) );
+		$this->set_data( apply_filters( 'carousel_slider/structured_data/image', $markup, $_post ) );
 	}
 
 	/**
@@ -237,14 +237,14 @@ class StructuredData {
 	 *
 	 * Hooked into `carousel_slider_post_loop` action hook.
 	 *
-	 * @param WP_Post $_post
+	 * @param \WP_Post $_post
 	 */
 	public function generate_post_data( $_post ) {
-		if ( ! $_post instanceof WP_Post ) {
+		if ( ! $_post instanceof \WP_Post ) {
 			return;
 		}
 
-		$image = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), 'normal' );
+		$image = wp_get_attachment_image_src( get_post_thumbnail_id( $_post->ID ), 'normal' );
 
 		$json['@type'] = 'BlogPosting';
 
@@ -280,7 +280,7 @@ class StructuredData {
 		$json['description']   = get_the_excerpt();
 
 
-		$this->set_data( apply_filters( 'carousel_slider_structured_data_post', $json, $_post ) );
+		$this->set_data( apply_filters( 'carousel_slider/structured_data/post', $json, $_post ) );
 	}
 
 	/**
@@ -288,11 +288,11 @@ class StructuredData {
 	 *
 	 * Hooked into `carousel_slider_product_loop` action hook.
 	 *
-	 * @param WC_Product $product Product data (default: null).
-	 * @param WP_Post $post
+	 * @param \WC_Product $product Product data (default: null).
+	 * @param \WP_Post $post
 	 */
 	public function generate_product_data( $product, $post ) {
-		if ( ! $product instanceof WC_Product ) {
+		if ( ! $product instanceof \WC_Product ) {
 			return;
 		}
 
@@ -309,6 +309,6 @@ class StructuredData {
 		$markup['url']   = $markup['@id'];
 		$markup['name']  = $name;
 
-		$this->set_data( apply_filters( 'carousel_slider_structured_data_product', $markup, $product ) );
+		$this->set_data( apply_filters( 'carousel_slider/structured_data/product', $markup, $product ) );
 	}
 }

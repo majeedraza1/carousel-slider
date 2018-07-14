@@ -46,25 +46,19 @@ class Shortcode {
 		$slide_type = in_array( $slide_type, Utils::get_slide_types() ) ? $slide_type : 'image-carousel';
 
 		if ( $slide_type == 'post-carousel' ) {
-			ob_start();
-			require CAROUSEL_SLIDER_TEMPLATES . '/public/post-carousel.php';
-			$html = ob_get_contents();
-			ob_end_clean();
+			$view = new \CarouselSlider\Modules\PostCarousel\View();
+			$view->set_slider_id( $id );
+			$html = $view->render();
 
-			return apply_filters( 'carousel_slider_posts_carousel', $html, $id );
+			return apply_filters( 'carousel_slider/view/post_carousel', $html, $id );
 		}
 
 		if ( $slide_type == 'video-carousel' ) {
-			wp_enqueue_script( 'magnific-popup' );
-			$_video_urls = array_filter( explode( ',', $this->get_meta( $id, '_video_url' ) ) );
-			$urls        = $this->get_video_url( $_video_urls );
+			$view = new \CarouselSlider\Modules\VideoCarousel\View();
+			$view->set_slider_id( $id );
+			$html = $view->render();
 
-			ob_start();
-			require CAROUSEL_SLIDER_TEMPLATES . '/public/video-carousel.php';
-			$html = ob_get_contents();
-			ob_end_clean();
-
-			return apply_filters( 'carousel_slider_videos_carousel', $html, $id );
+			return apply_filters( 'carousel_slider/view/video_carousel', $html, $id );
 		}
 
 		if ( $slide_type == 'image-carousel-url' ) {
@@ -77,12 +71,11 @@ class Shortcode {
 		}
 
 		if ( $slide_type == 'image-carousel' ) {
-			ob_start();
-			require CAROUSEL_SLIDER_TEMPLATES . '/public/images-carousel.php';
-			$html = ob_get_contents();
-			ob_end_clean();
+			$view = new \CarouselSlider\Modules\ImageCarousel\View();
+			$view->set_slider_id( $id );
+			$html = $view->render();
 
-			return apply_filters( 'carousel_slider_gallery_images_carousel', $html, $id );
+			return apply_filters( 'carousel_slider/view/image_carousel', $html, $id );
 		}
 
 		if ( $slide_type == 'product-carousel' ) {
@@ -322,95 +315,5 @@ class Shortcode {
 		ob_end_clean();
 
 		return $html;
-	}
-
-	/**
-	 * Get Youtube video ID from URL
-	 *
-	 * @param string $url
-	 *
-	 * @return mixed Youtube video ID or FALSE if not found
-	 */
-	private function get_youtube_id_from_url( $url ) {
-		$parts = parse_url( $url );
-		if ( isset( $parts['query'] ) ) {
-			parse_str( $parts['query'], $qs );
-			if ( isset( $qs['v'] ) ) {
-				return $qs['v'];
-			} elseif ( isset( $qs['vi'] ) ) {
-				return $qs['vi'];
-			}
-		}
-		if ( isset( $parts['path'] ) ) {
-			$path = explode( '/', trim( $parts['path'], '/' ) );
-
-			return $path[ count( $path ) - 1 ];
-		}
-
-		return false;
-	}
-
-	/**
-	 * Get Vimeo video ID from URL
-	 *
-	 * @param string $url
-	 *
-	 * @return mixed Vimeo video ID or FALSE if not found
-	 */
-	private function get_vimeo_id_from_url( $url ) {
-		$parts = parse_url( $url );
-		if ( isset( $parts['path'] ) ) {
-			$path = explode( '/', trim( $parts['path'], '/' ) );
-
-			return $path[ count( $path ) - 1 ];
-		}
-
-		return false;
-	}
-
-	/**
-	 * @param $video_urls
-	 *
-	 * @return array
-	 */
-	public function get_video_url( array $video_urls ) {
-		$_url = array();
-		foreach ( $video_urls as $video_url ) {
-			if ( ! filter_var( $video_url, FILTER_VALIDATE_URL ) ) {
-				continue;
-			}
-			$provider  = '';
-			$video_id  = '';
-			$thumbnail = '';
-			if ( false !== strpos( $video_url, 'youtube.com' ) ) {
-				$provider  = 'youtube';
-				$video_id  = $this->get_youtube_id_from_url( $video_url );
-				$thumbnail = array(
-					'large'  => 'https://img.youtube.com/vi/' . $video_id . '/hqdefault.jpg',
-					'medium' => 'https://img.youtube.com/vi/' . $video_id . '/mqdefault.jpg',
-					'small'  => 'https://img.youtube.com/vi/' . $video_id . '/sddefault.jpg',
-				);
-
-			} elseif ( false !== strpos( $video_url, 'vimeo.com' ) ) {
-				$provider  = 'vimeo';
-				$video_id  = $this->get_vimeo_id_from_url( $video_url );
-				$response  = wp_remote_get( "https://vimeo.com/api/v2/video/$video_id.json" );
-				$thumbnail = json_decode( wp_remote_retrieve_body( $response ), true );
-				$thumbnail = array(
-					'large'  => isset( $thumbnail[0]['thumbnail_large'] ) ? $thumbnail[0]['thumbnail_large'] : null,
-					'medium' => isset( $thumbnail[0]['thumbnail_medium'] ) ? $thumbnail[0]['thumbnail_medium'] : null,
-					'small'  => isset( $thumbnail[0]['thumbnail_small'] ) ? $thumbnail[0]['thumbnail_small'] : null,
-				);
-			}
-
-			$_url[] = array(
-				'provider'  => $provider,
-				'url'       => $video_url,
-				'video_id'  => $video_id,
-				'thumbnail' => $thumbnail,
-			);
-		}
-
-		return $_url;
 	}
 }

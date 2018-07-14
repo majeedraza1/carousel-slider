@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-abstract class View {
+abstract class AbstractView {
 
 	/**
 	 * @var int
@@ -23,6 +23,14 @@ abstract class View {
 	protected $total_slides = 0;
 
 	/**
+	 * Render element.
+	 * Generates the final HTML on the frontend.
+	 */
+	abstract public function render();
+
+	/**
+	 * Get numbers of slides of a slider
+	 *
 	 * @return int
 	 */
 	public function get_total_slides() {
@@ -30,6 +38,8 @@ abstract class View {
 	}
 
 	/**
+	 * Set numbers of slides of a slider
+	 *
 	 * @param int $total_slides
 	 */
 	public function set_total_slides( $total_slides ) {
@@ -105,7 +115,7 @@ abstract class View {
 			'<svg class="carousel-slider-nav-icon" viewBox="0 0 20 20"><path d="M6 15l5-5-5-5 1-2 7 7-7 7z"></path></svg>',
 		) );
 
-		return apply_filters( 'carousel_slider/owl_settings', $owl_setting );
+		return apply_filters( 'carousel_slider/owl_options', $owl_setting );
 	}
 
 	/**
@@ -148,6 +158,11 @@ abstract class View {
 		return DynamicStyle::generate( $this->get_slider_id() );
 	}
 
+	/**
+	 * Slider wrapper start
+	 *
+	 * @return string
+	 */
 	protected function slider_wrapper_start() {
 		$id      = $this->get_slider_id();
 		$class   = $this->get_slider_class();
@@ -161,11 +176,20 @@ abstract class View {
 
 		$html = '<div class="' . implode( ' ', $outer_classes ) . '">';
 		$html .= $this->dynamic_style();
-		$html .= "<div id='id-" . $id . "' class='" . $class . "' data-owl_carousel='" . $options . "'>";
+		$html .= "<div 
+		id='id-" . $id . "' 
+		class='" . $class . "' 
+		data-owl_options='" . $options . "'
+		data-slide-type='" . $this->slider_type() . "'>";
 
 		return $html;
 	}
 
+	/**
+	 * Slider wrapper end
+	 *
+	 * @return string
+	 */
 	protected function slider_wrapper_end() {
 		return '</div></div>';
 	}
@@ -179,11 +203,13 @@ abstract class View {
 		$class = array( 'owl-carousel', 'carousel-slider' );
 
 		// Arrows position
-		if ( $this->arrow_position() == 'inside' ) {
-			$class[] = 'arrows-inside';
-		} else {
-			$class[] = 'arrows-outside';
-		}
+		$class[] = 'arrows-' . $this->arrow_position();
+
+		// Dots position
+		$class[] = 'dots-' . $this->dots_position();
+
+		// Dots shape
+		$class[] = 'dots-' . $this->dots_shape();
 
 		// Arrows visibility
 		if ( $this->arrow_visibility() == 'always' ) {
@@ -194,9 +220,6 @@ abstract class View {
 			$class[] = 'arrows-visible-hover';
 		}
 
-		// Dots position
-		$class[] = 'dots-' . $this->dots_position();
-
 		// Dots visibility
 		if ( $this->dots_visibility() == 'always' ) {
 			$class[] = 'dots-visible-always';
@@ -205,9 +228,6 @@ abstract class View {
 		} else {
 			$class[] = 'dots-visible-hover';
 		}
-
-		// Dots shape
-		$class[] = 'dots-' . $this->dots_shape();
 
 		return implode( ' ', $class );
 	}

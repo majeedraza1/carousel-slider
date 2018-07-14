@@ -1,7 +1,7 @@
 <?php
 
+use CarouselSlider\Modules\PostCarousel\View;
 use CarouselSlider\Supports\DynamicStyle;
-use CarouselSlider\Supports\Utils;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -17,7 +17,7 @@ $_lazy_load_image  = get_post_meta( $id, '_lazy_load_image', true );
 	<?php echo DynamicStyle::generate( $id ); ?>
     <div <?php echo join( " ", $this->carousel_options( $id ) ); ?>>
 		<?php
-		$posts = Utils::get_posts( $id );
+		$posts = View::get_posts( $id );
 		foreach ( $posts as $_post ):
 			global $post;
 			$post = $_post;
