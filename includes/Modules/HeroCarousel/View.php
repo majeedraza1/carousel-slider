@@ -57,7 +57,7 @@ class View extends AbstractView {
 		'button_two_color',
 	);
 
-	protected $style = '';
+	protected $style = array();
 
 	/**
 	 * Render element.
@@ -75,26 +75,22 @@ class View extends AbstractView {
 		$this->set_total_slides( $slides_count );
 
 		$id    = $this->get_slider_id();
-		$_html = $this->slider_wrapper_start();
+		$_html = '';
+
+		$element                   = '#id-' . $id . ' .carousel-slider-hero__cell';
+		$this->style[ $element ][] = array(
+			'property' => 'height',
+			'value'    => $this->slide_height(),
+		);
 
 		foreach ( $slides as $slide_id => $slide ) {
 
 			$html = '';
 
-			$_link_type   = isset( $slide['link_type'] ) && in_array( $slide['link_type'],
-				array( 'full', 'button' ) ) ? $slide['link_type'] : 'full';
-			$_slide_link  = ! empty( $slide['slide_link'] ) ? esc_url( $slide['slide_link'] ) : '';
-			$_link_target = ! empty( $slide['link_target'] ) && in_array( $slide['link_target'],
-				array( '_self', '_blank' ) ) ? esc_attr( $slide['link_target'] ) : '_self';
+			$_link_type  = $this->link_type( $slide );
+			$_slide_link = $this->slide_link( $slide );
 
-			$_cell_style = '';
-			$_cell_style .= isset( $settings['slide_height'] ) ? 'height: ' . $this->slide_height() . ';' : '';
-
-			if ( $_link_type == 'full' && Utils::is_url( $_slide_link ) ) {
-				$html .= '<a class="carousel-slider-hero__cell" style="' . $_cell_style . '" href="' . $_slide_link . '" target="' . $_link_target . '">';
-			} else {
-				$html .= '<div class="carousel-slider-hero__cell" style="' . $_cell_style . '">';
-			}
+			$html .= $this->cell_start( $slide, $slide_id );
 
 			// Slide Background
 			$_img_bg_position  = ! empty( $slide['img_bg_position'] ) ? esc_attr( $slide['img_bg_position'] ) : 'center center';
@@ -107,18 +103,19 @@ class View extends AbstractView {
 			$_have_img         = is_array( $_img_src );
 
 			// Slide background
-			$_slide_bg_style = '';
-			$_slide_bg_style .= 'background-position: ' . $_img_bg_position . ';';
-			$_slide_bg_style .= 'background-size: ' . $_img_bg_size . ';';
+			$element                   = '#id-' . $id . ' .cell_background_' . $slide_id;
+			$this->style[ $element ][] = array( 'property' => 'background-position', 'value' => $_img_bg_position );
+			$this->style[ $element ][] = array( 'property' => 'background-size', 'value' => $_img_bg_size );
+
 			if ( $_have_img && ! $this->lazy_load_image() ) {
-				$_slide_bg_style .= 'background-image: url(' . $_img_src[0] . ');';
+				$this->style[ $element ][] = array( 'property' => 'background-image', 'value' => $_img_src[0], );
 			}
 			if ( ! empty( $_bg_color ) ) {
-				$_slide_bg_style .= 'background-color: ' . $_bg_color . ';';
+				$this->style[ $element ][] = array( 'property' => 'background-color', 'value' => $_bg_color, );
 			}
 
 			// Background class
-			$_slide_bg_class = 'carousel-slider-hero__cell__background';
+			$_slide_bg_class = 'carousel-slider-hero__cell__background cell_background_' . $slide_id;
 
 			if ( 'zoom-in' == $_ken_burns_effect ) {
 				$_slide_bg_class .= ' carousel-slider-hero-ken-in';
@@ -127,9 +124,9 @@ class View extends AbstractView {
 			}
 
 			if ( $this->lazy_load_image() ) {
-				$html .= '<div class="' . $_slide_bg_class . ' owl-lazy" data-src="' . $_img_src[0] . '" id="slide-item-' . $id . '-' . $slide_id . '" style="' . $_slide_bg_style . '"></div>';
+				$html .= '<div class="' . $_slide_bg_class . ' owl-lazy" data-src="' . $_img_src[0] . '" id="slide-item-' . $id . '-' . $slide_id . '"></div>';
 			} else {
-				$html .= '<div class="' . $_slide_bg_class . '" id="slide-item-' . $id . '-' . $slide_id . '" style="' . $_slide_bg_style . '"></div>';
+				$html .= '<div class="' . $_slide_bg_class . '" id="slide-item-' . $id . '-' . $slide_id . '"></div>';
 			}
 
 			// Cell Inner
@@ -232,9 +229,13 @@ class View extends AbstractView {
 
 			$_html .= apply_filters( 'carousel_slider_content', $html, $slide_id, $slide );
 		}
-		$_html .= $this->slider_wrapper_end();
 
-		return $_html;
+		$__html = $this->get_style();
+		$__html .= $this->slider_wrapper_start();
+		$__html .= $_html;
+		$__html .= $this->slider_wrapper_end();
+
+		return $__html;
 	}
 
 	protected function slider_wrapper_start() {
@@ -347,5 +348,61 @@ class View extends AbstractView {
 		$link_type = $this->get_content_setting( $slide, 'link_type', 'full' );
 
 		return in_array( $link_type, $valid ) ? $link_type : 'full';
+	}
+
+	private function link_target( $slide ) {
+		$valid       = array( '_self', '_blank' );
+		$link_target = $this->get_content_setting( $slide, 'link_target', '_self' );
+
+		return in_array( $link_target, $valid ) ? $link_target : '_self';
+	}
+
+	private function slide_link( $slide ) {
+		$slide_link = $this->get_content_setting( $slide, 'slide_link' );
+
+		return Utils::is_url( $slide_link ) ? esc_url( $slide_link ) : '';
+	}
+
+	private function cell_start( $slide, $slide_id ) {
+		$slide_link = $this->slide_link( $slide );
+		$class      = 'carousel-slider-hero__cell cell_' . $this->get_slider_id() . '_' . $slide_id;
+		if ( 'full' == $this->link_type( $slide ) && $slide_link ) {
+			return '<a class="' . $class . '" href="' . $slide_link . '" target="' . $this->link_target( $slide ) . '">';
+		}
+
+		return '<div class="' . $class . '">';
+	}
+
+	/**
+	 * @return string
+	 */
+	protected function get_style() {
+		$styles    = $this->style;
+		$final_css = '';
+
+		foreach ( $styles as $selector => $style_array ) {
+			$final_css .= $selector . '{';
+			foreach ( $style_array as $style ) {
+
+				$property = $style['property'];
+				$value    = (string) $style['value'];
+
+				if ( empty( $value ) ) {
+					continue;
+				}
+
+				// Make sure background-images are properly formatted
+				if ( 'background-image' == $property ) {
+					if ( false === strrpos( $value, 'url(' ) ) {
+						$value = 'url("' . esc_url_raw( $value ) . '")';
+					}
+				}
+
+				$final_css .= $property . ':' . $value . ';';
+			}
+			$final_css .= '}' . PHP_EOL;
+		}
+
+		return empty( $final_css ) ? '' : '<style>' . $final_css . '</style>';
 	}
 }
