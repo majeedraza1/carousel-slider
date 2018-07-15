@@ -53,7 +53,7 @@ class View extends AbstractView {
 
 			$html .= '</div>';
 
-			$_html .= apply_filters( 'carousel_slider/view/post', $html, $_post );
+			$_html .= apply_filters( 'carousel_slider/view/image', $html, $_post );
 		}
 
 		$_html .= $this->slider_wrapper_end();

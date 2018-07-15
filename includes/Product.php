@@ -381,7 +381,7 @@ class Product {
 	 *
 	 * @param array $args
 	 *
-	 * @return array|int|WP_Error
+	 * @return array|\WP_Error
 	 */
 	public function product_categories( $args = array() ) {
 
@@ -394,7 +394,13 @@ class Product {
 
 		$args = wp_parse_args( $args, $default );
 
-		return get_terms( $args );
+		$terms = get_terms( $args );
+
+		if ( is_wp_error( $terms ) ) {
+			return array();
+		}
+
+		return $terms;
 	}
 
 	/**
