@@ -152,10 +152,12 @@ abstract class AbstractView {
 	/**
 	 * Get slide dynamic style
 	 *
+	 * @param bool $newline
+	 *
 	 * @return string
 	 */
-	protected function dynamic_style() {
-		return DynamicStyle::generate( $this->get_slider_id() );
+	protected function dynamic_style( $newline = false ) {
+		return DynamicStyle::generate( $this->get_slider_id(), $newline );
 	}
 
 	/**
@@ -175,7 +177,7 @@ abstract class AbstractView {
 		);
 
 		$html = '<div class="' . implode( ' ', $outer_classes ) . '">';
-		$html .= $this->dynamic_style();
+		$html .= '<style type="text/css">' . $this->dynamic_style() . '</style>';
 		$html .= "<div 
 		id='id-" . $id . "' 
 		class='" . $class . "' 

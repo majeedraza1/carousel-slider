@@ -12,10 +12,11 @@ class DynamicStyle {
 	 * Generate dynamic style for slider
 	 *
 	 * @param int $id
+	 * @param bool $newline
 	 *
 	 * @return string
 	 */
-	public static function generate( $id = 0 ) {
+	public static function generate( $id = 0, $newline = false ) {
 		$_nav_color              = get_post_meta( $id, '_nav_color', true );
 		$_nav_active_color       = get_post_meta( $id, '_nav_active_color', true );
 		$_post_height            = get_post_meta( $id, '_post_height', true );
@@ -172,10 +173,6 @@ class DynamicStyle {
 
 		$styles = ob_get_clean();
 
-		$style = "<style type=\"text/css\">";
-		$style .= Utils::minify_css( $styles, false );
-		$style .= "</style>" . PHP_EOL;
-
-		return $style;
+		return Utils::minify_css( $styles, $newline );
 	}
 }
