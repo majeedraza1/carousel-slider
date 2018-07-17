@@ -33,6 +33,41 @@ class Metabox {
 	private $fields = array();
 
 	/**
+	 * Default field attributes
+	 *
+	 * @var array
+	 */
+	private static $default_attributes = array(
+		'type'              => 'text',
+		'id'                => '',
+		'label'             => '',
+		'description'       => '',
+		'priority'          => 10,
+		'section'           => '',
+		'default'           => '',
+		'choices'           => array(),
+		'input_attributes'  => array(),
+		'sanitize_callback' => '',
+		'validate_callback' => ''
+	);
+
+	/**
+	 * @var array
+	 */
+	private static $text_input_type = array(
+		'text',
+		'email',
+		'password',
+		'number',
+		'url',
+		'tel',
+		'date',
+		'time',
+		'hidden',
+		'search',
+	);
+
+	/**
 	 * Ensures only one instance of the class is loaded or can be loaded.
 	 *
 	 * @return self
@@ -125,7 +160,7 @@ class Metabox {
 	public function set_panel( $args = array() ) {
 		$default = array( 'id' => '', 'title' => '', 'description' => '', 'priority' => 10, );
 
-		if ( ! isset( $args['id'], $args['title'] ) ) {
+		if ( isset( $args['id'], $args['title'] ) ) {
 			$this->panels[] = wp_parse_args( $args, $default );
 		}
 	}
@@ -138,7 +173,7 @@ class Metabox {
 	public function set_section( $args = array() ) {
 		$default = array( 'id' => '', 'title' => '', 'description' => '', 'priority' => 10, 'panel' => '', );
 
-		if ( ! isset( $args['id'], $args['title'] ) ) {
+		if ( isset( $args['id'], $args['title'] ) ) {
 			$this->sections[] = wp_parse_args( $args, $default );
 		}
 	}
@@ -149,22 +184,8 @@ class Metabox {
 	 * @param array $args
 	 */
 	public function set_field( $args = array() ) {
-		$default = array(
-			'type'              => 'text',
-			'id'                => '',
-			'label'             => '',
-			'description'       => '',
-			'priority'          => 10,
-			'section'           => '',
-			'default'           => '',
-			'choices'           => array(),
-			'input_attributes'  => array(),
-			'sanitize_callback' => '',
-			'validate_callback' => ''
-		);
-
-		if ( ! isset( $args['id'], $args['title'] ) ) {
-			$this->fields[] = wp_parse_args( $args, $default );
+		if ( isset( $args['id'], $args['label'] ) ) {
+			$this->fields[] = wp_parse_args( $args, self::$default_attributes );
 		}
 	}
 
@@ -181,11 +202,204 @@ class Metabox {
 	}
 
 	/**
-	 * Build text field
+	 * Build form field
 	 *
 	 * @param array $args
+	 *
+	 * @return string
+	 */
+	public static function field( array $args ) {
+		if ( method_exists( __CLASS__, $args['type'] ) ) {
+			return call_user_func( array( __CLASS__, $args['type'] ), $args );
+		}
+
+		if ( in_array( $args['type'], self::$text_input_type ) ) {
+			return self::text( $args );
+		}
+
+		return '';
+	}
+
+	/**
+	 * Generate text based input field
+	 *
+	 * @param array $args
+	 *
+	 * @return string
 	 */
 	public static function text( array $args ) {
+		return '<input ' . self::build_attributes( $args ) . '>';
+	}
 
+	/**
+	 * Generate input attribute
+	 *
+	 * @param array $args
+	 * @param bool $echo
+	 *
+	 * @return array|string
+	 */
+	private static function build_attributes( array $args, $echo = true ) {
+		$input_type       = $args['type'];
+		$input_attributes = is_array( $args['input_attributes'] ) ? $args['input_attributes'] : array();
+		list( $id, $name ) = self::get_name_and_id( $args );
+
+		$attributes = array( 'id' => $id, 'name' => $name, );
+
+		if ( ! in_array( $input_type, array( 'textarea', 'select' ) ) ) {
+			$attributes['type'] = $input_type;
+		}
+
+		if ( ! in_array( $input_type, array( 'textarea', 'file', 'password', 'select' ) ) ) {
+			$attributes['value'] = self::get_value( $args );
+		}
+
+		if ( 'email' === $input_type || 'file' === $input_type ) {
+			$attributes['multiple'] = self::is_multiple( $args );
+		}
+
+		if ( 'hidden' === $input_type ) {
+			$attributes['spellcheck']   = false;
+			$attributes['tabindex']     = '-1';
+			$attributes['autocomplete'] = 'off';
+		}
+
+		if ( ! in_array( $input_type, array( 'hidden', 'image', 'submit', 'reset', 'button' ) ) ) {
+			$attributes['required'] = self::is_required( $args );
+		}
+
+		foreach ( $input_attributes as $attribute => $value ) {
+			if ( in_array( $attribute, array( 'id', 'name', 'type', 'value', 'multiple', 'required' ) ) ) {
+				continue;
+			}
+			$attributes[ $attribute ] = $value;
+		}
+
+		if ( $echo ) {
+			return self::array_to_attributes( $attributes );
+		}
+
+		return array_filter( $attributes );
+	}
+
+	/**
+	 * Convert array to input attributes
+	 *
+	 * @param array $attributes
+	 *
+	 * @return string
+	 */
+	private static function array_to_attributes( $attributes ) {
+		$string = array_map( function ( $key, $value ) {
+			if ( empty( $value ) && 'value' !== $key ) {
+				return null;
+			}
+			if ( in_array( $key, array( 'required', 'checked', 'multiple' ) ) && $value ) {
+				return $key;
+			}
+
+			// If boolean value
+			if ( is_bool( $value ) ) {
+				return sprintf( '%s="%s"', $key, $value ? 'true' : 'false' );
+			}
+
+			// If array value
+			if ( is_array( $value ) ) {
+				return sprintf( '%s="%s"', $key, implode( " ", $value ) );
+			}
+
+			// If string value
+			return sprintf( '%s="%s"', $key, esc_attr( $value ) );
+
+		}, array_keys( $attributes ), array_values( $attributes ) );
+
+		return implode( ' ', array_filter( $string ) );
+	}
+
+	/**
+	 * Get meta value
+	 *
+	 * @param array $args
+	 *
+	 * @return mixed
+	 */
+	private static function get_value( array $args ) {
+		global $post;
+
+		$value = get_post_meta( $post->ID, $args['id'], true );
+
+		if ( empty( $value ) && isset( $args['default'] ) ) {
+			return $args['default'];
+		}
+
+		return $value;
+	}
+
+	/**
+	 * Get input attribute name
+	 *
+	 * @param array $args
+	 *
+	 * @return mixed|string
+	 */
+	private static function get_name_and_id( array $args ) {
+		$group = isset( $args['group'] ) ? $args['group'] : false;
+		$index = isset( $args['index'] ) ? $args['index'] : false;
+		$id    = $args['id'];
+		$name  = $id;
+
+		if ( $group ) {
+			if ( false !== $index ) {
+				$name = $group . '[' . $index . ']' . '[' . $name . ']';
+				$id   = $group . '_' . $index . '_' . $id;
+			} else {
+				$name = $group . '[' . $name . ']';
+				$id   = $group . '_' . $id;
+			}
+		}
+
+		if ( self::is_multiple( $args ) ) {
+			$name = $name . '[]';
+		}
+
+		return array( $id, $name );
+	}
+
+	/**
+	 * Check if input support multiple value
+	 *
+	 * @param array $args
+	 *
+	 * @return bool
+	 */
+	private static function is_multiple( $args ) {
+		if ( isset( $args['multiple'] ) && $args['multiple'] ) {
+			return true;
+		}
+
+		if ( isset( $args['input_attributes']['multiple'] ) && $args['input_attributes']['multiple'] ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Check if input is required
+	 *
+	 * @param array $args
+	 *
+	 * @return bool
+	 */
+	private static function is_required( $args ) {
+		if ( isset( $args['required'] ) && $args['required'] ) {
+			return true;
+		}
+
+		if ( isset( $args['input_attributes']['required'] ) && $args['input_attributes']['required'] ) {
+			return true;
+		}
+
+		return false;
 	}
 }
