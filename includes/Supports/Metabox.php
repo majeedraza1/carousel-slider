@@ -228,7 +228,60 @@ class Metabox {
 	 * @return string
 	 */
 	public static function text( array $args ) {
-		return '<input ' . self::build_attributes( $args ) . '>';
+		$html = self::field_before( $args );
+		$html .= '<input ' . self::build_attributes( $args ) . '>';
+		$html .= self::field_after( $args );
+
+		return $html;
+	}
+
+	/**
+	 * Generate select input field
+	 *
+	 * @param array $args
+	 *
+	 * @return string
+	 */
+	public static function select( array $args ) {
+		$value = self::get_value( $args );
+
+		$html = self::field_before( $args );
+		$html .= '<select ' . self::build_attributes( $args ) . '>';
+		foreach ( $args['choices'] as $key => $label ) {
+			$option   = trim( $key );
+			$selected = ( $value == $option ) ? 'selected' : '';
+			$html     .= '<option value="' . $option . '" ' . $selected . '>' . $label . '</option>';
+		}
+		$html .= '</select>';
+		$html .= self::field_after( $args );
+
+		return $html;
+	}
+
+	/**
+	 * Generate buttonset input field
+	 *
+	 * @param array $args
+	 *
+	 * @return string
+	 */
+	public static function buttonset( array $args ) {
+		list( $id, $name ) = self::get_name_and_id( $args );
+		$value = self::get_value( $args );
+
+		$html = self::field_before( $args );
+		$html .= '<div class="buttonset">';
+		foreach ( $args['choices'] as $key => $option ) {
+			$input_id = $id . '_' . $key;
+			$checked  = ( $value == $key ) ? ' checked="checked"' : '';
+			$html     .= '<input class="switch-input" id="' . $input_id . '" type="radio" value="' . $key . '"
+                       name="' . $name . '" ' . $checked . '>';
+			$html     .= '<label class="switch-label switch-label-on" for="' . $input_id . '">' . $option . '</label></input>';
+		}
+		$html .= '</div>';
+		$html .= self::field_after( $args );
+
+		return $html;
 	}
 
 	/**
@@ -401,5 +454,66 @@ class Metabox {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Generate field before template
+	 *
+	 * @param $args
+	 *
+	 * @return string
+	 */
+	private static function field_before( array $args ) {
+		list( $input_id, $name ) = self::get_name_and_id( $args );
+
+		$_normal = '<div class="sp-input-group" id="field-' . $input_id . '">';
+
+		$_normal .= '<div class="sp-input-label">';
+		$_normal .= '<label for="' . $input_id . '">' . $args['label'] . '</label>';
+		if ( ! empty( $args['description'] ) ) {
+			$_normal .= '<p class="sp-input-desc">' . $args['description'] . '</p>';
+		}
+		$_normal .= '</div>';
+
+		$_normal .= '<div class="sp-input-field">';
+
+		if ( isset( $args['context'] ) && 'side' == $args['context'] ) {
+			$_side = '<p id="field-' . $input_id . '">';
+			$_side .= '<label for="' . $input_id . '"><strong>' . $args['label'] . '</strong></label>';
+
+			if ( isset( $args['type'] ) && 'color' == $args['type'] ) {
+				$_side .= '<span class="cs-tooltip" title="' . esc_attr( $args['description'] ) . '"></span><br>';
+			}
+
+			return $_side;
+		}
+
+		return $_normal;
+	}
+
+	/**
+	 * Generate field after template
+	 *
+	 * @param array $args
+	 *
+	 * @return string
+	 */
+	private static function field_after( $args = array() ) {
+
+		if ( isset( $args['context'] ) && 'side' == $args['context'] ) {
+			$_side = '';
+			if ( ! empty( $args['description'] ) ) {
+				$_side .= '<span class="cs-tooltip" title="' . esc_attr( $args['description'] ) . '"></span>';
+			}
+			// For Color reset tooltip
+			if ( isset( $args['type'] ) && 'color' == $args['type'] ) {
+				$_side = '';
+			}
+			$_side .= '</p>';
+
+			return $_side;
+		}
+
+		return '</div></div>';
 	}
 }
