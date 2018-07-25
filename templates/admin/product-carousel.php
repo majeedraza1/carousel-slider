@@ -1,5 +1,6 @@
 <?php
 
+use CarouselSlider\Supports\Metabox;
 use CarouselSlider\Supports\Utils;
 
 // If this file is called directly, abort.
@@ -66,13 +67,15 @@ if ( ! defined( 'WPINC' ) ) {
 				'std'  => 12,
 				'desc' => esc_html__( 'How many products you want to show on carousel slide.', 'carousel-slider' ),
 			) );
-			$this->form->checkbox( array(
-				'id'    => '_product_title',
-				'name'  => esc_html__( 'Show Title', 'carousel-slider' ),
-				'label' => esc_html__( 'Show Title.', 'carousel-slider' ),
-				'desc'  => esc_html__( 'Check to show product title.', 'carousel-slider' ),
-				'std'   => 'on'
+
+			echo Metabox::field( array(
+				'type'        => 'toggle',
+				'id'          => '_product_title',
+				'label'       => esc_html__( 'Show Title.', 'carousel-slider' ),
+				'description' => esc_html__( 'Check to show product title.', 'carousel-slider' ),
+				'default'     => 'on'
 			) );
+
 			$this->form->checkbox( array(
 				'id'    => '_product_rating',
 				'name'  => esc_html__( 'Show Rating', 'carousel-slider' ),

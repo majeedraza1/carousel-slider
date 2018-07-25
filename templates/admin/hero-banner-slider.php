@@ -240,14 +240,14 @@ if ( ! defined( 'WPINC' ) ) {
                     </div>
                 </div>
 				<?php
-				$animations = [
+				$animations = array(
 					''            => esc_html__( 'None', 'carousel-slider' ),
 					'fadeInDown'  => esc_html__( 'Fade In Down', 'carousel-slider' ),
 					'fadeInUp'    => esc_html__( 'Fade In Up', 'carousel-slider' ),
 					'fadeInRight' => esc_html__( 'Fade In Right', 'carousel-slider' ),
 					'fadeInLeft'  => esc_html__( 'Fade In Left', 'carousel-slider' ),
 					'zoomIn'      => esc_html__( 'Zoom In', 'carousel-slider' ),
-				];
+				);
 				?>
                 <div class="sp-input-group" id="field-_content_animation">
                     <div class="sp-input-label">

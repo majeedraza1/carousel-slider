@@ -13,7 +13,7 @@ class Admin {
 
 	private $form;
 
-	protected static $instance = null;
+	private static $instance = null;
 
 	/**
 	 * Ensures only one instance of this class is loaded or can be loaded.
@@ -35,7 +35,7 @@ class Admin {
 		$this->form = new Form();
 
 		add_action( 'init', array( $this, 'carousel_post_type' ) );
-		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
+		// add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 		add_filter( 'manage_edit-carousels_columns', array( $this, 'columns_head' ) );
 		add_filter( 'manage_carousels_posts_custom_column', array( $this, 'columns_content' ), 10, 2 );
 		add_action( 'save_post', array( $this, 'save_meta_box' ) );
@@ -96,7 +96,7 @@ class Admin {
 	 * Hide view and quick edit from carousel slider admin
 	 *
 	 * @param array $actions
-	 * @param WP_Post $post
+	 * @param \WP_Post $post
 	 *
 	 * @return mixed
 	 */
@@ -141,13 +141,11 @@ class Admin {
 
 			case 'usage':
 				?>
-                <input
-                        type="text"
-                        onmousedown="this.clicked = 1;"
-                        onfocus="if (!this.clicked) this.select(); else this.clicked = 2;"
-                        onclick="if (this.clicked === 2) this.select(); this.clicked = 0;"
-                        value="[carousel_slide id='<?php echo $post_id; ?>']"
-                        style="background-color: #f1f1f1;min-width: 250px;padding: 5px 8px;"
+                <input type="text" onmousedown="this.clicked = 1;"
+                       onfocus="if (!this.clicked) this.select(); else this.clicked = 2;"
+                       onclick="if (this.clicked === 2) this.select(); this.clicked = 0;"
+                       value="[carousel_slide id='<?php echo $post_id; ?>']"
+                       style="background-color: #f1f1f1;min-width: 250px;padding: 5px 8px;"
                 >
 				<?php
 				break;
@@ -195,10 +193,6 @@ class Admin {
 		require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/video-carousel.php';
 		require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/hero-banner-slider.php';
 		require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/images-settings.php';
-
-		// require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/navigation.php';
-		// require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/autoplay.php';
-		// require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/responsive.php';
 	}
 
 	/**
@@ -328,7 +322,7 @@ class Admin {
 	 * Adding our custom fields to the $form_fields array
 	 *
 	 * @param array $form_fields
-	 * @param WP_Post $post
+	 * @param \WP_Post $post
 	 *
 	 * @return array
 	 */
@@ -439,4 +433,3 @@ class Admin {
 		update_post_meta( $post_id, '_content_slider_settings', $_settings );
 	}
 }
-

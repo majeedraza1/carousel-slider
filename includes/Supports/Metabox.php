@@ -236,6 +236,49 @@ class Metabox {
 	}
 
 	/**
+	 * Generate color picker input field
+	 *
+	 * @param array $args
+	 *
+	 * @return string
+	 */
+	public static function color( array $args ) {
+		$args['input_attributes'] = array(
+			'class'              => 'color-picker',
+			'data-alpha'         => true,
+			'data-default-color' => isset( $args['default'] ) ? $args['default'] : '',
+		);
+
+		$html         = self::field_before( $args );
+		$args['type'] = 'text';
+		$html         .= '<input ' . self::build_attributes( $args ) . '>';
+		$args['type'] = 'color';
+		$html         .= self::field_after( $args );
+
+		return $html;
+	}
+
+	/**
+	 * Generate date input field
+	 *
+	 * @param array $args
+	 *
+	 * @return string
+	 */
+	public static function date( array $args ) {
+		$value = self::get_value( $args );
+		if ( ! empty( $value ) ) {
+			$value = date( 'Y-m-d', strtotime( $value ) );
+
+			$args['input_attributes']['value'] = $value;
+		}
+
+		$args['input_attributes']['pattern'] = "[0-9]{4}-[0-9]{2}-[0-9]{2}";
+
+		return self::text( $args );
+	}
+
+	/**
 	 * Generate select input field
 	 *
 	 * @param array $args
@@ -243,14 +286,105 @@ class Metabox {
 	 * @return string
 	 */
 	public static function select( array $args ) {
+		$args['type'] = 'select';
+		$value        = self::get_value( $args );
+
+		$html = self::field_before( $args );
+		$html .= '<select ' . self::build_attributes( $args ) . '>';
+		foreach ( $args['choices'] as $key => $label ) {
+			$option = trim( $key );
+			if ( self::is_multiple( $args ) && is_array( $value ) ) {
+				$selected = in_array( $option, $value ) ? 'selected' : '';
+			} else {
+				$selected = ( $value == $option ) ? 'selected' : '';
+			}
+			$html .= '<option value="' . $option . '" ' . $selected . '>' . $label . '</option>';
+		}
+		$html .= '</select>';
+		$html .= self::field_after( $args );
+
+		return $html;
+	}
+
+	/**
+	 * Generate post terms input field
+	 *
+	 * @param array $args
+	 *
+	 * @return string
+	 */
+	public static function post_terms( array $args ) {
+		global $wp_version;
+		$taxonomy = isset( $args['taxonomy'] ) ? $args['taxonomy'] : 'category';
+
+		if ( version_compare( $wp_version, '4.5.0', '>=' ) ) {
+			$_terms = get_terms( array( 'taxonomy' => $taxonomy ) );
+		} else {
+			$_terms = get_terms( $taxonomy );
+		}
+
+		$args['choices'] = array();
+		if ( ! is_wp_error( $_terms ) ) {
+			foreach ( $_terms as $term ) {
+				$args['choices'][ $term->term_id ] = sprintf( '%s (%s)', $term->name, $term->count );
+			}
+		}
+
 		$value = self::get_value( $args );
+		if ( is_string( $value ) ) {
+			$value = explode( ',', strip_tags( rtrim( $value, ',' ) ) );
+		}
 
 		$html = self::field_before( $args );
 		$html .= '<select ' . self::build_attributes( $args ) . '>';
 		foreach ( $args['choices'] as $key => $label ) {
 			$option   = trim( $key );
 			$selected = ( $value == $option ) ? 'selected' : '';
-			$html     .= '<option value="' . $option . '" ' . $selected . '>' . $label . '</option>';
+			if ( self::is_multiple( $args ) ) {
+				$selected = in_array( $option, $value ) ? 'selected' : '';
+			}
+			$html .= '<option value="' . $option . '" ' . $selected . '>' . $label . '</option>';
+		}
+		$html .= '</select>';
+		$html .= self::field_after( $args );
+
+		return $html;
+	}
+
+	/**
+	 * Generate posts list input field
+	 *
+	 * @param array $args
+	 *
+	 * @return string
+	 */
+	public static function posts_list( array $args ) {
+		$post_type = isset( $args['post_type'] ) ? $args['post_type'] : 'post';
+		$posts     = get_posts( array(
+			'post_type'      => $post_type,
+			'post_status'    => 'publish',
+			'posts_per_page' => 500
+		) );
+
+		$args['choices'] = array();
+		foreach ( $posts as $post ) {
+			$args['choices'][ $post->ID ] = $post->post_title;
+		}
+
+		$value = self::get_value( $args );
+		if ( is_string( $value ) ) {
+			$value = explode( ',', strip_tags( rtrim( $value, ',' ) ) );
+		}
+
+		$html = self::field_before( $args );
+		$html .= '<select ' . self::build_attributes( $args ) . '>';
+		foreach ( $args['choices'] as $key => $label ) {
+			$option   = trim( $key );
+			$selected = ( $value == $option ) ? 'selected' : '';
+			if ( self::is_multiple( $args ) ) {
+				$selected = in_array( $option, $value ) ? 'selected' : '';
+			}
+			$html .= '<option value="' . $option . '" ' . $selected . '>' . $label . '</option>';
 		}
 		$html .= '</select>';
 		$html .= self::field_after( $args );
@@ -284,6 +418,158 @@ class Metabox {
 		return $html;
 	}
 
+	public static function toggle( array $args ) {
+		list( $id, $name ) = self::get_name_and_id( $args );
+		$value = self::get_value( $args );
+
+		$input_attribute = array(
+			'type'    => 'checkbox',
+			'id'      => $id,
+			'name'    => $name,
+			'class'   => 'screen-reader-text',
+			'value'   => 'on',
+			'checked' => 'on' == $value ? true : false
+		);
+
+		$hidden_attributes = array(
+			'type'         => 'hidden',
+			'name'         => $name,
+			'spellcheck'   => false,
+			'tabindex'     => '-1',
+			'autocomplete' => 'off',
+			'value'        => 'off',
+		);
+
+
+		$html = self::field_before( $args );
+		$html .= '<div class="carousel-slider-toggle">';
+		$html .= '<input ' . self::array_to_attributes( $hidden_attributes ) . '>';
+		$html .= '<label for="' . $id . '">';
+		$html .= '<input ' . self::array_to_attributes( $input_attribute ) . '>';
+		$html .= '<span class="switch"></span>';
+		$html .= '</label>';
+		$html .= '</div>';
+		$html .= self::field_after( $args );
+
+		return $html;
+	}
+
+	/**
+	 * Generate image sizes input field
+	 *
+	 * @param array $args
+	 *
+	 * @return string
+	 */
+	public static function image_sizes( array $args ) {
+		global $_wp_additional_image_sizes;
+
+		$sizes = array();
+
+		foreach ( get_intermediate_image_sizes() as $_size ) {
+			if ( in_array( $_size, array( 'thumbnail', 'medium', 'medium_large', 'large' ) ) ) {
+
+				$width  = get_option( "{$_size}_size_w" );
+				$height = get_option( "{$_size}_size_h" );
+				$crop   = (bool) get_option( "{$_size}_crop" ) ? 'hard' : 'soft';
+
+				$sizes[ $_size ] = "{$_size} - $crop:{$width}x{$height}";
+
+			} elseif ( isset( $_wp_additional_image_sizes[ $_size ] ) ) {
+
+				$width  = $_wp_additional_image_sizes[ $_size ]['width'];
+				$height = $_wp_additional_image_sizes[ $_size ]['height'];
+				$crop   = $_wp_additional_image_sizes[ $_size ]['crop'] ? 'hard' : 'soft';
+
+				$sizes[ $_size ] = "{$_size} - $crop:{$width}x{$height}";
+			}
+		}
+
+		$args['choices'] = array_merge( $sizes, array( 'full' => 'original uploaded image' ) );
+
+		return self::select( $args );
+	}
+
+	/**
+	 * Generate image gallery input field
+	 *
+	 * @param array $args
+	 *
+	 * @return string
+	 */
+	public static function image_gallery( array $args ) {
+		global $post;
+
+		list( $id, $name ) = self::get_name_and_id( $args );
+		$value       = self::get_value( $args );
+		$value       = strip_tags( trim( $value, ',' ) );
+		$button_text = esc_html__( 'Add Gallery', 'carousel-slider' );
+		if ( ! empty( $value ) ) {
+			$button_text = esc_html__( 'Edit Gallery', 'carousel-slider' );
+		}
+		$input_attributes  = array(
+			'type'  => 'hidden',
+			'value' => $value,
+			'id'    => '_carousel_slider_images_ids',
+			'name'  => $name,
+		);
+		$button_attributes = array(
+			'href'          => '#',
+			'class'         => 'button',
+			'id'            => 'carousel_slider_gallery_btn',
+			'data-id'       => $post->ID,
+			'data-target'   => $id,
+			'data-ids'      => $value,
+			'data-create'   => esc_attr__( 'Create Gallery', 'carousel-slider' ),
+			'data-edit'     => esc_attr__( 'Edit Gallery', 'carousel-slider' ),
+			'data-save'     => esc_attr__( 'Save Gallery', 'carousel-slider' ),
+			'data-progress' => esc_attr__( 'Saving...', 'carousel-slider' ),
+			'data-insert'   => esc_attr__( 'Insert', 'carousel-slider' ),
+		);
+
+		$html = self::field_before( $args );
+		$html .= '<div class="carousel_slider_images">';
+		$html .= '<input ' . self::array_to_attributes( $input_attributes ) . '>';
+		$html .= '<a ' . self::array_to_attributes( $button_attributes ) . '>' . $button_text . '</a>';
+		$html .= '<ul class="carousel_slider_gallery_list">';
+		if ( $value ) {
+			$thumbs = explode( ',', $value );
+			foreach ( $thumbs as $thumb ) {
+				$html .= '<li>' . wp_get_attachment_image( $thumb, array( 50, 50 ) ) . '</li>';
+			}
+		}
+		$html .= '</ul>';
+		$html .= '</div>';
+		$html .= self::field_after( $args );
+
+		return $html;
+	}
+
+	/**
+	 * Generate image urls input field
+	 *
+	 * @param array $args
+	 *
+	 * @return string
+	 */
+	public static function images_url( array $args ) {
+		$value    = self::get_value( $args );
+		$btn_text = $value ? __( 'Edit URLs', 'carousel-slider' ) : __( 'Add URLs', 'carousel-slider' );
+
+		$html = self::field_before( $args );
+		$html .= '<a id="_images_urls_btn" class="button" href="#">' . $btn_text . '</a>';
+		$html .= '<ul class="carousel_slider_url_images_list">';
+		if ( is_array( $value ) && count( $value ) > 0 ) {
+			foreach ( $value as $image ) {
+				$html .= '<li><img src="' . $image['url'] . '" alt="' . $image['alt'] . '" width="75" height="75"></li>';
+			}
+		}
+		$html .= '</ul>';
+		$html .= self::field_after( $args );
+
+		return $html;
+	}
+
 	/**
 	 * Generate input attribute
 	 *
@@ -294,7 +580,7 @@ class Metabox {
 	 */
 	private static function build_attributes( array $args, $echo = true ) {
 		$input_type       = $args['type'];
-		$input_attributes = is_array( $args['input_attributes'] ) ? $args['input_attributes'] : array();
+		$input_attributes = isset( $args['input_attributes'] ) ? $args['input_attributes'] : array();
 		list( $id, $name ) = self::get_name_and_id( $args );
 
 		$attributes = array( 'id' => $id, 'name' => $name, );
@@ -322,9 +608,6 @@ class Metabox {
 		}
 
 		foreach ( $input_attributes as $attribute => $value ) {
-			if ( in_array( $attribute, array( 'id', 'name', 'type', 'value', 'multiple', 'required' ) ) ) {
-				continue;
-			}
 			$attributes[ $attribute ] = $value;
 		}
 
@@ -379,10 +662,21 @@ class Metabox {
 	private static function get_value( array $args ) {
 		global $post;
 
-		$value = get_post_meta( $post->ID, $args['id'], true );
+		$default = isset( $args['default'] ) ? $args['default'] : '';
+		$meta    = get_post_meta( $post->ID, $args['id'], true );
+		$value   = ! empty( $meta ) ? $meta : $default;
 
-		if ( empty( $value ) && isset( $args['default'] ) ) {
-			return $args['default'];
+		if ( isset( $args['meta_key'] ) ) {
+			$meta  = get_post_meta( $post->ID, $args['meta_key'], true );
+			$value = ! empty( $meta[ $args['id'] ] ) ? $meta[ $args['id'] ] : $default;
+
+			if ( isset( $args['index'] ) ) {
+				$value = ! empty( $meta[ $args['index'] ][ $args['id'] ] ) ? $meta[ $args['index'] ][ $args['id'] ] : $default;
+			}
+		}
+
+		if ( $value == 'zero' ) {
+			$value = 0;
 		}
 
 		return $value;
@@ -396,7 +690,7 @@ class Metabox {
 	 * @return mixed|string
 	 */
 	private static function get_name_and_id( array $args ) {
-		$group = isset( $args['group'] ) ? $args['group'] : false;
+		$group = isset( $args['group'] ) ? $args['group'] : 'carousel_slider';
 		$index = isset( $args['index'] ) ? $args['index'] : false;
 		$id    = $args['id'];
 		$name  = $id;

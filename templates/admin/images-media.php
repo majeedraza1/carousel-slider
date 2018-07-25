@@ -1,4 +1,7 @@
 <?php
+
+use CarouselSlider\Supports\Metabox;
+
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -12,10 +15,11 @@ if ( ! defined( 'WPINC' ) ) {
     <div class="shapla-toggle-inner">
         <div class="shapla-toggle-content">
 			<?php
-			$this->form->images_gallery( array(
-				'id'   => '_wpdh_image_ids',
-				'name' => esc_html__( 'Carousel Images', 'carousel-slider' ),
-				'desc' => esc_html__( 'Choose carousel images from media library.', 'carousel-slider' ),
+			echo Metabox::field( array(
+				'type'        => 'image_gallery',
+				'id'          => '_wpdh_image_ids',
+				'label'       => esc_html__( 'Carousel Images', 'carousel-slider' ),
+				'description' => esc_html__( 'Choose carousel images from media library.', 'carousel-slider' ),
 			) );
 			?>
         </div>

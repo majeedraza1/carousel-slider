@@ -10,13 +10,13 @@
         section_product_query = $('#section_product_query'),
         section_content_carousel = $('#section_content_carousel'),
         // Slide Type -- Post
-        _post_query_type = $('#_post_query_type'),
-        _post_date_after = $('#field-_post_date_after'),
-        _post_date_before = $('#field-_post_date_before'),
-        _post_categories = $('#field-_post_categories'),
-        _post_tags = $('#field-_post_tags'),
-        _post_in = $('#field-_post_in'),
-        _posts_per_page = $('#field-_posts_per_page'),
+        _post_query_type = $('.post_query_type'),
+        _post_date_after = $('.post_date_after').closest('.sp-input-group'),
+        _post_date_before = $('.post_date_before').closest('.sp-input-group'),
+        _post_categories = $('.post_categories').closest('.sp-input-group'),
+        _post_tags = $('.post_tags').closest('.sp-input-group'),
+        _post_in = $('.post_in').closest('.sp-input-group'),
+        _posts_per_page = $('.posts_per_page').closest('.sp-input-group'),
         // Slide Type -- Product
         _product_query_type = $('#_product_query_type'),
         _product_query = $('#field-_product_query'),
@@ -64,7 +64,9 @@
         if (_postQueryType === 'date_range') {
             _post_date_after.show();
             _post_date_before.show();
+
         }
+
         if (_postQueryType === 'post_categories') {
             _post_categories.show();
         }
@@ -85,18 +87,19 @@
         _post_tags.hide('fast');
         _post_in.hide('fast');
         _posts_per_page.show('fast');
+        var _val = $(this).val();
 
-        if (this.value === 'date_range') {
+        if (_val === 'date_range') {
             _post_date_after.slideDown();
             _post_date_before.slideDown();
         }
-        if (this.value === 'post_categories') {
+        if (_val === 'post_categories') {
             _post_categories.slideDown();
         }
-        if (this.value === 'post_tags') {
+        if (_val === 'post_tags') {
             _post_tags.slideDown();
         }
-        if (this.value === 'specific_posts') {
+        if (_val === 'specific_posts') {
             _post_in.slideDown();
             _posts_per_page.hide('fast');
         }
