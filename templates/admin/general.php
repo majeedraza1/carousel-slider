@@ -16,9 +16,7 @@ echo Metabox::field( array(
 	'description'      => sprintf( esc_html__( 'Choose "original uploaded image" for full size image or your desired image size for carousel image. You can change the default size for thumbnail, medium and large from %1$s Settings >> Media %2$s.', 'carousel-slider' ),
 		'<a target="_blank" href="' . get_admin_url() . 'options-media.php">', '</a>'
 	),
-	'input_attributes' => array(
-		'class' => 'select2 sp-input-text'
-	),
+	'input_attributes' => array( 'class' => 'sp-input-text' ),
 ) );
 
 echo Metabox::field( array(
@@ -44,7 +42,7 @@ echo Metabox::field( array(
 ) );
 
 echo Metabox::field( array(
-	'type'        => 'buttonset',
+	'type'        => 'toggle',
 	'id'          => '_lazy_load_image',
 	'label'       => esc_html__( 'Lazy Loading', 'carousel-slider' ),
 	'description' => esc_html__( 'Enable image with lazy loading.', 'carousel-slider' ),
@@ -56,7 +54,7 @@ echo Metabox::field( array(
 ) );
 
 echo Metabox::field( array(
-	'type'        => 'buttonset',
+	'type'        => 'toggle',
 	'id'          => '_inifnity_loop',
 	'label'       => esc_html__( 'Infinity loop', 'carousel-slider' ),
 	'description' => esc_html__( 'Enable or disable loop(circular) of carousel.', 'carousel-slider' ),
@@ -68,7 +66,7 @@ echo Metabox::field( array(
 ) );
 
 echo Metabox::field( array(
-	'type'        => 'buttonset',
+	'type'        => 'toggle',
 	'id'          => '_auto_width',
 	'label'       => esc_html__( 'Auto Width', 'carousel-slider' ),
 	'description' => esc_html__( 'Set item width according to its content width. Use width style on item to get the result you want. ', 'carousel-slider' ),

@@ -279,6 +279,23 @@ class Metabox {
 	}
 
 	/**
+	 * Generate textarea field
+	 *
+	 * @param array $args
+	 *
+	 * @return string
+	 */
+	public static function textarea( array $args ) {
+		$value = self::get_value( $args );
+
+		$html = self::field_before( $args );
+		$html .= '<textarea ' . self::build_attributes( $args ) . '>' . esc_textarea( $value ) . '</textarea>';
+		$html .= self::field_after( $args );
+
+		return $html;
+	}
+
+	/**
 	 * Generate select input field
 	 *
 	 * @param array $args
@@ -418,6 +435,13 @@ class Metabox {
 		return $html;
 	}
 
+	/**
+	 * Generate toggle input field
+	 *
+	 * @param array $args
+	 *
+	 * @return string
+	 */
 	public static function toggle( array $args ) {
 		list( $id, $name ) = self::get_name_and_id( $args );
 		$value = self::get_value( $args );

@@ -2,8 +2,9 @@
 
 namespace CarouselSlider\Display;
 
+// Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
-	exit; // Exit if accessed directly.
+	exit;
 }
 
 
@@ -16,9 +17,24 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class StructuredData {
 
-	protected static $instance = null;
+	/**
+	 * @var StructuredData
+	 */
+	private static $instance;
+
+	/**
+	 * @var array
+	 */
 	private $_product_data = array();
+
+	/**
+	 * @var array
+	 */
 	private $_image_data = array();
+
+	/**
+	 * @var array
+	 */
 	private $_post_data = array();
 
 	/**
@@ -29,20 +45,15 @@ class StructuredData {
 	public static function init() {
 		if ( is_null( self::$instance ) ) {
 			self::$instance = new self();
+
+			add_action( 'carousel_slider_image_gallery_loop', array( self::$instance, 'generate_image_data' ) );
+			add_action( 'carousel_slider/loop/post', array( self::$instance, 'generate_post_data' ) );
+			add_action( 'carousel_slider_product_loop', array( self::$instance, 'generate_product_data' ), 10, 2 );
+			// Output structured data.
+			add_action( 'wp_footer', array( self::$instance, 'output_structured_data' ), 90 );
 		}
 
 		return self::$instance;
-	}
-
-	/**
-	 * Constructor.
-	 */
-	public function __construct() {
-		add_action( 'carousel_slider_image_gallery_loop', array( $this, 'generate_image_data' ) );
-		add_action( 'carousel_slider/loop/post', array( $this, 'generate_post_data' ) );
-		add_action( 'carousel_slider_product_loop', array( $this, 'generate_product_data' ), 10, 2 );
-		// Output structured data.
-		add_action( 'wp_footer', array( $this, 'output_structured_data' ), 90 );
 	}
 
 	/**
@@ -110,6 +121,11 @@ class StructuredData {
 		return $this->_image_data;
 	}
 
+	/**
+	 * Get structured post data
+	 *
+	 * @return array
+	 */
 	private function get_structured_post_data() {
 		$data = array(
 			'@context' => 'http://schema.org/',
@@ -119,6 +135,11 @@ class StructuredData {
 		return $this->get_post_data() ? $data : array();
 	}
 
+	/**
+	 * Get post data
+	 *
+	 * @return array
+	 */
 	private function get_post_data() {
 		return $this->_post_data;
 	}
@@ -237,20 +258,20 @@ class StructuredData {
 	 *
 	 * Hooked into `carousel_slider_post_loop` action hook.
 	 *
-	 * @param \WP_Post $_post
+	 * @param \WP_Post $post
 	 */
-	public function generate_post_data( $_post ) {
-		if ( ! $_post instanceof \WP_Post ) {
+	public function generate_post_data( $post ) {
+		if ( ! $post instanceof \WP_Post ) {
 			return;
 		}
 
-		$image = wp_get_attachment_image_src( get_post_thumbnail_id( $_post->ID ), 'normal' );
+		$image = wp_get_attachment_image_src( get_post_thumbnail_id( $post ), 'normal' );
 
 		$json['@type'] = 'BlogPosting';
 
 		$json['mainEntityOfPage'] = array(
 			'@type' => 'webpage',
-			'@id'   => get_the_permalink(),
+			'@id'   => get_permalink( $post ),
 		);
 
 
@@ -273,14 +294,13 @@ class StructuredData {
 			);
 		}
 
-		$json['datePublished'] = get_post_time( 'c' );
-		$json['dateModified']  = get_the_modified_date( 'c' );
-		$json['name']          = get_the_title();
+		$json['datePublished'] = get_post_time( 'c', false, $post );
+		$json['dateModified']  = get_the_modified_date( 'c', $post );
+		$json['name']          = get_the_title( $post );
 		$json['headline']      = $json['name'];
-		$json['description']   = get_the_excerpt();
+		$json['description']   = get_the_excerpt( $post );
 
-
-		$this->set_data( apply_filters( 'carousel_slider/structured_data/post', $json, $_post ) );
+		$this->set_data( apply_filters( 'carousel_slider/structured_data/post', $json, $post ) );
 	}
 
 	/**
@@ -288,7 +308,7 @@ class StructuredData {
 	 *
 	 * Hooked into `carousel_slider_product_loop` action hook.
 	 *
-	 * @param \WC_Product $product Product data (default: null).
+	 * @param \WC_Product $product
 	 * @param \WP_Post $post
 	 */
 	public function generate_product_data( $product, $post ) {
@@ -298,15 +318,15 @@ class StructuredData {
 
 		if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, "3.0.0", ">=" ) ) {
 			$name      = $product->get_name();
-			$permalink = get_permalink( $product->get_id() );
+			$permalink = $product->get_permalink();
 		} else {
-			$name      = get_the_title( $post->ID );
-			$permalink = get_permalink( $post->ID );
+			$name      = get_the_title( $post );
+			$permalink = get_permalink( $post );
 		}
 
 		$markup['@type'] = 'Product';
 		$markup['@id']   = $permalink;
-		$markup['url']   = $markup['@id'];
+		$markup['url']   = $permalink;
 		$markup['name']  = $name;
 
 		$this->set_data( apply_filters( 'carousel_slider/structured_data/product', $markup, $product ) );

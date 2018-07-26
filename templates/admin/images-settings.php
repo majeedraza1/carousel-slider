@@ -1,4 +1,7 @@
 <?php
+
+use CarouselSlider\Supports\Metabox;
+
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -14,37 +17,42 @@ $img_settings = ( $slide_type == 'image-carousel' ) || ( $slide_type == 'image-c
     <div class="shapla-toggle-inner">
         <div class="shapla-toggle-content">
 			<?php
-			$this->form->checkbox( array(
-				'id'    => '_show_attachment_title',
-				'name'  => esc_html__( 'Show Image Title', 'carousel-slider' ),
-				'label' => esc_html__( 'Show Image Title', 'carousel-slider' ),
-				'desc'  => esc_html__( 'Check to show title below image. Only works with image carousel.', 'carousel-slider' ),
-				'std'   => 'off'
+			echo Metabox::field( array(
+				'type'        => 'toggle',
+				'id'          => '_show_attachment_title',
+				'label'       => esc_html__( 'Show Image Title', 'carousel-slider' ),
+				'description' => esc_html__( 'Check to show title below image. Only works with image carousel.', 'carousel-slider' ),
+				'default'     => 'off'
 			) );
-			$this->form->checkbox( array(
-				'id'    => '_show_attachment_caption',
-				'name'  => esc_html__( 'Show Image Caption', 'carousel-slider' ),
-				'label' => esc_html__( 'Show Image Caption', 'carousel-slider' ),
-				'desc'  => esc_html__( 'Check to show caption below image. Only works with image carousel.', 'carousel-slider' ),
-				'std'   => 'off'
+			echo Metabox::field( array(
+				'type'        => 'toggle',
+				'id'          => '_show_attachment_caption',
+				'label'       => esc_html__( 'Show Image Caption', 'carousel-slider' ),
+				'description' => esc_html__( 'Check to show caption below image. Only works with image carousel.', 'carousel-slider' ),
+				'default'     => 'off'
 			) );
-			$this->form->select( array(
-				'id'      => '_image_target',
-				'name'    => esc_html__( 'Image Target', 'carousel-slider' ),
-				'desc'    => esc_html__( 'Choose where to open the linked image.', 'carousel-slider' ),
-				'std'     => '_self',
-				'options' => array(
-					'_self'  => esc_html__( 'Open in the same frame as it was clicked', 'carousel-slider' ),
-					'_blank' => esc_html__( 'Open in a new window or tab', 'carousel-slider' ),
+
+			echo Metabox::field( array(
+				'type'        => 'toggle',
+				'id'          => '_image_lightbox',
+				'label'       => esc_html__( 'Show Lightbox Gallery', 'carousel-slider' ),
+				'description' => esc_html__( 'Check to show lightbox gallery.', 'carousel-slider' ),
+				'default'     => 'off'
+			) );
+
+			echo Metabox::field( array(
+				'type'             => 'buttonset',
+				'id'               => '_image_target',
+				'label'            => esc_html__( 'Image Target', 'carousel-slider' ),
+				'description'      => esc_html__( 'Choose where to open the linked image.', 'carousel-slider' ),
+				'default'          => '_self',
+				'choices'          => array(
+					'_self'  => esc_html__( 'Same window', 'carousel-slider' ),
+					'_blank' => esc_html__( 'New window', 'carousel-slider' ),
 				),
+				'input_attributes' => array( 'class' => 'sp-input-text' ),
 			) );
-			$this->form->checkbox( array(
-				'id'    => '_image_lightbox',
-				'name'  => esc_html__( 'Show Lightbox Gallery', 'carousel-slider' ),
-				'label' => esc_html__( 'Show Lightbox Gallery', 'carousel-slider' ),
-				'desc'  => esc_html__( 'Check to show lightbox gallery.', 'carousel-slider' ),
-				'std'   => 'off'
-			) );
+
 			?>
         </div>
     </div>

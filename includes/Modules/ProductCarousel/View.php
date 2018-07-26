@@ -56,7 +56,7 @@ class View extends AbstractView {
 			ob_start();
 			echo '<div class="product carousel-slider__product">';
 
-			do_action( 'carousel_slider_product_loop', $product );
+			do_action( 'carousel_slider_product_loop', $product, $post );
 			do_action( 'carousel_slider_before_shop_loop_item', $product );
 
 			do_action( 'woocommerce_before_shop_loop_item' );

@@ -5,8 +5,8 @@ namespace CarouselSlider\Interfaces;
 /**
  * Collection Interface
  *
- * @package DialogContactForm
- * @since   3.0.0
+ * @package CarouselSlider
+ * @since   1.9.0
  */
 interface CollectionInterface extends \ArrayAccess, \Countable, \IteratorAggregate {
 
