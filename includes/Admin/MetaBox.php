@@ -59,6 +59,48 @@ class MetaBox {
 
 		add_meta_box( "carousel-slider-general-settings", __( "General Settings", 'carousel-slider' ),
 			array( $this, 'general_settings_callback' ), $this->post_type, "advanced", "low" );
+
+		add_meta_box( "carousel-slider-settings", __( "Settings", 'carousel-slider' ),
+			array( $this, 'carousel_slider_settings' ), "carousels", "advanced", "low" );
+	}
+
+	public function carousel_slider_settings() {
+		?>
+        <div class="carousel-slider-tabs-wrapper">
+            <div id="carousel-slider-metabox-tabs" class="carousel-slider-tabs">
+                <ul class="carousel-slider-tabs-list">
+                    <li class="carousel-slider-tab-list--general">
+                        <a href="#carousel-slider-tab-1">
+							<?php esc_html_e( 'General Settings', 'dialog-contact-form' ); ?>
+                        </a>
+                    </li>
+                    <li class="carousel-slider-tab-list--autoplay">
+                        <a href="#carousel-slider-tab-2">
+							<?php esc_html_e( 'Autoplay Settings', 'dialog-contact-form' ); ?>
+                        </a>
+                    </li>
+                    <li class="carousel-slider-tab-list--navigation">
+                        <a href="#carousel-slider-tab-3">
+							<?php esc_html_e( 'Navigation Settings', 'dialog-contact-form' ); ?>
+                        </a>
+                    </li>
+                    <li class="carousel-slider-tab-list--responsive">
+                        <a href="#carousel-slider-tab-4">
+							<?php esc_html_e( 'Responsive Settings', 'dialog-contact-form' ); ?>
+                        </a>
+                    </li>
+                </ul>
+                <div id="carousel-slider-tab-1" class="carousel-slider-options-panel">&nbsp;
+                </div>
+                <div id="carousel-slider-tab-2" class="carousel-slider-options-panel">&nbsp;
+                </div>
+                <div id="carousel-slider-tab-3" class="carousel-slider-options-panel">&nbsp;
+                </div>
+                <div id="carousel-slider-tab-4" class="carousel-slider-options-panel">&nbsp;
+                </div>
+            </div>
+        </div>
+		<?php
 	}
 
 	/**

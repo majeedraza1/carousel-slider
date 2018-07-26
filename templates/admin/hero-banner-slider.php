@@ -1,4 +1,7 @@
 <?php
+
+use CarouselSlider\Supports\Metabox;
+
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
@@ -215,84 +218,52 @@ if ( ! defined( 'WPINC' ) ) {
             </div>
 
             <div class="content_settings">
-                <div class="sp-input-group" id="field-_content_slide_height">
-                    <div class="sp-input-label">
-                        <label for="_content_slide_height"><?php esc_html_e( 'Slide Height',
-								'carousel-slider' ); ?></label>
-                        <p class="sp-input-desc"><?php esc_html_e( 'Enter a px, em, rem or vh value for slide height. ex: 100vh',
-								'carousel-slider' ); ?></p>
-                    </div>
-                    <div class="sp-input-field">
-                        <input type="text" name="content_settings[slide_height]" id="_content_slide_height"
-                               class="sp-input-text" value="<?php echo $_slide_height; ?>">
-                    </div>
-                </div>
-                <div class="sp-input-group" id="field-_content_slide_height">
-                    <div class="sp-input-label">
-                        <label for="_content_slide_height"><?php esc_html_e( 'Slider Content Max Width',
-								'carousel-slider' ); ?></label>
-                        <p class="sp-input-desc"><?php esc_html_e( 'Enter a px, em, rem or % value for slide height. ex: 960px',
-								'carousel-slider' ); ?></p>
-                    </div>
-                    <div class="sp-input-field">
-                        <input type="text" name="content_settings[content_width]" id="_content_content_width"
-                               class="sp-input-text" value="<?php echo $_content_width; ?>">
-                    </div>
-                </div>
 				<?php
-				$animations = array(
-					''            => esc_html__( 'None', 'carousel-slider' ),
-					'fadeInDown'  => esc_html__( 'Fade In Down', 'carousel-slider' ),
-					'fadeInUp'    => esc_html__( 'Fade In Up', 'carousel-slider' ),
-					'fadeInRight' => esc_html__( 'Fade In Right', 'carousel-slider' ),
-					'fadeInLeft'  => esc_html__( 'Fade In Left', 'carousel-slider' ),
-					'zoomIn'      => esc_html__( 'Zoom In', 'carousel-slider' ),
-				);
+				echo Metabox::field( array(
+					'type'             => 'text',
+					'meta_key'         => '_content_slider_settings',
+					'group'            => 'content_settings',
+					'id'               => 'slide_height',
+					'label'            => esc_html__( 'Slide Height', 'carousel-slider' ),
+					'description'      => esc_html__( 'Enter a px, em, rem or % value for slide height. ex: 100vh', 'carousel-slider' ),
+					'input_attributes' => array( 'class' => 'sp-input-text' ),
+				) );
+				echo Metabox::field( array(
+					'type'             => 'text',
+					'meta_key'         => '_content_slider_settings',
+					'group'            => 'content_settings',
+					'id'               => 'content_width',
+					'label'            => esc_html__( 'Slider Content Max Width', 'carousel-slider' ),
+					'description'      => esc_html__( 'Enter a px, em, rem or % value for slide width. ex: 960px', 'carousel-slider' ),
+					'input_attributes' => array( 'class' => 'sp-input-text' ),
+				) );
+				echo Metabox::field( array(
+					'type'             => 'select',
+					'meta_key'         => '_content_slider_settings',
+					'group'            => 'content_settings',
+					'id'               => 'content_animation',
+					'label'            => esc_html__( 'Content Animation', 'carousel-slider' ),
+					'description'      => esc_html__( 'Select slide content animation.', 'carousel-slider' ),
+					'input_attributes' => array( 'class' => 'sp-input-text' ),
+					'choices'          => array(
+						''            => esc_html__( 'None', 'carousel-slider' ),
+						'fadeInDown'  => esc_html__( 'Fade In Down', 'carousel-slider' ),
+						'fadeInUp'    => esc_html__( 'Fade In Up', 'carousel-slider' ),
+						'fadeInRight' => esc_html__( 'Fade In Right', 'carousel-slider' ),
+						'fadeInLeft'  => esc_html__( 'Fade In Left', 'carousel-slider' ),
+						'zoomIn'      => esc_html__( 'Zoom In', 'carousel-slider' ),
+					),
+				) );
+				echo Metabox::field( array(
+					'type'        => 'spacing',
+					'meta_key'    => '_content_slider_settings',
+					'group'       => 'content_settings',
+					'id'          => 'slide_padding',
+					'label'       => esc_html__( 'Slider Padding', 'carousel-slider' ),
+					'description' => esc_html__( 'Enter padding around slide in px, em or rem.', 'carousel-slider' ),
+					'default'     => array( 'top' => '1rem', 'right' => '3rem', 'bottom' => '1rem', 'left' => '3rem', ),
+				) );
 				?>
-                <div class="sp-input-group" id="field-_content_animation">
-                    <div class="sp-input-label">
-                        <label for="_content_animation"><?php esc_html_e( 'Content Animation',
-								'carousel-slider' ); ?></label>
-                        <p class="sp-input-desc"><?php esc_html_e( 'Select slide content animation.',
-								'carousel-slider' ); ?></p>
-                    </div>
-                    <div class="sp-input-field">
-                        <select name="content_settings[content_animation]" id="_content_animation"
-                                class="sp-input-text">
-							<?php
-							foreach ( $animations as $animation_slug => $animation ) {
-								$__selected = selected( $_content_animation, $animation_slug, false );
-								echo '<option value="' . $animation_slug . '" ' . $__selected . '>' . $animation . '</option>';
-							}
-							?>
-                        </select>
-                    </div>
-                </div>
-                <div class="sp-input-group" id="field-_content_slide_padding">
-                    <div class="sp-input-label">
-                        <label for="_content_slide_padding"><?php esc_html_e( 'Slider Padding',
-								'carousel-slider' ); ?></label>
-                        <p class="sp-input-desc"><?php esc_html_e( 'Enter padding around slide in px, em or rem.',
-								'carousel-slider' ); ?></p>
-                    </div>
-                    <div class="sp-input-field">
-                        <span class="dashicons dashicons-arrow-up-alt"></span>
-                        <input name="content_settings[slide_padding][top]" class="spacing-text" placeholder="Top"
-                               value="<?php echo isset( $_slide_padding['top'] ) ? $_slide_padding['top'] : '1rem'; ?>">
-
-                        <span class="dashicons dashicons-arrow-right-alt"></span>
-                        <input name="content_settings[slide_padding][right]" class="spacing-text" placeholder="Right"
-                               value="<?php echo isset( $_slide_padding['right'] ) ? $_slide_padding['right'] : '3rem'; ?>">
-
-                        <span class="dashicons dashicons-arrow-down-alt"></span>
-                        <input name="content_settings[slide_padding][bottom]" class="spacing-text" placeholder="Bottom"
-                               value="<?php echo isset( $_slide_padding['bottom'] ) ? $_slide_padding['bottom'] : '1rem'; ?>">
-
-                        <span class="dashicons dashicons-arrow-left-alt"></span>
-                        <input name="content_settings[slide_padding][left]" class="spacing-text" placeholder="Left"
-                               value="<?php echo isset( $_slide_padding['left'] ) ? $_slide_padding['left'] : '3rem'; ?>">
-                    </div>
-                </div>
             </div>
         </div>
     </div>

@@ -10,12 +10,34 @@
 // Meta box fields
 .sp {
 	&-input-group {
-		margin-bottom: 10px;
+		border-bottom: 1px solid rgba(#000, 0.02);
+		margin-bottom: 15px;
+		padding-bottom: 15px;
+
+		&:last-child {
+			border-bottom: none;
+			margin-bottom: 0;
+			padding-bottom: 0;
+
+			.accordion-content & {
+				padding-bottom: 15px;
+			}
+		}
+
+		&:before,
 		&:after {
 			content: "";
 			display: table;
+		}
+		&:after {
 			clear: both
 		}
+	}
+
+	&-input-label,
+	&-input-field {
+		float: left;
+		width: 100%;
 	}
 
 	&-input-label {
@@ -24,37 +46,40 @@
 			margin-right: 30px;
 		}
 	}
+
 	&-input-field {
 	}
 
-	&-input-label,
-	&-input-field {
-		float: left;
-		width: 100%;
-	}
 	&-input-desc {
 		color: #999;
 		font-size: 0.9em;
-		line-height: 1.3em;
-		margin: 10px 30px 10px 0;
+		line-height: 1.5;
+		margin: 10px 30px 0 0;
 	}
 	&-input-text {
 		width: 100%;
-		padding: 8px 8px 8px 16px;
+		padding: 8px 10px;
 		height: 35px !important;
+
+		&[multiple] {
+			height: auto !important;
+		}
 
 		option {
 			padding: 8px 4px;
 		}
 	}
-}
 
-.spacing-text {
-	width: 62px;
-}
+	&-input-textarea {
+		width: 100%;
+		padding: 8px 10px;
+	}
 
-@media only screen and (min-width: 600px) {
-	.sp {
+	&-spacing-text {
+		width: 62px;
+	}
+
+	@media only screen and (min-width: 600px) {
 		&-input-label {
 			width: 40%;
 		}
@@ -62,42 +87,76 @@
 			width: 60%;
 		}
 	}
+
+	@media only screen and (min-width: 783px) {
+		&-input-label {
+			width: 30%;
+		}
+		&-input-field {
+			width: 70%;
+		}
+		&-input-text,
+		&-input-textarea {
+			width: 25em;
+			max-width: 100%;
+
+			&.widefat {
+				width: 100%;
+			}
+		}
+	}
+
+	@media only screen and (min-width: 851px) {
+		&-input-label,
+		&-input-field {
+			width: 100%;
+		}
+	}
+
+	@media only screen and (min-width: 1200px) {
+		&-input-label {
+			width: 40%;
+		}
+		&-input-field {
+			width: 60%;
+		}
+	}
+
+	@media only screen and (min-width: 1600px) {
+		&-input-label {
+			width: 30%;
+		}
+		&-input-field {
+			width: 70%;
+		}
+	}
 }
 
-@media only screen and (min-width: 783px) {
-	.sp-input-label {
-		width: 30%;
-	}
-	.sp-input-field {
-		width: 70%;
-	}
-	.sp-input-text {
-		width: 25em;
-	}
-}
+#side-sortables {
+	.dcf {
+		&-input-group {
+		}
 
-@media only screen and (min-width: 851px) {
-	.sp-input-label,
-	.sp-input-field {
-		width: 100%;
-	}
-}
+		&-input-label,
+		&-input-field {
+			width: 100%;
+		}
 
-@media only screen and (min-width: 1200px) {
-	.sp-input-label {
-		width: 40%;
-	}
-	.sp-input-field {
-		width: 60%;
-	}
-}
+		&-input-label {
+			label {
+				margin: 0 0 10px 0;
+				display: block;
+			}
+		}
 
-@media only screen and (min-width: 1600px) {
-	.sp-input-label {
-		width: 30%;
-	}
-	.sp-input-field {
-		width: 70%;
+		&-input-desc {
+			margin: -5px 0 5px 0;
+		}
+
+		&-input-text,
+		&-input-textarea {
+			width: 100%;
+		}
 	}
 }
 

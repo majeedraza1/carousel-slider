@@ -594,6 +594,65 @@ class Metabox {
 		return $html;
 	}
 
+
+	/**
+	 * Generate spacing input field
+	 *
+	 * @param array $args
+	 *
+	 * @return string
+	 */
+	public static function spacing( array $args ) {
+		list( $id, $name ) = self::get_name_and_id( $args );
+		$value = self::get_value( $args );
+
+		$default = isset( $args['default'] ) ? $args['default'] : array();
+
+		$html = self::field_before( $args );
+
+		// Top
+		if ( isset( $default['top'] ) ) {
+			$top_name  = $name . "[top]";
+			$top_value = isset( $value['top'] ) ? esc_attr( $value['top'] ) : $default['top'];
+			$html      .= '<div class="carousel-slider-dimension">';
+			$html      .= '<span class="add-on"><i class="dashicons dashicons-arrow-up-alt"></i></span>';
+			$html      .= '<input type="text" name="' . $top_name . '" value="' . $top_value . '">';
+			$html      .= '</div>';
+		}
+
+		// Right
+		if ( isset( $default['right'] ) ) {
+			$right_name  = $name . "[right]";
+			$right_value = isset( $value['right'] ) ? esc_attr( $value['right'] ) : $default['right'];
+			$html        .= '<div class="carousel-slider-dimension">';
+			$html        .= '<span class="add-on"><i class="dashicons dashicons-arrow-right-alt"></i></span>';
+			$html        .= '<input type="text" name="' . $right_name . '" value="' . $right_value . '">';
+			$html        .= '</div>';
+		}
+		// Bottom
+		if ( isset( $default['bottom'] ) ) {
+			$bottom_name  = $name . "[bottom]";
+			$bottom_value = isset( $value['bottom'] ) ? esc_attr( $value['bottom'] ) : $default['bottom'];
+			$html         .= '<div class="carousel-slider-dimension">';
+			$html         .= '<span class="add-on"><i class="dashicons dashicons-arrow-down-alt"></i></span>';
+			$html         .= '<input type="text" name="' . $bottom_name . '" value="' . $bottom_value . '">';
+			$html         .= '</div>';
+		}
+		// Bottom
+		if ( isset( $default['left'] ) ) {
+			$left_name  = $name . "[left]";
+			$left_value = isset( $value['left'] ) ? esc_attr( $value['left'] ) : $default['left'];
+			$html       .= '<div class="carousel-slider-dimension">';
+			$html       .= '<span class="add-on"><i class="dashicons dashicons-arrow-left-alt"></i></span>';
+			$html       .= '<input type="text" name="' . $left_name . '" value="' . $left_value . '">';
+			$html       .= '</div>';
+		}
+
+		$html .= self::field_after( $args );
+
+		return $html;
+	}
+
 	/**
 	 * Generate input attribute
 	 *
