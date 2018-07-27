@@ -659,6 +659,63 @@ class Metabox {
 	}
 
 	/**
+	 * Generate slider input field
+	 *
+	 * @param array $args
+	 *
+	 * @return string
+	 */
+	public static function slider( array $args ) {
+		list( $id, $name ) = self::get_name_and_id( $args );
+		$default = isset( $args['default'] ) ? $args['default'] : 0;
+		$value   = intval( self::get_value( $args ) );
+
+		$args['type'] = 'range';
+
+		$args['input_attributes']['data-reset_value'] = $default;
+		if ( ! isset( $args['input_attributes']['min'] ) ) {
+			$args['input_attributes']['min'] = 0;
+		}
+		if ( ! isset( $args['input_attributes']['max'] ) ) {
+			$args['input_attributes']['max'] = 100;
+		}
+
+		$number_attributes = array(
+			'type'  => 'number',
+			'class' => 'value',
+			'value' => $value,
+			'min'   => $args['input_attributes']['min'],
+			'max'   => $args['input_attributes']['max'],
+		);
+
+		$html = self::field_before( $args );
+		$html .= '<div class="carousel-slider-range-wrapper">';
+		$html .= '<input ' . self::build_attributes( $args ) . '>';
+		$html .= '<div class="range-value">';
+		$html .= '<input ' . self::array_to_attributes( $number_attributes ) . '>';
+		if ( ! empty( $args['choices']['suffix'] ) ) {
+			$html .= esc_attr( $args['choices']['suffix'] );
+		}
+		$html .= '</div>';
+		$html .= '<div class="carousel-slider-range-reset" title="' . esc_attr__( 'Reset to default value', 'carousel-slider' ) . '">';
+		$html .= '<span class="dashicons dashicons-image-rotate"></span>';
+		$html .= '</div>';
+		$html .= '</div>';
+		$html .= self::field_after( $args );
+
+		return $html;
+	}
+
+	/**
+	 * @param array $args
+	 *
+	 * @return string
+	 */
+	public static function range( array $args ) {
+		return self::slider( $args );
+	}
+
+	/**
 	 * Generate input attribute
 	 *
 	 * @param array $args
@@ -667,7 +724,7 @@ class Metabox {
 	 * @return array|string
 	 */
 	private static function build_attributes( array $args, $echo = true ) {
-		$input_type       = $args['type'];
+		$input_type       = isset( $args['type'] ) ? $args['type'] : 'text';
 		$input_attributes = isset( $args['input_attributes'] ) ? $args['input_attributes'] : array();
 		list( $id, $name ) = self::get_name_and_id( $args );
 

@@ -176,7 +176,7 @@ class Utils {
 			'nav_color'                 => '#f1f1f1',
 			'nav_active_color'          => '#00d1b2',
 			'margin_right'              => 10,
-			'lazy_load_image'           => 'off',
+			'lazy_load_image'           => 'on',
 		);
 
 		$options = apply_filters( 'carousel_slider_default_settings', $options );

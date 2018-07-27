@@ -20,25 +20,21 @@ echo Metabox::field( array(
 ) );
 
 echo Metabox::field( array(
-	'type'             => 'number',
+	'type'             => 'slider',
 	'id'               => '_margin_right',
 	'label'            => esc_html__( 'Item Spacing.', 'carousel-slider' ),
 	'description'      => esc_html__( 'Space between two slide. Enter 10 for 10px', 'carousel-slider' ),
 	'default'          => Utils::get_default_setting( 'margin_right' ),
-	'input_attributes' => array(
-		'class' => 'sp-input-text',
-	),
+	'input_attributes' => array( 'min' => 0, 'max' => 100 ),
 ) );
 
 echo Metabox::field( array(
-	'type'             => 'number',
+	'type'             => 'slider',
 	'id'               => '_stage_padding',
 	'label'            => esc_html__( 'Stage Padding', 'carousel-slider' ),
 	'description'      => esc_html__( 'Add left and right padding on carousel slider stage wrapper.', 'carousel-slider' ),
 	'default'          => 0,
-	'input_attributes' => array(
-		'class' => 'sp-input-text',
-	),
+	'input_attributes' => array( 'min' => 0, 'max' => 300 ),
 ) );
 
 echo Metabox::field( array(
@@ -47,10 +43,6 @@ echo Metabox::field( array(
 	'label'       => esc_html__( 'Lazy Loading', 'carousel-slider' ),
 	'description' => esc_html__( 'Enable image with lazy loading.', 'carousel-slider' ),
 	'default'     => Utils::get_default_setting( 'lazy_load_image' ),
-	'choices'     => array(
-		'on'  => esc_html__( 'Enable', 'carousel-slider' ),
-		'off' => esc_html__( 'Disable', 'carousel-slider' ),
-	),
 ) );
 
 echo Metabox::field( array(
@@ -59,10 +51,6 @@ echo Metabox::field( array(
 	'label'       => esc_html__( 'Infinity loop', 'carousel-slider' ),
 	'description' => esc_html__( 'Enable or disable loop(circular) of carousel.', 'carousel-slider' ),
 	'default'     => 'on',
-	'choices'     => array(
-		'on'  => esc_html__( 'Enable', 'carousel-slider' ),
-		'off' => esc_html__( 'Disable', 'carousel-slider' ),
-	),
 ) );
 
 echo Metabox::field( array(
@@ -71,8 +59,4 @@ echo Metabox::field( array(
 	'label'       => esc_html__( 'Auto Width', 'carousel-slider' ),
 	'description' => esc_html__( 'Set item width according to its content width. Use width style on item to get the result you want. ', 'carousel-slider' ),
 	'default'     => 'off',
-	'choices'     => array(
-		'on'  => esc_html__( 'Enable', 'carousel-slider' ),
-		'off' => esc_html__( 'Disable', 'carousel-slider' ),
-	),
 ) );
