@@ -286,7 +286,8 @@ class Metabox {
 	 * @return string
 	 */
 	public static function textarea( array $args ) {
-		$value = self::get_value( $args );
+		$args['type'] = 'textarea';
+		$value        = self::get_value( $args );
 
 		$html = self::field_before( $args );
 		$html .= '<textarea ' . self::build_attributes( $args ) . '>' . esc_textarea( $value ) . '</textarea>';
@@ -418,16 +419,20 @@ class Metabox {
 	 */
 	public static function buttonset( array $args ) {
 		list( $id, $name ) = self::get_name_and_id( $args );
-		$value = self::get_value( $args );
+		$value       = self::get_value( $args );
+		$attributes  = isset( $args['input_attributes'] ) ? $args['input_attributes'] : array();
+		$input_class = empty( $attributes['class'] ) ? 'switch-input' : 'switch-input ' . $attributes['class'];
 
 		$html = self::field_before( $args );
 		$html .= '<div class="buttonset">';
 		foreach ( $args['choices'] as $key => $option ) {
-			$input_id = $id . '_' . $key;
-			$checked  = ( $value == $key ) ? ' checked="checked"' : '';
-			$html     .= '<input class="switch-input" id="' . $input_id . '" type="radio" value="' . $key . '"
+			$input_id    = $id . '_' . $key;
+			$checked     = ( $value == $key ) ? ' checked="checked"' : '';
+			$label_class = ( $value == $key ) ? 'switch-label switch-label-on' : 'switch-label switch-label-off';
+
+			$html .= '<input class="' . $input_class . '" id="' . $input_id . '" type="radio" value="' . $key . '"
                        name="' . $name . '" ' . $checked . '>';
-			$html     .= '<label class="switch-label switch-label-on" for="' . $input_id . '">' . $option . '</label></input>';
+			$html .= '<label class="' . $label_class . '" for="' . $input_id . '">' . $option . '</label></input>';
 		}
 		$html .= '</div>';
 		$html .= self::field_after( $args );

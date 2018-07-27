@@ -197,8 +197,37 @@ if ( ! defined( 'WPINC' ) ) {
                                                 </li>
                                             </ul>
 
+                                            <div id="carousel-slider-tab-content" class="shapla-tab tab-content">
+		                                        <?php
+		                                        echo Metabox::textarea( array(
+			                                        'id'               => 'slide_heading',
+			                                        'group'            => 'carousel_slider_content',
+			                                        'index'            => $slide_num,
+			                                        'meta_key'         => '_content_slider',
+			                                        'label'            => esc_html__( 'Slide Heading:', 'carousel-slider' ),
+			                                        'description'      => esc_html__( 'Enter the heading for your slide. This field can take HTML markup.', 'carousel-slider' ),
+			                                        'input_attributes' => array(
+				                                        'class' => 'sp-input-textarea',
+				                                        'cols'  => 30,
+				                                        'rows'  => 3,
+			                                        ),
+		                                        ) );
+		                                        echo Metabox::textarea( array(
+			                                        'id'               => 'slide_description',
+			                                        'group'            => 'carousel_slider_content',
+			                                        'index'            => $slide_num,
+			                                        'meta_key'         => '_content_slider',
+			                                        'label'            => esc_html__( 'Slide Description:', 'carousel-slider' ),
+			                                        'description'      => esc_html__( 'Enter the description for your slide. This field can take HTML markup.', 'carousel-slider' ),
+			                                        'input_attributes' => array(
+				                                        'class' => 'sp-input-textarea',
+				                                        'cols'  => 30,
+				                                        'rows'  => 3,
+			                                        ),
+		                                        ) );
+		                                        ?>
+                                            </div><!-- .tab-content -->
 											<?php
-											include CAROUSEL_SLIDER_TEMPLATES . '/admin/parts/hero-banner/tab-content.php';
 											include CAROUSEL_SLIDER_TEMPLATES . '/admin/parts/hero-banner/tab-link.php';
 											include CAROUSEL_SLIDER_TEMPLATES . '/admin/parts/hero-banner/tab-background.php';
 											include CAROUSEL_SLIDER_TEMPLATES . '/admin/parts/hero-banner/tab-style.php';
@@ -264,25 +293,8 @@ if ( ! defined( 'WPINC' ) ) {
 					'default'     => array( 'top' => '1rem', 'right' => '3rem', 'bottom' => '1rem', 'left' => '3rem', ),
 				) );
 				?>
-            </div>
+            </div><!-- .content_settings -->
+
         </div>
     </div>
 </div>
-
-<svg width="1" height="1" style="display: none;">
-    <symbol id="icon-trash" viewBox="0 0 20 20">
-        <path d="M12 4h3c0.55 0 1 0.45 1 1v1h-13v-1c0-0.55 0.45-1 1-1h3c0.23-1.14 1.29-2 2.5-2s2.27 0.86 2.5 2zM8 4h3c-0.21-0.58-0.85-1-1.5-1s-1.29 0.42-1.5 1zM4 7h11v10c0 0.55-0.45 1-1 1h-9c-0.55 0-1-0.45-1-1v-10zM7 16v-7h-1v7h1zM10 16v-7h-1v7h1zM13 16v-7h-1v7h1z"></path>
-    </symbol>
-    <symbol id="icon-angle-down" viewBox="0 0 20 20">
-        <path d="M5 6l5 5 5-5 2 1-7 7-7-7z"></path>
-    </symbol>
-    <symbol id="icon-angle-up" viewBox="0 0 20 20">
-        <path d="M15 14l-5-5-5 5-2-1 7-7 7 7z"></path>
-    </symbol>
-    <symbol id="icon-angle-down-alt" viewBox="0 0 20 20">
-        <path d="M9 2h2v12l4-4 2 1-7 7-7-7 2-1 4 4v-12z"></path>
-    </symbol>
-    <symbol id="icon-angle-up-alt" viewBox="0 0 20 20">
-        <path d="M11 18h-2v-12l-4 4-2-1 7-7 7 7-2 1-4-4v12z"></path>
-    </symbol>
-</svg>
