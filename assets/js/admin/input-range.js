@@ -1,10 +1,10 @@
 (function ($) {
     'use strict';
 
-    var value, thisInput, inputDefault;
+    var value, thisInput;
 
     // Update the text value
-    $('input[type=range]').on('mousedown', function () {
+    $(document).on('mousedown', 'input[type=range]', function () {
         value = $(this).val();
         $(this).mousemove(function () {
             value = $(this).val();
@@ -12,18 +12,19 @@
         });
     });
 
-    $(document).on('input', '.range-value .value', function (e) {
+    $(document).on('input', '.range-value .value', function () {
         value = $(this).val();
         $(this).closest('.carousel-slider-range-wrapper').find('input[type=range]').val(value);
     });
 
     // Handle the reset button
-    $('.carousel-slider-range-reset').click(function () {
+    $(document).on('click', '.carousel-slider-range-reset', function () {
         thisInput = $(this).closest('.carousel-slider-range-wrapper').find('input');
-        inputDefault = thisInput.data('reset_value');
-        thisInput.val(inputDefault);
+        value = thisInput.data('reset_value');
+        value = !!value ? value : 0;
+        thisInput.val(value);
         thisInput.change();
-        $(this).closest('.carousel-slider-range-wrapper').find('.range-value .value').text(inputDefault);
+        $(this).closest('.carousel-slider-range-wrapper').find('.range-value .value').val(value);
     });
 
 })(jQuery);

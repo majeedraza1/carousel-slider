@@ -1,6 +1,6 @@
 <?php
 
-use CarouselSlider\Supports\Metabox;
+use CarouselSlider\Supports\Form;
 
 // If this file is called directly, abort.
 if (!defined('WPINC')) {
@@ -9,7 +9,7 @@ if (!defined('WPINC')) {
 ?>
 <div id="carousel-slider-tab-link" class="shapla-tab tab-content-link">
     <?php
-    echo Metabox::field(array(
+    echo Form::field(array(
         'type' => 'buttonset',
         'group' => 'carousel_slider_content',
         'index' => $slide_num,
@@ -29,7 +29,7 @@ if (!defined('WPINC')) {
 
     <div class="ContentCarouselLinkFull" style="display: <?php echo ($_link_type == 'full') ? 'block' : 'none'; ?>">
         <?php
-        echo Metabox::field(array(
+        echo Form::field(array(
             'type' => 'text',
             'group' => 'carousel_slider_content',
             'index' => $slide_num,
@@ -39,7 +39,7 @@ if (!defined('WPINC')) {
             'description' => esc_html__('Please enter your URL that will be used to link the full slide.', 'carousel-slider'),
             'input_attributes' => array('class' => 'sp-input-text',),
         ));
-        echo Metabox::field(array(
+        echo Form::field(array(
             'type' => 'buttonset',
             'group' => 'carousel_slider_content',
             'index' => $slide_num,
@@ -64,7 +64,7 @@ if (!defined('WPINC')) {
             <div class="shapla-toggle-inner">
                 <div class="shapla-toggle-content">
                     <?php
-                    echo Metabox::text(array(
+                    echo Form::text(array(
                         'type' => 'text',
                         'id' => 'button_one_text',
                         'group' => 'carousel_slider_content',
@@ -75,7 +75,7 @@ if (!defined('WPINC')) {
                         'input_attributes' => array('class' => 'sp-input-text'),
                     ));
 
-                    echo Metabox::text(array(
+                    echo Form::text(array(
                         'type' => 'text',
                         'id' => 'button_one_url',
                         'group' => 'carousel_slider_content',
@@ -86,7 +86,7 @@ if (!defined('WPINC')) {
                         'input_attributes' => array('class' => 'sp-input-text'),
                     ));
 
-                    echo Metabox::buttonset(array(
+                    echo Form::buttonset(array(
                         'id' => 'button_one_target',
                         'group' => 'carousel_slider_content',
                         'index' => $slide_num,
@@ -99,7 +99,7 @@ if (!defined('WPINC')) {
                         ),
                     ));
 
-                    echo Metabox::buttonset(array(
+                    echo Form::buttonset(array(
                         'id' => 'button_one_type',
                         'group' => 'carousel_slider_content',
                         'index' => $slide_num,
@@ -112,7 +112,7 @@ if (!defined('WPINC')) {
                         ),
                     ));
 
-                    echo Metabox::buttonset(array(
+                    echo Form::buttonset(array(
                         'id' => 'button_one_size',
                         'group' => 'carousel_slider_content',
                         'index' => $slide_num,
@@ -126,7 +126,7 @@ if (!defined('WPINC')) {
                         ),
                     ));
 
-                    echo Metabox::text(array(
+                    echo Form::text(array(
                         'type' => 'text',
                         'id' => 'button_one_border_width',
                         'group' => 'carousel_slider_content',
@@ -138,7 +138,7 @@ if (!defined('WPINC')) {
                         'input_attributes' => array('class' => 'sp-input-text'),
                     ));
 
-                    echo Metabox::text(array(
+                    echo Form::text(array(
                         'type' => 'text',
                         'id' => 'button_one_border_radius',
                         'group' => 'carousel_slider_content',
@@ -150,7 +150,7 @@ if (!defined('WPINC')) {
                         'input_attributes' => array('class' => 'sp-input-text'),
                     ));
 
-                    echo Metabox::color(array(
+                    echo Form::color(array(
                         'id' => 'button_one_bg_color',
                         'group' => 'carousel_slider_content',
                         'index' => $slide_num,
@@ -160,7 +160,7 @@ if (!defined('WPINC')) {
                         'description' => esc_html__('Choose button background color.', 'carousel-slider'),
                     ));
 
-                    echo Metabox::color(array(
+                    echo Form::color(array(
                         'id' => 'button_one_color',
                         'group' => 'carousel_slider_content',
                         'index' => $slide_num,
@@ -181,7 +181,7 @@ if (!defined('WPINC')) {
             <div class="shapla-toggle-inner">
                 <div class="shapla-toggle-content">
                     <?php
-                    echo Metabox::text(array(
+                    echo Form::text(array(
                         'type' => 'text',
                         'id' => 'button_two_text',
                         'group' => 'carousel_slider_content',
@@ -192,7 +192,7 @@ if (!defined('WPINC')) {
                         'input_attributes' => array('class' => 'sp-input-text'),
                     ));
 
-                    echo Metabox::text(array(
+                    echo Form::text(array(
                         'type' => 'text',
                         'id' => 'button_two_url',
                         'group' => 'carousel_slider_content',
@@ -203,7 +203,7 @@ if (!defined('WPINC')) {
                         'input_attributes' => array('class' => 'sp-input-text'),
                     ));
 
-                    echo Metabox::buttonset(array(
+                    echo Form::buttonset(array(
                         'id' => 'button_two_target',
                         'group' => 'carousel_slider_content',
                         'index' => $slide_num,
@@ -216,7 +216,7 @@ if (!defined('WPINC')) {
                         ),
                     ));
 
-                    echo Metabox::buttonset(array(
+                    echo Form::buttonset(array(
                         'id' => 'button_two_type',
                         'group' => 'carousel_slider_content',
                         'index' => $slide_num,
@@ -229,7 +229,7 @@ if (!defined('WPINC')) {
                         ),
                     ));
 
-                    echo Metabox::buttonset(array(
+                    echo Form::buttonset(array(
                         'id' => 'button_two_size',
                         'group' => 'carousel_slider_content',
                         'index' => $slide_num,
@@ -243,7 +243,7 @@ if (!defined('WPINC')) {
                         ),
                     ));
 
-                    echo Metabox::text(array(
+                    echo Form::text(array(
                         'type' => 'text',
                         'id' => 'button_two_border_width',
                         'group' => 'carousel_slider_content',
@@ -255,7 +255,7 @@ if (!defined('WPINC')) {
                         'input_attributes' => array('class' => 'sp-input-text'),
                     ));
 
-                    echo Metabox::text(array(
+                    echo Form::text(array(
                         'type' => 'text',
                         'id' => 'button_two_border_radius',
                         'group' => 'carousel_slider_content',
@@ -267,7 +267,7 @@ if (!defined('WPINC')) {
                         'input_attributes' => array('class' => 'sp-input-text'),
                     ));
 
-                    echo Metabox::color(array(
+                    echo Form::color(array(
                         'id' => 'button_two_bg_color',
                         'group' => 'carousel_slider_content',
                         'index' => $slide_num,
@@ -277,7 +277,7 @@ if (!defined('WPINC')) {
                         'description' => esc_html__('Choose button background color.', 'carousel-slider'),
                     ));
 
-                    echo Metabox::color(array(
+                    echo Form::color(array(
                         'id' => 'button_two_color',
                         'group' => 'carousel_slider_content',
                         'index' => $slide_num,

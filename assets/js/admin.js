@@ -311,10 +311,10 @@
 (function ($) {
     'use strict';
 
-    var value, thisInput, inputDefault;
+    var value, thisInput;
 
     // Update the text value
-    $('input[type=range]').on('mousedown', function () {
+    $(document).on('mousedown', 'input[type=range]', function () {
         value = $(this).val();
         $(this).mousemove(function () {
             value = $(this).val();
@@ -322,18 +322,19 @@
         });
     });
 
-    $(document).on('input', '.range-value .value', function (e) {
+    $(document).on('input', '.range-value .value', function () {
         value = $(this).val();
         $(this).closest('.carousel-slider-range-wrapper').find('input[type=range]').val(value);
     });
 
     // Handle the reset button
-    $('.carousel-slider-range-reset').click(function () {
+    $(document).on('click', '.carousel-slider-range-reset', function () {
         thisInput = $(this).closest('.carousel-slider-range-wrapper').find('input');
-        inputDefault = thisInput.data('reset_value');
-        thisInput.val(inputDefault);
+        value = thisInput.data('reset_value');
+        value = !!value ? value : 0;
+        thisInput.val(value);
         thisInput.change();
-        $(this).closest('.carousel-slider-range-wrapper').find('.range-value .value').text(inputDefault);
+        $(this).closest('.carousel-slider-range-wrapper').find('.range-value .value').val(value);
     });
 
 })(jQuery);
@@ -544,12 +545,12 @@
         _post_in = $('.post_in').closest('.sp-input-group'),
         _posts_per_page = $('.posts_per_page').closest('.sp-input-group'),
         // Slide Type -- Product
-        _product_query_type = $('#_product_query_type'),
-        _product_query = $('#field-_product_query'),
-        _product_categories = $('#field-_product_categories'),
-        _product_tags = $('#field-_product_tags'),
-        _product_in = $('#field-_product_in'),
-        _products_per_page = $('#field-_products_per_page');
+        _product_query_type = $('.product_query_type'),
+        _product_query = $('.product_query').closest('.sp-input-group'),
+        _product_categories = $('.product_categories').closest('.sp-input-group'),
+        _product_tags = $('.product_tags').closest('.sp-input-group'),
+        _product_in = $('.product_in').closest('.sp-input-group'),
+        _products_per_page = $('.products_per_page').closest('.sp-input-group');
 
     // Slide Type
     slide_type.on('change', function () {

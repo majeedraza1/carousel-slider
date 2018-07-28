@@ -43,4 +43,20 @@ class ModuleManager extends Collection {
 		 */
 		do_action( 'carousel_slider/modules/views', $this );
 	}
+
+	/**
+	 * Get collection item for key
+	 *
+	 * @param string $key The data key
+	 * @param mixed $default The default value to return if data key does not exist
+	 *
+	 * @return mixed The key's value, or the default value
+	 */
+	public function get( $key, $default = null ) {
+		if ( ! $this->has( $key ) ) {
+			return $default;
+		}
+
+		return '\\' . ltrim( $this->collections[ $key ], '\\' );
+	}
 }

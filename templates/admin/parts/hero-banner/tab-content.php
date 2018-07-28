@@ -1,6 +1,6 @@
 <?php
 
-use CarouselSlider\Supports\Metabox;
+use CarouselSlider\Supports\Form;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -9,7 +9,7 @@ if ( ! defined( 'WPINC' ) ) {
 ?>
 <div id="carousel-slider-tab-content" class="shapla-tab tab-content">
 	<?php
-	echo Metabox::textarea( array(
+	echo Form::textarea( array(
 		'id'               => 'slide_heading',
 		'group'            => 'carousel_slider_content',
 		'index'            => $slide_num,
@@ -22,7 +22,7 @@ if ( ! defined( 'WPINC' ) ) {
 			'rows'  => 3,
 		),
 	) );
-	echo Metabox::textarea( array(
+	echo Form::textarea( array(
 		'id'               => 'slide_description',
 		'group'            => 'carousel_slider_content',
 		'index'            => $slide_num,

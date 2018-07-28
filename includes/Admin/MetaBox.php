@@ -21,8 +21,6 @@ class MetaBox {
 	 */
 	private $post_type = 'carousels';
 
-	private $form;
-
 	/**
 	 * Ensures only one instance of this class is loaded or can be loaded.
 	 *
@@ -113,8 +111,6 @@ class MetaBox {
 
 		$slide_type = get_post_meta( $post->ID, '_slide_type', true );
 		$slide_type = in_array( $slide_type, Utils::get_slide_types() ) ? $slide_type : 'image-carousel';
-
-		$this->form = new Form();
 
 		require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/types.php';
 		require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/images-media.php';

@@ -1,6 +1,6 @@
 <?php
 
-use CarouselSlider\Supports\Metabox;
+use CarouselSlider\Supports\Form;
 
 // If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div class="shapla-toggle-inner">
         <div class="shapla-toggle-content">
 			<?php
-			echo Metabox::field( array(
+			echo Form::field( array(
 				'type'             => 'select',
 				'id'               => '_post_query_type',
 				'label'            => esc_html__( 'Query Type', 'carousel-slider' ),
@@ -30,7 +30,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				'input_attributes' => array( 'class' => 'sp-input-text post_query_type' ),
 			) );
 
-			echo Metabox::field( array(
+			echo Form::field( array(
 				'type'             => 'date',
 				'id'               => '_post_date_after',
 				'label'            => esc_html__( 'Date from', 'carousel-slider' ),
@@ -38,7 +38,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				'input_attributes' => array( 'class' => 'sp-input-text post_date_after' ),
 			) );
 
-			echo Metabox::field( array(
+			echo Form::field( array(
 				'type'             => 'date',
 				'id'               => '_post_date_before',
 				'label'            => esc_html__( 'Date to', 'carousel-slider' ),
@@ -46,7 +46,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				'input_attributes' => array( 'class' => 'sp-input-text post_date_before' ),
 			) );
 
-			echo Metabox::field( array(
+			echo Form::field( array(
 				'type'             => 'post_terms',
 				'id'               => '_post_categories',
 				'taxonomy'         => 'category',
@@ -58,7 +58,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				),
 			) );
 
-			echo Metabox::field( array(
+			echo Form::field( array(
 				'type'             => 'post_terms',
 				'id'               => '_post_tags',
 				'taxonomy'         => 'post_tag',
@@ -70,7 +70,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				),
 			) );
 
-			echo Metabox::field( array(
+			echo Form::field( array(
 				'type'             => 'posts_list',
 				'id'               => '_post_in',
 				'label'            => esc_html__( 'Specific posts', 'carousel-slider' ),
@@ -81,7 +81,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				),
 			) );
 
-			echo Metabox::field( array(
+			echo Form::field( array(
 				'type'             => 'number',
 				'id'               => '_posts_per_page',
 				'label'            => esc_html__( 'Posts per page', 'carousel-slider' ),
@@ -90,7 +90,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				'input_attributes' => array( 'class' => 'sp-input-text posts_per_page' ),
 			) );
 
-			echo Metabox::field( array(
+			echo Form::field( array(
 				'type'             => 'select',
 				'id'               => '_post_orderby',
 				'label'            => esc_html__( 'Order by', 'carousel-slider' ),
@@ -107,7 +107,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				'input_attributes' => array( 'class' => 'sp-input-text' ),
 			) );
 
-			echo Metabox::field( array(
+			echo Form::field( array(
 				'type'             => 'buttonset',
 				'id'               => '_post_order',
 				'label'            => esc_html__( 'Order', 'carousel-slider' ),
@@ -119,7 +119,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				'input_attributes' => array( 'class' => 'sp-input-text' ),
 			) );
 
-			echo Metabox::field( array(
+			echo Form::field( array(
 				'type'             => 'number',
 				'id'               => '_post_height',
 				'label'            => esc_html__( 'Colums Height', 'carousel-slider' ),

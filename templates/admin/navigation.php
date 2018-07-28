@@ -1,6 +1,6 @@
 <?php
 
-use CarouselSlider\Supports\Metabox;
+use CarouselSlider\Supports\Form;
 use CarouselSlider\Supports\Utils;
 
 // If this file is called directly, abort.
@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-echo Metabox::field( array(
+echo Form::field( array(
 	'type'             => 'select',
 	'id'               => '_nav_button',
 	'context'          => 'side',
@@ -23,7 +23,7 @@ echo Metabox::field( array(
 	'input_attributes' => array( 'class' => 'small-text', ),
 ) );
 
-echo Metabox::field( array(
+echo Form::field( array(
 	'type'             => 'text',
 	'id'               => '_slide_by',
 	'context'          => 'side',
@@ -34,7 +34,7 @@ echo Metabox::field( array(
 	'input_attributes' => array( 'class' => 'small-text', ),
 ) );
 
-echo Metabox::field( array(
+echo Form::field( array(
 	'type'             => 'select',
 	'id'               => '_arrow_position',
 	'context'          => 'side',
@@ -48,7 +48,7 @@ echo Metabox::field( array(
 	'input_attributes' => array( 'class' => 'small-text', ),
 ) );
 
-echo Metabox::field( array(
+echo Form::field( array(
 	'type'             => 'number',
 	'id'               => '_arrow_size',
 	'context'          => 'side',
@@ -60,7 +60,7 @@ echo Metabox::field( array(
 
 echo '<hr>';
 
-echo Metabox::field( array(
+echo Form::field( array(
 	'type'             => 'select',
 	'id'               => '_dot_nav',
 	'context'          => 'side',
@@ -75,7 +75,7 @@ echo Metabox::field( array(
 	'input_attributes' => array( 'class' => 'small-text', ),
 ) );
 
-echo Metabox::field( array(
+echo Form::field( array(
 	'type'             => 'select',
 	'id'               => '_bullet_position',
 	'context'          => 'side',
@@ -90,7 +90,7 @@ echo Metabox::field( array(
 	'input_attributes' => array( 'class' => 'small-text', ),
 ) );
 
-echo Metabox::field( array(
+echo Form::field( array(
 	'type'             => 'number',
 	'id'               => '_bullet_size',
 	'context'          => 'side',
@@ -100,7 +100,7 @@ echo Metabox::field( array(
 	'input_attributes' => array( 'class' => 'small-text', ),
 ) );
 
-echo Metabox::field( array(
+echo Form::field( array(
 	'type'             => 'select',
 	'id'               => '_bullet_shape',
 	'context'          => 'side',
@@ -116,7 +116,7 @@ echo Metabox::field( array(
 
 echo '<hr>';
 
-echo Metabox::field( array(
+echo Form::field( array(
 	'type'        => 'color',
 	'id'          => '_nav_color',
 	'context'     => 'side',
@@ -125,7 +125,7 @@ echo Metabox::field( array(
 	'default'     => Utils::get_default_setting( 'nav_color' ),
 ) );
 
-echo Metabox::field( array(
+echo Form::field( array(
 	'type'        => 'color',
 	'id'          => '_nav_active_color',
 	'context'     => 'side',

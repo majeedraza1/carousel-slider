@@ -1,13 +1,13 @@
 <?php
 
-use CarouselSlider\Supports\Metabox;
+use CarouselSlider\Supports\Form;
 
 // If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-echo Metabox::field( array(
+echo Form::field( array(
 	'type'             => 'number',
 	'id'               => '_items',
 	'label'            => esc_html__( 'Columns', 'carousel-slider' ),
@@ -16,7 +16,7 @@ echo Metabox::field( array(
 	'context'          => 'side',
 	'input_attributes' => array( 'class' => 'small-text', ),
 ) );
-echo Metabox::field( array(
+echo Form::field( array(
 	'type'             => 'number',
 	'id'               => '_items_desktop',
 	'label'            => esc_html__( 'Columns : Desktop', 'carousel-slider' ),
@@ -25,7 +25,7 @@ echo Metabox::field( array(
 	'context'          => 'side',
 	'input_attributes' => array( 'class' => 'small-text', ),
 ) );
-echo Metabox::field( array(
+echo Form::field( array(
 	'type'             => 'number',
 	'id'               => '_items_small_desktop',
 	'label'            => esc_html__( 'Columns : Small Desktop', 'carousel-slider' ),
@@ -34,7 +34,7 @@ echo Metabox::field( array(
 	'context'          => 'side',
 	'input_attributes' => array( 'class' => 'small-text', ),
 ) );
-echo Metabox::field( array(
+echo Form::field( array(
 	'type'             => 'number',
 	'id'               => '_items_portrait_tablet',
 	'label'            => esc_html__( 'Columns : Tablet', 'carousel-slider' ),
@@ -43,7 +43,7 @@ echo Metabox::field( array(
 	'context'          => 'side',
 	'input_attributes' => array( 'class' => 'small-text', ),
 ) );
-echo Metabox::field( array(
+echo Form::field( array(
 	'type'             => 'number',
 	'id'               => '_items_small_portrait_tablet',
 	'label'            => esc_html__( 'Columns : Small Tablet', 'carousel-slider' ),
@@ -52,7 +52,7 @@ echo Metabox::field( array(
 	'context'          => 'side',
 	'input_attributes' => array( 'class' => 'small-text', ),
 ) );
-echo Metabox::field( array(
+echo Form::field( array(
 	'type'             => 'number',
 	'id'               => '_items_portrait_mobile',
 	'label'            => esc_html__( 'Columns : Mobile', 'carousel-slider' ),

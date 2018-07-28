@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-class Metabox {
+class Form {
 
 	/**
 	 * @var self
@@ -666,7 +666,6 @@ class Metabox {
 	 * @return string
 	 */
 	public static function slider( array $args ) {
-		list( $id, $name ) = self::get_name_and_id( $args );
 		$default = isset( $args['default'] ) ? $args['default'] : 0;
 		$value   = intval( self::get_value( $args ) );
 
@@ -707,6 +706,8 @@ class Metabox {
 	}
 
 	/**
+	 * Generate range input field
+	 *
 	 * @param array $args
 	 *
 	 * @return string

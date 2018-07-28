@@ -18,12 +18,12 @@
         _post_in = $('.post_in').closest('.sp-input-group'),
         _posts_per_page = $('.posts_per_page').closest('.sp-input-group'),
         // Slide Type -- Product
-        _product_query_type = $('#_product_query_type'),
-        _product_query = $('#field-_product_query'),
-        _product_categories = $('#field-_product_categories'),
-        _product_tags = $('#field-_product_tags'),
-        _product_in = $('#field-_product_in'),
-        _products_per_page = $('#field-_products_per_page');
+        _product_query_type = $('.product_query_type'),
+        _product_query = $('.product_query').closest('.sp-input-group'),
+        _product_categories = $('.product_categories').closest('.sp-input-group'),
+        _product_tags = $('.product_tags').closest('.sp-input-group'),
+        _product_in = $('.product_in').closest('.sp-input-group'),
+        _products_per_page = $('.products_per_page').closest('.sp-input-group');
 
     // Slide Type
     slide_type.on('change', function () {

@@ -1,6 +1,6 @@
 <?php
 
-use CarouselSlider\Supports\Metabox;
+use CarouselSlider\Supports\Form;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -17,14 +17,14 @@ $img_settings = ( $slide_type == 'image-carousel' ) || ( $slide_type == 'image-c
     <div class="shapla-toggle-inner">
         <div class="shapla-toggle-content">
 			<?php
-			echo Metabox::field( array(
+			echo Form::field( array(
 				'type'        => 'toggle',
 				'id'          => '_show_attachment_title',
 				'label'       => esc_html__( 'Show Image Title', 'carousel-slider' ),
 				'description' => esc_html__( 'Check to show title below image. Only works with image carousel.', 'carousel-slider' ),
 				'default'     => 'off'
 			) );
-			echo Metabox::field( array(
+			echo Form::field( array(
 				'type'        => 'toggle',
 				'id'          => '_show_attachment_caption',
 				'label'       => esc_html__( 'Show Image Caption', 'carousel-slider' ),
@@ -32,7 +32,7 @@ $img_settings = ( $slide_type == 'image-carousel' ) || ( $slide_type == 'image-c
 				'default'     => 'off'
 			) );
 
-			echo Metabox::field( array(
+			echo Form::field( array(
 				'type'        => 'toggle',
 				'id'          => '_image_lightbox',
 				'label'       => esc_html__( 'Show Lightbox Gallery', 'carousel-slider' ),
@@ -40,7 +40,7 @@ $img_settings = ( $slide_type == 'image-carousel' ) || ( $slide_type == 'image-c
 				'default'     => 'off'
 			) );
 
-			echo Metabox::field( array(
+			echo Form::field( array(
 				'type'             => 'buttonset',
 				'id'               => '_image_target',
 				'label'            => esc_html__( 'Image Target', 'carousel-slider' ),

@@ -1,13 +1,13 @@
 <?php
 
-use CarouselSlider\Supports\Metabox;
+use CarouselSlider\Supports\Form;
 
 // If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
 }
 
-echo Metabox::field( array(
+echo Form::field( array(
 	'type'             => 'select',
 	'id'               => '_autoplay',
 	'context'          => 'side',
@@ -21,7 +21,7 @@ echo Metabox::field( array(
 	'input_attributes' => array( 'class' => 'small-text', ),
 ) );
 
-echo Metabox::field( array(
+echo Form::field( array(
 	'type'             => 'select',
 	'id'               => '_autoplay_pause',
 	'context'          => 'side',
@@ -35,7 +35,7 @@ echo Metabox::field( array(
 	'input_attributes' => array( 'class' => 'small-text', ),
 ) );
 
-echo Metabox::field( array(
+echo Form::field( array(
 	'type'             => 'number',
 	'id'               => '_autoplay_timeout',
 	'context'          => 'side',
@@ -45,7 +45,7 @@ echo Metabox::field( array(
 	'input_attributes' => array( 'class' => 'small-text', ),
 ) );
 
-echo Metabox::field( array(
+echo Form::field( array(
 	'type'             => 'number',
 	'id'               => '_autoplay_speed',
 	'context'          => 'side',

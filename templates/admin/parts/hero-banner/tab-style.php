@@ -1,6 +1,6 @@
 <?php
 
-use CarouselSlider\Supports\Metabox;
+use CarouselSlider\Supports\Form;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -9,7 +9,7 @@ if ( ! defined( 'WPINC' ) ) {
 ?>
 <div id="carousel-slider-tab-style" class="shapla-tab tab-style">
 	<?php
-	echo Metabox::buttonset( array(
+	echo Form::buttonset( array(
 		'id'          => 'content_alignment',
 		'group'       => 'carousel_slider_content',
 		'index'       => $slide_num,
@@ -24,7 +24,7 @@ if ( ! defined( 'WPINC' ) ) {
 		),
 	) );
 
-	echo Metabox::text( array(
+	echo Form::text( array(
 		'type'             => 'number',
 		'id'               => 'heading_font_size',
 		'group'            => 'carousel_slider_content',
@@ -36,7 +36,7 @@ if ( ! defined( 'WPINC' ) ) {
 		'description'      => esc_html__( 'Enter heading font size without px unit. In pixels, ex: 50 instead of 50px. Default: 40', 'carousel-slider' ),
 	) );
 
-	echo Metabox::text( array(
+	echo Form::text( array(
 		'type'             => 'text',
 		'id'               => 'heading_gutter',
 		'group'            => 'carousel_slider_content',
@@ -48,7 +48,7 @@ if ( ! defined( 'WPINC' ) ) {
 		'description'      => esc_html__( 'Enter gutter (space between description and heading) in px, em or rem, ex: 3rem', 'carousel-slider' ),
 	) );
 
-	echo Metabox::color( array(
+	echo Form::color( array(
 		'id'          => 'heading_color',
 		'group'       => 'carousel_slider_content',
 		'index'       => $slide_num,
@@ -58,7 +58,7 @@ if ( ! defined( 'WPINC' ) ) {
 		'description' => esc_html__( 'Select a color for the heading font. Default: #fff', 'carousel-slider' ),
 	) );
 
-	echo Metabox::text( array(
+	echo Form::text( array(
 		'type'             => 'number',
 		'id'               => 'description_font_size',
 		'group'            => 'carousel_slider_content',
@@ -70,7 +70,7 @@ if ( ! defined( 'WPINC' ) ) {
 		'description'      => esc_html__( 'Enter description font size without px unit. In pixels, ex: 50 instead of 50px. Default: 20', 'carousel-slider' ),
 	) );
 
-	echo Metabox::text( array(
+	echo Form::text( array(
 		'type'             => 'text',
 		'id'               => 'description_gutter',
 		'group'            => 'carousel_slider_content',
@@ -82,7 +82,7 @@ if ( ! defined( 'WPINC' ) ) {
 		'description'      => esc_html__( 'Enter gutter (space between description and buttons) in px, em or rem, ex: 3rem', 'carousel-slider' ),
 	) );
 
-	echo Metabox::color( array(
+	echo Form::color( array(
 		'id'          => 'description_color',
 		'group'       => 'carousel_slider_content',
 		'index'       => $slide_num,

@@ -1,6 +1,6 @@
 <?php
 
-use CarouselSlider\Supports\Metabox;
+use CarouselSlider\Supports\Form;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -18,7 +18,7 @@ $btn_text     = $_images_urls ? 'Edit URLs' : 'Add URLs';
     <div class="shapla-toggle-inner">
         <div class="shapla-toggle-content">
 			<?php
-			echo Metabox::field( array(
+			echo Form::field( array(
 				'type'        => 'images_url',
 				'id'          => '_images_urls',
 				'label'       => esc_html__( 'Images URLs', 'carousel-slider' ),

@@ -1,6 +1,6 @@
 <?php
 
-use CarouselSlider\Supports\Metabox;
+use CarouselSlider\Supports\Form;
 
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
@@ -218,7 +218,7 @@ if ( ! defined( 'WPINC' ) ) {
 
             <div class="content_settings">
 				<?php
-				echo Metabox::field( array(
+				echo Form::field( array(
 					'type'             => 'text',
 					'meta_key'         => '_content_slider_settings',
 					'group'            => 'content_settings',
@@ -227,7 +227,7 @@ if ( ! defined( 'WPINC' ) ) {
 					'description'      => esc_html__( 'Enter a px, em, rem or % value for slide height. ex: 100vh', 'carousel-slider' ),
 					'input_attributes' => array( 'class' => 'sp-input-text' ),
 				) );
-				echo Metabox::field( array(
+				echo Form::field( array(
 					'type'             => 'text',
 					'meta_key'         => '_content_slider_settings',
 					'group'            => 'content_settings',
@@ -236,7 +236,7 @@ if ( ! defined( 'WPINC' ) ) {
 					'description'      => esc_html__( 'Enter a px, em, rem or % value for slide width. ex: 960px', 'carousel-slider' ),
 					'input_attributes' => array( 'class' => 'sp-input-text' ),
 				) );
-				echo Metabox::field( array(
+				echo Form::field( array(
 					'type'             => 'select',
 					'meta_key'         => '_content_slider_settings',
 					'group'            => 'content_settings',
@@ -253,7 +253,7 @@ if ( ! defined( 'WPINC' ) ) {
 						'zoomIn'      => esc_html__( 'Zoom In', 'carousel-slider' ),
 					),
 				) );
-				echo Metabox::field( array(
+				echo Form::field( array(
 					'type'        => 'spacing',
 					'meta_key'    => '_content_slider_settings',
 					'group'       => 'content_settings',
