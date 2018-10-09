@@ -2,9 +2,8 @@
 
 namespace CarouselSlider\Admin;
 
-// If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
-	die;
+	die; // If this file is called directly, abort.
 }
 
 class Ajax {
@@ -26,6 +25,9 @@ class Ajax {
 		return self::$instance;
 	}
 
+	/**
+	 * Add slide template for hero carousel
+	 */
 	public function add_slide_template() {
 
 		if ( ! isset( $_POST['post_id'] ) ) {
@@ -64,6 +66,11 @@ class Ajax {
 		$this->send_json( __( 'Required action is unauthorized.', 'carousel-slider' ), 401 );
 	}
 
+	/**
+	 * Hero carousel default value
+	 *
+	 * @return array
+	 */
 	private function content_slide_default() {
 		$data = array(
 			// Slide Content
@@ -116,8 +123,8 @@ class Ajax {
 	/**
 	 * Add new slide
 	 *
-	 * @param $post_id
-	 * @param $content_slider
+	 * @param int $post_id
+	 * @param array $content_slider
 	 *
 	 * @return array
 	 */
@@ -136,9 +143,9 @@ class Ajax {
 	/**
 	 * Delete a slide
 	 *
-	 * @param $slide_position
-	 * @param $post_id
-	 * @param $slider
+	 * @param int $slide_position
+	 * @param int $post_id
+	 * @param array $slider
 	 *
 	 * @return mixed
 	 */
@@ -152,9 +159,9 @@ class Ajax {
 	/**
 	 * Move array element position
 	 *
-	 * @param $array
-	 * @param $current_index
-	 * @param $new_index
+	 * @param array $array
+	 * @param int $current_index
+	 * @param int $new_index
 	 *
 	 * @return mixed
 	 */
@@ -166,9 +173,11 @@ class Ajax {
 	}
 
 	/**
-	 * @param $slide_pos
-	 * @param $slider
-	 * @param $post_id
+	 * Move current slide to top
+	 *
+	 * @param int $slide_pos
+	 * @param array $slider
+	 * @param int $post_id
 	 *
 	 * @return mixed
 	 */
@@ -182,9 +191,11 @@ class Ajax {
 	}
 
 	/**
-	 * @param $slide_pos
-	 * @param $slider
-	 * @param $post_id
+	 * Move current slide one step up
+	 *
+	 * @param int $slide_pos
+	 * @param array $slider
+	 * @param int $post_id
 	 *
 	 * @return mixed
 	 */
@@ -198,9 +209,11 @@ class Ajax {
 	}
 
 	/**
-	 * @param $slider
-	 * @param $slide_pos
-	 * @param $post_id
+	 * Move current slide one step down
+	 *
+	 * @param array $slider
+	 * @param int $slide_pos
+	 * @param int $post_id
 	 *
 	 * @return array
 	 */
@@ -215,9 +228,11 @@ class Ajax {
 	}
 
 	/**
-	 * @param $slider
-	 * @param $slide_pos
-	 * @param $post_id
+	 * Move current slide to bottom
+	 *
+	 * @param array $slider
+	 * @param int $slide_pos
+	 * @param int $post_id
 	 *
 	 * @return array
 	 */

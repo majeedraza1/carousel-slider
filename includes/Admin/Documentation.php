@@ -2,13 +2,15 @@
 
 namespace CarouselSlider\Admin;
 
-// If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
-	die;
+	die; // If this file is called directly, abort.
 }
 
 class Documentation {
 
+	/**
+	 * @var self
+	 */
 	protected static $instance = null;
 
 	/**
