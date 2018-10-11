@@ -120,8 +120,7 @@ class View extends AbstractView {
 	 */
 	private function product_categories() {
 
-		$product_carousel   = new \CarouselSlider\Product();
-		$product_categories = $product_carousel->product_categories();
+		$product_categories = \CarouselSlider\Product::product_categories();
 		$count              = count( $product_categories );
 
 		if ( ! $count ) {

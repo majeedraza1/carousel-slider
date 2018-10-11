@@ -158,7 +158,6 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 			$this->container['activator'] = \CarouselSlider\Activator::init();
 			$this->container['script']    = \CarouselSlider\Script::init();
 			$this->container['preview']   = \CarouselSlider\Display\Preview::init();
-			$this->container['product']   = \CarouselSlider\Product::init();
 
 			if ( $this->is_request( 'admin' ) ) {
 				$this->container['admin']      = \CarouselSlider\Admin\Admin::init();
@@ -171,6 +170,12 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 			if ( $this->is_request( 'frontend' ) ) {
 				$this->container['structured-data'] = \CarouselSlider\Display\StructuredData::init();
 				$this->container['shortcode']       = \CarouselSlider\Display\Shortcode::init();
+
+				// Quick view and wish list button
+				add_action( 'carousel_slider_after_shop_loop_item',
+					array( 'CarouselSlider\\Product', 'quick_view_button' ), 10, 3 );
+				add_action( 'carousel_slider_after_shop_loop_item',
+					array( 'CarouselSlider\\Product', 'wish_list_button' ), 12, 3 );
 			}
 
 			// Widgets

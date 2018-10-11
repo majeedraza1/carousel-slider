@@ -102,35 +102,33 @@ class Utils {
 		$query_type    = empty( $query_type ) ? 'query_porduct' : $query_type;
 		$product_query = get_post_meta( $id, '_product_query', true );
 
-		$product_carousel = new Product();
-
 		$args = array( 'posts_per_page' => $per_page );
 
 		if ( $query_type == 'query_porduct' ) {
 
 			// Get features products
 			if ( $product_query == 'featured' ) {
-				return $product_carousel->featured_products( $args );
+				return Product::featured_products( $args );
 			}
 
 			// Get best_selling products
 			if ( $product_query == 'best_selling' ) {
-				return $product_carousel->best_selling_products( $args );
+				return Product::best_selling_products( $args );
 			}
 
 			// Get recent products
 			if ( $product_query == 'recent' ) {
-				return $product_carousel->recent_products( $args );
+				return Product::recent_products( $args );
 			}
 
 			// Get sale products
 			if ( $product_query == 'sale' ) {
-				return $product_carousel->sale_products( $args );
+				return Product::sale_products( $args );
 			}
 
 			// Get top_rated products
 			if ( $product_query == 'top_rated' ) {
-				return $product_carousel->top_rated_products( $args );
+				return Product::top_rated_products( $args );
 			}
 		}
 
@@ -139,7 +137,9 @@ class Utils {
 			$product_in = get_post_meta( $id, '_product_in', true );
 			$product_in = array_map( 'intval', explode( ',', $product_in ) );
 
-			return $product_carousel->products( array( 'post__in' => $product_in ) );
+			return Product::products_by_ids( array(
+				'post__in' => $product_in
+			) );
 		}
 
 		// Get posts by post categories IDs
@@ -147,7 +147,7 @@ class Utils {
 			$product_cat_ids = get_post_meta( $id, '_product_categories', true );
 			$product_cat_ids = array_map( 'intval', explode( ",", $product_cat_ids ) );
 
-			return $product_carousel->products_by_categories( $product_cat_ids, $per_page );
+			return Product::products_by_categories( $product_cat_ids, $per_page );
 		}
 
 		// Get posts by post tags IDs
@@ -155,7 +155,7 @@ class Utils {
 			$product_tags = get_post_meta( $id, '_product_tags', true );
 			$product_tags = array_map( 'intval', explode( ',', $product_tags ) );
 
-			return $product_carousel->products_by_tags( $product_tags, $per_page );
+			return Product::products_by_tags( $product_tags, $per_page );
 		}
 
 		return array();

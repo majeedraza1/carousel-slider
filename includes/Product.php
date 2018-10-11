@@ -2,25 +2,6 @@
 
 namespace CarouselSlider;
 
-/**!
- * @package Carousel_Slider
- * @subpackage Carousel_Slider_Product
- *
- * @method init()
- * @method wish_list_button()
- * @method quick_view_button()
- * @method quick_view()
- * @method products()
- * @method recent_products()
- * @method best_selling_products()
- * @method featured_products()
- * @method sale_products()
- * @method top_rated_products()
- * @method product_categories()
- * @method products_by_categories()
- * @method products_by_tags()
- */
-
 // If this file is called directly, abort.
 if ( ! defined( 'ABSPATH' ) ) {
 	die;
@@ -28,39 +9,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class Product {
 
-	private static $instance;
-
-	/**
-	 * Product carousel quick view
-	 */
-	public static function init() {
-		if ( is_null( self::$instance ) ) {
-			self::$instance = new self();
-
-			add_action( 'carousel_slider_after_shop_loop_item', array(
-				self::$instance,
-				'quick_view_button'
-			), 10, 3 );
-			add_action( 'carousel_slider_after_shop_loop_item', array(
-				self::$instance,
-				'wish_list_button'
-			), 12, 3 );
-		}
-
-		return self::$instance;
-	}
-
 	/**
 	 * Show YITH Wishlist button on product slider
 	 *
-	 * @param WC_Product $product
-	 * @param WP_Post $post
+	 * @param \WC_Product $product
+	 * @param \WP_Post $post
 	 * @param $slider_id
 	 */
 	public static function wish_list_button( $product, $post, $slider_id ) {
 		$_product_wish_list = get_post_meta( $slider_id, '_product_wishlist', true );
 
-		if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.7.0', '>=' ) ) {
+		if ( static::is_wc_version_3() ) {
 			$product_id = $product->get_id();
 		} else {
 			$product_id = $post->ID;
@@ -74,8 +33,8 @@ class Product {
 	/**
 	 * Show quick view button on product slider
 	 *
-	 * @param WC_Product $product
-	 * @param WP_Post $post
+	 * @param \WC_Product $product
+	 * @param \WP_Post $post
 	 * @param $slider_id
 	 */
 	public static function quick_view_button( $product, $post, $slider_id ) {
@@ -83,7 +42,7 @@ class Product {
 
 		if ( $_show_btn == 'on' ) {
 
-			if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.7.0', '>=' ) ) {
+			if ( static::is_wc_version_3() ) {
 				$product_id = $product->get_id();
 			} else {
 				$product_id = $post->ID;
@@ -114,7 +73,7 @@ class Product {
 	 *
 	 * @return string
 	 */
-	private function wc_version() {
+	private static function wc_version() {
 		if ( defined( 'WC_VERSION' ) ) {
 			return WC_VERSION;
 		}
@@ -123,15 +82,24 @@ class Product {
 	}
 
 	/**
+	 * Check if WooCommerce version at least 3.0.0
+	 *
+	 * @return bool
+	 */
+	public static function is_wc_version_3() {
+		return version_compare( static::wc_version(), '3.0.0', '>=' );
+	}
+
+	/**
 	 * List multiple products by product ids
 	 *
-	 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*, 3.1.*
+	 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.* - 3.4.*
 	 *
 	 * @param array $args
 	 *
 	 * @return array
 	 */
-	public function products( $args = array() ) {
+	public static function products_by_ids( $args = array() ) {
 		$defaults = array(
 			'orderby'        => 'title',
 			'order'          => 'asc',
@@ -151,7 +119,7 @@ class Product {
 			'meta_query'          => WC()->query->get_meta_query(),
 		);
 
-		if ( version_compare( $this->wc_version(), '2.7.0', '>=' ) ) {
+		if ( static::is_wc_version_3() ) {
 			$query_args['tax_query'] = WC()->query->get_tax_query();
 		}
 
@@ -161,13 +129,13 @@ class Product {
 	/**
 	 * Get Recent Products
 	 *
-	 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*, 3.1.*
+	 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.* - 3.4.*
 	 *
 	 * @param array $args
 	 *
 	 * @return array
 	 */
-	public function recent_products( $args = array() ) {
+	public static function recent_products( $args = array() ) {
 
 		$defaults = array(
 			'posts_per_page' => 12,
@@ -187,7 +155,7 @@ class Product {
 			'meta_query'          => WC()->query->get_meta_query(),
 		);
 
-		if ( version_compare( $this->wc_version(), '2.7.0', '>=' ) ) {
+		if ( static::is_wc_version_3() ) {
 			$query_args['tax_query'] = WC()->query->get_tax_query();
 		}
 
@@ -197,13 +165,13 @@ class Product {
 	/**
 	 * List best selling products on sale.
 	 *
-	 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*, 3.1.*
+	 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.* - 3.4.*
 	 *
 	 * @param array $args
 	 *
 	 * @return array
 	 */
-	public function best_selling_products( $args = array() ) {
+	public static function best_selling_products( $args = array() ) {
 
 		$defaults = array(
 			'posts_per_page' => 12,
@@ -221,7 +189,7 @@ class Product {
 			'meta_query'          => WC()->query->get_meta_query(),
 		);
 
-		if ( version_compare( $this->wc_version(), '2.7.0', '>=' ) ) {
+		if ( static::is_wc_version_3() ) {
 			$query_args['tax_query'] = WC()->query->get_tax_query();
 		}
 
@@ -231,13 +199,13 @@ class Product {
 	/**
 	 * Get WooCommerce featured products
 	 *
-	 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*, 3.1.*
+	 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.* - 3.4.*
 	 *
 	 * @param array $args
 	 *
 	 * @return array
 	 */
-	public function featured_products( $args = array() ) {
+	public static function featured_products( $args = array() ) {
 
 		$defaults = array(
 			'posts_per_page' => 12,
@@ -249,7 +217,7 @@ class Product {
 
 		$meta_query = WC()->query->get_meta_query();
 
-		if ( version_compare( $this->wc_version(), '2.7.0', '<' ) ) {
+		if ( version_compare( static::wc_version(), '3.0.0', '<' ) ) {
 			$meta_query[] = array(
 				'key'   => '_featured',
 				'value' => 'yes'
@@ -266,7 +234,7 @@ class Product {
 			'meta_query'          => $meta_query,
 		);
 
-		if ( version_compare( $this->wc_version(), '2.7.0', '>=' ) ) {
+		if ( static::is_wc_version_3() ) {
 			$tax_query               = WC()->query->get_tax_query();
 			$tax_query[]             = array(
 				'taxonomy' => 'product_visibility',
@@ -284,13 +252,13 @@ class Product {
 	/**
 	 * List all products on sale.
 	 *
-	 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*, 3.1.*
+	 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.* - 3.4.*
 	 *
 	 * @param array $args
 	 *
 	 * @return array
 	 */
-	public function sale_products( $args = array() ) {
+	public static function sale_products( $args = array() ) {
 		$defaults = array(
 			'posts_per_page' => 12,
 			'orderby'        => 'title',
@@ -310,7 +278,7 @@ class Product {
 			'post__in'       => array_merge( array( 0 ), wc_get_product_ids_on_sale() ),
 		);
 
-		if ( version_compare( $this->wc_version(), '2.7.0', '>=' ) ) {
+		if ( static::is_wc_version_3() ) {
 			$query_args['tax_query'] = WC()->query->get_tax_query();
 		}
 
@@ -320,13 +288,13 @@ class Product {
 	/**
 	 * Get top rated products
 	 *
-	 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*, 3.1.*
+	 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.* - 3.4.*
 	 *
 	 * @param array $args
 	 *
 	 * @return array
 	 */
-	public function top_rated_products( $args = array() ) {
+	public static function top_rated_products( $args = array() ) {
 		$defaults = array(
 			'posts_per_page' => 12,
 			'orderby'        => 'title',
@@ -335,7 +303,7 @@ class Product {
 
 		$args = wp_parse_args( $args, $defaults );
 
-		if ( version_compare( $this->wc_version(), '2.7.0', '>=' ) ) {
+		if ( static::is_wc_version_3() ) {
 			$query_args = array(
 				'posts_per_page' => $args['posts_per_page'],
 				'no_found_rows'  => 1,
@@ -347,9 +315,8 @@ class Product {
 				'meta_query'     => WC()->query->get_meta_query(),
 				'tax_query'      => WC()->query->get_tax_query(),
 			);
-			$_posts     = new WP_Query( $query_args );
 
-			return $_posts->posts;
+			return get_posts( $query_args );
 		}
 
 		// For WooCommerce version is less than 2.7.0
@@ -366,24 +333,24 @@ class Product {
 		);
 
 
-		$_posts = new WP_Query( $query_args );
+		$_posts = get_posts( $query_args );
 
 		remove_filter( 'posts_clauses', array( WC()->query, 'order_by_rating_post_clauses' ) );
 
-		return $_posts->posts;
+		return $_posts;
 	}
 
 
 	/**
 	 * List all (or limited) product categories.
 	 *
-	 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*, 3.1.*
+	 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.* - 3.4.*
 	 *
 	 * @param array $args
 	 *
 	 * @return array|\WP_Error
 	 */
-	public function product_categories( $args = array() ) {
+	public static function product_categories( $args = array() ) {
 
 		$default = array(
 			'taxonomy'   => 'product_cat',
@@ -406,14 +373,14 @@ class Product {
 	/**
 	 * Get products by categories ids
 	 *
-	 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*, 3.1.*
+	 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.* - 3.4.*
 	 *
 	 * @param array $cat_ids
 	 * @param int $per_page
 	 *
 	 * @return array
 	 */
-	public function products_by_categories( $cat_ids = array(), $per_page = 12 ) {
+	public static function products_by_categories( $cat_ids = array(), $per_page = 12 ) {
 		$args = array(
 			'post_type'          => 'product',
 			'post_status'        => 'publish',
@@ -435,14 +402,14 @@ class Product {
 	/**
 	 * Get products by tags ids
 	 *
-	 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.*, 3.1.*
+	 * Works with WooCommerce Version 2.5.*, 2.6.*, 3.0.* - 3.4.*
 	 *
 	 * @param array $cat_ids
 	 * @param int $per_page
 	 *
 	 * @return array
 	 */
-	public function products_by_tags( $cat_ids = array(), $per_page = 12 ) {
+	public static function products_by_tags( $cat_ids = array(), $per_page = 12 ) {
 		$args = array(
 			'post_type'          => 'product',
 			'post_status'        => 'publish',
