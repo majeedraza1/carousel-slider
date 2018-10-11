@@ -53,14 +53,14 @@ class Product {
 	/**
 	 * Show YITH Wishlist button on product slider
 	 *
-	 * @param \WC_Product $product
-	 * @param \WP_Post $post
+	 * @param WC_Product $product
+	 * @param WP_Post $post
 	 * @param $slider_id
 	 */
 	public static function wish_list_button( $product, $post, $slider_id ) {
 		$_product_wish_list = get_post_meta( $slider_id, '_product_wishlist', true );
 
-		if ( self::is_version3() ) {
+		if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.7.0', '>=' ) ) {
 			$product_id = $product->get_id();
 		} else {
 			$product_id = $post->ID;
@@ -74,8 +74,8 @@ class Product {
 	/**
 	 * Show quick view button on product slider
 	 *
-	 * @param \WC_Product $product
-	 * @param \WP_Post $post
+	 * @param WC_Product $product
+	 * @param WP_Post $post
 	 * @param $slider_id
 	 */
 	public static function quick_view_button( $product, $post, $slider_id ) {
@@ -83,7 +83,7 @@ class Product {
 
 		if ( $_show_btn == 'on' ) {
 
-			if ( self::is_version3() ) {
+			if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '2.7.0', '>=' ) ) {
 				$product_id = $product->get_id();
 			} else {
 				$product_id = $post->ID;
@@ -114,21 +114,12 @@ class Product {
 	 *
 	 * @return string
 	 */
-	private static function wc_version() {
+	private function wc_version() {
 		if ( defined( 'WC_VERSION' ) ) {
 			return WC_VERSION;
 		}
 
 		return '0.0.0';
-	}
-
-	/**
-	 * Check if it WooCommerce version 3.0 or higher
-	 *
-	 * @return bool
-	 */
-	private static function is_version3() {
-		return defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '3.0', '>=' );
 	}
 
 	/**
@@ -140,15 +131,7 @@ class Product {
 	 *
 	 * @return array
 	 */
-	public static function find_by_ids( $args = array() ) {
-
-		if ( self::is_version3() ) {
-			$arguments = array( 'status' => 'publish', 'include' => $args['post__in'] );
-			$products  = wc_get_products( $arguments );
-
-			return $products;
-		}
-
+	public function products( $args = array() ) {
 		$defaults = array(
 			'orderby'        => 'title',
 			'order'          => 'asc',
@@ -168,7 +151,7 @@ class Product {
 			'meta_query'          => WC()->query->get_meta_query(),
 		);
 
-		if ( version_compare( self::wc_version(), '2.7.0', '>=' ) ) {
+		if ( version_compare( $this->wc_version(), '2.7.0', '>=' ) ) {
 			$query_args['tax_query'] = WC()->query->get_tax_query();
 		}
 
@@ -184,19 +167,7 @@ class Product {
 	 *
 	 * @return array
 	 */
-	public static function recent_products( $args = array() ) {
-
-		if ( self::is_version3() ) {
-			$arguments = array(
-				'status'  => 'publish',
-				'order'   => 'DESC',
-				'orderby' => 'date',
-				'limit'   => $args['posts_per_page'],
-			);
-			$products  = wc_get_products( $arguments );
-
-			return $products;
-		}
+	public function recent_products( $args = array() ) {
 
 		$defaults = array(
 			'posts_per_page' => 12,
@@ -216,7 +187,7 @@ class Product {
 			'meta_query'          => WC()->query->get_meta_query(),
 		);
 
-		if ( version_compare( self::wc_version(), '2.7.0', '>=' ) ) {
+		if ( version_compare( $this->wc_version(), '2.7.0', '>=' ) ) {
 			$query_args['tax_query'] = WC()->query->get_tax_query();
 		}
 
@@ -250,7 +221,7 @@ class Product {
 			'meta_query'          => WC()->query->get_meta_query(),
 		);
 
-		if ( version_compare( Product::wc_version(), '2.7.0', '>=' ) ) {
+		if ( version_compare( $this->wc_version(), '2.7.0', '>=' ) ) {
 			$query_args['tax_query'] = WC()->query->get_tax_query();
 		}
 
@@ -278,7 +249,7 @@ class Product {
 
 		$meta_query = WC()->query->get_meta_query();
 
-		if ( version_compare( Product::wc_version(), '2.7.0', '<' ) ) {
+		if ( version_compare( $this->wc_version(), '2.7.0', '<' ) ) {
 			$meta_query[] = array(
 				'key'   => '_featured',
 				'value' => 'yes'
@@ -295,7 +266,7 @@ class Product {
 			'meta_query'          => $meta_query,
 		);
 
-		if ( version_compare( Product::wc_version(), '2.7.0', '>=' ) ) {
+		if ( version_compare( $this->wc_version(), '2.7.0', '>=' ) ) {
 			$tax_query               = WC()->query->get_tax_query();
 			$tax_query[]             = array(
 				'taxonomy' => 'product_visibility',
@@ -305,6 +276,7 @@ class Product {
 			);
 			$query_args['tax_query'] = $tax_query;
 		}
+
 
 		return get_posts( $query_args );
 	}
@@ -338,7 +310,7 @@ class Product {
 			'post__in'       => array_merge( array( 0 ), wc_get_product_ids_on_sale() ),
 		);
 
-		if ( version_compare( Product::wc_version(), '2.7.0', '>=' ) ) {
+		if ( version_compare( $this->wc_version(), '2.7.0', '>=' ) ) {
 			$query_args['tax_query'] = WC()->query->get_tax_query();
 		}
 
@@ -363,7 +335,7 @@ class Product {
 
 		$args = wp_parse_args( $args, $defaults );
 
-		if ( version_compare( Product::wc_version(), '2.7.0', '>=' ) ) {
+		if ( version_compare( $this->wc_version(), '2.7.0', '>=' ) ) {
 			$query_args = array(
 				'posts_per_page' => $args['posts_per_page'],
 				'no_found_rows'  => 1,
