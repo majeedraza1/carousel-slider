@@ -120,7 +120,7 @@ class Utils {
 
 			// Get recent products
 			if ( $product_query == 'recent' ) {
-				return $product_carousel->recent_products( $args );
+				return Product::recent_products( $args );
 			}
 
 			// Get sale products
@@ -139,7 +139,7 @@ class Utils {
 			$product_in = get_post_meta( $id, '_product_in', true );
 			$product_in = array_map( 'intval', explode( ',', $product_in ) );
 
-			return $product_carousel->products( array( 'post__in' => $product_in ) );
+			return Product::find_by_ids( array( 'post__in' => $product_in ) );
 		}
 
 		// Get posts by post categories IDs

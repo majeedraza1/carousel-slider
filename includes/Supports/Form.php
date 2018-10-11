@@ -739,8 +739,8 @@ class Form {
 			$attributes['value'] = self::get_value( $args );
 		}
 
-		if ( 'email' === $input_type || 'file' === $input_type ) {
-			$attributes['multiple'] = self::is_multiple( $args );
+		if ( self::is_multiple( $args ) ) {
+			$attributes['multiple'] = true;
 		}
 
 		if ( 'hidden' === $input_type ) {

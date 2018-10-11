@@ -43,15 +43,16 @@ class View extends AbstractView {
 
 		global $post;
 		global $product;
-		$posts = Utils::get_products( $this->get_slider_id() );
+		$_products = Utils::get_products( $this->get_slider_id() );
 
-		$this->set_total_slides( count( $posts ) );
+		$this->set_total_slides( count( $_products ) );
 
 		$html = $this->slider_wrapper_start();
 
-		foreach ( $posts as $post ) {
+		/** @var \WC_Product $product */
+		foreach ( $_products as $product ) {
+			$post = get_post( $product->get_id() );
 			setup_postdata( $post );
-			$product = wc_get_product( $post );
 
 			ob_start();
 			echo '<div class="product carousel-slider__product">';
