@@ -25,6 +25,11 @@
         _product_in = $('.product_in').closest('.sp-input-group'),
         _products_per_page = $('.products_per_page').closest('.sp-input-group');
 
+    $(document).on('change', '#_carousel_slider_slide_type', function (e) {
+        var _val = $(this).val();
+        $(document).trigger("CarouselSlider.change", [_val]);
+    });
+
     // Slide Type
     slide_type.on('change', function () {
         section_images_settings.hide('fast');
@@ -144,4 +149,4 @@
             _products_per_page.hide('fast');
         }
     });
-})(jQuery);
+})(window.jQuery);

@@ -66,4 +66,7 @@
             ]
         });
     });
-})(jQuery);
+
+    $("#carousel-slider-metabox-tabs").tabs();
+
+})(window.jQuery);

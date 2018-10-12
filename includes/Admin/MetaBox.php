@@ -46,18 +46,6 @@ class MetaBox {
 		add_meta_box( "carousel-slider-usages-info", __( "Usage (Shortcode)", 'carousel-slider' ),
 			array( $this, 'usages_callback' ), $this->post_type, "side", "high" );
 
-		add_meta_box( "carousel-slider-navigation-settings", __( "Navigation Settings", 'carousel-slider' ),
-			array( $this, 'navigation_settings_callback' ), $this->post_type, "side", "low" );
-
-		add_meta_box( "carousel-slider-autoplay-settings", __( "Autoplay Settings", 'carousel-slider' ),
-			array( $this, 'autoplay_settings_callback' ), $this->post_type, "side", "low" );
-
-		add_meta_box( "carousel-slider-responsive-settings", __( "Responsive Settings", 'carousel-slider' ),
-			array( $this, 'responsive_settings_callback' ), $this->post_type, "side", "low" );
-
-		add_meta_box( "carousel-slider-general-settings", __( "General Settings", 'carousel-slider' ),
-			array( $this, 'general_settings_callback' ), $this->post_type, "advanced", "low" );
-
 		add_meta_box( "carousel-slider-settings", __( "Settings", 'carousel-slider' ),
 			array( $this, 'carousel_slider_settings' ), "carousels", "advanced", "low" );
 	}
@@ -88,13 +76,17 @@ class MetaBox {
                         </a>
                     </li>
                 </ul>
-                <div id="carousel-slider-tab-1" class="carousel-slider-options-panel">&nbsp;
+                <div id="carousel-slider-tab-1" class="carousel-slider-options-panel">
+					<?php require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/general.php'; ?>
                 </div>
                 <div id="carousel-slider-tab-2" class="carousel-slider-options-panel">&nbsp;
+					<?php require CAROUSEL_SLIDER_TEMPLATES . '/admin/autoplay.php'; ?>
                 </div>
-                <div id="carousel-slider-tab-3" class="carousel-slider-options-panel">&nbsp;
+                <div id="carousel-slider-tab-3" class="carousel-slider-options-panel">
+					<?php require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/navigation.php'; ?>
                 </div>
-                <div id="carousel-slider-tab-4" class="carousel-slider-options-panel">&nbsp;
+                <div id="carousel-slider-tab-4" class="carousel-slider-options-panel">
+					<?php require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/responsive.php'; ?>
                 </div>
             </div>
         </div>
@@ -123,13 +115,6 @@ class MetaBox {
 	}
 
 	/**
-	 * Metabox callback for general settings
-	 */
-	public function general_settings_callback() {
-		require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/general.php';
-	}
-
-	/**
 	 * Render short code meta box content
 	 *
 	 * @param \WP_Post $post
@@ -147,26 +132,5 @@ class MetaBox {
                style="background-color: #f1f1f1; width: 100%; padding: 8px;"
         >
 		<?php echo ob_get_clean();
-	}
-
-	/**
-	 * Metabox callback for navigation settings
-	 */
-	public function navigation_settings_callback() {
-		require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/navigation.php';
-	}
-
-	/**
-	 * Metabox callback for autoplay settings
-	 */
-	public function autoplay_settings_callback() {
-		require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/autoplay.php';
-	}
-
-	/**
-	 * Metabox callback for responsive settings
-	 */
-	public function responsive_settings_callback() {
-		require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/responsive.php';
 	}
 }

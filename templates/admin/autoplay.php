@@ -8,9 +8,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 echo Form::field( array(
-	'type'             => 'select',
+	'type'             => 'toggle',
 	'id'               => '_autoplay',
-	'context'          => 'side',
 	'label'            => esc_html__( 'Autoplay', 'carousel-slider' ),
 	'description'      => esc_html__( 'Check to enable autoplay', 'carousel-slider' ),
 	'default'          => 'on',
@@ -22,9 +21,8 @@ echo Form::field( array(
 ) );
 
 echo Form::field( array(
-	'type'             => 'select',
+	'type'             => 'toggle',
 	'id'               => '_autoplay_pause',
-	'context'          => 'side',
 	'label'            => esc_html__( 'Autoplay Hover Pause', 'carousel-slider' ),
 	'description'      => esc_html__( 'Pause autoplay on mouse hover.', 'carousel-slider' ),
 	'default'          => 'on',
@@ -38,7 +36,6 @@ echo Form::field( array(
 echo Form::field( array(
 	'type'             => 'number',
 	'id'               => '_autoplay_timeout',
-	'context'          => 'side',
 	'label'            => esc_html__( 'Autoplay Timeout', 'carousel-slider' ),
 	'description'      => esc_html__( 'Autoplay interval timeout in millisecond. Default: 5000', 'carousel-slider' ),
 	'default'          => 5000,
@@ -48,7 +45,6 @@ echo Form::field( array(
 echo Form::field( array(
 	'type'             => 'number',
 	'id'               => '_autoplay_speed',
-	'context'          => 'side',
 	'label'            => esc_html__( 'Autoplay Speed', 'carousel-slider' ),
 	'description'      => esc_html__( 'Autoplay speed in millisecond. Default: 500', 'carousel-slider' ),
 	'default'          => 500,

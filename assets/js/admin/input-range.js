@@ -27,4 +27,4 @@
         $(this).closest('.carousel-slider-range-wrapper').find('.range-value .value').val(value);
     });
 
-})(jQuery);
+})(window.jQuery);
