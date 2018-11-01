@@ -37,4 +37,4 @@
     // Make fields sortable
     $('#carousel_slider_form').sortable();
 
-})(window.jQuery);
+})(jQuery);

@@ -1,4 +1,4 @@
-(function ($, wp) {
+(function ($) {
     "use strict";
 
     var frame,
@@ -128,4 +128,4 @@
         return false;
     }
 
-})(window.jQuery, window.wp);
+})(jQuery);

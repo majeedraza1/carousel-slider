@@ -1,12 +1,9 @@
 <?php
-
-use CarouselSlider\Supports\Utils;
-
 // If this file is called directly, abort.
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
-$slide_types = Utils::get_slide_types( false );
+$slide_types = carousel_slider_slide_type( false );
 ?>
 <div class="sp-input-group" style="margin: 10px 0 30px;">
     <div class="sp-input-label">
@@ -21,7 +18,7 @@ $slide_types = Utils::get_slide_types( false );
 				$selected = ( $slug == $slide_type ) ? 'selected' : '';
 
 				if ( 'product-carousel' == $slug ) {
-					$disabled = Utils::is_woocommerce_active() ? '' : 'disabled';
+					$disabled = carousel_slider_is_woocommerce_active() ? '' : 'disabled';
 					echo '<option value="' . $slug . '" ' . $selected . ' ' . $disabled . '>' . $label . '</option>';
 					continue;
 				}

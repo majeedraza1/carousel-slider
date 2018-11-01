@@ -1,13 +1,10 @@
 <?php
-
-namespace CarouselSlider\Widgets;
-
 // If this file is called directly, abort.
-if ( ! defined( 'ABSPATH' ) ) {
+if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-class CarouselSlider extends \WP_Widget {
+class Carousel_Slider_Widget extends WP_Widget {
 
 	/**
 	 * Sets up the widgets name etc
@@ -130,3 +127,5 @@ class CarouselSlider extends \WP_Widget {
 		register_widget( __CLASS__ );
 	}
 }
+
+add_action( 'widgets_init', array( 'Carousel_Slider_Widget', 'register' ) );

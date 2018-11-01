@@ -1,9 +1,6 @@
 <?php
-
-use CarouselSlider\Supports\Form;
-
 // If this file is called directly, abort.
-if ( ! defined( 'ABSPATH' ) ) {
+if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 ?>
@@ -15,87 +12,68 @@ if ( ! defined( 'ABSPATH' ) ) {
     <div class="shapla-toggle-inner">
         <div class="shapla-toggle-content">
 			<?php
-			echo Form::field( array(
-				'type'             => 'select',
-				'id'               => '_post_query_type',
-				'label'            => esc_html__( 'Query Type', 'carousel-slider' ),
-				'default'          => 'latest_posts',
-				'choices'          => array(
+			$this->form->select( array(
+				'id'      => '_post_query_type',
+				'name'    => esc_html__( 'Query Type', 'carousel-slider' ),
+				'std'     => 'latest_posts',
+				'options' => array(
 					'latest_posts'    => esc_html__( 'Latest Posts', 'carousel-slider' ),
 					'date_range'      => esc_html__( 'Date Range', 'carousel-slider' ),
 					'post_categories' => esc_html__( 'Post Categories', 'carousel-slider' ),
 					'post_tags'       => esc_html__( 'Post Tags', 'carousel-slider' ),
 					'specific_posts'  => esc_html__( 'Specific posts', 'carousel-slider' ),
 				),
-				'input_attributes' => array( 'class' => 'sp-input-text post_query_type' ),
 			) );
-
-			echo Form::field( array(
-				'type'             => 'date',
-				'id'               => '_post_date_after',
-				'label'            => esc_html__( 'Date from', 'carousel-slider' ),
-				'description'      => sprintf( esc_html__( 'Example: %s', 'carousel-slider' ), date( 'F d, Y', strtotime( '-3 months' ) ) ),
-				'input_attributes' => array( 'class' => 'sp-input-text post_date_after' ),
+			$this->form->date( array(
+				'id'   => '_post_date_after',
+				'name' => esc_html__( 'Date from', 'carousel-slider' ),
+				'desc' => sprintf( esc_html__( 'Example: %s', 'carousel-slider' ), date( 'F d, Y', strtotime( '-3 months' ) ) ),
 			) );
-
-			echo Form::field( array(
-				'type'             => 'date',
-				'id'               => '_post_date_before',
-				'label'            => esc_html__( 'Date to', 'carousel-slider' ),
-				'description'      => sprintf( esc_html__( 'Example: %s', 'carousel-slider' ), date( 'F d, Y', strtotime( '-7 days' ) ) ),
-				'input_attributes' => array( 'class' => 'sp-input-text post_date_before' ),
+			$this->form->date( array(
+				'id'   => '_post_date_before',
+				'name' => esc_html__( 'Date to', 'carousel-slider' ),
+				'desc' => sprintf( esc_html__( 'Example: %s', 'carousel-slider' ), date( 'F d, Y', strtotime( '-7 days' ) ) ),
 			) );
-
-			echo Form::field( array(
-				'type'             => 'post_terms',
-				'id'               => '_post_categories',
-				'taxonomy'         => 'category',
-				'label'            => esc_html__( 'Post Categories', 'carousel-slider' ),
-				'description'      => esc_html__( 'Show posts associated with selected categories.', 'carousel-slider' ),
-				'input_attributes' => array(
-					'class'    => 'sp-input-text select2 post_categories',
-					'multiple' => true,
+			$this->form->post_terms( array(
+				'id'       => '_post_categories',
+				'taxonomy' => 'category',
+				'multiple' => true,
+				'name'     => esc_html__( 'Post Categories', 'carousel-slider' ),
+				'desc'     => esc_html__( 'Show posts associated with selected categories.', 'carousel-slider' ),
+			) );
+			$this->form->post_terms( array(
+				'id'       => '_post_tags',
+				'taxonomy' => 'post_tag',
+				'multiple' => true,
+				'name'     => esc_html__( 'Post Tags', 'carousel-slider' ),
+				'desc'     => esc_html__( 'Show posts associated with selected tags.', 'carousel-slider' ),
+			) );
+			$this->form->posts_list( array(
+				'id'       => '_post_in',
+				'multiple' => true,
+				'name'     => esc_html__( 'Specific posts', 'carousel-slider' ),
+				'desc'     => esc_html__( 'Select posts that you want to show as slider. Select at least 5 posts', 'carousel-slider' ),
+			) );
+			$this->form->number( array(
+				'id'   => '_posts_per_page',
+				'name' => esc_html__( 'Posts per page', 'carousel-slider' ),
+				'std'  => 12,
+				'desc' => esc_html__( 'How many post you want to show on carousel slide.', 'carousel-slider' ),
+			) );
+			$this->form->select( array(
+				'id'      => '_post_order',
+				'name'    => esc_html__( 'Order', 'carousel-slider' ),
+				'std'     => 'DESC',
+				'options' => array(
+					'ASC'  => esc_html__( 'Ascending Order', 'carousel-slider' ),
+					'DESC' => esc_html__( 'Descending Order', 'carousel-slider' ),
 				),
 			) );
-
-			echo Form::field( array(
-				'type'             => 'post_terms',
-				'id'               => '_post_tags',
-				'taxonomy'         => 'post_tag',
-				'label'            => esc_html__( 'Post Tags', 'carousel-slider' ),
-				'description'      => esc_html__( 'Show posts associated with selected tags.', 'carousel-slider' ),
-				'input_attributes' => array(
-					'class'    => 'sp-input-text select2 post_tags',
-					'multiple' => true,
-				),
-			) );
-
-			echo Form::field( array(
-				'type'             => 'posts_list',
-				'id'               => '_post_in',
-				'label'            => esc_html__( 'Specific posts', 'carousel-slider' ),
-				'description'      => esc_html__( 'Select posts that you want to show as slider. Select at least 5 posts', 'carousel-slider' ),
-				'input_attributes' => array(
-					'class'    => 'sp-input-text select2 post_in',
-					'multiple' => true,
-				),
-			) );
-
-			echo Form::field( array(
-				'type'             => 'number',
-				'id'               => '_posts_per_page',
-				'label'            => esc_html__( 'Posts per page', 'carousel-slider' ),
-				'default'          => 12,
-				'description'      => esc_html__( 'How many post you want to show on carousel slide.', 'carousel-slider' ),
-				'input_attributes' => array( 'class' => 'sp-input-text posts_per_page' ),
-			) );
-
-			echo Form::field( array(
-				'type'             => 'select',
-				'id'               => '_post_orderby',
-				'label'            => esc_html__( 'Order by', 'carousel-slider' ),
-				'default'          => 'ID',
-				'choices'          => array(
+			$this->form->select( array(
+				'id'      => '_post_orderby',
+				'name'    => esc_html__( 'Order by', 'carousel-slider' ),
+				'std'     => 'ID',
+				'options' => array(
 					'none'          => esc_html__( 'No order', 'carousel-slider' ),
 					'ID'            => esc_html__( 'Post id', 'carousel-slider' ),
 					'author'        => esc_html__( 'Post author', 'carousel-slider' ),
@@ -104,28 +82,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 					'rand'          => esc_html__( 'Random order', 'carousel-slider' ),
 					'comment_count' => esc_html__( 'Number of comments', 'carousel-slider' ),
 				),
-				'input_attributes' => array( 'class' => 'sp-input-text' ),
 			) );
-
-			echo Form::field( array(
-				'type'             => 'buttonset',
-				'id'               => '_post_order',
-				'label'            => esc_html__( 'Order', 'carousel-slider' ),
-				'default'          => 'DESC',
-				'choices'          => array(
-					'ASC'  => esc_html__( 'Ascending', 'carousel-slider' ),
-					'DESC' => esc_html__( 'Descending', 'carousel-slider' ),
-				),
-				'input_attributes' => array( 'class' => 'sp-input-text' ),
-			) );
-
-			echo Form::field( array(
-				'type'             => 'number',
-				'id'               => '_post_height',
-				'label'            => esc_html__( 'Colums Height', 'carousel-slider' ),
-				'description'      => esc_html__( 'Enter colums height for posts carousel in numbers. 450 (px) is perfect when columns width is around 300px or higher. Otherwise you need to change it for perfection.', 'carousel-slider' ),
-				'default'          => 450,
-				'input_attributes' => array( 'class' => 'sp-input-text' ),
+			$this->form->number( array(
+				'id'   => '_post_height',
+				'name' => esc_html__( 'Colums Height', 'carousel-slider' ),
+				'desc' => esc_html__( 'Enter colums height for posts carousel in numbers. 450 (px) is perfect when columns width is around 300px or higher. Otherwise you need to change it for perfection.', 'carousel-slider' ),
+				'std'  => 450,
 			) );
 			?>
         </div>

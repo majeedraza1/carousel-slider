@@ -12,4 +12,4 @@
             panel.css('overflow', 'visible');
         }
     });
-})(window.jQuery);
+})(jQuery);

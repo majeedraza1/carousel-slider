@@ -13,4 +13,4 @@
         $(this).closest('.modal').removeClass('is-active');
     });
 
-})(window.jQuery);
+})(jQuery);
