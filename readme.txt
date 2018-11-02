@@ -113,6 +113,12 @@ Now you can use the following function at your theme template file replacing `YO
 
 == Changelog ==
 
+= version 1.9.0 - 2018-11-## =
+* Tweak - Checked version compatibility with WooCommerce 3.5.*
+* Tweak - Checked version compatibility with WordPress 5.0.*
+* Tweak - Add Gutenberg block for carousel slider.
+* Fixed - Disable magnific popup counter as it show wrong count.
+
 = version 1.8.9 - 2018-07-12 =
 * Tweak - Update Owl Carousel version to v2.3.4 as fix rewind issue.
 * Tweak - Transfer inline script to external file so that it should not conflict when combine scripts.

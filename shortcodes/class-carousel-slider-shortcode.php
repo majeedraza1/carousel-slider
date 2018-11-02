@@ -1,12 +1,18 @@
 <?php
-// If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-	die;
+
+if ( ! defined( 'ABSPATH' ) ) {
+	die; // If this file is called directly, abort.
 }
 
 if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 
 	class Carousel_Slider_Shortcode {
+
+		/**
+		 * The instance of the class
+		 *
+		 * @var self
+		 */
 		protected static $instance = null;
 
 		/**
@@ -180,8 +186,8 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 				$class .= ' dots-square';
 			}
 
-			$_dot_nav = (get_post_meta( $id, '_dot_nav', true ) != 'off');
-			$_nav_button = (get_post_meta( $id, '_nav_button', true ) != 'off');
+			$_dot_nav    = ( get_post_meta( $id, '_dot_nav', true ) != 'off' );
+			$_nav_button = ( get_post_meta( $id, '_nav_button', true ) != 'off' );
 
 			$options_array = array(
 				'id'                        => 'id-' . $id,

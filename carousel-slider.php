@@ -3,14 +3,14 @@
  * Plugin Name: Carousel Slider
  * Plugin URI: http://wordpress.org/plugins/carousel-slider
  * Description: The Easiest Way to Create SEO friendly Image, Logo, Video, Post and WooCommerce Product Carousel.
- * Version: 1.8.9
+ * Version: 1.9.0
  * Author: Sayful Islam
  * Author URI: https://sayfulislam.com
  * Requires at least: 4.4
- * Tested up to: 4.9
+ * Tested up to: 5.0
  *
  * WC requires at least: 2.5
- * WC tested up to: 3.4
+ * WC tested up to: 3.5
  *
  * Text Domain: carousel-slider
  *
@@ -21,9 +21,8 @@
  * @author Sayful Islam
  */
 
-// If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-	die;
+if ( ! defined( 'ABSPATH' ) ) {
+	die; // If this file is called directly, abort.
 }
 
 if ( ! class_exists( 'Carousel_Slider' ) ) {
@@ -38,11 +37,18 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		private $plugin_name = 'carousel-slider';
 
 		/**
+		 * Plugin custom post type
+		 *
+		 * @var string
+		 */
+		private $post_type = 'carousels';
+
+		/**
 		 * Plugin version
 		 *
 		 * @var string
 		 */
-		private $version = '1.8.9';
+		private $version = '1.9.0';
 
 		/**
 		 * Minimum PHP version required
@@ -52,13 +58,15 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		private $min_php = '5.3.0';
 
 		/**
-		 * @var object
+		 * The instance of the class
+		 *
+		 * @var self
 		 */
 		protected static $instance;
 
 		/**
 		 * Main Carousel_Slider Instance
-		 * Ensures only one instance of Carousel_Slider is loaded or can be loaded.
+		 * Ensures only one instance of the class is loaded or can be loaded.
 		 *
 		 * @since 1.6.0
 		 * @return Carousel_Slider - Main instance
@@ -93,6 +101,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		 */
 		public function define_constants() {
 			define( 'CAROUSEL_SLIDER_VERSION', $this->version );
+			define( 'CAROUSEL_SLIDER_POST_TYPE', $this->post_type );
 			define( 'CAROUSEL_SLIDER_FILE', __FILE__ );
 			define( 'CAROUSEL_SLIDER_PATH', dirname( CAROUSEL_SLIDER_FILE ) );
 			define( 'CAROUSEL_SLIDER_INCLUDES', CAROUSEL_SLIDER_PATH . '/includes' );
@@ -123,6 +132,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-activator.php';
 			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-product.php';
 			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-script.php';
+			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-preview.php';
 			require_once CAROUSEL_SLIDER_WIDGETS . '/widget-carousel_slider.php';
 
 			if ( $this->is_request( 'admin' ) ) {
@@ -133,6 +143,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-admin.php';
 				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-meta-box.php';
 				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-hero-carousel.php';
+				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-gutenberg-block.php';
 			}
 
 			require_once CAROUSEL_SLIDER_PATH . '/shortcodes/class-carousel-slider-shortcode.php';

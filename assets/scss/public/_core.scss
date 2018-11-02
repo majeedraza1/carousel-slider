@@ -8,6 +8,7 @@
 
 	.owl-stage {
 		position: relative;
+		-ms-touch-action: pan-Y;
 		touch-action: manipulation;
 		backface-visibility: hidden;
 
@@ -53,7 +54,7 @@
 	.owl-nav .owl-prev,
 	.owl-nav .owl-next,
 	.owl-dot {
-		cursor: hand;
+		cursor: pointer;
 		user-select: none;
 	}
 	.owl-nav button.owl-prev,
@@ -84,7 +85,7 @@
 	}
 
 	&.owl-drag .owl-item {
-		touch-action: none;
+		touch-action: pan-y;
 		user-select: none;
 	}
 
