@@ -2,9 +2,9 @@
 Contributors: sayful
 Tags: woocommerce, shortcode, images, carousel, carousel slider, image carousel, product carousel, slider, owl carousel
 Requires at least: 4.5
-Tested up to: 4.9
+Tested up to: 5.0
 Requires PHP: 5.3
-Stable tag: 1.8.9
+Stable tag: 1.9.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -113,11 +113,12 @@ Now you can use the following function at your theme template file replacing `YO
 
 == Changelog ==
 
-= version 1.9.0 - 2018-11-## =
+= version 1.9.0 - 2019-01-## =
 * Tweak - Checked version compatibility with WooCommerce 3.5.*
 * Tweak - Checked version compatibility with WordPress 5.0.*
 * Tweak - Add Gutenberg block for carousel slider.
 * Fixed - Disable magnific popup counter as it show wrong count.
+* Fixed - Fix "Link to URL" value is not deleting.
 
 = version 1.8.9 - 2018-07-12 =
 * Tweak - Update Owl Carousel version to v2.3.4 as fix rewind issue.

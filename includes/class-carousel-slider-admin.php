@@ -366,8 +366,9 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ) {
 			$slider_link_url = isset( $attachment['carousel_slider_link_url'] ) ? $attachment['carousel_slider_link_url'] : null;
 
 			if ( filter_var( $slider_link_url, FILTER_VALIDATE_URL ) ) {
-
 				update_post_meta( $post['ID'], '_carousel_slider_link_url', esc_url_raw( $slider_link_url ) );
+			} else {
+				delete_post_meta( $post['ID'], '_carousel_slider_link_url' );
 			}
 
 			return $post;
