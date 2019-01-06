@@ -94,11 +94,13 @@ if ( ! class_exists( 'Carousel_Slider_Shortcode' ) ):
 
 			if ( $slide_type == 'product-carousel' ) {
 
-				$query_type    = get_post_meta( $id, '_product_query_type', true );
-				$query_type    = empty( $query_type ) ? 'query_porduct' : $query_type;
+				$query_type = get_post_meta( $id, '_product_query_type', true );
+				$query_type = empty( $query_type ) ? 'query_product' : $query_type;
+				// Type mistake
+				$query_type    = ( 'query_porduct' == $query_type ) ? 'query_product' : $query_type;
 				$product_query = get_post_meta( $id, '_product_query', true );
 
-				if ( $query_type == 'query_porduct' && $product_query == 'product_categories_list' ) {
+				if ( $query_type == 'query_product' && $product_query == 'product_categories_list' ) {
 					ob_start();
 
 					echo $this->product_categories( $id );

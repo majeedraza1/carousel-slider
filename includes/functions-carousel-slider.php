@@ -266,14 +266,16 @@ if ( ! function_exists( 'carousel_slider_products' ) ) {
 		$id            = $carousel_id;
 		$per_page      = intval( get_post_meta( $id, '_products_per_page', true ) );
 		$query_type    = get_post_meta( $id, '_product_query_type', true );
-		$query_type    = empty( $query_type ) ? 'query_porduct' : $query_type;
+		$query_type    = empty( $query_type ) ? 'query_product' : $query_type;
+		// Type mistake
+		$query_type    = ( 'query_porduct' == $query_type ) ? 'query_product' : $query_type;
 		$product_query = get_post_meta( $id, '_product_query', true );
 
 		$product_carousel = new Carousel_Slider_Product();
 
 		$args = array( 'posts_per_page' => $per_page );
 
-		if ( $query_type == 'query_porduct' ) {
+		if ( $query_type == 'query_product' ) {
 
 			// Get features products
 			if ( $product_query == 'featured' ) {
