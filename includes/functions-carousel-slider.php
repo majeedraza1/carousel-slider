@@ -263,10 +263,10 @@ if ( ! function_exists( 'carousel_slider_products' ) ) {
 	 * @return array
 	 */
 	function carousel_slider_products( $carousel_id ) {
-		$id            = $carousel_id;
-		$per_page      = intval( get_post_meta( $id, '_products_per_page', true ) );
-		$query_type    = get_post_meta( $id, '_product_query_type', true );
-		$query_type    = empty( $query_type ) ? 'query_product' : $query_type;
+		$id         = $carousel_id;
+		$per_page   = intval( get_post_meta( $id, '_products_per_page', true ) );
+		$query_type = get_post_meta( $id, '_product_query_type', true );
+		$query_type = empty( $query_type ) ? 'query_product' : $query_type;
 		// Type mistake
 		$query_type    = ( 'query_porduct' == $query_type ) ? 'query_product' : $query_type;
 		$product_query = get_post_meta( $id, '_product_query', true );
@@ -409,7 +409,7 @@ if ( ! function_exists( 'carousel_slider_inline_style' ) ) {
                     color: {$_product_btn_text_color};
                 }
 
-                #id-{$id} .carousel-slider__product .star-rating {
+                #id-{$id} .carousel-slider__product .star-rating span:before {
                     color: {$_product_btn_bg_color};
                 }
 		    ";

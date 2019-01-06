@@ -122,6 +122,8 @@ Now you can use the following function at your theme template file replacing `YO
 * Fixed - Fix "Link to URL" value is not deleting.
 * Fixed - Post carousel border does not show properly.
 * Tweak - Update post carousel style.
+* Tweak - Update product carousel style with equal item width.
+* Fixed - Product carousel star rating color does not work.
 * Tweak - Removed "Columns Height" field from post carousel as it no longer required.
 
 = version 1.8.9 - 2018-07-12 =

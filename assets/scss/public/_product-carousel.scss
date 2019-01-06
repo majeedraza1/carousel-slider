@@ -1,38 +1,57 @@
+@import "../utilities/mixins";
+
 $text-color: #333333;
 $btn-color: #f1f1f1;
 $btn-background: #96588a;
 
 .carousel-slider {
+	&[data-slide-type="product-carousel"] {
+		.owl-stage {
+			display: flex;
+			flex-wrap: wrap;
+		}
+
+		.owl-item {
+			display: flex;
+			height: auto;
+		}
+	}
+
+	.woocommerce-loop-category__title {
+		font-size: 1.25rem;
+		margin: 1rem;
+	}
 
 	&__product {
 		position: relative;
 		text-align: center;
-		border: 1px solid #f1f1f1;
+		box-shadow: 0 1px 2px rgba(#000, 0.1), 0 0 0 1px rgba(#000, 0.1);
+		margin: 2px;
+		width: 100%;
 
 		.woocommerce-LoopProduct-link {
 			display: block;
 			overflow: hidden;
-			margin: 0 0 .5em;
+			margin: 0;
 		}
 
 		.onsale {
 			border: 0 none;
 			line-height: 1;
 			margin: 0;
-			padding: 15px 5px;
+			padding: 0.5rem;
 			color: $btn-color;
 			background-color: $btn-background;
 			position: absolute;
-			left: 8px;
-			top: 8px;
-			border-radius: 50%;
+			left: 1rem;
+			top: 1rem;
 		}
 
 		h3 {
-			padding: .5em 1em;
+			padding: 0;
 			text-align: left;
-			margin: 0;
-			font-size: 1em;
+			margin: 1rem;
+			font-size: 1.25rem;
 			color: $text-color;
 		}
 
@@ -51,14 +70,14 @@ $btn-background: #96588a;
 		strong {
 			display: block;
 		}
-		
+
 		// Price
 		.price {
 			color: $text-color;
 			display: inline-block;
 			font-weight: normal;
-			margin: .5em 1em;
-			font-size: .857em;
+			margin: 0 0.5rem 0 1rem;
+			font-size: .875rem;
 			float: left;
 
 			del {
@@ -77,9 +96,8 @@ $btn-background: #96588a;
 
 		// Star ratings
 		.star-rating {
-			color: $btn-background;
 			display: inline-block;
-			margin: .5em 1em;
+			margin: 0 1rem 0 0.5rem;
 			float: right;
 			overflow: hidden;
 			position: relative;
@@ -104,13 +122,14 @@ $btn-background: #96588a;
 				left: 0;
 				position: absolute;
 				padding-top: 1.5em;
-			}
 
-			span:before {
-				content: "\53\53\53\53\53";
-				top: 0;
-				position: absolute;
-				left: 0;
+				&:before {
+					color: $btn-background;
+					content: "\53\53\53\53\53";
+					top: 0;
+					position: absolute;
+					left: 0;
+				}
 			}
 		}
 
@@ -119,7 +138,7 @@ $btn-background: #96588a;
 		a.quick_view {
 			color: $btn-color;
 			background-color: $btn-background;
-			margin: 1em;
+			margin: 1rem;
 			line-height: 1;
 			cursor: pointer;
 			position: relative;
@@ -161,9 +180,7 @@ $btn-background: #96588a;
 					position: absolute;
 					top: .618em;
 					right: 1em;
-					-webkit-animation: spin 2s linear infinite;
-				    -moz-animation: spin 2s linear infinite;
-				    animation: spin 2s linear infinite;
+					animation: spin 2s linear infinite;
 				}
 			}
 
