@@ -416,6 +416,25 @@ if ( ! function_exists( 'carousel_slider_inline_style' ) ) {
 		// Content Carousel
 		if ( $slide_type == 'hero-banner-slider' && $content_sliders ) {
 			foreach ( $content_sliders as $slide_id => $slide ) {
+				// Title Style
+				$heading_font_size = ! empty( $slide['heading_font_size'] ) ? esc_attr( $slide['heading_font_size'] ) : 40;
+				$heading_gutter    = ! empty( $slide['heading_gutter'] ) ? esc_attr( $slide['heading_gutter'] ) : '30px';
+				$heading_color     = ! empty( $slide['heading_color'] ) ? esc_attr( $slide['heading_color'] ) : '#ffffff';
+				echo "#id-{$id} .hero__cell-{$slide_id} .carousel-slider-hero__cell__heading {
+					font-size: {$heading_font_size}px;
+					margin-bottom: {$heading_gutter};
+					color: {$heading_color};
+				}";
+				// Description Style
+				$description_font_size = ! empty( $slide['description_font_size'] ) ? esc_attr( $slide['description_font_size'] ) : 20;
+				$description_gutter    = ! empty( $slide['description_gutter'] ) ? esc_attr( $slide['description_gutter'] ) : '30px';
+				$description_color     = ! empty( $slide['description_color'] ) ? esc_attr( $slide['description_color'] ) : '#ffffff';
+				echo "#id-{$id} .hero__cell-{$slide_id} .carousel-slider-hero__cell__description{
+					font-size: {$description_font_size}px;
+					margin-bottom: {$description_gutter};
+					color: {$description_color};
+				}";
+				// Button Style
 				if ( isset( $slide['link_type'] ) && ( $slide['link_type'] == 'button' ) ) {
 
 					$_btn_1_type          = ! empty( $slide['button_one_type'] ) ? esc_attr( $slide['button_one_type'] ) : 'normal';

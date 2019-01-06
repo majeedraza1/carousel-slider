@@ -117,6 +117,7 @@ Now you can use the following function at your theme template file replacing `YO
 * Tweak - Checked version compatibility with WooCommerce 3.5.*
 * Tweak - Checked version compatibility with WordPress 5.0.*
 * Tweak - Add Gutenberg block for carousel slider.
+* Fixed - Hero banner slider heading and description style is not working.
 * Fixed - Disable magnific popup counter as it show wrong count.
 * Fixed - Fix "Link to URL" value is not deleting.
 * Fixed - Post carousel border does not show properly.

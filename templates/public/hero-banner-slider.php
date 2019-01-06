@@ -35,9 +35,9 @@ if ( empty( $settings['content_animation'] ) ) {
 			$_cell_style .= isset( $settings['slide_height'] ) ? 'height: ' . $settings['slide_height'] . ';' : '';
 
 			if ( $_link_type == 'full' && carousel_slider_is_url( $_slide_link ) ) {
-				$html .= '<a class="carousel-slider-hero__cell" style="' . $_cell_style . '" href="' . $_slide_link . '" target="' . $_link_target . '">';
+				$html .= '<a class="carousel-slider-hero__cell hero__cell-' . $slide_id . '" style="' . $_cell_style . '" href="' . $_slide_link . '" target="' . $_link_target . '">';
 			} else {
-				$html .= '<div class="carousel-slider-hero__cell" style="' . $_cell_style . '">';
+				$html .= '<div class="carousel-slider-hero__cell hero__cell-' . $slide_id . '" style="' . $_cell_style . '">';
 			}
 
 			// Slide Background
