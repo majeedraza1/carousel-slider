@@ -119,6 +119,9 @@ Now you can use the following function at your theme template file replacing `YO
 * Tweak - Add Gutenberg block for carousel slider.
 * Fixed - Disable magnific popup counter as it show wrong count.
 * Fixed - Fix "Link to URL" value is not deleting.
+* Fixed - Post carousel border does not show properly.
+* Tweak - Update post carousel style.
+* Tweak - Removed "Columns Height" field from post carousel as it no longer required.
 
 = version 1.8.9 - 2018-07-12 =
 * Tweak - Update Owl Carousel version to v2.3.4 as fix rewind issue.

@@ -391,16 +391,6 @@ if ( ! function_exists( 'carousel_slider_inline_style' ) ) {
             }
 		";
 
-		// Post Carousel Slider
-		if ( $slide_type == 'post-carousel' ) {
-
-			echo "
-                #id-{$id} .carousel-slider__post {
-                    height: {$_post_height}px
-                }
-            ";
-		}
-
 		// Product Carousel Slider
 		if ( $slide_type == 'product-carousel' ) {
 			echo "

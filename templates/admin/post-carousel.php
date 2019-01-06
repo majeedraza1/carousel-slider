@@ -83,12 +83,6 @@ if ( ! defined( 'WPINC' ) ) {
 					'comment_count' => esc_html__( 'Number of comments', 'carousel-slider' ),
 				),
 			) );
-			$this->form->number( array(
-				'id'   => '_post_height',
-				'name' => esc_html__( 'Colums Height', 'carousel-slider' ),
-				'desc' => esc_html__( 'Enter colums height for posts carousel in numbers. 450 (px) is perfect when columns width is around 300px or higher. Otherwise you need to change it for perfection.', 'carousel-slider' ),
-				'std'  => 450,
-			) );
 			?>
         </div>
     </div>

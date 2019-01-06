@@ -50,8 +50,10 @@ $_lazy_load_image  = get_post_meta( $id, '_lazy_load_image', true );
 			$html .= sprintf( '<a class="carousel-slider__post-title" href="%s"><h1>%s</h1></a>', $_permalink, $post->post_title );
 			$html .= '</div>'; // End Post Header
 			$html .= '<div class="carousel-slider__post-excerpt">' . $_excerpt . '</div>';
+
+			// Footer
 			$html .= '<footer class="carousel-slider__post-meta">';
-			$html .= '<div class="carousel-slider__post-excerpt-overlay"></div>';
+			// $html .= '<div class="carousel-slider__post-excerpt-overlay"></div>';
 			$html .= '<div class="carousel-slider__post-publication-meta">';
 			$html .= '<div class="carousel-slider__post-details-info">';
 
