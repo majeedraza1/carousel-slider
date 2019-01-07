@@ -32,7 +32,7 @@ if ( ! class_exists( 'Carousel_Slider_Preview' ) ) {
 
 		public function template_include( $template ) {
 			if ( isset( $_GET['carousel_slider_preview'], $_GET['carousel_slider_iframe'], $_GET['slider_id'] ) ) {
-				if ( current_user_can( 'edit_page', $_GET['slider_id'] ) ) {
+				if ( current_user_can( 'edit_pages' ) ) {
 					$template = CAROUSEL_SLIDER_TEMPLATES . '/public/preview-slider.php';
 				}
 			}
