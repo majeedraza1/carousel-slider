@@ -47,7 +47,7 @@ $_lazy_load_image  = get_post_meta( $id, '_lazy_load_image', true );
 			}
 
 			// Post Title
-			$html .= sprintf( '<a class="carousel-slider__post-title" href="%s"><h1>%s</h1></a>', $_permalink, $post->post_title );
+			$html .= sprintf( '<a class="carousel-slider__post-title" href="%s"><h2>%s</h2></a>', $_permalink, $post->post_title );
 			$html .= '</div>'; // End Post Header
 			$html .= '<div class="carousel-slider__post-excerpt">' . $_excerpt . '</div>';
 

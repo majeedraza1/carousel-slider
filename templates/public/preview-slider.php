@@ -48,13 +48,15 @@ add_filter( 'carousel_slider_load_scripts', '__return_true' );
 
 <script type="text/javascript">
     jQuery(document).ready(function () {
-        var frameEl = window.frameElement;
-        // get the form element
-        var height = jQuery('.carousel-slider-preview-container').outerHeight(true);
+        setTimeout(function () {
+            var frameEl = window.frameElement;
+            // get the form element
+            var height = jQuery('.carousel-slider-preview-container').outerHeight(true);
 
-        if (frameEl) {
-            frameEl.height = height;
-        }
+            if (frameEl) {
+                frameEl.height = height;
+            }
+        }, 500);
     });
 </script>
 <?php wp_footer(); ?>
