@@ -113,7 +113,7 @@ Now you can use the following function at your theme template file replacing `YO
 
 == Changelog ==
 
-= version 1.9.0 - 2019-01-## =
+= version 1.9.0 - 2019-01-20 =
 * Tweak - Checked version compatibility with WooCommerce 3.5.*
 * Tweak - Checked version compatibility with WordPress 5.0.*
 * Tweak - Add Gutenberg block for carousel slider.
@@ -125,6 +125,8 @@ Now you can use the following function at your theme template file replacing `YO
 * Tweak - Update product carousel style with equal item width.
 * Fixed - Product carousel star rating color does not work.
 * Tweak - Removed "Columns Height" field from post carousel as it no longer required.
+* Tweak - Slider item equal height for post and product carousel (issue #5)
+* Dev - Two new filter `carousel_slider_post_read_more` and `carousel_slider_post_excerpt_length` has been added.
 
 = version 1.8.9 - 2018-07-12 =
 * Tweak - Update Owl Carousel version to v2.3.4 as fix rewind issue.
