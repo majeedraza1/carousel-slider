@@ -2,9 +2,9 @@
 Contributors: sayful
 Tags: woocommerce, shortcode, images, carousel, carousel slider, image carousel, product carousel, slider, owl carousel
 Requires at least: 4.5
-Tested up to: 5.0
+Tested up to: 5.2
 Requires PHP: 5.3
-Stable tag: 1.9.0
+Stable tag: 1.9.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -112,6 +112,9 @@ Now you can use the following function at your theme template file replacing `YO
 7. Front-end example of image lightbox.
 
 == Changelog ==
+
+= version 1.9.1 - 2019-05-07 =
+* Tweak - Add WP_Post class as first params on `carousel_slider_post_read_more` filter hook.
 
 = version 1.9.0 - 2019-01-20 =
 * Tweak - Checked version compatibility with WooCommerce 3.5.*

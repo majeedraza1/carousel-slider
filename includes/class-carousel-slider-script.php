@@ -23,24 +23,23 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ) {
 		public static function init() {
 			if ( is_null( self::$instance ) ) {
 				self::$instance = new self();
+
+				add_action( 'wp_loaded', array( self::$instance, 'register_styles' ) );
+				add_action( 'wp_loaded', array( self::$instance, 'register_scripts' ) );
+
+				add_action( 'wp_enqueue_scripts', array( self::$instance, 'frontend_scripts' ), 15 );
+
+				add_action( 'admin_enqueue_scripts', array( self::$instance, 'admin_scripts' ), 10 );
+				add_action( 'admin_footer', array( self::$instance, 'gallery_url_template' ), 5 );
 			}
 
 			return self::$instance;
 		}
 
-		public function __construct() {
-			add_action( 'wp_loaded', array( $this, 'register_styles' ) );
-			add_action( 'wp_loaded', array( $this, 'register_scripts' ) );
-
-			add_action( 'wp_enqueue_scripts', array( $this, 'frontend_scripts' ), 15 );
-
-			add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ), 10 );
-			add_action( 'admin_footer', array( $this, 'gallery_url_template' ), 5 );
-		}
-
+		/**
+		 * Register styles
+		 */
 		public function register_styles() {
-			$suffix = ( defined( "SCRIPT_DEBUG" ) && SCRIPT_DEBUG ) ? '' : '.min';
-
 			$styles = array(
 				'carousel-slider'       => array(
 					'src'        => CAROUSEL_SLIDER_ASSETS . '/css/style.css',
@@ -61,6 +60,9 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ) {
 			}
 		}
 
+		/**
+		 * Register scripts
+		 */
 		public function register_scripts() {
 			$suffix = ( defined( "SCRIPT_DEBUG" ) && SCRIPT_DEBUG ) ? '' : '.min';
 
@@ -101,7 +103,7 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ) {
 				'owl-carousel'          => array(
 					'src'        => CAROUSEL_SLIDER_ASSETS . '/lib/owl-carousel/owl.carousel' . $suffix . '.js',
 					'dependency' => array( 'jquery' ),
-					'version'    => '2.2.1',
+					'version'    => '2.3.4',
 					'in_footer'  => true,
 				),
 				'magnific-popup'        => array(
@@ -113,7 +115,7 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ) {
 				'carousel-slider'       => array(
 					'src'        => CAROUSEL_SLIDER_ASSETS . '/js/script' . $suffix . '.js',
 					'dependency' => array( 'jquery', 'owl-carousel', 'magnific-popup' ),
-					'version'    => '1.1.0',
+					'version'    => CAROUSEL_SLIDER_VERSION,
 					'in_footer'  => true,
 				),
 			);

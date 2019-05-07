@@ -29,7 +29,7 @@ $_lazy_load_image  = get_post_meta( $id, '_lazy_load_image', true );
 			$_permalink = esc_url( get_permalink( $post->ID ) );
 			$_thumb_id  = get_post_thumbnail_id( $post->ID );
 			$num_words  = apply_filters( 'carousel_slider_post_excerpt_length', 20 );
-			$more_text  = apply_filters( 'carousel_slider_post_read_more', ' ...' );
+			$more_text  = apply_filters( 'carousel_slider_post_read_more', ' ...', $post );
 			$_excerpt   = wp_trim_words( wp_strip_all_tags( $post->post_content ), $num_words, $more_text );
 
 			if ( has_post_thumbnail( $post ) ) {
