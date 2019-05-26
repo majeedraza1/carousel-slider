@@ -29,6 +29,10 @@ if ( ! carousel_slider_is_woocommerce_active() ) {
 			setup_postdata( $post );
 			$product = wc_get_product( $post );
 
+			if ( ! $product->is_visible() ) {
+				continue;
+			}
+
 			echo '<div class="product carousel-slider__product">';
 
 			do_action( 'carousel_slider_product_loop', $product );
