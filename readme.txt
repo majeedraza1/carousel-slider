@@ -1,9 +1,9 @@
 === Carousel Slider ===
-Contributors: sayful
+Contributors: sayful, stackonet, majeedraza
 Tags: woocommerce, shortcode, images, carousel, carousel slider, image carousel, product carousel, slider, owl carousel
 Requires at least: 4.5
-Tested up to: 5.2
-Requires PHP: 5.3
+Tested up to: 5.3
+Requires PHP: 5.6
 Stable tag: 1.9.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
@@ -15,7 +15,7 @@ Create SEO friendly Image, Logo, Video, Post, WooCommerce Product Carousel and S
 **Create SEO friendly Image, Logo, Video, Post, WooCommerce Product Carousel and Slider.**
 Carousel Slider is a touch enabled WordPress plugin that lets you create highly customizable, stylish responsive carousel slider. With Carousel Slider, you can create image carousel using media gallery or custom url, post carousel, video carousel. We have integrated [Owl Carousel 2](http://www.owlcarousel.owlgraphic.com/) into our plugin for the ultimate device support.
 
-> Looking for a free minimal WordPress theme. Try [Shapla](https://wordpress.org/themes/shapla/)
+> Looking for a free minimal WordPress theme. Try [Shapla](https://wordpress.org/themes/shapla)
 
 
 **If you like this plugin, please give us [5 star](https://wordpress.org/support/plugin/carousel-slider/reviews/?rate=5#new-post) to encourage for future improvement.**
@@ -57,7 +57,7 @@ https://www.youtube.com/watch?v=yiAkvXyfakg
 = With Page Builder by SiteOrigin =
 https://www.youtube.com/watch?v=-OaYQZfr1RM
 
-= With WPBakery Visual Composer =
+= With Visual Composer Website Builder =
 https://www.youtube.com/watch?v=4LhDXH81whk
 
 = Using as a Widget =
@@ -262,7 +262,7 @@ Now you can use the following function at your theme template file replacing `YO
 * Added   - Lazy Load of images.
 * Added   - Support multiple carousel slide at same page.
 * Added   - New Carousel Slider Widget to add carousel at widget. Especially helpful for page builder that use widget like "SiteOrigin Page Builder".
-* Added   - New Element added for WPBakery Visual Composer page builder. If you are using WPBakery Visual Composer page.
+* Added   - New Element added for Visual Composer Website Builder. If you are using Visual Composer Website Builder.
 * Merged  - All CSS styles in on file.
 
 = version 1.5.1 - 2016-08-11 =

@@ -77,7 +77,7 @@ if ( ! defined( 'WPINC' ) ) {
                                 src="https://www.youtube.com/embed/4LhDXH81whk" frameborder="0"
                                 allowfullscreen></iframe>
                     </div>
-                    <label><?php esc_html_e( 'With WPBakery Visual Composer', 'carousel-slider' ); ?></label>
+                    <label><?php esc_html_e( 'With Visual Composer Website Builder', 'carousel-slider' ); ?></label>
                 </div>
             </div>
         </div>
