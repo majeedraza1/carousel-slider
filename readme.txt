@@ -1,10 +1,10 @@
 === Carousel Slider ===
 Contributors: sayful, stackonet, majeedraza
 Tags: woocommerce, shortcode, images, carousel, carousel slider, image carousel, product carousel, slider, owl carousel
-Requires at least: 4.5
+Requires at least: 4.8
 Tested up to: 5.3
 Requires PHP: 5.6
-Stable tag: 1.9.2
+Stable tag: 1.9.3
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -74,33 +74,6 @@ https://www.youtube.com/watch?v=kYgp6wp27lM
 
 If you still need help. visit [WordPress codex](https://codex.wordpress.org/Managing_Plugins#Installing_Plugins)
 
-== Frequently Asked Questions ==
-
-= How to use shortcode/slider in theme template file? =
-By default, Carousel slider only load scripts when you use shortcode in TinyMCE editor or use Carousel Slider Widget. This helps to reduce two unnecessary HTTP request for Style and Script when you are not using the slider.
-If you want to use shortcode in your theme directly, you need to tell the plugin to load scripts for your perticular page or template in your (theme/child theme) functions.php file. To load scripts, you can use the following filter hook.
-For example, if you want to use shortcode only for your front page, add the following filter hook in your theme functions.php file.
-
-`add_filter('carousel_slider_load_scripts', 'carousel_slider_load_scripts');
-function carousel_slider_load_scripts( $load_scripts ) {
-	// To use only for front page
-	if ( is_front_page() ) {
-		return true;
-	}
-	return $load_scripts;
-}`
-
-or write the following code to always load the slider scripts and style.
-
-`add_filter('carousel_slider_load_scripts', 'carousel_slider_load_scripts');
-function carousel_slider_load_scripts( $load_scripts ) {
-	return true;
-}`
-
-Now you can use the following function at your theme template file replacing `YOUR_SLIDER_ID` with actual carousel slider id.
-
-`echo do_shortcode('[carousel_slide id='YOUR_SLIDER_ID']");` 
-
 == Screenshots ==
 
 1. Carousel slider admin page
@@ -112,6 +85,10 @@ Now you can use the following function at your theme template file replacing `YO
 7. Front-end example of image lightbox.
 
 == Changelog ==
+
+= version 1.9.3 - 2019-11-08 =
+* Add - Add settings to enable/disable loading scrips and styles to all pages.
+* Tweak - Rename "WPBakery Visual Composer" to "Visual Composer Website Builder"
 
 = version 1.9.2 - 2019-05-26 =
 * Fix - Fix Carousel slider showing hidden products

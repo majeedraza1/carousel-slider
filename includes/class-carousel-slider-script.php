@@ -207,6 +207,12 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ) {
 		 * @return boolean
 		 */
 		private function should_load_scripts() {
+			$settings = get_option( 'carousel_slider_settings' );
+			$settings = is_array( $settings ) ? $settings : [];
+			if ( isset( $settings['load_scripts'] ) && 'always' == $settings['load_scripts'] ) {
+				return true;
+			}
+
 			global $post;
 			$load_scripts = is_active_widget( false, false, 'widget_carousel_slider', true ) ||
 			                ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'carousel_slide' ) ) ||

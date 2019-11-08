@@ -3,11 +3,11 @@
  * Plugin Name: Carousel Slider
  * Plugin URI: http://wordpress.org/plugins/carousel-slider
  * Description: <strong>Carousel Slider</strong> allows you to create beautiful, touch enabled, responsive carousels and sliders. It let you create SEO friendly Image carousel from Media Library or from custom URL, Video carousel using Youtube and Vimeo video, Post carousel, Hero banner slider and various types of WooCommerce products carousels.
- * Version: 1.9.2
+ * Version: 1.9.3
  * Author: Sayful Islam
  * Author URI: https://sayfulislam.com
- * Requires at least: 4.4
- * Tested up to: 5.2
+ * Requires at least: 4.8
+ * Tested up to: 5.3
  *
  * WC requires at least: 2.5
  * WC tested up to: 3.6
@@ -68,8 +68,8 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		 * Main Carousel_Slider Instance
 		 * Ensures only one instance of the class is loaded or can be loaded.
 		 *
-		 * @since 1.6.0
 		 * @return Carousel_Slider - Main instance
+		 * @since 1.6.0
 		 */
 		public static function instance() {
 			if ( is_null( self::$instance ) ) {
@@ -114,8 +114,8 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		/**
 		 * Define constant if not already set.
 		 *
-		 * @param  string $name
-		 * @param  string|bool $value
+		 * @param string $name
+		 * @param string|bool $value
 		 */
 		private function define( $name, $value ) {
 			if ( ! defined( $name ) ) {
@@ -136,6 +136,8 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 			require_once CAROUSEL_SLIDER_WIDGETS . '/widget-carousel_slider.php';
 
 			if ( $this->is_request( 'admin' ) ) {
+				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-setting-api.php';
+				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-setting.php';
 				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-credit.php';
 				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-documentation.php';
 				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-vc-element.php';
@@ -220,7 +222,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		/**
 		 * What type of request is this?
 		 *
-		 * @param  string $type admin, ajax, cron or frontend.
+		 * @param string $type admin, ajax, cron or frontend.
 		 *
 		 * @return bool
 		 */
