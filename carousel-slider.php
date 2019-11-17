@@ -10,7 +10,7 @@
  * Tested up to: 5.3
  *
  * WC requires at least: 2.5
- * WC tested up to: 3.6
+ * WC tested up to: 3.8
  *
  * Text Domain: carousel-slider
  *

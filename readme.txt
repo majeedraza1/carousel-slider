@@ -86,7 +86,9 @@ If you still need help. visit [WordPress codex](https://codex.wordpress.org/Mana
 
 == Changelog ==
 
-= version 1.9.3 - 2019-11-08 =
+= version 1.9.3 - 2019-11-17 =
+* Tweak - Checked version compatibility with WooCommerce 3.8.*
+* Tweak - Checked version compatibility with WordPress 5.3.*
 * Add - Add settings to enable/disable loading scrips and styles to all pages.
 * Tweak - Rename "WPBakery Visual Composer" to "Visual Composer Website Builder"
 
