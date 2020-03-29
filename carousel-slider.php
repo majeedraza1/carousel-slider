@@ -7,10 +7,10 @@
  * Author: Sayful Islam
  * Author URI: https://sayfulislam.com
  * Requires at least: 4.8
- * Tested up to: 5.3
+ * Tested up to: 5.4
  *
- * WC requires at least: 2.5
- * WC tested up to: 3.8
+ * WC requires at least: 3.0
+ * WC tested up to: 4.0
  *
  * Text Domain: carousel-slider
  *
