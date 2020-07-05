@@ -274,7 +274,7 @@ if ( ! class_exists( 'Carousel_Slider_Meta_Box' ) ):
 			$_autoplay         = get_post_meta( $post->ID, '_autoplay', true );
 			$_autoplay         = in_array( $_autoplay, array( 'on', 'off' ) ) ? $_autoplay : 'on';
 			$_autoplay_pause   = get_post_meta( $post->ID, '_autoplay_pause', true );
-			$_autoplay_pause   = in_array( $_autoplay_pause, array( 'on', 'off' ) ) ? $_autoplay : 'off';
+			$_autoplay_pause   = in_array( $_autoplay_pause, array( 'on', 'off' ) ) ? $_autoplay_pause : 'off';
 			$_autoplay_timeout = get_post_meta( $post->ID, '_autoplay_timeout', true );
 			$_autoplay_timeout = $_autoplay_timeout ? absint( $_autoplay_timeout ) : 5000;
 			$_autoplay_speed   = get_post_meta( $post->ID, '_autoplay_speed', true );
