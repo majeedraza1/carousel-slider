@@ -19,7 +19,7 @@ $_show_lightbox           = get_post_meta( $id, '_image_lightbox', true );
 ?>
 <div class="carousel-slider-outer carousel-slider-outer-images carousel-slider-outer-<?php echo $id; ?>">
 	<?php carousel_slider_inline_style( $id ); ?>
-    <div <?php echo join( " ", $this->carousel_options( $id ) ); ?>>
+	<div <?php echo join( " ", $this->carousel_options( $id ) ); ?>>
 		<?php
 		foreach ( $images_ids as $image_id ):
 
@@ -34,8 +34,8 @@ $_show_lightbox           = get_post_meta( $id, '_image_lightbox', true );
 
 			echo '<div class="carousel-slider__item">';
 
-			$title   = sprintf( '<h4 class="title">%1$s</h4>', $image_title );
-			$caption = sprintf( '<p class="caption">%1$s</p>', $image_caption );
+			$title   = sprintf( '<h4 class="title">%1$s</h4>', esc_html( $image_title ) );
+			$caption = sprintf( '<p class="caption">%1$s</p>', esc_html( $image_caption ) );
 
 			if ( $_show_attachment_title == 'on' && $_show_attachment_caption == 'on' ) {
 
@@ -85,5 +85,5 @@ $_show_lightbox           = get_post_meta( $id, '_image_lightbox', true );
 
 		endforeach;
 		?>
-    </div><!-- #id-## -->
+	</div><!-- #id-## -->
 </div>
