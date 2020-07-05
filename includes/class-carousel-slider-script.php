@@ -86,7 +86,7 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ) {
 					'in_footer'  => true,
 				),
 				'carousel-slider-admin' => array(
-					'src'        => CAROUSEL_SLIDER_ASSETS . '/js/admin' . $suffix . '.js',
+					'src'        => CAROUSEL_SLIDER_ASSETS . '/js/admin.js',
 					'dependency' => array(
 						'jquery',
 						'select2',

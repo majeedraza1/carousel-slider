@@ -4,7 +4,7 @@ Tags: woocommerce, shortcode, images, carousel, carousel slider, image carousel,
 Requires at least: 4.8
 Tested up to: 5.4
 Requires PHP: 5.6
-Stable tag: 1.9.3
+Stable tag: 1.9.4
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -85,6 +85,13 @@ If you still need help. visit [WordPress codex](https://codex.wordpress.org/Mana
 7. Front-end example of image lightbox.
 
 == Changelog ==
+
+= version 1.9.4 - 2020-07-05 =
+* Fix - in settings "Pause On Hover" looses it's value.
+* Fix - Carousel Displaying code from Divi Builder on post thumbnails.
+* Fix - Bug Store XSS with profile image.
+* Tweak - Checked version compatibility with WooCommerce 4.2.*
+* Dev - Replace module bundler from gulp to webpack.
 
 = version 1.9.3 - 2019-11-17 =
 * Tweak - Checked version compatibility with WooCommerce 3.8.*
