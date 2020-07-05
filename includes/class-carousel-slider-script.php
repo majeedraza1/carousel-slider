@@ -42,7 +42,7 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ) {
 		public function register_styles() {
 			$styles = array(
 				'carousel-slider'       => array(
-					'src'        => CAROUSEL_SLIDER_ASSETS . '/css/style.css',
+					'src'        => CAROUSEL_SLIDER_ASSETS . '/css/frontend.css',
 					'dependency' => array(),
 					'version'    => CAROUSEL_SLIDER_VERSION,
 					'media'      => 'all',
@@ -113,7 +113,7 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ) {
 					'in_footer'  => true,
 				),
 				'carousel-slider'       => array(
-					'src'        => CAROUSEL_SLIDER_ASSETS . '/js/script' . $suffix . '.js',
+					'src'        => CAROUSEL_SLIDER_ASSETS . '/js/frontend.js',
 					'dependency' => array( 'jquery', 'owl-carousel', 'magnific-popup' ),
 					'version'    => CAROUSEL_SLIDER_VERSION,
 					'in_footer'  => true,

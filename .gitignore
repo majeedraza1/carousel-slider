@@ -3,6 +3,8 @@
 .idea/
 .sass-cache/
 node_modules/
+assets/css
+assets/js
 
 # Files
 **.map
