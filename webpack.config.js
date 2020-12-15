@@ -3,135 +3,159 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const TerserPlugin = require('terser-webpack-plugin');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
-const autoprefixer = require('autoprefixer');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
+const svgToMiniDataURI = require('mini-svg-data-uri');
 
 const config = require('./config.json');
 
-let plugins = [];
-let entryPoints = {
-    frontend: [
-        "./assets/src/scss/frontend.scss",
-        "./assets/src/frontend/main.js",
-    ],
-    admin: [
-        "./assets/src/scss/admin.scss",
-        "./assets/src/admin/accordion.js",
-        "./assets/src/admin/hero-banner.js",
-        "./assets/src/admin/media-gallery.js",
-        "./assets/src/admin/media-url.js",
-        "./assets/src/admin/modal.js",
-        "./assets/src/admin/slide-type.js",
-        "./assets/src/admin/vendors.js",
-    ],
-    'gutenberg-block': [
-        "./assets/src/scss/gutenberg-block.scss",
-        "./assets/src/gutenberg-block/main.js",
-    ],
-};
-
-plugins.push(new MiniCssExtractPlugin({
-    filename: "../css/[name].css"
-}));
-
-plugins.push(new BrowserSyncPlugin({
-    proxy: config.proxyURL
-}));
-
-plugins.push(new VueLoaderPlugin());
-
 module.exports = (env, argv) => {
-    let isDev = argv.mode !== 'production';
+	let isDev = argv.mode !== 'production';
 
-    return {
-        "entry": entryPoints,
-        "output": {
-            "path": path.resolve(__dirname, 'assets/js'),
-            "filename": '[name].js'
-        },
-        "devtool": isDev ? 'eval-source-map' : false,
-        "module": {
-            "rules": [
-                {
-                    "test": /\.js$/,
-                    "use": {
-                        "loader": "babel-loader",
-                        "options": {
-                            presets: ['@babel/preset-env']
-                        }
-                    }
-                },
-                {
-                    test: /\.vue$/,
-                    use: [
-                        {loader: 'vue-loader'}
-                    ]
-                },
-                {
-                    test: /\.(sass|scss|css)$/,
-                    use: [
-                        {
-                            loader: isDev ? "vue-style-loader" : MiniCssExtractPlugin.loader
-                        },
-                        {
-                            loader: "css-loader",
-                            options: {
-                                sourceMap: isDev,
-                                importLoaders: 1
-                            }
-                        },
-                        {
-                            loader: "postcss-loader",
-                            options: {
-                                sourceMap: isDev,
-                                plugins: () => [autoprefixer()],
-                            },
-                        },
-                        {
-                            loader: "sass-loader",
-                            options: {
-                                sourceMap: isDev,
-                            },
-                        }
-                    ]
-                },
-                {
-                    test: /\.(eot|ttf|woff|woff2)$/,
-                    use: [
-                        {loader: 'file-loader'},
-                    ],
-                },
-                {
-                    test: /\.(png|je?pg|gif|svg)$/i,
-                    use: [
-                        {
-                            loader: 'url-loader',
-                            options: {
-                                limit: 8192,
-                            },
-                        },
-                    ],
-                },
-            ]
-        },
-        optimization: {
-            minimizer: [
-                new TerserPlugin(),
-                new OptimizeCSSAssetsPlugin()
-            ]
-        },
-        resolve: {
-            alias: {
-                'vue$': 'vue/dist/vue.esm.js',
-                '@': path.resolve('./assets/src/'),
-            },
-            modules: [
-                path.resolve('./node_modules'),
-                path.resolve(path.join(__dirname, 'assets/src/')),
-                path.resolve(path.join(__dirname, 'assets/src/shapla')),
-            ],
-            extensions: ['*', '.js', '.vue', '.json']
-        },
-        "plugins": plugins
-    }
+	let plugins = [];
+
+	plugins.push(new MiniCssExtractPlugin({
+		filename: "../css/[name].css"
+	}));
+
+	plugins.push(new BrowserSyncPlugin({
+		proxy: config.proxyURL
+	}));
+
+	plugins.push(new VueLoaderPlugin());
+
+	const webpackConfig = {
+		entry: config.entryPoints,
+		output: {
+			path: path.resolve(__dirname, 'assets/js'),
+			filename: '[name].js'
+		},
+		devtool: isDev ? 'eval-source-map' : false,
+		module: {
+			rules: [
+				{
+					test: /\.(js|jsx)$/i,
+					use: {
+						loader: "babel-loader",
+						options: {
+							presets: [
+								'@babel/preset-env',
+								'@babel/preset-react'
+							],
+							plugins: [
+								['@babel/plugin-proposal-class-properties', {'loose': true}],
+								['@babel/plugin-proposal-private-methods', {'loose': true}],
+								['@babel/plugin-proposal-object-rest-spread', {'loose': true}],
+							]
+						}
+					}
+				},
+				{
+					test: /\.vue$/i,
+					use: [
+						{loader: 'vue-loader'}
+					]
+				},
+				{
+					test: /\.(sass|scss|css)$/i,
+					use: [
+						{
+							loader: isDev ? "style-loader" : MiniCssExtractPlugin.loader
+						},
+						{
+							loader: "css-loader",
+							options: {
+								sourceMap: isDev,
+								importLoaders: 1
+							}
+						},
+						{
+							loader: "postcss-loader",
+							options: {
+								sourceMap: isDev,
+								postcssOptions: {
+									plugins: [
+										['postcss-preset-env'],
+									],
+								},
+							},
+						},
+						{
+							loader: "sass-loader",
+							options: {
+								sourceMap: isDev,
+							},
+						}
+					]
+				},
+				{
+					test: /\.(eot|ttf|woff|woff2)$/i,
+					use: [
+						{
+							loader: 'file-loader',
+							options: {
+								outputPath: '../fonts',
+							},
+						},
+					],
+				},
+				{
+					test: /\.(png|je?pg|gif)$/i,
+					use: [
+						{
+							loader: 'url-loader',
+							options: {
+								limit: 8192, // 8KB
+								outputPath: '../images',
+							},
+						},
+					],
+				},
+				{
+					test: /\.svg$/i,
+					use: [
+						{
+							loader: 'url-loader',
+							options: {
+								limit: 10240, // 10KB
+								outputPath: '../images',
+								generator: (content) => svgToMiniDataURI(content.toString()),
+							},
+						},
+					],
+				}
+			]
+		},
+		optimization: {
+			minimizer: [
+				new TerserPlugin(),
+				new OptimizeCSSAssetsPlugin()
+			]
+		},
+		resolve: {
+			alias: {
+				'vue$': 'vue/dist/vue.esm.js',
+				'@': path.resolve('./assets/src/'),
+			},
+			modules: [
+				path.resolve('./node_modules'),
+				path.resolve(path.join(__dirname, 'assets/src/')),
+				path.resolve(path.join(__dirname, 'assets/src/shapla')),
+			],
+			extensions: ['*', '.js', '.vue', '.json']
+		},
+		plugins: plugins
+	}
+
+	if (!isDev) {
+		// `jQuery`, `React`, `ReactDOM` will be loaded from WordPress
+		webpackConfig.externals = {
+			jquery: {commonjs: 'jquery', commonjs2: 'jquery', amd: 'jquery', umd: 'jquery', root: 'jQuery'},
+			react: {commonjs: 'react', commonjs2: 'react', amd: 'react', umd: 'react', root: 'React'},
+			'react-dom': {
+				commonjs: 'react-dom', commonjs2: 'react-dom', amd: 'react-dom', umd: 'react-dom', root: 'ReactDOM',
+			},
+		}
+	}
+
+	return webpackConfig;
 };

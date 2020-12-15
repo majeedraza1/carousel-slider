@@ -44,7 +44,7 @@ if ( ! class_exists( 'Carousel_Slider_Visual_Composer_Element' ) ) {
 				"description" => __( "Place Carousel Slider.", 'carousel-slider' ),
 				"base"        => "carousel_slide",
 				"controls"    => "full",
-				"icon"        => CAROUSEL_SLIDER_ASSETS . '/img/logo.svg',
+				"icon"        => CAROUSEL_SLIDER_ASSETS . '/static-images/logo.svg',
 				"category"    => __( 'Content', 'carousel-slider' ),
 				"params"      => array(
 					array(

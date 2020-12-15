@@ -1,11 +1,12 @@
 # Folders
 .git/
 .idea/
-.sass-cache/
 node_modules/
+vendor/*
 assets/css
 assets/js
 
 # Files
 **.map
 package-lock.json
+composer.lock

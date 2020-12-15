@@ -1,2 +1,1 @@
-<?php
-// Code is Poetry
+<?php // Code is Poetry

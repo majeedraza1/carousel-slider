@@ -77,7 +77,7 @@ if ( ! class_exists( 'Carousel_Slider_Gutenberg_Block' ) ) {
 			return array(
 				'sliders'         => $sliders,
 				'site_url'        => site_url(),
-				'block_logo'      => CAROUSEL_SLIDER_ASSETS . '/img/logo.svg',
+				'block_logo'      => CAROUSEL_SLIDER_ASSETS . '/static-images/logo.svg',
 				'block_title'     => __( 'Carousel Slider', 'carousel-slider' ),
 				'select_slider'   => __( 'Select a Slider', 'carousel-slider' ),
 				'selected_slider' => __( 'Current Selected Slider', 'carousel-slider' ),
