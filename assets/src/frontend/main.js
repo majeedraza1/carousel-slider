@@ -1,7 +1,5 @@
-import $ from "jquery";
-
-$('body').find('.carousel-slider').each(function () {
-	let _this = $(this);
+jQuery('body').find('.carousel-slider').each(function () {
+	let _this = jQuery(this);
 	let autoWidth = _this.data('auto-width');
 	let stagePadding = parseInt(_this.data('stage-padding'));
 	stagePadding = stagePadding > 0 ? stagePadding : 0;
@@ -43,7 +41,7 @@ $('body').find('.carousel-slider').each(function () {
 				});
 				_this.on('changed.owl.carousel', function (e) {
 					setTimeout(function () {
-						let current = $(e.target).find('.carousel-slider-hero__cell__content').eq(e.item.index);
+						let current = jQuery(e.target).find('.carousel-slider-hero__cell__content').eq(e.item.index);
 						current.show().addClass('animated' + ' ' + animation);
 					}, _this.data('autoplay-speed'));
 				});
@@ -53,15 +51,15 @@ $('body').find('.carousel-slider').each(function () {
 
 	if (jQuery().magnificPopup) {
 		if (_this.data('slide-type') === 'product-carousel') {
-			$(this).find('.magnific-popup').magnificPopup({
+			jQuery(this).find('.magnific-popup').magnificPopup({
 				type: 'ajax'
 			});
 		} else if ('video-carousel' === _this.data('slide-type')) {
-			$(this).find('.magnific-popup').magnificPopup({
+			jQuery(this).find('.magnific-popup').magnificPopup({
 				type: 'iframe'
 			});
 		} else {
-			$(this).find('.magnific-popup').magnificPopup({
+			jQuery(this).find('.magnific-popup').magnificPopup({
 				type: 'image',
 				gallery: {
 					enabled: true
