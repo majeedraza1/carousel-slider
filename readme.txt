@@ -2,9 +2,9 @@
 Contributors: sayful, stackonet, majeedraza
 Tags: woocommerce, shortcode, images, carousel, carousel slider, image carousel, product carousel, slider, owl carousel
 Requires at least: 4.8
-Tested up to: 5.5
+Tested up to: 5.6
 Requires PHP: 5.6
-Stable tag: 1.9.4
+Stable tag: 1.9.5
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -85,6 +85,10 @@ If you still need help. visit [WordPress codex](https://codex.wordpress.org/Mana
 7. Front-end example of image lightbox.
 
 == Changelog ==
+
+= version 1.9.5 - 2020-12-19 =
+* Dev - Update javaScript dependencies to latest version.
+* Dev - Tested with WordPress 5.6 and WooCommerce 4.8
 
 = version 1.9.4 - 2020-07-05 =
 * Fix - in settings "Pause On Hover" looses it's value.
