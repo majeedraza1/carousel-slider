@@ -73,12 +73,6 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ) {
 					'version'    => '4.0.5',
 					'in_footer'  => true,
 				),
-				'jquery-tiptip'         => array(
-					'src'        => CAROUSEL_SLIDER_ASSETS . '/lib/jquery-tiptip/jquery.tipTip' . $suffix . '.js',
-					'dependency' => array( 'jquery' ),
-					'version'    => '1.3',
-					'in_footer'  => true,
-				),
 				'wp-color-picker-alpha' => array(
 					'src'        => CAROUSEL_SLIDER_ASSETS . '/lib/wp-color-picker-alpha/wp-color-picker-alpha' . $suffix . '.js',
 					'dependency' => array( 'jquery', 'wp-color-picker' ),
@@ -95,7 +89,6 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ) {
 						'jquery-ui-datepicker',
 						'jquery-ui-sortable',
 						'jquery-ui-tabs',
-						'jquery-tiptip',
 					),
 					'version'    => CAROUSEL_SLIDER_VERSION,
 					'in_footer'  => true,
@@ -169,35 +162,35 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ) {
 				return;
 			}
 			?>
-            <template id="carouselSliderGalleryUrlTemplate" style="display: none;">
-                <div class="carousel_slider-fields">
-                    <label class="setting">
-                        <span class="name"><?php esc_html_e( 'URL', 'carousel-slider' ); ?></span>
-                        <input type="url" name="_images_urls[url][]" value="" autocomplete="off">
-                    </label>
-                    <label class="setting">
-                        <span class="name"><?php esc_html_e( 'Title', 'carousel-slider' ); ?></span>
-                        <input type="text" name="_images_urls[title][]" value="" autocomplete="off">
-                    </label>
-                    <label class="setting">
-                        <span class="name"><?php esc_html_e( 'Caption', 'carousel-slider' ); ?></span>
-                        <textarea name="_images_urls[caption][]"></textarea>
-                    </label>
-                    <label class="setting">
-                        <span class="name"><?php esc_html_e( 'Alt Text', 'carousel-slider' ); ?></span>
-                        <input type="text" name="_images_urls[alt][]" value="" autocomplete="off">
-                    </label>
-                    <label class="setting">
-                        <span class="name"><?php esc_html_e( 'Link To URL', 'carousel-slider' ); ?></span>
-                        <input type="text" name="_images_urls[link_url][]" value="" autocomplete="off">
-                    </label>
-                    <div class="actions">
-                        <span><span class="dashicons dashicons-move"></span></span>
-                        <span class="add_row"><span class="dashicons dashicons-plus-alt"></span></span>
-                        <span class="delete_row"><span class="dashicons dashicons-trash"></span></span>
-                    </div>
-                </div>
-            </template>
+			<template id="carouselSliderGalleryUrlTemplate" style="display: none;">
+				<div class="carousel_slider-fields">
+					<label class="setting">
+						<span class="name"><?php esc_html_e( 'URL', 'carousel-slider' ); ?></span>
+						<input type="url" name="_images_urls[url][]" value="" autocomplete="off">
+					</label>
+					<label class="setting">
+						<span class="name"><?php esc_html_e( 'Title', 'carousel-slider' ); ?></span>
+						<input type="text" name="_images_urls[title][]" value="" autocomplete="off">
+					</label>
+					<label class="setting">
+						<span class="name"><?php esc_html_e( 'Caption', 'carousel-slider' ); ?></span>
+						<textarea name="_images_urls[caption][]"></textarea>
+					</label>
+					<label class="setting">
+						<span class="name"><?php esc_html_e( 'Alt Text', 'carousel-slider' ); ?></span>
+						<input type="text" name="_images_urls[alt][]" value="" autocomplete="off">
+					</label>
+					<label class="setting">
+						<span class="name"><?php esc_html_e( 'Link To URL', 'carousel-slider' ); ?></span>
+						<input type="text" name="_images_urls[link_url][]" value="" autocomplete="off">
+					</label>
+					<div class="actions">
+						<span><span class="dashicons dashicons-move"></span></span>
+						<span class="add_row"><span class="dashicons dashicons-plus-alt"></span></span>
+						<span class="delete_row"><span class="dashicons dashicons-trash"></span></span>
+					</div>
+				</div>
+			</template>
 			<?php
 		}
 
@@ -215,8 +208,8 @@ if ( ! class_exists( 'Carousel_Slider_Script' ) ) {
 
 			global $post;
 			$load_scripts = is_active_widget( false, false, 'widget_carousel_slider', true ) ||
-			                ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'carousel_slide' ) ) ||
-			                ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'carousel' ) );
+							( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'carousel_slide' ) ) ||
+							( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'carousel' ) );
 
 			return apply_filters( 'carousel_slider_load_scripts', $load_scripts );
 		}

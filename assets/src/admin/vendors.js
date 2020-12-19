@@ -3,7 +3,7 @@
 
     // Initializing TipTip
     $(".cs-tooltip").each(function () {
-        $(this).tipTip();
+        // $(this).tipTip();
     });
 
     // Initializing Select2

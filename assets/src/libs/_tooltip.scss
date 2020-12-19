@@ -1,0 +1,74 @@
+$tooltip-text-color: rgb(255, 255, 255) !default;
+$tooltip-background-color: rgba(25, 25, 25, 0.92) !default;
+$tooltip-font-size: 12px !default;
+$tooltip-font-size-large: 16px !default;
+$tooltip-z-index: 9999 !default;
+$animation-curve-linear-out-slow-in: cubic-bezier(0, 0, 0.2, 1) !default;
+
+.shapla-tooltip {
+	transform: scale(0);
+	transform-origin: top center;
+	z-index: $tooltip-z-index;
+	background-color: $tooltip-background-color;
+	background-image: linear-gradient(to bottom, transparent, #000);
+	border: 1px solid rgba(#fff, 0.25);
+	border-radius: 2px;
+	box-shadow: 0 0 3px #555;
+	color: $tooltip-text-color;
+	display: inline-block;
+	font-size: $tooltip-font-size;
+	font-weight: 500;
+	line-height: 14px;
+	max-width: 170px;
+	position: fixed;
+	top: -500px;
+	left: -500px;
+	padding: 8px;
+	text-align: center;
+
+	&.is-active {
+		animation: pulse 200ms $animation-curve-linear-out-slow-in forwards;
+	}
+
+	&--large {
+		line-height: 14px;
+		font-size: $tooltip-font-size-large;
+		padding: 16px;
+	}
+}
+
+@keyframes pulse {
+	0% {
+		transform: scale(0);
+		opacity: 0;
+	}
+	50% {
+		transform: scale(0.99);
+	}
+	100% {
+		transform: scale(1);
+		opacity: 1;
+		visibility: visible;
+	}
+}
+
+[data-tooltip-target] {
+	display: inline-block;
+	float: right;
+	height: 1.5em;
+	position: relative;
+	width: 1.5em;
+
+	&::after {
+		font-family: Dashicons;
+		speak: none;
+		font-weight: 400;
+		text-transform: none;
+		-webkit-font-smoothing: antialiased;
+		width: 100%;
+		height: 100%;
+		text-align: center;
+		content: "\f223";
+		cursor: help;
+	}
+}
