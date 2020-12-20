@@ -1,33 +1,44 @@
-$tooltip-text-color: rgb(255, 255, 255) !default;
-$tooltip-background-color: rgba(25, 25, 25, 0.92) !default;
+$tooltip-text-color: #ffffff !default;
+$tooltip-background-color: rgba(#000000, 0.92) !default;
 $tooltip-font-size: 12px !default;
 $tooltip-font-size-large: 16px !default;
 $tooltip-z-index: 9999 !default;
 $animation-curve-linear-out-slow-in: cubic-bezier(0, 0, 0.2, 1) !default;
 
+@mixin shadow-3dp() {
+	box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.2), 0 1px 8px 0 rgba(0, 0, 0, 0.12);
+}
+
 .shapla-tooltip {
 	transform: scale(0);
 	transform-origin: top center;
 	z-index: $tooltip-z-index;
-	background-color: $tooltip-background-color;
-	background-image: linear-gradient(to bottom, transparent, #000);
-	border: 1px solid rgba(#fff, 0.25);
 	border-radius: 2px;
-	box-shadow: 0 0 3px #555;
-	color: $tooltip-text-color;
 	display: inline-block;
 	font-size: $tooltip-font-size;
-	font-weight: 500;
-	line-height: 14px;
+	font-weight: normal;
+	line-height: 1.2;
 	max-width: 170px;
 	position: fixed;
 	top: -500px;
 	left: -500px;
 	padding: 8px;
 	text-align: center;
+	@include shadow-3dp();
+
+	// Dark theme
+	background-color: rgba(#000, 0.92);
+	background-image: linear-gradient(to bottom, transparent, #000);
+	color: #ffffff;
+
+	&.is-light-theme {
+		background-color: rgba(#f5f5f5, 0.92);
+		background-image: linear-gradient(to bottom, transparent, #f5f5f5);
+		color: #323232;
+	}
 
 	&.is-active {
-		animation: pulse 200ms $animation-curve-linear-out-slow-in forwards;
+		animation: shapla-tooltip-pulse 200ms $animation-curve-linear-out-slow-in forwards;
 	}
 
 	&--large {
@@ -37,7 +48,7 @@ $animation-curve-linear-out-slow-in: cubic-bezier(0, 0, 0.2, 1) !default;
 	}
 }
 
-@keyframes pulse {
+@keyframes shapla-tooltip-pulse {
 	0% {
 		transform: scale(0);
 		opacity: 0;

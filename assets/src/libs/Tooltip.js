@@ -87,6 +87,7 @@ class Tooltip {
 			let cElement = document.createElement("div");
 			cElement.classList.add(this.cssClasses.MAIN);
 			cElement.setAttribute('data-tooltip-for', uuid);
+			cElement.setAttribute('role', 'tooltip');
 			cElement.innerText = content;
 			document.body.appendChild(cElement);
 
