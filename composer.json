@@ -1,0 +1,26 @@
+{
+  "name": "sayful1/carousel-slider",
+  "description": "Create SEO friendly Image, Logo, Video, Post, WooCommerce Product Carousel and Slider.",
+  "type": "wordpress-plugin",
+  "license": "GPL-2.0-or-later",
+  "homepage": "https://wordpress.org/plugins/carousel-slider",
+  "authors": [
+    {
+      "name": "Sayful Islam",
+      "email": "sayful.islam001@gmail.com",
+      "homepage": "https://sayfulislam.com",
+      "role": "Developer"
+    }
+  ],
+  "minimum-stability": "stable",
+  "autoload": {
+    "psr-4": {
+      "CarouselSlider\\": "classes",
+      "CarouselSlider\\Modules\\": "modules"
+    }
+  },
+  "require": {
+    "php": ">=7.0",
+    "ext-json": "*"
+  }
+}

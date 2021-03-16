@@ -52,6 +52,51 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ) {
 			// Add custom link to media gallery
 			add_filter( "attachment_fields_to_edit", array( $this, "attachment_fields_to_edit" ), null, 2 );
 			add_filter( "attachment_fields_to_save", array( $this, "attachment_fields_to_save" ), null, 2 );
+
+			add_action( 'admin_footer', array( $this, 'gallery_url_template' ), 5 );
+		}
+
+		/**
+		 * Carousel slider gallery url template
+		 *
+		 * @return void
+		 */
+		public function gallery_url_template() {
+			global $post_type;
+			if ( $post_type != 'carousels' ) {
+				return;
+			}
+			?>
+			<template id="carouselSliderGalleryUrlTemplate" style="display: none;">
+				<div class="carousel_slider-fields">
+					<label class="setting">
+						<span class="name"><?php esc_html_e( 'URL', 'carousel-slider' ); ?></span>
+						<input type="url" name="_images_urls[url][]" value="" autocomplete="off">
+					</label>
+					<label class="setting">
+						<span class="name"><?php esc_html_e( 'Title', 'carousel-slider' ); ?></span>
+						<input type="text" name="_images_urls[title][]" value="" autocomplete="off">
+					</label>
+					<label class="setting">
+						<span class="name"><?php esc_html_e( 'Caption', 'carousel-slider' ); ?></span>
+						<textarea name="_images_urls[caption][]"></textarea>
+					</label>
+					<label class="setting">
+						<span class="name"><?php esc_html_e( 'Alt Text', 'carousel-slider' ); ?></span>
+						<input type="text" name="_images_urls[alt][]" value="" autocomplete="off">
+					</label>
+					<label class="setting">
+						<span class="name"><?php esc_html_e( 'Link To URL', 'carousel-slider' ); ?></span>
+						<input type="text" name="_images_urls[link_url][]" value="" autocomplete="off">
+					</label>
+					<div class="actions">
+						<span><span class="dashicons dashicons-move"></span></span>
+						<span class="add_row"><span class="dashicons dashicons-plus-alt"></span></span>
+						<span class="delete_row"><span class="dashicons dashicons-trash"></span></span>
+					</div>
+				</div>
+			</template>
+			<?php
 		}
 
 		/**
@@ -152,17 +197,17 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ) {
 
 				case 'usage':
 					?>
-                    <label class="screen-reader-text" for="carousel_slider_usage_<?php echo $post_id; ?>">Copy
-                        shortcode</label>
-                    <input
-                            id="carousel_slider_usage_<?php echo $post_id; ?>"
-                            type="text"
-                            onmousedown="this.clicked = 1;"
-                            onfocus="if (!this.clicked) this.select(); else this.clicked = 2;"
-                            onclick="if (this.clicked === 2) this.select(); this.clicked = 0;"
-                            value="[carousel_slide id='<?php echo $post_id; ?>']"
-                            style="background-color: #f1f1f1;min-width: 250px;padding: 5px 8px;"
-                    >
+					<label class="screen-reader-text" for="carousel_slider_usage_<?php echo $post_id; ?>">Copy
+						shortcode</label>
+					<input
+						id="carousel_slider_usage_<?php echo $post_id; ?>"
+						type="text"
+						onmousedown="this.clicked = 1;"
+						onfocus="if (!this.clicked) this.select(); else this.clicked = 2;"
+						onclick="if (this.clicked === 2) this.select(); this.clicked = 0;"
+						value="[carousel_slide id='<?php echo $post_id; ?>']"
+						style="background-color: #f1f1f1;min-width: 250px;padding: 5px 8px;"
+					>
 					<?php
 					break;
 
@@ -214,7 +259,7 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ) {
 		/**
 		 * Save custom meta box
 		 *
-		 * @param  int $post_id The post ID
+		 * @param int $post_id The post ID
 		 */
 		public function save_meta_box( $post_id ) {
 			if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
@@ -305,7 +350,7 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ) {
 		/**
 		 * Save images urls
 		 *
-		 * @param  integer $post_id
+		 * @param integer $post_id
 		 *
 		 * @return void
 		 */

@@ -31,7 +31,7 @@ if ( ! class_exists( 'Carousel_Slider_Activator' ) ) {
 			if ( is_null( self::$instance ) ) {
 				self::$instance = new self();
 
-				add_action( 'carousel_slider_activation', array( self::$instance, 'activate' ) );
+				add_action( 'carousel_slider/activation', array( self::$instance, 'activate' ) );
 			}
 
 			return self::$instance;

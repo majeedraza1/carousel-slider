@@ -1,10 +1,66 @@
 <?php
-// If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-	die;
-}
 
-class Carousel_Slider_Widget extends WP_Widget {
+namespace CarouselSlider\Widget;
+
+use WP_Widget;
+
+defined( 'ABSPATH' ) || exit;
+
+class CarouselSliderWidget extends WP_Widget {
+
+	/**
+	 * The instance of the class
+	 *
+	 * @var self
+	 */
+	protected static $instance;
+
+	/**
+	 * Ensures only one instance of the class is loaded or can be loaded.
+	 *
+	 * @return self
+	 */
+	public static function init() {
+		if ( is_null( self::$instance ) ) {
+			self::$instance = new self();
+
+			add_action( 'widgets_init', [ self::$instance, 'register' ] );
+		}
+
+		return self::$instance;
+	}
+
+	/**
+	 * Register current class as widget
+	 */
+	public static function register() {
+		register_widget( __CLASS__ );
+	}
+
+	/**
+	 * Get the list of carousel sliders
+	 *
+	 * @return array
+	 */
+	private static function carousels_list(): array {
+		$posts = get_posts( [
+			'post_type'      => 'carousels',
+			'post_status'    => 'publish',
+			'posts_per_page' => 100,
+			'orderby'        => 'date',
+			'order'          => 'DESC',
+		] );
+
+		$items = [];
+
+		if ( count( $posts ) ) {
+			foreach ( $posts as $post ) {
+				$items[] = [ 'id' => $post->ID, 'title' => $post->post_title ];
+			}
+		}
+
+		return $items;
+	}
 
 	/**
 	 * Sets up the widgets name etc
@@ -25,8 +81,7 @@ class Carousel_Slider_Widget extends WP_Widget {
 	 * @param array $instance The settings for the particular instance of the widget.
 	 */
 	public function widget( $args, $instance ) {
-
-		$title       = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : null;
+		$title       = isset( $instance['title'] ) ? esc_html( $instance['title'] ) : null;
 		$carousel_id = isset( $instance['carousel_id'] ) ? absint( $instance['carousel_id'] ) : 0;
 
 		if ( ! $carousel_id ) {
@@ -51,7 +106,7 @@ class Carousel_Slider_Widget extends WP_Widget {
 	 * @return void
 	 */
 	public function form( $instance ) {
-		$carousels   = $this->carousels_list();
+		$carousels   = static::carousels_list();
 		$carousel_id = ! empty( $instance['carousel_id'] ) ? absint( $instance['carousel_id'] ) : null;
 		$title       = ! empty( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
 
@@ -63,11 +118,11 @@ class Carousel_Slider_Widget extends WP_Widget {
 			printf( '<p><label>%s</label>', __( 'Choose Slide', 'carousel-slider' ) );
 			printf( '<select class="widefat" name="%s">', $this->get_field_name( 'carousel_id' ) );
 			foreach ( $carousels as $carousel ) {
-				$selected = $carousel->id == $carousel_id ? 'selected="selected"' : '';
+				$selected = $carousel['id'] == $carousel_id ? 'selected="selected"' : '';
 				printf(
 					'<option value="%1$d" %3$s>%2$s</option>',
-					$carousel->id,
-					$carousel->title,
+					absint( $carousel['id'] ),
+					esc_html( $carousel['title'] ),
 					$selected
 				);
 			}
@@ -80,32 +135,6 @@ class Carousel_Slider_Widget extends WP_Widget {
 				__( 'click here', 'carousel-slider' )
 			);
 		}
-	}
-
-	/**
-	 * Get the list of carousel sliders
-	 *
-	 * @return array
-	 */
-	private function carousels_list() {
-		$carousels = get_posts( array(
-			'post_type'      => 'carousels',
-			'post_status'    => 'publish',
-			'posts_per_page' => - 1,
-			'orderby'        => 'date',
-			'order'          => 'DESC',
-		) );
-
-		if ( count( $carousels ) < 1 ) {
-			return array();
-		}
-
-		return array_map( function ( $carousel ) {
-			return (object) array(
-				'id'    => absint( $carousel->ID ),
-				'title' => esc_html( $carousel->post_title ),
-			);
-		}, $carousels );
 	}
 
 	/**
@@ -122,10 +151,4 @@ class Carousel_Slider_Widget extends WP_Widget {
 
 		return $old_instance;
 	}
-
-	public static function register() {
-		register_widget( __CLASS__ );
-	}
 }
-
-add_action( 'widgets_init', array( 'Carousel_Slider_Widget', 'register' ) );

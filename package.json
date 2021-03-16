@@ -66,6 +66,7 @@
     "webpack-cli": "^4.2.0"
   },
   "dependencies": {
-    "jquery": "^3.5.1"
+    "jquery": "^3.5.1",
+    "owl.carousel": "^2.3.4"
   }
 }

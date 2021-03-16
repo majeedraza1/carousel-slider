@@ -3,11 +3,12 @@
  * Plugin Name: Carousel Slider
  * Plugin URI: http://wordpress.org/plugins/carousel-slider
  * Description: <strong>Carousel Slider</strong> allows you to create beautiful, touch enabled, responsive carousels and sliders. It let you create SEO friendly Image carousel from Media Library or from custom URL, Video carousel using Youtube and Vimeo video, Post carousel, Hero banner slider and various types of WooCommerce products carousels.
- * Version: 1.9.5
+ * Version: 1.10.0
  * Author: Sayful Islam
  * Author URI: https://sayfulislam.com
- * Requires at least: 4.8
- * Tested up to: 5.6
+ * Requires PHP: 7.0
+ * Requires at least: 5.2
+ * Tested up to: 5.7
  *
  * WC requires at least: 3.0
  * WC tested up to: 4.8
@@ -48,14 +49,14 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		 *
 		 * @var string
 		 */
-		private $version = '1.9.4';
+		private $version = '1.10.0';
 
 		/**
 		 * Minimum PHP version required
 		 *
 		 * @var string
 		 */
-		private $min_php = '5.6.0';
+		private $min_php = '7.0';
 
 		/**
 		 * The instance of the class
@@ -75,7 +76,11 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 			if ( is_null( self::$instance ) ) {
 				self::$instance = new self();
 
+				// define constants
 				self::$instance->define_constants();
+
+				// Register autoloader
+				self::$instance->register_autoloader();
 
 				// Check if PHP version is supported for our plugin
 				if ( ! self::$instance->is_supported_php() ) {
@@ -84,6 +89,9 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 
 					return self::$instance;
 				}
+
+				// bootstrap main class
+				self::$instance->bootstrap_plugin();
 
 				self::$instance->includes();
 
@@ -100,6 +108,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		 * Define plugin constants
 		 */
 		public function define_constants() {
+			define( 'CAROUSEL_SLIDER', $this->plugin_name );
 			define( 'CAROUSEL_SLIDER_VERSION', $this->version );
 			define( 'CAROUSEL_SLIDER_POST_TYPE', $this->post_type );
 			define( 'CAROUSEL_SLIDER_FILE', __FILE__ );
@@ -112,45 +121,52 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		}
 
 		/**
-		 * Define constant if not already set.
-		 *
-		 * @param string $name
-		 * @param string|bool $value
+		 * Load plugin classes
 		 */
-		private function define( $name, $value ) {
-			if ( ! defined( $name ) ) {
-				define( $name, $value );
+		private function register_autoloader() {
+			if ( file_exists( CAROUSEL_SLIDER_PATH . '/vendor/autoload.php' ) ) {
+				include CAROUSEL_SLIDER_PATH . '/vendor/autoload.php';
+			} else {
+				include_once CAROUSEL_SLIDER_PATH . '/classes/Autoloader.php';
+
+				// instantiate the loader
+				$loader = new CarouselSlider\Autoloader;
+
+				// register the base directories for the namespace prefix
+				$loader->add_namespace( 'CarouselSlider', CAROUSEL_SLIDER_PATH . '/classes' );
+				$loader->add_namespace( 'CarouselSlider\Modules', CAROUSEL_SLIDER_PATH . '/modules' );
+
+				// register the autoloader
+				$loader->register();
 			}
+		}
+
+		/**
+		 * Instantiate the required classes
+		 *
+		 * @return void
+		 */
+		public function bootstrap_plugin() {
+			CarouselSlider\Plugin::init();
 		}
 
 		/**
 		 * Include admin and front facing files
 		 */
 		private function includes() {
-			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-i18n.php';
 			require_once CAROUSEL_SLIDER_INCLUDES . '/functions-carousel-slider.php';
 			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-activator.php';
 			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-product.php';
-			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-script.php';
-			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-preview.php';
-			require_once CAROUSEL_SLIDER_WIDGETS . '/widget-carousel_slider.php';
 
 			if ( $this->is_request( 'admin' ) ) {
-				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-setting-api.php';
-				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-setting.php';
-				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-credit.php';
-				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-documentation.php';
-				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-vc-element.php';
 				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-form.php';
 				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-admin.php';
 				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-meta-box.php';
 				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-hero-carousel.php';
-				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-gutenberg-block.php';
 			}
 
 			require_once CAROUSEL_SLIDER_PATH . '/shortcodes/class-carousel-slider-shortcode.php';
 			require_once CAROUSEL_SLIDER_PATH . '/shortcodes/class-carousel-slider-deprecated-shortcode.php';
-			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-structured-data.php';
 		}
 
 		/**
@@ -158,8 +174,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		 * @return void
 		 */
 		public function activation() {
-			do_action( 'carousel_slider_activation' );
-			flush_rewrite_rules();
+			do_action( 'carousel_slider/activation' );
 		}
 
 		/**
@@ -167,8 +182,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		 * @return void
 		 */
 		public function deactivation() {
-			do_action( 'carousel_slider_deactivation' );
-			flush_rewrite_rules();
+			do_action( 'carousel_slider/deactivation' );
 		}
 
 		/**
@@ -186,9 +200,9 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 			$error .= sprintf( __( 'The Carousel Slider plugin requires PHP version %s or greater.',
 				'carousel-slider' ), $this->min_php );
 			?>
-            <div class="error">
-                <p><?php printf( $error ); ?></p>
-            </div>
+			<div class="error">
+				<p><?php printf( $error ); ?></p>
+			</div>
 			<?php
 		}
 
