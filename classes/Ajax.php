@@ -33,7 +33,7 @@ class Ajax {
 	 */
 	public function test() {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_die( __( 'Sorry. This link only for developer to do some testing.' ) );
+			wp_die( 'Sorry. This link only for developer to do some testing.' );
 		}
 
 		var_dump( 'Testing some data on AJAX' );

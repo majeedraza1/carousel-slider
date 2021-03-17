@@ -1,10 +1,10 @@
 === Carousel Slider ===
 Contributors: sayful, stackonet, majeedraza
 Tags: woocommerce, shortcode, images, carousel, carousel slider, image carousel, product carousel, slider, owl carousel
-Requires at least: 4.8
-Tested up to: 5.6
-Requires PHP: 5.6
-Stable tag: 1.9.5
+Requires at least: 5.2
+Tested up to: 5.7
+Requires PHP: 7.0
+Stable tag: 1.10.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -85,6 +85,10 @@ If you still need help. visit [WordPress codex](https://codex.wordpress.org/Mana
 7. Front-end example of image lightbox.
 
 == Changelog ==
+
+= version 1.10.0 - 2021-03-17 =
+* Dev - Tested with WordPress 5.7 and WooCommerce 5.1
+* Dev - Update core code with namespace
 
 = version 1.9.5 - 2020-12-19 =
 * Dev - Update javaScript dependencies to latest version.

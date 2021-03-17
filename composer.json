@@ -22,5 +22,8 @@
   "require": {
     "php": ">=7.0",
     "ext-json": "*"
+  },
+  "scripts": {
+    "generate-pot": "wp i18n make-pot . languages/carousel-slider.pot"
   }
 }

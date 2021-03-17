@@ -10,8 +10,8 @@
  * Requires at least: 5.2
  * Tested up to: 5.7
  *
- * WC requires at least: 3.0
- * WC tested up to: 4.8
+ * WC requires at least: 4.0
+ * WC tested up to: 5.1
  *
  * Text Domain: carousel-slider
  *
@@ -164,9 +164,6 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-meta-box.php';
 				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-hero-carousel.php';
 			}
-
-			require_once CAROUSEL_SLIDER_PATH . '/shortcodes/class-carousel-slider-shortcode.php';
-			require_once CAROUSEL_SLIDER_PATH . '/shortcodes/class-carousel-slider-deprecated-shortcode.php';
 		}
 
 		/**

@@ -7,6 +7,7 @@ use CarouselSlider\Admin\GutenbergBlock;
 use CarouselSlider\Admin\Setting;
 use CarouselSlider\Frontend\Frontend;
 use CarouselSlider\Frontend\Preview;
+use CarouselSlider\Frontend\Shortcode;
 use CarouselSlider\Frontend\StructuredData;
 use CarouselSlider\Integration\VisualComposerElement;
 use CarouselSlider\Widget\CarouselSliderWidget;
@@ -60,6 +61,7 @@ class Plugin {
 		$this->container['assets']     = Assets::init();
 		$this->container['widget']     = CarouselSliderWidget::init();
 		$this->container['vc_element'] = VisualComposerElement::init();
+		$this->container['shortcode']  = Shortcode::init();
 
 		// Load classes for admin area
 		if ( $this->is_request( 'admin' ) ) {

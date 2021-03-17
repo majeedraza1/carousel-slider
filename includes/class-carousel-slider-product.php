@@ -40,14 +40,8 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ) {
 			if ( is_null( self::$instance ) ) {
 				self::$instance = new self();
 
-				add_action( 'carousel_slider_after_shop_loop_item', array(
-					self::$instance,
-					'quick_view_button'
-				), 10, 3 );
-				add_action( 'carousel_slider_after_shop_loop_item', array(
-					self::$instance,
-					'wish_list_button'
-				), 12, 3 );
+				add_action( 'carousel_slider_after_shop_loop_item', [ self::$instance, 'quick_view_button' ], 10, 3 );
+				add_action( 'carousel_slider_after_shop_loop_item', [ self::$instance, 'wish_list_button' ], 12, 3 );
 
 				add_action( 'wp_ajax_carousel_slider_quick_view', array( self::$instance, 'quick_view' ) );
 				add_action( 'wp_ajax_nopriv_carousel_slider_quick_view', array( self::$instance, 'quick_view' ) );
@@ -131,23 +125,23 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ) {
 			$product = wc_get_product( intval( $_GET['product_id'] ) );
 
 			?>
-            <div id="pmid-<?php echo intval( $_GET['slide_id'] ); ?>" class="product carousel-slider__product-modal">
+			<div id="pmid-<?php echo intval( $_GET['slide_id'] ); ?>" class="product carousel-slider__product-modal">
 
-                <div class="images">
+				<div class="images">
 					<?php echo get_the_post_thumbnail( $product->get_id(), 'medium_large' ); ?>
 					<?php if ( $product->is_on_sale() ) : ?>
 						<?php echo apply_filters( 'woocommerce_sale_flash',
 							'<span class="onsale">' . __( 'Sale!', 'carousel-slider' ) . '</span>', $product ); ?>
 					<?php endif; ?>
-                </div>
+				</div>
 
-                <div class="summary entry-summary">
+				<div class="summary entry-summary">
 
-                    <h1 class="product_title entry-title">
+					<h1 class="product_title entry-title">
 						<?php echo esc_attr( $product->get_title() ); ?>
-                    </h1>
+					</h1>
 
-                    <div class="woocommerce-product-rating">
+					<div class="woocommerce-product-rating">
 						<?php
 						// Check if WooCommerce Version 3.0.0 or higher
 						if ( function_exists( 'wc_get_rating_html' ) ) {
@@ -156,24 +150,24 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ) {
 							echo $product->get_rating_html();
 						}
 						?>
-                    </div>
+					</div>
 
-                    <div class="price">
+					<div class="price">
 						<?php
 						if ( $product->get_price_html() ) {
 							echo $product->get_price_html();
 						}
 						?>
-                    </div>
+					</div>
 
-                    <div class="description">
+					<div class="description">
 						<?php
 						echo '<div style="clear: both;"></div>';
 						echo apply_filters( 'woocommerce_short_description', $product->get_description() );
 						?>
-                    </div>
+					</div>
 
-                    <div>
+					<div>
 						<?php
 						// Show button
 						echo '<div style="clear: both;"></div>';
@@ -181,10 +175,10 @@ if ( ! class_exists( 'Carousel_Slider_Product' ) ) {
 							woocommerce_template_loop_add_to_cart();
 						}
 						?>
-                    </div>
+					</div>
 
-                </div>
-            </div>
+				</div>
+			</div>
 			<?php
 			wp_die();
 		}
