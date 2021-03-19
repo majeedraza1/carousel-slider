@@ -37,16 +37,11 @@ class GutenbergBlock {
 			return;
 		}
 		wp_register_script( 'carousel-slider-gutenberg-block',
-			CAROUSEL_SLIDER_ASSETS . '/js/gutenberg-block.js',
-			[ 'underscore', 'wp-blocks', 'wp-element', 'wp-components', 'wp-editor', 'wp-i18n' ]
-		);
+			CAROUSEL_SLIDER_ASSETS . '/js/gutenberg-block.js', [ 'wp-blocks', 'wp-components', 'wp-block-editor' ] );
 		wp_register_style( 'carousel-slider-gutenberg-style',
-			CAROUSEL_SLIDER_ASSETS . '/css/gutenberg-block.css',
-			[ 'wp-edit-blocks' ]
-		);
-		wp_localize_script( 'carousel-slider-gutenberg-block',
-			'carousel_slider_gutenberg_block', $this->block_localize_data()
-		);
+			CAROUSEL_SLIDER_ASSETS . '/css/gutenberg-block.css', [ 'wp-edit-blocks' ] );
+		wp_localize_script( 'carousel-slider-gutenberg-block', 'i18nCarouselSliderBlock',
+			$this->block_localize_data() );
 
 		register_block_type( 'carousel-slider/slider', [
 			'editor_script' => 'carousel-slider-gutenberg-block',

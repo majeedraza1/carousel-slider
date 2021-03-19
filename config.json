@@ -17,8 +17,8 @@
       "./assets/src/admin/vendors.js"
     ],
     "gutenberg-block": [
-      "./assets/src/scss/gutenberg-block.scss",
-      "./assets/src/gutenberg-block/main.js"
+      "./assets/src/admin/gutenberg-block.js",
+      "./assets/src/scss/gutenberg-block.scss"
     ]
   }
 }

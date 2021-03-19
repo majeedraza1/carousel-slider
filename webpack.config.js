@@ -5,6 +5,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const svgToMiniDataURI = require('mini-svg-data-uri');
+const nodeExternals = require('webpack-node-externals');
 
 const config = require('./config.json');
 
@@ -147,14 +148,7 @@ module.exports = (env, argv) => {
 	}
 
 	if (!isDev) {
-		// `jQuery`, `React`, `ReactDOM` will be loaded from WordPress
-		webpackConfig.externals = {
-			jquery: {commonjs: 'jquery', commonjs2: 'jquery', amd: 'jquery', umd: 'jquery', root: 'jQuery'},
-			react: {commonjs: 'react', commonjs2: 'react', amd: 'react', umd: 'react', root: 'React'},
-			'react-dom': {
-				commonjs: 'react-dom', commonjs2: 'react-dom', amd: 'react-dom', umd: 'react-dom', root: 'ReactDOM',
-			},
-		}
+		config.externals = [nodeExternals()]
 	}
 
 	return webpackConfig;
