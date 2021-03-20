@@ -29,7 +29,7 @@ $this->form->number( array(
 	'std'  => carousel_slider_default_settings()->margin_right
 ) );
 $this->form->select( array(
-	'id'      => '_inifnity_loop',
+	'id'      => '_infinity_loop',
 	'name'    => esc_html__( 'Infinity loop', 'carousel-slider' ),
 	'desc'    => esc_html__( 'Enable or disable loop(circular) of carousel.', 'carousel-slider' ),
 	'std'     => 'on',

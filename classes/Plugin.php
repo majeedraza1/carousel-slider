@@ -61,7 +61,7 @@ class Plugin {
 		$this->container['assets']     = Assets::init();
 		$this->container['widget']     = CarouselSliderWidget::init();
 		$this->container['vc_element'] = VisualComposerElement::init();
-		$this->container['shortcode']  = Shortcode::init();
+		$this->container['upgrader']   = Upgrader::init();
 
 		// Load classes for admin area
 		if ( $this->is_request( 'admin' ) ) {
@@ -108,6 +108,7 @@ class Plugin {
 	 */
 	public function frontend_includes() {
 		$this->container['frontend']        = Frontend::init();
+		$this->container['shortcode']       = Shortcode::init();
 		$this->container['preview']         = Preview::init();
 		$this->container['structured_data'] = StructuredData::init();
 	}

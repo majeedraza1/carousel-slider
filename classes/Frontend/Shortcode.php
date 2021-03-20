@@ -191,7 +191,7 @@ class Shortcode {
 			'data-slide-type'           => $this->get_meta( $id, '_slide_type', 'image-carousel' ),
 			'data-margin'               => $this->get_meta( $id, '_margin_right', '10' ),
 			'data-slide-by'             => $this->get_meta( $id, '_slide_by', '1' ),
-			'data-loop'                 => $this->get_meta( $id, '_inifnity_loop', 'true' ),
+			'data-loop'                 => $this->get_meta( $id, '_infinity_loop', 'true' ),
 			'data-lazy-load'            => $this->get_meta( $id, '_lazy_load_image', 'false' ),
 			'data-stage-padding'        => $this->get_meta( $id, '_stage_padding', '0' ),
 			'data-auto-width'           => $this->get_meta( $id, '_auto_width', 'false' ),
