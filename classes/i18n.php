@@ -34,9 +34,6 @@ class i18n {
 	 * @return void
 	 */
 	public function load_plugin_textdomain() {
-		$domain  = CAROUSEL_SLIDER;
-		$lan_dir = CAROUSEL_SLIDER_PATH . '/languages/';
-
-		load_plugin_textdomain( $domain, false, $lan_dir );
+		load_plugin_textdomain( CAROUSEL_SLIDER, false, basename( CAROUSEL_SLIDER_PATH ) . '/languages' );
 	}
 }

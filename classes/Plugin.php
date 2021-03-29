@@ -10,6 +10,7 @@ use CarouselSlider\Frontend\Preview;
 use CarouselSlider\Frontend\Shortcode;
 use CarouselSlider\Frontend\StructuredData;
 use CarouselSlider\Integration\VisualComposerElement;
+use CarouselSlider\Modules\VideoCarousel\VideoCarouselModule;
 use CarouselSlider\Widget\CarouselSliderWidget;
 
 defined( 'ABSPATH' ) || exit;
@@ -87,7 +88,7 @@ class Plugin {
 	 * @return void
 	 */
 	public function modules_includes() {
-
+		$this->container['module_video_carousel'] = VideoCarouselModule::init();
 	}
 
 	/**

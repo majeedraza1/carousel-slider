@@ -155,7 +155,6 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		 */
 		private function includes() {
 			require_once CAROUSEL_SLIDER_INCLUDES . '/functions-carousel-slider.php';
-			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-activator.php';
 			require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-product.php';
 
 			if ( $this->is_request( 'admin' ) ) {

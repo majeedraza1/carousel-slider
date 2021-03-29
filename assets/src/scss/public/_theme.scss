@@ -1,136 +1,147 @@
 .carousel-slider {
 
-    // Styling Next and Prev buttons
-    .owl-nav {
-        .owl-prev,
-        .owl-next {
-            height: 48px;
-            width: 48px;
-            display: inline-block;
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            opacity: 0;
-            margin: 0;
-            padding: 0;
-            transition: all .3s ease-in-out;
-        }
+	// Styling Next and Prev buttons
+	.owl-nav {
+		.owl-prev,
+		.owl-next {
+			color: var(--carousel-slider-nav-color, #{$background-color});
+			height: var(--carousel-slider-arrow-size, 48px);
+			width: var(--carousel-slider-arrow-size, 48px);
+			display: inline-block;
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			opacity: 0;
+			margin: 0;
+			padding: 0;
+			transition: all .3s ease-in-out;
 
-        .owl-prev {
-            left: 0;
-        }
+			&:hover {
+				color: var(--carousel-slider-active-nav-color, #{$background-hover-color});
+			}
 
-        .owl-next {
-            right: 0;
-        }
-    }
+			svg {
+				fill: currentColor;
+			}
+		}
 
-    &:hover {
-        .owl-nav {
-            .owl-prev,
-            .owl-next {
-                opacity: 1;
-            }
-        }
-    }
+		.owl-prev {
+			left: 0;
+		}
 
-    &.arrows-visible-always {
-        .owl-prev,
-        .owl-next {
-            opacity: 1;
-        }
-    }
+		.owl-next {
+			right: 0;
+		}
+	}
 
-    &.arrows-outside {
-        .owl-nav {
-            .owl-prev {
-                left: -48px;
-            }
+	&:hover {
+		.owl-nav {
+			.owl-prev,
+			.owl-next {
+				opacity: 1;
+			}
+		}
+	}
 
-            .owl-next {
-                right: -48px;
-            }
-        }
-    }
+	&.arrows-visible-always {
+		.owl-prev,
+		.owl-next {
+			opacity: 1;
+		}
+	}
 
-    // Styling dots
-    .owl-dots {
-        text-align: center;
-        -webkit-tap-highlight-color: transparent;
-        margin-top: 10px;
+	&.arrows-outside {
+		.owl-nav {
+			.owl-prev {
+				left: calc(var(--carousel-slider-arrow-size, 48px) * -1);
+			}
 
-        .owl-dot {
-            display: inline-block;
-            zoom: 1;
-            *display: inline;
+			.owl-next {
+				right: calc(var(--carousel-slider-arrow-size, 48px) * -1);
+			}
+		}
+	}
 
-            span {
-                width: 10px;
-                height: 10px;
-                margin: 4px 8px;
-                background-color: $background-color;
-                display: block;
-                -webkit-backface-visibility: visible;
-                transition: opacity 200ms ease;
-            }
+	// Styling dots
+	.owl-dots {
+		text-align: center;
+		-webkit-tap-highlight-color: transparent;
+		margin-top: 10px;
 
-            &.active,
-            &:hover {
-                span {
-                    background-color: $background-hover-color;
-                }
-            }
-        }
-    }
+		.owl-dot {
+			display: inline-block;
+			zoom: 1;
+			*display: inline;
 
-    // Dots positions
-    &.dots-center {
-        .owl-dots {
-            text-align: center;
-        }
-    }
-    &.dots-left {
-        .owl-dots {
-            text-align: left;
+			span {
+				width: var(--carousel-slider-bullet-size, 10px);
+				height: var(--carousel-slider-bullet-size, 10px);
+				margin: 4px 8px;
+				background-color: var(--carousel-slider-nav-color, #{$background-color});
+				display: block;
+				-webkit-backface-visibility: visible;
+				transition: opacity 200ms ease;
+			}
 
-            &:first-child {
-                span {
-                    margin-left: 0;
-                }
-            }
-        }
-    }
-    &.dots-right {
-        .owl-dots {
-            text-align: right;
+			&.active,
+			&:hover {
+				span {
+					background-color: var(--carousel-slider-active-nav-color, #{$background-hover-color});
+				}
+			}
+		}
+	}
 
-            &:last-child {
-                span {
-                    margin-right: 0;
-                }
-            }
-        }
-    }
+	// Dots positions
+	&.dots-center {
+		.owl-dots {
+			text-align: center;
+		}
+	}
 
-    // Dots visibility
-    &.dots-visible-hover {
-        .owl-dots {
-            opacity: 0;
-        }
+	&.dots-left {
+		.owl-dots {
+			text-align: left;
 
-        &:hover .owl-dots {
-            opacity: 1;
-        }
-    }
+			&:first-child {
+				span {
+					margin-left: 0;
+				}
+			}
+		}
+	}
 
-    // Dots shape
-    &.dots-circle {
-        .owl-dots {
-            .owl-dot {
-                span {
-                    border-radius: 9999px;
-                }
-            }
-        }
-    }
+	&.dots-right {
+		.owl-dots {
+			text-align: right;
+
+			&:last-child {
+				span {
+					margin-right: 0;
+				}
+			}
+		}
+	}
+
+	// Dots visibility
+	&.dots-visible-hover {
+		.owl-dots {
+			opacity: 0;
+		}
+
+		&:hover .owl-dots {
+			opacity: 1;
+		}
+	}
+
+	// Dots shape
+	&.dots-circle {
+		.owl-dots {
+			.owl-dot {
+				span {
+					border-radius: 9999px;
+				}
+			}
+		}
+	}
 }
