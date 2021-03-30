@@ -105,7 +105,7 @@ class Shortcode {
 			$html = ob_get_contents();
 			ob_end_clean();
 
-			return apply_filters( 'Carousel_Slider_Hero_Carousel', $html, $id );
+			return apply_filters( 'CarouselSlider\Modules\HeroCarousel\Ajax', $html, $id );
 		}
 
 		return apply_filters( 'carousel_slider/view', '', $id, $slide_type );

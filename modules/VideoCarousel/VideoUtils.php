@@ -4,7 +4,7 @@ namespace CarouselSlider\Modules\VideoCarousel;
 
 defined( 'ABSPATH' ) || exit;
 
-class Utils {
+class VideoUtils {
 	/**
 	 * Get Youtube video ID from URL
 	 *

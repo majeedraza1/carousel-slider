@@ -10,6 +10,8 @@ use CarouselSlider\Frontend\Preview;
 use CarouselSlider\Frontend\Shortcode;
 use CarouselSlider\Frontend\StructuredData;
 use CarouselSlider\Integration\VisualComposerElement;
+use CarouselSlider\Modules\HeroCarousel\HeroCarouselModule;
+use CarouselSlider\Modules\ProductCarousel\ProductCarouselModule;
 use CarouselSlider\Modules\VideoCarousel\VideoCarouselModule;
 use CarouselSlider\Widget\CarouselSliderWidget;
 
@@ -88,7 +90,9 @@ class Plugin {
 	 * @return void
 	 */
 	public function modules_includes() {
-		$this->container['module_video_carousel'] = VideoCarouselModule::init();
+		$this->container['module_video_carousel']   = VideoCarouselModule::init();
+		$this->container['module_hero_carousel']    = HeroCarouselModule::init();
+		$this->container['module_product_carousel'] = ProductCarouselModule::init();
 	}
 
 	/**

@@ -55,7 +55,7 @@ class VideoCarouselModule {
 				<div class="shapla-toggle-content">
 					<div class="sp-input-group" id="field-_video_url">
 						<div class="sp-input-label">
-							<label for="_video_url"><?php esc_html_e( 'Video URLs', 'carousel-slider' ) ?>></label>
+							<label for="_video_url"><?php esc_html_e( 'Video URLs', 'carousel-slider' ) ?></label>
 							<p class="sp-input-desc"><?php echo $description ?></p>
 						</div>
 						<div class="sp-input-field">
@@ -140,7 +140,7 @@ class VideoCarouselModule {
 		if ( is_string( $urls ) ) {
 			$urls = array_filter( explode( ',', $urls ) );
 		}
-		$urls = Utils::get_video_url( $urls );
+		$urls = VideoUtils::get_video_url( $urls );
 
 		$css_classes = [
 			"carousel-slider-outer",
