@@ -251,9 +251,13 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ) {
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/images-url.php';
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/post-carousel.php';
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/product-carousel.php';
-			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/video-carousel.php';
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/hero-banner-slider.php';
 			require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/images-settings.php';
+
+			/**
+			 * Allow third part plugin to add custom fields
+			 */
+			do_action( 'carousel_slider/meta_box_content', $post->ID, $slide_type );
 		}
 
 		/**
@@ -312,6 +316,8 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ) {
 			if ( isset( $_POST['_images_urls'] ) ) {
 				$this->save_images_urls( $post_id );
 			}
+
+			do_action( 'carousel_slider/save_slider', $post_id );
 		}
 
 		/**
