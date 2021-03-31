@@ -2,6 +2,8 @@
 
 namespace CarouselSlider\Modules\HeroCarousel;
 
+use CarouselSlider\Supports\Sanitize;
+
 defined( 'ABSPATH' ) || exit;
 
 class Item {
@@ -66,6 +68,7 @@ class Item {
 
 	/**
 	 * Sanitize item data
+	 *
 	 * @param array $data
 	 *
 	 * @return array
@@ -85,15 +88,15 @@ class Item {
 		$sanitize_data = [];
 		foreach ( $data as $key => $value ) {
 			if ( in_array( $key, [ 'slide_heading', 'slide_description' ] ) ) {
-				$sanitize_data[ $key ] = wp_kses_post( $value );
+				$sanitize_data[ $key ] = Sanitize::html( $value );
 			} elseif ( in_array( $key, [ 'img_id', 'heading_font_size', 'description_font_size' ] ) ) {
-				$sanitize_data[ $key ] = intval( $value );
+				$sanitize_data[ $key ] = Sanitize::int( $value );
 			} elseif ( in_array( $key, [ 'slide_link', 'button_one_url', 'button_two_url' ] ) ) {
-				$sanitize_data[ $key ] = esc_url_raw( $value );
+				$sanitize_data[ $key ] = Sanitize::url( $value );
 			} elseif ( in_array( $key, $color_fields ) ) {
-				$sanitize_data[ $key ] = carousel_slider_sanitize_color( $value );
+				$sanitize_data[ $key ] = Sanitize::color( $value );
 			} else {
-				$sanitize_data[ $key ] = sanitize_text_field( $value );
+				$sanitize_data[ $key ] = Sanitize::text( $value );
 			}
 		}
 

@@ -3,10 +3,6 @@
  * @package Carousel_Slider
  * @subpackage Carousel_Slider_Product
  *
- * @method init()
- * @method wish_list_button()
- * @method quick_view_button()
- * @method quick_view()
  * @method products()
  * @method recent_products()
  * @method best_selling_products()

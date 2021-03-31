@@ -68,6 +68,7 @@ class Upgrader {
 		$version = get_option( 'carousel_slider_version', '1.0.0' );
 		if ( version_compare( $version, '1.10.0', '<=' ) ) {
 			static::fix_meta_key_typo_error();
+			static::fix_product_query_type_typo_error();
 		}
 
 		// Add plugin version to database
@@ -87,6 +88,20 @@ class Upgrader {
 		global $wpdb;
 		$sql = "UPDATE {$wpdb->postmeta} SET `meta_key`= '_infinity_loop' WHERE `meta_key` = '_inifnity_loop'";
 		$sql .= " AND post_id IN(" . implode( ',', $ids ) . ")";
+
+		return $wpdb->query( $sql );
+	}
+
+	/**
+	 * Fix meta key typo error
+	 *
+	 * @return bool|int
+	 */
+	public function fix_product_query_type_typo_error() {
+		$ids = static::get_sliders_ids();
+		global $wpdb;
+		$sql = "UPDATE {$wpdb->postmeta} SET `meta_value`= 'query_product' WHERE `meta_value` = 'query_porduct'";
+		$sql .= " AND `meta_key` = '_product_query_type' AND post_id IN(" . implode( ',', $ids ) . ")";
 
 		return $wpdb->query( $sql );
 	}

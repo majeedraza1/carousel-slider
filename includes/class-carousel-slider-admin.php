@@ -448,17 +448,17 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ) {
 		 */
 		private function update_content_settings( $post_id ) {
 			$setting   = $_POST['content_settings'];
-			$_settings = array(
+			$_settings = [
 				'slide_height'      => sanitize_text_field( $setting['slide_height'] ),
 				'content_width'     => sanitize_text_field( $setting['content_width'] ),
 				'content_animation' => sanitize_text_field( $setting['content_animation'] ),
-				'slide_padding'     => array(
+				'slide_padding'     => [
 					'top'    => sanitize_text_field( $setting['slide_padding']['top'] ),
 					'right'  => sanitize_text_field( $setting['slide_padding']['right'] ),
 					'bottom' => sanitize_text_field( $setting['slide_padding']['bottom'] ),
 					'left'   => sanitize_text_field( $setting['slide_padding']['left'] ),
-				),
-			);
+				],
+			];
 			update_post_meta( $post_id, '_content_slider_settings', $_settings );
 		}
 	}

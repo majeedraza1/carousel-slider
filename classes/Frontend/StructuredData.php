@@ -2,6 +2,9 @@
 
 namespace CarouselSlider\Frontend;
 
+use WC_Product;
+use WP_Post;
+
 defined( 'ABSPATH' ) || exit;
 
 class StructuredData {
@@ -21,7 +24,7 @@ class StructuredData {
 
 			add_action( 'carousel_slider_image_gallery_loop', [ self::$instance, 'generate_image_data' ] );
 			add_action( 'carousel_slider_post_loop', [ self::$instance, 'generate_post_data' ] );
-			add_action( 'carousel_slider_product_loop', [ self::$instance, 'generate_product_data' ], 10, 2 );
+			add_action( 'carousel_slider_product_loop', [ self::$instance, 'generate_product_data' ] );
 			// Output structured data.
 			add_action( 'wp_footer', [ self::$instance, 'output_structured_data' ], 90 );
 		}
@@ -273,20 +276,14 @@ class StructuredData {
 	 * Hooked into `carousel_slider_product_loop` action hook.
 	 *
 	 * @param WC_Product $product Product data (default: null).
-	 * @param WP_Post $post
 	 */
-	public function generate_product_data( $product, $post ) {
+	public function generate_product_data( $product ) {
 		if ( ! $product instanceof WC_Product ) {
 			return;
 		}
 
-		if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, "3.0.0", ">=" ) ) {
-			$name      = $product->get_name();
-			$permalink = get_permalink( $product->get_id() );
-		} else {
-			$name      = get_the_title( $post->ID );
-			$permalink = get_permalink( $post->ID );
-		}
+		$name      = $product->get_name();
+		$permalink = get_permalink( $product->get_id() );
 
 		$markup['@type'] = 'Product';
 		$markup['@id']   = $permalink;
