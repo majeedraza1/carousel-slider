@@ -48,6 +48,16 @@ class Admin {
 		wp_enqueue_media();
 		wp_enqueue_style( 'carousel-slider-admin' );
 		wp_enqueue_script( 'carousel-slider-admin' );
+		wp_localize_script( 'carousel-slider-admin', 'CarouselSliderAdminL10n', [
+			'url'           => esc_html__( 'URL', 'carousel-slider' ),
+			'title'         => esc_html__( 'Title', 'carousel-slider' ),
+			'caption'       => esc_html__( 'Caption', 'carousel-slider' ),
+			'altText'       => esc_html__( 'Alt Text', 'carousel-slider' ),
+			'linkToUrl'     => esc_html__( 'Link To URL', 'carousel-slider' ),
+			'addNew'        => esc_html__( 'Add New Item', 'carousel-slider' ),
+			'moveCurrent'   => esc_html__( 'Move Current Item', 'carousel-slider' ),
+			'deleteCurrent' => esc_html__( 'Delete Current Item', 'carousel-slider' ),
+		] );
 	}
 
 	/**

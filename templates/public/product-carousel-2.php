@@ -1,8 +1,8 @@
 <?php
-// If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-	die;
-}
+
+use CarouselSlider\Modules\ProductCarousel\ProductUtils;
+
+defined( 'ABSPATH' ) || exit;
 
 if ( ! carousel_slider_is_woocommerce_active() ) {
 	if ( current_user_can( 'manage_options' ) ) {
@@ -19,15 +19,15 @@ if ( ! carousel_slider_is_woocommerce_active() ) {
 ?>
 <div class="products carousel-slider-outer carousel-slider-outer-products carousel-slider-outer-<?php echo $id; ?>">
 	<?php carousel_slider_inline_style( $id ); ?>
-    <div <?php echo join( " ", $this->carousel_options( $id ) ); ?>>
+	<div <?php echo join( " ", $this->carousel_options( $id ) ); ?>>
 		<?php
 		global $post;
 		global $product;
-		$posts = carousel_slider_products( $id );
+		$products = ProductUtils::get_products( $id );
 
-		foreach ( $posts as $post ):
+		foreach ( $products as $product ):
+			$post = get_post( $product->get_id() );
 			setup_postdata( $post );
-			$product = wc_get_product( $post );
 
 			if ( ! $product->is_visible() ) {
 				continue;
@@ -52,5 +52,5 @@ if ( ! carousel_slider_is_woocommerce_active() ) {
 		wp_reset_postdata();
 
 		?>
-    </div>
+	</div>
 </div>

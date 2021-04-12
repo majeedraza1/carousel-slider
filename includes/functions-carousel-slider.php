@@ -1,24 +1,24 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) {
-	die; // If this file is called directly, abort.
-}
+use CarouselSlider\Modules\HeroCarousel\HeroUtils;
+use CarouselSlider\Modules\ProductCarousel\ProductUtils;
+use CarouselSlider\Supports\Sanitize;
+use CarouselSlider\Supports\Validate;
+
+defined( 'ABSPATH' ) || exit;
 
 if ( ! function_exists( 'carousel_slider_is_url' ) ) {
 	/**
 	 * Check if url is valid as per RFC 2396 Generic Syntax
 	 *
-	 * @param string $url
+	 * @param mixed $url
 	 *
 	 * @return boolean
 	 */
-	function carousel_slider_is_url( $url ) {
-		if ( filter_var( $url, FILTER_VALIDATE_URL ) ) {
+	function carousel_slider_is_url( $url ): bool {
+		// _deprecated_function( __METHOD__, '1.11.0', Validate::class . '::url' );
 
-			return true;
-		}
-
-		return false;
+		return Validate::url( $url );
 	}
 }
 
@@ -31,44 +31,7 @@ if ( ! function_exists( 'carousel_slider_sanitize_color' ) ) {
 	 * @return mixed|string
 	 */
 	function carousel_slider_sanitize_color( $color ) {
-		if ( '' === $color ) {
-			return '';
-		}
-
-		// Trim unneeded whitespace
-		$color = str_replace( ' ', '', $color );
-
-		// If this is hex color, validate and return it
-		if ( 1 === preg_match( '|^#([A-Fa-f0-9]{3}){1,2}$|', $color ) ) {
-			return $color;
-		}
-
-		// If this is rgb, validate and return it
-		if ( 'rgb(' === substr( $color, 0, 4 ) ) {
-			list( $red, $green, $blue ) = sscanf( $color, 'rgb(%d,%d,%d)' );
-
-			if ( ( $red >= 0 && $red <= 255 ) &&
-			     ( $green >= 0 && $green <= 255 ) &&
-			     ( $blue >= 0 && $blue <= 255 )
-			) {
-				return "rgb({$red},{$green},{$blue})";
-			}
-		}
-
-		// If this is rgba, validate and return it
-		if ( 'rgba(' === substr( $color, 0, 5 ) ) {
-			list( $red, $green, $blue, $alpha ) = sscanf( $color, 'rgba(%d,%d,%d,%f)' );
-
-			if ( ( $red >= 0 && $red <= 255 ) &&
-			     ( $green >= 0 && $green <= 255 ) &&
-			     ( $blue >= 0 && $blue <= 255 ) &&
-			     $alpha >= 0 && $alpha <= 1
-			) {
-				return "rgba({$red},{$green},{$blue},{$alpha})";
-			}
-		}
-
-		return '';
+		return Sanitize::color( $color );
 	}
 }
 
@@ -259,74 +222,15 @@ if ( ! function_exists( 'carousel_slider_posts' ) ) {
  *
  * @param $carousel_id
  *
- * @return array
+ * @return array|WP_Post[]
  */
-function carousel_slider_products( $carousel_id ) {
-	$id         = $carousel_id;
-	$per_page   = intval( get_post_meta( $id, '_products_per_page', true ) );
-	$query_type = get_post_meta( $id, '_product_query_type', true );
-	$query_type = empty( $query_type ) ? 'query_product' : $query_type;
-	// Type mistake
-	$query_type    = ( 'query_porduct' == $query_type ) ? 'query_product' : $query_type;
-	$product_query = get_post_meta( $id, '_product_query', true );
-
-	$product_carousel = new Carousel_Slider_Product();
-
-	$args = array( 'posts_per_page' => $per_page );
-
-	if ( $query_type == 'query_product' ) {
-
-		// Get features products
-		if ( $product_query == 'featured' ) {
-			return $product_carousel->featured_products( $args );
-		}
-
-		// Get best_selling products
-		if ( $product_query == 'best_selling' ) {
-			return $product_carousel->best_selling_products( $args );
-		}
-
-		// Get recent products
-		if ( $product_query == 'recent' ) {
-			return $product_carousel->recent_products( $args );
-		}
-
-		// Get sale products
-		if ( $product_query == 'sale' ) {
-			return $product_carousel->sale_products( $args );
-		}
-
-		// Get top_rated products
-		if ( $product_query == 'top_rated' ) {
-			return $product_carousel->top_rated_products( $args );
-		}
+function carousel_slider_products( $carousel_id ): array {
+	$ids = ProductUtils::get_products( $carousel_id, [ 'return' => 'ids' ] );
+	if ( count( $ids ) ) {
+		return get_posts( [ 'post__in' => $ids ] );
 	}
 
-	// Get products by product IDs
-	if ( $query_type == 'specific_products' ) {
-		$product_in = get_post_meta( $id, '_product_in', true );
-		$product_in = array_map( 'intval', explode( ',', $product_in ) );
-
-		return $product_carousel->products( array( 'post__in' => $product_in ) );
-	}
-
-	// Get posts by post categories IDs
-	if ( $query_type == 'product_categories' ) {
-		$product_cat_ids = get_post_meta( $id, '_product_categories', true );
-		$product_cat_ids = array_map( 'intval', explode( ",", $product_cat_ids ) );
-
-		return $product_carousel->products_by_categories( $product_cat_ids, $per_page );
-	}
-
-	// Get posts by post tags IDs
-	if ( $query_type == 'product_tags' ) {
-		$product_tags = get_post_meta( $id, '_product_tags', true );
-		$product_tags = array_map( 'intval', explode( ',', $product_tags ) );
-
-		return $product_carousel->products_by_tags( $product_tags, $per_page );
-	}
-
-	return array();
+	return [];
 }
 
 if ( ! function_exists( 'carousel_slider_inline_style' ) ) {
@@ -537,23 +441,8 @@ if ( ! function_exists( 'carousel_slider_background_position' ) ) {
 	 *
 	 * @return array
 	 */
-	function carousel_slider_background_position( $key_only = false ) {
-		$positions = array(
-			'left top'      => 'left top',
-			'left center'   => 'left center',
-			'left bottom'   => 'left bottom',
-			'center top'    => 'center top',
-			'center center' => 'center', // Default
-			'center bottom' => 'center bottom',
-			'right top'     => 'right top',
-			'right center'  => 'right center',
-			'right bottom'  => 'right bottom',
-		);
-		if ( $key_only ) {
-			return array_keys( $positions );
-		}
-
-		return $positions;
+	function carousel_slider_background_position( $key_only = false ): array {
+		return HeroUtils::background_position( $key_only );
 	}
 }
 
@@ -563,20 +452,8 @@ if ( ! function_exists( 'carousel_slider_background_size' ) ) {
 	 *
 	 * @return array
 	 */
-	function carousel_slider_background_size( $key_only = false ) {
-		$sizes = array(
-			'auto'      => 'auto',
-			'contain'   => 'contain',
-			'cover'     => 'cover', // Default
-			'100% 100%' => '100%',
-			'100% auto' => '100% width',
-			'auto 100%' => '100% height',
-		);
-		if ( $key_only ) {
-			return array_keys( $sizes );
-		}
-
-		return $sizes;
+	function carousel_slider_background_size( $key_only = false ): array {
+		return HeroUtils::background_size( $key_only );
 	}
 }
 

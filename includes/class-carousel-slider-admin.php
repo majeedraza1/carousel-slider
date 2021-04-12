@@ -30,6 +30,20 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ) {
 		public static function init() {
 			if ( is_null( self::$instance ) ) {
 				self::$instance = new self();
+
+				add_action( 'init', [ self::$instance, 'carousel_post_type' ] );
+				add_action( 'add_meta_boxes', [ self::$instance, 'add_meta_boxes' ] );
+				add_filter( 'manage_edit-carousels_columns', [ self::$instance, 'columns_head' ] );
+				add_filter( 'manage_carousels_posts_custom_column', [ self::$instance, 'columns_content' ], 10, 2 );
+				add_action( 'save_post', [ self::$instance, 'save_meta_box' ] );
+				add_action( 'wp_ajax_carousel_slider_save_images', [ self::$instance, 'save_images' ] );
+
+				// Remove view and Quick Edit from Carousels
+				add_filter( 'post_row_actions', [ self::$instance, 'post_row_actions' ], 10, 2 );
+
+				// Add custom link to media gallery
+				add_filter( "attachment_fields_to_edit", [ self::$instance, "attachment_fields_to_edit" ], 10, 2 );
+				add_filter( "attachment_fields_to_save", [ self::$instance, "attachment_fields_to_save" ], 10, 2 );
 			}
 
 			return self::$instance;
@@ -39,90 +53,31 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ) {
 		 * Carousel_Slider_Admin constructor.
 		 */
 		public function __construct() {
-			$this->form = new Carousel_Slider_Form();
 
-			add_action( 'init', array( $this, 'carousel_post_type' ) );
-			add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
-			add_filter( 'manage_edit-carousels_columns', array( $this, 'columns_head' ) );
-			add_filter( 'manage_carousels_posts_custom_column', array( $this, 'columns_content' ), 10, 2 );
-			add_action( 'save_post', array( $this, 'save_meta_box' ) );
-			add_action( 'wp_ajax_carousel_slider_save_images', array( $this, 'save_images' ) );
-
-			// Remove view and Quick Edit from Carousels
-			add_filter( 'post_row_actions', array( $this, 'post_row_actions' ), 10, 2 );
-
-			// Add custom link to media gallery
-			add_filter( "attachment_fields_to_edit", array( $this, "attachment_fields_to_edit" ), null, 2 );
-			add_filter( "attachment_fields_to_save", array( $this, "attachment_fields_to_save" ), null, 2 );
-
-			add_action( 'admin_footer', array( $this, 'gallery_url_template' ), 5 );
-		}
-
-		/**
-		 * Carousel slider gallery url template
-		 *
-		 * @return void
-		 */
-		public function gallery_url_template() {
-			global $post_type;
-			if ( $post_type != 'carousels' ) {
-				return;
-			}
-			?>
-			<template id="carouselSliderGalleryUrlTemplate" style="display: none;">
-				<div class="carousel_slider-fields">
-					<label class="setting">
-						<span class="name"><?php esc_html_e( 'URL', 'carousel-slider' ); ?></span>
-						<input type="url" name="_images_urls[url][]" value="" autocomplete="off">
-					</label>
-					<label class="setting">
-						<span class="name"><?php esc_html_e( 'Title', 'carousel-slider' ); ?></span>
-						<input type="text" name="_images_urls[title][]" value="" autocomplete="off">
-					</label>
-					<label class="setting">
-						<span class="name"><?php esc_html_e( 'Caption', 'carousel-slider' ); ?></span>
-						<textarea name="_images_urls[caption][]"></textarea>
-					</label>
-					<label class="setting">
-						<span class="name"><?php esc_html_e( 'Alt Text', 'carousel-slider' ); ?></span>
-						<input type="text" name="_images_urls[alt][]" value="" autocomplete="off">
-					</label>
-					<label class="setting">
-						<span class="name"><?php esc_html_e( 'Link To URL', 'carousel-slider' ); ?></span>
-						<input type="text" name="_images_urls[link_url][]" value="" autocomplete="off">
-					</label>
-					<div class="actions">
-						<span><span class="dashicons dashicons-move"></span></span>
-						<span class="add_row"><span class="dashicons dashicons-plus-alt"></span></span>
-						<span class="delete_row"><span class="dashicons dashicons-trash"></span></span>
-					</div>
-				</div>
-			</template>
-			<?php
 		}
 
 		/**
 		 * Carousel slider post type
 		 */
 		public function carousel_post_type() {
-			$labels = array(
-				'name'               => _x( 'Slides', 'Post Type General Name', 'carousel-slider' ),
-				'singular_name'      => _x( 'Slide', 'Post Type Singular Name', 'carousel-slider' ),
+			$labels = [
+				'name'               => _x( 'Sliders', 'Post Type General Name', 'carousel-slider' ),
+				'singular_name'      => _x( 'Slider', 'Post Type Singular Name', 'carousel-slider' ),
 				'menu_name'          => __( 'Carousel Slider', 'carousel-slider' ),
-				'parent_item_colon'  => __( 'Parent Slide:', 'carousel-slider' ),
-				'all_items'          => __( 'All Slides', 'carousel-slider' ),
-				'view_item'          => __( 'View Slide', 'carousel-slider' ),
-				'add_new_item'       => __( 'Add New Slide', 'carousel-slider' ),
+				'parent_item_colon'  => __( 'Parent Slider:', 'carousel-slider' ),
+				'all_items'          => __( 'All Sliders', 'carousel-slider' ),
+				'view_item'          => __( 'View Slider', 'carousel-slider' ),
+				'add_new_item'       => __( 'Add New Slider', 'carousel-slider' ),
 				'add_new'            => __( 'Add New', 'carousel-slider' ),
-				'edit_item'          => __( 'Edit Slide', 'carousel-slider' ),
-				'update_item'        => __( 'Update Slide', 'carousel-slider' ),
-				'search_items'       => __( 'Search Slide', 'carousel-slider' ),
+				'edit_item'          => __( 'Edit Slider', 'carousel-slider' ),
+				'update_item'        => __( 'Update Slider', 'carousel-slider' ),
+				'search_items'       => __( 'Search Slider', 'carousel-slider' ),
 				'not_found'          => __( 'Not found', 'carousel-slider' ),
 				'not_found_in_trash' => __( 'Not found in Trash', 'carousel-slider' ),
-			);
+			];
 			$args   = array(
-				'label'               => __( 'Slide', 'carousel-slider' ),
-				'description'         => __( 'The easiest way to create carousel slide', 'carousel-slider' ),
+				'label'               => __( 'Slider', 'carousel-slider' ),
+				'description'         => __( 'The easiest way to create carousel slider', 'carousel-slider' ),
 				'labels'              => $labels,
 				'supports'            => array( 'title' ),
 				'hierarchical'        => false,
@@ -242,8 +197,10 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ) {
 		 *
 		 * @param WP_Post $post
 		 */
-		public function carousel_slider_meta_boxes( $post ) {
+		public function carousel_slider_meta_boxes( WP_Post $post ) {
 			wp_nonce_field( 'carousel_slider_nonce', '_carousel_slider_nonce' );
+
+			$this->form = new Carousel_Slider_Form();
 
 			$slide_type = get_post_meta( $post->ID, '_slide_type', true );
 			$slide_type = in_array( $slide_type, carousel_slider_slide_type() ) ? $slide_type : 'image-carousel';

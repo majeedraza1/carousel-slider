@@ -1,8 +1,8 @@
 <?php
-// If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-	die;
-}
+
+use CarouselSlider\Modules\ProductCarousel\ProductUtils;
+
+defined( 'ABSPATH' ) || exit;
 
 if ( ! carousel_slider_is_woocommerce_active() ) {
 	if ( current_user_can( 'manage_options' ) ) {
@@ -17,8 +17,7 @@ if ( ! carousel_slider_is_woocommerce_active() ) {
 	return;
 }
 
-$posts = carousel_slider_products( $id );
-
+$products = ProductUtils::get_products( $id );
 
 $_image_size       = get_post_meta( $id, '_image_size', true );
 $_nav_color        = get_post_meta( $id, '_nav_color', true );
@@ -35,16 +34,17 @@ $_product_quick_view = get_post_meta( $id, '_product_quick_view', true );
 ?>
 <div class="carousel-slider-outer carousel-slider-outer-products carousel-slider-outer-<?php echo $id; ?>">
 	<?php carousel_slider_inline_style( $id ); ?>
-    <div <?php echo join( " ", $this->carousel_options( $id ) ); ?>>
-		<?php foreach ( $posts as $post ): setup_postdata( $post ); ?>
-			<?php
-			$product = wc_get_product( $post->ID );
+	<div <?php echo join( " ", $this->carousel_options( $id ) ); ?>>
+		<?php foreach ( $products as $product ):
+
+			$post = get_post( $product->get_id() );
+			setup_postdata( $post );
 			if ( ! $product->is_visible() ) {
 				continue;
 			}
 			do_action( 'carousel_slider_product_loop', $product, $post );
 			?>
-            <div class="product carousel-slider__product">
+			<div class="product carousel-slider__product">
 				<?php
 				echo sprintf( '<a class="woocommerce-LoopProduct-link" href="%s">', get_the_permalink( $post->ID ) );
 				// Post Thumbnail
@@ -66,12 +66,7 @@ $_product_quick_view = get_post_meta( $id, '_product_quick_view', true );
 
 				// Show Rating
 				if ( $_product_rating == 'on' ) {
-					if ( version_compare( WC_VERSION, "3.0.0", ">=" ) ) {
-						echo wc_get_rating_html( $product->get_average_rating() );
-					} else {
-						echo $product->get_rating_html();
-					}
-
+					echo wc_get_rating_html( $product->get_average_rating() );
 				}
 				// Sale Product batch
 				if ( $product->is_on_sale() && $_product_onsale == 'on' ) {
@@ -117,8 +112,8 @@ $_product_quick_view = get_post_meta( $id, '_product_quick_view', true );
 					echo do_shortcode( '[yith_wcwl_add_to_wishlist]' );
 				}
 				?>
-            </div>
+			</div>
 		<?php endforeach;
 		wp_reset_postdata(); ?>
-    </div>
+	</div>
 </div>

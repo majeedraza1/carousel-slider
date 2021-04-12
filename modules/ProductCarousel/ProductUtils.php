@@ -34,10 +34,11 @@ class ProductUtils {
 	 * Get products
 	 *
 	 * @param int $slider_id
+	 * @param array $args
 	 *
 	 * @return array|WC_Product[]
 	 */
-	public static function get_products( int $slider_id ): array {
+	public static function get_products( int $slider_id, array $args = [] ): array {
 		$per_page   = (int) get_post_meta( $slider_id, '_products_per_page', true );
 		$per_page   = $per_page ? $per_page : 12;
 		$query_type = get_post_meta( $slider_id, '_product_query_type', true );
@@ -46,7 +47,7 @@ class ProductUtils {
 		$query_type = ( 'query_porduct' == $query_type ) ? 'query_product' : $query_type;
 		$query      = get_post_meta( $slider_id, '_product_query', true );
 
-		$args = static::parse_args( [ 'limit' => $per_page ] );
+		$args = static::parse_args( array_merge( $args, [ 'limit' => $per_page ] ) );
 
 		if ( $query_type == 'specific_products' ) {
 			$product_in = get_post_meta( $slider_id, '_product_in', true );
