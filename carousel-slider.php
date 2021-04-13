@@ -154,13 +154,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		 * Include admin and front facing files
 		 */
 		private function includes() {
-			require_once CAROUSEL_SLIDER_INCLUDES . '/functions-carousel-slider.php';
-
-			if ( $this->is_request( 'admin' ) ) {
-				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-form.php';
-				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-admin.php';
-				require_once CAROUSEL_SLIDER_INCLUDES . '/class-carousel-slider-meta-box.php';
-			}
+			require_once CAROUSEL_SLIDER_INCLUDES . '/functions.php';
 		}
 
 		/**

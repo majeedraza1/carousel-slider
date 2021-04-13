@@ -4,6 +4,7 @@ namespace CarouselSlider;
 
 use CarouselSlider\Admin\Admin;
 use CarouselSlider\Admin\GutenbergBlock;
+use CarouselSlider\Admin\MetaBox;
 use CarouselSlider\Admin\Setting;
 use CarouselSlider\Frontend\Frontend;
 use CarouselSlider\Frontend\Preview;
@@ -11,6 +12,7 @@ use CarouselSlider\Frontend\Shortcode;
 use CarouselSlider\Frontend\StructuredData;
 use CarouselSlider\Integration\VisualComposerElement;
 use CarouselSlider\Modules\HeroCarousel\HeroCarouselModule;
+use CarouselSlider\Modules\ImageCarousel\ImageCarouselModule;
 use CarouselSlider\Modules\ProductCarousel\ProductCarouselModule;
 use CarouselSlider\Modules\VideoCarousel\VideoCarouselModule;
 use CarouselSlider\Widget\CarouselSliderWidget;
@@ -90,6 +92,7 @@ class Plugin {
 	 * @return void
 	 */
 	public function modules_includes() {
+		$this->container['module_image_carousel']   = ImageCarouselModule::init();
 		$this->container['module_video_carousel']   = VideoCarouselModule::init();
 		$this->container['module_hero_carousel']    = HeroCarouselModule::init();
 		$this->container['module_product_carousel'] = ProductCarouselModule::init();
@@ -102,6 +105,7 @@ class Plugin {
 	 */
 	public function admin_includes() {
 		$this->container['admin']           = Admin::init();
+		$this->container['meta_box']        = MetaBox::init();
 		$this->container['setting']         = Setting::init();
 		$this->container['gutenberg_block'] = GutenbergBlock::init();
 	}

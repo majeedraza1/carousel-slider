@@ -3,6 +3,7 @@
 namespace CarouselSlider\Modules\VideoCarousel;
 
 use CarouselSlider\Frontend\Shortcode;
+use CarouselSlider\Utils;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -97,20 +98,7 @@ class VideoCarouselModule {
 	 * @return array
 	 */
 	public static function get_css_variable( int $slider_id ): array {
-		$nav_color        = get_post_meta( $slider_id, '_nav_color', true );
-		$active_nav_color = get_post_meta( $slider_id, '_nav_active_color', true );
-		$arrow_size       = get_post_meta( $slider_id, '_arrow_size', true );
-		$arrow_size       = is_numeric( $arrow_size ) ? absint( $arrow_size ) : 48;
-		$bullet_size      = get_post_meta( $slider_id, '_bullet_size', true );
-		$bullet_size      = is_numeric( $bullet_size ) ? absint( $bullet_size ) : 10;
-		$css_var          = [
-			"--carousel-slider-nav-color"        => $nav_color,
-			"--carousel-slider-active-nav-color" => $active_nav_color,
-			"--carousel-slider-arrow-size"       => $arrow_size . 'px',
-			"--carousel-slider-bullet-size"      => $bullet_size . 'px',
-		];
-
-		return apply_filters( 'carousel_slider/css_var', $css_var, $slider_id );
+		return Utils::get_css_variable( $slider_id );
 	}
 
 	/**

@@ -2,6 +2,8 @@
 
 namespace CarouselSlider\Frontend;
 
+use CarouselSlider\Utils;
+
 defined( 'ABSPATH' ) || exit;
 
 class Shortcode {
@@ -212,7 +214,26 @@ class Shortcode {
 	 * @return string
 	 */
 	public function get_meta( $id, $key, $default = null ) {
-		return carousel_slider_get_meta( $id, $key, $default );
+		$meta = get_post_meta( $id, $key, true );
+
+		if ( empty( $meta ) && $default ) {
+			$meta = $default;
+		}
+
+		if ( $meta == 'zero' ) {
+			$meta = '0';
+		}
+		if ( $meta == 'on' ) {
+			$meta = 'true';
+		}
+		if ( $meta == 'off' ) {
+			$meta = 'false';
+		}
+		if ( $key == '_margin_right' && $meta == 0 ) {
+			$meta = '0';
+		}
+
+		return esc_attr( $meta );
 	}
 
 	/**
@@ -223,7 +244,7 @@ class Shortcode {
 	 * @return array
 	 */
 	public function array_to_data( $array ) {
-		return carousel_slider_array_to_attribute( $array );
+		return Utils::array_to_attribute( (array) $array );
 	}
 
 	/**
