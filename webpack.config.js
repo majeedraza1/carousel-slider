@@ -5,7 +5,6 @@ const TerserPlugin = require('terser-webpack-plugin');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const svgToMiniDataURI = require('mini-svg-data-uri');
-const nodeExternals = require('webpack-node-externals');
 
 const config = require('./config.json');
 
@@ -147,8 +146,10 @@ module.exports = (env, argv) => {
 		plugins: plugins
 	}
 
-	if (!isDev) {
-		config.externals = [nodeExternals()]
+	webpackConfig.externals = {
+		'jquery': 'jQuery',
+		'react': 'React',
+		'react-dom': 'ReactDOM'
 	}
 
 	return webpackConfig;

@@ -36,7 +36,6 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ) {
 				add_filter( 'manage_edit-carousels_columns', [ self::$instance, 'columns_head' ] );
 				add_filter( 'manage_carousels_posts_custom_column', [ self::$instance, 'columns_content' ], 10, 2 );
 				add_action( 'save_post', [ self::$instance, 'save_meta_box' ] );
-				add_action( 'wp_ajax_carousel_slider_save_images', [ self::$instance, 'save_images' ] );
 
 				// Remove view and Quick Edit from Carousels
 				add_filter( 'post_row_actions', [ self::$instance, 'post_row_actions' ], 10, 2 );
@@ -75,17 +74,17 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ) {
 				'not_found'          => __( 'Not found', 'carousel-slider' ),
 				'not_found_in_trash' => __( 'Not found in Trash', 'carousel-slider' ),
 			];
-			$args   = array(
+			$args   = [
 				'label'               => __( 'Slider', 'carousel-slider' ),
 				'description'         => __( 'The easiest way to create carousel slider', 'carousel-slider' ),
 				'labels'              => $labels,
-				'supports'            => array( 'title' ),
+				'supports'            => [ 'title' ],
 				'hierarchical'        => false,
 				'public'              => false,
 				'show_ui'             => true,
 				'show_in_menu'        => true,
 				'show_in_nav_menus'   => true,
-				'show_in_admin_bar'   => true,
+				'show_in_admin_bar'   => false,
 				'menu_position'       => 5.55525,
 				'menu_icon'           => 'dashicons-slides',
 				'can_export'          => true,
@@ -94,7 +93,7 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ) {
 				'publicly_queryable'  => true,
 				'rewrite'             => false,
 				'capability_type'     => 'post',
-			);
+			];
 
 			register_post_type( 'carousels', $args );
 		}
@@ -105,7 +104,7 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ) {
 		 * @param array $actions
 		 * @param WP_Post $post
 		 *
-		 * @return mixed
+		 * @return array
 		 */
 		public function post_row_actions( $actions, $post ) {
 			if ( $post->post_type != 'carousels' ) {
@@ -277,39 +276,6 @@ if ( ! class_exists( 'Carousel_Slider_Admin' ) ) {
 			}
 
 			do_action( 'carousel_slider/save_slider', $post_id );
-		}
-
-		/**
-		 * Save carousel slider gallery images
-		 *
-		 * @return string
-		 */
-		public function save_images() {
-			// Check if not an autosave.
-			if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-				return;
-			}
-			// Check if required fields are set
-			if ( ! isset( $_POST['ids'], $_POST['post_id'] ) ) {
-				return;
-			}
-			// Check if user has permissions to save data.
-			if ( ! current_user_can( 'edit_posts' ) ) {
-				return;
-			}
-
-			$ids = strip_tags( rtrim( $_POST['ids'], ',' ) );
-			update_post_meta( $_POST['post_id'], '_wpdh_image_ids', $ids );
-
-			$thumbs        = explode( ',', $ids );
-			$thumbs_output = '';
-			foreach ( $thumbs as $thumb ) {
-				$thumbs_output .= '<li>' . wp_get_attachment_image( $thumb, array( 75, 75 ) ) . '</li>';
-			}
-
-			echo $thumbs_output;
-
-			die();
 		}
 
 		/**
