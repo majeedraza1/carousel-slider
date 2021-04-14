@@ -56,15 +56,6 @@ class Shortcode {
 			return apply_filters( 'carousel_slider_posts_carousel', $html, $id );
 		}
 
-		if ( $slide_type == 'image-carousel-url' ) {
-			ob_start();
-			require CAROUSEL_SLIDER_TEMPLATES . '/public/images-carousel-url.php';
-			$html = ob_get_contents();
-			ob_end_clean();
-
-			return apply_filters( 'carousel_slider_link_images_carousel', $html, $id );
-		}
-
 		if ( $slide_type == 'product-carousel' ) {
 
 			$query_type = get_post_meta( $id, '_product_query_type', true );
@@ -112,61 +103,14 @@ class Shortcode {
 	 * @return array
 	 */
 	public function carousel_options( $id ) {
-		$_nav_button      = get_post_meta( $id, '_nav_button', true );
-		$_arrow_position  = get_post_meta( $id, '_arrow_position', true );
-		$_dot_nav         = get_post_meta( $id, '_dot_nav', true );
-		$_bullet_position = get_post_meta( $id, '_bullet_position', true );
-		$_bullet_shape    = get_post_meta( $id, '_bullet_shape', true );
-
-		$class = 'owl-carousel carousel-slider';
-
-		// Arrows position
-		if ( $_arrow_position == 'inside' ) {
-			$class .= ' arrows-inside';
-		} else {
-			$class .= ' arrows-outside';
-		}
-
-		// Arrows visibility
-		if ( $_nav_button == 'always' ) {
-			$class .= ' arrows-visible-always';
-		} elseif ( $_nav_button == 'off' ) {
-			$class .= ' arrows-hidden';
-		} else {
-			$class .= ' arrows-visible-hover';
-		}
-
-		// Dots visibility
-		if ( $_dot_nav == 'on' ) {
-			$class .= ' dots-visible-always';
-		} elseif ( $_dot_nav == 'off' ) {
-			$class .= ' dots-hidden';
-		} else {
-			$class .= ' dots-visible-hover';
-		}
-
-		// Dots position
-		if ( $_bullet_position == 'left' ) {
-			$class .= ' dots-left';
-		} elseif ( $_bullet_position == 'right' ) {
-			$class .= ' dots-right';
-		} else {
-			$class .= ' dots-center';
-		}
-
-		// Dots shape
-		if ( $_bullet_shape == 'circle' ) {
-			$class .= ' dots-circle';
-		} else {
-			$class .= ' dots-square';
-		}
-
 		$_dot_nav    = ( get_post_meta( $id, '_dot_nav', true ) != 'off' );
 		$_nav_button = ( get_post_meta( $id, '_nav_button', true ) != 'off' );
 
+		$classes = Utils::get_css_classes( $id );
+
 		$options_array = array(
 			'id'                        => 'id-' . $id,
-			'class'                     => $class,
+			'class'                     => implode( ' ', $classes ),
 			// General
 			'data-slide-type'           => $this->get_meta( $id, '_slide_type', 'image-carousel' ),
 			'data-margin'               => $this->get_meta( $id, '_margin_right', '10' ),

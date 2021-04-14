@@ -48,6 +48,9 @@ class ImageCarouselModule {
 		if ( 'image-carousel' == $slider_type ) {
 			return self::get_image_carousel_view( $slider_id );
 		}
+		if ( 'image-carousel-url' == $slider_type ) {
+			return ImageCarouselUrl::get_view( $slider_id );
+		}
 
 		return $html;
 	}

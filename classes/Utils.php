@@ -63,6 +63,66 @@ class Utils {
 	}
 
 	/**
+	 * Get slider css classes
+	 *
+	 * @param int $slider_id
+	 *
+	 * @return string[]
+	 */
+	public static function get_css_classes( int $slider_id ): array {
+		$nav_button      = get_post_meta( $slider_id, '_nav_button', true );
+		$arrow_position  = get_post_meta( $slider_id, '_arrow_position', true );
+		$dot_nav         = get_post_meta( $slider_id, '_dot_nav', true );
+		$bullet_position = get_post_meta( $slider_id, '_bullet_position', true );
+		$bullet_shape    = get_post_meta( $slider_id, '_bullet_shape', true );
+
+		$class = [ 'owl-carousel', 'carousel-slider' ];
+
+		// Arrows position
+		if ( $arrow_position == 'inside' ) {
+			$class[] = 'arrows-inside';
+		} else {
+			$class[] = 'arrows-outside';
+		}
+
+		// Arrows visibility
+		if ( $nav_button == 'always' ) {
+			$class[] = 'arrows-visible-always';
+		} elseif ( $nav_button == 'off' ) {
+			$class[] = 'arrows-hidden';
+		} else {
+			$class[] = 'arrows-visible-hover';
+		}
+
+		// Dots visibility
+		if ( $dot_nav == 'on' ) {
+			$class[] = 'dots-visible-always';
+		} elseif ( $dot_nav == 'off' ) {
+			$class[] = 'dots-hidden';
+		} else {
+			$class[] = 'dots-visible-hover';
+		}
+
+		// Dots position
+		if ( $bullet_position == 'left' ) {
+			$class[] = 'dots-left';
+		} elseif ( $bullet_position == 'right' ) {
+			$class[] = 'dots-right';
+		} else {
+			$class[] = 'dots-center';
+		}
+
+		// Dots shape
+		if ( $bullet_shape == 'circle' ) {
+			$class[] = 'dots-circle';
+		} else {
+			$class[] = 'dots-square';
+		}
+
+		return $class;
+	}
+
+	/**
 	 * Get available image sizes
 	 *
 	 * @return array
