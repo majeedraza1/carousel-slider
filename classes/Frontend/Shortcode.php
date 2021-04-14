@@ -65,15 +65,6 @@ class Shortcode {
 			return apply_filters( 'carousel_slider_link_images_carousel', $html, $id );
 		}
 
-		if ( $slide_type == 'image-carousel' ) {
-			ob_start();
-			require CAROUSEL_SLIDER_TEMPLATES . '/public/images-carousel.php';
-			$html = ob_get_contents();
-			ob_end_clean();
-
-			return apply_filters( 'carousel_slider_gallery_images_carousel', $html, $id );
-		}
-
 		if ( $slide_type == 'product-carousel' ) {
 
 			$query_type = get_post_meta( $id, '_product_query_type', true );
@@ -107,7 +98,7 @@ class Shortcode {
 			$html = ob_get_contents();
 			ob_end_clean();
 
-			return apply_filters( 'CarouselSlider\Modules\HeroCarousel\Ajax', $html, $id );
+			return apply_filters( 'carousel_slider_hero_banner_carousel', $html, $id );
 		}
 
 		return apply_filters( 'carousel_slider/view', '', $id, $slide_type );
