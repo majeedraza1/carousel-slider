@@ -4,7 +4,7 @@ namespace CarouselSlider\Modules\HeroCarousel;
 
 defined( 'ABSPATH' ) || exit;
 
-class HeroUtils {
+class HeroCarouselHelper {
 	/**
 	 * @param bool $key_only
 	 *

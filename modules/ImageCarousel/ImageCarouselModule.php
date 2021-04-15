@@ -4,7 +4,7 @@ namespace CarouselSlider\Modules\ImageCarousel;
 
 use CarouselSlider\Frontend\Shortcode;
 use CarouselSlider\Supports\Validate;
-use CarouselSlider\Utils;
+use CarouselSlider\Helper;
 use WP_Post;
 
 defined( 'ABSPATH' ) || exit;
@@ -83,7 +83,7 @@ class ImageCarouselModule {
 			"carousel-slider-outer-images",
 			"carousel-slider-outer-{$slider_id}"
 		];
-		$css_vars    = Utils::get_css_variable( $slider_id );
+		$css_vars    = Helper::get_css_variable( $slider_id );
 		$styles      = [];
 		foreach ( $css_vars as $key => $var ) {
 			$styles[] = sprintf( "%s:%s", $key, $var );

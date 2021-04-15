@@ -1,6 +1,6 @@
 <?php
 
-use CarouselSlider\Modules\ProductCarousel\ProductUtils;
+use CarouselSlider\Modules\ProductCarousel\ProductCarouselHelper;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -23,7 +23,7 @@ if ( ! carousel_slider_is_woocommerce_active() ) {
 		<?php
 		global $post;
 		global $product;
-		$products = ProductUtils::get_products( $id );
+		$products = ProductCarouselHelper::get_products( $id );
 
 		foreach ( $products as $product ):
 			$post = get_post( $product->get_id() );

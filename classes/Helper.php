@@ -4,7 +4,7 @@ namespace CarouselSlider;
 
 defined( 'ABSPATH' ) || exit;
 
-class Utils {
+class Helper {
 
 	/**
 	 * Get carousel slider available slide type
@@ -12,14 +12,14 @@ class Utils {
 	 * @return array
 	 */
 	public static function get_slide_types(): array {
-		return apply_filters( 'carousel_slider_slide_type', array(
+		return apply_filters( 'carousel_slider_slide_type', [
 			'image-carousel'     => __( 'Image Carousel', 'carousel-slider' ),
 			'image-carousel-url' => __( 'Image Carousel (URL)', 'carousel-slider' ),
 			'post-carousel'      => __( 'Post Carousel', 'carousel-slider' ),
 			'product-carousel'   => __( 'Product Carousel', 'carousel-slider' ),
 			'video-carousel'     => __( 'Video Carousel', 'carousel-slider' ),
 			'hero-banner-slider' => __( 'Hero Carousel', 'carousel-slider' ),
-		) );
+		] );
 	}
 
 	/**
@@ -132,7 +132,7 @@ class Utils {
 
 		$sizes = [];
 		foreach ( get_intermediate_image_sizes() as $_size ) {
-			if ( in_array( $_size, array( 'thumbnail', 'medium', 'medium_large', 'large' ) ) ) {
+			if ( in_array( $_size, [ 'thumbnail', 'medium', 'medium_large', 'large' ] ) ) {
 
 				$width  = get_option( "{$_size}_size_w" );
 				$height = get_option( "{$_size}_size_h" );
@@ -186,5 +186,73 @@ class Utils {
 			return sprintf( '%s="%s"', $key, esc_attr( $value ) );
 
 		}, array_keys( $array ), array_values( $array ) );
+	}
+
+	/**
+	 * Get post meta by id and key
+	 *
+	 * @param int $id
+	 * @param string $key
+	 * @param null $default
+	 *
+	 * @return string
+	 */
+	public static function get_meta( int $id, string $key, $default = null ): string {
+		$meta = get_post_meta( $id, $key, true );
+
+		if ( empty( $meta ) && $default ) {
+			$meta = $default;
+		}
+
+		if ( $meta == 'zero' ) {
+			$meta = '0';
+		}
+		if ( $meta == 'on' ) {
+			$meta = 'true';
+		}
+		if ( $meta == 'off' ) {
+			$meta = 'false';
+		}
+		if ( $key == '_margin_right' && $meta == 0 ) {
+			$meta = '0';
+		}
+
+		return esc_attr( $meta );
+	}
+
+	/**
+	 * Get Owl Carousel Settings
+	 *
+	 * @param int $slider_id
+	 *
+	 * @return array
+	 */
+	public static function get_owl_carousel_settings( int $slider_id ): array {
+		return [
+			"stagePadding"       => (int) self::get_meta( $slider_id, '_stage_padding', 0 ),
+			"nav"                => get_post_meta( $slider_id, '_nav_button', true ) != 'off',
+			"dots"               => get_post_meta( $slider_id, '_dot_nav', true ) != 'off',
+			"margin"             => (int) self::get_meta( $slider_id, '_margin_right', 10 ),
+			"loop"               => self::get_meta( $slider_id, '_infinity_loop', true ),
+			"autoplay"           => self::get_meta( $slider_id, '_autoplay', true ),
+			"autoplayTimeout"    => (int) self::get_meta( $slider_id, '_autoplay_timeout', 5000 ),
+			"autoplaySpeed"      => (int) self::get_meta( $slider_id, '_autoplay_speed', 500 ),
+			"autoplayHoverPause" => self::get_meta( $slider_id, '_autoplay_pause', false ),
+			"slideBy"            => self::get_meta( $slider_id, '_slide_by', 1 ),
+			"lazyLoad"           => self::get_meta( $slider_id, '_lazy_load_image', true ),
+			"autoWidth"          => self::get_meta( $slider_id, '_auto_width', false ),
+			"navText"            => [
+				'<svg class="carousel-slider-nav-icon" viewBox="0 0 20 20"><path d="M14 5l-5 5 5 5-1 2-7-7 7-7z"></path></use></svg>',
+				'<svg class="carousel-slider-nav-icon" viewBox="0 0 20 20"><path d="M6 15l5-5-5-5 1-2 7 7-7 7z"></path></svg>'
+			],
+			"responsive"         => [
+				"300"  => (int) self::get_meta( $slider_id, '_items_portrait_mobile', 1 ),
+				"600"  => (int) self::get_meta( $slider_id, '_items_small_portrait_tablet', 2 ),
+				"768"  => (int) self::get_meta( $slider_id, '_items_portrait_tablet', 3 ),
+				"1024" => (int) self::get_meta( $slider_id, '_items_small_desktop', 4 ),
+				"1200" => (int) self::get_meta( $slider_id, '_items_desktop', 4 ),
+				"1921" => (int) self::get_meta( $slider_id, '_items', 4 ),
+			]
+		];
 	}
 }

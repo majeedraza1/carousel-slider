@@ -50,7 +50,7 @@ class ProductCarouselModule {
 			$quick_view_html = '<div style="clear: both;"></div>';
 			$quick_view_html .= sprintf(
 				'<a class="magnific-popup button quick_view" href="%1$s" data-product-id="%2$s">%3$s</a>',
-				ProductUtils::get_product_quick_view_url( $product->get_id() ),
+				ProductCarouselHelper::get_product_quick_view_url( $product->get_id() ),
 				$product->get_id(),
 				__( 'Quick View', 'carousel-slider' )
 			);

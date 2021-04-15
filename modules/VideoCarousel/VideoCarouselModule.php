@@ -3,7 +3,7 @@
 namespace CarouselSlider\Modules\VideoCarousel;
 
 use CarouselSlider\Frontend\Shortcode;
-use CarouselSlider\Utils;
+use CarouselSlider\Helper;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -91,17 +91,6 @@ class VideoCarouselModule {
 	}
 
 	/**
-	 * Get slider CSS style variables
-	 *
-	 * @param int $slider_id
-	 *
-	 * @return array
-	 */
-	public static function get_css_variable( int $slider_id ): array {
-		return Utils::get_css_variable( $slider_id );
-	}
-
-	/**
 	 * @param string $html
 	 * @param int $slider_id
 	 * @param string $slider_type
@@ -128,14 +117,14 @@ class VideoCarouselModule {
 		if ( is_string( $urls ) ) {
 			$urls = array_filter( explode( ',', $urls ) );
 		}
-		$urls = VideoUtils::get_video_url( $urls );
+		$urls = VideoCarouselHelper::get_video_url( $urls );
 
 		$css_classes = [
 			"carousel-slider-outer",
 			"carousel-slider-outer-videos",
 			"carousel-slider-outer-{$slider_id}"
 		];
-		$css_vars    = self::get_css_variable( $slider_id );
+		$css_vars    = Helper::get_css_variable( $slider_id );
 		$styles      = [];
 		foreach ( $css_vars as $key => $var ) {
 			$styles[] = sprintf( "%s:%s", $key, $var );

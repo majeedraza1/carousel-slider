@@ -1,11 +1,11 @@
 <?php
 
-use CarouselSlider\Modules\HeroCarousel\HeroUtils;
-use CarouselSlider\Modules\PostCarousel\PostUtils;
-use CarouselSlider\Modules\ProductCarousel\ProductUtils;
+use CarouselSlider\Modules\HeroCarousel\HeroCarouselHelper;
+use CarouselSlider\Modules\PostCarousel\PostCarouselHelper;
+use CarouselSlider\Modules\ProductCarousel\ProductCarouselHelper;
 use CarouselSlider\Supports\Sanitize;
 use CarouselSlider\Supports\Validate;
-use CarouselSlider\Utils;
+use CarouselSlider\Helper;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -28,7 +28,7 @@ if ( ! function_exists( 'carousel_slider_sanitize_color' ) ) {
 	 *
 	 * @param $color
 	 *
-	 * @return mixed|string
+	 * @return string
 	 */
 	function carousel_slider_sanitize_color( $color ) {
 		return Sanitize::color( $color );
@@ -46,26 +46,7 @@ if ( ! function_exists( 'carousel_slider_get_meta' ) ) {
 	 * @return string
 	 */
 	function carousel_slider_get_meta( $id, $key, $default = null ) {
-		$meta = get_post_meta( $id, $key, true );
-
-		if ( empty( $meta ) && $default ) {
-			$meta = $default;
-		}
-
-		if ( $meta == 'zero' ) {
-			$meta = '0';
-		}
-		if ( $meta == 'on' ) {
-			$meta = 'true';
-		}
-		if ( $meta == 'off' ) {
-			$meta = 'false';
-		}
-		if ( $key == '_margin_right' && $meta == 0 ) {
-			$meta = '0';
-		}
-
-		return esc_attr( $meta );
+		return Helper::get_meta( $id, $key, $default );
 	}
 }
 
@@ -78,7 +59,7 @@ if ( ! function_exists( 'carousel_slider_array_to_attribute' ) ) {
 	 * @return array
 	 */
 	function carousel_slider_array_to_attribute( $array ): array {
-		return Utils::array_to_attribute( (array) $array );
+		return Helper::array_to_attribute( (array) $array );
 	}
 }
 
@@ -89,7 +70,7 @@ if ( ! function_exists( 'carousel_slider_is_woocommerce_active' ) ) {
 	 * @return bool
 	 */
 	function carousel_slider_is_woocommerce_active(): bool {
-		return Utils::is_woocommerce_active();
+		return Helper::is_woocommerce_active();
 	}
 }
 
@@ -102,7 +83,7 @@ if ( ! function_exists( 'carousel_slider_posts' ) ) {
 	 * @return array
 	 */
 	function carousel_slider_posts( $carousel_id ): array {
-		return PostUtils::get_posts( intval( $carousel_id ) );
+		return PostCarouselHelper::get_posts( intval( $carousel_id ) );
 	}
 }
 
@@ -114,7 +95,7 @@ if ( ! function_exists( 'carousel_slider_posts' ) ) {
  * @return array|WP_Post[]
  */
 function carousel_slider_products( $carousel_id ): array {
-	$ids = ProductUtils::get_products( $carousel_id, [ 'return' => 'ids' ] );
+	$ids = ProductCarouselHelper::get_products( $carousel_id, [ 'return' => 'ids' ] );
 	if ( count( $ids ) ) {
 		return get_posts( [ 'post__in' => $ids ] );
 	}
@@ -131,7 +112,7 @@ if ( ! function_exists( 'carousel_slider_slide_type' ) ) {
 	 * @return array
 	 */
 	function carousel_slider_slide_type( $key_only = true ): array {
-		$types = Utils::get_slide_types();
+		$types = Helper::get_slide_types();
 
 		if ( $key_only ) {
 			return array_keys( $types );
@@ -148,7 +129,7 @@ if ( ! function_exists( 'carousel_slider_background_position' ) ) {
 	 * @return array
 	 */
 	function carousel_slider_background_position( $key_only = false ): array {
-		return HeroUtils::background_position( $key_only );
+		return HeroCarouselHelper::background_position( $key_only );
 	}
 }
 
@@ -159,13 +140,13 @@ if ( ! function_exists( 'carousel_slider_background_size' ) ) {
 	 * @return array
 	 */
 	function carousel_slider_background_size( $key_only = false ): array {
-		return HeroUtils::background_size( $key_only );
+		return HeroCarouselHelper::background_size( $key_only );
 	}
 }
 
 if ( ! function_exists( 'carousel_slider_default_settings' ) ) {
 	function carousel_slider_default_settings() {
-		$options = Utils::get_default_settings();
+		$options = Helper::get_default_settings();
 
 		return json_decode( json_encode( $options ) );
 	}

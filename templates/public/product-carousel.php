@@ -1,6 +1,6 @@
 <?php
 
-use CarouselSlider\Modules\ProductCarousel\ProductUtils;
+use CarouselSlider\Modules\ProductCarousel\ProductCarouselHelper;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -17,7 +17,7 @@ if ( ! carousel_slider_is_woocommerce_active() ) {
 	return;
 }
 
-$products = ProductUtils::get_products( $id );
+$products = ProductCarouselHelper::get_products( $id );
 
 $_image_size       = get_post_meta( $id, '_image_size', true );
 $_nav_color        = get_post_meta( $id, '_nav_color', true );

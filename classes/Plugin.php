@@ -13,6 +13,7 @@ use CarouselSlider\Frontend\StructuredData;
 use CarouselSlider\Integration\VisualComposerElement;
 use CarouselSlider\Modules\HeroCarousel\HeroCarouselModule;
 use CarouselSlider\Modules\ImageCarousel\ImageCarouselModule;
+use CarouselSlider\Modules\PostCarousel\PostCarouselModule;
 use CarouselSlider\Modules\ProductCarousel\ProductCarouselModule;
 use CarouselSlider\Modules\VideoCarousel\VideoCarouselModule;
 use CarouselSlider\Widget\CarouselSliderWidget;
@@ -94,8 +95,9 @@ class Plugin {
 	public function modules_includes() {
 		$this->container['module_image_carousel']   = ImageCarouselModule::init();
 		$this->container['module_video_carousel']   = VideoCarouselModule::init();
-		$this->container['module_hero_carousel']    = HeroCarouselModule::init();
+		$this->container['module_post_carousel']    = PostCarouselModule::init();
 		$this->container['module_product_carousel'] = ProductCarouselModule::init();
+		$this->container['module_hero_carousel']    = HeroCarouselModule::init();
 	}
 
 	/**

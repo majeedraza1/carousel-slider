@@ -7,7 +7,7 @@ use WP_Term;
 
 defined( 'ABSPATH' ) || exit;
 
-class ProductUtils {
+class ProductCarouselHelper {
 
 	/**
 	 * Parse arguments

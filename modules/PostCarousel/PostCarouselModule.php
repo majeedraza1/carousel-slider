@@ -1,28 +1,79 @@
 <?php
-// If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-	die;
-}
 
-$_image_size       = get_post_meta( $id, '_image_size', true );
-$_nav_color        = get_post_meta( $id, '_nav_color', true );
-$_nav_active_color = get_post_meta( $id, '_nav_active_color', true );
-$_lazy_load_image  = get_post_meta( $id, '_lazy_load_image', true );
-?>
-<div class="carousel-slider-outer carousel-slider-outer-posts carousel-slider-outer-<?php echo $id; ?>">
-	<?php carousel_slider_inline_style( $id ); ?>
-	<div <?php echo join( " ", $this->carousel_options( $id ) ); ?>>
-		<?php
-		$posts = carousel_slider_posts( $id );
-		foreach ( $posts as $_post ):
-			global $post;
-			$post = $_post;
+namespace CarouselSlider\Modules\PostCarousel;
+
+use CarouselSlider\Frontend\Shortcode;
+use CarouselSlider\Helper;
+use CarouselSlider\Supports\Validate;
+
+defined( 'ABSPATH' ) || exit;
+
+class PostCarouselModule {
+	/**
+	 * The instance of the class
+	 *
+	 * @var self
+	 */
+	protected static $instance;
+
+	/**
+	 * Ensures only one instance of the class is loaded or can be loaded.
+	 *
+	 * @return self
+	 */
+	public static function init() {
+		if ( is_null( self::$instance ) ) {
+			self::$instance = new self();
+
+			add_filter( 'carousel_slider/view', [ self::$instance, 'view' ], 10, 3 );
+		}
+
+		return self::$instance;
+	}
+
+	/**
+	 * @param string $html
+	 * @param int $slider_id
+	 * @param string $slider_type
+	 *
+	 * @return string
+	 */
+	public function view( string $html, int $slider_id, string $slider_type ): string {
+		if ( $slider_type == 'post-carousel' ) {
+			return self::get_view( $slider_id );
+		}
+
+		return $html;
+	}
+
+	public static function get_view( int $slider_id ): string {
+		$_image_size      = get_post_meta( $slider_id, '_image_size', true );
+		$_lazy_load_image = get_post_meta( $slider_id, '_lazy_load_image', true );
+
+		$posts = PostCarouselHelper::get_posts( $slider_id );
+
+		$css_classes = [
+			"carousel-slider-outer",
+			"carousel-slider-outer-posts",
+			"carousel-slider-outer-{$slider_id}"
+		];
+		$css_vars    = Helper::get_css_variable( $slider_id );
+		$styles      = [];
+		foreach ( $css_vars as $key => $var ) {
+			$styles[] = sprintf( "%s:%s", $key, $var );
+		}
+
+		$options = ( new Shortcode )->carousel_options( $slider_id );
+		$html    = '<div class="' . join( ' ', $css_classes ) . '" style="' . implode( ';', $styles ) . '">';
+		$html    .= '<div ' . join( " ", $options ) . '>';
+
+		foreach ( $posts as $post ) {
 			setup_postdata( $post );
 			$category = get_the_category( $post->ID );
 
 			do_action( 'carousel_slider_post_loop', $post, $category );
 
-			$html = '<div class="carousel-slider__post">';
+			$html .= '<div class="carousel-slider__post">';
 			$html .= '<div class="carousel-slider__post-content">';
 			$html .= '<div class="carousel-slider__post-header">';
 			// Post Thumbnail
@@ -36,16 +87,12 @@ $_lazy_load_image  = get_post_meta( $id, '_lazy_load_image', true );
 			if ( has_post_thumbnail( $post ) ) {
 				$image_src = wp_get_attachment_image_src( $_thumb_id, $_image_size );
 
-				if ( $_lazy_load_image == 'on' ) {
-
+				if ( Validate::checked( $_lazy_load_image ) ) {
 					$html .= sprintf( '<a href="%s" class="carousel-slider__post-image owl-lazy" data-src="%s"></a>', $_permalink, $image_src[0] );
 				} else {
-
 					$html .= sprintf( '<a href="%s" class="carousel-slider__post-image" style="background-image: url(%s)"></a>', $_permalink, $image_src[0] );
 				}
-
 			} else {
-
 				$html .= sprintf( '<a href="%s" class="carousel-slider__post-image"></a>', $_permalink );
 			}
 
@@ -103,10 +150,12 @@ $_lazy_load_image  = get_post_meta( $id, '_lazy_load_image', true );
 			$html .= '</footer>';
 			$html .= '</div>';
 			$html .= '</div>';
-
-			echo apply_filters( 'carousel_slider_post', $html, $post, $category );
-		endforeach;
+		}
 		wp_reset_postdata();
-		?>
-	</div>
-</div>
+
+		$html .= '</div>';
+		$html .= '</div>';
+
+		return apply_filters( 'carousel_slider_posts_carousel', $html, $slider_id, $posts );
+	}
+}
