@@ -162,11 +162,9 @@ if ( ! function_exists( 'carousel_slider_inline_style' ) ) {
 		$id                      = $carousel_id;
 		$_nav_color              = get_post_meta( $id, '_nav_color', true );
 		$_nav_active_color       = get_post_meta( $id, '_nav_active_color', true );
-		$_post_height            = get_post_meta( $id, '_post_height', true );
 		$_product_title_color    = get_post_meta( $id, '_product_title_color', true );
 		$_product_btn_bg_color   = get_post_meta( $id, '_product_button_bg_color', true );
 		$_product_btn_text_color = get_post_meta( $id, '_product_button_text_color', true );
-		$content_sliders         = get_post_meta( $id, '_content_slider', true );
 
 		$slide_type = get_post_meta( $id, '_slide_type', true );
 		$slide_type = in_array( $slide_type, carousel_slider_slide_type() ) ? $slide_type : 'image-carousel';
@@ -234,94 +232,6 @@ if ( ! function_exists( 'carousel_slider_inline_style' ) ) {
                     color: {$_product_btn_bg_color};
                 }
 		    ";
-		}
-
-		// Content Carousel
-		if ( $slide_type == 'hero-banner-slider' && $content_sliders ) {
-			foreach ( $content_sliders as $slide_id => $slide ) {
-				// Title Style
-				$heading_font_size = ! empty( $slide['heading_font_size'] ) ? esc_attr( $slide['heading_font_size'] ) : 40;
-				$heading_gutter    = ! empty( $slide['heading_gutter'] ) ? esc_attr( $slide['heading_gutter'] ) : '30px';
-				$heading_color     = ! empty( $slide['heading_color'] ) ? esc_attr( $slide['heading_color'] ) : '#ffffff';
-				echo "#id-{$id} .hero__cell-{$slide_id} .carousel-slider-hero__cell__heading {
-					font-size: {$heading_font_size}px;
-					margin-bottom: {$heading_gutter};
-					color: {$heading_color};
-				}";
-				// Description Style
-				$description_font_size = ! empty( $slide['description_font_size'] ) ? esc_attr( $slide['description_font_size'] ) : 20;
-				$description_gutter    = ! empty( $slide['description_gutter'] ) ? esc_attr( $slide['description_gutter'] ) : '30px';
-				$description_color     = ! empty( $slide['description_color'] ) ? esc_attr( $slide['description_color'] ) : '#ffffff';
-				echo "#id-{$id} .hero__cell-{$slide_id} .carousel-slider-hero__cell__description{
-					font-size: {$description_font_size}px;
-					margin-bottom: {$description_gutter};
-					color: {$description_color};
-				}";
-				// Button Style
-				if ( isset( $slide['link_type'] ) && ( $slide['link_type'] == 'button' ) ) {
-
-					$_btn_1_type          = ! empty( $slide['button_one_type'] ) ? esc_attr( $slide['button_one_type'] ) : 'normal';
-					$_btn_1_bg_color      = ! empty( $slide['button_one_bg_color'] ) ? carousel_slider_sanitize_color( $slide['button_one_bg_color'] ) : '#00d1b2';
-					$_btn_1_color         = ! empty( $slide['button_one_color'] ) ? carousel_slider_sanitize_color( $slide['button_one_color'] ) : '#ffffff';
-					$_btn_1_border_width  = ! empty( $slide['button_one_border_width'] ) ? esc_attr( $slide['button_one_border_width'] ) : '0px';
-					$_btn_1_border_radius = ! empty( $slide['button_one_border_radius'] ) ? esc_attr( $slide['button_one_border_radius'] ) : '3px';
-
-					if ( $_btn_1_type == 'stroke' ) {
-						echo "
-						#id-{$id} .cs-hero-button-{$slide_id}-1 {
-							border: {$_btn_1_border_width} solid {$_btn_1_bg_color};
-							border-radius: {$_btn_1_border_radius};
-							background-color: transparent;
-							color: {$_btn_1_bg_color};
-						}
-						#id-{$id} .cs-hero-button-{$slide_id}-1:hover {
-							border: {$_btn_1_border_width} solid {$_btn_1_bg_color};
-							background-color: {$_btn_1_bg_color};
-							color: {$_btn_1_color};
-						}
-					";
-					} else {
-						echo "
-						#id-{$id} .cs-hero-button-{$slide_id}-1 {
-							background-color: {$_btn_1_bg_color};
-							border: {$_btn_1_border_width} solid {$_btn_1_bg_color};
-							border-radius: {$_btn_1_border_radius};
-							color: {$_btn_1_color};
-						}
-					";
-					}
-
-					$_btn_2_type          = ! empty( $slide['button_two_type'] ) ? esc_attr( $slide['button_two_type'] ) : 'normal';
-					$_btn_2_bg_color      = ! empty( $slide['button_two_bg_color'] ) ? carousel_slider_sanitize_color( $slide['button_two_bg_color'] ) : '#00d1b2';
-					$_btn_2_color         = ! empty( $slide['button_two_color'] ) ? carousel_slider_sanitize_color( $slide['button_two_color'] ) : '#ffffff';
-					$_btn_2_border_width  = ! empty( $slide['button_two_border_width'] ) ? esc_attr( $slide['button_two_border_width'] ) : '0px';
-					$_btn_2_border_radius = ! empty( $slide['button_two_border_radius'] ) ? esc_attr( $slide['button_two_border_radius'] ) : '3px';
-					if ( $_btn_2_type == 'stroke' ) {
-						echo "
-						#id-{$id} .cs-hero-button-{$slide_id}-2 {
-							border: {$_btn_2_border_width} solid {$_btn_2_bg_color};
-							border-radius: {$_btn_2_border_radius};
-							background-color: transparent;
-							color: {$_btn_2_bg_color};
-						}
-						#id-{$id} .cs-hero-button-{$slide_id}-2:hover {
-							border: {$_btn_2_border_width} solid {$_btn_2_bg_color};
-							background-color: {$_btn_2_bg_color};
-							color: {$_btn_2_color};
-						}
-					";
-					} else {
-						echo "
-						#id-{$id} .cs-hero-button-{$slide_id}-2 {
-							background-color: {$_btn_2_bg_color};
-							border: {$_btn_2_border_width} solid {$_btn_2_bg_color};
-							border-radius: {$_btn_2_border_radius};
-							color: {$_btn_2_color};
-						}
-					";
-					}
-				}
-			}
 		}
 
 		echo "</style>";

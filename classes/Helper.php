@@ -189,6 +189,25 @@ class Helper {
 	}
 
 	/**
+	 * Array to style
+	 *
+	 * @param array $styles
+	 *
+	 * @return string
+	 */
+	public static function array_to_style( array $styles ): string {
+		$_styles = [];
+		foreach ( $styles as $key => $value ) {
+			if ( ! is_string( $key ) || empty( $value ) ) {
+				continue;
+			}
+			$_styles[] = sprintf( "%s:%s", $key, $value );
+		}
+
+		return implode( ';', $_styles );
+	}
+
+	/**
 	 * Get post meta by id and key
 	 *
 	 * @param int $id

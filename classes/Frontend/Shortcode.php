@@ -68,16 +68,6 @@ class Shortcode {
 			return apply_filters( 'carousel_slider_product_carousel', $html, $id );
 		}
 
-		if ( $slide_type == 'hero-banner-slider' ) {
-
-			ob_start();
-			require CAROUSEL_SLIDER_TEMPLATES . '/public/hero-banner-slider.php';
-			$html = ob_get_contents();
-			ob_end_clean();
-
-			return apply_filters( 'carousel_slider_hero_banner_carousel', $html, $id );
-		}
-
 		return apply_filters( 'carousel_slider/view', '', $id, $slide_type );
 	}
 

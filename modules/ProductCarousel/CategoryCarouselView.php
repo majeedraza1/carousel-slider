@@ -5,6 +5,8 @@ namespace CarouselSlider\Modules\ProductCarousel;
 use CarouselSlider\Frontend\Shortcode;
 use CarouselSlider\Helper;
 
+defined( 'ABSPATH' ) || exit;
+
 class CategoryCarouselView {
 	/**
 	 * Get view
