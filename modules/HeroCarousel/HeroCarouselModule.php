@@ -68,13 +68,8 @@ class HeroCarouselModule {
 			"carousel-slider-outer-$slider_id"
 		];
 
-		$attributes_array = Helper::array_to_attribute( [
-			'id'                => 'id-' . $slider_id,
-			'class'             => implode( ' ', Helper::get_css_classes( $slider_id ) ),
-			'style'             => Helper::array_to_style( Helper::get_css_variable( $slider_id ) ),
-			'data-slide-type'   => $slider_type,
-			'data-owl-settings' => wp_json_encode( Helper::get_owl_carousel_settings( $slider_id ) ),
-			'data-animation'    => $content_animation,
+		$attributes_array = Helper::get_slider_attributes( $slider_id, $slider_type, [
+			'data-animation' => $content_animation
 		] );
 
 		$html = '<div class="' . join( ' ', $css_classes ) . '">';

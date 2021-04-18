@@ -2,7 +2,6 @@
 
 namespace CarouselSlider\Modules\ImageCarousel;
 
-use CarouselSlider\Frontend\Shortcode;
 use CarouselSlider\Supports\Validate;
 use CarouselSlider\Helper;
 use WP_Post;
@@ -46,10 +45,10 @@ class ImageCarouselModule {
 	 */
 	public function view( string $html, int $slider_id, string $slider_type ): string {
 		if ( 'image-carousel' == $slider_type ) {
-			return self::get_image_carousel_view( $slider_id );
+			return self::get_image_carousel_view( $slider_id, $slider_type );
 		}
 		if ( 'image-carousel-url' == $slider_type ) {
-			return ImageCarouselUrl::get_view( $slider_id );
+			return ImageCarouselUrl::get_view( $slider_id, $slider_type );
 		}
 
 		return $html;
@@ -59,10 +58,11 @@ class ImageCarouselModule {
 	 * Get view
 	 *
 	 * @param int $slider_id
+	 * @param string $slider_type
 	 *
 	 * @return string
 	 */
-	public static function get_image_carousel_view( int $slider_id ): string {
+	public static function get_image_carousel_view( int $slider_id, string $slider_type ): string {
 		$ids = get_post_meta( $slider_id, '_wpdh_image_ids', true );
 		if ( is_string( $ids ) ) {
 			$ids = array_filter( explode( ',', $ids ) );
@@ -83,15 +83,11 @@ class ImageCarouselModule {
 			"carousel-slider-outer-images",
 			"carousel-slider-outer-{$slider_id}"
 		];
-		$css_vars    = Helper::get_css_variable( $slider_id );
-		$styles      = [];
-		foreach ( $css_vars as $key => $var ) {
-			$styles[] = sprintf( "%s:%s", $key, $var );
-		}
 
-		$options = ( new Shortcode )->carousel_options( $slider_id );
-		$html    = '<div class="' . join( ' ', $css_classes ) . '" style="' . implode( ';', $styles ) . '">';
-		$html    .= '<div ' . join( " ", $options ) . '>';
+		$attributes_array = Helper::get_slider_attributes( $slider_id, $slider_type );
+
+		$html = '<div class="' . join( ' ', $css_classes ) . '">';
+		$html .= "<div " . join( " ", $attributes_array ) . ">";
 		foreach ( $ids as $id ) {
 			$_post = get_post( $id );
 			do_action( 'carousel_slider_image_gallery_loop', $_post );

@@ -304,4 +304,25 @@ class Helper {
 			]
 		];
 	}
+
+	/**
+	 * Get slider default attributes
+	 *
+	 * @param int $slider_id
+	 * @param string $slider_type
+	 * @param array $args
+	 *
+	 * @return array
+	 */
+	public static function get_slider_attributes( int $slider_id, string $slider_type, array $args = [] ): array {
+		$attributes = array_merge( [
+			'id'                => 'id-' . $slider_id,
+			'class'             => implode( ' ', Helper::get_css_classes( $slider_id ) ),
+			'style'             => Helper::array_to_style( Helper::get_css_variable( $slider_id ) ),
+			'data-slide-type'   => $slider_type,
+			'data-owl-settings' => wp_json_encode( Helper::get_owl_carousel_settings( $slider_id ) ),
+		], $args );
+
+		return Helper::array_to_attribute( $attributes );
+	}
 }

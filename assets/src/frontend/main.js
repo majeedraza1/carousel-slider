@@ -1,36 +1,7 @@
 jQuery('body').find('.carousel-slider').each(function () {
 
-	let _this = jQuery(this);
-	let autoWidth = _this.data('auto-width');
-	let stagePadding = parseInt(_this.data('stage-padding'));
-	stagePadding = stagePadding > 0 ? stagePadding : 0;
-
-	let owlSettings = _this.data('owl-settings') || {
-		stagePadding: stagePadding,
-		nav: _this.data('nav'),
-		dots: _this.data('dots'),
-		margin: _this.data('margin'),
-		loop: _this.data('loop'),
-		autoplay: _this.data('autoplay'),
-		autoplayTimeout: _this.data('autoplay-timeout'),
-		autoplaySpeed: _this.data('autoplay-speed'),
-		autoplayHoverPause: _this.data('autoplay-hover-pause'),
-		slideBy: _this.data('slide-by'),
-		lazyLoad: _this.data('lazy-load'),
-		autoWidth: autoWidth,
-		navText: [
-			'<svg class="carousel-slider-nav-icon" viewBox="0 0 20 20"><path d="M14 5l-5 5 5 5-1 2-7-7 7-7z"/></svg>',
-			'<svg class="carousel-slider-nav-icon" viewBox="0 0 20 20"><path d="M6 15l5-5-5-5 1-2 7 7-7 7z"/></svg>'
-		],
-		responsive: {
-			320: {items: _this.data('colums-mobile')},
-			600: {items: _this.data('colums-small-tablet')},
-			768: {items: _this.data('colums-tablet')},
-			993: {items: _this.data('colums-small-desktop')},
-			1200: {items: _this.data('colums-desktop')},
-			1921: {items: _this.data('colums')}
-		}
-	};
+	let _this = jQuery(this),
+		owlSettings = _this.data('owl-settings');
 
 	if (typeof owlSettings === "object") {
 		Object.assign(owlSettings, {
@@ -41,7 +12,6 @@ jQuery('body').find('.carousel-slider').each(function () {
 		})
 	}
 
-	console.log(owlSettings)
 	_this.owlCarousel(owlSettings);
 
 	if ('hero-banner-slider' === _this.data('slide-type')) {

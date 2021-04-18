@@ -2,7 +2,6 @@
 
 namespace CarouselSlider\Modules\ImageCarousel;
 
-use CarouselSlider\Frontend\Shortcode;
 use CarouselSlider\Supports\Validate;
 use CarouselSlider\Helper;
 
@@ -11,10 +10,11 @@ class ImageCarouselUrl {
 	 * Get view
 	 *
 	 * @param int $slider_id
+	 * @param string $slider_type
 	 *
 	 * @return string
 	 */
-	public static function get_view( int $slider_id ): string {
+	public static function get_view( int $slider_id, string $slider_type ): string {
 		$images_urls = (array) get_post_meta( $slider_id, '_images_urls', true );
 		if ( count( $images_urls ) < 1 ) {
 			return '';
@@ -30,15 +30,11 @@ class ImageCarouselUrl {
 			"carousel-slider-outer-images",
 			"carousel-slider-outer-{$slider_id}"
 		];
-		$css_vars    = Helper::get_css_variable( $slider_id );
-		$styles      = [];
-		foreach ( $css_vars as $key => $var ) {
-			$styles[] = sprintf( "%s:%s", $key, $var );
-		}
 
-		$options = ( new Shortcode )->carousel_options( $slider_id );
-		$html    = '<div class="' . join( ' ', $css_classes ) . '" style="' . implode( ';', $styles ) . '">';
-		$html    .= '<div ' . join( " ", $options ) . '>';
+		$attributes_array = Helper::get_slider_attributes( $slider_id, $slider_type );
+
+		$html = '<div class="' . join( ' ', $css_classes ) . '">';
+		$html .= "<div " . join( " ", $attributes_array ) . ">";
 
 		foreach ( $images_urls as $imageInfo ) {
 			$title   = sprintf( '<h4 class="title">%1$s</h4>', esc_html( $imageInfo['title'] ) );

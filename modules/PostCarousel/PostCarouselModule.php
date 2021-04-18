@@ -2,7 +2,6 @@
 
 namespace CarouselSlider\Modules\PostCarousel;
 
-use CarouselSlider\Frontend\Shortcode;
 use CarouselSlider\Helper;
 use CarouselSlider\Supports\Validate;
 
@@ -40,13 +39,21 @@ class PostCarouselModule {
 	 */
 	public function view( string $html, int $slider_id, string $slider_type ): string {
 		if ( $slider_type == 'post-carousel' ) {
-			return self::get_view( $slider_id );
+			return self::get_view( $slider_id, $slider_type );
 		}
 
 		return $html;
 	}
 
-	public static function get_view( int $slider_id ): string {
+	/**
+	 * Get post carousel view
+	 *
+	 * @param int $slider_id
+	 * @param string $slider_type
+	 *
+	 * @return string
+	 */
+	public static function get_view( int $slider_id, string $slider_type ): string {
 		$_image_size      = get_post_meta( $slider_id, '_image_size', true );
 		$_lazy_load_image = get_post_meta( $slider_id, '_lazy_load_image', true );
 
@@ -57,15 +64,17 @@ class PostCarouselModule {
 			"carousel-slider-outer-posts",
 			"carousel-slider-outer-{$slider_id}"
 		];
-		$css_vars    = Helper::get_css_variable( $slider_id );
-		$styles      = [];
-		foreach ( $css_vars as $key => $var ) {
-			$styles[] = sprintf( "%s:%s", $key, $var );
-		}
 
-		$options = ( new Shortcode )->carousel_options( $slider_id );
-		$html    = '<div class="' . join( ' ', $css_classes ) . '" style="' . implode( ';', $styles ) . '">';
-		$html    .= '<div ' . join( " ", $options ) . '>';
+		$attributes_array = Helper::array_to_attribute( [
+			'id'                => 'id-' . $slider_id,
+			'class'             => implode( ' ', Helper::get_css_classes( $slider_id ) ),
+			'style'             => Helper::array_to_style( Helper::get_css_variable( $slider_id ) ),
+			'data-slide-type'   => $slider_type,
+			'data-owl-settings' => wp_json_encode( Helper::get_owl_carousel_settings( $slider_id ) ),
+		] );
+
+		$html = '<div class="' . join( ' ', $css_classes ) . '">';
+		$html .= "<div " . join( " ", $attributes_array ) . ">";
 
 		foreach ( $posts as $post ) {
 			setup_postdata( $post );

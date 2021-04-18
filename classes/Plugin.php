@@ -8,7 +8,6 @@ use CarouselSlider\Admin\MetaBox;
 use CarouselSlider\Admin\Setting;
 use CarouselSlider\Frontend\Frontend;
 use CarouselSlider\Frontend\Preview;
-use CarouselSlider\Frontend\Shortcode;
 use CarouselSlider\Frontend\StructuredData;
 use CarouselSlider\Integration\VisualComposerElement;
 use CarouselSlider\Modules\HeroCarousel\HeroCarouselModule;

@@ -2,7 +2,6 @@
 
 namespace CarouselSlider\Modules\ProductCarousel;
 
-use CarouselSlider\Frontend\Shortcode;
 use CarouselSlider\Helper;
 use WC_Product;
 use WP_Post;
@@ -49,20 +48,21 @@ class ProductCarouselModule {
 		$product_query = get_post_meta( $slider_id, '_product_query', true );
 
 		if ( $query_type == 'query_product' && $product_query == 'product_categories_list' ) {
-			return CategoryCarouselView::get_view( $slider_id );
+			return CategoryCarouselView::get_view( $slider_id, $slider_type );
 		}
 
-		return self::get_view( $slider_id );
+		return self::get_view( $slider_id, $slider_type );
 	}
 
 	/**
 	 * Get slider view
 	 *
 	 * @param int $slider_id
+	 * @param string $slider_type
 	 *
 	 * @return string
 	 */
-	public static function get_view( int $slider_id ): string {
+	public static function get_view( int $slider_id, string $slider_type ): string {
 		$products = ProductCarouselHelper::get_products( $slider_id );
 
 		$css_classes = [
@@ -70,12 +70,11 @@ class ProductCarouselModule {
 			"carousel-slider-outer-products",
 			"carousel-slider-outer-{$slider_id}"
 		];
-		$css_vars    = Helper::get_css_variable( $slider_id );
-		$styles      = Helper::array_to_style( $css_vars );
 
-		$options = ( new Shortcode )->carousel_options( $slider_id );
-		$html    = '<div class="' . join( ' ', $css_classes ) . '" style="' . $styles . '">';
-		$html    .= '<div ' . join( " ", $options ) . '>';
+		$attributes_array = Helper::get_slider_attributes( $slider_id, $slider_type );
+
+		$html = '<div class="' . join( ' ', $css_classes ) . '">';
+		$html .= "<div " . join( " ", $attributes_array ) . ">";
 
 		global $post;
 		global $product;

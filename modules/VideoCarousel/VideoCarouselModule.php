@@ -2,7 +2,6 @@
 
 namespace CarouselSlider\Modules\VideoCarousel;
 
-use CarouselSlider\Frontend\Shortcode;
 use CarouselSlider\Helper;
 
 defined( 'ABSPATH' ) || exit;
@@ -99,7 +98,7 @@ class VideoCarouselModule {
 	 */
 	public function view( string $html, int $slider_id, string $slider_type ): string {
 		if ( 'video-carousel' == $slider_type ) {
-			return static::get_view( $slider_id );
+			return static::get_view( $slider_id, $slider_type );
 		}
 
 		return $html;
@@ -109,10 +108,11 @@ class VideoCarouselModule {
 	 * Get view
 	 *
 	 * @param int $slider_id
+	 * @param string $slider_type
 	 *
 	 * @return string
 	 */
-	public static function get_view( int $slider_id ): string {
+	public static function get_view( int $slider_id, string $slider_type ): string {
 		$urls = get_post_meta( $slider_id, '_video_url', true );
 		if ( is_string( $urls ) ) {
 			$urls = array_filter( explode( ',', $urls ) );
@@ -124,15 +124,11 @@ class VideoCarouselModule {
 			"carousel-slider-outer-videos",
 			"carousel-slider-outer-{$slider_id}"
 		];
-		$css_vars    = Helper::get_css_variable( $slider_id );
-		$styles      = [];
-		foreach ( $css_vars as $key => $var ) {
-			$styles[] = sprintf( "%s:%s", $key, $var );
-		}
 
-		$options = ( new Shortcode )->carousel_options( $slider_id );
-		$html    = '<div class="' . join( ' ', $css_classes ) . '" style="' . implode( ';', $styles ) . '">';
-		$html    .= '<div ' . join( " ", $options ) . '>';
+		$attributes_array = Helper::get_slider_attributes( $slider_id, $slider_type );
+
+		$html = '<div class="' . join( ' ', $css_classes ) . '">';
+		$html .= "<div " . join( " ", $attributes_array ) . ">";
 		foreach ( $urls as $url ) {
 			$html .= '<div class="carousel-slider-item-video">';
 			$html .= '<div class="carousel-slider-video-wrapper">';
