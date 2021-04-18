@@ -2,7 +2,6 @@
 
 namespace CarouselSlider\Modules\HeroCarousel;
 
-use CarouselSlider\Frontend\Shortcode;
 use CarouselSlider\Helper;
 
 defined( 'ABSPATH' ) || exit;
@@ -42,13 +41,21 @@ class HeroCarouselModule {
 	 */
 	public function view( string $html, int $slider_id, string $slider_type ): string {
 		if ( 'hero-banner-slider' == $slider_type ) {
-			return static::get_view( $slider_id );
+			return static::get_view( $slider_id, $slider_type );
 		}
 
 		return $html;
 	}
 
-	public static function get_view( int $slider_id ): string {
+	/**
+	 * Get slider view
+	 *
+	 * @param int $slider_id
+	 * @param string $slider_type
+	 *
+	 * @return string
+	 */
+	public static function get_view( int $slider_id, string $slider_type ): string {
 		$items             = get_post_meta( $slider_id, '_content_slider', true );
 		$lazy_load_image   = get_post_meta( $slider_id, '_lazy_load_image', true );
 		$be_lazy           = in_array( $lazy_load_image, array( 'on', 'off' ) ) ? $lazy_load_image : 'on';
@@ -60,19 +67,24 @@ class HeroCarouselModule {
 			"carousel-slider-outer-contents",
 			"carousel-slider-outer-$slider_id"
 		];
-		$css_vars    = Helper::get_css_variable( $slider_id );
-		$styles      = Helper::array_to_style( $css_vars );
-		$options     = join( " ", ( new Shortcode )->carousel_options( $slider_id ) );
 
-		$html = '<div class="' . join( ' ', $css_classes ) . '" style="' . $styles . '">';
-		$html .= '<div data-animation="' . $content_animation . '" ' . $options . '>';
+		$attributes_array = Helper::array_to_attribute( [
+			'id'                => 'id-' . $slider_id,
+			'class'             => implode( ' ', Helper::get_css_classes( $slider_id ) ),
+			'style'             => Helper::array_to_style( Helper::get_css_variable( $slider_id ) ),
+			'data-slide-type'   => $slider_type,
+			'data-owl-settings' => wp_json_encode( Helper::get_owl_carousel_settings( $slider_id ) ),
+			'data-animation'    => $content_animation,
+		] );
+
+		$html = '<div class="' . join( ' ', $css_classes ) . '">';
+		$html .= "<div " . join( " ", $attributes_array ) . ">";
 		foreach ( $items as $slide_id => $slide ) {
-			$args = array_merge( $settings, [
+			$item = new Item( $slide, array_merge( $settings, [
 				'item_id'         => $slide_id,
 				'slider_id'       => $slider_id,
 				'lazy_load_image' => $be_lazy
-			] );
-			$item = new Item( $slide, $args );
+			] ) );
 			$html .= $item->get_view();
 		}
 		$html .= '</div>';

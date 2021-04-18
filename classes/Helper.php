@@ -2,6 +2,8 @@
 
 namespace CarouselSlider;
 
+use CarouselSlider\Supports\Validate;
+
 defined( 'ABSPATH' ) || exit;
 
 class Helper {
@@ -182,10 +184,27 @@ class Helper {
 				return sprintf( '%s="%s"', $key, implode( " ", $value ) );
 			}
 
+			if ( is_string( $value ) && self::is_json( $value ) ) {
+				return sprintf( "%s='%s'", $key, $value );
+			}
+
 			// If string value
 			return sprintf( '%s="%s"', $key, esc_attr( $value ) );
 
 		}, array_keys( $array ), array_values( $array ) );
+	}
+
+	/**
+	 * Check if value is json
+	 *
+	 * @param mixed $string
+	 *
+	 * @return bool
+	 */
+	public static function is_json( $string ): bool {
+		json_decode( $string );
+
+		return ( json_last_error() == JSON_ERROR_NONE );
 	}
 
 	/**
@@ -247,30 +266,41 @@ class Helper {
 	 * @return array
 	 */
 	public static function get_owl_carousel_settings( int $slider_id ): array {
+		$slide_by = self::get_meta( $slider_id, '_slide_by', 1 );
+		$slide_by = in_array( $slide_by, [ 'page', '-1', - 1 ], true ) ? 'page' : intval( $slide_by );
+
 		return [
 			"stagePadding"       => (int) self::get_meta( $slider_id, '_stage_padding', 0 ),
 			"nav"                => get_post_meta( $slider_id, '_nav_button', true ) != 'off',
 			"dots"               => get_post_meta( $slider_id, '_dot_nav', true ) != 'off',
 			"margin"             => (int) self::get_meta( $slider_id, '_margin_right', 10 ),
-			"loop"               => self::get_meta( $slider_id, '_infinity_loop', true ),
-			"autoplay"           => self::get_meta( $slider_id, '_autoplay', true ),
+			"loop"               => Validate::checked( self::get_meta( $slider_id, '_infinity_loop', true ) ),
+			"autoplay"           => Validate::checked( self::get_meta( $slider_id, '_autoplay', true ) ),
 			"autoplayTimeout"    => (int) self::get_meta( $slider_id, '_autoplay_timeout', 5000 ),
 			"autoplaySpeed"      => (int) self::get_meta( $slider_id, '_autoplay_speed', 500 ),
-			"autoplayHoverPause" => self::get_meta( $slider_id, '_autoplay_pause', false ),
-			"slideBy"            => self::get_meta( $slider_id, '_slide_by', 1 ),
-			"lazyLoad"           => self::get_meta( $slider_id, '_lazy_load_image', true ),
-			"autoWidth"          => self::get_meta( $slider_id, '_auto_width', false ),
-			"navText"            => [
-				'<svg class="carousel-slider-nav-icon" viewBox="0 0 20 20"><path d="M14 5l-5 5 5 5-1 2-7-7 7-7z"></path></use></svg>',
-				'<svg class="carousel-slider-nav-icon" viewBox="0 0 20 20"><path d="M6 15l5-5-5-5 1-2 7 7-7 7z"></path></svg>'
-			],
+			"autoplayHoverPause" => Validate::checked( self::get_meta( $slider_id, '_autoplay_pause', false ) ),
+			"slideBy"            => $slide_by,
+			"lazyLoad"           => Validate::checked( self::get_meta( $slider_id, '_lazy_load_image', true ) ),
+			"autoWidth"          => Validate::checked( self::get_meta( $slider_id, '_auto_width', false ) ),
 			"responsive"         => [
-				"300"  => (int) self::get_meta( $slider_id, '_items_portrait_mobile', 1 ),
-				"600"  => (int) self::get_meta( $slider_id, '_items_small_portrait_tablet', 2 ),
-				"768"  => (int) self::get_meta( $slider_id, '_items_portrait_tablet', 3 ),
-				"1024" => (int) self::get_meta( $slider_id, '_items_small_desktop', 4 ),
-				"1200" => (int) self::get_meta( $slider_id, '_items_desktop', 4 ),
-				"1921" => (int) self::get_meta( $slider_id, '_items', 4 ),
+				300  => [
+					"items" => (int) self::get_meta( $slider_id, '_items_portrait_mobile', 1 )
+				],
+				600  => [
+					"items" => (int) self::get_meta( $slider_id, '_items_small_portrait_tablet', 2 )
+				],
+				768  => [
+					"items" => (int) self::get_meta( $slider_id, '_items_portrait_tablet', 3 )
+				],
+				1024 => [
+					"items" => (int) self::get_meta( $slider_id, '_items_small_desktop', 4 )
+				],
+				1200 => [
+					"items" => (int) self::get_meta( $slider_id, '_items_desktop', 4 )
+				],
+				1921 => [
+					"items" => (int) self::get_meta( $slider_id, '_items', 4 )
+				],
 			]
 		];
 	}
