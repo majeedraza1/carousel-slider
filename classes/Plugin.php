@@ -6,6 +6,7 @@ use CarouselSlider\Admin\Admin;
 use CarouselSlider\Admin\GutenbergBlock;
 use CarouselSlider\Admin\MetaBox;
 use CarouselSlider\Admin\Setting;
+use CarouselSlider\CLI\Command;
 use CarouselSlider\Frontend\Frontend;
 use CarouselSlider\Frontend\Preview;
 use CarouselSlider\Frontend\StructuredData;
@@ -81,6 +82,11 @@ class Plugin {
 		// Load classes for ajax functionality
 		if ( $this->is_request( 'ajax' ) ) {
 			$this->ajax_includes();
+		}
+
+		// WP-CLI Commands
+		if ( class_exists( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) ) {
+			\WP_CLI::add_command( 'carousel-slider', Command::class );
 		}
 
 		$this->modules_includes();
