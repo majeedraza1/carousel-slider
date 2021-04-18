@@ -2,6 +2,8 @@
 
 namespace CarouselSlider\Modules\ProductCarousel;
 
+use CarouselSlider\Frontend\Shortcode;
+use CarouselSlider\Helper;
 use WC_Product;
 use WP_Post;
 
@@ -24,6 +26,8 @@ class ProductCarouselModule {
 		if ( is_null( self::$instance ) ) {
 			self::$instance = new self();
 
+			add_filter( 'carousel_slider/view', [ self::$instance, 'view' ], 10, 3 );
+
 			add_action( 'carousel_slider_after_shop_loop_item', [ self::$instance, 'quick_view_button' ], 10, 3 );
 			add_action( 'carousel_slider_after_shop_loop_item', [ self::$instance, 'wish_list_button' ], 12, 3 );
 
@@ -32,6 +36,81 @@ class ProductCarouselModule {
 		}
 
 		return self::$instance;
+	}
+
+	public function view( string $html, int $slider_id, string $slider_type ): string {
+		if ( 'product-carousel' != $slider_type ) {
+			return $html;
+		}
+
+		$query_type    = get_post_meta( $slider_id, '_product_query_type', true );
+		$query_type    = empty( $query_type ) ? 'query_product' : $query_type;
+		$query_type    = ( 'query_porduct' == $query_type ) ? 'query_product' : $query_type; // Type mistake
+		$product_query = get_post_meta( $slider_id, '_product_query', true );
+
+		if ( $query_type == 'query_product' && $product_query == 'product_categories_list' ) {
+			return CategoryCarouselView::get_view( $slider_id );
+		}
+
+		return self::get_view( $slider_id );
+	}
+
+	/**
+	 * Get slider view
+	 *
+	 * @param int $slider_id
+	 *
+	 * @return string
+	 */
+	public static function get_view( int $slider_id ): string {
+		$products = ProductCarouselHelper::get_products( $slider_id );
+
+		$css_classes = [
+			"carousel-slider-outer",
+			"carousel-slider-outer-products",
+			"carousel-slider-outer-{$slider_id}"
+		];
+		$css_vars    = Helper::get_css_variable( $slider_id );
+		$styles      = Helper::array_to_style( $css_vars );
+
+		$options = ( new Shortcode )->carousel_options( $slider_id );
+		$html    = '<div class="' . join( ' ', $css_classes ) . '" style="' . $styles . '">';
+		$html    .= '<div ' . join( " ", $options ) . '>';
+
+		global $post;
+		global $product;
+
+		foreach ( $products as $product ) {
+			$post = get_post( $product->get_id() );
+			setup_postdata( $post );
+
+			if ( ! $product->is_visible() ) {
+				continue;
+			}
+			ob_start();
+			echo '<div class="product carousel-slider__product">';
+
+			do_action( 'carousel_slider_product_loop', $product );
+			do_action( 'carousel_slider_before_shop_loop_item', $product );
+
+			do_action( 'woocommerce_before_shop_loop_item' );
+			do_action( 'woocommerce_before_shop_loop_item_title' );
+			do_action( 'woocommerce_shop_loop_item_title' );
+			do_action( 'woocommerce_after_shop_loop_item_title' );
+			do_action( 'woocommerce_after_shop_loop_item' );
+
+			do_action( 'carousel_slider_after_shop_loop_item', $product, $post, $slider_id );
+
+			echo '</div>';
+			$item_html = ob_get_clean();
+			$html      .= apply_filters( 'carousel_slider/product_carousel_item', $item_html, $product, $slider_id );
+		}
+		wp_reset_postdata();
+
+		$html .= '</div>';
+		$html .= '</div>';
+
+		return apply_filters( 'carousel_slider_product_carousel', $html );
 	}
 
 	/**

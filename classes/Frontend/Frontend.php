@@ -2,6 +2,8 @@
 
 namespace CarouselSlider\Frontend;
 
+use CarouselSlider\Helper;
+
 defined( 'ABSPATH' ) || exit;
 
 class Frontend {
@@ -22,10 +24,30 @@ class Frontend {
 		if ( is_null( self::$instance ) ) {
 			self::$instance = new self();
 
+			add_shortcode( 'carousel_slide', [ self::$instance, 'carousel_slide' ] );
 			add_action( 'wp_enqueue_scripts', [ self::$instance, 'frontend_scripts' ], 15 );
 		}
 
 		return self::$instance;
+	}
+
+	/**
+	 * A shortcode for rendering the carousel slide.
+	 *
+	 * @param array $attributes Shortcode attributes.
+	 *
+	 * @return string  The shortcode output
+	 */
+	public function carousel_slide( array $attributes ): string {
+		if ( empty( $attributes['id'] ) ) {
+			return '';
+		}
+
+		$slider_id  = intval( $attributes['id'] );
+		$slide_type = get_post_meta( $slider_id, '_slide_type', true );
+		$slide_type = array_key_exists( $slide_type, Helper::get_slide_types() ) ? $slide_type : 'image-carousel';
+
+		return apply_filters( 'carousel_slider/view', '', $slider_id, $slide_type );
 	}
 
 	/**

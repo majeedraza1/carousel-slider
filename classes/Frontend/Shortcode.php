@@ -3,73 +3,10 @@
 namespace CarouselSlider\Frontend;
 
 use CarouselSlider\Helper;
-use CarouselSlider\Modules\ProductCarousel\CategoryCarouselView;
 
 defined( 'ABSPATH' ) || exit;
 
 class Shortcode {
-
-	/**
-	 * The instance of the class
-	 *
-	 * @var self
-	 */
-	protected static $instance = null;
-
-	/**
-	 * Ensures only one instance of this class is loaded or can be loaded.
-	 *
-	 * @return self
-	 */
-	public static function init() {
-		if ( is_null( self::$instance ) ) {
-			self::$instance = new self();
-
-			add_shortcode( 'carousel_slide', [ self::$instance, 'carousel_slide' ] );
-		}
-
-		return self::$instance;
-	}
-
-	/**
-	 * A shortcode for rendering the carousel slide.
-	 *
-	 * @param array $attributes Shortcode attributes.
-	 *
-	 * @return string  The shortcode output
-	 */
-	public function carousel_slide( $attributes ) {
-		if ( empty( $attributes['id'] ) ) {
-			return '';
-		}
-
-		$id = intval( $attributes['id'] );
-
-		$slide_type = get_post_meta( $id, '_slide_type', true );
-		$slide_type = in_array( $slide_type, carousel_slider_slide_type() ) ? $slide_type : 'image-carousel';
-
-		if ( $slide_type == 'product-carousel' ) {
-
-			$query_type = get_post_meta( $id, '_product_query_type', true );
-			$query_type = empty( $query_type ) ? 'query_product' : $query_type;
-			// Type mistake
-			$query_type    = ( 'query_porduct' == $query_type ) ? 'query_product' : $query_type;
-			$product_query = get_post_meta( $id, '_product_query', true );
-
-			if ( $query_type == 'query_product' && $product_query == 'product_categories_list' ) {
-				return CategoryCarouselView::get_view( $id );
-			}
-
-			ob_start();
-			require CAROUSEL_SLIDER_TEMPLATES . '/public/product-carousel.php';
-			$html = ob_get_contents();
-			ob_end_clean();
-
-			return apply_filters( 'carousel_slider_product_carousel', $html, $id );
-		}
-
-		return apply_filters( 'carousel_slider/view', '', $id, $slide_type );
-	}
 
 	/**
 	 * Generate carousel options for slider
@@ -112,7 +49,7 @@ class Shortcode {
 			'data-colums-mobile'        => $this->get_meta( $id, '_items_portrait_mobile', '1' ),
 		];
 
-		return $this->array_to_data( $options_array );
+		return Helper::array_to_attribute( $options_array );
 	}
 
 	/**
@@ -124,18 +61,7 @@ class Shortcode {
 	 *
 	 * @return string
 	 */
-	public function get_meta( $id, $key, $default = null ) {
+	public function get_meta( $id, $key, $default = null ): string {
 		return Helper::get_meta( $id, $key, $default );
-	}
-
-	/**
-	 * Convert array to html data attribute
-	 *
-	 * @param $array
-	 *
-	 * @return array
-	 */
-	public function array_to_data( $array ) {
-		return Helper::array_to_attribute( (array) $array );
 	}
 }

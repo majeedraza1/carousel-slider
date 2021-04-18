@@ -119,7 +119,6 @@ class Plugin {
 	 */
 	public function frontend_includes() {
 		$this->container['frontend']        = Frontend::init();
-		$this->container['shortcode']       = Shortcode::init();
 		$this->container['preview']         = Preview::init();
 		$this->container['structured_data'] = StructuredData::init();
 	}
