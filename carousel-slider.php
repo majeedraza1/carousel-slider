@@ -93,8 +93,6 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 				// bootstrap main class
 				self::$instance->bootstrap_plugin();
 
-				self::$instance->includes();
-
 				register_activation_hook( __FILE__, array( self::$instance, 'activation' ) );
 				register_deactivation_hook( __FILE__, array( self::$instance, 'deactivation' ) );
 
@@ -148,13 +146,6 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		 */
 		public function bootstrap_plugin() {
 			CarouselSlider\Plugin::init();
-		}
-
-		/**
-		 * Include admin and front facing files
-		 */
-		private function includes() {
-			require_once CAROUSEL_SLIDER_INCLUDES . '/functions.php';
 		}
 
 		/**

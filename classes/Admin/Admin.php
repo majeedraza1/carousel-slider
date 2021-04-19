@@ -2,6 +2,7 @@
 
 namespace CarouselSlider\Admin;
 
+use CarouselSlider\Helper;
 use WP_Post;
 
 defined( 'ABSPATH' ) || exit;
@@ -109,7 +110,7 @@ class Admin {
 	 * @return void
 	 */
 	public function columns_content( string $column_name, int $post_id ) {
-		$slide_types = carousel_slider_slide_type( false );
+		$slide_types = Helper::get_slide_types();
 		switch ( $column_name ) {
 
 			case 'usage':

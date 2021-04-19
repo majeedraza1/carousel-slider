@@ -2,6 +2,7 @@
 
 namespace CarouselSlider\Admin;
 
+use CarouselSlider\Helper;
 use CarouselSlider\Supports\MetaBoxForm;
 use WP_Post;
 
@@ -159,7 +160,7 @@ class MetaBox {
 		wp_nonce_field( 'carousel_slider_nonce', '_carousel_slider_nonce' );
 
 		$slide_type = get_post_meta( $post->ID, '_slide_type', true );
-		$slide_type = in_array( $slide_type, carousel_slider_slide_type() ) ? $slide_type : 'image-carousel';
+		$slide_type = array_key_exists( $slide_type, Helper::get_slide_types() ) ? $slide_type : 'image-carousel';
 
 		require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/types.php';
 		require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/images-media.php';
@@ -344,7 +345,7 @@ class MetaBox {
 			<br>
 			<input type="text" class="color-picker" value="<?php echo $_nav_color; ?>" id="_nav_color"
 				   name="carousel_slider[_nav_color]" data-alpha="true"
-				   data-default-color="<?php echo carousel_slider_default_settings()->nav_color; ?>">
+				   data-default-color="<?php echo Helper::get_default_setting( 'nav_color' ); ?>">
 		</p><!-- Arrows & Dots Color -->
 
 		<p>
@@ -356,7 +357,7 @@ class MetaBox {
 			<br>
 			<input type="text" class="color-picker" value="<?php echo $_nav_active_color; ?>" id="_nav_active_color"
 				   name="carousel_slider[_nav_active_color]" data-alpha="true"
-				   data-default-color="<?php echo carousel_slider_default_settings()->nav_active_color; ?>">
+				   data-default-color="<?php echo Helper::get_default_setting( 'nav_active_color' ); ?>">
 		</p><!-- Arrows & Dots Hover Color -->
 		<?php
 	}

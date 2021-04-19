@@ -1,16 +1,18 @@
 <?php
 // If this file is called directly, abort.
+use CarouselSlider\Helper;
+
 if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 ?>
 <div data-id="open" id="section_product_query" class="shapla-toggle shapla-toggle--stroke"
-     style="display: <?php echo $slide_type != 'product-carousel' ? 'none' : 'block'; ?>">
+	 style="display: <?php echo $slide_type != 'product-carousel' ? 'none' : 'block'; ?>">
 	<span class="shapla-toggle-title">
 		<?php esc_html_e( 'Product Query', 'carousel-slider' ); ?>
 	</span>
-    <div class="shapla-toggle-inner">
-        <div class="shapla-toggle-content">
+	<div class="shapla-toggle-inner">
+		<div class="shapla-toggle-content">
 			<?php
 			$this->form->select( array(
 				'id'      => '_product_query_type',
@@ -117,23 +119,23 @@ if ( ! defined( 'WPINC' ) ) {
 				'type' => 'color',
 				'name' => esc_html__( 'Title Color', 'carousel-slider' ),
 				'desc' => esc_html__( 'Pick a color for product title. This color will also apply to sale tag and price.', 'carousel-slider' ),
-				'std'  => carousel_slider_default_settings()->product_title_color,
+				'std'  => Helper::get_default_setting( 'product_title_color' ),
 			) );
 			$this->form->color( array(
 				'id'   => '_product_button_bg_color',
 				'type' => 'color',
 				'name' => esc_html__( 'Button Background Color', 'carousel-slider' ),
 				'desc' => esc_html__( 'Pick a color for button background color. This color will also apply to product rating.', 'carousel-slider' ),
-				'std'  => carousel_slider_default_settings()->product_button_bg_color
+				'std'  => Helper::get_default_setting( 'product_button_bg_color' )
 			) );
 			$this->form->color( array(
 				'id'   => '_product_button_text_color',
 				'type' => 'color',
 				'name' => esc_html__( 'Button Text Color', 'carousel-slider' ),
 				'desc' => esc_html__( 'Pick a color for button text color.', 'carousel-slider' ),
-				'std'  => carousel_slider_default_settings()->product_button_text_color
+				'std'  => Helper::get_default_setting( 'product_button_text_color' )
 			) );
 			?>
-        </div>
-    </div>
+		</div>
+	</div>
 </div>
