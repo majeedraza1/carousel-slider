@@ -1,8 +1,8 @@
 @import "../utilities/mixins";
 
-$text-color: #333333;
-$btn-color: #f1f1f1;
-$btn-background: #96588a;
+$text-color: #{var(--cs-product-text,#333333)};
+$btn-color: #{var(--cs-product-on-primary,#f1f1f1)};
+$btn-background: #{var(--cs-product-primary,#96588a)};
 
 .carousel-slider {
 	&[data-slide-type="product-carousel"] {

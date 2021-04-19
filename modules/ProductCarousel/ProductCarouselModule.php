@@ -27,8 +27,8 @@ class ProductCarouselModule {
 
 			add_filter( 'carousel_slider/view', [ self::$instance, 'view' ], 10, 3 );
 
-			add_action( 'carousel_slider_after_shop_loop_item', [ self::$instance, 'quick_view_button' ], 10, 3 );
-			add_action( 'carousel_slider_after_shop_loop_item', [ self::$instance, 'wish_list_button' ], 12, 3 );
+			add_action( 'carousel_slider_after_shop_loop_item', [ self::$instance, 'quick_view_button' ], 10, 2 );
+			add_action( 'carousel_slider_after_shop_loop_item', [ self::$instance, 'wish_list_button' ], 12, 2 );
 
 			add_action( 'wp_ajax_carousel_slider_quick_view', [ self::$instance, 'quick_view' ] );
 			add_action( 'wp_ajax_nopriv_carousel_slider_quick_view', [ self::$instance, 'quick_view' ] );
@@ -51,7 +51,7 @@ class ProductCarouselModule {
 			return CategoryCarouselView::get_view( $slider_id, $slider_type );
 		}
 
-		return self::get_view( $slider_id, $slider_type );
+		return ProductCarouselView::get_view( $slider_id, $slider_type );
 	}
 
 	/**
@@ -71,7 +71,14 @@ class ProductCarouselModule {
 			"carousel-slider-outer-{$slider_id}"
 		];
 
-		$attributes_array = Helper::get_slider_attributes( $slider_id, $slider_type );
+		$css_vars                            = Helper::get_css_variable( $slider_id );
+		$css_vars["--cs-product-primary"]    = get_post_meta( $slider_id, '_product_button_bg_color', true );
+		$css_vars["--cs-product-on-primary"] = get_post_meta( $slider_id, '_product_button_text_color', true );
+		$css_vars["--cs-product-text"]       = get_post_meta( $slider_id, '_product_title_color', true );
+
+		$attributes_array = Helper::get_slider_attributes( $slider_id, $slider_type, [
+			'style' => Helper::array_to_style( $css_vars ),
+		] );
 
 		$html = '<div class="' . join( ' ', $css_classes ) . '">';
 		$html .= "<div " . join( " ", $attributes_array ) . ">";
@@ -89,7 +96,6 @@ class ProductCarouselModule {
 			ob_start();
 			echo '<div class="product carousel-slider__product">';
 
-			do_action( 'carousel_slider_product_loop', $product );
 			do_action( 'carousel_slider_before_shop_loop_item', $product );
 
 			do_action( 'woocommerce_before_shop_loop_item' );
@@ -98,7 +104,7 @@ class ProductCarouselModule {
 			do_action( 'woocommerce_after_shop_loop_item_title' );
 			do_action( 'woocommerce_after_shop_loop_item' );
 
-			do_action( 'carousel_slider_after_shop_loop_item', $product, $post, $slider_id );
+			do_action( 'carousel_slider_after_shop_loop_item', $product, $slider_id );
 
 			echo '</div>';
 			$item_html = ob_get_clean();
@@ -116,10 +122,9 @@ class ProductCarouselModule {
 	 * Show quick view button on product slider
 	 *
 	 * @param WC_Product $product
-	 * @param WP_Post $post
 	 * @param int $slider_id
 	 */
-	public static function quick_view_button( $product, $post, $slider_id ) {
+	public static function quick_view_button( $product, $slider_id ) {
 		$_show_btn = get_post_meta( $slider_id, '_product_quick_view', true );
 
 		if ( $_show_btn == 'on' ) {
@@ -140,10 +145,9 @@ class ProductCarouselModule {
 	 * Show YITH Wishlist button on product slider
 	 *
 	 * @param WC_Product $product
-	 * @param WP_Post $post
 	 * @param $slider_id
 	 */
-	public static function wish_list_button( $product, $post, $slider_id ) {
+	public static function wish_list_button( $product, $slider_id ) {
 		$_product_wish_list = get_post_meta( $slider_id, '_product_wishlist', true );
 		if ( class_exists( 'YITH_WCWL' ) && $_product_wish_list == 'on' ) {
 			echo do_shortcode( '[yith_wcwl_add_to_wishlist product_id="' . $product->get_id() . '"]' );

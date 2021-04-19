@@ -24,7 +24,7 @@ class StructuredData {
 
 			add_action( 'carousel_slider_image_gallery_loop', [ self::$instance, 'generate_image_data' ] );
 			add_action( 'carousel_slider_post_loop', [ self::$instance, 'generate_post_data' ] );
-			add_action( 'carousel_slider_product_loop', [ self::$instance, 'generate_product_data' ] );
+			add_action( 'carousel_slider_after_shop_loop_item', [ self::$instance, 'generate_product_data' ] );
 			// Output structured data.
 			add_action( 'wp_footer', [ self::$instance, 'output_structured_data' ], 90 );
 		}
@@ -272,8 +272,6 @@ class StructuredData {
 
 	/**
 	 * Generates Product structured data.
-	 *
-	 * Hooked into `carousel_slider_product_loop` action hook.
 	 *
 	 * @param WC_Product $product Product data (default: null).
 	 */
