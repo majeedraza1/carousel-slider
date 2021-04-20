@@ -24,6 +24,9 @@
     "ext-json": "*"
   },
   "scripts": {
-    "generate-pot": "wp i18n make-pot . languages/carousel-slider.pot"
+    "generate-pot": "wp i18n make-pot . languages/carousel-slider.pot",
+    "show-plugin-info": "wp carousel-slider info",
+    "create-sliders": "wp carousel-slider create_sliders",
+    "delete-sliders": "wp carousel-slider delete_sliders"
   }
 }

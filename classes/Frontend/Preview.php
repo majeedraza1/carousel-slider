@@ -2,6 +2,8 @@
 
 namespace CarouselSlider\Frontend;
 
+defined( 'ABSPATH' ) || exit;
+
 class Preview {
 	/**
 	 * The instance of the class
@@ -35,7 +37,8 @@ class Preview {
 	public function template_include( $template ) {
 		if ( isset( $_GET['carousel_slider_preview'], $_GET['carousel_slider_iframe'], $_GET['slider_id'] ) ) {
 			if ( current_user_can( 'edit_pages' ) ) {
-				$template = CAROUSEL_SLIDER_TEMPLATES . '/public/preview-slider.php';
+				add_filter( 'carousel_slider_load_scripts', '__return_true' );
+				$template = CAROUSEL_SLIDER_TEMPLATES . '/preview-slider.php';
 			}
 		}
 

@@ -3,6 +3,7 @@
 namespace CarouselSlider;
 
 use CarouselSlider\Supports\Validate;
+use WP_Error;
 use WP_Post;
 
 defined( 'ABSPATH' ) || exit;
@@ -345,6 +346,8 @@ class Helper {
 	 * Creates Carousel Slider test page
 	 *
 	 * @param array $ids
+	 *
+	 * @return int|WP_Error
 	 */
 	public static function create_test_page( array $ids = [] ) {
 		$page_path    = 'carousel-slider-test';
@@ -362,30 +365,31 @@ class Helper {
 		foreach ( $ids as $id ) {
 			$_post        = get_post( $id );
 			$page_content .= '<!-- wp:heading {"level":4} --><h4>' . $_post->post_title . '</h4><!-- /wp:heading -->';
-			$page_content .= '<!-- wp:shortcode -->[carousel_slide id=\'' . $id . '\']<!-- /wp:shortcode -->';
+			// $page_content .= '<!-- wp:shortcode -->[carousel_slide id=\'' . $id . '\']<!-- /wp:shortcode -->';
+			$page_content .= '<!-- wp:carousel-slider/slider {"sliderID":' . $id . ',"sliderName":"' . $_post->post_title . ' ( ID: ' . $id . ' )"} -->';
+			$page_content .= '<div class="wp-block-carousel-slider-slider">[carousel_slide id=\'' . $id . '\']</div>';
+			$page_content .= '<!-- /wp:carousel-slider/slider -->';
 			$page_content .= '<!-- wp:spacer {"height":100} --><div style="height:100px" aria-hidden="true" class="wp-block-spacer"></div><!-- /wp:spacer -->';
 		}
 
 		// Check that the page doesn't exist already
-		$_page = get_page_by_path( $page_path );
+		$_page     = get_page_by_path( $page_path );
+		$page_data = [
+			'post_content'   => $page_content,
+			'post_name'      => $page_path,
+			'post_title'     => $page_title,
+			'post_status'    => 'publish',
+			'post_type'      => 'page',
+			'ping_status'    => 'closed',
+			'comment_status' => 'closed',
+		];
 
 		if ( $_page instanceof WP_Post ) {
-			wp_update_post( array(
-				'ID'           => $_page->ID,
-				'post_content' => $page_content,
-				'post_name'    => $page_path,
-				'post_title'   => $page_title,
-			) );
-		} else {
-			wp_insert_post( array(
-				'post_content'   => $page_content,
-				'post_name'      => $page_path,
-				'post_title'     => $page_title,
-				'post_status'    => 'publish',
-				'post_type'      => 'page',
-				'ping_status'    => 'closed',
-				'comment_status' => 'closed',
-			) );
+			$page_data['ID'] = $_page->ID;
+
+			return wp_update_post( $page_data );
 		}
+
+		return wp_insert_post( $page_data );
 	}
 }
