@@ -2,9 +2,7 @@
 
 namespace CarouselSlider\Modules\ProductCarousel;
 
-use CarouselSlider\Helper;
 use WC_Product;
-use WP_Post;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -55,70 +53,6 @@ class ProductCarouselModule {
 	}
 
 	/**
-	 * Get slider view
-	 *
-	 * @param int $slider_id
-	 * @param string $slider_type
-	 *
-	 * @return string
-	 */
-	public static function get_view( int $slider_id, string $slider_type ): string {
-		$products = ProductCarouselHelper::get_products( $slider_id );
-
-		$css_classes = [
-			"carousel-slider-outer",
-			"carousel-slider-outer-products",
-			"carousel-slider-outer-{$slider_id}"
-		];
-
-		$css_vars                            = Helper::get_css_variable( $slider_id );
-		$css_vars["--cs-product-primary"]    = get_post_meta( $slider_id, '_product_button_bg_color', true );
-		$css_vars["--cs-product-on-primary"] = get_post_meta( $slider_id, '_product_button_text_color', true );
-		$css_vars["--cs-product-text"]       = get_post_meta( $slider_id, '_product_title_color', true );
-
-		$attributes_array = Helper::get_slider_attributes( $slider_id, $slider_type, [
-			'style' => Helper::array_to_style( $css_vars ),
-		] );
-
-		$html = '<div class="' . join( ' ', $css_classes ) . '">';
-		$html .= "<div " . join( " ", $attributes_array ) . ">";
-
-		global $post;
-		global $product;
-
-		foreach ( $products as $product ) {
-			$post = get_post( $product->get_id() );
-			setup_postdata( $post );
-
-			if ( ! $product->is_visible() ) {
-				continue;
-			}
-			ob_start();
-			echo '<div class="product carousel-slider__product">';
-
-			do_action( 'carousel_slider_before_shop_loop_item', $product );
-
-			do_action( 'woocommerce_before_shop_loop_item' );
-			do_action( 'woocommerce_before_shop_loop_item_title' );
-			do_action( 'woocommerce_shop_loop_item_title' );
-			do_action( 'woocommerce_after_shop_loop_item_title' );
-			do_action( 'woocommerce_after_shop_loop_item' );
-
-			do_action( 'carousel_slider_after_shop_loop_item', $product, $slider_id );
-
-			echo '</div>';
-			$item_html = ob_get_clean();
-			$html      .= apply_filters( 'carousel_slider/product_carousel_item', $item_html, $product, $slider_id );
-		}
-		wp_reset_postdata();
-
-		$html .= '</div>';
-		$html .= '</div>';
-
-		return apply_filters( 'carousel_slider_product_carousel', $html );
-	}
-
-	/**
 	 * Show quick view button on product slider
 	 *
 	 * @param WC_Product $product
@@ -158,7 +92,7 @@ class ProductCarouselModule {
 	 * Display quick view popup content
 	 */
 	public static function quick_view() {
-		if ( ! isset( $_GET['_wpnonce'], $_GET['product_id'], $_GET['slide_id'] ) ) {
+		if ( ! isset( $_GET['_wpnonce'], $_GET['product_id'] ) ) {
 			wp_die();
 		}
 
@@ -169,7 +103,7 @@ class ProductCarouselModule {
 		global $product;
 		$product = wc_get_product( intval( $_GET['product_id'] ) );
 		$html    = static::get_quick_view_html( $product );
-		echo apply_filters( 'carousel_slider/product_quick_view_html', $html, $product, intval( $_GET['slide_id'] ) );
+		echo apply_filters( 'carousel_slider/product_quick_view_html', $html, $product );
 		wp_die();
 	}
 

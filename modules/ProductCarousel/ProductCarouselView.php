@@ -67,9 +67,14 @@ class ProductCarouselView {
 			$post = get_post( $product->get_id() );
 			setup_postdata( $post );
 
-			if ( $product->is_visible() ) {
-				$html .= self::get_item( $product, $settings );
+			if ( ! $product->is_visible() ) {
+				continue;
 			}
+
+			if ( ! $product->has_enough_stock( 1 ) ) {
+				continue;
+			}
+			$html .= self::get_slider_item( $product, $settings );
 		}
 		wp_reset_postdata();
 
@@ -110,7 +115,7 @@ class ProductCarouselView {
 		// Show title
 		if ( $settings['show_title'] ) {
 			echo '<a href="' . esc_attr( $product->get_permalink() ) . '">';
-			echo '<h3>' . esc_html( $product->get_title() ) . '</h3>';
+			echo '<h3 class="woocommerce-loop-product__title">' . esc_html( $product->get_title() ) . '</h3>';
 			echo '</a>';
 		}
 
