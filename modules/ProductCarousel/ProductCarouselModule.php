@@ -46,7 +46,7 @@ class ProductCarouselModule {
 		$product_query = get_post_meta( $slider_id, '_product_query', true );
 
 		if ( $query_type == 'query_product' && $product_query == 'product_categories_list' ) {
-			return CategoryCarouselView::get_view( $slider_id, $slider_type );
+			return ProductCarouselView::get_category_view( $slider_id, $slider_type );
 		}
 
 		return ProductCarouselView::get_view( $slider_id, $slider_type );

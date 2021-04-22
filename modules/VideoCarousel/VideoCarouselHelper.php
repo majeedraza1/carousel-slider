@@ -78,9 +78,9 @@ class VideoCarouselHelper {
 				$response  = wp_remote_get( "https://vimeo.com/api/v2/video/$video_id.json" );
 				$thumbnail = json_decode( wp_remote_retrieve_body( $response ), true );
 				$thumbnail = [
-					'large'  => isset( $thumbnail[0]['thumbnail_large'] ) ? $thumbnail[0]['thumbnail_large'] : null,
-					'medium' => isset( $thumbnail[0]['thumbnail_medium'] ) ? $thumbnail[0]['thumbnail_medium'] : null,
-					'small'  => isset( $thumbnail[0]['thumbnail_small'] ) ? $thumbnail[0]['thumbnail_small'] : null,
+					'large'  => $thumbnail[0]['thumbnail_large'] ?? null,
+					'medium' => $thumbnail[0]['thumbnail_medium'] ?? null,
+					'small'  => $thumbnail[0]['thumbnail_small'] ?? null,
 				];
 			}
 

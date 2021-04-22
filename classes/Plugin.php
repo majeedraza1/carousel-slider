@@ -17,6 +17,8 @@ use CarouselSlider\Modules\PostCarousel\PostCarouselModule;
 use CarouselSlider\Modules\ProductCarousel\ProductCarouselModule;
 use CarouselSlider\Modules\VideoCarousel\VideoCarouselModule;
 use CarouselSlider\Widget\CarouselSliderWidget;
+use WP_CLI;
+use WP_CLI_Command;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -85,8 +87,8 @@ class Plugin {
 		}
 
 		// WP-CLI Commands
-		if ( class_exists( 'WP_CLI' ) && class_exists( 'WP_CLI_Command' ) ) {
-			\WP_CLI::add_command( 'carousel-slider', Command::class );
+		if ( class_exists( WP_CLI::class ) && class_exists( WP_CLI_Command::class ) ) {
+			WP_CLI::add_command( 'carousel-slider', Command::class );
 		}
 
 		$this->modules_includes();
@@ -163,19 +165,6 @@ class Plugin {
 	 * @return bool
 	 */
 	private function is_request( string $type ): bool {
-		switch ( $type ) {
-			case 'admin' :
-				return is_admin();
-			case 'ajax' :
-				return defined( 'DOING_AJAX' );
-			case 'rest' :
-				return defined( 'REST_REQUEST' );
-			case 'cron' :
-				return defined( 'DOING_CRON' );
-			case 'frontend' :
-				return ( ! is_admin() || defined( 'DOING_AJAX' ) ) && ! defined( 'DOING_CRON' );
-		}
-
-		return false;
+		return Helper::is_request( $type );
 	}
 }

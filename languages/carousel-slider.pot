@@ -9,17 +9,18 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-03-17T02:49:59+00:00\n"
+"POT-Creation-Date: 2021-04-21T04:19:38+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: carousel-slider\n"
 
 #. Plugin Name of the plugin
-#: classes/Admin/GutenbergBlock.php:85
+#: classes/Admin/Admin.php:54
+#: classes/Admin/GutenbergBlock.php:80
+#: classes/Admin/MetaBox.php:106
 #: classes/Integration/VisualComposerElement.php:40
+#: classes/Upgrader.php:62
 #: classes/Widget/CarouselSliderWidget.php:73
-#: includes/class-carousel-slider-admin.php:109
-#: includes/class-carousel-slider-admin.php:230
 msgid "Carousel Slider"
 msgstr ""
 
@@ -39,54 +40,428 @@ msgstr ""
 msgid "https://sayfulislam.com"
 msgstr ""
 
-#: carousel-slider.php:196
-#: carousel-slider.php:219
+#: carousel-slider.php:178
+#: carousel-slider.php:201
 msgid "Your installed PHP Version is: "
 msgstr ""
 
-#: carousel-slider.php:197
+#: carousel-slider.php:179
 msgid "The Carousel Slider plugin requires PHP version %s or greater."
 msgstr ""
 
-#: carousel-slider.php:218
+#: carousel-slider.php:200
 msgid "An Error Occurred"
 msgstr ""
 
-#: carousel-slider.php:220
+#: carousel-slider.php:202
 msgid "The Carousel Slider plugin requires PHP version %s or greater"
 msgstr ""
 
-#: carousel-slider.php:222
+#: carousel-slider.php:204
 msgid "The version of your PHP is %s unsupported and old %s. "
 msgstr ""
 
-#: carousel-slider.php:227
+#: carousel-slider.php:209
 msgid "You should update your PHP software or contact your host regarding this matter."
 msgstr ""
 
-#: carousel-slider.php:230
+#: carousel-slider.php:212
 msgid "Plugin Activation Error"
 msgstr ""
 
+#: classes/Admin/Admin.php:52
+msgctxt "Post Type General Name"
+msgid "Sliders"
+msgstr ""
+
+#: classes/Admin/Admin.php:53
+msgctxt "Post Type Singular Name"
+msgid "Slider"
+msgstr ""
+
+#: classes/Admin/Admin.php:55
+msgid "Parent Slider:"
+msgstr ""
+
+#: classes/Admin/Admin.php:56
+msgid "All Sliders"
+msgstr ""
+
+#: classes/Admin/Admin.php:57
+msgid "View Slider"
+msgstr ""
+
+#: classes/Admin/Admin.php:58
+msgid "Add New Slider"
+msgstr ""
+
 #: classes/Admin/Admin.php:59
+msgid "Add New"
+msgstr ""
+
 #: classes/Admin/Admin.php:60
+msgid "Edit Slider"
+msgstr ""
+
+#: classes/Admin/Admin.php:61
+msgid "Update Slider"
+msgstr ""
+
+#: classes/Admin/Admin.php:62
+msgid "Search Slider"
+msgstr ""
+
+#: classes/Admin/Admin.php:63
+msgid "Not found"
+msgstr ""
+
+#: classes/Admin/Admin.php:64
+msgid "Not found in Trash"
+msgstr ""
+
+#: classes/Admin/Admin.php:67
+msgid "Slider"
+msgstr ""
+
+#: classes/Admin/Admin.php:68
+msgid "The easiest way to create carousel slider"
+msgstr ""
+
+#: classes/Admin/Admin.php:98
+msgid "Carousel Slide Title"
+msgstr ""
+
+#: classes/Admin/Admin.php:99
+msgid "Shortcode"
+msgstr ""
+
+#: classes/Admin/Admin.php:100
+#: templates/admin/types.php:14
+msgid "Slide Type"
+msgstr ""
+
+#: classes/Admin/Admin.php:160
+msgid "Preview"
+msgstr ""
+
+#: classes/Admin/Admin.php:186
+#: templates/admin/images-url.php:44
+#: templates/admin/images-url.php:80
+msgid "URL"
+msgstr ""
+
+#: classes/Admin/Admin.php:187
+#: templates/admin/images-url.php:49
+#: templates/admin/images-url.php:84
+msgid "Title"
+msgstr ""
+
+#: classes/Admin/Admin.php:188
+#: templates/admin/images-url.php:55
+#: templates/admin/images-url.php:88
+msgid "Caption"
+msgstr ""
+
+#: classes/Admin/Admin.php:189
+#: templates/admin/images-url.php:59
+#: templates/admin/images-url.php:92
+msgid "Alt Text"
+msgstr ""
+
+#: classes/Admin/Admin.php:190
+#: templates/admin/images-url.php:64
+#: templates/admin/images-url.php:96
+msgid "Link To URL"
+msgstr ""
+
+#: classes/Admin/Admin.php:191
+msgid "Add New Item"
+msgstr ""
+
+#: classes/Admin/Admin.php:192
+msgid "Move Current Item"
+msgstr ""
+
+#: classes/Admin/Admin.php:193
+msgid "Delete Current Item"
+msgstr ""
+
+#: classes/Admin/Admin.php:203
+#: classes/Admin/Admin.php:204
 msgid "Documentation"
 msgstr ""
 
-#: classes/Admin/Admin.php:85
+#: classes/Admin/Admin.php:229
 msgid "If you like %1$s Carousel Slider %2$s please leave us a %3$s rating. A huge thanks in advance!"
 msgstr ""
 
-#: classes/Admin/GutenbergBlock.php:86
+#: classes/Admin/GutenbergBlock.php:81
 msgid "Select a Slider"
 msgstr ""
 
-#: classes/Admin/GutenbergBlock.php:87
+#: classes/Admin/GutenbergBlock.php:82
 msgid "Current Selected Slider"
 msgstr ""
 
-#: classes/Admin/GutenbergBlock.php:88
+#: classes/Admin/GutenbergBlock.php:83
 msgid "Type to filter sliders"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:114
+msgid "Usage (Shortcode)"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:122
+#: templates/admin/navigation.php:9
+msgid "Navigation Settings"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:130
+#: templates/admin/autoplay.php:9
+msgid "Autoplay Settings"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:138
+#: templates/admin/responsive.php:9
+msgid "Responsive Settings"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:146
+msgid "General Settings"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:194
+msgid "Copy the following shortcode and paste in post or page where you want to show."
+msgstr ""
+
+#: classes/Admin/MetaBox.php:239
+msgid "Show Arrow Nav"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:243
+#: classes/Admin/MetaBox.php:291
+msgid "Never"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:245
+#: classes/Admin/MetaBox.php:295
+msgid "Mouse Over"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:247
+#: classes/Admin/MetaBox.php:293
+#: classes/Admin/Setting.php:60
+msgid "Always"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:250
+msgid "Choose when to show arrow navigator."
+msgstr ""
+
+#: classes/Admin/MetaBox.php:254
+msgid "Arrow Steps"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:259
+msgid "Steps to go for each navigation request. Write \"page\" with inverted comma to slide by page."
+msgstr ""
+
+#: classes/Admin/MetaBox.php:263
+msgid "Arrow Position"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:267
+msgid "Outside"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:269
+msgid "Inside"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:272
+msgid "Choose where to show arrow. Inside slider or outside slider."
+msgstr ""
+
+#: classes/Admin/MetaBox.php:276
+msgid "Arrow Size"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:281
+msgid "Enter arrow size in pixels."
+msgstr ""
+
+#: classes/Admin/MetaBox.php:287
+msgid "Show Bullet Nav"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:298
+msgid "Choose when to show bullet navigator."
+msgstr ""
+
+#: classes/Admin/MetaBox.php:302
+msgid "Bullet Position"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:306
+msgid "Left"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:308
+msgid "Center"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:310
+msgid "Right"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:313
+msgid "Choose where to show bullets."
+msgstr ""
+
+#: classes/Admin/MetaBox.php:317
+msgid "Bullet Size"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:322
+msgid "Enter bullet size in pixels."
+msgstr ""
+
+#: classes/Admin/MetaBox.php:326
+msgid "Bullet Shape"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:330
+msgid "Square"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:332
+msgid "Circle"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:335
+msgid "Choose bullet nav shape."
+msgstr ""
+
+#: classes/Admin/MetaBox.php:341
+msgid "Arrows & Dots Color"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:344
+#: templates/admin/navigation.php:30
+msgid "Pick a color for navigation and dots."
+msgstr ""
+
+#: classes/Admin/MetaBox.php:353
+msgid "Arrows & Dots Hover Color"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:356
+#: templates/admin/navigation.php:36
+msgid "Pick a color for navigation and dots for active and hover effect."
+msgstr ""
+
+#: classes/Admin/MetaBox.php:380
+msgid "AutoPlay"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:384
+#: classes/Admin/MetaBox.php:397
+msgid "Enable"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:386
+#: classes/Admin/MetaBox.php:399
+msgid "Disable"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:389
+msgid "Choose whether slideshow should play automatically."
+msgstr ""
+
+#: classes/Admin/MetaBox.php:393
+msgid "Pause On Hover"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:402
+msgid "Pause automatic play on mouse hover."
+msgstr ""
+
+#: classes/Admin/MetaBox.php:406
+#: templates/admin/autoplay.php:23
+msgid "Autoplay Timeout"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:411
+msgid "Automatic play interval timeout in millisecond. Default: 5000"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:415
+#: templates/admin/autoplay.php:30
+msgid "Autoplay Speed"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:420
+msgid "Automatic play speed in millisecond. Default: 500"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:451
+#: templates/admin/responsive.php:17
+msgid "Columns"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:456
+#: templates/admin/responsive.php:18
+msgid "The number of items you want to see on the Extra Large Desktop Layout (Screens size greater than 1921 pixels DP)"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:460
+#: templates/admin/responsive.php:24
+msgid "Columns : Desktop"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:465
+#: templates/admin/responsive.php:25
+msgid "The number of items you want to see on the Desktop Layout (Screens size from 1200 pixels DP to 1920 pixels DP)"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:469
+#: templates/admin/responsive.php:31
+msgid "Columns : Small Desktop"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:475
+#: templates/admin/responsive.php:32
+msgid "The number of items you want to see on the Small Desktop Layout (Screens size from 993 pixels DP to 1199 pixels DP)"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:479
+#: templates/admin/responsive.php:37
+msgid "Columns : Tablet"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:485
+#: templates/admin/responsive.php:38
+msgid "The number of items you want to see on the Tablet Layout (Screens size from 768 pixels DP to 992 pixels DP)"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:489
+#: templates/admin/responsive.php:43
+msgid "Columns : Small Tablet"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:496
+#: templates/admin/responsive.php:44
+msgid "The number of items you want to see on the Small Tablet Layout(Screens size from 600 pixels DP to 767 pixels DP)"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:500
+#: templates/admin/responsive.php:49
+msgid "Columns : Mobile"
+msgstr ""
+
+#: classes/Admin/MetaBox.php:507
+#: templates/admin/responsive.php:50
+msgid "The number of items you want to see on the Mobile Layout (Screens size from 320 pixels DP to 599 pixels DP)"
 msgstr ""
 
 #: classes/Admin/Setting.php:39
@@ -113,14 +488,44 @@ msgstr ""
 msgid "If you choose Optimized, then scrips and styles will be loaded only on page where you are using shortcode. If Optimized is not working for you then choose Always."
 msgstr ""
 
-#: classes/Admin/Setting.php:60
-#: includes/class-carousel-slider-meta-box.php:162
-#: includes/class-carousel-slider-meta-box.php:204
-msgid "Always"
-msgstr ""
-
 #: classes/Admin/Setting.php:61
 msgid "Optimized (recommended)"
+msgstr ""
+
+#: classes/CLI/Command.php:134
+msgid "Could not create slider."
+msgstr ""
+
+#: classes/CLI/Command.php:139
+msgid "#%s - %s has been created successfully."
+msgstr ""
+
+#: classes/Helper.php:20
+msgid "Image Carousel"
+msgstr ""
+
+#: classes/Helper.php:21
+msgid "Image Carousel (URL)"
+msgstr ""
+
+#: classes/Helper.php:22
+msgid "Post Carousel"
+msgstr ""
+
+#: classes/Helper.php:23
+msgid "Product Carousel"
+msgstr ""
+
+#: classes/Helper.php:24
+msgid "Video Carousel"
+msgstr ""
+
+#: classes/Helper.php:25
+msgid "Hero Carousel"
+msgstr ""
+
+#: classes/Helper.php:354
+msgid "Carousel Slider Test"
 msgstr ""
 
 #: classes/Integration/VisualComposerElement.php:41
@@ -133,6 +538,58 @@ msgstr ""
 
 #: classes/Integration/VisualComposerElement.php:53
 msgid "Choose Carousel Slide"
+msgstr ""
+
+#: classes/Supports/MetaBoxForm.php:208
+msgid "Create Gallery"
+msgstr ""
+
+#: classes/Supports/MetaBoxForm.php:209
+msgid "Edit Gallery"
+msgstr ""
+
+#: classes/Supports/MetaBoxForm.php:210
+msgid "Save Gallery"
+msgstr ""
+
+#: classes/Supports/MetaBoxForm.php:211
+msgid "Saving..."
+msgstr ""
+
+#: classes/Supports/MetaBoxForm.php:212
+msgid "Insert"
+msgstr ""
+
+#: classes/Supports/MetaBoxForm.php:236
+msgid "Edit URLs"
+msgstr ""
+
+#: classes/Supports/MetaBoxForm.php:236
+msgid "Add URLs"
+msgstr ""
+
+#: classes/Supports/MetaBoxForm.php:260
+msgid "Browse"
+msgstr ""
+
+#: classes/Upgrader.php:40
+msgid "Carousel Slider need to update database."
+msgstr ""
+
+#: classes/Upgrader.php:41
+msgid "We strongly recommend creating a backup of your site before updating."
+msgstr ""
+
+#: classes/Upgrader.php:42
+msgid "Update database"
+msgstr ""
+
+#: classes/Upgrader.php:64
+msgid "Sorry. This link only for developer to do some testing."
+msgstr ""
+
+#: classes/Upgrader.php:77
+msgid "Database upgrade process has been started."
 msgstr ""
 
 #: classes/Widget/CarouselSliderWidget.php:71
@@ -159,443 +616,41 @@ msgstr ""
 msgid "click here"
 msgstr ""
 
-#: includes/class-carousel-slider-admin.php:73
-#: templates/admin/images-url.php:42
-#: templates/admin/images-url.php:74
-msgid "URL"
-msgstr ""
-
-#: includes/class-carousel-slider-admin.php:77
-#: templates/admin/images-url.php:47
-#: templates/admin/images-url.php:78
-msgid "Title"
-msgstr ""
-
-#: includes/class-carousel-slider-admin.php:81
-#: templates/admin/images-url.php:52
-#: templates/admin/images-url.php:82
-msgid "Caption"
-msgstr ""
-
-#: includes/class-carousel-slider-admin.php:85
-#: templates/admin/images-url.php:56
-#: templates/admin/images-url.php:86
-msgid "Alt Text"
-msgstr ""
-
-#: includes/class-carousel-slider-admin.php:89
-#: templates/admin/images-url.php:61
-#: templates/admin/images-url.php:90
-msgid "Link To URL"
-msgstr ""
-
-#: includes/class-carousel-slider-admin.php:107
-msgctxt "Post Type General Name"
-msgid "Slides"
-msgstr ""
-
-#: includes/class-carousel-slider-admin.php:108
-msgctxt "Post Type Singular Name"
-msgid "Slide"
-msgstr ""
-
-#: includes/class-carousel-slider-admin.php:110
-msgid "Parent Slide:"
-msgstr ""
-
-#: includes/class-carousel-slider-admin.php:111
-msgid "All Slides"
-msgstr ""
-
-#: includes/class-carousel-slider-admin.php:112
-msgid "View Slide"
-msgstr ""
-
-#: includes/class-carousel-slider-admin.php:113
-msgid "Add New Slide"
-msgstr ""
-
-#: includes/class-carousel-slider-admin.php:114
-msgid "Add New"
-msgstr ""
-
-#: includes/class-carousel-slider-admin.php:115
-msgid "Edit Slide"
-msgstr ""
-
-#: includes/class-carousel-slider-admin.php:116
-msgid "Update Slide"
-msgstr ""
-
-#: includes/class-carousel-slider-admin.php:117
-msgid "Search Slide"
-msgstr ""
-
-#: includes/class-carousel-slider-admin.php:118
-msgid "Not found"
-msgstr ""
-
-#: includes/class-carousel-slider-admin.php:119
-msgid "Not found in Trash"
-msgstr ""
-
-#: includes/class-carousel-slider-admin.php:122
-#: templates/admin/hero-banner-slider.php:106
-msgid "Slide"
-msgstr ""
-
-#: includes/class-carousel-slider-admin.php:123
-msgid "The easiest way to create carousel slide"
-msgstr ""
-
-#: includes/class-carousel-slider-admin.php:163
-msgid "Preview"
-msgstr ""
-
-#: includes/class-carousel-slider-admin.php:179
-msgid "Carousel Slide Title"
-msgstr ""
-
-#: includes/class-carousel-slider-admin.php:180
-msgid "Shortcode"
-msgstr ""
-
-#: includes/class-carousel-slider-admin.php:181
-#: templates/admin/types.php:11
-msgid "Slide Type"
-msgstr ""
-
-#: includes/class-carousel-slider-admin.php:390
-msgid "Link to URL"
-msgstr ""
-
-#: includes/class-carousel-slider-admin.php:395
-msgid "\"Link to URL\" only works on Carousel Slider for linking image to a custom url."
-msgstr ""
-
-#: includes/class-carousel-slider-form.php:210
-msgid "Create Gallery"
-msgstr ""
-
-#: includes/class-carousel-slider-form.php:211
-msgid "Edit Gallery"
-msgstr ""
-
-#: includes/class-carousel-slider-form.php:212
-msgid "Save Gallery"
-msgstr ""
-
-#: includes/class-carousel-slider-form.php:213
-msgid "Saving..."
-msgstr ""
-
-#: includes/class-carousel-slider-form.php:214
-msgid "Insert"
-msgstr ""
-
-#: includes/class-carousel-slider-form.php:238
-msgid "Edit URLs"
-msgstr ""
-
-#: includes/class-carousel-slider-form.php:238
-msgid "Add URLs"
-msgstr ""
-
-#: includes/class-carousel-slider-form.php:262
-msgid "Browse"
-msgstr ""
-
-#: includes/class-carousel-slider-hero-carousel.php:33
+#: modules/HeroCarousel/Ajax.php:30
 msgid "Required attribute is not set properly."
 msgstr ""
 
-#: includes/class-carousel-slider-hero-carousel.php:65
-msgid "Required action is unauthorized."
+#: modules/ImageCarousel/ImageCarouselModule.php:184
+msgid "Link to URL"
 msgstr ""
 
-#: includes/class-carousel-slider-meta-box.php:54
-msgid "Usage (Shortcode)"
+#: modules/ImageCarousel/ImageCarouselModule.php:188
+msgid "\"Link to URL\" only works on Carousel Slider for linking image to a custom url."
 msgstr ""
 
-#: includes/class-carousel-slider-meta-box.php:62
-#: templates/admin/navigation.php:9
-msgid "Navigation Settings"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:70
-#: templates/admin/autoplay.php:9
-msgid "Autoplay Settings"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:78
-#: templates/admin/responsive.php:9
-msgid "Responsive Settings"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:86
-msgid "General Settings"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:110
-msgid "Copy the following shortcode and paste in post or page where you want to show."
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:157
-msgid "Show Arrow Nav"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:160
-#: includes/class-carousel-slider-meta-box.php:203
-msgid "Never"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:161
-#: includes/class-carousel-slider-meta-box.php:205
-msgid "Mouse Over"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:165
-msgid "Choose when to show arrow navigator."
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:169
-msgid "Arrow Steps"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:174
-msgid "Steps to go for each navigation request. Write \"page\" with inverted comma to slide by page."
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:178
-msgid "Arrow Position"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:181
-msgid "Outside"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:182
-msgid "Inside"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:185
-msgid "Choose where to show arrow. Inside slider or outside slider."
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:189
-msgid "Arrow Size"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:194
-msgid "Enter arrow size in pixels."
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:200
-msgid "Show Bullet Nav"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:208
-msgid "Choose when to show bullet navigator."
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:212
-msgid "Bullet Position"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:215
-msgid "Left"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:216
-msgid "Center"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:217
-msgid "Right"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:220
-msgid "Choose where to show bullets."
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:224
-msgid "Bullet Size"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:229
-msgid "Enter bullet size in pixels."
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:233
-msgid "Bullet Shape"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:236
-msgid "Square"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:237
-msgid "Circle"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:240
-msgid "Choose bullet nav shape."
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:246
-msgid "Arrows & Dots Color"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:249
-#: templates/admin/navigation.php:30
-msgid "Pick a color for navigation and dots."
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:258
-msgid "Arrows & Dots Hover Color"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:261
-#: templates/admin/navigation.php:36
-msgid "Pick a color for navigation and dots for active and hover effect."
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:285
-msgid "AutoPlay"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:288
-#: includes/class-carousel-slider-meta-box.php:299
-msgid "Enable"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:289
-#: includes/class-carousel-slider-meta-box.php:300
-msgid "Disable"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:292
-msgid "Choose whether slideshow should play automatically."
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:296
-msgid "Pause On Hover"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:303
-msgid "Pause automatic play on mouse hover."
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:307
-#: templates/admin/autoplay.php:23
-msgid "Autoplay Timeout"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:312
-msgid "Automatic play interval timeout in millisecond. Default: 5000"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:316
-#: templates/admin/autoplay.php:30
-msgid "Autoplay Speed"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:321
-msgid "Automatic play speed in millisecond. Default: 500"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:352
-#: templates/admin/responsive.php:17
-msgid "Columns"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:357
-#: templates/admin/responsive.php:18
-msgid "The number of items you want to see on the Extra Large Desktop Layout (Screens size greater than 1921 pixels DP)"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:361
-#: templates/admin/responsive.php:24
-msgid "Columns : Desktop"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:366
-#: templates/admin/responsive.php:25
-msgid "The number of items you want to see on the Desktop Layout (Screens size from 1200 pixels DP to 1920 pixels DP)"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:370
-#: templates/admin/responsive.php:31
-msgid "Columns : Small Desktop"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:376
-#: templates/admin/responsive.php:32
-msgid "The number of items you want to see on the Small Desktop Layout (Screens size from 993 pixels DP to 1199 pixels DP)"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:380
-#: templates/admin/responsive.php:37
-msgid "Columns : Tablet"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:386
-#: templates/admin/responsive.php:38
-msgid "The number of items you want to see on the Tablet Layout (Screens size from 768 pixels DP to 992 pixels DP)"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:390
-#: templates/admin/responsive.php:43
-msgid "Columns : Small Tablet"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:397
-#: templates/admin/responsive.php:44
-msgid "The number of items you want to see on the Small Tablet Layout(Screens size from 600 pixels DP to 767 pixels DP)"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:401
-#: templates/admin/responsive.php:49
-msgid "Columns : Mobile"
-msgstr ""
-
-#: includes/class-carousel-slider-meta-box.php:408
-#: templates/admin/responsive.php:50
-msgid "The number of items you want to see on the Mobile Layout (Screens size from 320 pixels DP to 599 pixels DP)"
-msgstr ""
-
-#: includes/class-carousel-slider-product.php:112
-#: templates/public/product-carousel.php:110
+#: modules/ProductCarousel/ProductCarouselModule.php:72
 msgid "Quick View"
 msgstr ""
 
-#: includes/class-carousel-slider-product.php:140
-#: templates/public/product-carousel.php:78
+#: modules/ProductCarousel/ProductCarouselModule.php:126
+#: modules/ProductCarousel/ProductCarouselView.php:129
 msgid "Sale!"
 msgstr ""
 
-#: includes/functions-carousel-slider.php:520
-msgid "Image Carousel"
+#: modules/VideoCarousel/VideoCarouselModule.php:44
+msgid "Only support youtube and vimeo. Enter video URL from youtube or vimeo separating each by comma"
 msgstr ""
 
-#: includes/functions-carousel-slider.php:521
-msgid "Image Carousel (URL)"
+#: modules/VideoCarousel/VideoCarouselModule.php:45
+msgid "Example:"
 msgstr ""
 
-#: includes/functions-carousel-slider.php:522
-msgid "Post Carousel"
+#: modules/VideoCarousel/VideoCarouselModule.php:52
+msgid "Video Settings"
 msgstr ""
 
-#: includes/functions-carousel-slider.php:523
-msgid "Product Carousel"
-msgstr ""
-
-#: includes/functions-carousel-slider.php:524
-msgid "Video Carousel"
-msgstr ""
-
-#: includes/functions-carousel-slider.php:525
-msgid "Hero Carousel"
+#: modules/VideoCarousel/VideoCarouselModule.php:58
+msgid "Video URLs"
 msgstr ""
 
 #: templates/admin/autoplay.php:16
@@ -675,60 +730,64 @@ msgstr ""
 msgid "With Visual Composer Website Builder"
 msgstr ""
 
-#: templates/admin/general.php:8
+#: templates/admin/general.php:10
 msgid "_image_size"
 msgstr ""
 
-#: templates/admin/general.php:9
+#: templates/admin/general.php:11
 msgid "Carousel Image size"
 msgstr ""
 
-#: templates/admin/general.php:11
+#: templates/admin/general.php:13
 msgid "Choose \"original uploaded image\" for full size image or your desired image size for carousel image. You can change the default size for thumbnail, medium and large from %1$s Settings >> Media %2$s."
 msgstr ""
 
-#: templates/admin/general.php:17
+#: templates/admin/general.php:19
 msgid "Lazy Loading"
 msgstr ""
 
-#: templates/admin/general.php:18
+#: templates/admin/general.php:20
 msgid "Enable image with lazy loading."
 msgstr ""
 
-#: templates/admin/general.php:27
+#: templates/admin/general.php:29
 msgid "Item Spacing."
 msgstr ""
 
-#: templates/admin/general.php:28
+#: templates/admin/general.php:30
 msgid "Space between two slide. Enter 10 for 10px"
 msgstr ""
 
-#: templates/admin/general.php:33
+#: templates/admin/general.php:35
 msgid "Infinity loop"
 msgstr ""
 
-#: templates/admin/general.php:34
+#: templates/admin/general.php:36
 msgid "Enable or disable loop(circular) of carousel."
 msgstr ""
 
-#: templates/admin/general.php:43
+#: templates/admin/general.php:45
 msgid "Stage Padding"
 msgstr ""
 
-#: templates/admin/general.php:44
+#: templates/admin/general.php:46
 msgid "Add left and right padding on carousel slider stage wrapper."
 msgstr ""
 
-#: templates/admin/general.php:49
+#: templates/admin/general.php:51
 msgid "Auto Width"
 msgstr ""
 
-#: templates/admin/general.php:50
+#: templates/admin/general.php:52
 msgid "Set item width according to its content width. Use width style on item to get the result you want. "
 msgstr ""
 
 #: templates/admin/hero-banner-slider.php:10
 msgid "Hero Banner Slider"
+msgstr ""
+
+#: templates/admin/hero-banner-slider.php:106
+msgid "Slide"
 msgstr ""
 
 #: templates/admin/hero-banner-slider.php:116
@@ -899,7 +958,7 @@ msgstr ""
 msgid "Image Carousel - from URL"
 msgstr ""
 
-#: templates/admin/images-url.php:104
+#: templates/admin/images-url.php:112
 msgid "Save"
 msgstr ""
 
@@ -1079,7 +1138,7 @@ msgstr ""
 
 #: templates/admin/parts/hero-banner/tab-link-button-one.php:113
 #: templates/admin/parts/hero-banner/tab-link-button-two.php:114
-#: templates/admin/product-carousel.php:132
+#: templates/admin/product-carousel.php:134
 msgid "Button Text Color"
 msgstr ""
 
@@ -1184,7 +1243,7 @@ msgid "Post Query"
 msgstr ""
 
 #: templates/admin/post-carousel.php:17
-#: templates/admin/product-carousel.php:17
+#: templates/admin/product-carousel.php:19
 msgid "Query Type"
 msgstr ""
 
@@ -1288,197 +1347,175 @@ msgstr ""
 msgid "Number of comments"
 msgstr ""
 
-#: templates/admin/product-carousel.php:10
+#: templates/admin/product-carousel.php:12
 msgid "Product Query"
 msgstr ""
 
-#: templates/admin/product-carousel.php:20
+#: templates/admin/product-carousel.php:22
 msgid "Query Products"
 msgstr ""
 
-#: templates/admin/product-carousel.php:21
-#: templates/admin/product-carousel.php:43
+#: templates/admin/product-carousel.php:23
+#: templates/admin/product-carousel.php:45
 msgid "Product Categories"
 msgstr ""
 
-#: templates/admin/product-carousel.php:22
-#: templates/admin/product-carousel.php:50
+#: templates/admin/product-carousel.php:24
+#: templates/admin/product-carousel.php:52
 msgid "Product Tags"
 msgstr ""
 
-#: templates/admin/product-carousel.php:23
+#: templates/admin/product-carousel.php:25
 msgid "Specific Products"
 msgstr ""
 
-#: templates/admin/product-carousel.php:28
+#: templates/admin/product-carousel.php:30
 msgid "Choose Query"
 msgstr ""
 
-#: templates/admin/product-carousel.php:31
+#: templates/admin/product-carousel.php:33
 msgid "Featured Products"
 msgstr ""
 
-#: templates/admin/product-carousel.php:32
+#: templates/admin/product-carousel.php:34
 msgid "Recent Products"
 msgstr ""
 
-#: templates/admin/product-carousel.php:33
+#: templates/admin/product-carousel.php:35
 msgid "Sale Products"
 msgstr ""
 
-#: templates/admin/product-carousel.php:34
+#: templates/admin/product-carousel.php:36
 msgid "Best-Selling Products"
 msgstr ""
 
-#: templates/admin/product-carousel.php:35
+#: templates/admin/product-carousel.php:37
 msgid "Top Rated Products"
 msgstr ""
 
-#: templates/admin/product-carousel.php:36
+#: templates/admin/product-carousel.php:38
 msgid "Product Categories List"
 msgstr ""
 
-#: templates/admin/product-carousel.php:44
+#: templates/admin/product-carousel.php:46
 msgid "Show products associated with selected categories."
 msgstr ""
 
-#: templates/admin/product-carousel.php:51
+#: templates/admin/product-carousel.php:53
 msgid "Show products associated with selected tags."
 msgstr ""
 
-#: templates/admin/product-carousel.php:57
+#: templates/admin/product-carousel.php:59
 msgid "Specific products"
 msgstr ""
 
-#: templates/admin/product-carousel.php:58
+#: templates/admin/product-carousel.php:60
 msgid "Select products that you want to show as slider. Select at least 5 products"
 msgstr ""
 
-#: templates/admin/product-carousel.php:62
+#: templates/admin/product-carousel.php:64
 msgid "Product per page"
 msgstr ""
 
-#: templates/admin/product-carousel.php:64
+#: templates/admin/product-carousel.php:66
 msgid "How many products you want to show on carousel slide."
 msgstr ""
 
-#: templates/admin/product-carousel.php:68
+#: templates/admin/product-carousel.php:70
 msgid "Show Title"
 msgstr ""
 
-#: templates/admin/product-carousel.php:69
+#: templates/admin/product-carousel.php:71
 msgid "Show Title."
 msgstr ""
 
-#: templates/admin/product-carousel.php:70
+#: templates/admin/product-carousel.php:72
 msgid "Check to show product title."
 msgstr ""
 
-#: templates/admin/product-carousel.php:75
+#: templates/admin/product-carousel.php:77
 msgid "Show Rating"
 msgstr ""
 
-#: templates/admin/product-carousel.php:76
+#: templates/admin/product-carousel.php:78
 msgid "Show Rating."
 msgstr ""
 
-#: templates/admin/product-carousel.php:77
+#: templates/admin/product-carousel.php:79
 msgid "Check to show product rating."
 msgstr ""
 
-#: templates/admin/product-carousel.php:82
+#: templates/admin/product-carousel.php:84
 msgid "Show Price"
 msgstr ""
 
-#: templates/admin/product-carousel.php:83
+#: templates/admin/product-carousel.php:85
 msgid "Show Price."
 msgstr ""
 
-#: templates/admin/product-carousel.php:84
+#: templates/admin/product-carousel.php:86
 msgid "Check to show product price."
 msgstr ""
 
-#: templates/admin/product-carousel.php:89
+#: templates/admin/product-carousel.php:91
 msgid "Show Cart Button"
 msgstr ""
 
-#: templates/admin/product-carousel.php:90
+#: templates/admin/product-carousel.php:92
 msgid "Show Cart Button."
 msgstr ""
 
-#: templates/admin/product-carousel.php:91
+#: templates/admin/product-carousel.php:93
 msgid "Check to show product add to cart button."
 msgstr ""
 
-#: templates/admin/product-carousel.php:96
-#: templates/admin/product-carousel.php:97
+#: templates/admin/product-carousel.php:98
+#: templates/admin/product-carousel.php:99
 msgid "Show Sale Tag"
 msgstr ""
 
-#: templates/admin/product-carousel.php:98
+#: templates/admin/product-carousel.php:100
 msgid "Check to show product sale tag for onsale products."
 msgstr ""
 
-#: templates/admin/product-carousel.php:103
-#: templates/admin/product-carousel.php:104
+#: templates/admin/product-carousel.php:105
+#: templates/admin/product-carousel.php:106
 msgid "Show Wishlist Button"
 msgstr ""
 
-#: templates/admin/product-carousel.php:106
+#: templates/admin/product-carousel.php:108
 msgid "Check to show wishlist button. This feature needs %s plugin to be installed."
 msgstr ""
 
-#: templates/admin/product-carousel.php:106
+#: templates/admin/product-carousel.php:108
 msgid "YITH WooCommerce Wishlist"
 msgstr ""
 
-#: templates/admin/product-carousel.php:110
-#: templates/admin/product-carousel.php:111
+#: templates/admin/product-carousel.php:112
+#: templates/admin/product-carousel.php:113
 msgid "Show Quick View"
 msgstr ""
 
-#: templates/admin/product-carousel.php:112
+#: templates/admin/product-carousel.php:114
 msgid "Check to show quick view button."
 msgstr ""
 
-#: templates/admin/product-carousel.php:118
+#: templates/admin/product-carousel.php:120
 msgid "Title Color"
 msgstr ""
 
-#: templates/admin/product-carousel.php:119
+#: templates/admin/product-carousel.php:121
 msgid "Pick a color for product title. This color will also apply to sale tag and price."
 msgstr ""
 
-#: templates/admin/product-carousel.php:125
+#: templates/admin/product-carousel.php:127
 msgid "Button Background Color"
 msgstr ""
 
-#: templates/admin/product-carousel.php:126
+#: templates/admin/product-carousel.php:128
 msgid "Pick a color for button background color. This color will also apply to product rating."
 msgstr ""
 
-#: templates/admin/product-carousel.php:133
+#: templates/admin/product-carousel.php:135
 msgid "Pick a color for button text color."
-msgstr ""
-
-#: templates/admin/video-carousel.php:10
-msgid "Video Settings"
-msgstr ""
-
-#: templates/admin/video-carousel.php:17
-msgid "Video URLs"
-msgstr ""
-
-#: templates/admin/video-carousel.php:20
-msgid "Only support youtube and vimeo. Enter video URL from youtube or vimeo separating each by comma"
-msgstr ""
-
-#: templates/public/product-carousel-2.php:10
-#: templates/public/product-carousel.php:10
-msgid "Carousel Slider needs %s to work for products carousel."
-msgstr ""
-
-#: templates/public/product-carousel-2.php:12
-#: templates/public/product-carousel.php:12
-msgid "WooCommerce"
 msgstr ""

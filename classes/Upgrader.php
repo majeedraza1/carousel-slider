@@ -56,7 +56,7 @@ class Upgrader {
 	 * Run upgrade function
 	 */
 	public function upgrade() {
-		$nonce       = $_REQUEST['_wpnonce'] ? $_REQUEST['_wpnonce'] : null;
+		$nonce       = $_REQUEST['_wpnonce'] ?: null;
 		$is_verified = wp_verify_nonce( $nonce, 'carousel_slider_upgrade' );
 
 		$message = '<h1>' . __( 'Carousel Slider', 'carousel-slider' ) . '</h1>';
