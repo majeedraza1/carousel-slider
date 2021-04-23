@@ -40,7 +40,7 @@ class ProductCarouselHelper {
 	 */
 	public static function get_products( int $slider_id, array $args = [] ): array {
 		$per_page   = (int) get_post_meta( $slider_id, '_products_per_page', true );
-		$per_page   = $per_page ? $per_page : 12;
+		$per_page   = $per_page ?: 12;
 		$query_type = get_post_meta( $slider_id, '_product_query_type', true );
 		$query_type = empty( $query_type ) ? 'query_product' : $query_type;
 		// Type mistake

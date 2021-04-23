@@ -25,6 +25,7 @@ class PostCarouselModule {
 			self::$instance = new self();
 
 			add_filter( 'carousel_slider/view', [ self::$instance, 'view' ], 10, 3 );
+			PostCarouselAdmin::init();
 		}
 
 		return self::$instance;

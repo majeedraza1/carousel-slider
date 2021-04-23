@@ -36,23 +36,32 @@ let template = `<div class="media-url--column shapla-column is-4">
 </div>`;
 
 // URL Images Model
-modalOpenBtn.on('click', event => {
+$(document).on('click', '#_images_urls_btn', event => {
 	event.preventDefault();
-	modal.css("display", "block");
+	$(document).find('.shapla-modal').addClass('is-active');
 	$("body").addClass("overflowHidden");
 });
-modal.on('click', '.carousel_slider-close', event => {
+
+$(document).on('click', '[data-dismiss="shapla-modal"]', event => {
 	event.preventDefault();
-	modal.css("display", "none");
+	$(event.target).closest('.shapla-modal').removeClass('is-active');
 	$("body").removeClass("overflowHidden");
 });
 
-let carouselSliderBodyHeight = $(window).height() - (38 + 48 + 32 + 30);
-$('.carousel_slider-modal-body').css('height', carouselSliderBodyHeight + 'px');
-
 // Append new row
-body.on('click', '.add_row', function () {
-	$(this).closest('.media-url--column').after(template);
+body.on('click', '.add_row', function (event) {
+	event.preventDefault();
+	let currentColumn = $(this).closest('.media-url--column');
+	if (currentColumn.length) {
+		currentColumn.after(template);
+	} else {
+		let columns = modal.find('.media-url--column');
+		if (columns.length) {
+			columns.last().after(template);
+		} else {
+			modal.find('#carousel_slider_form').prepend(template);
+		}
+	}
 });
 
 // Delete current row

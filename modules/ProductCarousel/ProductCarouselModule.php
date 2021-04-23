@@ -30,6 +30,8 @@ class ProductCarouselModule {
 
 			add_action( 'wp_ajax_carousel_slider_quick_view', [ self::$instance, 'quick_view' ] );
 			add_action( 'wp_ajax_nopriv_carousel_slider_quick_view', [ self::$instance, 'quick_view' ] );
+
+			ProductCarouselAdmin::init();
 		}
 
 		return self::$instance;

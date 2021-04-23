@@ -163,12 +163,8 @@ class MetaBox {
 		$slide_type = array_key_exists( $slide_type, Helper::get_slide_types() ) ? $slide_type : 'image-carousel';
 
 		require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/types.php';
-		require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/images-media.php';
 		require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/images-url.php';
-		require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/post-carousel.php';
-		require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/product-carousel.php';
 		require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/hero-banner-slider.php';
-		require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/images-settings.php';
 
 		/**
 		 * Allow third part plugin to add custom fields

@@ -1,6 +1,7 @@
 $imagePath: '../img/';
 
 @import "~shapla-css/src/grid/columns";
+@import "~shapla-css/src/elements/delete-icon/delete-icon";
 @import "~shapla-css/src/components/modal/modal";
 
 @import "utilities/variables";
@@ -14,3 +15,11 @@ $imagePath: '../img/';
 @import 'admin/modal';
 @import 'admin/tab';
 @import 'admin/documentation';
+
+.shapla-modal {
+	box-sizing: border-box;
+
+	*, *:before, *:after {
+		box-sizing: inherit;
+	}
+}

@@ -31,6 +31,8 @@ class ImageCarouselModule {
 			// Add custom link to media gallery
 			add_filter( "attachment_fields_to_edit", [ self::$instance, "attachment_fields_to_edit" ], 10, 2 );
 			add_filter( "attachment_fields_to_save", [ self::$instance, "attachment_fields_to_save" ], 10, 2 );
+
+			ImageCarouselAdmin::init();
 		}
 
 		return self::$instance;

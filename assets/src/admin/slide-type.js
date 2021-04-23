@@ -105,7 +105,7 @@
     // Slide Type -- Product Carousel
     if (slide_type.val() === 'product-carousel') {
         var _productQueryType = _product_query_type.val();
-        if (_productQueryType === 'query_porduct') {
+        if (_productQueryType === 'query_product') {
             _product_query.show();
         }
         if (_productQueryType === 'product_categories') {
@@ -127,7 +127,7 @@
         _product_in.hide('fast');
         _products_per_page.show('fast');
 
-        if (this.value === 'query_porduct') {
+        if (this.value === 'query_product') {
             _product_query.slideDown();
         }
         if (this.value === 'product_categories') {
