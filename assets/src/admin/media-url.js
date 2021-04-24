@@ -2,35 +2,39 @@
  * Carousel Slider Gallery from URL
  */
 
-const _l10n = window.CarouselSliderAdminL10n;
-let $ = jQuery, body = $('body'), modal = $('#CarouselSliderModal'), modalOpenBtn = $('#_images_urls_btn');
+const _l10n = window.CarouselSliderAdminL10n,
+	$ = jQuery,
+	body = $('body'),
+	modal = $('#CarouselSliderModal');
 
-let template = `<div class="media-url--column shapla-column is-4">
-<div class="carousel_slider-fields">
-	<label class="setting">
+let template = `<div class="media-url--column shapla-column is-12">
+<div class="carousel_slider-fields media-url-form-field">
+	<div class="media-url-form-field__content">
+		<label class="setting media-url-form-field__item">
 			<span class="name">${_l10n.url}</span>
 			<input type="url" name="_images_urls[url][]" value="" autocomplete="off">
-	</label>
-	<label class="setting">
+		</label>
+		<label class="setting media-url-form-field__item">
 			<span class="name">${_l10n.title}</span>
 			<input type="text" name="_images_urls[title][]" value="" autocomplete="off">
-	</label>
-	<label class="setting">
+		</label>
+		<label class="setting media-url-form-field__item">
 			<span class="name">${_l10n.caption}</span>
 			<textarea name="_images_urls[caption][]"></textarea>
-	</label>
-	<label class="setting">
+		</label>
+		<label class="setting media-url-form-field__item">
 			<span class="name">${_l10n.altText}</span>
 			<input type="text" name="_images_urls[alt][]" value="" autocomplete="off">
-	</label>
-	<label class="setting">
+		</label>
+		<label class="setting media-url-form-field__item">
 			<span class="name">${_l10n.linkToUrl}</span>
 			<input type="text" name="_images_urls[link_url][]" value="" autocomplete="off">
-	</label>
-	<div class="actions">
-			<span><span class="dashicons dashicons-move"></span></span>
-			<span class="add_row"><span class="dashicons dashicons-plus-alt"></span></span>
-			<span class="delete_row"><span class="dashicons dashicons-trash"></span></span>
+		</label>
+	</div>
+	<div class="media-url-form-field__actions">
+		<span class="move_row"><span class="dashicons dashicons-move"></span></span>
+		<span class="add_row"><span class="dashicons dashicons-plus-alt"></span></span>
+		<span class="delete_row"><span class="dashicons dashicons-trash"></span></span>
 	</div>
 </div>
 </div>`;
@@ -49,7 +53,7 @@ $(document).on('click', '[data-dismiss="shapla-modal"]', event => {
 });
 
 // Append new row
-body.on('click', '.add_row', function (event) {
+$(document).on('click', '.add_row', function (event) {
 	event.preventDefault();
 	let currentColumn = $(this).closest('.media-url--column');
 	if (currentColumn.length) {
@@ -65,7 +69,7 @@ body.on('click', '.add_row', function (event) {
 });
 
 // Delete current row
-body.on('click', '.delete_row', function () {
+$(document).on('click', '.delete_row', function () {
 	if (confirm("Are you sure to delete")) {
 		$(this).closest('.media-url--column').remove();
 	}

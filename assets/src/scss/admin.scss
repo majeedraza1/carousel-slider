@@ -7,19 +7,19 @@ $imagePath: '../img/';
 @import "utilities/variables";
 @import "utilities/mixins";
 @import 'admin/widget';
-@import 'admin/toggle';
 @import 'admin/meta-box';
-@import 'admin/datepicker';
 @import 'admin/select2';
-@import 'admin/model';
-@import 'admin/modal';
+@import 'admin/toggle';
 @import 'admin/tab';
+@import 'admin/image-carouel-url';
 @import 'admin/documentation';
 
 .shapla-modal {
 	box-sizing: border-box;
 
-	*, *:before, *:after {
+	*,
+	*:before,
+	*:after {
 		box-sizing: inherit;
 	}
 }

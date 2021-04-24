@@ -72,10 +72,9 @@ class MetaBoxForm {
 		}
 
 		list( $name, $value ) = $this->field_common( $args );
-		$std_value = $args['std'] ?? '';
 
 		echo $this->field_before( $args );
-		echo sprintf( '<input type="text" class="sp-input-text datepicker" value="%1$s" id="%2$s" name="%3$s">', $value, $args['id'], $name, $std_value );
+		echo sprintf( '<input type="date" class="sp-input-text" value="%1$s" id="%2$s" name="%3$s">', $value, $args['id'], $name );
 		echo $this->field_after( $args );
 	}
 
