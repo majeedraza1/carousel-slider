@@ -26,6 +26,7 @@ class HeroCarouselModule {
 			add_filter( 'carousel_slider/view', [ self::$instance, 'view' ], 10, 3 );
 			add_action( 'carousel_slider/save_slider', [ self::$instance, 'save_slider' ] );
 
+			HeroCarouselAdmin::init();
 			Ajax::init();
 		}
 

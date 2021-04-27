@@ -8,11 +8,9 @@
     "admin": [
       "./assets/src/scss/admin.scss",
       "./assets/src/admin/main.js",
-      "./assets/src/admin/accordion.js",
       "./assets/src/admin/hero-banner.js",
       "./assets/src/admin/media-gallery.js",
       "./assets/src/admin/media-url.js",
-      "./assets/src/admin/modal.js",
       "./assets/src/admin/slide-type.js",
       "./assets/src/admin/vendors.js"
     ],

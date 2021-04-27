@@ -160,7 +160,6 @@ class Assets {
 					'select2',
 					'wp-color-picker-alpha',
 					'jquery-ui-accordion',
-					'jquery-ui-datepicker',
 					'jquery-ui-sortable',
 					'jquery-ui-tabs',
 				],

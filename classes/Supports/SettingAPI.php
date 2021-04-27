@@ -488,9 +488,9 @@ class SettingAPI {
 	 * @return string
 	 */
 	public function date( $field, $name, $value ) {
-		$value = date( "F d, Y", strtotime( $value ) );
+		$value = date( "Y-m-d", strtotime( $value ) );
 
-		return sprintf( '<input type="text" class="regular-text datepicker" value="%1$s" id="%2$s" name="%3$s">',
+		return sprintf( '<input type="date" class="regular-text" value="%1$s" id="%2$s" name="%3$s">',
 			$value, $field['id'], $name );
 	}
 
