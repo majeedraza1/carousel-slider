@@ -2,10 +2,7 @@
 
 use CarouselSlider\Supports\MetaBoxForm;
 
-// If this file is called directly, abort.
-if ( ! defined( 'WPINC' ) ) {
-	die;
-}
+defined( 'ABSPATH' ) || exit;
 
 $metaBox      = new MetaBoxForm;
 $item_index   = $slide_num = $slide_num ?? 0;
@@ -13,61 +10,52 @@ $_link_type   = ! empty( $content_slider['link_type'] ) ? esc_attr( $content_sli
 $_slide_link  = ! empty( $content_slider['slide_link'] ) ? esc_url( $content_slider['slide_link'] ) : '';
 $_link_target = ! empty( $content_slider['link_target'] ) ? esc_attr( $content_slider['link_target'] ) : '_blank';
 
-?>
-<div id="carousel-slider-tab-link" class="shapla-tab tab-content-link">
+echo '<div id="carousel-slider-tab-link" class="shapla-tab tab-content-link">';
+$metaBox->select( [
+	'id'               => 'link_type',
+	'class'            => 'sp-input-text link_type',
+	'name'             => esc_html__( 'Slide Link Type', 'carousel-slider' ),
+	'desc'             => esc_html__( 'Select how the slide will link.', 'carousel-slider' ),
+	'options'          => [
+		'none'   => esc_html__( 'No Link', 'carousel-slider' ),
+		'full'   => esc_html__( 'Full Slide', 'carousel-slider' ),
+		'button' => esc_html__( 'Button', 'carousel-slider' ),
+	],
+	'input_attributes' => [
+		'name'  => sprintf( "carousel_slider_content[%s][link_type]", $slide_num ),
+		'value' => $_link_type,
+	],
+] );
 
-	<div class="sp-input-group" id="field-_link_type">
-		<div class="sp-input-label">
-			<label for="_link_type"><?php esc_html_e( 'Slide Link Type', 'carousel-slider' ); ?></label>
-			<p class="sp-input-desc"><?php esc_html_e( 'Select how the slide will link.', 'carousel-slider' ); ?></p>
-		</div>
-		<div class="sp-input-field">
-			<select name="carousel_slider_content[<?php echo $slide_num; ?>][link_type]"
-					id="_link_type" class="sp-input-text link_type">
-				<option
-					value="none" <?php selected( $_link_type, 'none' ); ?>><?php esc_html_e( 'No Link', 'carousel-slider' ); ?></option>
-				<option
-					value="full" <?php selected( $_link_type, 'full' ); ?>><?php esc_html_e( 'Full Slide', 'carousel-slider' ); ?></option>
-				<option
-					value="button" <?php selected( $_link_type, 'button' ); ?>><?php esc_html_e( 'Button', 'carousel-slider' ); ?></option>
-			</select>
-		</div>
-	</div>
+$is_full = $_link_type == 'full' ? 'display:block' : 'display:none';
+echo '<div class="ContentCarouselLinkFull" style="' . $is_full . '">';
+$metaBox->text( [
+	'id'               => 'slide_link',
+	'name'             => esc_html__( 'Slide Link', 'carousel-slider' ),
+	'desc'             => esc_html__( 'Please enter your URL that will be used to link the full slide.', 'carousel-slider' ),
+	'input_attributes' => [
+		'name'  => sprintf( "carousel_slider_content[%s][link_type]", $slide_num ),
+		'value' => $_slide_link,
+	],
+] );
+$metaBox->select( [
+	'id'               => 'link_target',
+	'name'             => esc_html__( 'Open Slide Link In New Window', 'carousel-slider' ),
+	'input_attributes' => [
+		'name'  => sprintf( "carousel_slider_content[%s][link_target]", $slide_num ),
+		'value' => $_link_target,
+	],
+	'options'          => [
+		'_blank' => esc_html__( 'Yes', 'carousel-slider' ),
+		'_self'  => esc_html__( 'No', 'carousel-slider' ),
+	],
+] );
+echo '</div>';
 
-	<div class="ContentCarouselLinkFull" style="display: <?php echo ( $_link_type == 'full' ) ? 'block' : 'none'; ?>">
-		<div class="sp-input-group" id="field-_slide_link">
-			<div class="sp-input-label">
-				<label for="_slide_link"><?php esc_html_e( 'Slide Link', 'carousel-slider' ); ?></label>
-				<p class="sp-input-desc"><?php esc_html_e( 'Please enter your URL that will be used to link the full slide.', 'carousel-slider' ); ?></p>
-			</div>
-			<div class="sp-input-field">
-				<input type="url" id="_slide_link"
-					   class="sp-input-text" value="<?php echo $_slide_link; ?>"
-					   name="carousel_slider_content[<?php echo $slide_num; ?>][slide_link]">
-			</div>
-		</div>
+$is_button = $_link_type == 'button' ? 'display:block' : 'display:none';
+echo '<div class="ContentCarouselLinkButtons" style="' . $is_button . '">';
+include CAROUSEL_SLIDER_TEMPLATES . '/admin/hero-banner/tab-link-button-one.php';
+include CAROUSEL_SLIDER_TEMPLATES . '/admin/hero-banner/tab-link-button-two.php';
+echo '</div>';
 
-		<div class="sp-input-group" id="field-_link_target">
-			<div class="sp-input-label">
-				<label
-					for="_link_target"><?php esc_html_e( 'Open Slide Link In New Window', 'carousel-slider' ); ?></label>
-			</div>
-			<div class="sp-input-field">
-				<select name="carousel_slider_content[<?php echo $slide_num; ?>][link_target]"
-						id="_link_target" class="sp-input-text">
-					<option
-						value="_blank" <?php selected( $_link_target, '_blank' ); ?>><?php esc_html_e( 'Yes', 'carousel-slider' ); ?></option>
-					<option
-						value="_self" <?php selected( $_link_target, '_self' ); ?>><?php esc_html_e( 'No', 'carousel-slider' ); ?></option>
-				</select>
-			</div>
-		</div>
-	</div>
-
-	<div class="ContentCarouselLinkButtons"
-		 style="display: <?php echo ( $_link_type == 'button' ) ? 'block' : 'none'; ?>">
-		<?php include CAROUSEL_SLIDER_TEMPLATES . '/admin/hero-banner/tab-link-button-one.php';; ?>
-		<?php include CAROUSEL_SLIDER_TEMPLATES . '/admin/hero-banner/tab-link-button-two.php';; ?>
-	</div>
-
-</div>
+echo '</div>';

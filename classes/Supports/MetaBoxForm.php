@@ -2,6 +2,8 @@
 
 namespace CarouselSlider\Supports;
 
+use CarouselSlider\Helper;
+
 defined( 'ABSPATH' ) || exit;
 
 class MetaBoxForm {
@@ -170,6 +172,32 @@ class MetaBoxForm {
 		}
 		echo '</select>';
 		echo $this->field_after( $args );
+	}
+
+	/**
+	 * @param array $args
+	 */
+	public function upload_iframe( array $args ) {
+		if ( ! isset( $args['id'], $args['name'] ) ) {
+			return;
+		}
+		list( $name, $value ) = $this->get_name_and_value( $args );
+		$class       = isset( $args['class'] ) ? esc_attr( $args['class'] ) : 'sp-input-hidden';
+		$button_text = $value ? __( 'Update Image', 'carousel-slider' ) : __( 'Set Image', 'carousel-slider' );
+
+		global $post;
+		$attrs = [
+			'class'            => 'button slide_image_add',
+			'href'             => esc_url( get_upload_iframe_src( 'image', $post->ID ) ),
+			'data-title'       => esc_attr__( 'Select or Upload Slide Background Image', 'carousel-slider' ),
+			'data-button-text' => esc_attr( $button_text ),
+		];
+
+		$html = $this->field_before( $args );
+		$html .= '<input type="hidden" class="' . $class . '" name="' . $name . '" value="' . $value . '" />';
+		$html .= '<a ' . implode( ' ', Helper::array_to_attribute( $attrs ) ) . '>' . esc_html( $button_text ) . '</a>';
+		$html .= $this->field_after( $args );
+		echo $html;
 	}
 
 	/**
@@ -582,5 +610,4 @@ class MetaBoxForm {
 
 		return false;
 	}
-
 }

@@ -90,4 +90,17 @@ class HeroCarouselHelper {
 	public static function link_target(): array {
 		return [ '_blank', '_self' ];
 	}
+
+	/**
+	 * Ken burns effects
+	 *
+	 * @return array
+	 */
+	public static function ken_burns_effects(): array {
+		return [
+			''         => __( 'None', 'carousel-slider' ),
+			'zoom-in'  => __( 'Zoom In', 'carousel-slider' ),
+			'zoom-out' => __( 'Zoom Out', 'carousel-slider' ),
+		];
+	}
 }
