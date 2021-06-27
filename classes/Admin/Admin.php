@@ -212,7 +212,41 @@ class Admin {
 	 * Documentation page callback
 	 */
 	public function documentation_page_callback() {
-		include_once CAROUSEL_SLIDER_TEMPLATES . '/admin/documentation.php';
+		$items = [
+			[ 'youtube_id' => '_hVsamgr1k4', 'title' => __( 'Hero Image Carousel', 'carousel-slider' ) ],
+			[ 'youtube_id' => 'ZzI1JhElrxc', 'title' => __( 'Image carousel (gallery images)', 'carousel-slider' ) ],
+			[ 'youtube_id' => 'a7hqn1yNzwM', 'title' => __( 'Image carousel (custom URLs)', 'carousel-slider' ) ],
+			[ 'youtube_id' => 'ImJB946azy0', 'title' => __( 'Posts Carousel', 'carousel-slider' ) ],
+			[ 'youtube_id' => 'yiAkvXyfakg', 'title' => __( 'WooCommerce Product Carousel', 'carousel-slider' ) ],
+			[ 'youtube_id' => 'kYgp6wp27lM', 'title' => __( 'In Widget Areas', 'carousel-slider' ) ],
+			[ 'youtube_id' => '-OaYQZfr1RM', 'title' => __( 'With Page Builder by SiteOrigin', 'carousel-slider' ) ],
+			[ 'youtube_id' => '4LhDXH81whk', 'title' => __( 'With Visual Composer Website Builder', 'carousel-slider' ) ],
+		];
+		$html  = '<div class="wrap">';
+		$html  .= '<h1 class="wp-heading">' . esc_html__( 'Carousel Slider Documentation', 'carousel-slider' ) . '</h1>';
+		$html  .= '<div class="clear"></div>';
+		$html  .= '<div class="postbox"><div class="inside">';
+		$html  .= '<div class="carousel_slider_columns">';
+		foreach ( $items as $item ) {
+			$html .= '<div class="carousel_slider_column">';
+			$html .= '<div class="carousel_slider_iframe">';
+			$html .= sprintf(
+				'<iframe width="1280" height="720" src="https://www.youtube.com/embed/%s" allowfullscreen></iframe>',
+				$item['youtube_id']
+			);
+			$html .= '</div>';
+			if ( ! empty( $item['title'] ) ) {
+				$html .= '<label>' . esc_html( $item['title'] ) . '</label>';
+			}
+			if ( ! empty( $item['description'] ) ) {
+				$html .= '<p class="description">' . esc_html( $item['description'] ) . '</p>';
+			}
+			$html .= '</div>';
+		}
+		$html .= '</div>';
+		$html .= '</div></div>';
+		$html .= '</div>';
+		echo $html;
 	}
 
 	/**

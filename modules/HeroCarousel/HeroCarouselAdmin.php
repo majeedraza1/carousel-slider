@@ -2,6 +2,7 @@
 
 namespace CarouselSlider\Modules\HeroCarousel;
 
+use CarouselSlider\Helper;
 use CarouselSlider\Supports\MetaBoxForm;
 
 class HeroCarouselAdmin {
@@ -73,21 +74,23 @@ class HeroCarouselAdmin {
 		<?php
 	}
 
+	/**
+	 * Item meta box
+	 *
+	 * @param Item $item
+	 * @param int $total_items
+	 */
 	public static function item_meta_box( Item $item, int $total_items = 0 ) {
-		$slide_num      = $item_index = $item->get_item_id();
-		$total_sliders  = $total_items;
-		$content_slider = $item->to_array();
-		global $post;
 		?>
 		<div class="shapla-toggle shapla-toggle--normal" data-id="closed">
 			<div class="shapla-toggle-title">
-				<?php printf( '%s %s', esc_html__( 'Slide', 'carousel-slider' ), $slide_num + 1 ); ?>
+				<?php printf( '%s %s', esc_html__( 'Slide', 'carousel-slider' ), $item->get_item_id() + 1 ); ?>
 			</div>
 			<div class="shapla-toggle-inner">
 				<div class="shapla-toggle-content">
 
 					<div class="carousel_slider__slide_actions">
-						<?php echo HeroCarouselAdmin::get_actions_html( $item->get_slider_id(), $slide_num, $total_sliders ) ?>
+						<?php echo HeroCarouselAdmin::get_actions_html( $item->get_slider_id(), $item->get_item_id(), $total_items ) ?>
 					</div>
 					<div class="clear" style="width: 100%; margin-bottom: 1rem; height: 1px;"></div>
 
@@ -113,12 +116,18 @@ class HeroCarouselAdmin {
 								</li>
 							</ul>
 
-							<?php
-							include CAROUSEL_SLIDER_TEMPLATES . '/admin/hero-banner/tab-content.php';
-							include CAROUSEL_SLIDER_TEMPLATES . '/admin/hero-banner/tab-link.php';
-							include CAROUSEL_SLIDER_TEMPLATES . '/admin/hero-banner/tab-background.php';
-							include CAROUSEL_SLIDER_TEMPLATES . '/admin/hero-banner/tab-style.php';
-							?>
+							<div id="carousel-slider-tab-content" class="shapla-tab tab-content">
+								<?php self::get_item_tab_content( $item ); ?>
+							</div>
+							<div id="carousel-slider-tab-link" class="shapla-tab tab-content-link">
+								<?php self::get_item_tab_link( $item ); ?>
+							</div>
+							<div id="carousel-slider-tab-background" class="shapla-tab tab-background">
+								<?php self::get_item_tab_background( $item ); ?>
+							</div>
+							<div id="carousel-slider-tab-style" class="shapla-tab tab-style">
+								<?php self::get_item_tab_style( $item ); ?>
+							</div>
 						</div>
 					</div>
 
@@ -127,6 +136,493 @@ class HeroCarouselAdmin {
 			</div>
 		</div>
 		<?php
+	}
+
+	/**
+	 * Get loop item content
+	 *
+	 * @param Item $item
+	 */
+	public static function get_item_tab_content( Item $item ) {
+		$metaBox = new MetaBoxForm;
+
+		$metaBox->textarea( [
+			'id'               => 'slide_heading',
+			'name'             => esc_html__( 'Slide Heading', 'carousel-slider' ),
+			'desc'             => esc_html__( 'Enter the heading for your slide. This field can take HTML markup.', 'carousel-slider' ),
+			'rows'             => 3,
+			'input_attributes' => [
+				'name'  => sprintf( "carousel_slider_content[%s][slide_heading]", $item->get_item_id() ),
+				'value' => $item->get_prop( 'slide_heading' ),
+			],
+		] );
+		$metaBox->textarea( [
+			'id'               => 'slide_description',
+			'name'             => esc_html__( 'Slide Description', 'carousel-slider' ),
+			'desc'             => esc_html__( 'Enter the description for your slide. This field can take HTML markup.', 'carousel-slider' ),
+			'rows'             => 4,
+			'input_attributes' => [
+				'name'  => sprintf( "carousel_slider_content[%s][slide_description]", $item->get_item_id() ),
+				'value' => $item->get_prop( 'slide_description' ),
+			],
+		] );
+	}
+
+	/**
+	 * Get item tab link
+	 *
+	 * @param Item $item
+	 */
+	public static function get_item_tab_link( Item $item ) {
+		$metaBox   = new MetaBoxForm;
+		$link_type = $item->get_prop( 'link_type', 'full' );
+
+		$metaBox->select( [
+			'id'               => 'link_type',
+			'class'            => 'sp-input-text link_type',
+			'name'             => esc_html__( 'Slide Link Type', 'carousel-slider' ),
+			'desc'             => esc_html__( 'Select how the slide will link.', 'carousel-slider' ),
+			'options'          => [
+				'none'   => esc_html__( 'No Link', 'carousel-slider' ),
+				'full'   => esc_html__( 'Full Slide', 'carousel-slider' ),
+				'button' => esc_html__( 'Button', 'carousel-slider' ),
+			],
+			'input_attributes' => [
+				'name'  => sprintf( "carousel_slider_content[%s][link_type]", $item->get_item_id() ),
+				'value' => $item->get_prop( 'link_type' ),
+			],
+		] );
+
+		echo '<div class="ContentCarouselLinkFull" style="' . ( $link_type == 'full' ? 'display:block' : 'display:none' ) . '">';
+		$metaBox->text( [
+			'id'               => 'slide_link',
+			'name'             => esc_html__( 'Slide Link', 'carousel-slider' ),
+			'desc'             => esc_html__( 'Please enter your URL that will be used to link the full slide.', 'carousel-slider' ),
+			'input_attributes' => [
+				'name'  => sprintf( "carousel_slider_content[%s][link_type]", $item->get_item_id() ),
+				'value' => $item->get_prop( 'slide_link' ),
+			],
+		] );
+		$metaBox->select( [
+			'id'               => 'link_target',
+			'name'             => esc_html__( 'Open Slide Link In New Window', 'carousel-slider' ),
+			'input_attributes' => [
+				'name'  => sprintf( "carousel_slider_content[%s][link_target]", $item->get_item_id() ),
+				'value' => $item->get_prop( 'link_target' ),
+			],
+			'options'          => [
+				'_blank' => esc_html__( 'Yes', 'carousel-slider' ),
+				'_self'  => esc_html__( 'No', 'carousel-slider' ),
+			],
+		] );
+		echo '</div>';
+
+		echo '<div class="ContentCarouselLinkButtons" style="' . ( $link_type == 'button' ? 'display:block' : 'display:none' ) . '">';
+		self::get_item_tab_link_button_one( $item );
+		self::get_item_tab_link_button_two( $item );
+		echo '</div>';
+	}
+
+	/**
+	 * Get loop item button one link
+	 *
+	 * @param Item $item
+	 */
+	public static function get_item_tab_link_button_one( Item $item ) {
+		$metaBox = new MetaBoxForm;
+		?>
+		<div data-id="closed" id="content_carousel_button_one" class="shapla-toggle shapla-toggle--stroke">
+			<span class="shapla-toggle-title">
+				<?php esc_html_e( 'Button #1', 'carousel-slider' ); ?>
+			</span>
+			<div class="shapla-toggle-inner">
+				<div class="shapla-toggle-content">
+					<?php
+					$metaBox->text( [
+						'id'               => 'button_one_text',
+						'name'             => esc_html__( 'Button Text', 'carousel-slider' ),
+						'desc'             => esc_html__( 'Add button text', 'carousel-slider' ),
+						'input_attributes' => [
+							'name'  => sprintf( "carousel_slider_content[%s][button_one_text]", $item->get_item_id() ),
+							'value' => $item->get_prop( 'button_one_text' ),
+						],
+					] );
+					$metaBox->text( [
+						'id'               => 'button_one_url',
+						'name'             => esc_html__( 'Button URL', 'carousel-slider' ),
+						'desc'             => esc_html__( 'Add the button url e.g. https://example.com', 'carousel-slider' ),
+						'input_attributes' => [
+							'name'  => sprintf( "carousel_slider_content[%s][button_one_url]", $item->get_item_id() ),
+							'value' => $item->get_prop( 'button_one_url' ),
+						],
+					] );
+					$metaBox->select( [
+						'id'               => 'button_one_target',
+						'name'             => esc_html__( 'Open Button Link In', 'carousel-slider' ),
+						'desc'             => esc_html__( 'Add the button url e.g. https://example.com', 'carousel-slider' ),
+						'options'          => [
+							'_blank' => esc_html__( 'New Window', 'carousel-slider' ),
+							'_self'  => esc_html__( 'Same Window', 'carousel-slider' ),
+						],
+						'input_attributes' => [
+							'name'  => sprintf( "carousel_slider_content[%s][button_one_target]", $item->get_item_id() ),
+							'value' => $item->get_prop( 'button_one_target', '_self' ),
+						],
+					] );
+					$metaBox->select( [
+						'id'               => 'button_one_type',
+						'name'             => esc_html__( 'Button Type', 'carousel-slider' ),
+						'options'          => [
+							'normal' => esc_html__( 'Normal', 'carousel-slider' ),
+							'stroke' => esc_html__( 'Stroke', 'carousel-slider' ),
+						],
+						'input_attributes' => [
+							'name'  => sprintf( "carousel_slider_content[%s][button_one_type]", $item->get_item_id() ),
+							'value' => $item->get_prop( 'button_one_type' ),
+						],
+					] );
+					$metaBox->select( [
+						'id'               => 'button_one_size',
+						'name'             => esc_html__( 'Button Size', 'carousel-slider' ),
+						'options'          => [
+							'large'  => esc_html__( 'Large', 'carousel-slider' ),
+							'medium' => esc_html__( 'Medium', 'carousel-slider' ),
+							'small'  => esc_html__( 'Small', 'carousel-slider' ),
+						],
+						'input_attributes' => [
+							'name'  => sprintf( "carousel_slider_content[%s][button_one_size]", $item->get_item_id() ),
+							'value' => $item->get_prop( 'button_one_size' ),
+						],
+					] );
+					$metaBox->text( [
+						'id'               => 'button_one_border_width',
+						'name'             => esc_html__( 'Border Width', 'carousel-slider' ),
+						'desc'             => esc_html__( 'Enter border width in pixel. e.g. 2px', 'carousel-slider' ),
+						'input_attributes' => [
+							'name'  => sprintf( "carousel_slider_content[%s][button_one_border_width]", $item->get_item_id() ),
+							'value' => $item->get_prop( 'button_one_border_width' ),
+						],
+					] );
+					$metaBox->text( [
+						'id'               => 'button_one_border_radius',
+						'name'             => esc_html__( 'Border Radius', 'carousel-slider' ),
+						'desc'             => esc_html__( 'Enter border radius in pixel. e.g. 2px', 'carousel-slider' ),
+						'input_attributes' => [
+							'name'  => sprintf( "carousel_slider_content[%s][button_one_border_radius]", $item->get_item_id() ),
+							'value' => $item->get_prop( 'button_one_border_radius' ),
+						],
+					] );
+					$metaBox->color( [
+						'id'               => 'button_one_bg_color',
+						'name'             => esc_html__( 'Button Color', 'carousel-slider' ),
+						'std'              => '#00d1b2',
+						'input_attributes' => [
+							'name'  => sprintf( "carousel_slider_content[%s][button_one_bg_color]", $item->get_item_id() ),
+							'value' => $item->get_prop( 'button_one_bg_color', '#00d1b2' ),
+						],
+					] );
+					$metaBox->color( [
+						'id'               => 'button_one_color',
+						'name'             => esc_html__( 'Button Text Color', 'carousel-slider' ),
+						'std'              => '#ffffff',
+						'input_attributes' => [
+							'name'  => sprintf( "carousel_slider_content[%s][button_one_color]", $item->get_item_id() ),
+							'value' => $item->get_prop( 'button_one_color', '#ffffff' ),
+						],
+					] );
+					?>
+				</div>
+			</div>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Get loop item button two link
+	 *
+	 * @param Item $item
+	 */
+	public static function get_item_tab_link_button_two( Item $item ) {
+		$metaBox = new MetaBoxForm;
+		?>
+		<div data-id="closed" id="content_carousel_button_one" class="shapla-toggle shapla-toggle--stroke">
+			<span class="shapla-toggle-title">
+				<?php esc_html_e( 'Button #2', 'carousel-slider' ); ?>
+			</span>
+			<div class="shapla-toggle-inner">
+				<div class="shapla-toggle-content">
+					<?php
+					$metaBox->text( [
+						'id'               => 'button_two_text',
+						'name'             => esc_html__( 'Button Text', 'carousel-slider' ),
+						'desc'             => esc_html__( 'Add button text', 'carousel-slider' ),
+						'input_attributes' => [
+							'name'  => sprintf( "carousel_slider_content[%s][button_two_text]", $item->get_item_id() ),
+							'value' => $item->get_prop( 'button_two_text' ),
+						],
+					] );
+					$metaBox->text( [
+						'id'               => 'button_two_url',
+						'name'             => esc_html__( 'Button URL', 'carousel-slider' ),
+						'desc'             => esc_html__( 'Add the button url e.g. https://example.com', 'carousel-slider' ),
+						'input_attributes' => [
+							'name'  => sprintf( "carousel_slider_content[%s][button_two_url]", $item->get_item_id() ),
+							'value' => $item->get_prop( 'button_two_url' ),
+						],
+					] );
+					$metaBox->select( [
+						'id'               => 'button_two_target',
+						'name'             => esc_html__( 'Open Button Link In', 'carousel-slider' ),
+						'desc'             => esc_html__( 'Add the button url e.g. https://example.com', 'carousel-slider' ),
+						'options'          => [
+							'_blank' => esc_html__( 'New Window', 'carousel-slider' ),
+							'_self'  => esc_html__( 'Same Window', 'carousel-slider' ),
+						],
+						'input_attributes' => [
+							'name'  => sprintf( "carousel_slider_content[%s][button_two_target]", $item->get_item_id() ),
+							'value' => $item->get_prop( 'button_two_target' ),
+						],
+					] );
+					$metaBox->select( [
+						'id'               => 'button_two_type',
+						'name'             => esc_html__( 'Button Type', 'carousel-slider' ),
+						'options'          => [
+							'normal' => esc_html__( 'Normal', 'carousel-slider' ),
+							'stroke' => esc_html__( 'Stroke', 'carousel-slider' ),
+						],
+						'input_attributes' => [
+							'name'  => sprintf( "carousel_slider_content[%s][button_two_type]", $item->get_item_id() ),
+							'value' => $item->get_prop( 'button_two_type', 'normal' ),
+						],
+					] );
+					$metaBox->select( [
+						'id'               => 'button_two_size',
+						'name'             => esc_html__( 'Button Size', 'carousel-slider' ),
+						'options'          => [
+							'large'  => esc_html__( 'Large', 'carousel-slider' ),
+							'medium' => esc_html__( 'Medium', 'carousel-slider' ),
+							'small'  => esc_html__( 'Small', 'carousel-slider' ),
+						],
+						'input_attributes' => [
+							'name'  => sprintf( "carousel_slider_content[%s][button_two_size]", $item->get_item_id() ),
+							'value' => $item->get_prop( 'button_two_size' ),
+						],
+					] );
+					$metaBox->text( [
+						'id'               => 'button_two_border_width',
+						'name'             => esc_html__( 'Border Width', 'carousel-slider' ),
+						'desc'             => esc_html__( 'Enter border width in pixel. e.g. 2px', 'carousel-slider' ),
+						'input_attributes' => [
+							'name'  => sprintf( "carousel_slider_content[%s][button_two_border_width]", $item->get_item_id() ),
+							'value' => $item->get_prop( 'button_two_border_width' ),
+						],
+					] );
+					$metaBox->text( [
+						'id'               => 'button_two_border_radius',
+						'name'             => esc_html__( 'Border Radius', 'carousel-slider' ),
+						'desc'             => esc_html__( 'Enter border radius in pixel. e.g. 2px', 'carousel-slider' ),
+						'input_attributes' => [
+							'name'  => sprintf( "carousel_slider_content[%s][button_two_border_radius]", $item->get_item_id() ),
+							'value' => $item->get_prop( 'button_two_border_radius' ),
+						],
+					] );
+					$metaBox->color( [
+						'id'               => 'button_two_bg_color',
+						'name'             => esc_html__( 'Button Color', 'carousel-slider' ),
+						'std'              => '#00d1b2',
+						'input_attributes' => [
+							'name'  => sprintf( "carousel_slider_content[%s][button_two_bg_color]", $item->get_item_id() ),
+							'value' => $item->get_prop( 'button_two_bg_color' ),
+						],
+					] );
+					$metaBox->color( [
+						'id'               => 'button_two_color',
+						'name'             => esc_html__( 'Button Text Color', 'carousel-slider' ),
+						'std'              => '#ffffff',
+						'input_attributes' => [
+							'name'  => sprintf( "carousel_slider_content[%s][button_two_color]", $item->get_item_id() ),
+							'value' => $item->get_prop( 'button_two_color' ),
+						],
+					] );
+					?>
+				</div>
+			</div>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Get loop item background
+	 *
+	 * @param Item $item
+	 */
+	public static function get_item_tab_background( Item $item ) {
+		$metaBox  = new MetaBoxForm;
+		$bg_image = wp_get_attachment_image_src( $item->get_prop( 'img_id' ), 'full' );
+
+		// Canvas style
+		$canvas_style = [
+			'background-repeat'   => 'no-repeat',
+			'background-position' => $item->get_prop( 'img_bg_position', 'center center' ),
+			'background-size'     => $item->get_prop( 'img_bg_size', 'cover' ),
+			'background-color'    => $item->get_prop( 'bg_color' ),
+		];
+		if ( is_array( $bg_image ) ) {
+			$canvas_style['background-image'] = 'url(' . $bg_image[0] . ')';
+		}
+		?>
+		<div class="slide_bg_wrapper">
+			<div class="slide-media-left">
+				<div class="slide_thumb">
+					<div class="content_slide_canvas"
+						 style="<?php echo Helper::array_to_style( $canvas_style ); ?>"></div>
+					<span class="delete-bg-img<?php echo ! is_array( $bg_image ) ? ' hidden' : ''; ?>"
+						  title="<?php esc_html_e( 'Delete the background image for this slide', 'carousel-slider' ); ?>">&times;</span>
+				</div>
+			</div>
+			<div class="slide-media-right">
+				<?php
+				$metaBox->upload_iframe( [
+					'id'               => 'img_id',
+					'class'            => 'background_image_id',
+					'name'             => esc_html__( 'Background Image', 'carousel-slider' ),
+					'input_attributes' => [
+						'name'  => sprintf( "carousel_slider_content[%s][img_id]", $item->get_item_id() ),
+						'value' => $item->get_prop( 'img_id' ),
+					],
+				] );
+				$metaBox->select( [
+					'id'               => 'img_bg_position',
+					'class'            => 'sp-input-text background_image_position',
+					'name'             => esc_html__( 'Background Position', 'carousel-slider' ),
+					'options'          => HeroCarouselHelper::background_position(),
+					'input_attributes' => [
+						'name'  => sprintf( "carousel_slider_content[%s][img_bg_position]", $item->get_item_id() ),
+						'value' => $item->get_prop( 'img_bg_position' ),
+					],
+				] );
+				$metaBox->select( [
+					'id'               => 'img_bg_size',
+					'class'            => 'sp-input-text background_image_size',
+					'name'             => esc_html__( 'Background Size', 'carousel-slider' ),
+					'options'          => HeroCarouselHelper::background_size(),
+					'input_attributes' => [
+						'name'  => sprintf( "carousel_slider_content[%s][img_bg_size]", $item->get_item_id() ),
+						'value' => $item->get_prop( 'img_bg_size' ),
+					],
+				] );
+				$metaBox->select( [
+					'id'               => 'ken_burns_effect',
+					'name'             => esc_html__( 'Ken Burns Effect', 'carousel-slider' ),
+					'options'          => HeroCarouselHelper::ken_burns_effects(),
+					'input_attributes' => [
+						'name'  => sprintf( "carousel_slider_content[%s][ken_burns_effect]", $item->get_item_id() ),
+						'value' => $item->get_prop( 'ken_burns_effect' ),
+					],
+				] );
+				$metaBox->color( [
+					'id'               => 'bg_color',
+					'name'             => esc_html__( 'Background Color', 'carousel-slider' ),
+					'std'              => 'rgba(255,255,255,0.5)',
+					'input_attributes' => [
+						'name'  => sprintf( "carousel_slider_content[%s][bg_color]", $item->get_item_id() ),
+						'value' => $item->get_prop( 'bg_color' ),
+					],
+				] );
+				$metaBox->color( [
+					'id'               => 'bg_overlay',
+					'name'             => esc_html__( 'Background Overlay', 'carousel-slider' ),
+					'std'              => 'rgba(0,0,0,0.5)',
+					'input_attributes' => [
+						'name'  => sprintf( "carousel_slider_content[%s][bg_overlay]", $item->get_item_id() ),
+						'value' => $item->get_prop( 'bg_overlay' ),
+					],
+				] );
+				?>
+			</div>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Get item tab style
+	 *
+	 * @param Item $item
+	 */
+	public static function get_item_tab_style( Item $item ) {
+		$metaBox = new MetaBoxForm();
+
+		$metaBox->select( [
+			'id'               => 'content_alignment',
+			'name'             => esc_html__( 'Content Alignment', 'carousel-slider' ),
+			'desc'             => esc_html__( 'Select how the heading, description and buttons will be aligned', 'carousel-slider' ),
+			'std'              => 'left',
+			'options'          => HeroCarouselHelper::text_alignment(),
+			'input_attributes' => [
+				'name'  => sprintf( "carousel_slider_content[%s][content_alignment]", $item->get_item_id() ),
+				'value' => $item->get_prop( 'content_alignment' ),
+			],
+		] );
+		$metaBox->number( [
+			'id'               => 'heading_font_size',
+			'name'             => esc_html__( 'Heading Font Size', 'carousel-slider' ),
+			'desc'             => esc_html__( 'Enter heading font size without px unit. In pixels, ex: 50 instead of 50px. Default: 60', 'carousel-slider' ),
+			'std'              => '60',
+			'input_attributes' => [
+				'name'  => sprintf( "carousel_slider_content[%s][heading_font_size]", $item->get_item_id() ),
+				'value' => $item->get_prop( 'heading_font_size' ),
+			],
+		] );
+		$metaBox->text( [
+			'id'               => 'heading_gutter',
+			'name'             => esc_html__( 'Spacing/Gutter', 'carousel-slider' ),
+			'desc'             => esc_html__( 'Enter gutter (space between description and heading) in px, em or rem, ex: 3rem', 'carousel-slider' ),
+			'std'              => '30px',
+			'input_attributes' => [
+				'name'  => sprintf( "carousel_slider_content[%s][heading_gutter]", $item->get_item_id() ),
+				'value' => $item->get_prop( 'heading_gutter' ),
+			],
+		] );
+		$metaBox->color( [
+			'id'               => 'heading_color',
+			'name'             => esc_html__( 'Heading Color', 'carousel-slider' ),
+			'desc'             => esc_html__( 'Select a color for the heading font. Default: #fff', 'carousel-slider' ),
+			'std'              => '#ffffff',
+			'input_attributes' => [
+				'name'  => sprintf( "carousel_slider_content[%s][heading_color]", $item->get_item_id() ),
+				'value' => $item->get_prop( 'heading_color' ),
+			],
+		] );
+		$metaBox->text( [
+			'id'               => 'description_font_size',
+			'name'             => esc_html__( 'Description Font Size', 'carousel-slider' ),
+			'desc'             => esc_html__( 'Enter description font size without px unit. In pixels, ex: 20 instead of 20px. Default: 24', 'carousel-slider' ),
+			'std'              => '24',
+			'input_attributes' => [
+				'name'  => sprintf( "carousel_slider_content[%s][description_font_size]", $item->get_item_id() ),
+				'value' => $item->get_prop( 'description_font_size' ),
+			],
+		] );
+		$metaBox->text( [
+			'id'               => 'description_gutter',
+			'name'             => esc_html__( 'Description Spacing/Gutter', 'carousel-slider' ),
+			'desc'             => esc_html__( 'Enter gutter (space between description and buttons) in px, em or rem, ex: 3rem', 'carousel-slider' ),
+			'std'              => '30px',
+			'input_attributes' => [
+				'name'  => sprintf( "carousel_slider_content[%s][description_gutter]", $item->get_item_id() ),
+				'value' => $item->get_prop( 'description_gutter' ),
+			],
+		] );
+		$metaBox->color( [
+			'id'               => 'description_color',
+			'name'             => esc_html__( 'Description Color', 'carousel-slider' ),
+			'desc'             => esc_html__( 'Select a color for the description font. Default: #fff', 'carousel-slider' ),
+			'std'              => '#ffffff',
+			'input_attributes' => [
+				'name'  => sprintf( "carousel_slider_content[%s][description_color]", $item->get_item_id() ),
+				'value' => $item->get_prop( 'description_color' ),
+			],
+		] );
 	}
 
 	/**

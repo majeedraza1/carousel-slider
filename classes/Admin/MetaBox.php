@@ -162,7 +162,33 @@ class MetaBox {
 		$slide_type = get_post_meta( $post->ID, '_slide_type', true );
 		$slide_type = array_key_exists( $slide_type, Helper::get_slide_types() ) ? $slide_type : 'image-carousel';
 
-		require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/types.php';
+		$slide_types = Helper::get_slide_types();
+		?>
+		<div class="sp-input-group" style="margin: 10px 0 30px;">
+			<div class="sp-input-label">
+				<label for="_carousel_slider_slide_type">
+					<?php esc_html_e( 'Slide Type', 'carousel-slider' ); ?>
+				</label>
+			</div>
+			<div class="sp-input-field">
+				<select name="carousel_slider[_slide_type]" id="_carousel_slider_slide_type" class="sp-input-text">
+					<?php
+					foreach ( $slide_types as $slug => $label ) {
+						$selected = ( $slug == $slide_type ) ? 'selected' : '';
+
+						if ( 'product-carousel' == $slug ) {
+							$disabled = Helper::is_woocommerce_active() ? '' : 'disabled';
+							echo '<option value="' . $slug . '" ' . $selected . ' ' . $disabled . '>' . $label . '</option>';
+							continue;
+						}
+
+						echo '<option value="' . $slug . '" ' . $selected . '>' . $label . '</option>';
+					}
+					?>
+				</select>
+			</div>
+		</div>
+		<?php
 
 		/**
 		 * Allow third part plugin to add custom fields
@@ -171,10 +197,60 @@ class MetaBox {
 	}
 
 	/**
-	 * @param WP_Post $post
+	 * General settings
 	 */
-	public function general_settings_callback( $post ) {
-		require_once CAROUSEL_SLIDER_TEMPLATES . '/admin/general.php';
+	public function general_settings_callback() {
+		$form = new MetaBoxForm;
+		$form->image_sizes( array(
+			'id'   => esc_html__( '_image_size', 'carousel-slider' ),
+			'name' => esc_html__( 'Carousel Image size', 'carousel-slider' ),
+			'desc' => sprintf(
+				esc_html__( 'Choose "original uploaded image" for full size image or your desired image size for carousel image. You can change the default size for thumbnail, medium and large from %1$s Settings >> Media %2$s.', 'carousel-slider' ),
+				'<a target="_blank" href="' . get_admin_url() . 'options-media.php">', '</a>'
+			),
+		) );
+		$form->select( array(
+			'id'      => '_lazy_load_image',
+			'name'    => esc_html__( 'Lazy Loading', 'carousel-slider' ),
+			'desc'    => esc_html__( 'Enable image with lazy loading.', 'carousel-slider' ),
+			'std'     => Helper::get_default_setting( 'lazy_load_image' ),
+			'options' => array(
+				'on'  => esc_html__( 'Enable' ),
+				'off' => esc_html__( 'Disable' ),
+			),
+		) );
+		$form->number( array(
+			'id'   => '_margin_right',
+			'name' => esc_html__( 'Item Spacing.', 'carousel-slider' ),
+			'desc' => esc_html__( 'Space between two slide. Enter 10 for 10px', 'carousel-slider' ),
+			'std'  => Helper::get_default_setting( 'margin_right' )
+		) );
+		$form->select( array(
+			'id'      => '_infinity_loop',
+			'name'    => esc_html__( 'Infinity loop', 'carousel-slider' ),
+			'desc'    => esc_html__( 'Enable or disable loop(circular) of carousel.', 'carousel-slider' ),
+			'std'     => 'on',
+			'options' => array(
+				'on'  => esc_html__( 'Enable' ),
+				'off' => esc_html__( 'Disable' ),
+			),
+		) );
+		$form->number( array(
+			'id'   => '_stage_padding',
+			'name' => esc_html__( 'Stage Padding', 'carousel-slider' ),
+			'desc' => esc_html__( 'Add left and right padding on carousel slider stage wrapper.', 'carousel-slider' ),
+			'std'  => '0',
+		) );
+		$form->select( array(
+			'id'      => '_auto_width',
+			'name'    => esc_html__( 'Auto Width', 'carousel-slider' ),
+			'desc'    => esc_html__( 'Set item width according to its content width. Use width style on item to get the result you want. ', 'carousel-slider' ),
+			'std'     => 'off',
+			'options' => array(
+				'on'  => esc_html__( 'Enable' ),
+				'off' => esc_html__( 'Disable' ),
+			),
+		) );
 	}
 
 	/**
