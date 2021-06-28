@@ -141,6 +141,9 @@ module.exports = (env, argv) => {
 				path.resolve(path.join(__dirname, 'assets/src/')),
 				path.resolve(path.join(__dirname, 'assets/src/shapla')),
 			],
+			fallback: {
+				url: false
+			},
 			extensions: ['*', '.js', '.vue', '.json']
 		},
 		plugins: plugins
@@ -149,7 +152,10 @@ module.exports = (env, argv) => {
 	webpackConfig.externals = {
 		'jquery': 'jQuery',
 		'react': 'React',
-		'react-dom': 'ReactDOM'
+		'react-dom': 'ReactDOM',
+		'@wordpress/blocks': 'wp.blocks',
+		'@wordpress/block-editor': 'wp.blockEditor',
+		'@wordpress/components': 'wp.components'
 	}
 
 	return webpackConfig;

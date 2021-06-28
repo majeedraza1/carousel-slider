@@ -1,18 +1,21 @@
+import React from "react";
+import {registerBlockType} from '@wordpress/blocks';
+import {TextControl} from '@wordpress/components';
+import {InspectorControls} from '@wordpress/block-editor';
+
+const settings = window.i18nCarouselSliderBlock || {
+	sliders: [], site_url: '', block_logo: '', block_title: '', select_slider: '', selected_slider: '',
+	filter_slider: '',
+}
+
 /**
  * Carousel Slider Block
  *
  * A block for embedding a carousel slider into a post/page.
  */
 
-const blocks = window.wp.blocks,
-	editor = window.wp.blockEditor,
-	components = window.wp.components,
-	settings = window.i18nCarouselSliderBlock,
-	TextControl = components.TextControl,// text input control
-	InspectorControls = editor.InspectorControls; // sidebar controls
-
 // register our block
-blocks.registerBlockType('carousel-slider/slider', {
+registerBlockType('carousel-slider/slider', {
 	title: settings.block_title,
 	icon: 'slides',
 	category: 'common',
@@ -36,11 +39,11 @@ blocks.registerBlockType('carousel-slider/slider', {
 
 		// show the dropdown when we click on the input
 		function carouselSliderFocusClick(event) {
-			var elementID = event.target.getAttribute('id');
-			var idArray = elementID.split('-');
-			var carouselSliderOptions = document.getElementById('carousel-slider-filter-container-' + idArray[idArray.length - 1]);
+			let elementID = event.target.getAttribute('id');
+			let idArray = elementID.split('-');
+			let carouselSliderOptions = document.getElementById('carousel-slider-filter-container-' + idArray[idArray.length - 1]);
 			// get the related input element
-			var carouselSliderInput = document.getElementById('carousel-slider-sliderFilter-' + idArray[idArray.length - 1]);
+			let carouselSliderInput = document.getElementById('carousel-slider-sliderFilter-' + idArray[idArray.length - 1]);
 			// set focus to the element so the onBlur function runs properly
 			carouselSliderInput.focus();
 			carouselSliderOptions.style.display = 'block';
@@ -55,10 +58,10 @@ blocks.registerBlockType('carousel-slider/slider', {
 			 * Get the main div of the filter to tell if this is being
 			 * selected from the sidebar or block so we can hide the dropdown
 			 */
-			var elementID = event.target.parentNode.parentNode;
-			var idArray = elementID.getAttribute('id').split('-');
-			var carouselSliderOptions = document.getElementById('carousel-slider-filter-container-' + idArray[idArray.length - 1]);
-			var inputEl = document.getElementById('carousel-slider-sliderFilter-sidebar');
+			let elementID = event.target.parentNode.parentNode;
+			let idArray = elementID.getAttribute('id').split('-');
+			let carouselSliderOptions = document.getElementById('carousel-slider-filter-container-' + idArray[idArray.length - 1]);
+			let inputEl = document.getElementById('carousel-slider-sliderFilter-sidebar');
 
 			if (inputEl) {
 				inputEl.value = '';
@@ -71,19 +74,19 @@ blocks.registerBlockType('carousel-slider/slider', {
 			 * Get the main div of the filter to tell if this is being
 			 * selected from the sidebar or block so we can hide the dropdown
 			 */
-			var elementID = event.target.getAttribute('id');
-			var idArray = elementID.split('-');
-			var carouselSliderOptions = document.getElementById('carousel-slider-filter-container-' + idArray[idArray.length - 1]);
+			let elementID = event.target.getAttribute('id');
+			let idArray = elementID.split('-');
+			let carouselSliderOptions = document.getElementById('carousel-slider-filter-container-' + idArray[idArray.length - 1]);
 			carouselSliderOptions.style.display = 'none';
 		}
 
 		function carouselSliderInputKeyUp(event) {
-			var val = event.target.value;
+			let val = event.target.value;
 			/**
 			 * Get the main div of the filter to tell if this is being
 			 * selected from the sidebar or block so we can SHOW the dropdown
 			 */
-			var filterInputContainer = event.target.parentNode.parentNode.parentNode;
+			let filterInputContainer = event.target.parentNode.parentNode.parentNode;
 			filterInputContainer.querySelector('.carousel-slider-filter-option-container').style.display = 'block';
 			filterInputContainer.style.display = 'block';
 
