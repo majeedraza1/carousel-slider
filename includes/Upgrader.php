@@ -24,9 +24,41 @@ class Upgrader {
 
 			add_action( 'admin_notices', [ self::$instance, 'show_upgrade_notice' ] );
 			add_action( 'wp_ajax_carousel_slider_upgrade', [ self::$instance, 'upgrade' ] );
+
+			add_action( 'in_plugin_update_message-carousel-slider/carousel-slider.php',
+				[ self::$instance, 'in_plugin_update_message' ] );
 		}
 
 		return self::$instance;
+	}
+
+
+	/**
+	 * Show in plugin update message
+	 *
+	 * @param array $plugin_data
+	 */
+	public function in_plugin_update_message( array $plugin_data ) {
+		$current_version       = CAROUSEL_SLIDER_VERSION;
+		$current_version_array = explode( '.', $current_version );
+		$new_version           = $plugin_data['new_version'];
+		$new_version_array     = explode( '.', $new_version );
+
+		$html = '';
+		if ( version_compare( $current_version_array[0], $new_version_array[0], '<' ) ) {
+			$html .= '</p><div class="cs_plugin_upgrade_notice extensions_warning major_update">';
+			$html .= '<div class="cs_plugin_upgrade_notice__title">';
+			$html .= sprintf( "<strong>%s</strong> version <strong>%s</strong> is a major update.", $plugin_data['Title'], $new_version );
+			$html .= '</div>';
+			$html .= '<div class="cs_plugin_upgrade_notice__description">';
+			$html .= __( 'We made a lot of major changes to this version.', 'carousel-slider' ) . ' ';
+			$html .= __( 'We believe that all functionality will remain same after update (remember to refresh you cache plugin).', 'carousel-slider' ) . ' ';
+			$html .= __( 'Still make sure that you took a backup so you can role back if anything happen wrong to you.', 'carousel-slider' );
+			$html .= '</div>';
+			$html .= '</div><p class="dummy" style="display: none">';
+		}
+
+		echo apply_filters( 'carousel_slider/in_plugin_update_message', $html, $plugin_data );
 	}
 
 	/**

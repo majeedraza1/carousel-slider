@@ -23,3 +23,18 @@ $imagePath: '../img/';
 		box-sizing: inherit;
 	}
 }
+
+// Update message
+.cs_plugin_upgrade_notice {
+	border-top: 1px solid #dba617;
+	margin-top: 1rem;
+	padding: 1rem 0;
+
+	&__title {
+		font-size: 1.125em;
+	}
+
+	&__description {
+		padding-top: 1rem;
+	}
+}

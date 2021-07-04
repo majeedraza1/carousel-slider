@@ -172,10 +172,11 @@ class Admin {
 	public function admin_scripts( $hook ) {
 		global $post;
 
-		$_is_carousel = is_a( $post, 'WP_Post' ) && ( 'carousels' == $post->post_type );
-		$_is_doc      = ( 'carousels_page_carousel-slider-documentation' == $hook );
+		$_is_carousel    = is_a( $post, 'WP_Post' ) && ( 'carousels' == $post->post_type );
+		$_is_doc         = ( 'carousels_page_carousel-slider-documentation' == $hook );
+		$_is_plugin_page = 'plugins.php' == $hook;
 
-		if ( ! $_is_carousel && ! $_is_doc ) {
+		if ( ! ( $_is_carousel || $_is_doc || $_is_plugin_page ) ) {
 			return;
 		}
 
@@ -220,7 +221,10 @@ class Admin {
 			[ 'youtube_id' => 'yiAkvXyfakg', 'title' => __( 'WooCommerce Product Carousel', 'carousel-slider' ) ],
 			[ 'youtube_id' => 'kYgp6wp27lM', 'title' => __( 'In Widget Areas', 'carousel-slider' ) ],
 			[ 'youtube_id' => '-OaYQZfr1RM', 'title' => __( 'With Page Builder by SiteOrigin', 'carousel-slider' ) ],
-			[ 'youtube_id' => '4LhDXH81whk', 'title' => __( 'With Visual Composer Website Builder', 'carousel-slider' ) ],
+			[
+				'youtube_id' => '4LhDXH81whk',
+				'title'      => __( 'With Visual Composer Website Builder', 'carousel-slider' )
+			],
 		];
 		$html  = '<div class="wrap">';
 		$html  .= '<h1 class="wp-heading">' . esc_html__( 'Carousel Slider Documentation', 'carousel-slider' ) . '</h1>';

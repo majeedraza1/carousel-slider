@@ -75,7 +75,7 @@ class Assets {
 	 *
 	 * @return string
 	 */
-	public static function get_assets_url( $path = '' ): string {
+	public static function get_assets_url( string $path = '' ): string {
 		$url = CAROUSEL_SLIDER_ASSETS;
 
 		if ( static::is_ssl() && 0 === stripos( $url, 'http://' ) ) {
@@ -115,9 +115,9 @@ class Assets {
 	 */
 	private function register_scripts( array $scripts ) {
 		foreach ( $scripts as $handle => $script ) {
-			$deps      = isset( $script['deps'] ) ? $script['deps'] : false;
-			$in_footer = isset( $script['in_footer'] ) ? $script['in_footer'] : true;
-			$version   = isset( $script['version'] ) ? $script['version'] : $this->version;
+			$deps      = $script['deps'] ?? false;
+			$in_footer = $script['in_footer'] ?? true;
+			$version   = $script['version'] ?? $this->version;
 			wp_register_script( $handle, $script['src'], $deps, $version, $in_footer );
 		}
 	}
@@ -131,7 +131,7 @@ class Assets {
 	 */
 	public function register_styles( array $styles ) {
 		foreach ( $styles as $handle => $style ) {
-			$deps = isset( $style['deps'] ) ? $style['deps'] : false;
+			$deps = $style['deps'] ?? false;
 			wp_register_style( $handle, $style['src'], $deps, $this->version );
 		}
 	}
