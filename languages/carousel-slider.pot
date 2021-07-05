@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-06-28T01:11:26+00:00\n"
+"POT-Creation-Date: 2021-07-05T06:51:19+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: carousel-slider\n"
@@ -19,7 +19,7 @@ msgstr ""
 #: includes/Admin/GutenbergBlock.php:80
 #: includes/Admin/MetaBox.php:106
 #: includes/Integration/VisualComposerElement.php:40
-#: includes/Upgrader.php:62
+#: includes/Upgrader.php:94
 #: includes/Widget/CarouselSliderWidget.php:73
 msgid "Carousel Slider"
 msgstr ""
@@ -144,85 +144,85 @@ msgstr ""
 msgid "Preview"
 msgstr ""
 
-#: includes/Admin/Admin.php:186
+#: includes/Admin/Admin.php:187
 #: modules/ImageCarousel/ImageCarouselAdmin.php:138
 msgid "URL"
 msgstr ""
 
-#: includes/Admin/Admin.php:187
+#: includes/Admin/Admin.php:188
 #: modules/ImageCarousel/ImageCarouselAdmin.php:143
 msgid "Title"
 msgstr ""
 
-#: includes/Admin/Admin.php:188
+#: includes/Admin/Admin.php:189
 #: modules/ImageCarousel/ImageCarouselAdmin.php:149
 msgid "Caption"
 msgstr ""
 
-#: includes/Admin/Admin.php:189
+#: includes/Admin/Admin.php:190
 #: modules/ImageCarousel/ImageCarouselAdmin.php:153
 msgid "Alt Text"
 msgstr ""
 
-#: includes/Admin/Admin.php:190
+#: includes/Admin/Admin.php:191
 #: modules/ImageCarousel/ImageCarouselAdmin.php:158
 msgid "Link To URL"
 msgstr ""
 
-#: includes/Admin/Admin.php:191
+#: includes/Admin/Admin.php:192
 msgid "Add New Item"
 msgstr ""
 
-#: includes/Admin/Admin.php:192
+#: includes/Admin/Admin.php:193
 msgid "Move Current Item"
 msgstr ""
 
-#: includes/Admin/Admin.php:193
+#: includes/Admin/Admin.php:194
 msgid "Delete Current Item"
 msgstr ""
 
-#: includes/Admin/Admin.php:203
 #: includes/Admin/Admin.php:204
+#: includes/Admin/Admin.php:205
 msgid "Documentation"
 msgstr ""
 
-#: includes/Admin/Admin.php:216
+#: includes/Admin/Admin.php:217
 msgid "Hero Image Carousel"
 msgstr ""
 
-#: includes/Admin/Admin.php:217
+#: includes/Admin/Admin.php:218
 msgid "Image carousel (gallery images)"
 msgstr ""
 
-#: includes/Admin/Admin.php:218
+#: includes/Admin/Admin.php:219
 msgid "Image carousel (custom URLs)"
 msgstr ""
 
-#: includes/Admin/Admin.php:219
+#: includes/Admin/Admin.php:220
 msgid "Posts Carousel"
 msgstr ""
 
-#: includes/Admin/Admin.php:220
+#: includes/Admin/Admin.php:221
 msgid "WooCommerce Product Carousel"
 msgstr ""
 
-#: includes/Admin/Admin.php:221
+#: includes/Admin/Admin.php:222
 msgid "In Widget Areas"
 msgstr ""
 
-#: includes/Admin/Admin.php:222
+#: includes/Admin/Admin.php:223
 msgid "With Page Builder by SiteOrigin"
 msgstr ""
 
-#: includes/Admin/Admin.php:223
+#: includes/Admin/Admin.php:226
 msgid "With Visual Composer Website Builder"
 msgstr ""
 
-#: includes/Admin/Admin.php:226
+#: includes/Admin/Admin.php:230
 msgid "Carousel Slider Documentation"
 msgstr ""
 
-#: includes/Admin/Admin.php:263
+#: includes/Admin/Admin.php:267
 msgid "If you like %1$s Carousel Slider %2$s please leave us a %3$s rating. A huge thanks in advance!"
 msgstr ""
 
@@ -556,6 +556,14 @@ msgstr ""
 msgid "Optimized (recommended)"
 msgstr ""
 
+#: includes/Admin/Setting.php:69
+msgid "Show Structured Data"
+msgstr ""
+
+#: includes/Admin/Setting.php:70
+msgid "If you enable to show, then it will generate structured data for every slider for better SEO. But if you are using some other SEO plugin to handle SEO, then you can disabled it."
+msgstr ""
+
 #: includes/CLI/Command.php:134
 msgid "Could not create slider."
 msgstr ""
@@ -564,31 +572,31 @@ msgstr ""
 msgid "#%s - %s has been created successfully."
 msgstr ""
 
-#: includes/Helper.php:20
+#: includes/Helper.php:40
 msgid "Image Carousel"
 msgstr ""
 
-#: includes/Helper.php:21
+#: includes/Helper.php:41
 msgid "Image Carousel (URL)"
 msgstr ""
 
-#: includes/Helper.php:22
+#: includes/Helper.php:42
 msgid "Post Carousel"
 msgstr ""
 
-#: includes/Helper.php:23
+#: includes/Helper.php:43
 msgid "Product Carousel"
 msgstr ""
 
-#: includes/Helper.php:24
+#: includes/Helper.php:44
 msgid "Video Carousel"
 msgstr ""
 
-#: includes/Helper.php:25
+#: includes/Helper.php:45
 msgid "Hero Carousel"
 msgstr ""
 
-#: includes/Helper.php:354
+#: includes/Helper.php:387
 msgid "Carousel Slider Test"
 msgstr ""
 
@@ -648,23 +656,39 @@ msgstr ""
 msgid "Browse"
 msgstr ""
 
-#: includes/Upgrader.php:40
+#: includes/Upgrader.php:51
+msgid "<strong>%s</strong> version <strong>%s</strong> is a major update."
+msgstr ""
+
+#: includes/Upgrader.php:54
+msgid "We made a lot of major changes to this version."
+msgstr ""
+
+#: includes/Upgrader.php:55
+msgid "We believe that all functionality will remain same after update (remember to refresh you cache plugin)."
+msgstr ""
+
+#: includes/Upgrader.php:56
+msgid "Still make sure that you took a backup so you can role back if anything happen wrong to you."
+msgstr ""
+
+#: includes/Upgrader.php:72
 msgid "Carousel Slider need to update database."
 msgstr ""
 
-#: includes/Upgrader.php:41
+#: includes/Upgrader.php:73
 msgid "We strongly recommend creating a backup of your site before updating."
 msgstr ""
 
-#: includes/Upgrader.php:42
+#: includes/Upgrader.php:74
 msgid "Update database"
 msgstr ""
 
-#: includes/Upgrader.php:64
+#: includes/Upgrader.php:96
 msgid "Sorry. This link only for developer to do some testing."
 msgstr ""
 
-#: includes/Upgrader.php:77
+#: includes/Upgrader.php:109
 msgid "Database upgrade process has been started."
 msgstr ""
 
@@ -1132,11 +1156,11 @@ msgstr ""
 msgid "Save"
 msgstr ""
 
-#: modules/ImageCarousel/ImageCarouselModule.php:186
+#: modules/ImageCarousel/ImageCarouselModule.php:95
 msgid "Link to URL"
 msgstr ""
 
-#: modules/ImageCarousel/ImageCarouselModule.php:190
+#: modules/ImageCarousel/ImageCarouselModule.php:99
 msgid "\"Link to URL\" only works on Carousel Slider for linking image to a custom url."
 msgstr ""
 
@@ -1422,27 +1446,27 @@ msgstr ""
 msgid "Pick a color for button text color."
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselModule.php:74
+#: modules/ProductCarousel/ProductCarouselModule.php:70
 msgid "Quick View"
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselModule.php:128
-#: modules/ProductCarousel/ProductCarouselView.php:129
+#: modules/ProductCarousel/ProductCarouselModule.php:124
+#: modules/ProductCarousel/ProductCarouselView.php:149
 msgid "Sale!"
 msgstr ""
 
-#: modules/VideoCarousel/VideoCarouselModule.php:44
+#: modules/VideoCarousel/VideoCarouselModule.php:42
 msgid "Only support youtube and vimeo. Enter video URL from youtube or vimeo separating each by comma"
 msgstr ""
 
-#: modules/VideoCarousel/VideoCarouselModule.php:45
+#: modules/VideoCarousel/VideoCarouselModule.php:43
 msgid "Example:"
 msgstr ""
 
-#: modules/VideoCarousel/VideoCarouselModule.php:52
+#: modules/VideoCarousel/VideoCarouselModule.php:50
 msgid "Video Settings"
 msgstr ""
 
-#: modules/VideoCarousel/VideoCarouselModule.php:58
+#: modules/VideoCarousel/VideoCarouselModule.php:56
 msgid "Video URLs"
 msgstr ""

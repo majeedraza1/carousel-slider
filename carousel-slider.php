@@ -199,56 +199,24 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 
 			$error = '<h1>' . __( 'An Error Occurred', 'carousel-slider' ) . '</h1>';
 			$error .= '<h2>' . __( 'Your installed PHP Version is: ', 'carousel-slider' ) . PHP_VERSION . '</h2>';
-			$error .= '<p>' . sprintf( __( 'The Carousel Slider plugin requires PHP version %s or greater',
-					'carousel-slider' ), $this->min_php ) . '</p>';
-			$error .= '<p>' . sprintf( __( 'The version of your PHP is %s unsupported and old %s. ',
-					'carousel-slider' ),
-					'<a href="http://php.net/supported-versions.php" target="_blank"><strong>',
+			$error .= '<p>' . sprintf( __( 'The Carousel Slider plugin requires PHP version %s or greater', 'carousel-slider' ), $this->min_php ) . '</p>';
+			$error .= '<p>' . sprintf( __( 'The version of your PHP is %s unsupported and old %s. ', 'carousel-slider' ),
+					'<a href="https://php.net/supported-versions.php" target="_blank"><strong>',
 					'</strong></a>'
 				);
-			$error .= __( 'You should update your PHP software or contact your host regarding this matter.',
-					'carousel-slider' ) . '</p>';
+			$error .= __( 'You should update your PHP software or contact your host regarding this matter.', 'carousel-slider' ) . '</p>';
 
 			wp_die( $error, __( 'Plugin Activation Error', 'carousel-slider' ), array( 'back_link' => true ) );
 		}
 
 		/**
-		 * What type of request is this?
-		 *
-		 * @param string $type admin, ajax, cron or frontend.
-		 *
-		 * @return bool
-		 */
-		public function is_request( $type ) {
-			switch ( $type ) {
-				case 'admin':
-					return is_admin();
-				case 'ajax':
-					return defined( 'DOING_AJAX' );
-				case 'cron':
-					return defined( 'DOING_CRON' );
-				case 'frontend':
-					return ( ! is_admin() || defined( 'DOING_AJAX' ) ) && ! defined( 'DOING_CRON' );
-			}
-
-			return false;
-		}
-
-		/**
 		 * Check if the PHP version is supported
 		 *
-		 * @param null $min_php
 		 *
 		 * @return bool
 		 */
-		private function is_supported_php( $min_php = null ) {
-			$min_php = $min_php ? $min_php : $this->min_php;
-
-			if ( version_compare( PHP_VERSION, $min_php, '<=' ) ) {
-				return false;
-			}
-
-			return true;
+		private function is_supported_php() {
+			return ! version_compare( PHP_VERSION, $this->min_php, '<=' );
 		}
 	}
 }

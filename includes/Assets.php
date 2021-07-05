@@ -148,17 +148,12 @@ class Assets {
 				'deps'    => [ 'jquery' ],
 				'version' => '4.0.5',
 			],
-			'wp-color-picker-alpha'    => [
-				'src'     => static::get_assets_url( 'lib/wp-color-picker-alpha/wp-color-picker-alpha.min.js' ),
-				'deps'    => [ 'jquery', 'wp-color-picker' ],
-				'version' => '2.1.3',
-			],
 			"carousel-slider-admin"    => [
 				'src'  => static::get_assets_url( 'js/admin.js' ),
 				'deps' => [
 					'jquery',
 					'select2',
-					'wp-color-picker-alpha',
+					'wp-color-picker',
 					'jquery-ui-accordion',
 					'jquery-ui-sortable',
 					'jquery-ui-tabs',

@@ -48,7 +48,7 @@ class Upgrader {
 		if ( version_compare( $current_version_array[0], $new_version_array[0], '<' ) ) {
 			$html .= '</p><div class="cs_plugin_upgrade_notice extensions_warning major_update">';
 			$html .= '<div class="cs_plugin_upgrade_notice__title">';
-			$html .= sprintf( "<strong>%s</strong> version <strong>%s</strong> is a major update.", $plugin_data['Title'], $new_version );
+			$html .= sprintf( __( "<strong>%s</strong> version <strong>%s</strong> is a major update.", 'carousel-slider' ), $plugin_data['Title'], $new_version );
 			$html .= '</div>';
 			$html .= '<div class="cs_plugin_upgrade_notice__description">';
 			$html .= __( 'We made a lot of major changes to this version.', 'carousel-slider' ) . ' ';
