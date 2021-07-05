@@ -2,12 +2,11 @@
 
 namespace CarouselSlider\Modules\PostCarousel;
 
-use CarouselSlider\Modules\ProductCarousel\ProductCarouselAdmin;
 use CarouselSlider\Supports\MetaBoxForm;
 
 defined( 'ABSPATH' ) || exit;
 
-class PostCarouselAdmin {
+class Admin {
 	/**
 	 * The instance of the class
 	 *

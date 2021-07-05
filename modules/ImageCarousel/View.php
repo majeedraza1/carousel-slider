@@ -2,11 +2,11 @@
 
 namespace CarouselSlider\Modules\ImageCarousel;
 
-use CarouselSlider\Abstracts\View;
+use CarouselSlider\Abstracts\AbstractView;
 use CarouselSlider\Helper;
 use CarouselSlider\Supports\Validate;
 
-class ImageCarouselView extends View {
+class View extends AbstractView {
 
 	/**
 	 * @inheritDoc

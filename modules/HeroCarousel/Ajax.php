@@ -81,5 +81,3 @@ class Ajax {
 		return $array;
 	}
 }
-
-Ajax::init();

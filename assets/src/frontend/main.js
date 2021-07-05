@@ -1,5 +1,5 @@
-import '../libs/owl-carousel/index.js';
-import '../libs/magnific-popup/index.js';
+import 'owl.carousel/dist/owl.carousel.js';
+import 'magnific-popup/dist/jquery.magnific-popup.js';
 
 jQuery('body').find('.carousel-slider').each(function () {
 

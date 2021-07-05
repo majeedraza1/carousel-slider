@@ -145,7 +145,7 @@ class Assets {
 		return [
 			"carousel-slider-admin"    => [
 				'src'  => static::get_assets_url( 'js/admin.js' ),
-				'deps' => [ 'jquery', 'wp-color-picker', 'jquery-ui-accordion', 'jquery-ui-tabs' ],
+				'deps' => [ 'jquery', 'wp-color-picker', 'jquery-ui-accordion', 'jquery-ui-tabs', 'jquery-ui-sortable' ]
 			],
 			"carousel-slider-frontend" => [
 				'src'  => static::get_assets_url( 'js/frontend.js' ),

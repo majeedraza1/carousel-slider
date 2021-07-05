@@ -2,11 +2,11 @@
 
 namespace CarouselSlider\Modules\HeroCarousel;
 
-use CarouselSlider\Abstracts\Template;
+use CarouselSlider\Abstracts\AbstractTemplate;
 
 defined( 'ABSPATH' ) || exit;
 
-class TemplateHeroCarousel extends Template {
+class Template extends AbstractTemplate {
 
 	/**
 	 * Get default hero carousel settings

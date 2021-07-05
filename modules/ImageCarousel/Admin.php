@@ -6,7 +6,7 @@ use CarouselSlider\Supports\MetaBoxForm;
 
 defined( 'ABSPATH' ) || exit;
 
-class ImageCarouselAdmin {
+class Admin {
 	/**
 	 * The instance of the class
 	 *

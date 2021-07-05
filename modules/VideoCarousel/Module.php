@@ -4,7 +4,7 @@ namespace CarouselSlider\Modules\VideoCarousel;
 
 defined( 'ABSPATH' ) || exit;
 
-class VideoCarouselModule {
+class Module {
 	/**
 	 * The instance of the class
 	 *
@@ -95,7 +95,7 @@ class VideoCarouselModule {
 	 * @return array
 	 */
 	public function view( array $views ): array {
-		$views['video-carousel'] = new VideoCarouselView();
+		$views['video-carousel'] = new View();
 
 		return $views;
 	}

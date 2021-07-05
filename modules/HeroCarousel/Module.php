@@ -6,7 +6,7 @@ use CarouselSlider\Helper;
 
 defined( 'ABSPATH' ) || exit;
 
-class HeroCarouselModule {
+class Module {
 	/**
 	 * The instance of the class
 	 *
@@ -26,8 +26,10 @@ class HeroCarouselModule {
 			add_filter( 'carousel_slider/register_view', [ self::$instance, 'view' ] );
 			add_action( 'carousel_slider/save_slider', [ self::$instance, 'save_slider' ] );
 
-			HeroCarouselAdmin::init();
-			Ajax::init();
+			if ( Helper::is_request( 'admin' ) ) {
+				Admin::init();
+				Ajax::init();
+			}
 		}
 
 		return self::$instance;
@@ -39,7 +41,7 @@ class HeroCarouselModule {
 	 * @return array
 	 */
 	public function view( array $views ): array {
-		$views['hero-banner-slider'] = new HeroCarouselView();
+		$views['hero-banner-slider'] = new View();
 
 		return $views;
 	}

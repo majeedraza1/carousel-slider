@@ -6,7 +6,7 @@ use WP_Post;
 
 defined( 'ABSPATH' ) || exit;
 
-class PostCarouselHelper {
+class Helper {
 	/**
 	 * Get posts by carousel slider ID
 	 *

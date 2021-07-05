@@ -3,9 +3,10 @@
 namespace CarouselSlider\Modules\HeroCarousel;
 
 use CarouselSlider\Helper;
+use CarouselSlider\Modules\HeroCarousel\Helper as HeroCarouselHelper;
 use CarouselSlider\Supports\MetaBoxForm;
 
-class HeroCarouselAdmin {
+class Admin {
 
 	/**
 	 * @var self
@@ -61,13 +62,13 @@ class HeroCarouselAdmin {
 									'lazy_load_image' => true
 								] ) );
 
-								HeroCarouselAdmin::item_meta_box( $item, $total_sliders );
+								Admin::item_meta_box( $item, $total_sliders );
 							}
 						}
 						?>
 					</div>
 
-					<?php HeroCarouselAdmin::content_meta_box_settings( $post->ID ); ?>
+					<?php Admin::content_meta_box_settings( $post->ID ); ?>
 				</div>
 			</div>
 		</div>
@@ -90,7 +91,7 @@ class HeroCarouselAdmin {
 				<div class="shapla-toggle-content">
 
 					<div class="carousel_slider__slide_actions">
-						<?php echo HeroCarouselAdmin::get_actions_html( $item->get_slider_id(), $item->get_item_id(), $total_items ) ?>
+						<?php echo Admin::get_actions_html( $item->get_slider_id(), $item->get_item_id(), $total_items ) ?>
 					</div>
 					<div class="clear" style="width: 100%; margin-bottom: 1rem; height: 1px;"></div>
 

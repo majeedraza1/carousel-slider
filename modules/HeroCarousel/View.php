@@ -2,12 +2,12 @@
 
 namespace CarouselSlider\Modules\HeroCarousel;
 
-use CarouselSlider\Abstracts\View;
+use CarouselSlider\Abstracts\AbstractView;
 use CarouselSlider\Helper;
 
 defined( 'ABSPATH' ) || exit;
 
-class HeroCarouselView extends View {
+class View extends AbstractView {
 
 	/**
 	 * @inheritDoc

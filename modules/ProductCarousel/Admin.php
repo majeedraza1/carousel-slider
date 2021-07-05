@@ -7,7 +7,7 @@ use CarouselSlider\Supports\MetaBoxForm;
 
 defined( 'ABSPATH' ) || exit;
 
-class ProductCarouselAdmin {
+class Admin {
 	/**
 	 * The instance of the class
 	 *

@@ -2,14 +2,15 @@
 
 namespace CarouselSlider\Modules\ProductCarousel;
 
-use CarouselSlider\Abstracts\View;
+use CarouselSlider\Abstracts\AbstractView;
 use CarouselSlider\Helper;
 use CarouselSlider\Supports\Validate;
+use CarouselSlider\Modules\ProductCarousel\Helper as ProductCarouselHelper;
 use WC_Product;
 
 defined( 'ABSPATH' ) || exit;
 
-class ProductCarouselView extends View {
+class View extends AbstractView {
 
 	/**
 	 * @inheritDoc

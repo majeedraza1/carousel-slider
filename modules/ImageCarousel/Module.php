@@ -3,12 +3,11 @@
 namespace CarouselSlider\Modules\ImageCarousel;
 
 use CarouselSlider\Supports\Validate;
-use CarouselSlider\Helper;
 use WP_Post;
 
 defined( 'ABSPATH' ) || exit;
 
-class ImageCarouselModule {
+class Module {
 	/**
 	 * The instance of the class
 	 *
@@ -32,7 +31,7 @@ class ImageCarouselModule {
 			add_filter( "attachment_fields_to_edit", [ self::$instance, "attachment_fields_to_edit" ], 10, 2 );
 			add_filter( "attachment_fields_to_save", [ self::$instance, "attachment_fields_to_save" ], 10, 2 );
 
-			ImageCarouselAdmin::init();
+			Admin::init();
 		}
 
 		return self::$instance;
@@ -46,8 +45,8 @@ class ImageCarouselModule {
 	 * @return array
 	 */
 	public function view( array $views ): array {
-		$views['image-carousel']     = new ImageCarouselView();
-		$views['image-carousel-url'] = new ImageCarouselUrlView();
+		$views['image-carousel']     = new View();
+		$views['image-carousel-url'] = new UrlView();
 
 		return $views;
 	}

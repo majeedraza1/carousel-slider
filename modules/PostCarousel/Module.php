@@ -7,7 +7,7 @@ use CarouselSlider\Supports\Validate;
 
 defined( 'ABSPATH' ) || exit;
 
-class PostCarouselModule {
+class Module {
 	/**
 	 * The instance of the class
 	 *
@@ -25,7 +25,7 @@ class PostCarouselModule {
 			self::$instance = new self();
 
 			add_filter( 'carousel_slider/register_view', [ self::$instance, 'view' ] );
-			PostCarouselAdmin::init();
+			Admin::init();
 		}
 
 		return self::$instance;
@@ -39,7 +39,7 @@ class PostCarouselModule {
 	 * @return array
 	 */
 	public function view( array $views ): array {
-		$views['post-carousel'] = new PostCarouselView();
+		$views['post-carousel'] = new View();
 
 		return $views;
 	}

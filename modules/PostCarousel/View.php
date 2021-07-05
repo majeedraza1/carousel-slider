@@ -2,13 +2,14 @@
 
 namespace CarouselSlider\Modules\PostCarousel;
 
-use CarouselSlider\Abstracts\View;
+use CarouselSlider\Abstracts\AbstractView;
 use CarouselSlider\Helper;
 use CarouselSlider\Supports\Validate;
+use CarouselSlider\Modules\PostCarousel\Helper as PostCarouselHelper;
 
 defined( 'ABSPATH' ) || exit;
 
-class PostCarouselView extends View {
+class View extends AbstractView {
 
 	/**
 	 * @inheritDoc

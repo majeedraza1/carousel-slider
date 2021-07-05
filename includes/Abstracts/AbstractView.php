@@ -6,7 +6,7 @@ use CarouselSlider\Interfaces\SliderViewInterface;
 
 defined( 'ABSPATH' ) || exit;
 
-abstract class View implements SliderViewInterface {
+abstract class AbstractView implements SliderViewInterface {
 	/**
 	 * Slider id
 	 *

@@ -2,11 +2,11 @@
 
 namespace CarouselSlider\Modules\VideoCarousel;
 
-use CarouselSlider\Abstracts\Template;
+use CarouselSlider\Abstracts\AbstractTemplate;
 
 defined( 'ABSPATH' ) || exit;
 
-class TemplateVideoCarousel extends Template {
+class Template extends AbstractTemplate {
 
 	/**
 	 * Create gallery image carousel with random images

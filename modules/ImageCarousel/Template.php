@@ -2,25 +2,26 @@
 
 namespace CarouselSlider\Modules\ImageCarousel;
 
-use CarouselSlider\Abstracts\Template;
+use CarouselSlider\Abstracts\AbstractTemplate;
 
 defined( 'ABSPATH' ) || exit;
 
-class TemplateUrlImageCarousel extends Template {
+class Template extends AbstractTemplate {
+
 	/**
 	 * Get default image carousel settings
 	 *
 	 * @return array
 	 */
 	public static function get_default_settings(): array {
-		return wp_parse_args( array(
-			'_slide_type'              => 'image-carousel-url',
+		return wp_parse_args( [
+			'_slide_type'              => 'image-carousel',
 			// Image Carousel Settings
 			'_show_attachment_title'   => 'off',
 			'_show_attachment_caption' => 'off',
 			'_image_lightbox'          => 'on',
 			'_image_target'            => '_self',
-		), parent::get_default_settings() );
+		], parent::get_default_settings() );
 	}
 
 	/**
@@ -34,25 +35,16 @@ class TemplateUrlImageCarousel extends Template {
 	public static function create( $slider_title = null, $args = [] ): int {
 		$images = self::get_images();
 		$images = array_slice( $images, 0, 10 );
-
-		$_urls = array();
-		foreach ( $images as $image ) {
-			$_urls[] = array(
-				'url'      => $image['image_src'],
-				'title'    => $image['title'],
-				'caption'  => $image['caption'],
-				'alt'      => $image['alt_text'],
-				'link_url' => $image['link_url'],
-			);
-		}
+		$ids    = wp_list_pluck( $images, 'id' );
+		$ids    = is_array( $ids ) ? implode( ',', $ids ) : $ids;
 
 		if ( empty( $slider_title ) ) {
-			$slider_title = 'URL Image Carousel with Dummy Data';
+			$slider_title = 'Image Carousel with Dummy Data';
 		}
 
 		$default = self::get_default_settings();
 
-		$default['_images_urls'] = $_urls;
+		$default['_wpdh_image_ids'] = $ids;
 
 		$data = wp_parse_args( $args, $default );
 

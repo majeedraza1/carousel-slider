@@ -2,12 +2,12 @@
 
 namespace CarouselSlider\Modules\PostCarousel;
 
-use CarouselSlider\Abstracts\Template;
+use CarouselSlider\Abstracts\AbstractTemplate;
 use WP_Term;
 
 defined( 'ABSPATH' ) || exit;
 
-class TemplatePostCarousel extends Template {
+class Template extends AbstractTemplate {
 
 	/**
 	 * Get default image carousel settings

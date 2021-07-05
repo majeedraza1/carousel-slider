@@ -8,7 +8,7 @@ use WP_Post;
 
 defined( 'ABSPATH' ) || exit;
 
-abstract class Template {
+abstract class AbstractTemplate {
 	/**
 	 * Get default image carousel settings
 	 *

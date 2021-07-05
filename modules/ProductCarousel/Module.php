@@ -6,7 +6,7 @@ use WC_Product;
 
 defined( 'ABSPATH' ) || exit;
 
-class ProductCarouselModule {
+class Module {
 	/**
 	 * The instance of the class
 	 *
@@ -31,7 +31,7 @@ class ProductCarouselModule {
 			add_action( 'wp_ajax_carousel_slider_quick_view', [ self::$instance, 'quick_view' ] );
 			add_action( 'wp_ajax_nopriv_carousel_slider_quick_view', [ self::$instance, 'quick_view' ] );
 
-			ProductCarouselAdmin::init();
+			Admin::init();
 		}
 
 		return self::$instance;
@@ -45,7 +45,7 @@ class ProductCarouselModule {
 	 * @return array
 	 */
 	public function view( array $views ): array {
-		$views['product-carousel'] = new ProductCarouselView();
+		$views['product-carousel'] = new View();
 
 		return $views;
 	}
@@ -65,7 +65,7 @@ class ProductCarouselModule {
 			$quick_view_html = '<div style="clear: both;"></div>';
 			$quick_view_html .= sprintf(
 				'<a class="magnific-popup button quick_view" href="%1$s" data-product-id="%2$s">%3$s</a>',
-				ProductCarouselHelper::get_product_quick_view_url( $product->get_id() ),
+				Helper::get_product_quick_view_url( $product->get_id() ),
 				$product->get_id(),
 				__( 'Quick View', 'carousel-slider' )
 			);

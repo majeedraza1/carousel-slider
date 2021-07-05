@@ -3,12 +3,12 @@
 namespace CarouselSlider\CLI;
 
 use CarouselSlider\Helper;
-use CarouselSlider\Modules\HeroCarousel\TemplateHeroCarousel;
-use CarouselSlider\Modules\ImageCarousel\TemplateGalleryImageCarousel;
-use CarouselSlider\Modules\ImageCarousel\TemplateUrlImageCarousel;
-use CarouselSlider\Modules\PostCarousel\TemplatePostCarousel;
-use CarouselSlider\Modules\ProductCarousel\TemplateProductCarousel;
-use CarouselSlider\Modules\VideoCarousel\TemplateVideoCarousel;
+use CarouselSlider\Modules\HeroCarousel\Template as TemplateHeroCarousel;
+use CarouselSlider\Modules\ImageCarousel\Template as TemplateImageCarousel;
+use CarouselSlider\Modules\ImageCarousel\TemplateUrl as TemplateUrlImageCarousel;
+use CarouselSlider\Modules\PostCarousel\Template as TemplatePostCarousel;
+use CarouselSlider\Modules\ProductCarousel\Template as TemplateProductCarousel;
+use CarouselSlider\Modules\VideoCarousel\Template as TemplateVideoCarousel;
 use WP_CLI;
 use WP_CLI_Command;
 use WP_Post;
@@ -94,7 +94,7 @@ class Command extends WP_CLI_Command {
 		$post_query = ! empty( $assoc_args['post-query'] ) ? $assoc_args['post-query'] : 'latest_posts';
 
 		if ( 'image-carousel' == $type ) {
-			$slider_id = TemplateGalleryImageCarousel::create( $slider_title, array(
+			$slider_id = TemplateImageCarousel::create( $slider_title, array(
 				'_created_via' => 'wp-cli',
 			) );
 		}
@@ -230,7 +230,7 @@ class Command extends WP_CLI_Command {
 		foreach ( $sliders as $slider ) {
 			switch ( $slider['type'] ) {
 				case 'image-carousel';
-					$ids[] = TemplateGalleryImageCarousel::create( $slider['title'], $slider['args'] );
+					$ids[] = TemplateImageCarousel::create( $slider['title'], $slider['args'] );
 					WP_CLI::line( "{$slider['title']} has been created successfully." );
 					break;
 				case 'image-carousel-url';

@@ -2,12 +2,12 @@
 
 namespace CarouselSlider\Modules\ProductCarousel;
 
-use CarouselSlider\Abstracts\Template;
+use CarouselSlider\Abstracts\AbstractTemplate;
 use CarouselSlider\Helper;
 
 defined( 'ABSPATH' ) || exit;
 
-class TemplateProductCarousel extends Template {
+class Template extends AbstractTemplate {
 
 	/**
 	 * Get default image carousel settings

@@ -2,19 +2,22 @@
 
 namespace CarouselSlider\Modules\VideoCarousel;
 
-use CarouselSlider\Abstracts\View;
+use CarouselSlider\Abstracts\AbstractView;
 use CarouselSlider\Helper;
+use CarouselSlider\Modules\VideoCarousel\Helper as VideoCarouselHelper;
+use CarouselSlider\Supports\Validate;
 
 defined( 'ABSPATH' ) || exit;
 
-class VideoCarouselView extends View {
+class View extends AbstractView {
 	/**
 	 * @inheritDoc
 	 */
 	public function render(): string {
-		$slider_id   = $this->get_slider_id();
-		$slider_type = $this->get_slider_type();
-		$urls        = get_post_meta( $slider_id, '_video_url', true );
+		$slider_id       = $this->get_slider_id();
+		$slider_type     = $this->get_slider_type();
+		$urls            = get_post_meta( $slider_id, '_video_url', true );
+		$lazy_load_image = get_post_meta( $slider_id, '_lazy_load_image', true );
 		if ( is_string( $urls ) ) {
 			$urls = array_filter( explode( ',', $urls ) );
 		}
@@ -36,7 +39,11 @@ class VideoCarouselView extends View {
 			$html .= '<a class="magnific-popup" href="' . esc_url( $url['url'] ) . '">';
 			$html .= '<div class="carousel-slider-video-play-icon"></div>';
 			$html .= '<div class="carousel-slider-video-overlay"></div>';
-			$html .= '<img class="owl-lazy" data-src="' . esc_url( $url['thumbnail']['large'] ) . '"/>';
+			if ( Validate::checked( $lazy_load_image ) ) {
+				$html .= '<img class="owl-lazy" data-src="' . esc_url( $url['thumbnail']['large'] ) . '"/>';
+			} else {
+				$html .= '<img src="' . esc_url( $url['thumbnail']['large'] ) . '"/>';
+			}
 			$html .= '</a>';
 			$html .= '</div>';
 			$html .= '</div>';
