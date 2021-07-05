@@ -1,6 +1,7 @@
 import Tooltip from "@/libs/tooltip/index.js";
 import '@/libs/tooltip/index.scss';
 import '@/libs/color-picker/index.js';
+import 'select2/dist/js/select2.js'
 import $ from 'jquery';
 
 let elements = document.querySelectorAll(".cs-tooltip");

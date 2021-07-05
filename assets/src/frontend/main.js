@@ -1,3 +1,6 @@
+import '../libs/owl-carousel/index.js';
+import '../libs/magnific-popup/index.js';
+
 jQuery('body').find('.carousel-slider').each(function () {
 
 	let _this = jQuery(this),

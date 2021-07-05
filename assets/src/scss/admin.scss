@@ -3,12 +3,12 @@ $imagePath: '../img/';
 @import "~shapla-css/src/grid/columns";
 @import "~shapla-css/src/elements/delete-icon/delete-icon";
 @import "~shapla-css/src/components/modal/modal";
+@import '~select2/dist/css/select2.css';
 
 @import "utilities/variables";
 @import "utilities/mixins";
 @import 'admin/widget';
 @import 'admin/meta-box';
-@import 'admin/select2';
 @import 'admin/toggle';
 @import 'admin/tab';
 @import 'admin/image-carouel-url';

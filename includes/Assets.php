@@ -143,35 +143,13 @@ class Assets {
 	 */
 	public function get_scripts(): array {
 		return [
-			'select2'                  => [
-				'src'     => static::get_assets_url( 'lib/select2/select2.min.js' ),
-				'deps'    => [ 'jquery' ],
-				'version' => '4.0.5',
-			],
 			"carousel-slider-admin"    => [
 				'src'  => static::get_assets_url( 'js/admin.js' ),
-				'deps' => [
-					'jquery',
-					'select2',
-					'wp-color-picker',
-					'jquery-ui-accordion',
-					'jquery-ui-sortable',
-					'jquery-ui-tabs',
-				],
-			],
-			'owl-carousel'             => [
-				'src'     => static::get_assets_url( 'lib/owl-carousel/owl.carousel.min.js' ),
-				'deps'    => [ 'jquery' ],
-				'version' => '2.3.4',
-			],
-			'magnific-popup'           => [
-				'src'     => static::get_assets_url( 'lib/magnific-popup/jquery.magnific-popup.min.js' ),
-				'deps'    => [ 'jquery' ],
-				'version' => '1.1.0',
+				'deps' => [ 'jquery', 'wp-color-picker', 'jquery-ui-accordion', 'jquery-ui-tabs' ],
 			],
 			"carousel-slider-frontend" => [
 				'src'  => static::get_assets_url( 'js/frontend.js' ),
-				'deps' => [ 'jquery', 'owl-carousel', 'magnific-popup' ],
+				'deps' => [ 'jquery' ],
 			],
 		];
 	}
