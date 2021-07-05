@@ -122,8 +122,8 @@ class SettingAPI {
 		$page_title  = $this->menu_fields['page_title'];
 		$menu_title  = $this->menu_fields['menu_title'];
 		$menu_slug   = $this->menu_fields['menu_slug'];
-		$capability  = isset( $this->menu_fields['capability'] ) ? $this->menu_fields['capability'] : 'manage_options';
-		$parent_slug = isset( $this->menu_fields['parent_slug'] ) ? $this->menu_fields['parent_slug'] : null;
+		$capability  = $this->menu_fields['capability'] ?? 'manage_options';
+		$parent_slug = $this->menu_fields['parent_slug'] ?? null;
 
 		if ( $parent_slug ) {
 			add_submenu_page(
@@ -132,7 +132,7 @@ class SettingAPI {
 				$menu_title,
 				$capability,
 				$menu_slug,
-				array( $this, 'page_content' )
+				[ $this, 'page_content' ]
 			);
 		} else {
 			add_menu_page(
@@ -140,7 +140,7 @@ class SettingAPI {
 				$menu_title,
 				$capability,
 				$menu_slug,
-				array( $this, 'page_content' )
+				[ $this, 'page_content' ]
 			);
 		}
 	}
@@ -176,7 +176,7 @@ class SettingAPI {
 			return;
 		}
 
-		$current_tab = isset ( $_GET['tab'] ) ? $_GET['tab'] : $this->tabs[0]['id'];
+		$current_tab = $_GET['tab'] ?? $this->tabs[0]['id'];
 		$page        = $this->menu_fields['menu_slug'];
 
 		echo '<h2 class="nav-tab-wrapper wp-clearfix">';
@@ -205,7 +205,7 @@ class SettingAPI {
 		}
 
 		if ( ! $current_tab ) {
-			$current_tab = isset ( $_GET['tab'] ) ? $_GET['tab'] : $this->tabs[0]['id'];
+			$current_tab = $_GET['tab'] ?? $this->tabs[0]['id'];
 		}
 
 		$new_array = array();
@@ -234,8 +234,8 @@ class SettingAPI {
 	 *
 	 * @return array
 	 */
-	public function sanitize_callback( array $input ) {
-		$output_array = array();
+	public function sanitize_callback( array $input ): array {
+		$output_array = [];
 		$fields       = $this->fields;
 		$options      = (array) get_option( $this->menu_fields['option_name'] );
 		$options      = array_filter( $options );
@@ -246,7 +246,7 @@ class SettingAPI {
 
 		if ( count( $this->tabs ) > 0 ) {
 			parse_str( $_POST['_wp_http_referer'], $referrer );
-			$tab    = isset( $referrer['tab'] ) ? $referrer['tab'] : $this->tabs[0]['id'];
+			$tab    = $referrer['tab'] ?? $this->tabs[0]['id'];
 			$fields = $this->filter_fields_by_tab( $tab );
 		}
 
@@ -268,7 +268,7 @@ class SettingAPI {
 	 * Get options parsed with default value
 	 * @return array
 	 */
-	public function get_options() {
+	public function get_options(): array {
 		$options_array = array();
 
 		foreach ( $this->fields as $value ) {
@@ -292,63 +292,46 @@ class SettingAPI {
 	 *
 	 * @return mixed
 	 */
-	private function validate( $input, $validation_rule = 'text' ) {
+	private function validate( $input, string $validation_rule = 'text' ) {
 		switch ( $validation_rule ) {
-			case 'text':
-				return sanitize_text_field( $input );
-				break;
 
 			case 'number':
 				return is_int( $input ) ? trim( $input ) : intval( $input );
-				break;
 
 			case 'url':
 				return esc_url_raw( trim( $input ) );
-				break;
 
 			case 'email':
 				return sanitize_email( $input );
-				break;
 
 			case 'checkbox':
 				return ( $input == 1 ) ? 1 : 0;
-				break;
 
 			case 'multi_checkbox':
 				return $input;
-				break;
 
+			case 'text':
 			case 'radio':
-				return sanitize_text_field( $input );
-				break;
-
 			case 'select':
 				return sanitize_text_field( $input );
-				break;
 
 			case 'date':
 				return date( 'F d, Y', strtotime( $input ) );
-				break;
 
 			case 'textarea':
 				return wp_filter_nohtml_kses( $input );
-				break;
 
 			case 'inlinehtml':
 				return wp_filter_kses( force_balance_tags( $input ) );
-				break;
 
 			case 'linebreaks':
 				return wp_strip_all_tags( $input );
-				break;
 
 			case 'wp_editor':
 				return wp_kses_post( $input );
-				break;
 
 			default:
 				return sanitize_text_field( $input );
-				break;
 		}
 	}
 
@@ -359,7 +342,7 @@ class SettingAPI {
 	 *
 	 * @return void
 	 */
-	private function setting_fields( $fields = null ) {
+	private function setting_fields( array $fields = [] ) {
 		$fields = is_array( $fields ) ? $fields : $this->fields;
 
 		$table = "";
@@ -367,8 +350,8 @@ class SettingAPI {
 
 		foreach ( $fields as $field ) {
 			$name  = sprintf( '%s[%s]', $this->menu_fields['option_name'], $field['id'] );
-			$type  = isset( $field['type'] ) ? $field['type'] : 'text';
-			$value = isset( $this->options[ $field['id'] ] ) ? $this->options[ $field['id'] ] : '';
+			$type  = $field['type'] ?? 'text';
+			$value = $this->options[ $field['id'] ] ?? '';
 
 			$table .= "<tr>";
 			$table .= sprintf( '<th scope="row"><label for="%1$s">%2$s</label></th>', $field['id'],
@@ -397,11 +380,11 @@ class SettingAPI {
 	 *
 	 * @param array $field
 	 * @param string $name
-	 * @param string $value
+	 * @param string|mixed $value
 	 *
 	 * @return string
 	 */
-	public function text( $field, $name, $value ) {
+	public function text( array $field, string $name, $value ): string {
 		return sprintf( '<input type="text" class="regular-text" value="%1$s" id="%2$s" name="%3$s">', $value,
 			$field['id'], $name );
 	}
@@ -411,11 +394,11 @@ class SettingAPI {
 	 *
 	 * @param array $field
 	 * @param string $name
-	 * @param string $value
+	 * @param string|mixed $value
 	 *
 	 * @return string
 	 */
-	public function email( $field, $name, $value ) {
+	public function email( array $field, string $name, $value ): string {
 		return sprintf( '<input type="email" class="regular-text" value="%1$s" id="%2$s" name="%3$s">', $value,
 			$field['id'], $name );
 	}
@@ -425,12 +408,12 @@ class SettingAPI {
 	 *
 	 * @param array $field
 	 * @param string $name
-	 * @param string $value
+	 * @param string|mixed $value
 	 *
 	 * @return string
 	 */
-	public function password( $field, $name, $value ) {
-		return sprintf( '<input type="password" class="regular-text" value="" id="%2$s" name="%3$s">', $value,
+	public function password( array $field, string $name, $value = null ): string {
+		return sprintf( '<input type="password" class="regular-text" value="" id="%1$s" name="%2$s">',
 			$field['id'], $name );
 	}
 
@@ -439,11 +422,11 @@ class SettingAPI {
 	 *
 	 * @param array $field
 	 * @param string $name
-	 * @param string $value
+	 * @param string|mixed $value
 	 *
 	 * @return string
 	 */
-	public function number( $field, $name, $value ) {
+	public function number( array $field, string $name, $value ): string {
 		return sprintf( '<input type="number" class="regular-text" value="%1$s" id="%2$s" name="%3$s">', $value,
 			$field['id'], $name );
 	}
@@ -453,11 +436,11 @@ class SettingAPI {
 	 *
 	 * @param array $field
 	 * @param string $name
-	 * @param string $value
+	 * @param string|mixed $value
 	 *
 	 * @return string
 	 */
-	public function url( $field, $name, $value ) {
+	public function url( array $field, string $name, $value ): string {
 		return sprintf( '<input type="url" class="regular-text" value="%1$s" id="%2$s" name="%3$s">', $value,
 			$field['id'], $name );
 	}
@@ -467,11 +450,11 @@ class SettingAPI {
 	 *
 	 * @param array $field
 	 * @param string $name
-	 * @param string $value
+	 * @param string|mixed $value
 	 *
 	 * @return string
 	 */
-	public function color( $field, $name, $value ) {
+	public function color( array $field, string $name, $value ): string {
 		$default_color = ( isset( $field['std'] ) ) ? $field['std'] : "";
 
 		return sprintf( '<input type="text" class="color-picker" value="%1$s" id="%2$s" name="%3$s" data-alpha="true" data-default-color="%4$s">',
@@ -483,11 +466,11 @@ class SettingAPI {
 	 *
 	 * @param array $field
 	 * @param string $name
-	 * @param string $value
+	 * @param string|mixed $value
 	 *
 	 * @return string
 	 */
-	public function date( $field, $name, $value ) {
+	public function date( array $field, string $name, $value ): string {
 		$value = date( "Y-m-d", strtotime( $value ) );
 
 		return sprintf( '<input type="date" class="regular-text" value="%1$s" id="%2$s" name="%3$s">',
@@ -499,11 +482,11 @@ class SettingAPI {
 	 *
 	 * @param array $field
 	 * @param string $name
-	 * @param string $value
+	 * @param string|mixed $value
 	 *
 	 * @return string
 	 */
-	public function textarea( $field, $name, $value ) {
+	public function textarea( array $field, string $name, $value ): string {
 		$rows        = ( isset( $field['rows'] ) ) ? $field['rows'] : 5;
 		$cols        = ( isset( $field['cols'] ) ) ? $field['cols'] : 40;
 		$placeholder = ( isset( $field['placeholder'] ) ) ? sprintf( 'placeholder="%s"',
@@ -517,11 +500,11 @@ class SettingAPI {
 	 *
 	 * @param array $field
 	 * @param string $name
-	 * @param string $value
+	 * @param string|mixed $value
 	 *
 	 * @return string
 	 */
-	public function checkbox( $field, $name, $value ) {
+	public function checkbox( array $field, string $name, $value ): string {
 		$checked = ( 1 == $value ) ? 'checked' : '';
 		$table   = '<input type="hidden" name="' . $name . '" value="0">';
 		$table   .= '<fieldset><legend class="screen-reader-text"><span>' . $field['name'] . '</span></legend>';
@@ -537,11 +520,11 @@ class SettingAPI {
 	 *
 	 * @param array $field
 	 * @param string $name
-	 * @param array $value
+	 * @param array|mixed $value
 	 *
 	 * @return string
 	 */
-	public function multi_checkbox( $field, $name, $value ) {
+	public function multi_checkbox( array $field, string $name, $value ): string {
 		$table = "<fieldset>";
 		$name  = $name . "[]";
 
@@ -560,11 +543,11 @@ class SettingAPI {
 	 *
 	 * @param array $field
 	 * @param string $name
-	 * @param string $value
+	 * @param string|mixed $value
 	 *
 	 * @return string
 	 */
-	public function radio( $field, $name, $value ) {
+	public function radio( array $field, string $name, $value ): string {
 		$table = '<fieldset><legend class="screen-reader-text"><span>' . $field['name'] . '</span></legend><p>';
 
 		foreach ( $field['options'] as $key => $label ) {
@@ -582,11 +565,11 @@ class SettingAPI {
 	 *
 	 * @param array $field
 	 * @param string $name
-	 * @param string $value
+	 * @param string|mixed $value
 	 *
 	 * @return string
 	 */
-	public function select( $field, $name, $value ) {
+	public function select( array $field, string $name, $value ): string {
 		$table = sprintf( '<select id="%1$s" name="%2$s" class="regular-text">', $field['id'], $name );
 		foreach ( $field['options'] as $key => $label ) {
 			$selected = ( $value == $key ) ? 'selected="selected"' : '';
@@ -600,13 +583,13 @@ class SettingAPI {
 	/**
 	 * Get available image sizes
 	 *
-	 * @param $field
-	 * @param $name
-	 * @param $value
+	 * @param array $field
+	 * @param string $name
+	 * @param string|mixed $value
 	 *
 	 * @return string
 	 */
-	public function image_sizes( $field, $name, $value ) {
+	public function image_sizes( array $field, string $name, $value ): string {
 
 		global $_wp_additional_image_sizes;
 
@@ -648,18 +631,18 @@ class SettingAPI {
 	 *
 	 * @param array $field
 	 * @param string $name
-	 * @param string $value
+	 * @param string|mixed $value
 	 *
 	 * @return string
 	 */
-	public function wp_editor( $field, $name, $value ) {
+	public function wp_editor( array $field, string $name, $value ): string {
 		ob_start();
 		echo "<div class='sp-wp-editor-container'>";
 		wp_editor( $value, $field['id'], array(
 			'textarea_name' => $name,
 			'tinymce'       => false,
 			'media_buttons' => false,
-			'textarea_rows' => isset( $field['rows'] ) ? $field['rows'] : 6,
+			'textarea_rows' => $field['rows'] ?? 6,
 			'quicktags'     => array( "buttons" => "strong,em,link,img,ul,li,ol" ),
 		) );
 		echo "</div>";

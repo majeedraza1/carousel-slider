@@ -3,6 +3,7 @@
 namespace CarouselSlider\Frontend;
 
 use CarouselSlider\Helper;
+use CarouselSlider\Interfaces\SliderViewInterface;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -47,6 +48,14 @@ class Frontend {
 		$slide_type = get_post_meta( $slider_id, '_slide_type', true );
 		$slide_type = array_key_exists( $slide_type, Helper::get_slide_types() ) ? $slide_type : 'image-carousel';
 
+		$view = Helper::get_slider_view( $slide_type );
+		if ( $view instanceof SliderViewInterface ) {
+			$view->set_slider_id( $slider_id );
+			$view->set_slider_type( $slide_type );
+
+			return $view->render();
+		}
+
 		return apply_filters( 'carousel_slider/view', '', $slider_id, $slide_type );
 	}
 
@@ -68,16 +77,14 @@ class Frontend {
 	 * @return bool
 	 */
 	private function should_load_scripts(): bool {
-		$settings = get_option( 'carousel_slider_settings' );
-		$settings = is_array( $settings ) ? $settings : [];
-		if ( isset( $settings['load_scripts'] ) && 'always' == $settings['load_scripts'] ) {
+		$load_scripts = Helper::get_setting( 'load_scripts', 'optimized' );
+		if ( 'always' == $load_scripts ) {
 			return true;
 		}
 
 		global $post;
 		$load_scripts = is_active_widget( false, false, 'widget_carousel_slider', true ) ||
-		                ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'carousel_slide' ) ) ||
-		                ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'carousel' ) );
+		                ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'carousel_slide' ) );
 
 		return apply_filters( 'carousel_slider_load_scripts', $load_scripts );
 	}

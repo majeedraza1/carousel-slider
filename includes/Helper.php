@@ -2,6 +2,7 @@
 
 namespace CarouselSlider;
 
+use CarouselSlider\Interfaces\SliderViewInterface;
 use CarouselSlider\Supports\Validate;
 use WP_Error;
 use WP_Post;
@@ -9,6 +10,25 @@ use WP_Post;
 defined( 'ABSPATH' ) || exit;
 
 class Helper {
+
+	/**
+	 * Get setting
+	 *
+	 * @param string $key
+	 * @param mixed $default
+	 *
+	 * @return mixed|null
+	 */
+	public static function get_setting( string $key, $default = null ) {
+		$default_options = [
+			'load_scripts'         => 'optimized',
+			'show_structured_data' => '1',
+		];
+		$settings        = (array) get_option( 'carousel_slider_settings' );
+		$settings        = wp_parse_args( $settings, $default_options );
+
+		return $settings[ $key ] ?? $default;
+	}
 
 	/**
 	 * Get carousel slider available slide type
@@ -24,6 +44,19 @@ class Helper {
 			'video-carousel'     => __( 'Video Carousel', 'carousel-slider' ),
 			'hero-banner-slider' => __( 'Hero Carousel', 'carousel-slider' ),
 		] );
+	}
+
+	/**
+	 * Get slider view
+	 *
+	 * @param string $key
+	 *
+	 * @return false|SliderViewInterface
+	 */
+	public static function get_slider_view( string $key ) {
+		$views = apply_filters( 'carousel_slider/register_view', [] );
+
+		return $views[ $key ] ?? false;
 	}
 
 	/**

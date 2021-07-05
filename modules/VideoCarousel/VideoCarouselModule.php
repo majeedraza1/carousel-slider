@@ -2,8 +2,6 @@
 
 namespace CarouselSlider\Modules\VideoCarousel;
 
-use CarouselSlider\Helper;
-
 defined( 'ABSPATH' ) || exit;
 
 class VideoCarouselModule {
@@ -25,7 +23,7 @@ class VideoCarouselModule {
 
 			add_action( 'carousel_slider/meta_box_content', [ self::$instance, 'meta_box_content' ], 10, 2 );
 			add_action( 'carousel_slider/save_slider', [ self::$instance, 'save_slider' ] );
-			add_filter( 'carousel_slider/view', [ self::$instance, 'view' ], 10, 3 );
+			add_filter( 'carousel_slider/register_view', [ self::$instance, 'view' ] );
 		}
 
 		return self::$instance;
@@ -90,59 +88,15 @@ class VideoCarouselModule {
 	}
 
 	/**
-	 * @param string $html
-	 * @param int $slider_id
-	 * @param string $slider_type
+	 * Register view
 	 *
-	 * @return string
+	 * @param array $views
+	 *
+	 * @return array
 	 */
-	public function view( string $html, int $slider_id, string $slider_type ): string {
-		if ( 'video-carousel' == $slider_type ) {
-			return static::get_view( $slider_id, $slider_type );
-		}
+	public function view( array $views ): array {
+		$views['video-carousel'] = new VideoCarouselView();
 
-		return $html;
-	}
-
-	/**
-	 * Get view
-	 *
-	 * @param int $slider_id
-	 * @param string $slider_type
-	 *
-	 * @return string
-	 */
-	public static function get_view( int $slider_id, string $slider_type ): string {
-		$urls = get_post_meta( $slider_id, '_video_url', true );
-		if ( is_string( $urls ) ) {
-			$urls = array_filter( explode( ',', $urls ) );
-		}
-		$urls = VideoCarouselHelper::get_video_url( $urls );
-
-		$css_classes = [
-			"carousel-slider-outer",
-			"carousel-slider-outer-videos",
-			"carousel-slider-outer-{$slider_id}"
-		];
-
-		$attributes_array = Helper::get_slider_attributes( $slider_id, $slider_type );
-
-		$html = '<div class="' . join( ' ', $css_classes ) . '">';
-		$html .= "<div " . join( " ", $attributes_array ) . ">";
-		foreach ( $urls as $url ) {
-			$html .= '<div class="carousel-slider-item-video">';
-			$html .= '<div class="carousel-slider-video-wrapper">';
-			$html .= '<a class="magnific-popup" href="' . esc_url( $url['url'] ) . '">';
-			$html .= '<div class="carousel-slider-video-play-icon"></div>';
-			$html .= '<div class="carousel-slider-video-overlay"></div>';
-			$html .= '<img class="owl-lazy" data-src="' . esc_url( $url['thumbnail']['large'] ) . '"/>';
-			$html .= '</a>';
-			$html .= '</div>';
-			$html .= '</div>';
-		}
-		$html .= '</div>';
-		$html .= '</div>';
-
-		return apply_filters( 'carousel_slider_videos_carousel', $html, $slider_id );
+		return $views;
 	}
 }

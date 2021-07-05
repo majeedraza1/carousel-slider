@@ -2,19 +2,18 @@
 
 namespace CarouselSlider\Modules\ImageCarousel;
 
+use CarouselSlider\Abstracts\View;
 use CarouselSlider\Supports\Validate;
 use CarouselSlider\Helper;
 
-class ImageCarouselUrl {
+class ImageCarouselUrlView extends View {
+
 	/**
-	 * Get view
-	 *
-	 * @param int $slider_id
-	 * @param string $slider_type
-	 *
-	 * @return string
+	 * @inheritDoc
 	 */
-	public static function get_view( int $slider_id, string $slider_type ): string {
+	public function render(): string {
+		$slider_id   = $this->get_slider_id();
+		$slider_type = $this->get_slider_type();
 		$images_urls = (array) get_post_meta( $slider_id, '_images_urls', true );
 		if ( count( $images_urls ) < 1 ) {
 			return '';

@@ -23,7 +23,7 @@ class ProductCarouselModule {
 		if ( is_null( self::$instance ) ) {
 			self::$instance = new self();
 
-			add_filter( 'carousel_slider/view', [ self::$instance, 'view' ], 10, 3 );
+			add_filter( 'carousel_slider/register_view', [ self::$instance, 'view' ] );
 
 			add_action( 'carousel_slider_after_shop_loop_item', [ self::$instance, 'quick_view_button' ], 10, 2 );
 			add_action( 'carousel_slider_after_shop_loop_item', [ self::$instance, 'wish_list_button' ], 12, 2 );
@@ -37,21 +37,17 @@ class ProductCarouselModule {
 		return self::$instance;
 	}
 
-	public function view( string $html, int $slider_id, string $slider_type ): string {
-		if ( 'product-carousel' != $slider_type ) {
-			return $html;
-		}
+	/**
+	 * Register view
+	 *
+	 * @param array $views
+	 *
+	 * @return array
+	 */
+	public function view( array $views ): array {
+		$views['product-carousel'] = new ProductCarouselView();
 
-		$query_type    = get_post_meta( $slider_id, '_product_query_type', true );
-		$query_type    = empty( $query_type ) ? 'query_product' : $query_type;
-		$query_type    = ( 'query_porduct' == $query_type ) ? 'query_product' : $query_type; // Type mistake
-		$product_query = get_post_meta( $slider_id, '_product_query', true );
-
-		if ( $query_type == 'query_product' && $product_query == 'product_categories_list' ) {
-			return ProductCarouselView::get_category_view( $slider_id, $slider_type );
-		}
-
-		return ProductCarouselView::get_view( $slider_id, $slider_type );
+		return $views;
 	}
 
 	/**

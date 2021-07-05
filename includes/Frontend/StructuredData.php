@@ -2,6 +2,8 @@
 
 namespace CarouselSlider\Frontend;
 
+use CarouselSlider\Helper;
+use CarouselSlider\Supports\Validate;
 use WC_Product;
 use WP_Post;
 
@@ -9,9 +11,9 @@ defined( 'ABSPATH' ) || exit;
 
 class StructuredData {
 	protected static $instance = null;
-	private $_product_data = array();
-	private $_image_data = array();
-	private $_post_data = array();
+	private $_product_data = [];
+	private $_image_data = [];
+	private $_post_data = [];
 
 	/**
 	 * Ensures only one instance of this class is loaded or can be loaded.
@@ -22,11 +24,15 @@ class StructuredData {
 		if ( is_null( self::$instance ) ) {
 			self::$instance = new self();
 
-			add_action( 'carousel_slider_image_gallery_loop', [ self::$instance, 'generate_image_data' ] );
-			add_action( 'carousel_slider_post_loop', [ self::$instance, 'generate_post_data' ] );
-			add_action( 'carousel_slider_after_shop_loop_item', [ self::$instance, 'generate_product_data' ] );
-			// Output structured data.
-			add_action( 'wp_footer', [ self::$instance, 'output_structured_data' ], 90 );
+			$show = Validate::checked( Helper::get_setting( 'show_structured_data', '1' ) );
+
+			if ( $show ) {
+				add_action( 'carousel_slider_image_gallery_loop', [ self::$instance, 'generate_image_data' ] );
+				add_action( 'carousel_slider_post_loop', [ self::$instance, 'generate_post_data' ] );
+				add_action( 'carousel_slider_after_shop_loop_item', [ self::$instance, 'generate_product_data' ] );
+				// Output structured data.
+				add_action( 'wp_footer', [ self::$instance, 'output_structured_data' ], 90 );
+			}
 		}
 
 		return self::$instance;
@@ -56,13 +62,13 @@ class StructuredData {
 	 * Structures and returns product data.
 	 * @return array
 	 */
-	private function get_structured_product_data() {
-		$data = array(
-			'@context' => 'http://schema.org/',
+	private function get_structured_product_data(): array {
+		$data = [
+			'@context' => 'https://schema.org/',
 			"@graph"   => $this->get_product_data()
-		);
+		];
 
-		return $this->get_product_data() ? $data : array();
+		return $this->get_product_data() ? $data : [];
 	}
 
 	/**
@@ -70,7 +76,7 @@ class StructuredData {
 	 *
 	 * @return array
 	 */
-	private function get_product_data() {
+	private function get_product_data(): array {
 		return $this->_product_data;
 	}
 
@@ -78,14 +84,14 @@ class StructuredData {
 	 * Structures and returns image data.
 	 * @return array
 	 */
-	private function get_structured_image_data() {
-		$data = array(
-			'@context'        => 'http://schema.org/',
+	private function get_structured_image_data(): array {
+		$data = [
+			'@context'        => 'https://schema.org/',
 			"@type"           => "ImageGallery",
 			"associatedMedia" => $this->get_image_data()
-		);
+		];
 
-		return $this->get_image_data() ? $data : array();
+		return $this->get_image_data() ? $data : [];
 	}
 
 	/**
@@ -93,20 +99,29 @@ class StructuredData {
 	 *
 	 * @return array
 	 */
-	private function get_image_data() {
+	private function get_image_data(): array {
 		return $this->_image_data;
 	}
 
-	private function get_structured_post_data() {
+	/**
+	 * Get structured data for post
+	 * @return array
+	 */
+	private function get_structured_post_data(): array {
 		$data = array(
-			'@context' => 'http://schema.org/',
+			'@context' => 'https://schema.org/',
 			"@graph"   => $this->get_post_data()
 		);
 
 		return $this->get_post_data() ? $data : array();
 	}
 
-	private function get_post_data() {
+	/**
+	 * Get post data
+	 *
+	 * @return array
+	 */
+	private function get_post_data(): array {
 		return $this->_post_data;
 	}
 
@@ -115,15 +130,15 @@ class StructuredData {
 	 *
 	 * Hooked into `carousel_slider_image_gallery_loop` action hook.
 	 *
-	 * @param WP_Post $_post Post data (default: null).
+	 * @param WP_Post $post Post data (default: null).
 	 */
-	public function generate_image_data( $_post ) {
-		$image                = wp_get_attachment_image_src( $_post->ID, 'full' );
+	public function generate_image_data( WP_Post $post ) {
+		$image                = wp_get_attachment_image_src( $post->ID, 'full' );
 		$markup['@type']      = 'ImageObject';
 		$markup['contentUrl'] = $image[0];
-		$markup['name']       = $_post->post_title;
+		$markup['name']       = $post->post_title;
 
-		$this->set_data( apply_filters( 'carousel_slider_structured_data_image', $markup, $_post ) );
+		$this->set_data( apply_filters( 'carousel_slider_structured_data_image', $markup, $post ) );
 	}
 
 	/**
@@ -133,7 +148,7 @@ class StructuredData {
 	 *
 	 * @return bool
 	 */
-	private function set_data( $data ) {
+	private function set_data( array $data ): bool {
 		if ( ! isset( $data['@type'] ) || ! preg_match( '|^[a-zA-Z]{1,20}$|', $data['@type'] ) ) {
 			return false;
 		}
@@ -162,11 +177,11 @@ class StructuredData {
 	/**
 	 * Check if image is already added to list
 	 *
-	 * @param string $image_id
+	 * @param string|null $image_id
 	 *
 	 * @return boolean
 	 */
-	private function maybe_image_added( $image_id = null ) {
+	private function maybe_image_added( string $image_id ): bool {
 		$image_data = $this->get_image_data();
 		if ( count( $image_data ) > 0 ) {
 			$image_data = array_map( function ( $data ) {
@@ -186,7 +201,7 @@ class StructuredData {
 	 *
 	 * @return boolean
 	 */
-	private function maybe_product_added( $product_id = null ) {
+	private function maybe_product_added( string $product_id ): bool {
 		$product_data = $this->get_product_data();
 		if ( count( $product_data ) > 0 ) {
 			$product_data = array_map( function ( $data ) {
@@ -206,7 +221,7 @@ class StructuredData {
 	 *
 	 * @return boolean
 	 */
-	private function maybe_post_added( $post_id ) {
+	private function maybe_post_added( string $post_id ): bool {
 		$post_data = $this->get_post_data();
 		if ( count( $post_data ) > 0 ) {
 			$post_data = array_map( function ( $data ) {
@@ -224,10 +239,10 @@ class StructuredData {
 	 *
 	 * Hooked into `carousel_slider_post_loop` action hook.
 	 *
-	 * @param WP_Post $_post
+	 * @param WP_Post|mixed $post
 	 */
-	public function generate_post_data( $_post ) {
-		if ( ! $_post instanceof WP_Post ) {
+	public function generate_post_data( $post ) {
+		if ( ! $post instanceof WP_Post ) {
 			return;
 		}
 
@@ -267,13 +282,13 @@ class StructuredData {
 		$json['description']   = get_the_excerpt();
 
 
-		$this->set_data( apply_filters( 'carousel_slider_structured_data_post', $json, $_post ) );
+		$this->set_data( apply_filters( 'carousel_slider_structured_data_post', $json, $post ) );
 	}
 
 	/**
 	 * Generates Product structured data.
 	 *
-	 * @param WC_Product $product Product data (default: null).
+	 * @param WC_Product|mixed $product Product data (default: null).
 	 */
 	public function generate_product_data( $product ) {
 		if ( ! $product instanceof WC_Product ) {

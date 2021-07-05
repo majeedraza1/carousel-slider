@@ -2,11 +2,31 @@
 
 namespace CarouselSlider\Modules\ProductCarousel;
 
+use CarouselSlider\Abstracts\View;
 use CarouselSlider\Helper;
 use CarouselSlider\Supports\Validate;
 use WC_Product;
 
-class ProductCarouselView {
+defined( 'ABSPATH' ) || exit;
+
+class ProductCarouselView extends View {
+
+	/**
+	 * @inheritDoc
+	 */
+	public function render(): string {
+		$query_type    = get_post_meta( $this->slider_id, '_product_query_type', true );
+		$query_type    = empty( $query_type ) ? 'query_product' : $query_type;
+		$query_type    = ( 'query_porduct' == $query_type ) ? 'query_product' : $query_type; // Type mistake
+		$product_query = get_post_meta( $this->slider_id, '_product_query', true );
+
+		if ( $query_type == 'query_product' && $product_query == 'product_categories_list' ) {
+			return self::get_category_view( $this->slider_id, $this->slider_type );
+		}
+
+		return self::get_view( $this->slider_id, $this->slider_type );
+	}
+
 	/**
 	 * Get slider settings
 	 *
