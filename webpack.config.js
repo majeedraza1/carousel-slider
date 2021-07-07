@@ -134,12 +134,12 @@ module.exports = (env, argv) => {
 		resolve: {
 			alias: {
 				'vue$': 'vue/dist/vue.esm.js',
-				'@': path.resolve('./assets/src/'),
+				'@': path.resolve('./resources/'),
 			},
 			modules: [
 				path.resolve('./node_modules'),
-				path.resolve(path.join(__dirname, 'assets/src/')),
-				path.resolve(path.join(__dirname, 'assets/src/shapla')),
+				path.resolve(path.join(__dirname, 'resources/')),
+				path.resolve(path.join(__dirname, 'resources/shapla')),
 			],
 			fallback: {
 				url: false
