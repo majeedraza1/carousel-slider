@@ -1,0 +1,79 @@
+{
+  "name": "carousel-slider",
+  "version": "1.10.5",
+  "description": "The Easiest Way to Create SEO friendly Image, Logo, Video, Post and WooCommerce Product Carousel.",
+  "keywords": [
+    "wordpress",
+    "wordpress-plugin",
+    "carousel-slider",
+    "carousel",
+    "slider",
+    "hero-slider",
+    "product-slider"
+  ],
+  "author": {
+    "name": "Sayful Islam",
+    "email": "sayful.islam001@gmail.com",
+    "url": "https://sayfulislam.com"
+  },
+  "license": "GPL-3.0-only",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sayful1/carousel-slider.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sayful1/carousel-slider/issues"
+  },
+  "homepage": "https://wordpress.org/plugins/carousel-slider/",
+  "scripts": {
+    "dev": "webpack --mode=development --progress --watch",
+    "dev-build": "webpack --mode=development",
+    "build": "webpack --mode=production"
+  },
+  "browserslist": [
+    "last 1 years"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/plugin-proposal-class-properties": "^7.12.1",
+    "@babel/plugin-proposal-object-rest-spread": "^7.12.1",
+    "@babel/plugin-proposal-private-methods": "^7.12.1",
+    "@babel/preset-env": "^7.12.11",
+    "@babel/preset-react": "^7.12.10",
+    "autoprefixer": "^10.1.0",
+    "babel-loader": "^8.2.2",
+    "browser-sync": "^2.26.13",
+    "browser-sync-webpack-plugin": "^2.2.2",
+    "css-loader": "^5.0.1",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^4.5.0",
+    "mini-css-extract-plugin": "^1.3.3",
+    "mini-svg-data-uri": "^1.2.3",
+    "node-sass": "^5.0.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.4",
+    "path": "^0.12.7",
+    "postcss": "^8.2.1",
+    "postcss-combine-media-query": "^1.0.1",
+    "postcss-loader": "^4.1.0",
+    "postcss-preset-env": "^6.7.0",
+    "sass-loader": "^10.1.0",
+    "style-loader": "^2.0.0",
+    "terser-webpack-plugin": "^5.0.3",
+    "url-loader": "^4.1.1",
+    "vue-loader": "^15.9.6",
+    "vue-template-compiler": "^2.6.12",
+    "webpack": "^5.11.0",
+    "webpack-cli": "^4.2.0",
+    "webpack-node-externals": "^2.5.2"
+  },
+  "dependencies": {
+    "@wordpress/block-editor": "^5.3.0",
+    "@wordpress/blocks": "^8.0.0",
+    "@wordpress/components": "^13.0.0",
+    "jquery": "^3.5.1",
+    "owl.carousel": "^2.3.4",
+    "react": "^16.0 || ^17.0",
+    "react-dom": "^16.0 || ^17.0",
+    "shapla-css": "^2.0.0"
+  }
+}

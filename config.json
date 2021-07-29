@@ -1,0 +1,24 @@
+{
+  "proxyURL": "http://plugins.test/wp-admin/edit.php?post_type=carousels",
+  "entryPoints": {
+    "frontend": [
+      "./assets/src/scss/frontend.scss",
+      "./assets/src/frontend/main.js"
+    ],
+    "admin": [
+      "./assets/src/scss/admin.scss",
+      "./assets/src/admin/main.js",
+      "./assets/src/admin/accordion.js",
+      "./assets/src/admin/hero-banner.js",
+      "./assets/src/admin/media-gallery.js",
+      "./assets/src/admin/media-url.js",
+      "./assets/src/admin/modal.js",
+      "./assets/src/admin/slide-type.js",
+      "./assets/src/admin/vendors.js"
+    ],
+    "gutenberg-block": [
+      "./assets/src/admin/gutenberg-block.js",
+      "./assets/src/scss/gutenberg-block.scss"
+    ]
+  }
+}
