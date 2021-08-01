@@ -2,9 +2,9 @@
 Contributors: sayful, stackonet, majeedraza
 Tags: woocommerce, shortcode, images, carousel, carousel slider, image carousel, product carousel, slider, owl carousel
 Requires at least: 5.2
-Tested up to: 5.7
+Tested up to: 5.8
 Requires PHP: 7.0
-Stable tag: 1.10.1
+Stable tag: 1.10.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -85,6 +85,10 @@ If you still need help. visit [WordPress codex](https://codex.wordpress.org/Mana
 7. Front-end example of image lightbox.
 
 == Changelog ==
+
+= version 1.10.2 - 2021-08-01 =
+* Dev - Tested with WordPress 5.8 and WooCommerce 5.5
+* Fix - Fix video carousel image is not showing for non-lazy loading slider.
 
 = version 1.10.1 - 2021-07-05 =
 * Dev - Add custom update message for future major version
