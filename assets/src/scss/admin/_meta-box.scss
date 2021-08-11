@@ -1,0 +1,239 @@
+// Global
+.overflowHidden {
+    overflow: hidden;
+}
+
+.overflowVisible {
+    overflow: visible;
+}
+
+// Meta box fields
+.sp {
+    &-input-group {
+        margin-bottom: 10px;
+        &:after {
+            content: "";
+            display: table;
+            clear: both
+        }
+    }
+
+    &-input-label {
+        label {
+            font-weight: 600;
+            margin-right: 30px;
+        }
+    }
+    &-input-field {
+    }
+
+    &-input-label,
+    &-input-field {
+        float: left;
+        width: 100%;
+    }
+    &-input-desc {
+        color: #999;
+        font-size: 0.9em;
+        line-height: 1.3em;
+        margin: 10px 30px 10px 0;
+    }
+    &-input-text {
+        width: 100%;
+        padding: 8px 8px 8px 16px;
+        height: 35px !important;
+
+        option {
+            padding: 8px 4px;
+        }
+    }
+}
+
+.spacing-text {
+    width: 62px;
+}
+
+@media only screen and (min-width: 600px) {
+    .sp {
+        &-input-label {
+            width: 40%;
+        }
+        &-input-field {
+            width: 60%;
+        }
+    }
+}
+
+@media only screen and (min-width: 783px) {
+    .sp-input-label {
+        width: 30%;
+    }
+    .sp-input-field {
+        width: 70%;
+    }
+    .sp-input-text {
+        width: 25em;
+    }
+}
+
+@media only screen and (min-width: 851px) {
+    .sp-input-label,
+    .sp-input-field {
+        width: 100%;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .sp-input-label {
+        width: 40%;
+    }
+    .sp-input-field {
+        width: 60%;
+    }
+}
+
+@media only screen and (min-width: 1600px) {
+    .sp-input-label {
+        width: 30%;
+    }
+    .sp-input-field {
+        width: 70%;
+    }
+}
+
+// Admin Media gallery
+.carousel_slider {
+    &_images {
+        &:before,
+        &:after {
+            display: table;
+            content: "";
+        }
+        &:after {
+            clear: both;
+        }
+    }
+    &_gallery_btn {
+        border: 1px solid #616161;
+        color: #616161;
+        background-color: #f1f1f1;
+        padding: 5px 15px;
+        text-decoration: none;
+
+        &:hover {
+            background-color: #ffffff;
+            color: #616161;
+        }
+    }
+    &_gallery_list {
+        margin: 15px 0 0 0;
+        padding: 0;
+        list-style: none;
+        box-sizing: border-box;
+        &:before,
+        &:after {
+            display: table;
+            content: "";
+        }
+        &:after {
+            clear: both;
+        }
+
+        li {
+            float: left;
+            margin: 0;
+            padding: 0;
+
+            > img {
+                margin-right: 10px;
+                margin-bottom: 10px;
+                display: block;
+                box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+            }
+        }
+    }
+}
+
+// Hide Post carousel fields
+// Related fields will be open by jQuery
+#field-_post_date_after,
+#field-_post_date_before,
+#field-_post_categories,
+#field-_post_tags,
+#field-_post_in {
+    display: none;
+}
+
+// Hide Post carousel fields
+// Related fields will be open by jQuery
+#field-_product_query,
+#field-_product_categories,
+#field-_product_tags,
+#field-_product_in {
+    display: none;
+}
+
+#carousel-slider-navigation-settings,
+#carousel-slider-responsive-settings,
+#carousel-slider-autoplay-settings {
+    p {
+        overflow: hidden;
+    }
+    input.small-text,
+    select.small-text {
+        float: right;
+    }
+}
+
+// Content Carousel Meta
+.tab-background {
+    .slide_bg_wrapper {
+        display: flex;
+        padding: 1rem 0;
+    }
+    .slide_thumb {
+        position: relative;
+        float: left;
+        margin-right: 1rem;
+        border: solid 1px #e0e0e0;
+        padding: 5px;
+
+        > div {
+            width: 320px;
+            height: 180px;
+            background-color: #f1f1f1;
+            background-repeat: no-repeat;
+            background-position: top left;
+            background-size: 100% auto;
+        }
+
+        > span {
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            line-height: 14px;
+            padding: 3px 3px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #ffffff;
+            cursor: pointer;
+            transition: all .3s ease-in-out;
+
+            &.hidden {
+                display: none !important;
+            }
+        }
+    }
+
+    .slide_image_settings_line {
+        display: block;
+        margin: 0.5rem 0;
+
+        > span {
+            width: 150px;
+            display: inline-block;
+        }
+    }
+}

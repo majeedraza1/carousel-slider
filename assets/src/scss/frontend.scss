@@ -1,0 +1,21 @@
+$imagePath: '../img/';
+
+@import 'public/variables';
+@import 'public/core';
+@import 'public/animate';
+@import 'public/autoheight';
+@import 'public/lazyload';
+@import 'public/video';
+@import 'public/theme';
+@import 'public/post-carousel';
+@import 'public/product-carousel';
+@import 'public/content-carousel';
+@import 'public/image-carousel';
+@import 'public/button';
+@import 'public/magnific-popup';
+@import 'public/product_modal';
+
+// Disable magnific popup counter as it show wrong count
+.mfp-counter {
+	display: none;
+}

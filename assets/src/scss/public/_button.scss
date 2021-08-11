@@ -1,0 +1,39 @@
+.cs-hero-button {
+    -webkit-appearance: none;
+    -webkit-font-smoothing: inherit;
+    display: inline-block;
+    font-size: 1rem;
+    line-height: 1;
+    padding: 0.75em 1em;
+    border-radius: 0;
+    text-decoration: none;
+    text-align: center;
+    box-sizing: border-box;
+    transition: all 200ms ease-in-out;
+
+    &:hover {
+        text-decoration: none;
+    }
+
+    &--normal {
+        opacity: 0.9;
+        filter: alpha(opacity=90);
+    }
+
+    &--stroke {
+        background: transparent;
+        border-width: 1px;
+        border-style: solid;
+        border-color: transparent;
+    }
+
+    &--medium {
+        font-size: 1.2rem;
+        padding: 0.9em 1.2em;
+    }
+
+    &--large {
+        font-size: 1.5rem;
+        padding: 0.9em 1.6em;
+    }
+}

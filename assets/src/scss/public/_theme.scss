@@ -1,0 +1,136 @@
+.carousel-slider {
+
+    // Styling Next and Prev buttons
+    .owl-nav {
+        .owl-prev,
+        .owl-next {
+            height: 48px;
+            width: 48px;
+            display: inline-block;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            opacity: 0;
+            margin: 0;
+            padding: 0;
+            transition: all .3s ease-in-out;
+        }
+
+        .owl-prev {
+            left: 0;
+        }
+
+        .owl-next {
+            right: 0;
+        }
+    }
+
+    &:hover {
+        .owl-nav {
+            .owl-prev,
+            .owl-next {
+                opacity: 1;
+            }
+        }
+    }
+
+    &.arrows-visible-always {
+        .owl-prev,
+        .owl-next {
+            opacity: 1;
+        }
+    }
+
+    &.arrows-outside {
+        .owl-nav {
+            .owl-prev {
+                left: -48px;
+            }
+
+            .owl-next {
+                right: -48px;
+            }
+        }
+    }
+
+    // Styling dots
+    .owl-dots {
+        text-align: center;
+        -webkit-tap-highlight-color: transparent;
+        margin-top: 10px;
+
+        .owl-dot {
+            display: inline-block;
+            zoom: 1;
+            *display: inline;
+
+            span {
+                width: 10px;
+                height: 10px;
+                margin: 4px 8px;
+                background-color: $background-color;
+                display: block;
+                -webkit-backface-visibility: visible;
+                transition: opacity 200ms ease;
+            }
+
+            &.active,
+            &:hover {
+                span {
+                    background-color: $background-hover-color;
+                }
+            }
+        }
+    }
+
+    // Dots positions
+    &.dots-center {
+        .owl-dots {
+            text-align: center;
+        }
+    }
+    &.dots-left {
+        .owl-dots {
+            text-align: left;
+
+            &:first-child {
+                span {
+                    margin-left: 0;
+                }
+            }
+        }
+    }
+    &.dots-right {
+        .owl-dots {
+            text-align: right;
+
+            &:last-child {
+                span {
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+
+    // Dots visibility
+    &.dots-visible-hover {
+        .owl-dots {
+            opacity: 0;
+        }
+
+        &:hover .owl-dots {
+            opacity: 1;
+        }
+    }
+
+    // Dots shape
+    &.dots-circle {
+        .owl-dots {
+            .owl-dot {
+                span {
+                    border-radius: 9999px;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,145 @@
+// == Colors
+// Start with assigning color names to specific hex values.
+
+$black: #000000 !default;
+$grey-darker: #212121 !default;
+$grey-dark: #616161 !default;
+$grey: #9e9e9e !default;
+$grey-light: #e0e0e0 !default;
+$grey-lighter: #f5f5f5 !default;
+$white: #ffffff !default;
+$teal: #009688 !default;
+$blue: #2196f3 !default;
+$green: #4caf50 !default;
+$yellow: #ffeb3b !default;
+$amber: #ffc107 !default;
+$orange: #ff9800 !default;
+$red: #f44336 !default;
+$purple: #9c27b0 !default;
+$turquoise: #00d1b2 !default;
+$pink: #e91e63 !default;
+
+// Reassign color vars to semantic color scheme
+$primary: $teal !default;
+$info: $blue !default;
+$success: $green !default;
+$warning: $amber !default;
+$danger: $red !default;
+$light: $grey-lighter !default;
+$dark: $grey-darker !default;
+
+$colors: (
+	'teal': $teal,
+	'blue': $blue,
+	'green': $green,
+	'yellow': $yellow,
+	'amber': $amber,
+	'orange': $orange,
+	'red': $red,
+	'purple': $purple,
+	'turquoise': $turquoise,
+	'pink': $pink,
+	'white': $white,
+	'light': $grey-lighter,
+	'grey-light': $grey-light,
+	'grey': $grey,
+	'grey-dark': $grey-dark,
+	'dark': $grey-darker,
+	'black': $black,
+);
+
+// General colors
+$background: $grey-lighter !default;
+
+$border: $grey-lighter !default;
+$border-hover: $grey-light !default;
+
+//== Link colors
+$link: $primary !default;
+$link-invert: $primary !default;
+$link-visited: $purple !default;
+
+$link-hover: $grey-darker !default;
+$link-hover-border: $grey-light !default;
+
+$link-focus: $grey-darker !default;
+$link-focus-border: $primary !default;
+
+$link-active: $grey-darker !default;
+$link-active-border: $grey-dark !default;
+
+//== Button
+$button: $grey-darker !default;
+$button-background: $white !default;
+$button-border: $grey-lighter !default;
+
+$button-hover: $link-hover !default;
+$button-hover-border: $link-hover-border !default;
+
+$button-focus: $link-focus !default;
+$button-focus-border: $link-focus-border !default;
+
+$button-active: $link-active !default;
+$button-active-border: $link-active-border !default;
+
+$button-shadow-inset: inset 0 1px 2px rgba($black, 0.2) !default;
+
+// Typography
+$family-sans-serif: BlinkMacSystemFont, -apple-system, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif !default;
+$family-monospace: monospace !default;
+
+$family-primary: $family-sans-serif !default;
+$family-code: $family-monospace !default;
+
+$size-1: 3rem !default;
+$size-2: 2.5rem !default;
+$size-3: 2rem !default;
+$size-4: 1.5rem !default;
+$size-5: 1.25rem !default;
+$size-6: 1rem !default;
+$size-7: 0.75rem !default;
+
+$size-small: $size-7 !default;
+$size-normal: $size-6 !default;
+$size-medium: $size-5 !default;
+$size-large: $size-4 !default;
+
+$weight-light: 300 !default;
+$weight-normal: 400 !default;
+$weight-semibold: 500 !default;
+$weight-bold: 700 !default;
+
+// Text colors
+$text: $grey-dark !default;
+$text-invert: $text !default;
+$text-light: $grey !default;
+$text-strong: $grey-darker !default;
+
+// Miscellaneous
+$radius-small: 2px !default;
+$radius: 3px !default;
+$radius-large: 5px !default;
+
+//== Grid breakpoints
+$screen-sm: 576px !default;
+$screen-md: 769px !default;
+$screen-lg: 1000px !default;
+$screen-xl: 1192px !default;
+$screen-hd: 1384px !default;
+
+//== Grid containers
+$container-sm: 540px !default;
+$container-md: 720px !default;
+$container-lg: 960px !default;
+$container-xl: 1140px !default;
+$container-hd: 1340px !default;
+
+// Responsiveness
+// 960, 1152, and 1344 have been chosen because they are divisible by both 12 and 16
+$tablet: 769px !default;
+// 960px container + 40px
+$desktop: 1000px !default;
+// 1152px container + 40
+$widescreen: 1192px !default;
+// 1344px container + 40
+$fullhd: 1384px !default;
