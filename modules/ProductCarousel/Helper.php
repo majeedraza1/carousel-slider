@@ -17,7 +17,7 @@ class Helper {
 	 * @return array
 	 */
 	private static function parse_args( array $args = [] ): array {
-		$args = wp_parse_args( $args, [
+		return wp_parse_args( $args, [
 			'limit'      => 12,
 			'order'      => 'DESC',
 			'orderby'    => 'date',
@@ -26,8 +26,6 @@ class Helper {
 			'page'       => 1,
 			'return'     => 'objects',
 		] );
-
-		return $args;
 	}
 
 	/**
@@ -114,12 +112,12 @@ class Helper {
 	 *
 	 * @return array|WP_Term[]
 	 */
-	public static function product_categories( $args = array() ): array {
-		$args = wp_parse_args( $args, array(
+	public static function product_categories( array $args = [] ): array {
+		$args = wp_parse_args( $args, [
 			'hide_empty' => true,
 			'orderby'    => 'name',
 			'order'      => 'ASC',
-		) );
+		] );
 
 		$args['taxonomy'] = 'product_cat';
 

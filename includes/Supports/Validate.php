@@ -26,6 +26,6 @@ class Validate {
 	 * @return boolean
 	 */
 	public static function checked( $value ): bool {
-		return in_array( $value, array( 'yes', 'on', '1', 1, true, 'true' ), true );
+		return in_array( $value, [ 'yes', 'on', '1', 1, true, 'true' ], true );
 	}
 }

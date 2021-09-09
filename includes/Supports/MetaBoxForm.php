@@ -300,31 +300,7 @@ class MetaBoxForm {
 
 		list( $name, $value ) = $this->get_name_and_value( $args );
 
-		global $_wp_additional_image_sizes;
-
-		$sizes = array();
-
-		foreach ( get_intermediate_image_sizes() as $_size ) {
-			if ( in_array( $_size, array( 'thumbnail', 'medium', 'medium_large', 'large' ) ) ) {
-
-				$width  = get_option( "{$_size}_size_w" );
-				$height = get_option( "{$_size}_size_h" );
-				$crop   = (bool) get_option( "{$_size}_crop" ) ? 'hard' : 'soft';
-
-				$sizes[ $_size ] = "{$_size} - $crop:{$width}x{$height}";
-
-			} elseif ( isset( $_wp_additional_image_sizes[ $_size ] ) ) {
-
-				$width  = $_wp_additional_image_sizes[ $_size ]['width'];
-				$height = $_wp_additional_image_sizes[ $_size ]['height'];
-				$crop   = $_wp_additional_image_sizes[ $_size ]['crop'] ? 'hard' : 'soft';
-
-				$sizes[ $_size ] = "{$_size} - $crop:{$width}x{$height}";
-			}
-		}
-
-		$sizes = array_merge( $sizes, array( 'full' => 'original uploaded image' ) );
-
+		$sizes = Helper::get_available_image_sizes();
 
 		echo $this->field_before( $args );
 		echo '<select name="' . $name . '" id="' . $args['id'] . '" class="select2 sp-input-text">';

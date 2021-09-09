@@ -135,46 +135,20 @@ class Sanitize {
 	}
 
 	/**
-	 * Array of allowed html tags on short block
-	 * @return array
-	 */
-	private static function allowed_html_tags_short_block(): array {
-		return [
-			'div'    => [ 'class' => [], 'id' => [], ],
-			'span'   => [ 'class' => [], 'id' => [], ],
-			'ol'     => [ 'class' => [], 'id' => [], ],
-			'ul'     => [ 'class' => [], 'id' => [], ],
-			'li'     => [ 'class' => [], 'id' => [], ],
-			'p'      => [ 'class' => [], 'id' => [], ],
-			'a'      => [
-				'href'   => [],
-				'class'  => [],
-				'id'     => [],
-				'rel'    => [],
-				'title'  => [],
-				'target' => [],
-			],
-			'br'     => [],
-			'em'     => [],
-			'strong' => [],
-		];
-	}
-
-	/**
 	 * Sanitize color
 	 *
-	 * @param mixed $value
+	 * @param mixed $value hex, rgb, rgba color or transparent
 	 *
 	 * @return string
 	 */
 	public static function color( $value ): string {
 		// If the value is empty, then return empty.
-		if ( '' === $value ) {
+		if ( '' === $value || ! is_string( $value ) ) {
 			return '';
 		}
 
 		// If transparent, then return 'transparent'.
-		if ( is_string( $value ) && 'transparent' === trim( $value ) ) {
+		if ( 'transparent' === trim( $value ) ) {
 			return 'transparent';
 		}
 
@@ -191,7 +165,7 @@ class Sanitize {
 			list( $red, $green, $blue ) = sscanf( $value, 'rgb(%d,%d,%d)' );
 
 			if ( ( $red >= 0 && $red <= 255 ) && ( $green >= 0 && $green <= 255 ) && ( $blue >= 0 && $blue <= 255 ) ) {
-				return "rgb({$red},{$green},{$blue})";
+				return "rgb($red,$green,$blue)";
 			}
 		}
 
@@ -201,7 +175,7 @@ class Sanitize {
 
 			if ( ( $red >= 0 && $red <= 255 ) && ( $green >= 0 && $green <= 255 ) && ( $blue >= 0 && $blue <= 255 ) &&
 			     $alpha >= 0 && $alpha <= 1 ) {
-				return "rgba({$red},{$green},{$blue},{$alpha})";
+				return "rgba($red,$green,$blue,$alpha)";
 			}
 		}
 

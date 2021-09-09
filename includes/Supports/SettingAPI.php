@@ -2,6 +2,7 @@
 
 namespace CarouselSlider\Supports;
 
+use CarouselSlider\Helper;
 use Exception;
 
 defined( 'ABSPATH' ) || exit;
@@ -194,11 +195,11 @@ class SettingAPI {
 	/**
 	 * Filter settings fields by page tab
 	 *
-	 * @param string $current_tab
+	 * @param string|null|mixed $current_tab
 	 *
 	 * @return array
 	 */
-	public function filter_fields_by_tab( $current_tab = null ) {
+	public function filter_fields_by_tab( $current_tab = null ): array {
 
 		if ( count( $this->tabs ) < 1 ) {
 			return $this->fields;
@@ -241,7 +242,7 @@ class SettingAPI {
 		$options      = array_filter( $options );
 
 		if ( empty( $options ) ) {
-			$options = (array) $this->get_options();
+			$options = $this->get_options();
 		}
 
 		if ( count( $this->tabs ) > 0 ) {
@@ -251,7 +252,7 @@ class SettingAPI {
 		}
 
 		// Loop through each setting being saved and
-		// pass it through a sanitize filter
+		// pass it through a filter to sanitize
 		foreach ( $input as $key => $value ) {
 			foreach ( $fields as $field ) {
 				if ( $field['id'] == $key ) {
@@ -269,19 +270,22 @@ class SettingAPI {
 	 * @return array
 	 */
 	public function get_options(): array {
-		$options_array = array();
+		if ( empty( $this->options ) ) {
+			$options_array = [];
 
-		foreach ( $this->fields as $value ) {
-			$std_value                     = ( isset( $value['std'] ) ) ? $value['std'] : '';
-			$options_array[ $value['id'] ] = $std_value;
+			foreach ( $this->fields as $value ) {
+				$options_array[ $value['id'] ] = $value['std'] ?? '';
+			}
+
+			$options = wp_parse_args(
+				get_option( $this->menu_fields['option_name'] ),
+				$options_array
+			);
+
+			$this->options = $options;
 		}
 
-		$options = wp_parse_args(
-			get_option( $this->menu_fields['option_name'] ),
-			$options_array
-		);
-
-		return $this->options = $options;
+		return $this->options;
 	}
 
 	/**
@@ -309,11 +313,6 @@ class SettingAPI {
 
 			case 'multi_checkbox':
 				return $input;
-
-			case 'text':
-			case 'radio':
-			case 'select':
-				return sanitize_text_field( $input );
 
 			case 'date':
 				return date( 'F d, Y', strtotime( $input ) );
@@ -345,8 +344,7 @@ class SettingAPI {
 	private function setting_fields( array $fields = [] ) {
 		$fields = is_array( $fields ) ? $fields : $this->fields;
 
-		$table = "";
-		$table .= "<table class='form-table'>";
+		$table = "<table class='form-table'>";
 
 		foreach ( $fields as $field ) {
 			$name  = sprintf( '%s[%s]', $this->menu_fields['option_name'], $field['id'] );
@@ -487,8 +485,8 @@ class SettingAPI {
 	 * @return string
 	 */
 	public function textarea( array $field, string $name, $value ): string {
-		$rows        = ( isset( $field['rows'] ) ) ? $field['rows'] : 5;
-		$cols        = ( isset( $field['cols'] ) ) ? $field['cols'] : 40;
+		$rows        = $field['rows'] ?? 5;
+		$cols        = $field['cols'] ?? 40;
 		$placeholder = ( isset( $field['placeholder'] ) ) ? sprintf( 'placeholder="%s"',
 			esc_attr( $field['placeholder'] ) ) : '';
 
@@ -525,9 +523,9 @@ class SettingAPI {
 	 * @return string
 	 */
 	public function multi_checkbox( array $field, string $name, $value ): string {
-		$table = "<fieldset>";
-		$name  = $name . "[]";
+		$name = $name . "[]";
 
+		$table = "<fieldset>";
 		$table .= sprintf( '<input type="hidden" name="%1$s" value="0">', $name );
 		foreach ( $field['options'] as $key => $label ) {
 			$checked = ( in_array( $key, $value ) ) ? 'checked="checked"' : '';
@@ -590,31 +588,7 @@ class SettingAPI {
 	 * @return string
 	 */
 	public function image_sizes( array $field, string $name, $value ): string {
-
-		global $_wp_additional_image_sizes;
-
-		$sizes = array();
-
-		foreach ( get_intermediate_image_sizes() as $_size ) {
-			if ( in_array( $_size, array( 'thumbnail', 'medium', 'medium_large', 'large' ) ) ) {
-
-				$width  = get_option( "{$_size}_size_w" );
-				$height = get_option( "{$_size}_size_h" );
-				$crop   = (bool) get_option( "{$_size}_crop" ) ? 'hard' : 'soft';
-
-				$sizes[ $_size ] = "{$_size} - {$width}x{$height} ($crop crop)";
-
-			} elseif ( isset( $_wp_additional_image_sizes[ $_size ] ) ) {
-
-				$width  = $_wp_additional_image_sizes[ $_size ]['width'];
-				$height = $_wp_additional_image_sizes[ $_size ]['height'];
-				$crop   = $_wp_additional_image_sizes[ $_size ]['crop'] ? 'hard' : 'soft';
-
-				$sizes[ $_size ] = "{$_size} - {$width}x{$height} ($crop crop)";
-			}
-		}
-
-		$sizes = array_merge( $sizes, array( 'full' => 'original uploaded image' ) );
+		$sizes = Helper::get_available_image_sizes();
 
 		$table = '<select name="' . $name . '" id="' . $field['id'] . '" class="regular-text select2">';
 		foreach ( $sizes as $key => $option ) {

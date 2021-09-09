@@ -189,7 +189,7 @@ class Helper {
 				$height = get_option( "{$_size}_size_h" );
 				$crop   = get_option( "{$_size}_crop" ) ? 'hard' : 'soft';
 
-				$sizes[ $_size ] = "{$_size} - $crop:{$width}x{$height}";
+				$sizes[ $_size ] = sprintf( "%s - %s:%sx%s", $_size, $crop, $width, $height );
 
 			} elseif ( isset( $_wp_additional_image_sizes[ $_size ] ) ) {
 
@@ -197,7 +197,7 @@ class Helper {
 				$height = $_wp_additional_image_sizes[ $_size ]['height'];
 				$crop   = $_wp_additional_image_sizes[ $_size ]['crop'] ? 'hard' : 'soft';
 
-				$sizes[ $_size ] = "{$_size} - $crop:{$width}x{$height}";
+				$sizes[ $_size ] = sprintf( "%s - %s:%sx%s", $_size, $crop, $width, $height );
 			}
 		}
 
