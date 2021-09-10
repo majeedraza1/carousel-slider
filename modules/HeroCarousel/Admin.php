@@ -6,6 +6,8 @@ use CarouselSlider\Helper;
 use CarouselSlider\Modules\HeroCarousel\Helper as HeroCarouselHelper;
 use CarouselSlider\Supports\MetaBoxForm;
 
+defined( 'ABSPATH' ) || exit;
+
 class Admin {
 
 	/**

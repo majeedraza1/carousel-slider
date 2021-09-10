@@ -6,6 +6,8 @@ use CarouselSlider\Abstracts\AbstractView;
 use CarouselSlider\Helper;
 use CarouselSlider\Supports\Validate;
 
+defined( 'ABSPATH' ) || exit;
+
 class View extends AbstractView {
 
 	/**

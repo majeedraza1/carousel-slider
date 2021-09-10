@@ -1,12 +1,13 @@
+@use "~shapla-css/src/index.scss" as shapla;
+
 $imagePath: '../img/';
 
-@import "~shapla-css/src/grid/columns";
-@import "~shapla-css/src/elements/delete-icon/delete-icon";
-@import "~shapla-css/src/components/modal/modal";
+@include shapla.columns;
+@include shapla.delete-icon;
+@include shapla.modal;
+
 @import '~select2/dist/css/select2.css';
 
-@import "utilities/variables";
-@import "utilities/mixins";
 @import 'admin/widget';
 @import 'admin/meta-box';
 @import 'admin/toggle';

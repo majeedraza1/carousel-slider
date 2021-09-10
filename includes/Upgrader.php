@@ -93,7 +93,7 @@ class Upgrader {
 
 		$message = '<h1>' . __( 'Carousel Slider', 'carousel-slider' ) . '</h1>';
 		if ( ! ( current_user_can( 'manage_options' ) && $is_verified ) ) {
-			$message .= '<p>' . __( 'Sorry. This link only for developer to do some testing.', 'carousel-slider' ) . '</p>';
+			$message .= '<p>' . __( 'Sorry. This link only for admin to perform upgrade tasks.', 'carousel-slider' ) . '</p>';
 			_default_wp_die_handler( $message, '', [ 'back_link' => true ] );
 		}
 

@@ -1,9 +1,8 @@
 const path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require('terser-webpack-plugin');
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
-const {VueLoaderPlugin} = require('vue-loader');
 const svgToMiniDataURI = require('mini-svg-data-uri');
 
 const config = require('./config.json');
@@ -20,8 +19,6 @@ module.exports = (env, argv) => {
 	plugins.push(new BrowserSyncPlugin({
 		proxy: config.proxyURL
 	}));
-
-	plugins.push(new VueLoaderPlugin());
 
 	const webpackConfig = {
 		entry: config.entryPoints,
@@ -42,18 +39,12 @@ module.exports = (env, argv) => {
 								'@babel/preset-react'
 							],
 							plugins: [
-								['@babel/plugin-proposal-class-properties', {'loose': true}],
-								['@babel/plugin-proposal-private-methods', {'loose': true}],
-								['@babel/plugin-proposal-object-rest-spread', {'loose': true}],
+								['@babel/plugin-proposal-class-properties'],
+								['@babel/plugin-proposal-private-methods'],
+								['@babel/plugin-proposal-object-rest-spread'],
 							]
 						}
 					}
-				},
-				{
-					test: /\.vue$/i,
-					use: [
-						{loader: 'vue-loader'}
-					]
 				},
 				{
 					test: /\.(sass|scss|css)$/i,
@@ -89,57 +80,41 @@ module.exports = (env, argv) => {
 				},
 				{
 					test: /\.(eot|ttf|woff|woff2)$/i,
-					use: [
-						{
-							loader: 'file-loader',
-							options: {
-								outputPath: '../fonts',
-							},
-						},
-					],
+					type: 'asset/resource',
+					generator: {
+						filename: '../fonts/[hash][ext]'
+					}
 				},
 				{
 					test: /\.(png|je?pg|gif)$/i,
-					use: [
-						{
-							loader: 'url-loader',
-							options: {
-								limit: 8192, // 8KB
-								outputPath: '../images',
-							},
-						},
-					],
+					type: 'asset',
+					generator: {
+						filename: '../images/[hash][ext]'
+					}
 				},
 				{
 					test: /\.svg$/i,
-					use: [
-						{
-							loader: 'url-loader',
-							options: {
-								limit: 10240, // 10KB
-								outputPath: '../images',
-								generator: (content) => svgToMiniDataURI(content.toString()),
-							},
-						},
-					],
+					type: 'asset',
+					generator: {
+						filename: '../images/[hash][ext]',
+						dataUrl: content => svgToMiniDataURI(content.toString())
+					},
 				}
 			]
 		},
 		optimization: {
 			minimizer: [
 				new TerserPlugin(),
-				new OptimizeCSSAssetsPlugin()
+				new CssMinimizerPlugin()
 			]
 		},
 		resolve: {
 			alias: {
-				'vue$': 'vue/dist/vue.esm.js',
 				'@': path.resolve('./resources/'),
 			},
 			modules: [
 				path.resolve('./node_modules'),
 				path.resolve(path.join(__dirname, 'resources/')),
-				path.resolve(path.join(__dirname, 'resources/shapla')),
 			],
 			fallback: {
 				url: false

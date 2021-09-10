@@ -1,9 +1,10 @@
 import 'owl.carousel/dist/owl.carousel.js';
 import 'magnific-popup/dist/jquery.magnific-popup.js';
+import $ from 'jquery';
 
-jQuery('body').find('.carousel-slider').each(function () {
+$('body').find('.carousel-slider').each(function () {
 
-	let _this = jQuery(this),
+	let _this = $(this),
 		owlSettings = _this.data('owl-settings');
 
 	if (typeof owlSettings === "object") {
@@ -33,27 +34,25 @@ jQuery('body').find('.carousel-slider').each(function () {
 		}
 	}
 
-	if (jQuery().magnificPopup) {
-		if (_this.data('slide-type') === 'product-carousel') {
-			jQuery(this).find('.magnific-popup').magnificPopup({
-				type: 'ajax'
-			});
-		} else if ('video-carousel' === _this.data('slide-type')) {
-			jQuery(this).find('.magnific-popup').magnificPopup({
-				type: 'iframe'
-			});
-		} else {
-			jQuery(this).find('.magnific-popup').magnificPopup({
-				type: 'image',
-				gallery: {
-					enabled: true
-				},
-				zoom: {
-					enabled: true,
-					duration: 300,
-					easing: 'ease-in-out'
-				}
-			});
-		}
+	if (_this.data('slide-type') === 'product-carousel') {
+		$(this).find('.magnific-popup').magnificPopup({
+			type: 'ajax'
+		});
+	} else if ('video-carousel' === _this.data('slide-type')) {
+		$(this).find('.magnific-popup').magnificPopup({
+			type: 'iframe'
+		});
+	} else {
+		$(this).find('.magnific-popup').magnificPopup({
+			type: 'image',
+			gallery: {
+				enabled: true
+			},
+			zoom: {
+				enabled: true,
+				duration: 300,
+				easing: 'ease-in-out'
+			}
+		});
 	}
 });
