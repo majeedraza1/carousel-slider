@@ -7,11 +7,11 @@
  * Author: Sayful Islam
  * Author URI: https://sayfulislam.com
  * Requires PHP: 7.0
- * Requires at least: 5.2
- * Tested up to: 5.7
+ * Requires at least: 5.6
+ * Tested up to: 5.8
  *
- * WC requires at least: 4.0
- * WC tested up to: 5.1
+ * WC requires at least: 5.0
+ * WC tested up to: 5.6
  *
  * Text Domain: carousel-slider
  *
@@ -22,9 +22,8 @@
  * @author Sayful Islam
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	die; // If this file is called directly, abort.
-}
+// If this file is called directly, abort.
+defined( 'ABSPATH' ) || exit;
 
 if ( ! class_exists( 'Carousel_Slider' ) ) {
 
@@ -84,19 +83,21 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 
 				// Check if PHP version is supported for our plugin
 				if ( ! self::$instance->is_supported_php() ) {
-					register_activation_hook( __FILE__, array( self::$instance, 'auto_deactivate' ) );
-					add_action( 'admin_notices', array( self::$instance, 'php_version_notice' ) );
+					register_activation_hook( __FILE__, [ self::$instance, 'auto_deactivate' ] );
+					add_action( 'admin_notices', [ self::$instance, 'php_version_notice' ] );
 
 					return self::$instance;
 				}
 
+				do_action( 'carousel_slider/init' );
+
 				// bootstrap main class
 				self::$instance->bootstrap_plugin();
 
-				register_activation_hook( __FILE__, array( self::$instance, 'activation' ) );
-				register_deactivation_hook( __FILE__, array( self::$instance, 'deactivation' ) );
+				register_activation_hook( __FILE__, [ self::$instance, 'activation' ] );
+				register_deactivation_hook( __FILE__, [ self::$instance, 'deactivation' ] );
 
-				do_action( 'carousel_slider_init' );
+				do_action( 'carousel_slider/loaded' );
 			}
 
 			return self::$instance;
@@ -111,9 +112,6 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 			define( 'CAROUSEL_SLIDER_POST_TYPE', $this->post_type );
 			define( 'CAROUSEL_SLIDER_FILE', __FILE__ );
 			define( 'CAROUSEL_SLIDER_PATH', dirname( CAROUSEL_SLIDER_FILE ) );
-			define( 'CAROUSEL_SLIDER_INCLUDES', CAROUSEL_SLIDER_PATH . '/includes' );
-			define( 'CAROUSEL_SLIDER_TEMPLATES', CAROUSEL_SLIDER_PATH . '/templates' );
-			define( 'CAROUSEL_SLIDER_WIDGETS', CAROUSEL_SLIDER_PATH . '/widgets' );
 			define( 'CAROUSEL_SLIDER_URL', plugins_url( '', CAROUSEL_SLIDER_FILE ) );
 			define( 'CAROUSEL_SLIDER_ASSETS', CAROUSEL_SLIDER_URL . '/assets' );
 		}
@@ -125,13 +123,13 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 			if ( file_exists( CAROUSEL_SLIDER_PATH . '/vendor/autoload.php' ) ) {
 				include CAROUSEL_SLIDER_PATH . '/vendor/autoload.php';
 			} else {
-				include_once CAROUSEL_SLIDER_INCLUDES . '/Autoloader.php';
+				include_once CAROUSEL_SLIDER_PATH . '/includes/Autoloader.php';
 
 				// instantiate the loader
 				$loader = new CarouselSlider\Autoloader;
 
 				// register the base directories for the namespace prefix
-				$loader->add_namespace( 'CarouselSlider', CAROUSEL_SLIDER_INCLUDES );
+				$loader->add_namespace( 'CarouselSlider', CAROUSEL_SLIDER_PATH . '/includes' );
 				$loader->add_namespace( 'CarouselSlider\Modules', CAROUSEL_SLIDER_PATH . '/modules' );
 
 				// register the autoloader

@@ -2,9 +2,9 @@
  * Carousel Slider Gallery from URL
  */
 
+import $ from 'jquery';
+
 const _l10n = window.CarouselSliderAdminL10n,
-	$ = jQuery,
-	body = $('body'),
 	modal = $('#CarouselSliderModal');
 
 let template = `<div class="media-url--column shapla-column is-12">

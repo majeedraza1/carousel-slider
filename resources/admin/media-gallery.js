@@ -80,7 +80,6 @@ _this.on('click', function (e) {
 			}
 		});
 	}
-
 });
 
 function loadImages(images) {

@@ -389,7 +389,7 @@ class Helper {
 
 		if ( empty( $ids ) ) {
 			$ids = get_posts( [
-				'post_type'   => 'carousels',
+				'post_type'   => CAROUSEL_SLIDER_POST_TYPE,
 				'post_status' => 'publish',
 				'numberposts' => - 1
 			] );
