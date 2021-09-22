@@ -3,63 +3,72 @@ $tooltip-background-color: rgba(#000000, 0.92) !default;
 $tooltip-font-size: 12px !default;
 $tooltip-font-size-large: 16px !default;
 $tooltip-z-index: 9999 !default;
-$animation-curve-linear-out-slow-in: cubic-bezier(0, 0, 0.2, 1) !default;
+$tooltip-max-width: 200px !default;
 
-@mixin shadow-3dp() {
-	box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.14), 0 3px 3px -2px rgba(0, 0, 0, 0.2), 0 1px 8px 0 rgba(0, 0, 0, 0.12);
-}
+$tooltip-arrow-width: .8rem !default;
+$tooltip-arrow-height: .4rem !default;
+$tooltip-arrow-color: $tooltip-background-color !default;
 
 .shapla-tooltip {
-	transform: scale(0);
-	transform-origin: top center;
-	z-index: $tooltip-z-index;
-	border-radius: 2px;
-	display: inline-block;
-	font-size: $tooltip-font-size;
-	font-weight: normal;
-	line-height: 1.2;
-	max-width: 170px;
-	position: fixed;
-	top: -500px;
-	left: -500px;
-	padding: 8px;
-	text-align: center;
-	@include shadow-3dp();
+	box-shadow: 0 3px 4px 0 rgba(#000, 0.14), 0 3px 3px -2px rgba(#000, 0.2), 0 1px 8px 0 rgba(#000, 0.12);
+	display: none;
 
 	// Dark theme
 	background-color: rgba(#000, 0.92);
 	background-image: linear-gradient(to bottom, transparent, #000);
 	color: #ffffff;
 
-	&.is-light-theme {
+	&.is-theme-light {
 		background-color: rgba(#f5f5f5, 0.92);
 		background-image: linear-gradient(to bottom, transparent, #f5f5f5);
 		color: #323232;
 	}
 
+	&__inner {
+		border-radius: 3px;
+		font-size: $tooltip-font-size;
+		font-weight: normal;
+		padding: 4px 8px;
+		max-width: $tooltip-max-width;
+		word-wrap: break-word;
+	}
+
 	&.is-active {
-		animation: shapla-tooltip-pulse 200ms $animation-curve-linear-out-slow-in forwards;
+		display: block;
 	}
 
-	&--large {
-		line-height: 14px;
-		font-size: $tooltip-font-size-large;
-		padding: 16px;
+	&__arrow,
+	&__arrow::before {
+		background-color: inherit;
+		position: absolute;
+		width: $tooltip-arrow-width;
+		height: $tooltip-arrow-height;
 	}
-}
 
-@keyframes shapla-tooltip-pulse {
-	0% {
-		transform: scale(0);
-		opacity: 0;
+	&__arrow {
+		visibility: hidden;
 	}
-	50% {
-		transform: scale(0.99);
-	}
-	100% {
-		transform: scale(1);
-		opacity: 1;
+
+	&__arrow::before {
 		visibility: visible;
+		content: '';
+		transform: rotate(45deg);
+	}
+
+	&[data-popper-placement^='top'] > &__arrow {
+		bottom: 0;
+	}
+
+	&[data-popper-placement^='bottom'] > &__arrow {
+		top: 0;
+	}
+
+	&[data-popper-placement^='left'] > &__arrow {
+		right: 0;
+	}
+
+	&[data-popper-placement^='right'] > &__arrow {
+		left: 0;
 	}
 }
 
