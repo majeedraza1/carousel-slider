@@ -1,10 +1,10 @@
 <?php
 
-namespace CarouselSlider\Integration;
+namespace CarouselSlider\Integration\VisualComposer;
 
 defined( 'ABSPATH' ) || exit;
 
-class VisualComposerElement {
+class Element {
 	/**
 	 * The instance of the class
 	 *

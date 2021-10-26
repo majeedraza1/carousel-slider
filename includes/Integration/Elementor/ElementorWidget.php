@@ -105,10 +105,27 @@ class ElementorWidget extends Widget_Base {
 	 * @inheritDoc
 	 */
 	protected function render() {
-		$settings = $this->get_settings_for_display();
+		$settings  = $this->get_settings_for_display();
+		$slider_id = intval( $settings['slider_id'] );
+
+		if ( 'elementor' == ( $_GET['action'] ?? '' ) ) {
+			$args = add_query_arg( [
+				'carousel_slider_preview' => true,
+				'carousel_slider_iframe'  => true,
+				'slider_id'               => $slider_id,
+			], site_url() );
+
+			$html = '<div class="carousel-slider-iframe-container">';
+			$html .= '<div class="carousel-slider-iframe-overlay"></div>';
+			$html .= '<iframe class="carousel-slider-iframe" src="' . $args . '" height="0" width="500"></iframe>';
+			$html .= '</div>';
+			echo $html;
+
+			return;
+		}
 
 		$html = '<div class="carousel-slider-elementor-widget">';
-		$html .= Frontend::init()->carousel_slide( [ 'id' => intval( $settings['slider_id'] ) ] );
+		$html .= Frontend::init()->carousel_slide( [ 'id' => $slider_id ] );
 		$html .= '</div>';
 
 		echo $html;

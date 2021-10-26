@@ -11,7 +11,7 @@ use CarouselSlider\Frontend\Frontend;
 use CarouselSlider\Frontend\Preview;
 use CarouselSlider\Frontend\StructuredData;
 use CarouselSlider\Integration\Elementor\ElementorExtension;
-use CarouselSlider\Integration\VisualComposerElement;
+use CarouselSlider\Integration\VisualComposer\Element;
 use CarouselSlider\Modules\HeroCarousel\Module as HeroCarouselModule;
 use CarouselSlider\Modules\ImageCarousel\Module as ImageCarouselModule;
 use CarouselSlider\Modules\PostCarousel\Module as PostCarouselModule;
@@ -69,7 +69,7 @@ class Plugin {
 		$this->container['i18n']                = i18n::init();
 		$this->container['assets']              = Assets::init();
 		$this->container['widget']              = CarouselSliderWidget::init();
-		$this->container['vc_element']          = VisualComposerElement::init();
+		$this->container['vc_element']          = Element::init();
 		$this->container['elementor_extension'] = ElementorExtension::init();
 		$this->container['upgrader']            = Upgrader::init();
 
