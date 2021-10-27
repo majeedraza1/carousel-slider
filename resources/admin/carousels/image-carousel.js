@@ -1,9 +1,34 @@
 import $ from 'jquery';
+import EventBus from "@/admin/EventBus";
 
 let frame,
 	_this = $('#carousel_slider_gallery_btn'),
+	section_images_settings = $('#section_images_settings'),
+	section_url_images_settings = $('#section_url_images_settings'),
+	section_images_general_settings = $('#section_images_general_settings'),
 	images = _this.data('ids'),
 	selection = loadImages(images);
+
+EventBus.onChangeSlideType(_type => {
+	if ('image-carousel' === _type) {
+		section_url_images_settings.hide('fast');
+		section_images_settings.slideDown();
+		section_images_general_settings.slideDown();
+	} else if ('image-carousel-url' === _type) {
+		section_images_settings.hide('fast');
+		section_url_images_settings.slideDown();
+		section_images_general_settings.slideDown();
+	} else {
+		section_images_settings.hide('fast');
+		section_url_images_settings.hide('fast');
+		section_images_general_settings.hide('fast');
+	}
+});
+
+const updateDom = (ids_string, gallery_html) => {
+	$('#_carousel_slider_images_ids').val(ids_string);
+	$('.carousel_slider_gallery_list').html(gallery_html);
+}
 
 _this.on('click', function (e) {
 	e.preventDefault();
@@ -27,9 +52,9 @@ _this.on('click', function (e) {
 	frame.content.get('view').sidebar.unset('gallery'); // Hide Gallery Settings in sidebar
 
 	// when editing a gallery
-	overrideGalleryInsert();
+	overrideGalleryInsert()
 	frame.on('toolbar:render:gallery-edit', function () {
-		overrideGalleryInsert();
+		overrideGalleryInsert()
 	});
 
 	frame.on('content:render:browse', function (browser) {
@@ -51,36 +76,34 @@ _this.on('click', function (e) {
 		let models = frame.state().get('library');
 		if (models.length === 0) {
 			selection = false;
-			$('#_carousel_slider_images_ids').val('');
-			$('.carousel_slider_gallery_list').html('');
+			updateDom('', '');
 		}
 	});
-
-	function overrideGalleryInsert() {
-		frame.toolbar.get('view').set({
-			insert: {
-				style: 'primary',
-				text: _this.data('save'),
-				click: function () {
-					let models = frame.state().get('library'), ids = [], html = '';
-
-					models.each(function (attachment) {
-						ids.push(attachment.id);
-						let src = attachment.attributes.sizes.thumbnail || attachment.attributes.sizes.full;
-						html += `<li><img src="${src.url}" width="50" height="50" class="attachment-50x50 size-50x50" loading="lazy"></li>`;
-					});
-
-					this.el.innerHTML = _this.data('progress');
-
-					selection = loadImages(ids.toString());
-					frame.close();
-					$('#_carousel_slider_images_ids').val(ids.toString());
-					$('.carousel_slider_gallery_list').html(html);
-				}
-			}
-		});
-	}
 });
+
+function overrideGalleryInsert() {
+	frame.toolbar.get('view').set({
+		insert: {
+			style: 'primary',
+			text: _this.data('save'),
+			click: function () {
+				let models = frame.state().get('library'), ids = [], html = '';
+
+				models.each(function (attachment) {
+					ids.push(attachment.id);
+					let src = attachment.attributes.sizes.thumbnail || attachment.attributes.sizes.full;
+					html += `<li><img src="${src.url}" width="50" height="50" class="attachment-50x50 size-50x50" loading="lazy"></li>`;
+				});
+
+				this.el.innerHTML = _this.data('progress');
+
+				selection = loadImages(ids.toString());
+				frame.close();
+				updateDom(ids.toString(), html);
+			}
+		}
+	});
+}
 
 function loadImages(images) {
 	if (!images) {

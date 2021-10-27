@@ -2,6 +2,7 @@
 
 namespace CarouselSlider\Admin;
 
+use CarouselSlider\Helper;
 use WP_Post;
 
 defined( 'ABSPATH' ) || exit;
@@ -55,25 +56,19 @@ class GutenbergBlock {
 	 * @return array
 	 */
 	private function block_localize_data(): array {
-		$_sliders = get_posts( [
-			'posts_per_page' => - 1,
-			'orderby'        => 'date',
-			'order'          => 'DESC',
-			'post_type'      => 'carousels',
-			'post_status'    => 'publish',
-		] );
+		$_sliders = Helper::get_sliders();
 		$sliders  = [];
 		foreach ( $_sliders as $form ) {
 			if ( ! $form instanceof WP_Post ) {
 				continue;
 			}
-			$sliders[] = array(
+			$sliders[] = [
 				'value' => absint( $form->ID ),
 				'label' => esc_attr( $form->post_title ),
-			);
+			];
 		}
 
-		return array(
+		return [
 			'sliders'         => $sliders,
 			'site_url'        => site_url(),
 			'block_logo'      => CAROUSEL_SLIDER_ASSETS . '/static-images/logo.svg',
@@ -81,6 +76,6 @@ class GutenbergBlock {
 			'select_slider'   => __( 'Select a Slider', 'carousel-slider' ),
 			'selected_slider' => __( 'Current Selected Slider', 'carousel-slider' ),
 			'filter_slider'   => __( 'Type to filter sliders', 'carousel-slider' ),
-		);
+		];
 	}
 }

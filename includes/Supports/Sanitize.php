@@ -100,10 +100,13 @@ class Sanitize {
 	 *
 	 * @param mixed $value
 	 *
-	 * @return boolean
+	 * @return mixed|boolean|string
 	 */
-	public static function checked( $value ): bool {
-		return in_array( $value, array( 'yes', 'on', '1', 1, true, 'true' ), true );
+	public static function checked( $value ) {
+		$true_values  = [ 'yes', 'on', '1', 1, true, 'true' ];
+		$false_values = [ 'no', 'off', '0', 0, false, 'false' ];
+
+		return in_array( $value, array_merge( $true_values, $false_values ), true ) ? $value : '';
 	}
 
 	/**

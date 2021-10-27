@@ -12,6 +12,26 @@ defined( 'ABSPATH' ) || exit;
 class Helper {
 
 	/**
+	 * Get sliders
+	 *
+	 * @param array $args
+	 *
+	 * @return WP_Post[]|int[] Array of post objects or post IDs.
+	 */
+	public static function get_sliders( array $args = [] ): array {
+		$args = wp_parse_args( $args, [
+			'post_status'    => 'publish',
+			'posts_per_page' => - 1,
+			'orderby'        => 'date',
+			'order'          => 'DESC',
+		] );
+
+		$args['post_type'] = CAROUSEL_SLIDER_POST_TYPE;
+
+		return get_posts( $args );
+	}
+
+	/**
 	 * Get setting
 	 *
 	 * @param string $key

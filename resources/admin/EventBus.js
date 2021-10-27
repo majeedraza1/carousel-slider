@@ -25,7 +25,7 @@ class EventBus {
 	 * @param {Object} params
 	 */
 	static changeSlideType(params = {}) {
-		EventBus.dispatch('change.SlideType', params);
+		EventBus.dispatch('change.CarouselSlider.SlideType', params);
 	}
 
 	/**
@@ -34,9 +34,8 @@ class EventBus {
 	 * @param {function} callback
 	 */
 	static onChangeSlideType(callback) {
-		EventBus.on('change.SlideType', data => callback(data));
+		EventBus.on('change.CarouselSlider.SlideType', data => callback(data));
 	}
 }
 
-export {EventBus};
 export default EventBus;

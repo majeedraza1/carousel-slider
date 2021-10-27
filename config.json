@@ -7,11 +7,7 @@
     ],
     "admin": [
       "./resources/scss/admin.scss",
-      "./resources/admin/main.js",
-      "./resources/admin/hero-banner.js",
-      "./resources/admin/media-gallery.js",
-      "./resources/admin/media-url.js",
-      "./resources/admin/slide-type.js"
+      "./resources/admin/main.js"
     ],
     "gutenberg-block": [
       "./resources/admin/gutenberg-block.js",

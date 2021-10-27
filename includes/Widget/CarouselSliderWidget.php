@@ -2,6 +2,7 @@
 
 namespace CarouselSlider\Widget;
 
+use CarouselSlider\Helper;
 use WP_Widget;
 
 defined( 'ABSPATH' ) || exit;
@@ -43,20 +44,11 @@ class CarouselSliderWidget extends WP_Widget {
 	 * @return array
 	 */
 	private static function carousels_list(): array {
-		$posts = get_posts( [
-			'post_type'      => 'carousels',
-			'post_status'    => 'publish',
-			'posts_per_page' => 100,
-			'orderby'        => 'date',
-			'order'          => 'DESC',
-		] );
+		$posts = Helper::get_sliders();
 
 		$items = [];
-
-		if ( count( $posts ) ) {
-			foreach ( $posts as $post ) {
-				$items[] = [ 'id' => $post->ID, 'title' => $post->post_title ];
-			}
+		foreach ( $posts as $post ) {
+			$items[] = [ 'id' => $post->ID, 'title' => $post->post_title ];
 		}
 
 		return $items;
