@@ -1,6 +1,6 @@
 import React from "react";
 import {registerBlockType} from '@wordpress/blocks';
-import {TextControl} from '@wordpress/components';
+import {SelectControl} from '@wordpress/components';
 import {InspectorControls} from '@wordpress/block-editor';
 
 const settings = window.i18nCarouselSliderBlock || {
@@ -30,140 +30,33 @@ registerBlockType('carousel-slider/slider', {
 			sliderName = props.attributes.sliderName,
 			children = [];
 
-		if (!sliderID) sliderID = ''; // Default.
-		if (!sliderName) sliderName = ''; // Default
+		if (!sliderID) sliderID = '';
+		if (!sliderName) sliderName = '';
 
-		// this function is required, but we don't need it to do anything
-		function carouselSliderOnValueChange(sliderName) {
+		let previewUrl = new URL(settings.site_url);
+		previewUrl.searchParams.append('carousel_slider_preview', '1');
+		previewUrl.searchParams.append('carousel_slider_iframe', '1');
+		previewUrl.searchParams.append('slider_id', sliderID);
+		let iFrameSrc = previewUrl.toString();
+
+		const changeSlider = (slider_id) => {
+			let getActiveSlider = settings.sliders.find(_slider => _slider.value == slider_id);
+			props.setAttributes({sliderID: parseInt(slider_id), sliderName: getActiveSlider.label});
 		}
 
-		// show the dropdown when we click on the input
-		function carouselSliderFocusClick(event) {
-			let elementID = event.target.getAttribute('id');
-			let idArray = elementID.split('-');
-			let carouselSliderOptions = document.getElementById('carousel-slider-filter-container-' + idArray[idArray.length - 1]);
-			// get the related input element
-			let carouselSliderInput = document.getElementById('carousel-slider-sliderFilter-' + idArray[idArray.length - 1]);
-			// set focus to the element so the onBlur function runs properly
-			carouselSliderInput.focus();
-			carouselSliderOptions.style.display = 'block';
-		}
-
-		// function for select the slider on filter drop down item click
-		function selectSlider(event) {
-			//set the attributes from the selected for item
-			let value = event.target.value || event.target.getAttribute('data-slider_id');
-			props.setAttributes({sliderID: parseInt(value), sliderName: event.target.innerText});
-			/**
-			 * Get the main div of the filter to tell if this is being
-			 * selected from the sidebar or block so we can hide the dropdown
-			 */
-			let elementID = event.target.parentNode.parentNode;
-			let idArray = elementID.getAttribute('id').split('-');
-			let carouselSliderOptions = document.getElementById('carousel-slider-filter-container-' + idArray[idArray.length - 1]);
-			let inputEl = document.getElementById('carousel-slider-sliderFilter-sidebar');
-
-			if (inputEl) {
-				inputEl.value = '';
-			}
-			carouselSliderOptions.style.display = 'none';
-		}
-
-		function carouselSliderHideOptions(event) {
-			/**
-			 * Get the main div of the filter to tell if this is being
-			 * selected from the sidebar or block so we can hide the dropdown
-			 */
-			let elementID = event.target.getAttribute('id');
-			let idArray = elementID.split('-');
-			let carouselSliderOptions = document.getElementById('carousel-slider-filter-container-' + idArray[idArray.length - 1]);
-			carouselSliderOptions.style.display = 'none';
-		}
-
-		function carouselSliderInputKeyUp(event) {
-			let val = event.target.value;
-			/**
-			 * Get the main div of the filter to tell if this is being
-			 * selected from the sidebar or block so we can SHOW the dropdown
-			 */
-			let filterInputContainer = event.target.parentNode.parentNode.parentNode;
-			filterInputContainer.querySelector('.carousel-slider-filter-option-container').style.display = 'block';
-			filterInputContainer.style.display = 'block';
-
-			// Let's filter the sliders here
-			settings.sliders.forEach(slider => {
-				let liEl = filterInputContainer.querySelector("[data-slider_id='" + slider.value + "']");
-				if (0 <= slider.label.toLowerCase().indexOf(val.toLowerCase())) {
-					// shows options that DO contain the text entered
-					liEl.style.display = 'block';
-				} else {
-					// hides options the do not contain the text entered
-					liEl.style.display = 'none';
-				}
-			});
-		}
-
-		// Set up the slider items from the localized php variables
-		let sliderItems = settings.sliders.map(slider => {
-			let label = slider.label + " ( ID: " + slider.value + " )";
-			return (<li className="carousel-slider-filter-option" key={slider.value} data-slider_id={slider.value}
-						onMouseDown={selectSlider}>{label}</li>)
-		});
-
-		// Set up slider filter for the block
-		let inputFilterMain = (
-			<div id="carousel-slider-filter-input-main" className="carousel-slider-filter-input">
-				<TextControl
-					id='carousel-slider-sliderFilter-main'
-					className='carousel-slider-filter-input-el blocks-select-control__input'
-					placeholder={settings.select_slider}
-					onChange={carouselSliderOnValueChange}
-					onClick={carouselSliderFocusClick}
-					onKeyUp={carouselSliderInputKeyUp}
-				/>
-				<span id='carousel-slider-filter-input-icon-main' className='carousel-slider-filter-input-icon'
-					  onClick={carouselSliderFocusClick}>&#9662;</span>
-				<div id='carousel-slider-filter-container-main' className='carousel-slider-filter-option-container'>
-					<ul>{sliderItems}</ul>
-				</div>
-			</div>
+		const selectControl = (
+			<SelectControl label={settings.select_slider} value={sliderID} options={settings.sliders}
+						   onChange={changeSlider}/>
 		)
-
-		let sliderItems2 = settings.sliders.map(slider => {
-			let label = slider.label + " ( ID: " + slider.value + " )";
-			return (<li className="carousel-slider-filter-option" key={`side-${slider.value}`}
-						data-slider_id={slider.value} onMouseDown={selectSlider}>{label}</li>)
-		});
-		let inputFilterSidebar = (
-			<div id="carousel-slider-filter-input-sidebar" className="carousel-slider-filter-input">
-				<TextControl
-					id='carousel-slider-sliderFilter-sidebar'
-					className='carousel-slider-filter-input-el blocks-select-control__input'
-					placeholder={settings.select_slider}
-					onChange={carouselSliderOnValueChange}
-					onClick={carouselSliderFocusClick}
-					onKeyUp={carouselSliderInputKeyUp}
-					onBlur={carouselSliderHideOptions}
-				/>
-				<span id='carousel-slider-filter-input-icon-sidebar' className='carousel-slider-filter-input-icon'
-					  onClick={carouselSliderFocusClick}>&#9662;</span>
-				<div id='carousel-slider-filter-container-sidebar' className='carousel-slider-filter-option-container'>
-					<ul>{sliderItems2}</ul>
-				</div>
-			</div>
-		)
-
-		// Create filter input for the sidebar blocks settings
 
 		// Set up the slider filter dropdown in the side bar 'block' settings
 		let inspectorControls = (
 			<InspectorControls>
-				<span>{settings.selected_slider}</span>
-				<br/>
-				<span>{sliderName}</span>
-				<br/>
-				<label htmlFor="carousel-slider-sliderFilter-sidebar">{settings.filter_slider}</label>
-				{inputFilterSidebar}
+				<div>
+					<div>{settings.selected_slider}</div>
+					<div>{sliderName}</div>
+				</div>
+				{selectControl}
 			</InspectorControls>
 		)
 
@@ -176,17 +69,15 @@ registerBlockType('carousel-slider/slider', {
 				<div style={{width: '100%'}}>
 					<img className="carousel-slider-block-logo" src={settings.block_logo} alt=""/>
 					<div>{settings.block_title}</div>
-					{inputFilterMain}
+					{selectControl}
 				</div>
 			)
 			children.push(element);
 		} else {
-			let iFrameSrc = settings.site_url + '?carousel_slider_preview=1&carousel_slider_iframe=1&slider_id=' + sliderID;
 			let iFrame = (
 				<div className="carousel-slider-iframe-container">
 					<div className="carousel-slider-iframe-overlay"/>
-					<iframe className="carousel-slider-iframe" scrolling="no" src={iFrameSrc} height="0"
-							width="500"/>
+					<iframe className="carousel-slider-iframe" scrolling="no" src={iFrameSrc} height="0" width="500"/>
 				</div>
 			)
 			children.push(iFrame)
@@ -201,8 +92,7 @@ registerBlockType('carousel-slider/slider', {
 	 */
 	save: ({attributes}) => {
 		if (attributes.sliderID) {
-			let shortcode = `[carousel_slide id='${attributes.sliderID}']`;
-			return <div>{shortcode}</div>;
+			return <div>{`[carousel_slide id='${attributes.sliderID}']`}</div>;
 		}
 		return '';
 	}
