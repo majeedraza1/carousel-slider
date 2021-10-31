@@ -2,6 +2,7 @@
 
 namespace CarouselSlider\Widget;
 
+use CarouselSlider\Frontend\Frontend;
 use CarouselSlider\Helper;
 use WP_Widget;
 
@@ -86,7 +87,7 @@ class CarouselSliderWidget extends WP_Widget {
 			echo $args['before_title'] . $title . $args['after_title'];
 		}
 
-		echo do_shortcode( '[carousel_slide id=' . $carousel_id . ']' );
+		echo Frontend::init()->carousel_slide( [ 'id' => $carousel_id ] );
 		echo $args['after_widget'];
 	}
 
