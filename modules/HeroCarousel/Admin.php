@@ -202,7 +202,7 @@ class Admin {
 			'name'             => esc_html__( 'Slide Link', 'carousel-slider' ),
 			'desc'             => esc_html__( 'Please enter your URL that will be used to link the full slide.', 'carousel-slider' ),
 			'input_attributes' => [
-				'name'  => sprintf( "carousel_slider_content[%s][link_type]", $item->get_item_id() ),
+				'name'  => sprintf( "carousel_slider_content[%s][slide_link]", $item->get_item_id() ),
 				'value' => $item->get_prop( 'slide_link' ),
 			],
 		] );

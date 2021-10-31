@@ -40,5 +40,5 @@ const toggleProductCarouselSettings = () => {
 	}
 }
 
-$('#_post_query_type').on('change', () => toggleProductCarouselSettings());
+$('#_product_query_type').on('change', () => toggleProductCarouselSettings());
 $(document).ready(() => toggleProductCarouselSettings());

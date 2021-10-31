@@ -78,8 +78,8 @@ class View extends AbstractView {
 			'style' => Helper::array_to_style( $css_vars ),
 		] );
 
-		$html = '<div class="' . join( ' ', $css_classes ) . '">';
-		$html .= "<div " . join( " ", $attributes_array ) . ">";
+		$html = '<div class="' . join( ' ', $css_classes ) . '">' . PHP_EOL;
+		$html .= "<div " . join( " ", $attributes_array ) . ">" . PHP_EOL;
 
 		global $post;
 		global $product;
@@ -95,12 +95,12 @@ class View extends AbstractView {
 			if ( ! $product->has_enough_stock( 1 ) ) {
 				continue;
 			}
-			$html .= self::get_slider_item( $product, $settings );
+			$html .= self::get_slider_item( $product, $settings ) . PHP_EOL;
 		}
 		wp_reset_postdata();
 
-		$html .= '</div>';
-		$html .= '</div>';
+		$html .= '</div><!-- .carousel-slider-' . $slider_id . ' -->' . PHP_EOL;
+		$html .= '</div><!-- .carousel-slider-outer-' . $slider_id . ' -->' . PHP_EOL;
 
 		return apply_filters( 'carousel_slider_product_carousel', $html );
 	}
@@ -219,8 +219,8 @@ class View extends AbstractView {
 		$attributes_array = Helper::get_slider_attributes( $slider_id, $slider_type );
 
 		ob_start();
-		echo '<div class="' . join( ' ', $css_classes ) . '">';
-		echo "<div " . join( " ", $attributes_array ) . ">";
+		echo '<div class="' . join( ' ', $css_classes ) . '">' . PHP_EOL;
+		echo "<div " . join( " ", $attributes_array ) . ">" . PHP_EOL;
 		foreach ( $categories as $category ) {
 			echo '<div class="product carousel-slider__product">';
 			do_action( 'woocommerce_before_subcategory', $category );
@@ -228,10 +228,11 @@ class View extends AbstractView {
 			do_action( 'woocommerce_shop_loop_subcategory_title', $category );
 			do_action( 'woocommerce_after_subcategory_title', $category );
 			do_action( 'woocommerce_after_subcategory', $category );
-			echo '</div>';
+			echo '</div>' . PHP_EOL;
 		}
-		echo '</div>';
-		echo '</div>';
+
+		echo '</div><!-- .carousel-slider-' . $slider_id . ' -->' . PHP_EOL;
+		echo '</div><!-- .carousel-slider-outer-' . $slider_id . ' -->' . PHP_EOL;
 		$html = ob_get_clean();
 
 		return apply_filters( 'carousel_slider_product_carousel', $html, $slider_id );

@@ -147,7 +147,7 @@ class Helper {
 		$bullet_position = get_post_meta( $slider_id, '_bullet_position', true );
 		$bullet_shape    = get_post_meta( $slider_id, '_bullet_shape', true );
 
-		$class = [ 'owl-carousel', 'carousel-slider' ];
+		$class = [ 'owl-carousel', 'carousel-slider', 'carousel-slider-' . $slider_id ];
 
 		// Arrows position
 		if ( $arrow_position == 'inside' ) {

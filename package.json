@@ -31,7 +31,7 @@
     "build": "webpack --mode=production"
   },
   "browserslist": [
-    "defaults"
+    "last 1 years"
   ],
   "devDependencies": {
     "@babel/core": "^7.16.0",

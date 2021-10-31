@@ -31,18 +31,19 @@ class View extends AbstractView {
 			'data-animation' => $content_animation
 		] );
 
-		$html = '<div class="' . join( ' ', $css_classes ) . '">';
-		$html .= "<div " . join( " ", $attributes_array ) . ">";
+		$html = '<div class="' . join( ' ', $css_classes ) . '">' . PHP_EOL;
+		$html .= "<div " . join( " ", $attributes_array ) . ">" . PHP_EOL;
 		foreach ( $items as $slide_id => $slide ) {
 			$item = new Item( $slide, array_merge( $settings, [
 				'item_id'         => $slide_id,
 				'slider_id'       => $slider_id,
 				'lazy_load_image' => $be_lazy
 			] ) );
-			$html .= $item->get_view();
+			$html .= $item->get_view() . PHP_EOL;
 		}
-		$html .= '</div>';
-		$html .= '</div>';
+
+		$html .= '</div><!-- .carousel-slider-' . $slider_id . ' -->' . PHP_EOL;
+		$html .= '</div><!-- .carousel-slider-outer-' . $slider_id . ' -->' . PHP_EOL;
 
 		return apply_filters( 'carousel_slider_hero_banner_carousel', $html, $slider_id );
 	}

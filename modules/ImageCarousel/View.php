@@ -39,22 +39,24 @@ class View extends AbstractView {
 
 		$attributes_array = Helper::get_slider_attributes( $slider_id, $slider_type );
 
-		$html = '<div class="' . join( ' ', $css_classes ) . '">';
-		$html .= "<div " . join( " ", $attributes_array ) . ">";
+		$html = '<div class="' . join( ' ', $css_classes ) . '">' . PHP_EOL;
+		$html .= "<div " . join( " ", $attributes_array ) . ">" . PHP_EOL;
 		foreach ( $ids as $id ) {
 			$_post = get_post( $id );
 			do_action( 'carousel_slider_image_gallery_loop', $_post );
 
-			$title          = sprintf( '<h4 class="title">%1$s</h4>', esc_html( $_post->post_title ) );
-			$caption        = sprintf( '<p class="caption">%1$s</p>', esc_html( $_post->post_excerpt ) );
+			$title          = ! empty( $_post->post_title ) ?
+				sprintf( '<h4 class="title">%1$s</h4>', esc_html( $_post->post_title ) ) : '';
+			$caption        = ! empty( $_post->post_excerpt ) ?
+				sprintf( '<p class="caption">%1$s</p>', esc_html( $_post->post_excerpt ) ) : '';
 			$image_alt_text = trim( strip_tags( get_post_meta( $id, '_wp_attachment_image_alt', true ) ) );
 			$image_link_url = get_post_meta( $id, "_carousel_slider_link_url", true );
 
-			if ( $show_title_and_caption ) {
+			if ( $show_title_and_caption && ( ! empty( $title ) || ! empty( $caption ) ) ) {
 				$full_caption = sprintf( '<div class="carousel-slider__caption">%1$s%2$s</div>', $title, $caption );
-			} elseif ( Validate::checked( $show_attachment_title ) ) {
+			} elseif ( Validate::checked( $show_attachment_title ) && ! empty( $title ) ) {
 				$full_caption = sprintf( '<div class="carousel-slider__caption">%s</div>', $title );
-			} elseif ( Validate::checked( $show_attachment_caption ) ) {
+			} elseif ( Validate::checked( $show_attachment_caption ) && ! empty( $caption ) ) {
 				$full_caption = sprintf( '<div class="carousel-slider__caption">%s</div>', $caption );
 			} else {
 				$full_caption = '';
@@ -71,25 +73,22 @@ class View extends AbstractView {
 				$image = wp_get_attachment_image( $id, $image_size, false, [ 'alt' => $image_alt_text ] );
 			}
 
+			$html .= '<div class="carousel-slider__item">';
 			if ( Validate::checked( $show_lightbox ) ) {
-				wp_enqueue_script( 'magnific-popup' );
 				$image_src = wp_get_attachment_image_src( $id, 'full' );
-				$html      .= sprintf(
-					'<a href="%1$s" class="magnific-popup">%2$s%3$s</a>',
-					esc_url( $image_src[0] ), $image, $full_caption
-				);
+				$html      .= sprintf( '<a class="magnific-popup" href="%1$s">%2$s%3$s</a>',
+					esc_url( $image_src[0] ), $image, $full_caption );
 			} elseif ( Validate::url( $image_link_url ) ) {
-				$html .= sprintf(
-					'<a href="%1$s" target="%4$s">%2$s%3$s</a>',
-					esc_url( $image_link_url ), $image, $full_caption, $image_target
-				);
+				$html .= sprintf( '<a  href="%1$s" target="%4$s">%2$s%3$s</a>',
+					esc_url( $image_link_url ), $image, $full_caption, $image_target );
 			} else {
 				$html .= $image;
 				$html .= $full_caption;
 			}
+			$html .= '</div>' . PHP_EOL;
 		}
-		$html .= '</div>';
-		$html .= '</div>';
+		$html .= '</div><!-- .carousel-slider-' . $slider_id . ' -->' . PHP_EOL;
+		$html .= '</div><!-- .carousel-slider-outer-' . $slider_id . ' -->' . PHP_EOL;
 
 		return apply_filters( 'carousel_slider_gallery_images_carousel', $html );
 	}

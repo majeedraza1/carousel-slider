@@ -31,8 +31,8 @@ class View extends AbstractView {
 
 		$attributes_array = Helper::get_slider_attributes( $slider_id, $slider_type );
 
-		$html = '<div class="' . join( ' ', $css_classes ) . '">';
-		$html .= "<div " . join( " ", $attributes_array ) . ">";
+		$html = '<div class="' . join( ' ', $css_classes ) . '">' . PHP_EOL;
+		$html .= "<div " . join( " ", $attributes_array ) . ">" . PHP_EOL;
 		foreach ( $urls as $url ) {
 			$html .= '<div class="carousel-slider-item-video">';
 			$html .= '<div class="carousel-slider-video-wrapper">';
@@ -46,10 +46,11 @@ class View extends AbstractView {
 			}
 			$html .= '</a>';
 			$html .= '</div>';
-			$html .= '</div>';
+			$html .= '</div>' . PHP_EOL;
 		}
-		$html .= '</div>';
-		$html .= '</div>';
+
+		$html .= '</div><!-- .carousel-slider-' . $slider_id . ' -->' . PHP_EOL;
+		$html .= '</div><!-- .carousel-slider-outer-' . $slider_id . ' -->' . PHP_EOL;
 
 		return apply_filters( 'carousel_slider_videos_carousel', $html, $slider_id );
 	}

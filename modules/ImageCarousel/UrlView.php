@@ -34,8 +34,8 @@ class UrlView extends AbstractView {
 
 		$attributes_array = Helper::get_slider_attributes( $slider_id, $slider_type );
 
-		$html = '<div class="' . join( ' ', $css_classes ) . '">';
-		$html .= "<div " . join( " ", $attributes_array ) . ">";
+		$html = '<div class="' . join( ' ', $css_classes ) . '">' . PHP_EOL;
+		$html .= "<div " . join( " ", $attributes_array ) . ">" . PHP_EOL;
 
 		foreach ( $images_urls as $imageInfo ) {
 			$title   = sprintf( '<h4 class="title">%1$s</h4>', esc_html( $imageInfo['title'] ) );
@@ -66,11 +66,11 @@ class UrlView extends AbstractView {
 				$html .= $image;
 				$html .= $full_caption;
 			}
-			$html .= '</div>';
+			$html .= '</div>' . PHP_EOL;
 		}
 
-		$html .= '</div>';
-		$html .= '</div>';
+		$html .= '</div><!-- .carousel-slider-' . $slider_id . ' -->' . PHP_EOL;
+		$html .= '</div><!-- .carousel-slider-outer-' . $slider_id . ' -->' . PHP_EOL;
 
 		return apply_filters( 'carousel_slider_link_images_carousel', $html, $slider_id );
 	}

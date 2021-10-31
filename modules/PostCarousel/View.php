@@ -36,8 +36,8 @@ class View extends AbstractView {
 			'data-owl-settings' => wp_json_encode( Helper::get_owl_carousel_settings( $slider_id ) ),
 		] );
 
-		$html = '<div class="' . join( ' ', $css_classes ) . '">';
-		$html .= "<div " . join( " ", $attributes_array ) . ">";
+		$html = '<div class="' . join( ' ', $css_classes ) . '">' . PHP_EOL;
+		$html .= "<div " . join( " ", $attributes_array ) . ">" . PHP_EOL;
 
 		foreach ( $posts as $post ) {
 			setup_postdata( $post );
@@ -121,12 +121,12 @@ class View extends AbstractView {
 			$html .= '</div>';
 			$html .= '</footer>';
 			$html .= '</div>';
-			$html .= '</div>';
+			$html .= '</div>' . PHP_EOL;
 		}
 		wp_reset_postdata();
 
-		$html .= '</div>';
-		$html .= '</div>';
+		$html .= '</div><!-- .carousel-slider-' . $slider_id . ' -->' . PHP_EOL;
+		$html .= '</div><!-- .carousel-slider-outer-' . $slider_id . ' -->' . PHP_EOL;
 
 		return apply_filters( 'carousel_slider_posts_carousel', $html, $slider_id, $posts );
 	}
