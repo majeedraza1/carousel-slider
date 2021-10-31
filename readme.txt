@@ -1,6 +1,6 @@
 === Carousel Slider ===
 Contributors: sayful, majeedraza, stackonet
-Tags: woocommerce, images, slider, carousel, carousel slider, image carousel, product carousel
+Tags: carousel, carousel slider, image carousel, product carousel, woocommerce, slider
 Requires at least: 5.6
 Tested up to: 5.8
 Requires PHP: 7.0
@@ -90,7 +90,7 @@ Update to get new features and better security.
 
 == Changelog ==
 
-= version 2.0.0 - 2021-09-09 =
+= version 2.0.0 - 2021-10-31 =
 
 * Dev - Update preview slider core code.
 * Dev - Add CLI(Command Line Interface) to create test sliders.

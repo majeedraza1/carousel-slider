@@ -1,5 +1,102 @@
+$text-color: #{var(--cs-product-text,#333333)};
+$btn-color: #{var(--cs-product-on-primary,#f1f1f1)};
+$btn-background: #{var(--cs-product-primary,#96588a)};
+
+.carousel-slider {
+	&[data-slide-type="product-carousel"] {
+		.owl-stage {
+			display: flex;
+			flex-wrap: wrap;
+		}
+
+		.owl-item {
+			display: flex;
+			height: auto;
+		}
+	}
+
+	&__product {
+		position: relative;
+		text-align: center;
+		box-shadow: 0 1px 2px rgba(#000, 0.1), 0 0 0 1px rgba(#000, 0.1);
+		margin: 2px;
+		width: 100%;
+	}
+
+	.woocommerce-loop-category__title,
+	.woocommerce-loop-product__title {
+		color: $text-color;
+		font-size: 1.25rem;
+		margin: 1rem;
+		padding: 0;
+	}
+
+	.woocommerce-loop-product__link {
+		display: block;
+		margin: 0;
+		overflow: hidden;
+		text-decoration: none !important;
+	}
+
+	// Price
+	.price {
+		color: $text-color;
+		display: inline-block;
+		font-weight: normal;
+		margin: 0 0.5rem 0 1rem;
+		font-size: .875rem;
+
+		del {
+			color: inherit;
+			background-color: transparent;
+			opacity: 0.5;
+			display: inline-block;
+		}
+
+		ins {
+			color: inherit;
+			background-color: transparent;
+			font-weight: bold;
+		}
+	}
+
+	// On sale
+	.onsale {
+		color: $btn-color;
+		background-color: $btn-background;
+		position: absolute;
+		left: 1rem;
+		top: 1rem;
+	}
+
+	// Star ratings
+	.star-rating {
+		span {
+			&:before {
+				color: $btn-background;
+			}
+		}
+	}
+
+	// Buttons
+	a.add_to_cart_button,
+	a.added_to_cart,
+	a.quick_view {
+		color: $btn-color;
+		background-color: $btn-background;
+		position: relative;
+		margin-bottom: .5rem;
+
+		&:hover {
+			color: $btn-color;
+			background-color: $btn-background;
+			text-decoration: none;
+		}
+	}
+}
+
 .mfp-content {
-	
+
 	.product {
 		background-color: #ffffff;
 		display: table;
@@ -32,7 +129,7 @@
 		.description {
 			margin: 1em 0;
 		}
-		
+
 		// Price
 		.price {
 			// color: $text-color;
@@ -142,8 +239,8 @@
 					top: .618em;
 					right: 1em;
 					-webkit-animation: spin 2s linear infinite;
-				    -moz-animation: spin 2s linear infinite;
-				    animation: spin 2s linear infinite;
+					-moz-animation: spin 2s linear infinite;
+					animation: spin 2s linear infinite;
 				}
 			}
 

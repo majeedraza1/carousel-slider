@@ -9,23 +9,23 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-07-05T06:51:19+00:00\n"
+"POT-Creation-Date: 2021-10-31T06:28:24+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.4.0\n"
 "X-Domain: carousel-slider\n"
 
 #. Plugin Name of the plugin
 #: includes/Admin/Admin.php:54
-#: includes/Admin/GutenbergBlock.php:80
+#: includes/Admin/GutenbergBlock.php:72
 #: includes/Admin/MetaBox.php:106
-#: includes/Integration/VisualComposerElement.php:40
+#: includes/Integration/VisualComposer/Element.php:40
 #: includes/Upgrader.php:94
-#: includes/Widget/CarouselSliderWidget.php:73
+#: includes/Widget/CarouselSliderWidget.php:65
 msgid "Carousel Slider"
 msgstr ""
 
 #. Plugin URI of the plugin
-msgid "http://wordpress.org/plugins/carousel-slider"
+msgid "https://wordpress.org/plugins/carousel-slider"
 msgstr ""
 
 #. Description of the plugin
@@ -40,32 +40,32 @@ msgstr ""
 msgid "https://sayfulislam.com"
 msgstr ""
 
-#: carousel-slider.php:178
-#: carousel-slider.php:201
+#: carousel-slider.php:176
+#: carousel-slider.php:199
 msgid "Your installed PHP Version is: "
 msgstr ""
 
-#: carousel-slider.php:179
+#: carousel-slider.php:177
 msgid "The Carousel Slider plugin requires PHP version %s or greater."
 msgstr ""
 
-#: carousel-slider.php:200
+#: carousel-slider.php:198
 msgid "An Error Occurred"
 msgstr ""
 
-#: carousel-slider.php:202
+#: carousel-slider.php:200
 msgid "The Carousel Slider plugin requires PHP version %s or greater"
 msgstr ""
 
-#: carousel-slider.php:204
+#: carousel-slider.php:201
 msgid "The version of your PHP is %s unsupported and old %s. "
 msgstr ""
 
-#: carousel-slider.php:209
+#: carousel-slider.php:205
 msgid "You should update your PHP software or contact your host regarding this matter."
 msgstr ""
 
-#: carousel-slider.php:212
+#: carousel-slider.php:207
 msgid "Plugin Activation Error"
 msgstr ""
 
@@ -145,27 +145,27 @@ msgid "Preview"
 msgstr ""
 
 #: includes/Admin/Admin.php:187
-#: modules/ImageCarousel/ImageCarouselAdmin.php:138
+#: modules/ImageCarousel/Admin.php:138
 msgid "URL"
 msgstr ""
 
 #: includes/Admin/Admin.php:188
-#: modules/ImageCarousel/ImageCarouselAdmin.php:143
+#: modules/ImageCarousel/Admin.php:143
 msgid "Title"
 msgstr ""
 
 #: includes/Admin/Admin.php:189
-#: modules/ImageCarousel/ImageCarouselAdmin.php:149
+#: modules/ImageCarousel/Admin.php:149
 msgid "Caption"
 msgstr ""
 
 #: includes/Admin/Admin.php:190
-#: modules/ImageCarousel/ImageCarouselAdmin.php:153
+#: modules/ImageCarousel/Admin.php:153
 msgid "Alt Text"
 msgstr ""
 
 #: includes/Admin/Admin.php:191
-#: modules/ImageCarousel/ImageCarouselAdmin.php:158
+#: modules/ImageCarousel/Admin.php:158
 msgid "Link To URL"
 msgstr ""
 
@@ -226,16 +226,9 @@ msgstr ""
 msgid "If you like %1$s Carousel Slider %2$s please leave us a %3$s rating. A huge thanks in advance!"
 msgstr ""
 
-#: includes/Admin/GutenbergBlock.php:81
+#: includes/Admin/GutenbergBlock.php:60
+#: includes/Admin/GutenbergBlock.php:73
 msgid "Select a Slider"
-msgstr ""
-
-#: includes/Admin/GutenbergBlock.php:82
-msgid "Current Selected Slider"
-msgstr ""
-
-#: includes/Admin/GutenbergBlock.php:83
-msgid "Type to filter sliders"
 msgstr ""
 
 #: includes/Admin/MetaBox.php:114
@@ -572,43 +565,55 @@ msgstr ""
 msgid "#%s - %s has been created successfully."
 msgstr ""
 
-#: includes/Helper.php:40
+#: includes/Helper.php:60
 msgid "Image Carousel"
 msgstr ""
 
-#: includes/Helper.php:41
+#: includes/Helper.php:61
 msgid "Image Carousel (URL)"
 msgstr ""
 
-#: includes/Helper.php:42
+#: includes/Helper.php:62
 msgid "Post Carousel"
 msgstr ""
 
-#: includes/Helper.php:43
+#: includes/Helper.php:63
 msgid "Product Carousel"
 msgstr ""
 
-#: includes/Helper.php:44
+#: includes/Helper.php:64
 msgid "Video Carousel"
 msgstr ""
 
-#: includes/Helper.php:45
+#: includes/Helper.php:65
 msgid "Hero Carousel"
 msgstr ""
 
-#: includes/Helper.php:387
+#: includes/Helper.php:407
 msgid "Carousel Slider Test"
 msgstr ""
 
-#: includes/Integration/VisualComposerElement.php:41
+#: includes/Integration/Elementor/ElementorWidget.php:24
+msgid "Carousel Slider - Elementor"
+msgstr ""
+
+#: includes/Integration/Elementor/ElementorWidget.php:70
+msgid "Slider Settings"
+msgstr ""
+
+#: includes/Integration/Elementor/ElementorWidget.php:75
+msgid "Choose slider"
+msgstr ""
+
+#: includes/Integration/VisualComposer/Element.php:41
 msgid "Place Carousel Slider."
 msgstr ""
 
-#: includes/Integration/VisualComposerElement.php:45
+#: includes/Integration/VisualComposer/Element.php:45
 msgid "Content"
 msgstr ""
 
-#: includes/Integration/VisualComposerElement.php:53
+#: includes/Integration/VisualComposer/Element.php:53
 msgid "Choose Carousel Slide"
 msgstr ""
 
@@ -685,788 +690,788 @@ msgid "Update database"
 msgstr ""
 
 #: includes/Upgrader.php:96
-msgid "Sorry. This link only for developer to do some testing."
+msgid "Sorry. This link only for admin to perform upgrade tasks."
 msgstr ""
 
 #: includes/Upgrader.php:109
 msgid "Database upgrade process has been started."
 msgstr ""
 
-#: includes/Widget/CarouselSliderWidget.php:71
+#: includes/Widget/CarouselSliderWidget.php:63
 msgid "The easiest way to create image, video, post and WooCommerce product carousel."
 msgstr ""
 
-#: includes/Widget/CarouselSliderWidget.php:115
+#: includes/Widget/CarouselSliderWidget.php:107
 msgid "Title (optional):"
 msgstr ""
 
-#: includes/Widget/CarouselSliderWidget.php:118
+#: includes/Widget/CarouselSliderWidget.php:110
 msgid "Choose Slide"
 msgstr ""
 
-#: includes/Widget/CarouselSliderWidget.php:133
+#: includes/Widget/CarouselSliderWidget.php:125
 msgid "You did not add any carousel slider yet."
 msgstr ""
 
-#: includes/Widget/CarouselSliderWidget.php:134
+#: includes/Widget/CarouselSliderWidget.php:126
 msgid "to create a new carousel slider now."
 msgstr ""
 
-#: includes/Widget/CarouselSliderWidget.php:135
+#: includes/Widget/CarouselSliderWidget.php:127
 msgid "click here"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:45
+msgid "Hero Banner Slider"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:90
+msgid "Slide"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:105
+msgid "Slide Background"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:109
+msgid "Slide Content"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:113
+#: modules/HeroCarousel/Admin.php:202
+msgid "Slide Link"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:117
+msgid "Slide Style"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:154
+msgid "Slide Heading"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:155
+msgid "Enter the heading for your slide. This field can take HTML markup."
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:164
+msgid "Slide Description"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:165
+msgid "Enter the description for your slide. This field can take HTML markup."
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:186
+msgid "Slide Link Type"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:187
+msgid "Select how the slide will link."
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:189
+#: modules/HeroCarousel/Helper.php:79
+msgid "No Link"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:190
+#: modules/HeroCarousel/Helper.php:80
+msgid "Full Slide"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:191
+#: modules/HeroCarousel/Helper.php:81
+msgid "Button"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:203
+msgid "Please enter your URL that will be used to link the full slide."
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:211
+msgid "Open Slide Link In New Window"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:217
+msgid "Yes"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:218
+msgid "No"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:239
+msgid "Button #1"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:246
+#: modules/HeroCarousel/Admin.php:360
+msgid "Button Text"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:247
+#: modules/HeroCarousel/Admin.php:361
+msgid "Add button text"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:255
+#: modules/HeroCarousel/Admin.php:369
+msgid "Button URL"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:256
+#: modules/HeroCarousel/Admin.php:265
+#: modules/HeroCarousel/Admin.php:370
+#: modules/HeroCarousel/Admin.php:379
+msgid "Add the button url e.g. https://example.com"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:264
+#: modules/HeroCarousel/Admin.php:378
+msgid "Open Button Link In"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:267
+#: modules/HeroCarousel/Admin.php:381
+msgid "New Window"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:268
+#: modules/HeroCarousel/Admin.php:382
+msgid "Same Window"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:277
+#: modules/HeroCarousel/Admin.php:391
+msgid "Button Type"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:279
+#: modules/HeroCarousel/Admin.php:393
+msgid "Normal"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:280
+#: modules/HeroCarousel/Admin.php:394
+msgid "Stroke"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:289
+#: modules/HeroCarousel/Admin.php:403
+msgid "Button Size"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:291
+#: modules/HeroCarousel/Admin.php:405
+msgid "Large"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:292
+#: modules/HeroCarousel/Admin.php:406
+msgid "Medium"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:293
+#: modules/HeroCarousel/Admin.php:407
+msgid "Small"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:302
+#: modules/HeroCarousel/Admin.php:416
+msgid "Border Width"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:303
+#: modules/HeroCarousel/Admin.php:417
+msgid "Enter border width in pixel. e.g. 2px"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:311
+#: modules/HeroCarousel/Admin.php:425
+msgid "Border Radius"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:312
+#: modules/HeroCarousel/Admin.php:426
+msgid "Enter border radius in pixel. e.g. 2px"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:320
+#: modules/HeroCarousel/Admin.php:434
+msgid "Button Color"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:329
+#: modules/HeroCarousel/Admin.php:443
+#: modules/ProductCarousel/Admin.php:167
+msgid "Button Text Color"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:353
+msgid "Button #2"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:483
+msgid "Delete the background image for this slide"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:491
+msgid "Background Image"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:500
+msgid "Background Position"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:510
+msgid "Background Size"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:519
+msgid "Ken Burns Effect"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:528
+msgid "Background Color"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:537
+msgid "Background Overlay"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:560
+msgid "Content Alignment"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:561
+msgid "Select how the heading, description and buttons will be aligned"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:571
+msgid "Heading Font Size"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:572
+msgid "Enter heading font size without px unit. In pixels, ex: 50 instead of 50px. Default: 60"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:581
+msgid "Spacing/Gutter"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:582
+msgid "Enter gutter (space between description and heading) in px, em or rem, ex: 3rem"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:591
+msgid "Heading Color"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:592
+msgid "Select a color for the heading font. Default: #fff"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:601
+msgid "Description Font Size"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:602
+msgid "Enter description font size without px unit. In pixels, ex: 20 instead of 20px. Default: 24"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:611
+msgid "Description Spacing/Gutter"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:612
+msgid "Enter gutter (space between description and buttons) in px, em or rem, ex: 3rem"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:621
+msgid "Description Color"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:622
+msgid "Select a color for the description font. Default: #fff"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:647
+msgid "Delete current slide"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:654
+msgid "Move Slide to Top"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:659
+msgid "Move Slide Up"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:666
+msgid "Move Slide Down"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:671
+msgid "Move Slide to Bottom"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:701
+msgid "Slide Height"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:702
+msgid "Enter a px, em, rem or vh value for slide height. ex: 100vh"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:712
+msgid "Slider Content Max Width"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:713
+msgid "Enter a px, em, rem or % value for slide height. ex: 960px"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:723
+msgid "Content Animation"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:724
+msgid "Select slide content animation."
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:736
+msgid "Slider Padding"
+msgstr ""
+
+#: modules/HeroCarousel/Admin.php:737
+msgid "Enter padding around slide in px, em or rem."
 msgstr ""
 
 #: modules/HeroCarousel/Ajax.php:30
 msgid "Required attribute is not set properly."
 msgstr ""
 
-#: modules/HeroCarousel/HeroCarouselAdmin.php:42
-msgid "Hero Banner Slider"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:87
-msgid "Slide"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:102
-msgid "Slide Background"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:106
-msgid "Slide Content"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:110
-#: modules/HeroCarousel/HeroCarouselAdmin.php:199
-msgid "Slide Link"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:114
-msgid "Slide Style"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:151
-msgid "Slide Heading"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:152
-msgid "Enter the heading for your slide. This field can take HTML markup."
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:161
-msgid "Slide Description"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:162
-msgid "Enter the description for your slide. This field can take HTML markup."
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:183
-msgid "Slide Link Type"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:184
-msgid "Select how the slide will link."
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:186
-#: modules/HeroCarousel/HeroCarouselHelper.php:79
-msgid "No Link"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:187
-#: modules/HeroCarousel/HeroCarouselHelper.php:80
-msgid "Full Slide"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:188
-#: modules/HeroCarousel/HeroCarouselHelper.php:81
-msgid "Button"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:200
-msgid "Please enter your URL that will be used to link the full slide."
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:208
-msgid "Open Slide Link In New Window"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:214
-msgid "Yes"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:215
-msgid "No"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:236
-msgid "Button #1"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:243
-#: modules/HeroCarousel/HeroCarouselAdmin.php:357
-msgid "Button Text"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:244
-#: modules/HeroCarousel/HeroCarouselAdmin.php:358
-msgid "Add button text"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:252
-#: modules/HeroCarousel/HeroCarouselAdmin.php:366
-msgid "Button URL"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:253
-#: modules/HeroCarousel/HeroCarouselAdmin.php:262
-#: modules/HeroCarousel/HeroCarouselAdmin.php:367
-#: modules/HeroCarousel/HeroCarouselAdmin.php:376
-msgid "Add the button url e.g. https://example.com"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:261
-#: modules/HeroCarousel/HeroCarouselAdmin.php:375
-msgid "Open Button Link In"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:264
-#: modules/HeroCarousel/HeroCarouselAdmin.php:378
-msgid "New Window"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:265
-#: modules/HeroCarousel/HeroCarouselAdmin.php:379
-msgid "Same Window"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:274
-#: modules/HeroCarousel/HeroCarouselAdmin.php:388
-msgid "Button Type"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:276
-#: modules/HeroCarousel/HeroCarouselAdmin.php:390
-msgid "Normal"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:277
-#: modules/HeroCarousel/HeroCarouselAdmin.php:391
-msgid "Stroke"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:286
-#: modules/HeroCarousel/HeroCarouselAdmin.php:400
-msgid "Button Size"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:288
-#: modules/HeroCarousel/HeroCarouselAdmin.php:402
-msgid "Large"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:289
-#: modules/HeroCarousel/HeroCarouselAdmin.php:403
-msgid "Medium"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:290
-#: modules/HeroCarousel/HeroCarouselAdmin.php:404
-msgid "Small"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:299
-#: modules/HeroCarousel/HeroCarouselAdmin.php:413
-msgid "Border Width"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:300
-#: modules/HeroCarousel/HeroCarouselAdmin.php:414
-msgid "Enter border width in pixel. e.g. 2px"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:308
-#: modules/HeroCarousel/HeroCarouselAdmin.php:422
-msgid "Border Radius"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:309
-#: modules/HeroCarousel/HeroCarouselAdmin.php:423
-msgid "Enter border radius in pixel. e.g. 2px"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:317
-#: modules/HeroCarousel/HeroCarouselAdmin.php:431
-msgid "Button Color"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:326
-#: modules/HeroCarousel/HeroCarouselAdmin.php:440
-#: modules/ProductCarousel/ProductCarouselAdmin.php:167
-msgid "Button Text Color"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:350
-msgid "Button #2"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:480
-msgid "Delete the background image for this slide"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:488
-msgid "Background Image"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:497
-msgid "Background Position"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:507
-msgid "Background Size"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:516
-msgid "Ken Burns Effect"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:525
-msgid "Background Color"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:534
-msgid "Background Overlay"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:557
-msgid "Content Alignment"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:558
-msgid "Select how the heading, description and buttons will be aligned"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:568
-msgid "Heading Font Size"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:569
-msgid "Enter heading font size without px unit. In pixels, ex: 50 instead of 50px. Default: 60"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:578
-msgid "Spacing/Gutter"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:579
-msgid "Enter gutter (space between description and heading) in px, em or rem, ex: 3rem"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:588
-msgid "Heading Color"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:589
-msgid "Select a color for the heading font. Default: #fff"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:598
-msgid "Description Font Size"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:599
-msgid "Enter description font size without px unit. In pixels, ex: 20 instead of 20px. Default: 24"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:608
-msgid "Description Spacing/Gutter"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:609
-msgid "Enter gutter (space between description and buttons) in px, em or rem, ex: 3rem"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:618
-msgid "Description Color"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:619
-msgid "Select a color for the description font. Default: #fff"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:644
-msgid "Delete current slide"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:651
-msgid "Move Slide to Top"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:656
-msgid "Move Slide Up"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:663
-msgid "Move Slide Down"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:668
-msgid "Move Slide to Bottom"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:698
-msgid "Slide Height"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:699
-msgid "Enter a px, em, rem or vh value for slide height. ex: 100vh"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:709
-msgid "Slider Content Max Width"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:710
-msgid "Enter a px, em, rem or % value for slide height. ex: 960px"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:720
-msgid "Content Animation"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:721
-msgid "Select slide content animation."
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:733
-msgid "Slider Padding"
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselAdmin.php:734
-msgid "Enter padding around slide in px, em or rem."
-msgstr ""
-
-#: modules/HeroCarousel/HeroCarouselHelper.php:50
-#: modules/HeroCarousel/HeroCarouselHelper.php:101
+#: modules/HeroCarousel/Helper.php:50
+#: modules/HeroCarousel/Helper.php:101
 msgid "None"
 msgstr ""
 
-#: modules/HeroCarousel/HeroCarouselHelper.php:51
+#: modules/HeroCarousel/Helper.php:51
 msgid "Fade In Down"
 msgstr ""
 
-#: modules/HeroCarousel/HeroCarouselHelper.php:52
+#: modules/HeroCarousel/Helper.php:52
 msgid "Fade In Up"
 msgstr ""
 
-#: modules/HeroCarousel/HeroCarouselHelper.php:53
+#: modules/HeroCarousel/Helper.php:53
 msgid "Fade In Right"
 msgstr ""
 
-#: modules/HeroCarousel/HeroCarouselHelper.php:54
+#: modules/HeroCarousel/Helper.php:54
 msgid "Fade In Left"
 msgstr ""
 
-#: modules/HeroCarousel/HeroCarouselHelper.php:55
-#: modules/HeroCarousel/HeroCarouselHelper.php:102
+#: modules/HeroCarousel/Helper.php:55
+#: modules/HeroCarousel/Helper.php:102
 msgid "Zoom In"
 msgstr ""
 
-#: modules/HeroCarousel/HeroCarouselHelper.php:103
+#: modules/HeroCarousel/Helper.php:103
 msgid "Zoom Out"
 msgstr ""
 
-#: modules/ImageCarousel/ImageCarouselAdmin.php:46
+#: modules/ImageCarousel/Admin.php:46
 msgid "URL Images"
 msgstr ""
 
-#: modules/ImageCarousel/ImageCarouselAdmin.php:53
+#: modules/ImageCarousel/Admin.php:53
 msgid "Images URLs"
 msgstr ""
 
-#: modules/ImageCarousel/ImageCarouselAdmin.php:54
+#: modules/ImageCarousel/Admin.php:54
 msgid "Enter external images URLs."
 msgstr ""
 
-#: modules/ImageCarousel/ImageCarouselAdmin.php:63
+#: modules/ImageCarousel/Admin.php:63
 msgid "Media Images"
 msgstr ""
 
-#: modules/ImageCarousel/ImageCarouselAdmin.php:70
+#: modules/ImageCarousel/Admin.php:70
 msgid "Carousel Images"
 msgstr ""
 
-#: modules/ImageCarousel/ImageCarouselAdmin.php:71
+#: modules/ImageCarousel/Admin.php:71
 msgid "Choose carousel images from media library."
 msgstr ""
 
-#: modules/ImageCarousel/ImageCarouselAdmin.php:80
+#: modules/ImageCarousel/Admin.php:80
 msgid "Image Carousel Settings"
 msgstr ""
 
-#: modules/ImageCarousel/ImageCarouselAdmin.php:87
-#: modules/ImageCarousel/ImageCarouselAdmin.php:88
+#: modules/ImageCarousel/Admin.php:87
+#: modules/ImageCarousel/Admin.php:88
 msgid "Show Image Title"
 msgstr ""
 
-#: modules/ImageCarousel/ImageCarouselAdmin.php:89
+#: modules/ImageCarousel/Admin.php:89
 msgid "Check to show title below image. Only works with image carousel."
 msgstr ""
 
-#: modules/ImageCarousel/ImageCarouselAdmin.php:94
-#: modules/ImageCarousel/ImageCarouselAdmin.php:95
+#: modules/ImageCarousel/Admin.php:94
+#: modules/ImageCarousel/Admin.php:95
 msgid "Show Image Caption"
 msgstr ""
 
-#: modules/ImageCarousel/ImageCarouselAdmin.php:96
+#: modules/ImageCarousel/Admin.php:96
 msgid "Check to show caption below image. Only works with image carousel."
 msgstr ""
 
-#: modules/ImageCarousel/ImageCarouselAdmin.php:101
+#: modules/ImageCarousel/Admin.php:101
 msgid "Image Target"
 msgstr ""
 
-#: modules/ImageCarousel/ImageCarouselAdmin.php:102
+#: modules/ImageCarousel/Admin.php:102
 msgid "Choose where to open the linked image."
 msgstr ""
 
-#: modules/ImageCarousel/ImageCarouselAdmin.php:105
+#: modules/ImageCarousel/Admin.php:105
 msgid "Open in the same frame as it was clicked"
 msgstr ""
 
-#: modules/ImageCarousel/ImageCarouselAdmin.php:106
+#: modules/ImageCarousel/Admin.php:106
 msgid "Open in a new window or tab"
 msgstr ""
 
-#: modules/ImageCarousel/ImageCarouselAdmin.php:111
-#: modules/ImageCarousel/ImageCarouselAdmin.php:112
+#: modules/ImageCarousel/Admin.php:111
+#: modules/ImageCarousel/Admin.php:112
 msgid "Show Lightbox Gallery"
 msgstr ""
 
-#: modules/ImageCarousel/ImageCarouselAdmin.php:113
+#: modules/ImageCarousel/Admin.php:113
 msgid "Check to show lightbox gallery."
 msgstr ""
 
-#: modules/ImageCarousel/ImageCarouselAdmin.php:125
+#: modules/ImageCarousel/Admin.php:125
 msgid "Image Carousel - from URL"
 msgstr ""
 
-#: modules/ImageCarousel/ImageCarouselAdmin.php:181
+#: modules/ImageCarousel/Admin.php:181
 msgid "Save"
 msgstr ""
 
-#: modules/ImageCarousel/ImageCarouselModule.php:95
+#: modules/ImageCarousel/Module.php:94
 msgid "Link to URL"
 msgstr ""
 
-#: modules/ImageCarousel/ImageCarouselModule.php:99
+#: modules/ImageCarousel/Module.php:98
 msgid "\"Link to URL\" only works on Carousel Slider for linking image to a custom url."
 msgstr ""
 
-#: modules/PostCarousel/PostCarouselAdmin.php:39
+#: modules/PostCarousel/Admin.php:38
 msgid "Post Query"
 msgstr ""
 
-#: modules/PostCarousel/PostCarouselAdmin.php:46
-#: modules/ProductCarousel/ProductCarouselAdmin.php:52
+#: modules/PostCarousel/Admin.php:45
+#: modules/ProductCarousel/Admin.php:52
 msgid "Query Type"
 msgstr ""
 
-#: modules/PostCarousel/PostCarouselAdmin.php:49
+#: modules/PostCarousel/Admin.php:48
 msgid "Latest Posts"
 msgstr ""
 
-#: modules/PostCarousel/PostCarouselAdmin.php:50
+#: modules/PostCarousel/Admin.php:49
 msgid "Date Range"
 msgstr ""
 
-#: modules/PostCarousel/PostCarouselAdmin.php:51
-#: modules/PostCarousel/PostCarouselAdmin.php:70
+#: modules/PostCarousel/Admin.php:50
+#: modules/PostCarousel/Admin.php:69
 msgid "Post Categories"
 msgstr ""
 
-#: modules/PostCarousel/PostCarouselAdmin.php:52
-#: modules/PostCarousel/PostCarouselAdmin.php:77
+#: modules/PostCarousel/Admin.php:51
+#: modules/PostCarousel/Admin.php:76
 msgid "Post Tags"
 msgstr ""
 
-#: modules/PostCarousel/PostCarouselAdmin.php:53
-#: modules/PostCarousel/PostCarouselAdmin.php:83
+#: modules/PostCarousel/Admin.php:52
+#: modules/PostCarousel/Admin.php:82
 msgid "Specific posts"
 msgstr ""
 
-#: modules/PostCarousel/PostCarouselAdmin.php:58
+#: modules/PostCarousel/Admin.php:57
 msgid "Date from"
 msgstr ""
 
-#: modules/PostCarousel/PostCarouselAdmin.php:59
-#: modules/PostCarousel/PostCarouselAdmin.php:64
+#: modules/PostCarousel/Admin.php:58
+#: modules/PostCarousel/Admin.php:63
 msgid "Example: %s"
 msgstr ""
 
-#: modules/PostCarousel/PostCarouselAdmin.php:63
+#: modules/PostCarousel/Admin.php:62
 msgid "Date to"
 msgstr ""
 
-#: modules/PostCarousel/PostCarouselAdmin.php:71
+#: modules/PostCarousel/Admin.php:70
 msgid "Show posts associated with selected categories."
 msgstr ""
 
-#: modules/PostCarousel/PostCarouselAdmin.php:78
+#: modules/PostCarousel/Admin.php:77
 msgid "Show posts associated with selected tags."
 msgstr ""
 
-#: modules/PostCarousel/PostCarouselAdmin.php:84
+#: modules/PostCarousel/Admin.php:83
 msgid "Select posts that you want to show as slider. Select at least 5 posts"
 msgstr ""
 
-#: modules/PostCarousel/PostCarouselAdmin.php:88
+#: modules/PostCarousel/Admin.php:87
 msgid "Posts per page"
 msgstr ""
 
-#: modules/PostCarousel/PostCarouselAdmin.php:90
+#: modules/PostCarousel/Admin.php:89
 msgid "How many post you want to show on carousel slide."
 msgstr ""
 
-#: modules/PostCarousel/PostCarouselAdmin.php:94
+#: modules/PostCarousel/Admin.php:93
 msgid "Order"
 msgstr ""
 
-#: modules/PostCarousel/PostCarouselAdmin.php:97
+#: modules/PostCarousel/Admin.php:96
 msgid "Ascending Order"
 msgstr ""
 
-#: modules/PostCarousel/PostCarouselAdmin.php:98
+#: modules/PostCarousel/Admin.php:97
 msgid "Descending Order"
 msgstr ""
 
-#: modules/PostCarousel/PostCarouselAdmin.php:103
+#: modules/PostCarousel/Admin.php:102
 msgid "Order by"
 msgstr ""
 
-#: modules/PostCarousel/PostCarouselAdmin.php:106
+#: modules/PostCarousel/Admin.php:105
 msgid "No order"
 msgstr ""
 
-#: modules/PostCarousel/PostCarouselAdmin.php:107
+#: modules/PostCarousel/Admin.php:106
 msgid "Post id"
 msgstr ""
 
-#: modules/PostCarousel/PostCarouselAdmin.php:108
+#: modules/PostCarousel/Admin.php:107
 msgid "Post author"
 msgstr ""
 
-#: modules/PostCarousel/PostCarouselAdmin.php:109
+#: modules/PostCarousel/Admin.php:108
 msgid "Post title"
 msgstr ""
 
-#: modules/PostCarousel/PostCarouselAdmin.php:110
+#: modules/PostCarousel/Admin.php:109
 msgid "Last modified date"
 msgstr ""
 
-#: modules/PostCarousel/PostCarouselAdmin.php:111
+#: modules/PostCarousel/Admin.php:110
 msgid "Random order"
 msgstr ""
 
-#: modules/PostCarousel/PostCarouselAdmin.php:112
+#: modules/PostCarousel/Admin.php:111
 msgid "Number of comments"
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:45
+#: modules/ProductCarousel/Admin.php:45
 msgid "Product Query"
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:55
+#: modules/ProductCarousel/Admin.php:55
 msgid "Query Products"
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:56
-#: modules/ProductCarousel/ProductCarouselAdmin.php:78
+#: modules/ProductCarousel/Admin.php:56
+#: modules/ProductCarousel/Admin.php:78
 msgid "Product Categories"
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:57
-#: modules/ProductCarousel/ProductCarouselAdmin.php:85
+#: modules/ProductCarousel/Admin.php:57
+#: modules/ProductCarousel/Admin.php:85
 msgid "Product Tags"
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:58
+#: modules/ProductCarousel/Admin.php:58
 msgid "Specific Products"
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:63
+#: modules/ProductCarousel/Admin.php:63
 msgid "Choose Query"
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:66
+#: modules/ProductCarousel/Admin.php:66
 msgid "Featured Products"
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:67
+#: modules/ProductCarousel/Admin.php:67
 msgid "Recent Products"
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:68
+#: modules/ProductCarousel/Admin.php:68
 msgid "Sale Products"
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:69
+#: modules/ProductCarousel/Admin.php:69
 msgid "Best-Selling Products"
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:70
+#: modules/ProductCarousel/Admin.php:70
 msgid "Top Rated Products"
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:71
+#: modules/ProductCarousel/Admin.php:71
 msgid "Product Categories List"
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:79
+#: modules/ProductCarousel/Admin.php:79
 msgid "Show products associated with selected categories."
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:86
+#: modules/ProductCarousel/Admin.php:86
 msgid "Show products associated with selected tags."
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:92
+#: modules/ProductCarousel/Admin.php:92
 msgid "Specific products"
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:93
+#: modules/ProductCarousel/Admin.php:93
 msgid "Select products that you want to show as slider. Select at least 5 products"
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:97
+#: modules/ProductCarousel/Admin.php:97
 msgid "Product per page"
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:99
+#: modules/ProductCarousel/Admin.php:99
 msgid "How many products you want to show on carousel slide."
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:103
+#: modules/ProductCarousel/Admin.php:103
 msgid "Show Title"
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:104
+#: modules/ProductCarousel/Admin.php:104
 msgid "Show Title."
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:105
+#: modules/ProductCarousel/Admin.php:105
 msgid "Check to show product title."
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:110
+#: modules/ProductCarousel/Admin.php:110
 msgid "Show Rating"
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:111
+#: modules/ProductCarousel/Admin.php:111
 msgid "Show Rating."
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:112
+#: modules/ProductCarousel/Admin.php:112
 msgid "Check to show product rating."
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:117
+#: modules/ProductCarousel/Admin.php:117
 msgid "Show Price"
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:118
+#: modules/ProductCarousel/Admin.php:118
 msgid "Show Price."
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:119
+#: modules/ProductCarousel/Admin.php:119
 msgid "Check to show product price."
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:124
+#: modules/ProductCarousel/Admin.php:124
 msgid "Show Cart Button"
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:125
+#: modules/ProductCarousel/Admin.php:125
 msgid "Show Cart Button."
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:126
+#: modules/ProductCarousel/Admin.php:126
 msgid "Check to show product add to cart button."
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:131
-#: modules/ProductCarousel/ProductCarouselAdmin.php:132
+#: modules/ProductCarousel/Admin.php:131
+#: modules/ProductCarousel/Admin.php:132
 msgid "Show Sale Tag"
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:133
+#: modules/ProductCarousel/Admin.php:133
 msgid "Check to show product sale tag for onsale products."
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:138
-#: modules/ProductCarousel/ProductCarouselAdmin.php:139
+#: modules/ProductCarousel/Admin.php:138
+#: modules/ProductCarousel/Admin.php:139
 msgid "Show Wishlist Button"
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:141
+#: modules/ProductCarousel/Admin.php:141
 msgid "Check to show wishlist button. This feature needs %s plugin to be installed."
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:141
+#: modules/ProductCarousel/Admin.php:141
 msgid "YITH WooCommerce Wishlist"
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:145
-#: modules/ProductCarousel/ProductCarouselAdmin.php:146
+#: modules/ProductCarousel/Admin.php:145
+#: modules/ProductCarousel/Admin.php:146
 msgid "Show Quick View"
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:147
+#: modules/ProductCarousel/Admin.php:147
 msgid "Check to show quick view button."
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:153
+#: modules/ProductCarousel/Admin.php:153
 msgid "Title Color"
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:154
+#: modules/ProductCarousel/Admin.php:154
 msgid "Pick a color for product title. This color will also apply to sale tag and price."
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:160
+#: modules/ProductCarousel/Admin.php:160
 msgid "Button Background Color"
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:161
+#: modules/ProductCarousel/Admin.php:161
 msgid "Pick a color for button background color. This color will also apply to product rating."
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselAdmin.php:168
+#: modules/ProductCarousel/Admin.php:168
 msgid "Pick a color for button text color."
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselModule.php:70
+#: modules/ProductCarousel/Module.php:70
 msgid "Quick View"
 msgstr ""
 
-#: modules/ProductCarousel/ProductCarouselModule.php:124
-#: modules/ProductCarousel/ProductCarouselView.php:149
+#: modules/ProductCarousel/Module.php:124
+#: modules/ProductCarousel/View.php:150
 msgid "Sale!"
 msgstr ""
 
-#: modules/VideoCarousel/VideoCarouselModule.php:42
+#: modules/VideoCarousel/Module.php:42
 msgid "Only support youtube and vimeo. Enter video URL from youtube or vimeo separating each by comma"
 msgstr ""
 
-#: modules/VideoCarousel/VideoCarouselModule.php:43
+#: modules/VideoCarousel/Module.php:43
 msgid "Example:"
 msgstr ""
 
-#: modules/VideoCarousel/VideoCarouselModule.php:50
+#: modules/VideoCarousel/Module.php:50
 msgid "Video Settings"
 msgstr ""
 
-#: modules/VideoCarousel/VideoCarouselModule.php:56
+#: modules/VideoCarousel/Module.php:56
 msgid "Video URLs"
 msgstr ""
