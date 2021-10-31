@@ -57,25 +57,20 @@ class GutenbergBlock {
 	 */
 	private function block_localize_data(): array {
 		$_sliders = Helper::get_sliders();
-		$sliders  = [];
+		$sliders  = [ [ 'value' => '', 'label' => __( 'Select a Slider', 'carousel-slider' ) ] ];
 		foreach ( $_sliders as $form ) {
 			if ( ! $form instanceof WP_Post ) {
 				continue;
 			}
-			$sliders[] = [
-				'value' => absint( $form->ID ),
-				'label' => esc_attr( $form->post_title ),
-			];
+			$sliders[] = [ 'value' => absint( $form->ID ), 'label' => esc_attr( $form->post_title ) ];
 		}
 
 		return [
-			'sliders'         => $sliders,
-			'site_url'        => site_url(),
-			'block_logo'      => CAROUSEL_SLIDER_ASSETS . '/static-images/logo.svg',
-			'block_title'     => __( 'Carousel Slider', 'carousel-slider' ),
-			'select_slider'   => __( 'Select a Slider', 'carousel-slider' ),
-			'selected_slider' => __( 'Current Selected Slider', 'carousel-slider' ),
-			'filter_slider'   => __( 'Type to filter sliders', 'carousel-slider' ),
+			'sliders'       => $sliders,
+			'site_url'      => site_url(),
+			'block_logo'    => CAROUSEL_SLIDER_ASSETS . '/static-images/logo.svg',
+			'block_title'   => __( 'Carousel Slider', 'carousel-slider' ),
+			'select_slider' => __( 'Select a Slider', 'carousel-slider' ),
 		];
 	}
 }

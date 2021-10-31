@@ -3,18 +3,14 @@ import {registerBlockType} from '@wordpress/blocks';
 import {SelectControl} from '@wordpress/components';
 import {InspectorControls} from '@wordpress/block-editor';
 
-const settings = window.i18nCarouselSliderBlock || {
-	sliders: [], site_url: '', block_logo: '', block_title: '', select_slider: '', selected_slider: '',
-	filter_slider: '',
-}
+const settings = window.i18nCarouselSliderBlock ||
+	{sliders: [], site_url: '', block_logo: '', block_title: '', select_slider: ''}
 
 /**
  * Carousel Slider Block
  *
  * A block for embedding a carousel slider into a post/page.
  */
-
-// register our block
 registerBlockType('carousel-slider/slider', {
 	title: settings.block_title,
 	icon: 'slides',
@@ -22,16 +18,12 @@ registerBlockType('carousel-slider/slider', {
 
 	attributes: {
 		sliderID: {type: 'integer', default: 0},
-		sliderName: {type: 'string', default: ''}
 	},
 
 	edit: (props) => {
-		let sliderID = props.attributes.sliderID,
-			sliderName = props.attributes.sliderName,
-			children = [];
+		let sliderID = props.attributes.sliderID, children = [];
 
 		if (!sliderID) sliderID = '';
-		if (!sliderName) sliderName = '';
 
 		let previewUrl = new URL(settings.site_url);
 		previewUrl.searchParams.append('carousel_slider_preview', '1');
@@ -40,8 +32,7 @@ registerBlockType('carousel-slider/slider', {
 		let iFrameSrc = previewUrl.toString();
 
 		const changeSlider = (slider_id) => {
-			let getActiveSlider = settings.sliders.find(_slider => _slider.value == slider_id);
-			props.setAttributes({sliderID: parseInt(slider_id), sliderName: getActiveSlider.label});
+			props.setAttributes({sliderID: parseInt(slider_id)});
 		}
 
 		const selectControl = (
@@ -49,14 +40,29 @@ registerBlockType('carousel-slider/slider', {
 						   onChange={changeSlider}/>
 		)
 
+		let iFrame = (
+			<div className="carousel-slider-iframe-container">
+				<div className="carousel-slider-iframe-overlay"/>
+				<iframe className="carousel-slider-iframe" scrolling="no" src={iFrameSrc} height="0" width="500"/>
+			</div>
+		)
+
+		let element = (
+			<div className="carousel-slider-editor-controls">
+				<img className="carousel-slider-editor-controls__logo" src={settings.block_logo} alt=""/>
+				<div className="carousel-slider-editor-controls__title">{settings.block_title}</div>
+				<div className="carousel-slider-editor-controls__input">
+					{selectControl}
+				</div>
+			</div>
+		)
+
 		// Set up the slider filter dropdown in the side bar 'block' settings
 		let inspectorControls = (
 			<InspectorControls>
-				<div>
-					<div>{settings.selected_slider}</div>
-					<div>{sliderName}</div>
+				<div className="carousel-slider-inspector-controls">
+					{selectControl}
 				</div>
-				{selectControl}
 			</InspectorControls>
 		)
 
@@ -65,21 +71,8 @@ registerBlockType('carousel-slider/slider', {
 		 * with the slider in Gutenberg, then render the iframe with slider
 		 */
 		if ('' === sliderID) {
-			let element = (
-				<div style={{width: '100%'}}>
-					<img className="carousel-slider-block-logo" src={settings.block_logo} alt=""/>
-					<div>{settings.block_title}</div>
-					{selectControl}
-				</div>
-			)
 			children.push(element);
 		} else {
-			let iFrame = (
-				<div className="carousel-slider-iframe-container">
-					<div className="carousel-slider-iframe-overlay"/>
-					<iframe className="carousel-slider-iframe" scrolling="no" src={iFrameSrc} height="0" width="500"/>
-				</div>
-			)
 			children.push(iFrame)
 		}
 		children.push(inspectorControls);
