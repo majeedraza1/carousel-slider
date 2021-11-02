@@ -65,11 +65,18 @@ class Admin {
 			<div class="shapla-toggle-inner">
 				<div class="shapla-toggle-content">
 					<?php
-					$metabox->images_gallery( array(
+					$metabox->images_gallery( [
 						'id'   => '_wpdh_image_ids',
 						'name' => esc_html__( 'Carousel Images', 'carousel-slider' ),
 						'desc' => esc_html__( 'Choose carousel images from media library.', 'carousel-slider' ),
-					) );
+					] );
+					$metabox->checkbox( [
+						'id'    => '_shuffle_images',
+						'name'  => esc_html__( 'Shuffle', 'carousel-slider' ),
+						'label' => esc_html__( 'Shuffle Images Order', 'carousel-slider' ),
+						'desc'  => esc_html__( 'Check to shuffle images order at each page refresh.', 'carousel-slider' ),
+						'std'   => 'off'
+					] );
 					?>
 				</div>
 			</div>
@@ -135,27 +142,35 @@ class Admin {
 										<div class="carousel_slider-fields media-url-form-field">
 											<div class="media-url-form-field__content">
 												<label class="setting media-url-form-field__item">
-													<span class="name"><?php esc_html_e( 'URL', 'carousel-slider' ); ?></span>
-													<input type="url" name="_images_urls[url][]" value="<?php echo $image['url']; ?>"
+													<span
+														class="name"><?php esc_html_e( 'URL', 'carousel-slider' ); ?></span>
+													<input type="url" name="_images_urls[url][]"
+														   value="<?php echo $image['url']; ?>"
 														   autocomplete="off">
 												</label>
 												<label class="setting media-url-form-field__item">
-													<span class="name"><?php esc_html_e( 'Title', 'carousel-slider' ); ?></span>
+													<span
+														class="name"><?php esc_html_e( 'Title', 'carousel-slider' ); ?></span>
 													<input type="text" name="_images_urls[title][]"
 														   value="<?php echo $image['title']; ?>"
 														   autocomplete="off">
 												</label>
 												<label class="setting media-url-form-field__item">
-													<span class="name"><?php esc_html_e( 'Caption', 'carousel-slider' ); ?></span>
-													<textarea name="_images_urls[caption][]"><?php echo $image['caption']; ?></textarea>
+													<span
+														class="name"><?php esc_html_e( 'Caption', 'carousel-slider' ); ?></span>
+													<textarea
+														name="_images_urls[caption][]"><?php echo $image['caption']; ?></textarea>
 												</label>
 												<label class="setting media-url-form-field__item">
-													<span class="name"><?php esc_html_e( 'Alt Text', 'carousel-slider' ); ?></span>
-													<input type="text" name="_images_urls[alt][]" value="<?php echo $image['alt']; ?>"
+													<span
+														class="name"><?php esc_html_e( 'Alt Text', 'carousel-slider' ); ?></span>
+													<input type="text" name="_images_urls[alt][]"
+														   value="<?php echo $image['alt']; ?>"
 														   autocomplete="off">
 												</label>
 												<label class="setting media-url-form-field__item">
-													<span class="name"><?php esc_html_e( 'Link To URL', 'carousel-slider' ); ?></span>
+													<span
+														class="name"><?php esc_html_e( 'Link To URL', 'carousel-slider' ); ?></span>
 													<input type="text" name="_images_urls[link_url][]"
 														   value="<?php echo $image['link_url']; ?>"
 														   autocomplete="off">

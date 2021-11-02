@@ -3,6 +3,7 @@
 namespace CarouselSlider\Modules\ProductCarousel;
 
 use CarouselSlider\Abstracts\AbstractView;
+use CarouselSlider\Admin\Setting;
 use CarouselSlider\Helper;
 use CarouselSlider\Supports\Validate;
 use CarouselSlider\Modules\ProductCarousel\Helper as ProductCarouselHelper;
@@ -95,7 +96,12 @@ class View extends AbstractView {
 			if ( ! $product->has_enough_stock( 1 ) ) {
 				continue;
 			}
-			$html .= self::get_slider_item( $product, $settings ) . PHP_EOL;
+			$template = Setting::get_option( 'woocommerce_shop_loop_item_template' );
+			if ( 'v1-compatibility' == $template ) {
+				$html .= self::get_item( $product, $settings ) . PHP_EOL;
+			} else {
+				$html .= self::get_slider_item( $product, $settings ) . PHP_EOL;
+			}
 		}
 		wp_reset_postdata();
 
@@ -112,7 +118,6 @@ class View extends AbstractView {
 	 * @param array $settings
 	 *
 	 * @return string
-	 * @deprecated
 	 */
 	public static function get_item( WC_Product $product, array $settings ): string {
 		ob_start();

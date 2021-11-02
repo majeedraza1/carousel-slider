@@ -29,6 +29,25 @@ class Setting {
 	}
 
 	/**
+	 * Get option
+	 *
+	 * @param string $key
+	 * @param mixed $default
+	 *
+	 * @return mixed
+	 */
+	public static function get_option( string $key, $default = '' ) {
+		$default_args = [
+			'load_scripts'                        => 'optimized',
+			'show_structured_data'                => '1',
+			'woocommerce_shop_loop_item_template' => 'v1-compatibility',
+		];
+		$options      = wp_parse_args( get_option( 'carousel_slider_settings', [] ), $default_args );
+
+		return $options[ $key ] ?? $default;
+	}
+
+	/**
 	 * Plugin setting fields
 	 *
 	 * @throws Exception
@@ -48,6 +67,10 @@ class Setting {
 		$settings->add_tab( [
 			'id'    => 'general',
 			'title' => __( 'General', 'carousel-slider' ),
+		] );
+		$settings->add_tab( [
+			'id'    => 'woocommerce',
+			'title' => __( 'WooCommerce', 'carousel-slider' ),
 		] );
 
 		$settings->add_field( [
@@ -69,6 +92,21 @@ class Setting {
 			'name' => __( 'Show Structured Data', 'carousel-slider' ),
 			'desc' => __( 'If you enable to show, then it will generate structured data for every slider for better SEO. But if you are using some other SEO plugin to handle SEO, then you can disabled it.', 'carousel-slider' ),
 			'tab'  => 'general',
+		] );
+		$settings->add_field( [
+			'id'      => 'woocommerce_shop_loop_item_template',
+			'type'    => 'radio',
+			'std'     => 'v1-compatibility',
+			'name'    => __( 'Slider item template', 'carousel-slider' ),
+			'desc'    => [
+				__( '<strong>WooCommerce Default</strong> use hook to load shop loop template and does not allow to hide/show title, rating, price, card button, sale tag using slider settings.', 'carousel-slider' ),
+				__( '<strong>Compatibility mode</strong> use custom template and allow to hide/show title, rating, price, card button, sale tag.', 'carousel-slider' ),
+			],
+			'options' => [
+				'wc-default'       => __( 'WooCommerce Default (recommended)', 'carousel-slider' ),
+				'v1-compatibility' => __( 'Compatibility mode (with version 1)', 'carousel-slider' ),
+			],
+			'tab'     => 'woocommerce',
 		] );
 	}
 }

@@ -363,7 +363,8 @@ class SettingAPI {
 			}
 
 			if ( ! empty( $field['desc'] ) ) {
-				$table .= sprintf( '<p class="description">%s</p>', $field['desc'] );
+				$desc  = is_array( $field['desc'] ) ? implode( "<br>", $field['desc'] ) : $field['desc'];
+				$table .= sprintf( '<p class="description">%s</p>', $desc );
 			}
 			$table .= "</td>";
 			$table .= "</tr>";

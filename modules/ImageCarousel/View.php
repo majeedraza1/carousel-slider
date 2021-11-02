@@ -20,6 +20,10 @@ class View extends AbstractView {
 		if ( is_string( $ids ) ) {
 			$ids = array_filter( explode( ',', $ids ) );
 		}
+		$shuffle_images = get_post_meta( $slider_id, '_shuffle_images', true );
+		if ( Validate::checked( $shuffle_images ) ) {
+			shuffle( $ids );
+		}
 		$image_target            = get_post_meta( $slider_id, '_image_target', true );
 		$image_target            = in_array( $image_target, [ '_self', '_blank' ] ) ? $image_target : '_self';
 		$image_size              = get_post_meta( $slider_id, '_image_size', true );

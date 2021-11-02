@@ -4,7 +4,7 @@ Tags: carousel, carousel slider, image carousel, product carousel, woocommerce, 
 Requires at least: 5.6
 Tested up to: 5.8
 Requires PHP: 7.0
-Stable tag: 2.0.0
+Stable tag: 2.0.1
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -23,6 +23,7 @@ into our plugin for the ultimate device support.
 
 = Full Feature Set =
 
+* **Support major website/page builder**, including Gutenberg (WordPress core), Elementor, Visual Composer, SiteOrigin
 * **Multiple types carousel**, images from media gallery, images from URL, videos from youtube and vimeo, posts, and WooCommerce products carousel slider
 * **Hero slider** with background image, title, description, call to action buttons and more
 * **Posts carousel**, support Specific posts, Post Categories, Post Tags, Posts per page, Date range query and ordering
@@ -90,9 +91,12 @@ Update to get new features and better security.
 
 == Changelog ==
 
+= version 2.0.1 - 2021-11-02 =
+* Fix - Fix issue with version 1 compatibility template for WooCommerce product loop item
+* Feature - Add random order for images carousel
+
 = version 2.0.0 - 2021-10-31 =
 
-* Dev - Update preview slider core code.
 * Dev - Add CLI(Command Line Interface) to create test sliders.
 * Dev - Update owl setting functionality to data attribute.
 * Dev - Add CSS variable to handle inline style.
