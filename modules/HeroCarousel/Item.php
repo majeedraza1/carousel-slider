@@ -191,6 +191,15 @@ class Item extends Data {
 	}
 
 	/**
+	 * Get Slider height
+	 *
+	 * @return mixed|string
+	 */
+	public function get_slide_height() {
+		return $this->slider_settings['slide_height'] ?? '300px';
+	}
+
+	/**
 	 * Get item view
 	 *
 	 * @return string
@@ -200,16 +209,16 @@ class Item extends Data {
 		$slide_link   = $this->get_prop( 'slide_link' );
 		$link_target  = $this->get_prop( 'link_target', '_self' );
 		$is_full_link = $link_type == 'full' && Validate::url( $slide_link );
-		$slide_height = $this->get_prop( 'slide_height', '400px' );
 		$slide_index  = $this->get_item_id();
 		$html         = '';
 
 		$cell_attr = [
-			"class"  => "carousel-slider-hero__cell hero__cell-$slide_index",
-			"style"  => "--cell-height: $slide_height",
-			"href"   => $slide_link,
-			"target" => $link_target
+			"class" => "carousel-slider-hero__cell hero__cell-$slide_index",
+			"style" => "--cell-height: " . $this->get_slide_height(),
 		];
+		if ( $is_full_link ) {
+			$cell_attr = array_merge( $cell_attr, [ "href" => $slide_link, "target" => $link_target ] );
+		}
 
 		$html .= '<' . ( $is_full_link ? 'a' : 'div' ) . ' ' . join( " ", Helper::array_to_attribute( $cell_attr ) ) . '>';
 
