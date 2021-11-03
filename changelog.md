@@ -1,3 +1,12 @@
+#### version 2.0.2 - 2021-11-03
+
+* Fix - Fix hero carousel height is not working as before.
+
+#### version 2.0.1 - 2021-11-02
+
+* Fix - Fix issue with version 1 compatibility template for WooCommerce product loop item
+* Feature - Add random order for images carousel
+
 #### version 2.0.0 - 2021-09-09
 
 * Dev - Update preview slider core code.
