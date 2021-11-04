@@ -5,6 +5,7 @@ namespace CarouselSlider\Modules\ImageCarousel;
 use CarouselSlider\Abstracts\AbstractView;
 use CarouselSlider\Helper;
 use CarouselSlider\Supports\Validate;
+use WP_Post;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -47,6 +48,9 @@ class View extends AbstractView {
 		$html .= "<div " . join( " ", $attributes_array ) . ">" . PHP_EOL;
 		foreach ( $ids as $id ) {
 			$_post = get_post( $id );
+			if ( ! $_post instanceof WP_Post ) {
+				continue;
+			}
 			do_action( 'carousel_slider_image_gallery_loop', $_post );
 
 			$title          = ! empty( $_post->post_title ) ?
