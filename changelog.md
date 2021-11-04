@@ -1,3 +1,7 @@
+#### version 2.0.3 - 2021-11-04
+
+* Fix - Fix error on image carousel structure data if image is deleted.
+
 #### version 2.0.2 - 2021-11-03
 
 * Fix - Fix hero carousel height is not working as before.
