@@ -1,5 +1,6 @@
 === Carousel Slider ===
 Contributors: sayful, majeedraza, stackonet
+Donate link: https://www.buymeacoffee.com/sayful1
 Tags: carousel, carousel slider, image carousel, product carousel, woocommerce, slider
 Requires at least: 5.6
 Tested up to: 5.8
