@@ -469,4 +469,21 @@ class Helper {
 
 		return false;
 	}
+
+	/**
+	 * Get preview link
+	 *
+	 * @param WP_Post $post
+	 *
+	 * @return string
+	 */
+	public static function get_preview_link( WP_Post $post ): string {
+		$args = [
+			'carousel_slider_preview' => true,
+			'carousel_slider_iframe'  => true,
+			'slider_id'               => $post->ID,
+		];
+
+		return add_query_arg( $args, site_url( '/' ) );
+	}
 }

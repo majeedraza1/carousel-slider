@@ -1,3 +1,7 @@
+#### version 2.0.4 - 2021-11-20
+
+* Tweak - Update carousel preview link on edit page 
+
 #### version 2.0.3 - 2021-11-04
 
 * Fix - Fix error on image carousel structure data if image is deleted.

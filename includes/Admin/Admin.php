@@ -35,6 +35,7 @@ class Admin {
 				[ self::$instance, 'columns_content' ], 10, 2 );
 			// Remove view and Quick Edit from Carousels
 			add_filter( 'post_row_actions', [ self::$instance, 'post_row_actions' ], 10, 2 );
+			add_filter( 'preview_post_link', [ self::$instance, 'preview_post_link' ], 10, 2 );
 
 			add_action( 'admin_enqueue_scripts', [ self::$instance, 'admin_scripts' ], 10 );
 			add_action( 'admin_menu', [ self::$instance, 'documentation_menu' ] );
@@ -42,6 +43,22 @@ class Admin {
 		}
 
 		return self::$instance;
+	}
+
+	/**
+	 * Modify preview post link for carousel slider
+	 *
+	 * @param string $preview_link
+	 * @param WP_Post $post
+	 *
+	 * @return string
+	 */
+	public function preview_post_link( string $preview_link, WP_Post $post ): string {
+		if ( $post->post_type == self::POST_TYPE ) {
+			$preview_link = Helper::get_preview_link( $post );
+		}
+
+		return $preview_link;
 	}
 
 	/**
@@ -152,11 +169,7 @@ class Admin {
 			return $actions;
 		}
 
-		$view_url        = add_query_arg( array(
-			'carousel_slider_preview' => true,
-			'carousel_slider_iframe'  => true,
-			'slider_id'               => $post->ID,
-		), site_url( '/' ) );
+		$view_url        = Helper::get_preview_link( $post );
 		$actions['view'] = '<a href="' . $view_url . '" target="_blank">' . esc_html__( 'Preview', 'carousel-slider' ) . '</a>';
 
 		unset( $actions['inline hide-if-no-js'] );
