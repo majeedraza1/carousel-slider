@@ -80,6 +80,7 @@ $btn-background: #{var(--cs-product-primary,#96588a)};
 
 	// Buttons
 	a.add_to_cart_button,
+	a.add_to_cart_read_more,
 	a.added_to_cart,
 	a.quick_view {
 		color: $btn-color;
