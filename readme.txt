@@ -5,7 +5,7 @@ Tags: carousel, carousel slider, image carousel, product carousel, woocommerce, 
 Requires at least: 5.6
 Tested up to: 5.8
 Requires PHP: 7.0
-Stable tag: 2.0.4
+Stable tag: 2.0.6
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -24,7 +24,7 @@ into our plugin for the ultimate device support.
 
 = Full Feature Set =
 
-* **Support major website/page builder**, including Gutenberg (WordPress core), Elementor, Visual Composer, SiteOrigin
+* **Support major website/page builder**, including Gutenberg (WordPress core), Elementor, Visual Composer, SiteOrigin, Divi Builder
 * **Multiple types carousel**, images from media gallery, images from URL, videos from youtube and vimeo, posts, and WooCommerce products carousel slider
 * **Hero slider** with background image, title, description, call to action buttons and more
 * **Posts carousel**, support Specific posts, Post Categories, Post Tags, Posts per page, Date range query and ordering
@@ -93,6 +93,7 @@ Update to get new features and better security.
 == Changelog ==
 
 = version 2.0.6 - 2021-11-00 =
+* Add - Add functionality to add css file link dynamically if it is not added yet
 * Add - Add custom module for "Divi Builder"
 
 = version 2.0.5 - 2021-11-20 =

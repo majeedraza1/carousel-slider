@@ -170,4 +170,20 @@ class Assets {
 			],
 		];
 	}
+
+	/**
+	 * Script to load css file via javaScript
+	 *
+	 * @return string
+	 */
+	public static function get_style_loader_script(): string {
+		$data       = self::get_assets_url( 'css/frontend.css' );
+		$javascript = file_get_contents( self::get_assets_url( '/js/style-loader.js' ) );
+		$script     = '<script id="carousel-slider-style-loader">' . PHP_EOL;
+		$script     .= 'window.carouselSliderCssUrl = ' . wp_json_encode( $data ) . ';' . PHP_EOL;
+		$script     .= $javascript . PHP_EOL;
+		$script     .= '</script>' . PHP_EOL;
+
+		return $script;
+	}
 }

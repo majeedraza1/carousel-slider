@@ -2,8 +2,10 @@
 
 namespace CarouselSlider\Frontend;
 
+use CarouselSlider\Assets;
 use CarouselSlider\Helper;
 use CarouselSlider\Interfaces\SliderViewInterface;
+use WP_Post;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -44,9 +46,24 @@ class Frontend {
 			return '';
 		}
 
-		$slider_id  = intval( $attributes['id'] );
+		$slider_id = intval( $attributes['id'] );
+
+		// Check if id is valid or not
+		$post = get_post( $slider_id );
+		if ( ! ( $post instanceof WP_Post && $post->post_type == CAROUSEL_SLIDER_POST_TYPE ) ) {
+			return '';
+		}
+
 		$slide_type = get_post_meta( $slider_id, '_slide_type', true );
 		$slide_type = array_key_exists( $slide_type, Helper::get_slide_types() ) ? $slide_type : 'image-carousel';
+
+		// If script & style is not enqueued yet, then enqueued it now
+		if ( ! wp_script_is( 'carousel-slider-frontend', 'enqueued' ) ) {
+			wp_enqueue_script( 'carousel-slider-frontend' );
+			add_action( 'wp_footer', function () {
+				echo Assets::get_style_loader_script();
+			}, 0 );
+		}
 
 		$view = Helper::get_slider_view( $slide_type );
 		if ( $view instanceof SliderViewInterface ) {

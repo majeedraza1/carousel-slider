@@ -7,6 +7,7 @@ use ET_Builder_Module;
 defined( 'ABSPATH' ) || exit;
 
 class DiviBuilderModule {
+
 	private static $instance = null;
 
 	/**
@@ -36,8 +37,13 @@ class DiviBuilderModule {
 		}
 	}
 
+	/**
+	 * Load module script
+	 */
 	public function load_scripts() {
-		// @todo load only when builder is active
+		if ( empty( $_GET['et_fb'] ) ) {
+			return;
+		}
 		wp_enqueue_style( 'carousel-slider-divi-modules', CAROUSEL_SLIDER_ASSETS . '/css/divi-modules.css', [] );
 		wp_enqueue_script( 'carousel-slider-divi-modules', CAROUSEL_SLIDER_ASSETS . '/js/divi-modules.js',
 			[ 'react', 'react-dom' ], '', true );
