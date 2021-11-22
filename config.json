@@ -12,6 +12,10 @@
     "gutenberg-block": [
       "./resources/admin/gutenberg-block.js",
       "./resources/scss/gutenberg-block.scss"
+    ],
+    "divi-modules": [
+      "./resources/admin/divi-builder-module.jsx",
+      "./resources/scss/divi-builder-module.scss"
     ]
   }
 }

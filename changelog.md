@@ -1,6 +1,14 @@
+#### version 2.0.6 - 2021-11-00
+
+* Add - Add custom module for "Divi Builder"
+
+#### version 2.0.5 - 2021-11-20
+
+* Fix - Product carousel button style is not working for 'read more' button
+
 #### version 2.0.4 - 2021-11-20
 
-* Tweak - Update carousel preview link on edit page 
+* Tweak - Update carousel preview link on edit page
 
 #### version 2.0.3 - 2021-11-04
 

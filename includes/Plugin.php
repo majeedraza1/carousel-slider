@@ -10,6 +10,7 @@ use CarouselSlider\CLI\Command;
 use CarouselSlider\Frontend\Frontend;
 use CarouselSlider\Frontend\Preview;
 use CarouselSlider\Frontend\StructuredData;
+use CarouselSlider\Integration\DiviBuilder\DiviBuilderModule;
 use CarouselSlider\Integration\Elementor\ElementorExtension;
 use CarouselSlider\Integration\VisualComposer\Element;
 use CarouselSlider\Modules\HeroCarousel\Module as HeroCarouselModule;
@@ -71,6 +72,7 @@ class Plugin {
 		$this->container['widget']              = CarouselSliderWidget::init();
 		$this->container['vc_element']          = Element::init();
 		$this->container['elementor_extension'] = ElementorExtension::init();
+		$this->container['divi_module']         = DiviBuilderModule::init();
 		$this->container['upgrader']            = Upgrader::init();
 
 		// Load classes for admin area

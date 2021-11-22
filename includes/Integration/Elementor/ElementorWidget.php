@@ -3,6 +3,7 @@
 namespace CarouselSlider\Integration\Elementor;
 
 use CarouselSlider\Frontend\Frontend;
+use CarouselSlider\Helper;
 use Elementor\Controls_Manager;
 use Elementor\Widget_Base;
 
@@ -56,11 +57,7 @@ class ElementorWidget extends Widget_Base {
 	 * @inheritDoc
 	 */
 	protected function register_controls() {
-		$posts   = get_posts( [
-			'post_type'   => CAROUSEL_SLIDER_POST_TYPE,
-			'post_status' => 'publish',
-			'numberposts' => - 1
-		] );
+		$posts   = Helper::get_sliders();
 		$options = [];
 		foreach ( $posts as $post ) {
 			$options[ $post->ID ] = $post->post_title;
