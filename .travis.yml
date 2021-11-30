@@ -1,0 +1,35 @@
+language: php
+
+services:
+  - mysql
+
+env:
+  global:
+    - WP_DB_USER=wp
+    - WP_DB_PASS=password
+    - WP_DB_NAME=wp_tests
+    - WP_VERSION=*
+
+php:
+  - 8.0
+  - 7.4
+  - 7.0
+
+matrix:
+  include:
+    - php: 5.6
+      env: WP_VERSION=4.9.*
+
+before_script:
+  - mysql -u root -e "GRANT ALL PRIVILEGES ON ${WP_DB_NAME}.* TO ${WP_DB_USER} IDENTIFIED BY '${WP_DB_PASS}';"
+  - mysql -u root -e "CREATE DATABASE ${WP_DB_NAME};"
+
+install:
+  - composer validate --strict
+  - composer require --no-update --dev roots/wordpress:${WP_VERSION} wp-phpunit/wp-phpunit:${WP_VERSION}
+  - composer install
+  - "[ $TRAVIS_PHP_VERSION != '8.0' ] || composer update phpunit/phpunit --ignore-platform-reqs --with-dependencies"
+  - composer show
+
+script:
+  - composer test
