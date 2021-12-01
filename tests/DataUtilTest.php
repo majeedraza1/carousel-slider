@@ -57,5 +57,6 @@ class DataUtilTest extends WP_UnitTestCase {
 	public function test_it_returns_json_string_of_data_when_echo_class() {
 		$this->data->set_prop( 'prop5', 'prop5 value' );
 		$this->assertEquals( $this->data, wp_json_encode( $this->data->to_array() ) );
+		$this->assertEquals( wp_json_encode( $this->data ), wp_json_encode( $this->data->to_array() ) );
 	}
 }
