@@ -11,10 +11,21 @@ class Sanitize {
 	 *
 	 * @param mixed $value The value to be sanitized.
 	 *
-	 * @return integer|double|string
+	 * @return int|float
 	 */
 	public static function number( $value ) {
-		return is_numeric( $value ) ? $value : intval( $value );
+		if ( ! is_numeric( $value ) ) {
+			return 0;
+		}
+		if ( is_int( $value ) || is_float( $value ) ) {
+			return $value;
+		}
+
+		if ( preg_match( "/^\\d+\\.\\d+$/", $value ) === 1 ) {
+			return floatval( $value );
+		}
+
+		return intval( $value );
 	}
 
 	/**
@@ -25,6 +36,10 @@ class Sanitize {
 	 * @return float
 	 */
 	public static function float( $value ): float {
+		if ( ! is_numeric( $value ) ) {
+			return 0;
+		}
+
 		return floatval( $value );
 	}
 
@@ -36,6 +51,10 @@ class Sanitize {
 	 * @return int
 	 */
 	public static function int( $value ): int {
+		if ( ! is_numeric( $value ) ) {
+			return 0;
+		}
+
 		return intval( $value );
 	}
 

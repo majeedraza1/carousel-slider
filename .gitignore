@@ -1,11 +1,12 @@
 # Folders
-.git/
-.idea/
-node_modules/
-vendor/*
-wordpress/*
+.git
+.idea
+node_modules
+vendor
+wordpress
 assets/css
 assets/js
+tests/coverage
 
 # Files
 **.map

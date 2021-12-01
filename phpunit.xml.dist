@@ -8,10 +8,28 @@
 	convertWarningsToExceptions="true"
 >
 	<testsuites>
-		<testsuite name="unit">
-			<directory prefix="test-" suffix=".php">./tests/</directory>
+		<testsuite name="Carousel Slider Test Suite">
+			<directory suffix="Test.php">./tests/</directory>
 		</testsuite>
 	</testsuites>
+	<logging>
+		<log type="coverage-html" target="./tests/coverage"/>
+	</logging>
+	<filter>
+		<whitelist>
+			<file>carousel-slider.php</file>
+			<directory suffix=".php">includes/</directory>
+			<directory suffix=".php">modules/</directory>
+			<exclude>
+				<file>includes/Ajax.php</file>
+				<file>includes/Assets.php</file>
+				<file>includes/Autoloader.php</file>
+				<file>includes/i18n.php</file>
+				<file>includes/Plugin.php</file>
+				<file>includes/Upgrader.php</file>
+			</exclude>
+		</whitelist>
+	</filter>
 
 	<php>
 		<env name="WP_PHPUNIT__TESTS_CONFIG" value="tests/wp-config.php"/>

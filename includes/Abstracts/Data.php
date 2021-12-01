@@ -91,12 +91,7 @@ class Data implements ArrayAccess, JsonSerializable {
 	 */
 	public function get_prop( string $key, $default = '' ) {
 		if ( $this->has_prop( $key ) ) {
-			$value = $this->data[ $key ];
-			if ( is_numeric( $value ) ) {
-				return is_float( $value ) ? floatval( $value ) : intval( $value );
-			}
-
-			return $value;
+			return $this->data[ $key ];
 		}
 
 		return $default;
@@ -114,7 +109,7 @@ class Data implements ArrayAccess, JsonSerializable {
 	}
 
 	/**
-	 * Whether a offset exists
+	 * Whether an offset exists
 	 *
 	 * @param mixed $offset An offset to check for.
 	 *
