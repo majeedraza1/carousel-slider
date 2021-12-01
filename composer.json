@@ -19,10 +19,6 @@
       "CarouselSlider\\Modules\\": "modules"
     }
   },
-  "require": {
-    "php": "^7.0 || ^8.0",
-    "ext-json": "*"
-  },
   "require-dev": {
     "phpunit/phpunit": "^7.0",
     "roots/wordpress": "^5.0",
