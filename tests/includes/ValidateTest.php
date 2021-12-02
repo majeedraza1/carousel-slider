@@ -17,4 +17,10 @@ class ValidateTest extends WP_UnitTestCase {
 		$this->assertTrue( Validate::checked( 1 ) );
 		$this->assertTrue( Validate::checked( '1' ) );
 	}
+
+	public function test_it_validate_json() {
+		$this->assertTrue( Validate::json( wp_json_encode( [ 'key' => 'value' ] ) ) );
+		$this->assertFalse( Validate::json( [ 'key' => 'value' ] ) );
+		$this->assertFalse( Validate::json( 'String' ) );
+	}
 }

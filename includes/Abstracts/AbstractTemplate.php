@@ -14,7 +14,7 @@ abstract class AbstractTemplate {
 	 *
 	 * @return array
 	 */
-	protected static function get_default_settings(): array {
+	public static function get_default_settings(): array {
 		return [
 			// General Settings
 			'_image_size'                  => 'medium',
@@ -57,7 +57,7 @@ abstract class AbstractTemplate {
 	 *
 	 * @return array
 	 */
-	protected static function get_images( string $image_size = 'full', int $per_page = 100 ): array {
+	public static function get_images( string $image_size = 'full', int $per_page = 100 ): array {
 		$args        = array(
 			'order'          => 'DESC',
 			'post_type'      => 'attachment',
@@ -67,14 +67,10 @@ abstract class AbstractTemplate {
 		);
 		$attachments = get_posts( $args );
 
-		$images = array();
+		$images = [];
 
 		foreach ( $attachments as $attachment ) {
-			if ( ! $attachment instanceof WP_Post ) {
-				continue;
-			}
-
-			if ( ! in_array( $attachment->post_mime_type, array( 'image/jpeg', 'image/png' ) ) ) {
+			if ( ! in_array( $attachment->post_mime_type, [ 'image/jpeg', 'image/png' ] ) ) {
 				continue;
 			}
 
@@ -82,7 +78,7 @@ abstract class AbstractTemplate {
 			$_link_url  = get_post_meta( $attachment->ID, '_carousel_slider_link_url', true );
 			$_image_alt = get_post_meta( $attachment->ID, '_wp_attachment_image_alt', true );
 
-			$images[] = array(
+			$images[] = [
 				'id'           => $attachment->ID,
 				'title'        => $attachment->post_title,
 				'description'  => $attachment->post_content,
@@ -92,7 +88,7 @@ abstract class AbstractTemplate {
 				'image_src'    => $src[0],
 				'image_width'  => $src[1],
 				'image_height' => $src[2],
-			);
+			];
 		}
 
 		$widths  = wp_list_pluck( $images, 'image_width' );
@@ -109,7 +105,7 @@ abstract class AbstractTemplate {
 	 *
 	 * @return int|WP_Error The post ID on success. The value 0 or \WP_Error on failure.
 	 */
-	protected static function create_slider( $slider_title ) {
+	public static function create_slider( $slider_title ) {
 		return wp_insert_post( [
 			'post_title'     => $slider_title,
 			'post_status'    => 'publish',

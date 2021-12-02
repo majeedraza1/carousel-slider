@@ -253,7 +253,7 @@ class Helper {
 				return sprintf( '%s="%s"', $key, implode( " ", $value ) );
 			}
 
-			if ( is_string( $value ) && self::is_json( $value ) ) {
+			if ( is_string( $value ) && Validate::json( $value ) ) {
 				return sprintf( "%s='%s'", $key, $value );
 			}
 
@@ -271,9 +271,9 @@ class Helper {
 	 * @return bool
 	 */
 	public static function is_json( $string ): bool {
-		json_decode( $string );
+		_deprecated_function( __METHOD__, '2.0.6', Validate::class . '::json' );
 
-		return ( json_last_error() == JSON_ERROR_NONE );
+		return Validate::json( $string );
 	}
 
 	/**

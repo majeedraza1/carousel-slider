@@ -28,4 +28,20 @@ class Validate {
 	public static function checked( $value ): bool {
 		return in_array( $value, [ 'yes', 'on', '1', 1, true, 'true' ], true );
 	}
+
+	/**
+	 * Check if value is json
+	 *
+	 * @param mixed $string
+	 *
+	 * @return bool
+	 */
+	public static function json( $string ): bool {
+		if ( ! is_string( $string ) ) {
+			return false;
+		}
+		json_decode( $string );
+
+		return ( json_last_error() == JSON_ERROR_NONE );
+	}
 }
