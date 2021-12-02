@@ -117,11 +117,15 @@ class Upgrader {
 	 */
 	public function fix_meta_key_typo_error() {
 		$ids = static::get_sliders_ids();
-		global $wpdb;
-		$sql = "UPDATE {$wpdb->postmeta} SET `meta_key`= '_infinity_loop' WHERE `meta_key` = '_inifnity_loop'";
-		$sql .= " AND post_id IN(" . implode( ',', $ids ) . ")";
+		if ( count( $ids ) ) {
+			global $wpdb;
+			$sql = "UPDATE {$wpdb->postmeta} SET `meta_key`= '_infinity_loop' WHERE `meta_key` = '_inifnity_loop'";
+			$sql .= " AND post_id IN(" . implode( ',', $ids ) . ")";
 
-		return $wpdb->query( $sql );
+			return $wpdb->query( $sql );
+		}
+
+		return false;
 	}
 
 	/**
@@ -131,11 +135,15 @@ class Upgrader {
 	 */
 	public function fix_product_query_type_typo_error() {
 		$ids = static::get_sliders_ids();
-		global $wpdb;
-		$sql = "UPDATE {$wpdb->postmeta} SET `meta_value`= 'query_product' WHERE `meta_value` = 'query_porduct'";
-		$sql .= " AND `meta_key` = '_product_query_type' AND post_id IN(" . implode( ',', $ids ) . ")";
+		if ( count( $ids ) ) {
+			global $wpdb;
+			$sql = "UPDATE {$wpdb->postmeta} SET `meta_value`= 'query_product' WHERE `meta_value` = 'query_porduct'";
+			$sql .= " AND `meta_key` = '_product_query_type' AND post_id IN(" . implode( ',', $ids ) . ")";
 
-		return $wpdb->query( $sql );
+			return $wpdb->query( $sql );
+		}
+
+		return false;
 	}
 
 	/**
