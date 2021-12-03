@@ -269,7 +269,8 @@ class MetaBox {
 
 	public function navigation_settings_callback() {
 		$metaBox = new MetaBoxForm;
-		$metaBox->select( [
+		$metaBox->field( [
+			'type'    => 'select',
 			'id'      => '_nav_button',
 			'class'   => 'small-text',
 			'name'    => esc_html__( 'Show Arrow Nav', 'carousel-slider' ),
@@ -282,7 +283,8 @@ class MetaBox {
 			'std'     => 'on',
 			'context' => 'side',
 		] );
-		$metaBox->text( [
+		$metaBox->field( [
+			'type'    => 'text',
 			'id'      => '_slide_by',
 			'class'   => 'small-text',
 			'name'    => esc_html__( 'Arrow Steps', 'carousel-slider' ),

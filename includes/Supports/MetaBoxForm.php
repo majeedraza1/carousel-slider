@@ -3,120 +3,86 @@
 namespace CarouselSlider\Supports;
 
 use CarouselSlider\Helper;
+use CarouselSlider\Interfaces\MetaboxFieldInterface;
+use CarouselSlider\Supports\MetaboxApi\Fields\BaseField;
+use CarouselSlider\Supports\MetaboxApi\Fields\ButtonGroup;
+use CarouselSlider\Supports\MetaboxApi\Fields\Checkbox;
+use CarouselSlider\Supports\MetaboxApi\Fields\Color;
+use CarouselSlider\Supports\MetaboxApi\Fields\Select;
+use CarouselSlider\Supports\MetaboxApi\Fields\Spacing;
+use CarouselSlider\Supports\MetaboxApi\Fields\Text;
+use CarouselSlider\Supports\MetaboxApi\Fields\Textarea;
 
 defined( 'ABSPATH' ) || exit;
 
 class MetaBoxForm {
 
 	/**
+	 * Map field settings
+	 *
+	 * @param array $settings
+	 *
+	 * @return array
+	 */
+	public function map_field_settings( array $settings ): array {
+		$attrs = [
+			'name'    => 'label',
+			'desc'    => 'description',
+			'class'   => 'field_class',
+			'options' => 'choices',
+			'std'     => 'default',
+		];
+		foreach ( $settings as $key => $value ) {
+			if ( isset( $attrs[ $key ] ) ) {
+				$settings[ $attrs[ $key ] ] = $value;
+				unset( $settings[ $key ] );
+			}
+		}
+
+		return $settings;
+	}
+
+	/**
+	 * @param string $type
+	 *
+	 * @return BaseField|MetaboxFieldInterface
+	 */
+	public function get_field_class( string $type = 'text' ) {
+		$types = [
+			'text'         => Text::class,
+			'textarea'     => Textarea::class,
+			'spacing'      => Spacing::class,
+			'checkbox'     => Checkbox::class,
+			'button_group' => ButtonGroup::class,
+			'select'       => Select::class,
+			'color'        => Color::class,
+		];
+
+		$className = array_key_exists( $type, $types ) ? $types[ $type ] : $types['text'];
+
+		return new $className;
+	}
+
+	/**
 	 * Generate text field
 	 *
 	 * @param array $args
-	 */
-	public function text( array $args ) {
-		if ( ! isset( $args['id'], $args['name'] ) ) {
-			return;
-		}
-
-		list( $name, $value ) = $this->get_name_and_value( $args );
-		$class = isset( $args['class'] ) ? esc_attr( $args['class'] ) : 'sp-input-text';
-
-		echo $this->field_before( $args );
-		echo sprintf( '<input type="text" class="' . $class . '" value="%1$s" id="%2$s" name="%3$s">', $value, $args['id'], $name );
-		echo $this->field_after( $args );
-	}
-
-	/**
-	 * Generate textarea field
 	 *
-	 * @param array $args
+	 * @return string
 	 */
-	public function textarea( array $args ) {
-		if ( ! isset( $args['id'], $args['name'] ) ) {
-			return;
-		}
-
-		list( $name, $value ) = $this->get_name_and_value( $args );
-		$cols = $args['cols'] ?? 35;
-		$rows = $args['rows'] ?? 6;
-
-		echo $this->field_before( $args );
-		echo sprintf( '<textarea class="sp-input-textarea" id="%2$s" name="%3$s" cols="%4$d" rows="%5$d">%1$s</textarea>', esc_textarea( $value ), $args['id'], $name, $cols, $rows );
-		echo $this->field_after( $args );
-	}
-
-	/**
-	 * Generate color picker field
-	 *
-	 * @param array $args
-	 */
-	public function color( array $args ) {
-		if ( ! isset( $args['id'], $args['name'] ) ) {
-			return;
-		}
-
-		list( $name, $value ) = $this->get_name_and_value( $args );
-		$std_value = $args['std'] ?? '';
-
-		echo $this->field_before( $args );
-		echo '<br>';
-		echo sprintf( '<input type="text" class="color-picker" value="%1$s" id="%2$s" name="%3$s" data-alpha-enabled="true" data-default-color="%4$s">', $value, $args['id'], $name, $std_value );
-		echo $this->field_after( $args );
-	}
-
-	/**
-	 * Generate date picker field
-	 *
-	 * @param array $args
-	 */
-	public function date( array $args ) {
-		if ( ! isset( $args['id'], $args['name'] ) ) {
-			return;
-		}
-
+	public function field( array $args ): string {
 		list( $name, $value ) = $this->get_name_and_value( $args );
 
-		echo $this->field_before( $args );
-		echo sprintf( '<input type="date" class="sp-input-text" value="%1$s" id="%2$s" name="%3$s">', $value, $args['id'], $name );
-		echo $this->field_after( $args );
-	}
+		$field = self::get_field_class( $args['type'] ?? 'text' );
+		$field->set_settings( $this->map_field_settings( $args ) );
+		$field->set_name( $name );
+		$field->set_value( $value );
 
-	/**
-	 * Generate number field
-	 *
-	 * @param array $args
-	 */
-	public function number( array $args ) {
-		if ( ! isset( $args['id'], $args['name'] ) ) {
-			return;
-		}
+		$html = $this->field_before( $args );
+		$html .= $field->render();
+		$html .= $this->field_after( $args );
 
-		list( $name, $value ) = $this->get_name_and_value( $args );
-		$class = isset( $args['class'] ) ? esc_attr( $args['class'] ) : 'sp-input-text';
-
-		echo $this->field_before( $args );
-		echo sprintf( '<input type="number" class="' . $class . '" value="%1$s" id="%2$s" name="%3$s">', $value, $args['id'], $name );
-		echo $this->field_after( $args );
-	}
-
-	/**
-	 * Generate checkbox field
-	 *
-	 * @param array $args
-	 */
-	public function checkbox( array $args ) {
-		if ( ! isset( $args['id'], $args['name'] ) ) {
-			return;
-		}
-
-		list( $name, $value ) = $this->get_name_and_value( $args );
-		$checked = ( $value == 'on' ) ? ' checked' : '';
-		$label   = $args['label'] ?? '';
-
-		echo $this->field_before( $args );
-		echo sprintf( '<input type="hidden" name="%1$s" value="off">', $name );
-		echo sprintf( '<label for="%2$s"><input type="checkbox" ' . $checked . ' value="on" id="%2$s" name="%1$s">%3$s</label>', $name, $args['id'], $label );
-		echo $this->field_after( $args );
+		return $html;
 	}
 
 	/**
@@ -125,22 +91,10 @@ class MetaBoxForm {
 	 * @param $args
 	 */
 	public function select( $args ) {
-		if ( ! isset( $args['id'], $args['name'] ) ) {
-			return;
-		}
+		$args['type']        = 'select';
+		$args['field_class'] = 'select2 sp-input-text';
 
-		list( $name, $value ) = $this->get_name_and_value( $args );
-		$multiple = isset( $args['multiple'] ) ? 'multiple' : '';
-		$class    = isset( $args['class'] ) ? esc_attr( $args['class'] ) : 'select2 sp-input-text';
-
-		echo $this->field_before( $args );
-		echo sprintf( '<select name="%1$s" id="%2$s" class="' . $class . '" %3$s>', $name, $args['id'], $multiple );
-		foreach ( $args['options'] as $key => $option ) {
-			$selected = ( $value == $key ) ? ' selected="selected"' : '';
-			echo '<option value="' . $key . '" ' . $selected . '>' . $option . '</option>';
-		}
-		echo '</select>';
-		echo $this->field_after( $args );
+		echo $this->field( $args );
 	}
 
 	/**
@@ -150,29 +104,20 @@ class MetaBoxForm {
 	 * @param $args
 	 */
 	public function posts_list( $args ) {
-		if ( ! isset( $args['id'], $args['name'] ) ) {
-			return;
-		}
-
-		list( $name, $value ) = $this->get_name_and_value( $args );
-		$value     = explode( ',', $value );
-		$multiple  = isset( $args['multiple'] ) ? 'multiple' : '';
-		$post_type = $args['post_type'] ?? 'post';
-
-		echo $this->field_before( $args );
-		echo '<select name="' . $name . '" id="' . $args['id'] . '" class="select2 sp-input-text" ' . $multiple . '>';
-		$posts = get_posts( array(
-			'post_type'      => $post_type,
+		$posts = get_posts( [
+			'post_type'      => $args['post_type'] ?? 'post',
 			'post_status'    => 'publish',
 			'posts_per_page' => - 1
-		) );
+		] );
 
+		$args['type']        = 'select';
+		$args['field_class'] = 'select2 sp-input-text';
+		$args['choices']     = [];
 		foreach ( $posts as $post ) {
-			$selected = in_array( $post->ID, $value ) ? ' selected="selected"' : '';
-			echo '<option value="' . $post->ID . '" ' . $selected . '>' . $post->post_title . '</option>';
+			$args['choices'][ $post->ID ] = $post->post_title;
 		}
-		echo '</select>';
-		echo $this->field_after( $args );
+
+		echo $this->field( $args );
 	}
 
 	/**
@@ -276,41 +221,16 @@ class MetaBoxForm {
 		echo $html;
 	}
 
-	public function file( array $args ) {
-		if ( ! isset( $args['id'], $args['name'] ) ) {
-			return;
-		}
-
-		list( $name, $value ) = $this->get_name_and_value( $args );
-
-		echo $this->field_before( $args );
-		echo sprintf( '<input type="text" class="sp-input-text" value="%1$s" id="%2$s" name="%3$s">', $value, $args['id'], $name );
-		echo sprintf( '<input type="button" class="button" id="carousel_slider_video_btn" value="%s">', __( 'Browse', 'carousel-slider' ) );
-		echo $this->field_after( $args );
-	}
-
 	/**
 	 * Generate image sizes dropdown from available image sizes
 	 *
 	 * @param array $args
 	 */
 	public function image_sizes( array $args ) {
-		if ( ! isset( $args['id'], $args['name'] ) ) {
-			return;
-		}
+		$args['type']    = 'select';
+		$args['choices'] = Helper::get_available_image_sizes();
 
-		list( $name, $value ) = $this->get_name_and_value( $args );
-
-		$sizes = Helper::get_available_image_sizes();
-
-		echo $this->field_before( $args );
-		echo '<select name="' . $name . '" id="' . $args['id'] . '" class="select2 sp-input-text">';
-		foreach ( $sizes as $key => $option ) {
-			$selected = ( $value == $key ) ? ' selected="selected"' : '';
-			echo '<option value="' . $key . '" ' . $selected . '>' . $option . '</option>';
-		}
-		echo '</select>';
-		echo $this->field_after( $args );
+		echo $this->field( $args );
 	}
 
 	/**
@@ -319,91 +239,17 @@ class MetaBoxForm {
 	 * @param array $args
 	 */
 	public function post_terms( array $args ) {
-		global $wp_version;
+		$terms = get_terms( [ 'taxonomy' => $args['taxonomy'] ?? 'category' ] );
 
-		if ( ! isset( $args['id'], $args['name'] ) ) {
-			return;
-		}
-		list( $name, $value ) = $this->get_name_and_value( $args );
-
-		$value    = explode( ',', strip_tags( rtrim( $value, ',' ) ) );
-		$multiple = isset( $args['multiple'] ) ? 'multiple' : '';
-		$taxonomy = $args['taxonomy'] ?? 'category';
-
-		if ( version_compare( $wp_version, '4.5.0', '>=' ) ) {
-			$terms = get_terms( array( 'taxonomy' => $taxonomy ) );
-		} else {
-			$terms = get_terms( $taxonomy );
+		$args['type']    = 'select';
+		$args['choices'] = [];
+		if ( ! is_wp_error( $terms ) ) {
+			foreach ( $terms as $term ) {
+				$args['choices'][ $term->term_id ] = sprintf( '%s (%s)', $term->name, $term->count );
+			}
 		}
 
-		if ( is_wp_error( $terms ) ) {
-			$terms = array();
-		}
-
-		echo $this->field_before( $args );
-
-		echo '<select name="' . $name . '" id="' . $args['id'] . '" class="select2 sp-input-text" ' . $multiple . '>';
-		foreach ( $terms as $term ) {
-			$title    = sprintf( '%s (%s)', $term->name, $term->count );
-			$selected = in_array( $term->term_id, $value ) ? ' selected="selected"' : '';
-			echo '<option value="' . $term->term_id . '" ' . $selected . '>' . $title . '</option>';
-		}
-		echo '</select>';
-
-		echo $this->field_after( $args );
-	}
-
-	/**
-	 * Generate spacing input field
-	 *
-	 * @param array $args
-	 */
-	public function spacing( array $args ) {
-		list( $id, $name ) = self::get_name_and_id( $args );
-		$value   = self::get_value( $args );
-		$default = $args['default'] ?? [];
-
-		$html = self::field_before( $args );
-		$html .= '<div class="sp-field-spacing flex">';
-
-		// Top
-		if ( isset( $default['top'] ) ) {
-			$top_value = $value['top'] ?? $default['top'];
-			$html      .= '<div class="carousel-slider-dimension">';
-			$html      .= '<span class="add-on"><i class="dashicons dashicons-arrow-up-alt"></i></span>';
-			$html      .= '<input type="text" name="' . $name . "[top]" . '" value="' . esc_attr( $top_value ) . '">';
-			$html      .= '</div>';
-		}
-
-		// Right
-		if ( isset( $default['right'] ) ) {
-			$right_value = isset( $value['right'] ) ? esc_attr( $value['right'] ) : $default['right'];
-			$html        .= '<div class="carousel-slider-dimension">';
-			$html        .= '<span class="add-on"><i class="dashicons dashicons-arrow-right-alt"></i></span>';
-			$html        .= '<input type="text" name="' . $name . "[right]" . '" value="' . $right_value . '">';
-			$html        .= '</div>';
-		}
-		// Bottom
-		if ( isset( $default['bottom'] ) ) {
-			$bottom_value = isset( $value['bottom'] ) ? esc_attr( $value['bottom'] ) : $default['bottom'];
-			$html         .= '<div class="carousel-slider-dimension">';
-			$html         .= '<span class="add-on"><i class="dashicons dashicons-arrow-down-alt"></i></span>';
-			$html         .= '<input type="text" name="' . $name . "[bottom]" . '" value="' . $bottom_value . '">';
-			$html         .= '</div>';
-		}
-		// Bottom
-		if ( isset( $default['left'] ) ) {
-			$left_value = isset( $value['left'] ) ? esc_attr( $value['left'] ) : $default['left'];
-			$html       .= '<div class="carousel-slider-dimension">';
-			$html       .= '<span class="add-on"><i class="dashicons dashicons-arrow-left-alt"></i></span>';
-			$html       .= '<input type="text" name="' . $name . "[left]" . '" value="' . $left_value . '">';
-			$html       .= '</div>';
-		}
-
-		$html .= '</div>';
-		$html .= self::field_after( $args );
-
-		echo $html;
+		echo $this->field( $args );
 	}
 
 	/**
@@ -490,101 +336,8 @@ class MetaBoxForm {
 		return '</div></div>';
 	}
 
-	/**
-	 * Get meta value
-	 *
-	 * @param array $args
-	 *
-	 * @return mixed
-	 */
-	private static function get_value( array $args ) {
-		global $post;
-
-		$default = $args['default'] ?? '';
-		$meta    = get_post_meta( $post->ID, $args['id'], true );
-		$value   = ! empty( $meta ) ? $meta : $default;
-
-		if ( isset( $args['meta_key'] ) ) {
-			$meta  = get_post_meta( $post->ID, $args['meta_key'], true );
-			$value = ! empty( $meta[ $args['id'] ] ) ? $meta[ $args['id'] ] : $default;
-
-			if ( isset( $args['index'] ) ) {
-				$value = ! empty( $meta[ $args['index'] ][ $args['id'] ] ) ? $meta[ $args['index'] ][ $args['id'] ] : $default;
-			}
-		}
-
-		if ( $value == 'zero' ) {
-			$value = 0;
-		}
-
-		return $value;
-	}
-
-	/**
-	 * Get input attribute name
-	 *
-	 * @param array $args
-	 *
-	 * @return array
-	 */
-	private static function get_name_and_id( array $args ): array {
-		$group = $args['group'] ?? 'carousel_slider';
-		$index = $args['index'] ?? false;
-		$id    = $args['id'];
-		$name  = $id;
-
-		if ( $group ) {
-			if ( false !== $index ) {
-				$name = $group . '[' . $index . ']' . '[' . $name . ']';
-				$id   = $group . '_' . $index . '_' . $id;
-			} else {
-				$name = $group . '[' . $name . ']';
-				$id   = $group . '_' . $id;
-			}
-		}
-
-		if ( self::is_multiple( $args ) ) {
-			$name = $name . '[]';
-		}
-
-		return [ $id, $name ];
-	}
-
-	/**
-	 * Check if input support multiple value
-	 *
-	 * @param array $args
-	 *
-	 * @return bool
-	 */
-	private static function is_multiple( array $args ): bool {
-		if ( isset( $args['multiple'] ) && $args['multiple'] ) {
-			return true;
-		}
-
-		if ( isset( $args['input_attributes']['multiple'] ) && $args['input_attributes']['multiple'] ) {
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
-	 * Check if input is required
-	 *
-	 * @param array $args
-	 *
-	 * @return bool
-	 */
-	private static function is_required( array $args ): bool {
-		if ( isset( $args['required'] ) && $args['required'] ) {
-			return true;
-		}
-
-		if ( isset( $args['input_attributes']['required'] ) && $args['input_attributes']['required'] ) {
-			return true;
-		}
-
-		return false;
+	public function __call( $name, $arguments ) {
+		$args = array_merge( ( is_array( $arguments[0] ) ? $arguments[0] : [] ), [ 'type' => $name ] );
+		echo $this->field( $args );
 	}
 }

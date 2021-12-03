@@ -13,7 +13,7 @@ class Template extends AbstractTemplate {
 	 *
 	 * @return array
 	 */
-	protected static function get_default_settings(): array {
+	public static function get_default_settings(): array {
 		return wp_parse_args( [
 			'_slide_type'                  => 'hero-banner-slider',
 			// Responsive Settings

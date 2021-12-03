@@ -39,14 +39,14 @@ class Template extends AbstractTemplate {
 	 *
 	 * @return int The post ID on success. The value 0 on failure.
 	 */
-	public static function create( $slider_title = null, $args = array() ): int {
+	public static function create( string $slider_title = '', array $args = array() ): int {
 		if ( empty( $slider_title ) ) {
 			$slider_title = 'Post Carousel with Latest Post';
 		}
 
 		$post_id = self::create_slider( $slider_title );
 
-		if ( ! $post_id ) {
+		if ( is_wp_error( $post_id ) ) {
 			return 0;
 		}
 
@@ -56,24 +56,21 @@ class Template extends AbstractTemplate {
 		if ( 'specific_posts' == $query_type ) {
 			if ( empty( $data['_post_in'] ) ) {
 				$posts_ids        = self::get_random_posts_ids();
-				$posts_ids        = is_array( $posts_ids ) ? implode( ',', $posts_ids ) : $posts_ids;
-				$data['_post_in'] = $posts_ids;
+				$data['_post_in'] = implode( ',', $posts_ids );
 			}
 		}
 
 		if ( 'post_categories' == $query_type ) {
 			if ( empty( $data['_post_categories'] ) ) {
 				$categories_ids           = self::get_post_categories_ids();
-				$categories_ids           = is_array( $categories_ids ) ? implode( ',', $categories_ids ) : $categories_ids;
-				$data['_post_categories'] = $categories_ids;
+				$data['_post_categories'] = implode( ',', $categories_ids );
 			}
 		}
 
 		if ( 'post_tags' == $query_type ) {
 			if ( empty( $data['_post_tags'] ) ) {
 				$tags_ids           = self::get_post_tags_ids();
-				$tags_ids           = is_array( $tags_ids ) ? implode( ',', $tags_ids ) : $tags_ids;
-				$data['_post_tags'] = $tags_ids;
+				$data['_post_tags'] = implode( ',', $tags_ids );
 			}
 		}
 

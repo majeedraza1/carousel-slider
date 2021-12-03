@@ -2,6 +2,8 @@
 
 namespace CarouselSlider;
 
+use CarouselSlider\Supports\Validate;
+
 defined( 'ABSPATH' ) || exit;
 
 class ViewHelper {

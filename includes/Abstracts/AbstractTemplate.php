@@ -4,7 +4,6 @@ namespace CarouselSlider\Abstracts;
 
 use CarouselSlider\Helper;
 use WP_Error;
-use WP_Post;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -18,7 +17,7 @@ abstract class AbstractTemplate {
 		return [
 			// General Settings
 			'_image_size'                  => 'medium',
-			'_stage_padding'               => (string) 0,
+			'_stage_padding'               => "0",
 			'_margin_right'                => (string) Helper::get_default_setting( 'margin_right' ),
 			'_lazy_load_image'             => Helper::get_default_setting( 'lazy_load_image' ),
 			'_infinity_loop'               => 'on',
