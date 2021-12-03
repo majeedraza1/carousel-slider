@@ -2,7 +2,7 @@
 
 namespace CarouselSlider\Admin;
 
-use CarouselSlider\Supports\SettingAPI;
+use CarouselSlider\Supports\SettingApi\DefaultSettingApi;
 use Exception;
 
 defined( 'ABSPATH' ) || exit;
@@ -53,7 +53,7 @@ class Setting {
 	 * @throws Exception
 	 */
 	public function settings() {
-		$settings = new SettingAPI;
+		$settings = new DefaultSettingApi();
 		$settings->add_menu( [
 			'page_title'  => __( 'Carousel Slider Settings', 'carousel-slider' ),
 			'menu_title'  => __( 'Settings', 'carousel-slider' ),
@@ -64,11 +64,11 @@ class Setting {
 		] );
 
 		// Add settings page tab
-		$settings->add_tab( [
+		$settings->set_panel( [
 			'id'    => 'general',
 			'title' => __( 'General', 'carousel-slider' ),
 		] );
-		$settings->add_tab( [
+		$settings->set_panel( [
 			'id'    => 'woocommerce',
 			'title' => __( 'WooCommerce', 'carousel-slider' ),
 		] );
@@ -83,15 +83,15 @@ class Setting {
 				'always'    => __( 'Always', 'carousel-slider' ),
 				'optimized' => __( 'Optimized (recommended)', 'carousel-slider' ),
 			],
-			'tab'     => 'general',
+			'panel'   => 'general',
 		] );
 		$settings->add_field( [
-			'id'   => 'show_structured_data',
-			'type' => 'checkbox',
-			'std'  => '1',
-			'name' => __( 'Show Structured Data', 'carousel-slider' ),
-			'desc' => __( 'If you enable to show, then it will generate structured data for every slider for better SEO. But if you are using some other SEO plugin to handle SEO, then you can disabled it.', 'carousel-slider' ),
-			'tab'  => 'general',
+			'id'    => 'show_structured_data',
+			'type'  => 'checkbox',
+			'std'   => '1',
+			'name'  => __( 'Show Structured Data', 'carousel-slider' ),
+			'desc'  => __( 'If you enable to show, then it will generate structured data for every slider for better SEO. But if you are using some other SEO plugin to handle SEO, then you can disabled it.', 'carousel-slider' ),
+			'panel' => 'general',
 		] );
 		$settings->add_field( [
 			'id'      => 'woocommerce_shop_loop_item_template',
@@ -99,14 +99,14 @@ class Setting {
 			'std'     => 'v1-compatibility',
 			'name'    => __( 'Slider item template', 'carousel-slider' ),
 			'desc'    => [
-				__( '<strong>WooCommerce Default</strong> use hook to load shop loop template and does not allow to hide/show title, rating, price, card button, sale tag using slider settings.', 'carousel-slider' ),
-				__( '<strong>Compatibility mode</strong> use custom template and allow to hide/show title, rating, price, card button, sale tag.', 'carousel-slider' ),
+				__( '<strong>WooCommerce Default</strong> use hook to load shop loop template and does not allow hiding/showing title, rating, price, card button, sale tag using slider settings.', 'carousel-slider' ),
+				__( '<strong>Compatibility mode</strong> use custom template and allow hiding/showing title, rating, price, card button, sale tag.', 'carousel-slider' ),
 			],
 			'options' => [
 				'wc-default'       => __( 'WooCommerce Default (recommended)', 'carousel-slider' ),
 				'v1-compatibility' => __( 'Compatibility mode (with version 1)', 'carousel-slider' ),
 			],
-			'tab'     => 'woocommerce',
+			'panel'   => 'woocommerce',
 		] );
 	}
 }
