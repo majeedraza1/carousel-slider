@@ -43,7 +43,7 @@
 		}
 	}
 
-	&.arrows-visible-always {
+	&.arrows-visibility-always {
 		.owl-prev,
 		.owl-next {
 			opacity: 1;
@@ -124,7 +124,7 @@
 	}
 
 	// Dots visibility
-	&.dots-visible-hover {
+	&.dots-visibility-hover {
 		.owl-dots {
 			opacity: 0;
 		}

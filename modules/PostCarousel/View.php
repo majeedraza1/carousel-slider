@@ -22,22 +22,7 @@ class View extends AbstractView {
 
 		$posts = PostCarouselHelper::get_posts( $slider_id );
 
-		$css_classes = [
-			"carousel-slider-outer",
-			"carousel-slider-outer-posts",
-			"carousel-slider-outer-{$slider_id}"
-		];
-
-		$attributes_array = Helper::array_to_attribute( [
-			'id'                => 'id-' . $slider_id,
-			'class'             => implode( ' ', Helper::get_css_classes( $slider_id ) ),
-			'style'             => Helper::array_to_style( Helper::get_css_variable( $slider_id ) ),
-			'data-slide-type'   => $slider_type,
-			'data-owl-settings' => wp_json_encode( Helper::get_owl_carousel_settings( $slider_id ) ),
-		] );
-
-		$html = '<div class="' . join( ' ', $css_classes ) . '">' . PHP_EOL;
-		$html .= "<div " . join( " ", $attributes_array ) . ">" . PHP_EOL;
+		$html = $this->start_wrapper_html();
 
 		foreach ( $posts as $post ) {
 			setup_postdata( $post );
@@ -125,8 +110,7 @@ class View extends AbstractView {
 		}
 		wp_reset_postdata();
 
-		$html .= '</div><!-- .carousel-slider-' . $slider_id . ' -->' . PHP_EOL;
-		$html .= '</div><!-- .carousel-slider-outer-' . $slider_id . ' -->' . PHP_EOL;
+		$html .= $this->end_wrapper_html();
 
 		return apply_filters( 'carousel_slider_posts_carousel', $html, $slider_id, $posts );
 	}

@@ -357,7 +357,7 @@ class MetaBox {
 				'square' => esc_html__( 'Square', 'carousel-slider' ),
 				'circle' => esc_html__( 'Circle', 'carousel-slider' ),
 			],
-			'std'     => 'center',
+			'std'     => 'circle',
 			'context' => 'side',
 		] );
 		echo '<hr>';

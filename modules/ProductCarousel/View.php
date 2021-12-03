@@ -23,10 +23,10 @@ class View extends AbstractView {
 		$product_query = get_post_meta( $this->slider_id, '_product_query', true );
 
 		if ( $query_type == 'query_product' && $product_query == 'product_categories_list' ) {
-			return self::get_category_view( $this->slider_id, $this->slider_type );
+			return $this->get_category_view();
 		}
 
-		return self::get_view( $this->slider_id, $this->slider_type );
+		return $this->get_view();
 	}
 
 	/**
@@ -55,32 +55,25 @@ class View extends AbstractView {
 	}
 
 	/**
-	 * @param int $slider_id
-	 * @param string $slider_type
-	 *
+	 * @return array
+	 */
+	public function get_css_variable(): array {
+		$css_vars                            = parent::get_css_variable();
+		$css_vars["--cs-product-primary"]    = get_post_meta( $this->get_slider_id(), '_product_button_bg_color', true );
+		$css_vars["--cs-product-on-primary"] = get_post_meta( $this->get_slider_id(), '_product_button_text_color', true );
+		$css_vars["--cs-product-text"]       = get_post_meta( $this->get_slider_id(), '_product_title_color', true );
+
+		return $css_vars;
+	}
+
+	/**
 	 * @return string
 	 */
-	public static function get_view( int $slider_id, string $slider_type ): string {
-		$products = ProductCarouselHelper::get_products( $slider_id );
-		$settings = self::get_settings( $slider_id );
+	public function get_view(): string {
+		$products = ProductCarouselHelper::get_products( $this->get_slider_id() );
+		$settings = self::get_settings( $this->get_slider_id() );
 
-		$css_classes = [
-			"carousel-slider-outer",
-			"carousel-slider-outer-products",
-			"carousel-slider-outer-{$slider_id}"
-		];
-
-		$css_vars                            = Helper::get_css_variable( $slider_id );
-		$css_vars["--cs-product-primary"]    = get_post_meta( $slider_id, '_product_button_bg_color', true );
-		$css_vars["--cs-product-on-primary"] = get_post_meta( $slider_id, '_product_button_text_color', true );
-		$css_vars["--cs-product-text"]       = get_post_meta( $slider_id, '_product_title_color', true );
-
-		$attributes_array = Helper::get_slider_attributes( $slider_id, $slider_type, [
-			'style' => Helper::array_to_style( $css_vars ),
-		] );
-
-		$html = '<div class="' . join( ' ', $css_classes ) . '">' . PHP_EOL;
-		$html .= "<div " . join( " ", $attributes_array ) . ">" . PHP_EOL;
+		$html = $this->start_wrapper_html();
 
 		global $post;
 		global $product;
@@ -105,8 +98,7 @@ class View extends AbstractView {
 		}
 		wp_reset_postdata();
 
-		$html .= '</div><!-- .carousel-slider-' . $slider_id . ' -->' . PHP_EOL;
-		$html .= '</div><!-- .carousel-slider-outer-' . $slider_id . ' -->' . PHP_EOL;
+		$html .= $this->end_wrapper_html();
 
 		return apply_filters( 'carousel_slider_product_carousel', $html );
 	}
@@ -207,25 +199,14 @@ class View extends AbstractView {
 	/**
 	 * Get view
 	 *
-	 * @param int $slider_id
-	 * @param string $slider_type
-	 *
 	 * @return string
 	 */
-	public static function get_category_view( int $slider_id, string $slider_type ): string {
+	public function get_category_view(): string {
+		$slider_id  = $this->get_slider_id();
 		$categories = ProductCarouselHelper::product_categories();
 
-		$css_classes = [
-			"carousel-slider-outer",
-			"carousel-slider-outer-products",
-			"carousel-slider-outer-{$slider_id}"
-		];
-
-		$attributes_array = Helper::get_slider_attributes( $slider_id, $slider_type );
-
 		ob_start();
-		echo '<div class="' . join( ' ', $css_classes ) . '">' . PHP_EOL;
-		echo "<div " . join( " ", $attributes_array ) . ">" . PHP_EOL;
+		echo $this->start_wrapper_html();
 		foreach ( $categories as $category ) {
 			echo '<div class="product carousel-slider__product">';
 			do_action( 'woocommerce_before_subcategory', $category );
@@ -236,8 +217,7 @@ class View extends AbstractView {
 			echo '</div>' . PHP_EOL;
 		}
 
-		echo '</div><!-- .carousel-slider-' . $slider_id . ' -->' . PHP_EOL;
-		echo '</div><!-- .carousel-slider-outer-' . $slider_id . ' -->' . PHP_EOL;
+		echo $this->end_wrapper_html();
 		$html = ob_get_clean();
 
 		return apply_filters( 'carousel_slider_product_carousel', $html, $slider_id );

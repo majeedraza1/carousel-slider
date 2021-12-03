@@ -3,7 +3,6 @@
 namespace CarouselSlider\Modules\ImageCarousel;
 
 use CarouselSlider\Abstracts\AbstractView;
-use CarouselSlider\Helper;
 use CarouselSlider\Supports\Validate;
 use WP_Post;
 
@@ -36,16 +35,7 @@ class View extends AbstractView {
 		                           Validate::checked( $show_attachment_caption );
 		$show_lightbox           = get_post_meta( $slider_id, '_image_lightbox', true );
 
-		$css_classes = [
-			"carousel-slider-outer",
-			"carousel-slider-outer-images",
-			"carousel-slider-outer-{$slider_id}"
-		];
-
-		$attributes_array = Helper::get_slider_attributes( $slider_id, $slider_type );
-
-		$html = '<div class="' . join( ' ', $css_classes ) . '">' . PHP_EOL;
-		$html .= "<div " . join( " ", $attributes_array ) . ">" . PHP_EOL;
+		$html = $this->start_wrapper_html();
 		foreach ( $ids as $id ) {
 			$_post = get_post( $id );
 			if ( ! $_post instanceof WP_Post ) {
@@ -95,8 +85,7 @@ class View extends AbstractView {
 			}
 			$html .= '</div>' . PHP_EOL;
 		}
-		$html .= '</div><!-- .carousel-slider-' . $slider_id . ' -->' . PHP_EOL;
-		$html .= '</div><!-- .carousel-slider-outer-' . $slider_id . ' -->' . PHP_EOL;
+		$html .= $this->end_wrapper_html();
 
 		return apply_filters( 'carousel_slider_gallery_images_carousel', $html );
 	}
