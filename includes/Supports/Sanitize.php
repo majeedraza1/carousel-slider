@@ -204,4 +204,34 @@ class Sanitize {
 		// Not valid color, return empty string
 		return '';
 	}
+
+
+	/**
+	 * Sanitize meta value
+	 *
+	 * @param mixed $value
+	 *
+	 * @return mixed
+	 */
+	public static function deep( $value ) {
+		if ( empty( $value ) ) {
+			return $value;
+		}
+		if ( is_scalar( $value ) ) {
+			if ( is_numeric( $value ) ) {
+				return self::number( $value );
+			}
+
+			return sanitize_text_field( $value );
+		}
+
+		$sanitized_value = [];
+		if ( is_array( $value ) ) {
+			foreach ( $value as $index => $item ) {
+				$sanitized_value[ $index ] = self::deep( $item );
+			}
+		}
+
+		return $sanitized_value;
+	}
 }

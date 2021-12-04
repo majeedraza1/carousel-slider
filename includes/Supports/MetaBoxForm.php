@@ -3,11 +3,12 @@
 namespace CarouselSlider\Supports;
 
 use CarouselSlider\Helper;
-use CarouselSlider\Interfaces\MetaboxFieldInterface;
+use CarouselSlider\Interfaces\FieldInterface;
 use CarouselSlider\Supports\MetaboxApi\Fields\BaseField;
 use CarouselSlider\Supports\MetaboxApi\Fields\ButtonGroup;
 use CarouselSlider\Supports\MetaboxApi\Fields\Checkbox;
 use CarouselSlider\Supports\MetaboxApi\Fields\Color;
+use CarouselSlider\Supports\MetaboxApi\Fields\ImagesGallery;
 use CarouselSlider\Supports\MetaboxApi\Fields\Select;
 use CarouselSlider\Supports\MetaboxApi\Fields\Spacing;
 use CarouselSlider\Supports\MetaboxApi\Fields\Text;
@@ -45,17 +46,18 @@ class MetaBoxForm {
 	/**
 	 * @param string $type
 	 *
-	 * @return BaseField|MetaboxFieldInterface
+	 * @return BaseField|FieldInterface
 	 */
 	public function get_field_class( string $type = 'text' ) {
 		$types = [
-			'text'         => Text::class,
-			'textarea'     => Textarea::class,
-			'spacing'      => Spacing::class,
-			'checkbox'     => Checkbox::class,
-			'button_group' => ButtonGroup::class,
-			'select'       => Select::class,
-			'color'        => Color::class,
+			'text'           => Text::class,
+			'textarea'       => Textarea::class,
+			'spacing'        => Spacing::class,
+			'checkbox'       => Checkbox::class,
+			'button_group'   => ButtonGroup::class,
+			'select'         => Select::class,
+			'color'          => Color::class,
+			'images_gallery' => ImagesGallery::class,
 		];
 
 		$className = array_key_exists( $type, $types ) ? $types[ $type ] : $types['text'];
@@ -142,50 +144,6 @@ class MetaBoxForm {
 		$html = $this->field_before( $args );
 		$html .= '<input type="hidden" class="' . $class . '" name="' . $name . '" value="' . $value . '" />';
 		$html .= '<a ' . implode( ' ', Helper::array_to_attribute( $attrs ) ) . '>' . esc_html( $button_text ) . '</a>';
-		$html .= $this->field_after( $args );
-		echo $html;
-	}
-
-	/**
-	 * Generate image gallery field
-	 *
-	 * @param $args
-	 */
-	public function images_gallery( $args ) {
-		if ( ! isset( $args['id'], $args['name'] ) ) {
-			return;
-		}
-		list( $name, $value ) = $this->get_name_and_value( $args );
-
-		$btn_text = $value ? 'Edit Gallery' : 'Add Gallery';
-		$value    = strip_tags( rtrim( $value, ',' ) );
-		$output   = '';
-		global $post;
-
-		if ( $value ) {
-			$thumbs = explode( ',', $value );
-			foreach ( $thumbs as $thumb ) {
-				$output .= '<li>' . wp_get_attachment_image( $thumb, array( 50, 50 ) ) . '</li>';
-			}
-		}
-
-		$html = $this->field_before( $args );
-		$html .= '<div class="carousel_slider_images">';
-		$html .= sprintf( '<input type="hidden" value="%1$s" id="_carousel_slider_images_ids" name="%2$s">', $value, $name );
-		$html .= sprintf(
-			'<a href="#" id="%1$s" class="button" data-id="%2$s" data-ids="%3$s" data-create="%5$s" data-edit="%6$s" data-save="%7$s" data-progress="%8$s" data-insert="%9$s">%4$s</a>',
-			'carousel_slider_gallery_btn',
-			$post->ID,
-			$value,
-			$btn_text,
-			esc_html__( 'Create Gallery', 'carousel-slider' ),
-			esc_html__( 'Edit Gallery', 'carousel-slider' ),
-			esc_html__( 'Save Gallery', 'carousel-slider' ),
-			esc_html__( 'Saving...', 'carousel-slider' ),
-			esc_html__( 'Insert', 'carousel-slider' )
-		);
-		$html .= sprintf( '<ul class="carousel_slider_gallery_list">%s</ul>', $output );
-		$html .= '</div>';
 		$html .= $this->field_after( $args );
 		echo $html;
 	}

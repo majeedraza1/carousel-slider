@@ -24,35 +24,6 @@ class SliderSetting extends Data {
 	}
 
 	/**
-	 * @inerhitDoc
-	 */
-	public function get_prop( string $key, $default = '' ) {
-		$value    = parent::get_prop( $key, $default );
-		$num_keys = [
-			'items_on_mobile',
-			'items_on_small_tablet',
-			'items_on_tablet',
-			'items_on_desktop',
-			'items_on_widescreen',
-			'items_on_fullhd',
-			'space_between',
-			'stage_padding',
-			'autoplay_delay',
-			'autoplay_speed',
-		];
-		if ( in_array( $key, $num_keys ) ) {
-			return (int) $value;
-		}
-
-		$bool_keys = [ 'autoplay', 'autoplay_hover_pause', 'loop', 'lazy_load', 'auto_width' ];
-		if ( in_array( $key, $bool_keys ) ) {
-			return Validate::checked( $value );
-		}
-
-		return $value;
-	}
-
-	/**
 	 * Set nav visibility
 	 *
 	 * @param mixed $value
@@ -109,10 +80,16 @@ class SliderSetting extends Data {
 	 * @return void
 	 */
 	protected function read_metadata() {
-		$attribute_meta_key = self::props_to_meta_keys();
-		foreach ( $attribute_meta_key as $attribute => $meta_key ) {
+		$attribute_meta_key = self::props();
+		foreach ( $attribute_meta_key as $attribute => $config ) {
 			$method_name = 'set_' . $attribute;
-			$value       = get_post_meta( $this->slider_id, $meta_key, true );
+			$value       = get_post_meta( $this->slider_id, $config['meta_key'], true );
+			if ( 'int' == $config['type'] ) {
+				$value = (int) $value;
+			}
+			if ( 'bool' == $config['type'] ) {
+				$value = Validate::checked( $value );
+			}
 			if ( method_exists( $this, $method_name ) ) {
 				$this->$method_name( $value );
 			} else {
@@ -131,6 +108,10 @@ class SliderSetting extends Data {
 	public function write_metadata() {
 		$props_to_meta_keys = self::props_to_meta_keys();
 		foreach ( $props_to_meta_keys as $prop_name => $meta_key ) {
+			/**
+			 * @TODO
+			 * convert bool value to yes no
+			 */
 			update_post_meta( $this->slider_id, $meta_key, $this->get_prop( $prop_name ) );
 		}
 	}
@@ -141,33 +122,13 @@ class SliderSetting extends Data {
 	 * @return array
 	 */
 	public static function get_defaults(): array {
-		return [
-			'nav_visibility'        => 'hover',
-			'nav_position'          => 'outside',
-			'nav_size'              => 48,
-			'nav_steps'             => 1,
-			'pagination_visibility' => 'never',
-			'pagination_position'   => 'center',
-			'pagination_size'       => 10,
-			'pagination_shape'      => 'circle',
-			'nav_color'             => Helper::get_default_setting( 'nav_color' ),
-			'nav_active_color'      => Helper::get_default_setting( 'nav_active_color' ),
-			'items_on_mobile'       => 1,
-			'items_on_small_tablet' => 2,
-			'items_on_tablet'       => 2,
-			'items_on_desktop'      => 3,
-			'items_on_widescreen'   => 4,
-			'items_on_fullhd'       => 5,
-			'space_between'         => 30,
-			'stage_padding'         => 0,
-			'autoplay_delay'        => 5000,
-			'autoplay_speed'        => 300,
-			'autoplay'              => true,
-			'autoplay_hover_pause'  => true,
-			'loop'                  => true,
-			'lazy_load'             => true,
-			'auto_width'            => false,
-		];
+		$props = self::props();
+		$data  = [];
+		foreach ( $props as $prop => $config ) {
+			$data[ $prop ] = $config['default'];
+		}
+
+		return $data;
 	}
 
 	/**
@@ -175,32 +136,145 @@ class SliderSetting extends Data {
 	 * @return string[]
 	 */
 	public static function props_to_meta_keys(): array {
+		$props = static::props();
+		$data  = [];
+		foreach ( $props as $prop => $config ) {
+			$data[ $prop ] = $config['meta_key'];
+		}
+
+		return $data;
+	}
+
+	/**
+	 * @return array
+	 */
+	public static function props(): array {
 		return [
-			'nav_visibility'        => '_nav_button',
-			'nav_position'          => '_arrow_position',
-			'nav_size'              => '_arrow_size',
-			'nav_steps'             => '_slide_by',
-			'pagination_visibility' => '_dot_nav',
-			'pagination_position'   => '_bullet_position',
-			'pagination_size'       => '_bullet_size',
-			'pagination_shape'      => '_bullet_shape',
-			'nav_color'             => '_nav_color',
-			'nav_active_color'      => '_nav_active_color',
-			'items_on_mobile'       => '_items_portrait_mobile',
-			'items_on_small_tablet' => '_items_small_portrait_tablet',
-			'items_on_tablet'       => '_items_portrait_tablet',
-			'items_on_desktop'      => '_items_small_desktop',
-			'items_on_widescreen'   => '_items_desktop',
-			'items_on_fullhd'       => '_items',
-			'space_between'         => '_margin_right',
-			'stage_padding'         => '_stage_padding',
-			'autoplay_delay'        => '_autoplay_timeout',
-			'autoplay_speed'        => '_autoplay_speed',
-			'autoplay'              => '_autoplay',
-			'autoplay_hover_pause'  => '_autoplay_pause',
-			'loop'                  => '_infinity_loop',
-			'lazy_load'             => '_lazy_load_image',
-			'auto_width'            => '_auto_width',
+			'nav_visibility'        => [
+				'meta_key' => '_nav_button',
+				'type'     => 'string',
+				'default'  => 'hover',
+			],
+			'nav_position'          => [
+				'meta_key' => '_arrow_position',
+				'type'     => 'string',
+				'default'  => 'outside',
+			],
+			'nav_size'              => [
+				'meta_key' => '_arrow_size',
+				'type'     => 'int',
+				'default'  => 48,
+			],
+			'nav_steps'             => [
+				'meta_key' => '_slide_by',
+				'type'     => [ 'string', 'int' ],
+				'default'  => 1,
+			],
+			'pagination_visibility' => [
+				'meta_key' => '_dot_nav',
+				'type'     => 'string',
+				'default'  => 'never',
+			],
+			'pagination_position'   => [
+				'meta_key' => '_bullet_position',
+				'type'     => 'string',
+				'default'  => 'center',
+			],
+			'pagination_size'       => [
+				'meta_key' => '_bullet_size',
+				'type'     => 'int',
+				'default'  => 10,
+			],
+			'pagination_shape'      => [
+				'meta_key' => '_bullet_shape',
+				'type'     => 'string',
+				'default'  => 'circle',
+			],
+			'nav_color'             => [
+				'meta_key' => '_nav_color',
+				'type'     => 'string',
+				'default'  => Helper::get_default_setting( 'nav_color' ),
+			],
+			'nav_active_color'      => [
+				'meta_key' => '_nav_active_color',
+				'type'     => 'string',
+				'default'  => Helper::get_default_setting( 'nav_active_color' ),
+			],
+			'items_on_mobile'       => [
+				'meta_key' => '_items_portrait_mobile',
+				'type'     => 'int',
+				'default'  => 1,
+			],
+			'items_on_small_tablet' => [
+				'meta_key' => '_items_small_portrait_tablet',
+				'type'     => 'int',
+				'default'  => 1,
+			],
+			'items_on_tablet'       => [
+				'meta_key' => '_items_portrait_tablet',
+				'type'     => 'int',
+				'default'  => 2,
+			],
+			'items_on_desktop'      => [
+				'meta_key' => '_items_small_desktop',
+				'type'     => 'int',
+				'default'  => 3,
+			],
+			'items_on_widescreen'   => [
+				'meta_key' => '_items_desktop',
+				'type'     => 'int',
+				'default'  => 4,
+			],
+			'items_on_fullhd'       => [
+				'meta_key' => '_items',
+				'type'     => 'int',
+				'default'  => 5,
+			],
+			'space_between'         => [
+				'meta_key' => '_margin_right',
+				'type'     => 'int',
+				'default'  => 30,
+			],
+			'stage_padding'         => [
+				'meta_key' => '_stage_padding',
+				'type'     => 'int',
+				'default'  => 0,
+			],
+			'autoplay_delay'        => [
+				'meta_key' => '_autoplay_timeout',
+				'type'     => 'int',
+				'default'  => 5000,
+			],
+			'autoplay_speed'        => [
+				'meta_key' => '_autoplay_speed',
+				'type'     => 'int',
+				'default'  => 300,
+			],
+			'autoplay'              => [
+				'meta_key' => '_autoplay',
+				'type'     => 'bool',
+				'default'  => true,
+			],
+			'autoplay_hover_pause'  => [
+				'meta_key' => '_autoplay_pause',
+				'type'     => 'bool',
+				'default'  => true,
+			],
+			'loop'                  => [
+				'meta_key' => '_infinity_loop',
+				'type'     => 'bool',
+				'default'  => true,
+			],
+			'lazy_load'             => [
+				'meta_key' => '_lazy_load_image',
+				'type'     => 'bool',
+				'default'  => true,
+			],
+			'auto_width'            => [
+				'meta_key' => '_auto_width',
+				'type'     => 'bool',
+				'default'  => false,
+			],
 		];
 	}
 }

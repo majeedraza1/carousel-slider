@@ -2,6 +2,6 @@
 
 namespace CarouselSlider\Interfaces;
 
-interface MetaboxFieldInterface {
+interface FieldInterface {
 	public function render(): string;
 }

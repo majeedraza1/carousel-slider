@@ -2,10 +2,10 @@
 
 namespace CarouselSlider\Supports\MetaboxApi\Fields;
 
-use CarouselSlider\Interfaces\MetaboxFieldInterface;
+use CarouselSlider\Interfaces\FieldInterface;
 use CarouselSlider\Supports\Sanitize;
 
-abstract class BaseField implements MetaboxFieldInterface {
+abstract class BaseField implements FieldInterface {
 	/**
 	 * Field settings
 	 *
@@ -29,35 +29,6 @@ abstract class BaseField implements MetaboxFieldInterface {
 	 * @return string
 	 */
 	abstract public function render(): string;
-
-	/**
-	 * Sanitize meta value
-	 *
-	 * @param mixed $value
-	 *
-	 * @return mixed
-	 */
-	public function sanitize( $value ) {
-		if ( empty( $value ) ) {
-			return $value;
-		}
-		if ( is_scalar( $value ) ) {
-			if ( is_numeric( $value ) ) {
-				return Sanitize::number( $value );
-			}
-
-			return sanitize_text_field( $value );
-		}
-
-		$sanitized_value = [];
-		if ( is_array( $value ) ) {
-			foreach ( $value as $index => $item ) {
-				$sanitized_value[ $index ] = $this->sanitize( $item );
-			}
-		}
-
-		return $sanitized_value;
-	}
 
 	/**
 	 * Get setting
