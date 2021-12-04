@@ -32,7 +32,7 @@ class ImagesGallery extends BaseField {
 		$html .= '<a ' . $this->array_to_attributes( $button_attr ) . '>' . esc_html( $btn_text ) . '</a>';
 		$html .= '<ul class="carousel_slider_gallery_list">';
 		if ( $value ) {
-			$thumbs = explode( ',', $value );
+			$thumbs = array_map( 'intval', explode( ',', $value ) );
 			foreach ( $thumbs as $thumb ) {
 				$html .= '<li>' . wp_get_attachment_image( $thumb, [ 50, 50 ] ) . '</li>';
 			}

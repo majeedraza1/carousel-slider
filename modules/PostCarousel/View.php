@@ -17,6 +17,7 @@ class View extends AbstractView {
 	 */
 	public function render(): string {
 		$_image_size      = get_post_meta( $this->get_slider_id(), '_image_size', true );
+		$_image_size      = is_string( $_image_size ) ? $_image_size : 'full';
 		$_lazy_load_image = Validate::checked( get_post_meta( $this->get_slider_id(), '_lazy_load_image', true ) );
 
 		$posts = PostCarouselHelper::get_posts( $this->get_slider_id() );
@@ -82,7 +83,7 @@ class View extends AbstractView {
 	 * @return string
 	 */
 	protected function get_thumbnail_html( WP_Post $post, string $image_size, bool $lazy_load, string $permalink ): string {
-		$thumbnail_id = get_post_thumbnail_id( $post->ID );
+		$thumbnail_id = (int) get_post_thumbnail_id( $post->ID );
 		if ( ! $thumbnail_id ) {
 			return '<a href="' . esc_url( $permalink ) . '" class="carousel-slider__post-image"></a>';
 		}

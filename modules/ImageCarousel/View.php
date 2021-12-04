@@ -14,9 +14,8 @@ class View extends AbstractView {
 	 * @inheritDoc
 	 */
 	public function render(): string {
-		$slider_type = $this->get_slider_type();
-		$slider_id   = $this->get_slider_id();
-		$ids         = get_post_meta( $slider_id, '_wpdh_image_ids', true );
+		$slider_id = $this->get_slider_id();
+		$ids       = get_post_meta( $slider_id, '_wpdh_image_ids', true );
 		if ( is_string( $ids ) ) {
 			$ids = array_filter( explode( ',', $ids ) );
 		}
@@ -28,11 +27,9 @@ class View extends AbstractView {
 		$image_target            = in_array( $image_target, [ '_self', '_blank' ] ) ? $image_target : '_self';
 		$image_size              = get_post_meta( $slider_id, '_image_size', true );
 		$image_size              = in_array( $image_size, get_intermediate_image_sizes() ) ? $image_size : 'medium_large';
-		$lazy_load_image         = get_post_meta( $slider_id, '_lazy_load_image', true );
-		$show_attachment_title   = get_post_meta( $slider_id, '_show_attachment_title', true );
-		$show_attachment_caption = get_post_meta( $slider_id, '_show_attachment_caption', true );
-		$show_title_and_caption  = Validate::checked( $show_attachment_title ) &&
-		                           Validate::checked( $show_attachment_caption );
+		$lazy_load_image         = Validate::checked( get_post_meta( $slider_id, '_lazy_load_image', true ) );
+		$show_attachment_title   = Validate::checked( get_post_meta( $slider_id, '_show_attachment_title', true ) );
+		$show_attachment_caption = Validate::checked( get_post_meta( $slider_id, '_show_attachment_caption', true ) );
 		$show_lightbox           = get_post_meta( $slider_id, '_image_lightbox', true );
 
 		$html = $this->start_wrapper_html();
@@ -43,33 +40,11 @@ class View extends AbstractView {
 			}
 			do_action( 'carousel_slider_image_gallery_loop', $_post );
 
-			$title          = ! empty( $_post->post_title ) ?
-				sprintf( '<h4 class="title">%1$s</h4>', esc_html( $_post->post_title ) ) : '';
-			$caption        = ! empty( $_post->post_excerpt ) ?
-				sprintf( '<p class="caption">%1$s</p>', esc_html( $_post->post_excerpt ) ) : '';
-			$image_alt_text = trim( strip_tags( get_post_meta( $id, '_wp_attachment_image_alt', true ) ) );
 			$image_link_url = get_post_meta( $id, "_carousel_slider_link_url", true );
 
-			if ( $show_title_and_caption && ( ! empty( $title ) || ! empty( $caption ) ) ) {
-				$full_caption = sprintf( '<div class="carousel-slider__caption">%1$s%2$s</div>', $title, $caption );
-			} elseif ( Validate::checked( $show_attachment_title ) && ! empty( $title ) ) {
-				$full_caption = sprintf( '<div class="carousel-slider__caption">%s</div>', $title );
-			} elseif ( Validate::checked( $show_attachment_caption ) && ! empty( $caption ) ) {
-				$full_caption = sprintf( '<div class="carousel-slider__caption">%s</div>', $caption );
-			} else {
-				$full_caption = '';
-			}
+			$full_caption = $this->get_caption_html( $_post, $show_attachment_title, $show_attachment_caption );
 
-			if ( Validate::checked( $lazy_load_image ) ) {
-				$image_src = wp_get_attachment_image_src( $id, $image_size );
-				$image     = sprintf(
-					'<img class="owl-lazy" data-src="%1$s" width="%2$s" height="%3$s" alt="%4$s" />',
-					$image_src[0], $image_src[1], $image_src[2], $image_alt_text
-				);
-
-			} else {
-				$image = wp_get_attachment_image( $id, $image_size, false, [ 'alt' => $image_alt_text ] );
-			}
+			$image = $this->get_image_html( $id, $image_size, $lazy_load_image );
 
 			$html .= '<div class="carousel-slider__item">';
 			if ( Validate::checked( $show_lightbox ) ) {
@@ -88,5 +63,61 @@ class View extends AbstractView {
 		$html .= $this->end_wrapper_html();
 
 		return apply_filters( 'carousel_slider_gallery_images_carousel', $html );
+	}
+
+	/**
+	 * @param int $image_id
+	 * @param string $image_size
+	 * @param bool $lazy_load_image
+	 *
+	 * @return string
+	 */
+	protected function get_image_html( int $image_id, string $image_size, bool $lazy_load_image ): string {
+		$image_alt_text = trim( strip_tags( get_post_meta( $image_id, '_wp_attachment_image_alt', true ) ) );
+		if ( $lazy_load_image ) {
+			$image_src = wp_get_attachment_image_src( $image_id, $image_size );
+
+			return sprintf(
+				'<img class="owl-lazy" data-src="%1$s" width="%2$s" height="%3$s" alt="%4$s" />',
+				$image_src[0], $image_src[1], $image_src[2], $image_alt_text
+			);
+
+		}
+
+		return wp_get_attachment_image( $image_id, $image_size, false, [ 'alt' => $image_alt_text ] );
+	}
+
+	/**
+	 * @param WP_Post $post
+	 * @param bool $show_title
+	 * @param bool $show_caption
+	 *
+	 * @return string
+	 */
+	protected function get_caption_html( WP_Post $post, bool $show_title, bool $show_caption ): string {
+		$show_title_and_caption = $show_title && $show_caption;
+		$title                  = '';
+		$caption                = '';
+
+		if ( ! empty( $post->post_title ) ) {
+			$title = '<h4 class="title">' . esc_html( $post->post_title ) . '</h4>';
+		}
+		if ( ! empty( $post->post_excerpt ) ) {
+			$caption = '<p class="caption">' . esc_html( $post->post_excerpt ) . '</p>';
+		}
+
+		if ( $show_title_and_caption && ( $title || $caption ) ) {
+			return sprintf( '<div class="carousel-slider__caption">%1$s%2$s</div>', $title, $caption );
+		}
+
+		if ( $show_title && $title ) {
+			return sprintf( '<div class="carousel-slider__caption">%s</div>', $title );
+		}
+
+		if ( $show_caption && $caption ) {
+			return sprintf( '<div class="carousel-slider__caption">%s</div>', $caption );
+		}
+
+		return '';
 	}
 }

@@ -16,6 +16,14 @@ use CarouselSlider\Supports\MetaboxApi\Fields\Textarea;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * @method void text( array $args )
+ * @method void textarea( array $args )
+ * @method void spacing( array $args )
+ * @method void button_group( array $args )
+ * @method void color( array $args )
+ * @method void images_gallery( array $args )
+ */
 class MetaBoxForm {
 
 	/**
@@ -75,6 +83,7 @@ class MetaBoxForm {
 	public function field( array $args ): string {
 		list( $name, $value ) = $this->get_name_and_value( $args );
 
+		/** @var BaseField $field */
 		$field = self::get_field_class( $args['type'] ?? 'text' );
 		$field->set_settings( $this->map_field_settings( $args ) );
 		$field->set_name( $name );
