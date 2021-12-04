@@ -53,34 +53,21 @@ class Template extends AbstractTemplate {
 		$data       = wp_parse_args( $args, self::get_default_settings() );
 		$query_type = $data['_post_query_type'];
 
-		if ( 'specific_posts' == $query_type ) {
-			if ( empty( $data['_post_in'] ) ) {
-				$posts_ids        = self::get_random_posts_ids();
-				$data['_post_in'] = implode( ',', $posts_ids );
-			}
-		}
+		$query_types = [
+			'specific_posts'  => [ '_post_in' => implode( ',', self::get_random_posts_ids() ) ],
+			'post_categories' => [ '_post_categories' => implode( ',', self::get_post_categories_ids() ) ],
+			'post_tags'       => [ '_post_tags' => implode( ',', self::get_post_tags_ids() ) ],
+			'date_range'      => [
+				'_post_date_after' => date( 'Y-m-d', strtotime( '-3 years' ) ),
+				'_post_date_before' => date( 'Y-m-d', strtotime( '-2 hours' ) ),
+			],
+		];
 
-		if ( 'post_categories' == $query_type ) {
-			if ( empty( $data['_post_categories'] ) ) {
-				$categories_ids           = self::get_post_categories_ids();
-				$data['_post_categories'] = implode( ',', $categories_ids );
-			}
-		}
+		$default_args = $query_types[ $query_type ] ?? [];
 
-		if ( 'post_tags' == $query_type ) {
-			if ( empty( $data['_post_tags'] ) ) {
-				$tags_ids           = self::get_post_tags_ids();
-				$data['_post_tags'] = implode( ',', $tags_ids );
-			}
-		}
-
-		if ( 'date_range' == $query_type ) {
-			if ( empty( $data['_post_date_after'] ) ) {
-				$data['_post_date_after'] = date( 'Y-m-d', strtotime( '-3 years' ) );
-			}
-
-			if ( empty( $data['_post_date_before'] ) ) {
-				$data['_post_date_before'] = date( 'Y-m-d', strtotime( '-2 hours' ) );
+		foreach ( $default_args as $meta_key => $default_value ) {
+			if ( empty( $data[ $meta_key ] ) ) {
+				$data[ $meta_key ] = $default_value;
 			}
 		}
 
