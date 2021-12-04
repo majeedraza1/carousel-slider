@@ -45,7 +45,7 @@ class Template extends AbstractTemplate {
 	 *
 	 * @return int The post ID on success. The value 0 on failure.
 	 */
-	public static function create( $slider_title = null, $args = [] ): int {
+	public static function create( string $slider_title = null, array $args = [] ): int {
 		if ( empty( $slider_title ) ) {
 			$slider_title = 'Product Carousel';
 		}
@@ -59,33 +59,25 @@ class Template extends AbstractTemplate {
 		$data       = wp_parse_args( $args, self::get_default_settings() );
 		$query_type = $data['_product_query_type'];
 
-		if ( 'specific_products' == $query_type ) {
-			if ( empty( $data['_product_in'] ) ) {
-				$posts_ids           = self::get_random_products_ids();
-				$posts_ids           = is_array( $posts_ids ) ? implode( ',', $posts_ids ) : $posts_ids;
-				$data['_product_in'] = $posts_ids;
-			}
-		}
+		$query_types  = [
+			'specific_products'  => [
+				'_product_in' => implode( ',', self::get_random_products_ids() ),
+			],
+			'product_categories' => [
+				'_product_categories' => implode( ',', self::get_product_categories_ids() ),
+			],
+			'product_tags'       => [
+				'_product_tags' => implode( ',', self::get_product_tags_ids() ),
+			],
+			'query_product'      => [
+				'_product_query' => 'recent',
+			],
+		];
+		$default_args = $query_types[ $query_type ] ?? [];
 
-		if ( 'product_categories' == $query_type ) {
-			if ( empty( $data['_product_categories'] ) ) {
-				$categories_ids              = self::get_product_categories_ids();
-				$categories_ids              = is_array( $categories_ids ) ? implode( ',', $categories_ids ) : $categories_ids;
-				$data['_product_categories'] = $categories_ids;
-			}
-		}
-
-		if ( 'product_tags' == $query_type ) {
-			if ( empty( $data['_product_tags'] ) ) {
-				$tags_ids              = self::get_product_tags_ids();
-				$tags_ids              = is_array( $tags_ids ) ? implode( ',', $tags_ids ) : $tags_ids;
-				$data['_product_tags'] = $tags_ids;
-			}
-		}
-
-		if ( 'query_product' == $query_type ) {
-			if ( empty( $data['_product_query'] ) ) {
-				$data['_product_query'] = 'recent';
+		foreach ( $default_args as $meta_key => $default_value ) {
+			if ( empty( $data[ $meta_key ] ) ) {
+				$data[ $meta_key ] = $default_value;
 			}
 		}
 
