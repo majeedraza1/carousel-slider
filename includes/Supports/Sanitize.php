@@ -184,25 +184,66 @@ class Sanitize {
 
 		// If this is rgb, validate and return it
 		if ( 'rgb(' === substr( $value, 0, 4 ) ) {
-			list( $red, $green, $blue ) = sscanf( $value, 'rgb(%d,%d,%d)' );
-
-			if ( ( $red >= 0 && $red <= 255 ) && ( $green >= 0 && $green <= 255 ) && ( $blue >= 0 && $blue <= 255 ) ) {
-				return "rgb($red,$green,$blue)";
-			}
+			return self::rgb_color( $value );
 		}
 
 		// If this is rgba, validate and return it
 		if ( 'rgba(' === substr( $value, 0, 5 ) ) {
-			list( $red, $green, $blue, $alpha ) = sscanf( $value, 'rgba(%d,%d,%d,%f)' );
-
-			if ( ( $red >= 0 && $red <= 255 ) && ( $green >= 0 && $green <= 255 ) && ( $blue >= 0 && $blue <= 255 ) &&
-			     $alpha >= 0 && $alpha <= 1 ) {
-				return "rgba($red,$green,$blue,$alpha)";
-			}
+			return self::rgba_color( $value );
 		}
 
 		// Not valid color, return empty string
 		return '';
+	}
+
+	/**
+	 * Sanitize RGB Color
+	 *
+	 * @param string $value
+	 *
+	 * @return string
+	 */
+	public static function rgb_color( string $value ): string {
+		$value = str_replace( ' ', '', $value );
+		if ( 'rgb(' === substr( $value, 0, 4 ) ) {
+			list( $red, $green, $blue ) = sscanf( $value, 'rgb(%d,%d,%d)' );
+
+			if ( self::is_validate_rgba( $red, $green, $blue ) ) {
+				return "rgb($red,$green,$blue)";
+			}
+		}
+
+		return '';
+	}
+
+	public static function rgba_color( string $value ): string {
+		$value = str_replace( ' ', '', $value );
+		if ( 'rgba(' === substr( $value, 0, 5 ) ) {
+			list( $red, $green, $blue, $alpha ) = sscanf( $value, 'rgba(%d,%d,%d,%f)' );
+
+			if ( self::is_validate_rgba( $red, $green, $blue, $alpha ) ) {
+				return "rgba($red,$green,$blue,$alpha)";
+			}
+		}
+
+		return '';
+	}
+
+	/**
+	 * Validate if it is a valid rgba color
+	 *
+	 * @param int $red
+	 * @param int $green
+	 * @param int $blue
+	 * @param float $alpha
+	 *
+	 * @return bool
+	 */
+	private static function is_validate_rgba( int $red, int $green, int $blue, float $alpha = 1 ): bool {
+		return ( $red >= 0 && $red <= 255 ) &&
+		       ( $green >= 0 && $green <= 255 ) &&
+		       ( $blue >= 0 && $blue <= 255 ) &&
+		       $alpha >= 0 && $alpha <= 1;
 	}
 
 
