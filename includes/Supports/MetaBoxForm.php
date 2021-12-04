@@ -23,6 +23,8 @@ defined( 'ABSPATH' ) || exit;
  * @method void button_group( array $args )
  * @method void color( array $args )
  * @method void images_gallery( array $args )
+ * @method void number( array $args )
+ * @method void checkbox( array $args )
  */
 class MetaBoxForm {
 

@@ -3,7 +3,8 @@
 namespace CarouselSlider\Modules\ProductCarousel;
 
 use CarouselSlider\Abstracts\AbstractView;
-use CarouselSlider\Admin\Setting;
+use CarouselSlider\Abstracts\SliderSetting;
+use CarouselSlider\Admin\Setting as GlobalSetting;
 use CarouselSlider\Helper;
 use CarouselSlider\Supports\Validate;
 use CarouselSlider\Modules\ProductCarousel\Helper as ProductCarouselHelper;
@@ -12,6 +13,14 @@ use WC_Product;
 defined( 'ABSPATH' ) || exit;
 
 class View extends AbstractView {
+
+	public function get_slider_setting(): SliderSetting {
+		if ( ! $this->slider_setting instanceof Setting ) {
+			$this->slider_setting = new Setting( $this->get_slider_id() );
+		}
+
+		return $this->slider_setting;
+	}
 
 	/**
 	 * @inheritDoc
@@ -89,7 +98,7 @@ class View extends AbstractView {
 			if ( ! $product->has_enough_stock( 1 ) ) {
 				continue;
 			}
-			$template = Setting::get_option( 'woocommerce_shop_loop_item_template' );
+			$template = GlobalSetting::get_option( 'woocommerce_shop_loop_item_template' );
 			if ( 'v1-compatibility' == $template ) {
 				$html .= self::get_item( $product, $settings ) . PHP_EOL;
 			} else {

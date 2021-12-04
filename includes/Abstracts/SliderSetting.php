@@ -8,11 +8,12 @@ use CarouselSlider\Supports\Validate;
 class SliderSetting extends Data {
 
 	protected $slider_id = 0;
-	protected $settings = [];
+	protected $data_read = false;
 
 	public function __construct( int $slider_id ) {
 		$this->slider_id = $slider_id;
-		$this->settings  = self::get_defaults();
+		$this->data      = self::get_defaults();
+		$this->read_metadata();
 	}
 
 	/**
@@ -33,7 +34,7 @@ class SliderSetting extends Data {
 		$value = str_replace( [ 'off', 'on' ], [ 'never', 'hover' ], $value );
 
 		if ( in_array( $value, [ 'always', 'never', 'hover' ] ) ) {
-			$this->settings['nav_visibility'] = $value;
+			$this->data['nav_visibility'] = $value;
 		}
 	}
 
@@ -44,7 +45,7 @@ class SliderSetting extends Data {
 	 */
 	public function set_nav_position( $value ) {
 		if ( in_array( $value, [ 'inside', 'outside' ] ) ) {
-			$this->settings['nav_position'] = $value;
+			$this->data['nav_position'] = $value;
 		}
 	}
 
@@ -55,9 +56,9 @@ class SliderSetting extends Data {
 	 */
 	public function set_nav_steps( $value ) {
 		if ( in_array( $value, [ 'page', '-1', - 1 ], true ) ) {
-			$this->settings['nav_steps'] = 'page';
+			$this->data['nav_steps'] = 'page';
 		} else {
-			$this->settings['nav_steps'] = max( 1, intval( $value ) );
+			$this->data['nav_steps'] = max( 1, intval( $value ) );
 		}
 	}
 
@@ -71,7 +72,7 @@ class SliderSetting extends Data {
 		$value = str_replace( [ 'off', 'on' ], [ 'never', 'always' ], $value );
 
 		if ( in_array( $value, [ 'always', 'never', 'hover' ] ) ) {
-			$this->settings['pagination_visibility'] = $value;
+			$this->data['pagination_visibility'] = $value;
 		}
 	}
 
@@ -80,22 +81,44 @@ class SliderSetting extends Data {
 	 * @return void
 	 */
 	protected function read_metadata() {
-		$attribute_meta_key = self::props();
+		if ( $this->data_read ) {
+			return;
+		}
+		$attribute_meta_key = static::props();
 		foreach ( $attribute_meta_key as $attribute => $config ) {
 			$method_name = 'set_' . $attribute;
-			$value       = get_post_meta( $this->slider_id, $config['meta_key'], true );
-			if ( 'int' == $config['type'] ) {
-				$value = (int) $value;
-			}
-			if ( 'bool' == $config['type'] ) {
-				$value = Validate::checked( $value );
-			}
+			$value       = get_post_meta( $this->get_slider_id(), $config['meta_key'], true );
 			if ( method_exists( $this, $method_name ) ) {
 				$this->$method_name( $value );
 			} else {
+				$value = $this->sanitize_by_type( $config['type'], $value );
 				$this->set_prop( $attribute, $value );
 			}
 		}
+		$this->data_read = true;
+	}
+
+	/**
+	 * @param string $type
+	 * @param mixed $value
+	 *
+	 * @return mixed
+	 */
+	protected function sanitize_by_type( string $type, $value ) {
+		if ( 'array' == $type && is_string( $value ) ) {
+			$value = explode( ',', $value );
+		}
+		if ( 'int[]' == $type && is_string( $value ) ) {
+			$value = array_filter( array_map( 'intval', explode( ',', $value ) ) );
+		}
+		if ( 'int' == $type ) {
+			$value = (int) $value;
+		}
+		if ( 'bool' == $type ) {
+			$value = Validate::checked( $value );
+		}
+
+		return $value;
 	}
 
 	/**
@@ -117,12 +140,12 @@ class SliderSetting extends Data {
 	}
 
 	/**
-	 * Get default settings
+	 * Get default values
 	 *
 	 * @return array
 	 */
 	public static function get_defaults(): array {
-		$props = self::props();
+		$props = static::props();
 		$data  = [];
 		foreach ( $props as $prop => $config ) {
 			$data[ $prop ] = $config['default'];
