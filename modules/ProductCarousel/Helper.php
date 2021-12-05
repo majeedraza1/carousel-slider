@@ -10,6 +10,68 @@ defined( 'ABSPATH' ) || exit;
 class Helper {
 
 	/**
+	 * List all (or limited) product categories.
+	 *
+	 * @param array $args
+	 *
+	 * @return array|WP_Term[]
+	 */
+	public static function product_categories( array $args = [] ): array {
+		$args = wp_parse_args( $args, [
+			'hide_empty' => true,
+			'orderby'    => 'name',
+			'order'      => 'ASC',
+		] );
+
+		$args['taxonomy'] = 'product_cat';
+
+		return get_terms( $args );
+	}
+
+	/**
+	 * Format term slug
+	 *
+	 * @param array $tags
+	 * @param string $taxonomy
+	 *
+	 * @return array
+	 */
+	public static function format_term_slug( array $tags, string $taxonomy ): array {
+		$ids = [];
+		foreach ( $tags as $index => $tag ) {
+			if ( is_numeric( $tag ) ) {
+				$ids[] = intval( $tag );
+				unset( $tags[ $index ] );
+			}
+		}
+		if ( count( $ids ) ) {
+			$terms = get_terms( [ 'taxonomy' => $taxonomy, 'include' => $ids ] );
+			$slugs = is_array( $terms ) ? wp_list_pluck( $terms, 'slug' ) : [];
+			$tags  = array_merge( $slugs, array_values( $tags ) );
+		}
+
+		return $tags;
+	}
+
+	/**
+	 * Get product quick view url
+	 *
+	 * @param int $product_id
+	 *
+	 * @return string
+	 */
+	public static function get_product_quick_view_url( int $product_id ): string {
+		$args = array(
+			'action'     => 'carousel_slider_quick_view',
+			'ajax'       => 'true',
+			'product_id' => $product_id,
+		);
+		$url  = add_query_arg( $args, admin_url( 'admin-ajax.php' ) );
+
+		return wp_nonce_url( $url, 'carousel_slider_quick_view' );
+	}
+
+	/**
 	 * Parse arguments
 	 *
 	 * @param array $args
@@ -37,133 +99,121 @@ class Helper {
 	 * @return array|WC_Product[]
 	 */
 	public static function get_products( int $slider_id, array $args = [] ): array {
-		$per_page   = (int) get_post_meta( $slider_id, '_products_per_page', true );
-		$per_page   = $per_page ?: 12;
-		$query_type = get_post_meta( $slider_id, '_product_query_type', true );
-		$query_type = empty( $query_type ) ? 'query_product' : $query_type;
-		// Type mistake
-		$query_type = ( 'query_porduct' == $query_type ) ? 'query_product' : $query_type;
-		$query      = get_post_meta( $slider_id, '_product_query', true );
+		$setting = new Setting( $slider_id );
 
-		$args = static::parse_args( array_merge( $args, [ 'limit' => $per_page ] ) );
+		$args       = static::parse_args( array_merge( $args, [ 'limit' => $setting->get_prop( 'per_page' ) ] ) );
+		$query_type = $setting->get_query_type();
 
-		if ( $query_type == 'specific_products' ) {
-			$product_in = get_post_meta( $slider_id, '_product_in', true );
-			$product_in = is_string( $product_in ) ? explode( ',', $product_in ) : $product_in;
-			$product_in = array_map( 'intval', (array) $product_in );
-
-			$args['include'] = $product_in;
-		}
-
-		if ( $query_type == 'product_categories' ) {
-			$categories = get_post_meta( $slider_id, '_product_categories', true );
-			$categories = is_string( $categories ) ? explode( ',', $categories ) : $categories;
-			$categories = array_map( 'intval', $categories );
-
-			$args['category'] = static::format_term_for_query( $categories, 'product_cat' );
-		}
-
-		if ( $query_type == 'product_tags' ) {
-			$tags = get_post_meta( $slider_id, '_product_tags', true );
-			$tags = is_string( $tags ) ? explode( ',', $tags ) : $tags;
-			$tags = array_map( 'intval', $tags );
-
-			$args['tag'] = static::format_term_for_query( $tags, 'product_tag' );
-		}
-
-		if ( $query_type == 'query_product' ) {
-			// Featured
-			if ( $query == 'featured' ) {
-				$args['featured'] = true;
-			}
-
-			// Best selling
-			if ( $query == 'best_selling' ) {
-				$args['order']    = 'DESC';
-				$args['orderby']  = 'meta_value_num';
-				$args['meta_key'] = 'total_sales';
-			}
-
-			// Recent products
-			if ( $query == 'recent' ) {
-				$args['order']   = 'DESC';
-				$args['orderby'] = 'date';
-			}
-
-			if ( $query == 'sale' ) {
-				$args['include'] = array_merge( [ 0 ], wc_get_product_ids_on_sale() );
-			}
-
-			if ( $query == 'top_rated' ) {
-				$args['order']    = 'DESC';
-				$args['orderby']  = 'meta_value_num';
-				$args['meta_key'] = '_wc_average_rating';
-			}
-
-		}
+		self::add_specific_products_query_args( $setting, $args );
+		self::add_product_categories_query_args( $setting, $args );
+		self::add_product_tags_query_args( $setting, $args );
+		self::add_featured_product_query_args( $query_type, $args );
+		self::add_best_selling_query_args( $query_type, $args );
+		self::add_recent_product_query_args( $query_type, $args );
+		self::add_on_sale_query_args( $query_type, $args );
+		self::add_top_rated_query_args( $query_type, $args );
 
 		return wc_get_products( $args );
 	}
 
 	/**
-	 * List all (or limited) product categories.
-	 *
+	 * @param string $query_type
 	 * @param array $args
 	 *
-	 * @return array|WP_Term[]
+	 * @return void
 	 */
-	public static function product_categories( array $args = [] ): array {
-		$args = wp_parse_args( $args, [
-			'hide_empty' => true,
-			'orderby'    => 'name',
-			'order'      => 'ASC',
-		] );
-
-		$args['taxonomy'] = 'product_cat';
-
-		return get_terms( $args );
+	protected static function add_top_rated_query_args( string $query_type, array &$args ) {
+		if ( $query_type == 'top_rated' ) {
+			$args['order']    = 'DESC';
+			$args['orderby']  = 'meta_value_num';
+			$args['meta_key'] = '_wc_average_rating';
+		}
 	}
 
 	/**
-	 * Format term slug
+	 * @param string $query_type
+	 * @param array $args
 	 *
-	 * @param array $tags
-	 * @param string $taxonomy
-	 *
-	 * @return array
+	 * @return void
 	 */
-	protected static function format_term_for_query( array $tags, string $taxonomy ): array {
-		$ids = [];
-		foreach ( $tags as $index => $tag ) {
-			if ( is_numeric( $tag ) ) {
-				$ids[] = intval( $tag );
-				unset( $tags[ $index ] );
-			}
+	protected static function add_on_sale_query_args( string $query_type, array &$args ) {
+		if ( $query_type == 'sale' ) {
+			$args['include'] = array_merge( [ 0 ], wc_get_product_ids_on_sale() );
 		}
-		if ( count( $ids ) ) {
-			$terms = get_terms( [ 'taxonomy' => $taxonomy, 'include' => $ids ] );
-			$slugs = wp_list_pluck( $terms, 'slug' );
-			$tags  = array_merge( $slugs, array_values( $tags ) );
-		}
-
-		return $tags;
 	}
 
 	/**
-	 * Get product quick view url
+	 * @param string $query_type
+	 * @param array $args
 	 *
-	 * @param int $product_id
-	 *
-	 * @return string
+	 * @return void
 	 */
-	public static function get_product_quick_view_url( int $product_id ): string {
-		$args = array(
-			'action'     => 'carousel_slider_quick_view',
-			'ajax'       => 'true',
-			'product_id' => $product_id,
-		);
-		$url  = add_query_arg( $args, admin_url( 'admin-ajax.php' ) );
+	protected static function add_recent_product_query_args( string $query_type, array &$args ) {
+		if ( $query_type == 'recent' ) {
+			$args['order']   = 'DESC';
+			$args['orderby'] = 'date';
+		}
+	}
 
-		return wp_nonce_url( $url, 'carousel_slider_quick_view' );
+	/**
+	 * @param string $query_type
+	 * @param array $args
+	 *
+	 * @return void
+	 */
+	protected static function add_best_selling_query_args( string $query_type, array &$args ) {
+		if ( $query_type == 'best_selling' ) {
+			$args['order']    = 'DESC';
+			$args['orderby']  = 'meta_value_num';
+			$args['meta_key'] = 'total_sales';
+		}
+	}
+
+	/**
+	 * @param string $query_type
+	 * @param array $args
+	 *
+	 * @return void
+	 */
+	protected static function add_featured_product_query_args( string $query_type, array &$args ) {
+		if ( $query_type == 'featured' ) {
+			$args['featured'] = true;
+		}
+	}
+
+	/**
+	 * @param Setting $setting
+	 * @param array $args
+	 *
+	 * @return void
+	 */
+	protected static function add_product_tags_query_args( Setting $setting, array &$args ) {
+		if ( $setting->get_query_type() == 'product_tags' ) {
+			$args['tag'] = $setting->get_tags_slug();
+		}
+	}
+
+	/**
+	 * @param Setting $setting
+	 * @param array $args
+	 *
+	 * @return void
+	 */
+	protected static function add_product_categories_query_args( Setting $setting, array &$args ) {
+		if ( $setting->get_query_type() == 'product_categories' ) {
+			$args['category'] = $setting->get_categories_slug();
+		}
+	}
+
+	/**
+	 * @param Setting $setting
+	 * @param array $args
+	 *
+	 * @return void
+	 */
+	protected static function add_specific_products_query_args( Setting $setting, array &$args ) {
+		if ( $setting->get_query_type() == 'specific_products' ) {
+			$args['include'] = $setting->get_prop( 'product_in' );
+		}
 	}
 }

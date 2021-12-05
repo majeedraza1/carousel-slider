@@ -3,7 +3,7 @@
 namespace CarouselSlider\Modules\ProductCarousel;
 
 use CarouselSlider\Abstracts\SliderSetting;
-use CarouselSlider\Helper;
+use CarouselSlider\Helper as GlobalHelper;
 
 class Setting extends SliderSetting {
 
@@ -25,13 +25,37 @@ class Setting extends SliderSetting {
 	 * @return string
 	 */
 	public function get_query_type(): string {
-		$slide_type    = $this->get_prop( 'product_query_type' );
+		$slide_type = $this->get_prop( 'product_query_type' );
+		// For backward compatibility of typo
+		$slide_type    = str_replace( 'query_porduct', 'query_product', $slide_type );
 		$product_query = $this->get_prop( 'product_query' );
 		if ( 'query_product' == $slide_type ) {
 			$slide_type = $product_query;
 		}
 
 		return in_array( $slide_type, self::$types ) ? $slide_type : 'recent';
+	}
+
+	/**
+	 * Get product category slug
+	 *
+	 * @return array
+	 */
+	public function get_categories_slug(): array {
+		$ids = $this->get_prop( 'product_categories' );
+
+		return Helper::format_term_slug( $ids, 'product_cat' );
+	}
+
+	/**
+	 * Get product category slug
+	 *
+	 * @return array
+	 */
+	public function get_tags_slug(): array {
+		$ids = $this->get_prop( 'product_tags' );
+
+		return Helper::format_term_slug( $ids, 'product_tag' );
 	}
 
 	/**
@@ -123,17 +147,17 @@ class Setting extends SliderSetting {
 			'title_color'        => [
 				'meta_key' => '_product_title_color',
 				'type'     => 'string',
-				'default'  => Helper::get_default_setting( 'product_title_color' )
+				'default'  => GlobalHelper::get_default_setting( 'product_title_color' )
 			],
 			'button_color'       => [
 				'meta_key' => '_product_button_bg_color',
 				'type'     => 'string',
-				'default'  => Helper::get_default_setting( 'product_button_bg_color' )
+				'default'  => GlobalHelper::get_default_setting( 'product_button_bg_color' )
 			],
 			'button_on_color'    => [
 				'meta_key' => '_product_button_text_color',
 				'type'     => 'string',
-				'default'  => Helper::get_default_setting( 'product_button_text_color' )
+				'default'  => GlobalHelper::get_default_setting( 'product_button_text_color' )
 			],
 		];
 	}
