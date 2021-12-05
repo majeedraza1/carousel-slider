@@ -17,6 +17,32 @@ defined( 'ABSPATH' ) || exit;
 
 class Command extends WP_CLI_Command {
 	/**
+	 * @param array $assoc_args
+	 * @param string $slider_title
+	 *
+	 * @return int
+	 */
+	protected static function create_post_carousel( array $assoc_args, string $slider_title ): int {
+		$post_query      = ! empty( $assoc_args['post-query'] ) ? $assoc_args['post-query'] : 'latest_posts';
+		$date_from       = ! empty( $assoc_args['date-from'] ) ? $assoc_args['date-from'] : '';
+		$date_to         = ! empty( $assoc_args['date-to'] ) ? $assoc_args['date-to'] : '';
+		$post_categories = ! empty( $assoc_args['post-categories'] ) ? $assoc_args['post-categories'] : '';
+		$post_tags       = ! empty( $assoc_args['post-tags'] ) ? $assoc_args['post-tags'] : '';
+		$post_in         = ! empty( $assoc_args['post-in'] ) ? $assoc_args['post-in'] : '';
+		$post_args       = array(
+			'_created_via'      => 'wp-cli',
+			'_post_query_type'  => $post_query,
+			'_post_date_after'  => $date_from,
+			'_post_date_before' => $date_to,
+			'_post_categories'  => $post_categories,
+			'_post_tags'        => $post_tags,
+			'_post_in'          => $post_in,
+		);
+
+		return TemplatePostCarousel::create( $slider_title, $post_args );
+	}
+
+	/**
 	 * Display Carousel Slider Information
 	 *
 	 * @subcommand info
@@ -90,8 +116,7 @@ class Command extends WP_CLI_Command {
 	public function create_slider( $args, $assoc_args ) {
 		$slider_id = 0;
 		list( $slider_title ) = $args;
-		$type       = ! empty( $assoc_args['type'] ) ? $assoc_args['type'] : 'image-carousel';
-		$post_query = ! empty( $assoc_args['post-query'] ) ? $assoc_args['post-query'] : 'latest_posts';
+		$type = ! empty( $assoc_args['type'] ) ? $assoc_args['type'] : 'image-carousel';
 
 		if ( 'image-carousel' == $type ) {
 			$slider_id = TemplateImageCarousel::create( $slider_title, array(
@@ -112,22 +137,7 @@ class Command extends WP_CLI_Command {
 		}
 
 		if ( 'post-carousel' == $type ) {
-			$date_from       = ! empty( $assoc_args['date-from'] ) ? $assoc_args['date-from'] : '';
-			$date_to         = ! empty( $assoc_args['date-to'] ) ? $assoc_args['date-to'] : '';
-			$post_categories = ! empty( $assoc_args['post-categories'] ) ? $assoc_args['post-categories'] : '';
-			$post_tags       = ! empty( $assoc_args['post-tags'] ) ? $assoc_args['post-tags'] : '';
-			$post_in         = ! empty( $assoc_args['post-in'] ) ? $assoc_args['post-in'] : '';
-			$post_args       = array(
-				'_created_via'      => 'wp-cli',
-				'_post_query_type'  => $post_query,
-				'_post_date_after'  => $date_from,
-				'_post_date_before' => $date_to,
-				'_post_categories'  => $post_categories,
-				'_post_tags'        => $post_tags,
-				'_post_in'          => $post_in,
-			);
-
-			$slider_id = TemplatePostCarousel::create( $slider_title, $post_args );
+			$slider_id = self::create_post_carousel( $assoc_args, (string) $slider_title );
 		}
 
 		if ( ! $slider_id ) {

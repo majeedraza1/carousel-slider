@@ -127,57 +127,18 @@ abstract class BaseField implements FieldInterface {
 	 */
 	protected function build_attributes( bool $string = true ) {
 		$input_type = $this->get_setting( 'type' );
-		$attributes = array(
+		$attributes = [
 			'id'          => $this->get_setting( 'id' ),
 			'class'       => $this->get_setting( 'field_class' ),
 			'name'        => $this->get_name(),
 			'placeholder' => $this->get_setting( 'placeholder' ),
-		);
+		];
 
-		if ( ! in_array( $input_type, array( 'textarea', 'select' ) ) ) {
+		if ( ! in_array( $input_type, [ 'textarea', 'select' ] ) ) {
 			$attributes['type'] = $input_type;
 		}
 
-		if ( 'textarea' === $input_type ) {
-			$attributes['rows'] = $this->get_setting( 'rows' );
-		}
-
-		if ( ! in_array( $input_type, array( 'textarea', 'file' ) ) ) {
-			$attributes['autocomplete'] = $this->get_setting( 'autocomplete' );
-		}
-
-		if ( ! in_array( $input_type, array( 'textarea', 'file', 'password', 'select' ) ) ) {
-			$attributes['value'] = $this->get_value();
-		}
-
-		if ( 'file' === $input_type ) {
-			$attributes['accept'] = $this->get_setting( 'accept' );
-		}
-
-		if ( 'number' === $input_type ) {
-			$attributes['max']  = $this->get_setting( 'max' );
-			$attributes['min']  = $this->get_setting( 'min' );
-			$attributes['step'] = $this->get_setting( 'step' );
-		}
-
-		if ( 'date' === $input_type ) {
-			$attributes['max'] = $this->get_setting( 'max' );
-			$attributes['min'] = $this->get_setting( 'min' );
-		}
-
-		if ( 'hidden' === $input_type ) {
-			$attributes['spellcheck']   = false;
-			$attributes['tabindex']     = '-1';
-			$attributes['autocomplete'] = 'off';
-		}
-
-		if ( 'email' === $input_type || 'file' === $input_type ) {
-			$attributes['multiple'] = $this->get_setting( 'multiple' );
-		}
-
-		if ( ! in_array( $input_type, array( 'hidden', 'image', 'submit', 'reset', 'button' ) ) ) {
-			$attributes['required'] = $this->get_setting( 'required' );
-		}
+		$this->add_extra_attributes( $attributes );
 
 		$input_attributes = (array) $this->get_setting( 'input_attributes' );
 		foreach ( $input_attributes as $attr_name => $attr_val ) {
@@ -223,5 +184,67 @@ abstract class BaseField implements FieldInterface {
 		}, array_keys( $attributes ), array_values( $attributes ) );
 
 		return implode( ' ', array_filter( $string ) );
+	}
+
+	/**
+	 * Add extra attributes
+	 * @param array $attributes
+	 */
+	protected function add_extra_attributes( array &$attributes ) {
+		$input_type       = $this->get_setting( 'type' );
+		$extra_attributes = [
+			[
+				'include_types' => [ 'textarea' ],
+				'attrs'         => [ 'rows' => $this->get_setting( 'rows' ) ]
+			],
+			[
+				'include_types' => [ 'file' ],
+				'attrs'         => [ 'accept' => $this->get_setting( 'accept' ) ]
+			],
+			[
+				'include_types' => [ 'number', 'date' ],
+				'attrs'         => [
+					'max' => $this->get_setting( 'max' ),
+					'min' => $this->get_setting( 'min' ),
+				]
+			],
+			[
+				'include_types' => [ 'number' ],
+				'attrs'         => [ 'step' => $this->get_setting( 'step' ), ]
+			],
+			[
+				'include_types' => [ 'email', 'file' ],
+				'attrs'         => [ 'multiple' => $this->get_setting( 'multiple' ), ]
+			],
+			[
+				'include_types' => [ 'hidden' ],
+				'attrs'         => [ 'spellcheck' => 'false', 'tabindex' => '-1', 'autocomplete' => 'off' ]
+			],
+			[
+				'exclude_types' => [ 'textarea', 'file' ],
+				'attrs'         => [ 'autocomplete' => $this->get_setting( 'autocomplete' ) ]
+			],
+			[
+				'exclude_types' => [ 'textarea', 'file', 'password', 'select' ],
+				'attrs'         => [ 'value' => $this->get_value() ]
+			],
+			[
+				'exclude_types' => [ 'hidden', 'image', 'submit', 'reset', 'button' ],
+				'attrs'         => [ 'required' => $this->get_setting( 'required' ) ]
+			],
+		];
+
+		foreach ( $extra_attributes as $attribute ) {
+			if ( isset( $attribute['include_types'] ) && in_array( $input_type, $attribute['include_types'] ) ) {
+				foreach ( $attribute['attrs'] as $attr_key => $attr_val ) {
+					$attributes[ $attr_key ] = $attr_val;
+				}
+			}
+			if ( isset( $attribute['exclude_types'] ) && ! in_array( $input_type, $attribute['exclude_types'] ) ) {
+				foreach ( $attribute['attrs'] as $attr_key => $attr_val ) {
+					$attributes[ $attr_key ] = $attr_val;
+				}
+			}
+		}
 	}
 }
