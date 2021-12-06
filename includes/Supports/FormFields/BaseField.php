@@ -174,7 +174,7 @@ abstract class BaseField implements FieldInterface {
 
 			// If array value
 			if ( is_array( $value ) ) {
-				return sprintf( '%s="%s"', $key, implode( " ", $value ) );
+				return sprintf( '%s="%s"', $key, implode( ",", $value ) );
 			}
 
 			// If string value
