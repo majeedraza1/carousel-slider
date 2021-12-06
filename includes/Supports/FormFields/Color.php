@@ -1,6 +1,6 @@
 <?php
 
-namespace CarouselSlider\Supports\MetaboxApi\Fields;
+namespace CarouselSlider\Supports\FormFields;
 
 class Color extends BaseField {
 

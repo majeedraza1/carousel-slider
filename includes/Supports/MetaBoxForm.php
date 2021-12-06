@@ -4,15 +4,15 @@ namespace CarouselSlider\Supports;
 
 use CarouselSlider\Helper;
 use CarouselSlider\Interfaces\FieldInterface;
-use CarouselSlider\Supports\MetaboxApi\Fields\BaseField;
-use CarouselSlider\Supports\MetaboxApi\Fields\ButtonGroup;
-use CarouselSlider\Supports\MetaboxApi\Fields\Checkbox;
-use CarouselSlider\Supports\MetaboxApi\Fields\Color;
-use CarouselSlider\Supports\MetaboxApi\Fields\ImagesGallery;
-use CarouselSlider\Supports\MetaboxApi\Fields\Select;
-use CarouselSlider\Supports\MetaboxApi\Fields\Spacing;
-use CarouselSlider\Supports\MetaboxApi\Fields\Text;
-use CarouselSlider\Supports\MetaboxApi\Fields\Textarea;
+use CarouselSlider\Supports\FormFields\BaseField;
+use CarouselSlider\Supports\FormFields\ButtonGroup;
+use CarouselSlider\Supports\FormFields\Checkbox;
+use CarouselSlider\Supports\FormFields\Color;
+use CarouselSlider\Supports\FormFields\ImagesGallery;
+use CarouselSlider\Supports\FormFields\Select;
+use CarouselSlider\Supports\FormFields\Spacing;
+use CarouselSlider\Supports\FormFields\Text;
+use CarouselSlider\Supports\FormFields\Textarea;
 
 defined( 'ABSPATH' ) || exit;
 

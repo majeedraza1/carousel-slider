@@ -1,9 +1,8 @@
 <?php
 
-namespace CarouselSlider\Supports\MetaboxApi\Fields;
+namespace CarouselSlider\Supports\FormFields;
 
 use CarouselSlider\Interfaces\FieldInterface;
-use CarouselSlider\Supports\Sanitize;
 
 abstract class BaseField implements FieldInterface {
 	/**
@@ -188,6 +187,7 @@ abstract class BaseField implements FieldInterface {
 
 	/**
 	 * Add extra attributes
+	 *
 	 * @param array $attributes
 	 */
 	protected function add_extra_attributes( array &$attributes ) {

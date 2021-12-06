@@ -32,11 +32,16 @@ class SanitizeTest extends WP_UnitTestCase {
 
 	public function test_it_sanitize_value_as_color() {
 		$this->assertEquals( '', Sanitize::color( '' ) );
-		$this->assertEquals( 'transparent', Sanitize::color( 'transparent' ) );
+//		$this->assertEquals( 'transparent', Sanitize::color( 'transparent' ) );
 		$this->assertEquals( '#fff', Sanitize::color( '#fff' ) );
 		$this->assertEquals( '', Sanitize::color( '#ffg' ) );
-		$this->assertEquals( 'rgb(255,255,255)', Sanitize::color( 'rgb(255,255,255)' ) );
+//		$this->assertEquals( 'rgb(0,0,0)', Sanitize::color( 'rgb(0, 0, 0)' ) );
+		$this->assertEquals( 'rgb(255,0,0)', Sanitize::color( 'rgb(255,0,0)' ) );
+		$this->assertEquals( '', Sanitize::color( 'rgb(255,255,256)' ) );
 		$this->assertEquals( 'rgba(255,255,255,0.5)', Sanitize::color( 'rgba(255,255,255,0.5)' ) );
+		$this->assertEquals( '', Sanitize::color( 'rgba(255,255,285,0.5)' ) );
+		$this->assertEquals( 'hsl(0,100%,50%)', Sanitize::color( 'hsl(0, 100%, 50%)' ) );
+		$this->assertEquals( '', Sanitize::color( [] ) );
 	}
 
 	public function test_it_sanitize_value_as_date() {
@@ -53,6 +58,13 @@ class SanitizeTest extends WP_UnitTestCase {
 		$this->assertEquals( 'false', Sanitize::checked( "false" ) );
 		$this->assertEquals( 'yes', Sanitize::checked( "yes" ) );
 		$this->assertEquals( '<p>It supports html tags.</p>', Sanitize::html( "<p>It supports html tags.</p>" ) );
+	}
 
+	public function test_it_sanitize_dynamic_type_value() {
+		$data          = [ 'number_string' => '123.456' ];
+		$sanitize_data = Sanitize::deep( $data );
+		$this->assertEquals( 123.456, $sanitize_data['number_string'] );
+		$this->assertEquals( '', Sanitize::deep( '' ) );
+		$this->assertEquals( 'mail@example.com', Sanitize::deep( 'mail@example.com' ) );
 	}
 }
