@@ -13,7 +13,8 @@
 		</testsuite>
 	</testsuites>
 	<logging>
-		<log type="coverage-html" target="./tests/coverage"/>
+		<log type="coverage-clover" target="./tests/coverage/coverage.xml"/>
+		<log type="coverage-html" target="./tests/coverage/html"/>
 	</logging>
 	<filter>
 		<whitelist>

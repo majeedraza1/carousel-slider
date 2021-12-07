@@ -44,24 +44,30 @@ class MetaBox {
 	}
 
 	/**
+	 * Check current user can save slider
+	 *
+	 * @param int $post_id
+	 *
+	 * @return bool
+	 */
+	public function current_user_can_save( int $post_id ): bool {
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+			return false;
+		}
+
+		return isset( $_POST['_carousel_slider_nonce'] ) &&
+			   wp_verify_nonce( $_POST['_carousel_slider_nonce'], 'carousel_slider_nonce' ) &&
+			   current_user_can( 'edit_post', $post_id );
+	}
+
+	/**
 	 * Save custom meta box
 	 *
 	 * @param int $post_id The post ID
 	 */
 	public function save_meta_box( int $post_id ) {
-		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-			return;
-		}
-		// Check if nonce is set.
-		if ( ! isset( $_POST['_carousel_slider_nonce'], $_POST['carousel_slider'] ) ) {
-			return;
-		}
-		// Check if nonce is valid.
-		if ( ! wp_verify_nonce( $_POST['_carousel_slider_nonce'], 'carousel_slider_nonce' ) ) {
-			return;
-		}
 		// Check if user has permissions to save data.
-		if ( ! current_user_can( 'edit_post', $post_id ) ) {
+		if ( ! $this->current_user_can_save( $post_id ) ) {
 			return;
 		}
 
