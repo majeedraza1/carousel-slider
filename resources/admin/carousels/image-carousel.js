@@ -1,3 +1,4 @@
+/** global: wp */
 import $ from 'jquery';
 import EventBus from "@/admin/EventBus";
 
@@ -81,26 +82,28 @@ _this.on('click', function (e) {
 	});
 });
 
+const onClickModalSaveButton = () => {
+	let models = frame.state().get('library'),
+		ids = [],
+		html = '';
+
+	models.each(function (attachment) {
+		ids.push(attachment.id);
+		let src = attachment.attributes.sizes.thumbnail || attachment.attributes.sizes.full;
+		html += `<li><img src="${src.url}" width="50" height="50" class="attachment-50x50 size-50x50" loading="lazy"></li>`;
+	});
+
+	selection = loadImages(ids.toString());
+	frame.close();
+	updateDom(ids.toString(), html);
+}
+
 function overrideGalleryInsert() {
 	frame.toolbar.get('view').set({
 		insert: {
 			style: 'primary',
 			text: _this.data('save'),
-			click: function () {
-				let models = frame.state().get('library'), ids = [], html = '';
-
-				models.each(function (attachment) {
-					ids.push(attachment.id);
-					let src = attachment.attributes.sizes.thumbnail || attachment.attributes.sizes.full;
-					html += `<li><img src="${src.url}" width="50" height="50" class="attachment-50x50 size-50x50" loading="lazy"></li>`;
-				});
-
-				this.el.innerHTML = _this.data('progress');
-
-				selection = loadImages(ids.toString());
-				frame.close();
-				updateDom(ids.toString(), html);
-			}
+			click: () => onClickModalSaveButton()
 		}
 	});
 }
