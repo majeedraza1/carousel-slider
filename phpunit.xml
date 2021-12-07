@@ -9,7 +9,11 @@
 >
 	<testsuites>
 		<testsuite name="Carousel Slider Test Suite">
-			<directory suffix="Test.php">./tests/</directory>
+			<file>./tests/unit/Carousel_SliderTest.php</file>
+			<directory suffix="Test.php">./tests/unit/includes/</directory>
+		</testsuite>
+		<testsuite name="Carousel Slider Modules">
+			<directory suffix="Test.php">./tests/unit/modules/</directory>
 		</testsuite>
 	</testsuites>
 	<logging>
@@ -21,14 +25,6 @@
 			<file>carousel-slider.php</file>
 			<directory suffix=".php">includes/</directory>
 			<directory suffix=".php">modules/</directory>
-			<exclude>
-				<file>includes/Ajax.php</file>
-				<file>includes/Assets.php</file>
-				<file>includes/Autoloader.php</file>
-				<file>includes/i18n.php</file>
-				<file>includes/Plugin.php</file>
-				<file>includes/Upgrader.php</file>
-			</exclude>
 		</whitelist>
 	</filter>
 

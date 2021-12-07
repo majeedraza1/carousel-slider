@@ -1,6 +1,6 @@
 <?php
 
-namespace Supports\FormFields;
+namespace CarouselSlider\Test\Supports\FormFields;
 
 use CarouselSlider\Supports\FormFields\Textarea;
 

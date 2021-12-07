@@ -1,5 +1,7 @@
 <?php
 
+namespace CarouselSlider\Test\Supports;
+
 use CarouselSlider\Helper;
 
 class HelperTest extends \WP_UnitTestCase {

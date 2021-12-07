@@ -1,8 +1,10 @@
 <?php
 
+namespace CarouselSlider\Test\Supports;
+
 use CarouselSlider\Supports\Sanitize;
 
-class SanitizeTest extends WP_UnitTestCase {
+class SanitizeTest extends \WP_UnitTestCase {
 	public function test_it_sanitize_value_as_number() {
 		$this->assertTrue( 1 === Sanitize::number( 1 ) );
 		$this->assertTrue( 1 === Sanitize::number( '1' ) );

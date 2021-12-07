@@ -19,6 +19,12 @@
       "CarouselSlider\\Modules\\": "modules"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "CarouselSlider\\Test\\": "tests/unit/includes",
+      "CarouselSlider\\Test\\Modules\\": "tests/unit/modules"
+    }
+  },
   "require": {
     "ext-json": "*"
   },

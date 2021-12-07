@@ -1,8 +1,10 @@
 <?php
 
+namespace CarouselSlider\Test\Supports;
+
 use CarouselSlider\Supports\Validate;
 
-class ValidateTest extends WP_UnitTestCase {
+class ValidateTest extends \WP_UnitTestCase {
 	public function test_validate_url() {
 		$this->assertTrue( Validate::url( 'https://example.com' ) );
 		$this->assertTrue( Validate::url( 'https://example' ) );

@@ -1,8 +1,10 @@
 <?php
 
+namespace CarouselSlider\Test\Abstracts;
+
 use CarouselSlider\Abstracts\AbstractView;
 
-class AbstractViewTest extends WP_UnitTestCase {
+class AbstractViewTest extends \WP_UnitTestCase {
 	protected $instance;
 
 	public function setUp() {

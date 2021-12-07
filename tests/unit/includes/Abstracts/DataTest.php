@@ -1,8 +1,10 @@
 <?php
 
+namespace CarouselSlider\Test\Abstracts;
+
 use CarouselSlider\Abstracts\Data;
 
-class DataUtilTest extends WP_UnitTestCase {
+class DataTest extends \WP_UnitTestCase {
 
 	/**
 	 * @var Data
