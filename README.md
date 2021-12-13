@@ -1,10 +1,21 @@
 # Carousel Slider
 
 <p align="center">
-<a href="https://wordpress.org/plugins/carousel-slider"><img src="https://scrutinizer-ci.com/g/sayful1/carousel-slider/badges/quality-score.png?b=main" alt="Code Quality"></a>
-<a href="https://wordpress.org/plugins/carousel-slider"><img src="https://scrutinizer-ci.com/g/sayful1/carousel-slider/badges/coverage.png?b=main" alt="Code Coverage"></a>
-<a href="https://wordpress.org/plugins/carousel-slider"><img src="https://scrutinizer-ci.com/g/sayful1/carousel-slider/badges/build.png?b=main" alt="Build Status"></a>
-<a href="https://wordpress.org/plugins/carousel-slider"><img src="https://scrutinizer-ci.com/g/sayful1/carousel-slider/badges/code-intelligence.svg?b=main" alt="Code Intelligence Status"></a>
+<a href="https://wordpress.org/plugins/carousel-slider">
+	<img src="https://img.shields.io/wordpress/plugin/v/carousel-slider.svg" alt="WordPress Plugin Version">
+</a>
+<a href="https://wordpress.org/plugins/carousel-slider">
+	<img src="https://img.shields.io/wordpress/v/carousel-slider.svg" alt="WordPress Tested Up To">
+</a>
+<a href="https://wordpress.org/plugins/carousel-slider">
+	<img src="https://img.shields.io/wordpress/plugin/dt/carousel-slider.svg" alt="WordPress Plugin Downloads">
+</a>
+<a href="https://wordpress.org/plugins/carousel-slider">
+	<img src="https://img.shields.io/wordpress/plugin/r/carousel-slider.svg" alt="WordPress Plugin Rating">
+</a>
+<a href="https://scrutinizer-ci.com/g/sayful1/carousel-slider">
+	<img src="https://scrutinizer-ci.com/g/sayful1/carousel-slider/badges/quality-score.png?b=main" alt="Code Quality">
+</a>
 </p>
 
 Create SEO friendly Image, Logo, Video, Post, WooCommerce Product Carousel and Slider.
