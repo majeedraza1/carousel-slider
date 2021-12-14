@@ -1,4 +1,9 @@
 <?php
+/**
+ * The setting-specific file of the plugin
+ *
+ * @package CarouselSlider/Admin
+ */
 
 namespace CarouselSlider\Admin;
 
@@ -7,6 +12,9 @@ use Exception;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Setting class to register global setting.
+ */
 class Setting {
 	/**
 	 * Instance of current class
@@ -16,6 +24,8 @@ class Setting {
 	private static $instance;
 
 	/**
+	 * The only one instance of the class can be loaded
+	 *
 	 * @return self
 	 */
 	public static function init() {
@@ -31,8 +41,8 @@ class Setting {
 	/**
 	 * Get option
 	 *
-	 * @param string $key
-	 * @param mixed  $default
+	 * @param string $key option key.
+	 * @param mixed  $default default value.
 	 *
 	 * @return mixed
 	 */
@@ -50,7 +60,7 @@ class Setting {
 	/**
 	 * Plugin setting fields
 	 *
-	 * @throws Exception
+	 * @throws Exception It throws exception if you don't set name and id field.
 	 */
 	public function settings() {
 		$settings = new DefaultSettingApi();
@@ -65,7 +75,7 @@ class Setting {
 			]
 		);
 
-		// Add settings page tab
+		// Add settings page tab.
 		$settings->set_panel(
 			[
 				'id'    => 'general',

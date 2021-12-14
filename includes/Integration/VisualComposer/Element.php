@@ -31,7 +31,7 @@ class Element {
 	 * Integrate with visual composer
 	 */
 	public function integrate_with_vc() {
-		// Check if Visual Composer is installed
+		// Check if Visual Composer is installed.
 		if ( ! function_exists( 'vc_map' ) ) {
 			return;
 		}

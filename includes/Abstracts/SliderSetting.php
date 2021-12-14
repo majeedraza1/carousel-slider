@@ -31,7 +31,7 @@ class SliderSetting extends Data {
 	 * @param mixed $value
 	 */
 	public function set_nav_visibility( $value ) {
-		// For backup compatability
+		// For backup compatability.
 		$value = str_replace( [ 'off', 'on' ], [ 'never', 'hover' ], $value );
 
 		if ( in_array( $value, [ 'always', 'never', 'hover' ] ) ) {
@@ -69,7 +69,7 @@ class SliderSetting extends Data {
 	 * @param mixed $value
 	 */
 	public function set_pagination_visibility( $value ) {
-		// For backup compatability
+		// For backup compatability.
 		$value = str_replace( [ 'off', 'on' ], [ 'never', 'always' ], $value );
 
 		if ( in_array( $value, [ 'always', 'never', 'hover' ] ) ) {

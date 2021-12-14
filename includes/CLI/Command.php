@@ -185,7 +185,7 @@ class Command extends WP_CLI_Command {
 				'title' => 'Test: Video Carousel - Youtube',
 				'args'  => [],
 			],
-			// Post Carousel
+			// Post Carousel.
 			[
 				'type'  => 'post-carousel',
 				'title' => 'Test: Post Carousel - Latest Posts',
@@ -211,7 +211,7 @@ class Command extends WP_CLI_Command {
 				'title' => 'Test: Post Carousel - IDs',
 				'args'  => [ '_post_query_type' => 'specific_posts' ],
 			],
-			// Product Carousel
+			// Product Carousel.
 			[
 				'type'  => 'product-carousel',
 				'title' => 'Test: Product Carousel - IDs',

@@ -169,7 +169,7 @@ class Sanitize {
 			return '';
 		}
 
-		// Trim unneeded whitespace
+		// Trim unneeded whitespace.
 		$value = str_replace( ' ', '', $value );
 
 		// This pattern will check and match 3/6/8-character hex, rgb, rgba, hsl, & hsla colors.

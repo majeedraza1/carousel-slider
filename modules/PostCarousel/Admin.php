@@ -24,11 +24,44 @@ class Admin {
 			self::$instance = new self();
 
 			add_action( 'carousel_slider/meta_box_content', [ self::$instance, 'meta_box_content' ], 10, 2 );
+			add_action( 'carousel_slider/save_slider', [ self::$instance, 'save_meta_box_content' ] );
 		}
 
 		return self::$instance;
 	}
 
+	/**
+	 * Save post carousel content
+	 *
+	 * @param int $post_id The post id.
+	 *
+	 * @return void
+	 */
+	public function save_meta_box_content( int $post_id ) {
+		// phpcs:ignore: WordPress.Security.NonceVerification.Missing
+		if ( ! isset( $_POST['carousel_slider']['_post_categories'] ) ) {
+			update_post_meta( $post_id, '_post_categories', '' );
+		}
+
+		// phpcs:ignore: WordPress.Security.NonceVerification.Missing
+		if ( ! isset( $_POST['carousel_slider']['_post_tags'] ) ) {
+			update_post_meta( $post_id, '_post_tags', '' );
+		}
+
+		// phpcs:ignore: WordPress.Security.NonceVerification.Missing
+		if ( ! isset( $_POST['carousel_slider']['_post_in'] ) ) {
+			update_post_meta( $post_id, '_post_in', '' );
+		}
+	}
+
+	/**
+	 * Metabox content
+	 *
+	 * @param int $slider_id The slider id.
+	 * @param string $slider_type The slider type.
+	 *
+	 * @return void
+	 */
 	public function meta_box_content( int $slider_id, string $slider_type ) {
 		$metabox = new MetaBoxForm();
 		?>

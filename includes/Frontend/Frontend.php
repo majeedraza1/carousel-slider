@@ -48,7 +48,7 @@ class Frontend {
 
 		$slider_id = intval( $attributes['id'] );
 
-		// Check if id is valid or not
+		// Check if id is valid or not.
 		$post = get_post( $slider_id );
 		if ( ! ( $post instanceof WP_Post && $post->post_type == CAROUSEL_SLIDER_POST_TYPE ) ) {
 			return '';
@@ -57,7 +57,7 @@ class Frontend {
 		$slide_type = get_post_meta( $slider_id, '_slide_type', true );
 		$slide_type = array_key_exists( $slide_type, Helper::get_slide_types() ) ? $slide_type : 'image-carousel';
 
-		// If script & style is not enqueued yet, then enqueued it now
+		// If script & style is not enqueued yet, then enqueued it now.
 		if ( ! wp_script_is( 'carousel-slider-frontend', 'enqueued' ) ) {
 			wp_enqueue_script( 'carousel-slider-frontend' );
 			add_action(

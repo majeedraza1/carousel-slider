@@ -233,7 +233,7 @@ class MetaBoxForm {
 	private function get_name_and_value( array $args ): array {
 		global $post;
 		$input_attributes = $args['input_attributes'] ?? [];
-		// Meta Name
+		// Meta Name.
 		if ( isset( $input_attributes['name'] ) ) {
 			$name = $input_attributes['name'];
 		} else {
@@ -242,7 +242,7 @@ class MetaBoxForm {
 			$name     = sprintf( '%s[%s]%s', $group, $args['id'], $multiple );
 		}
 
-		// Meta Value
+		// Meta Value.
 		$default = $args['std'] ?? '';
 		if ( isset( $input_attributes['value'] ) ) {
 			$value = ! empty( $input_attributes['value'] ) ? $input_attributes['value'] : $default;

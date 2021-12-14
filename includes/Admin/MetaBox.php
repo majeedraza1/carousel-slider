@@ -1,4 +1,9 @@
 <?php
+/**
+ * The slider meta box specific file of the plugin
+ *
+ * @package CarouselSlider/Admin
+ */
 
 namespace CarouselSlider\Admin;
 
@@ -8,6 +13,9 @@ use WP_Post;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * MetaBox class
+ */
 class MetaBox {
 
 	/**
@@ -32,21 +40,19 @@ class MetaBox {
 	public static function init() {
 		if ( is_null( self::$instance ) ) {
 			self::$instance = new self();
+
+			self::$instance->post_type = CAROUSEL_SLIDER_POST_TYPE;
+			add_action( 'add_meta_boxes', array( self::$instance, 'add_meta_boxes' ) );
+			add_action( 'save_post', array( self::$instance, 'save_meta_box' ) );
 		}
 
 		return self::$instance;
 	}
 
-	public function __construct() {
-		$this->post_type = CAROUSEL_SLIDER_POST_TYPE;
-		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
-		add_action( 'save_post', array( $this, 'save_meta_box' ) );
-	}
-
 	/**
 	 * Check current user can save slider
 	 *
-	 * @param int $post_id
+	 * @param int $post_id post id.
 	 *
 	 * @return bool
 	 */
@@ -55,15 +61,17 @@ class MetaBox {
 			return false;
 		}
 
-		return isset( $_POST['_carousel_slider_nonce'] ) &&
-			   wp_verify_nonce( $_POST['_carousel_slider_nonce'], 'carousel_slider_nonce' ) &&
-			   current_user_can( 'edit_post', $post_id );
+		if ( ! current_user_can( 'edit_post', $post_id ) ) {
+			return false;
+		}
+
+		return false !== wp_verify_nonce( $_POST['_carousel_slider_nonce'] ?? '', 'carousel_slider_nonce' );
 	}
 
 	/**
 	 * Save custom meta box
 	 *
-	 * @param int $post_id The post ID
+	 * @param int $post_id The post ID.
 	 */
 	public function save_meta_box( int $post_id ) {
 		// Check if user has permissions to save data.
@@ -71,27 +79,16 @@ class MetaBox {
 			return;
 		}
 
+		// phpcs:ignore: WordPress.Security.NonceVerification.Missing
 		foreach ( $_POST['carousel_slider'] as $key => $val ) {
 			if ( is_array( $val ) ) {
 				$val = implode( ',', $val );
 			}
 
-			if ( $key == '_margin_right' && $val == 0 ) {
+			if ( '_margin_right' === $key && 0 === $val ) {
 				$val = 'zero';
 			}
 			update_post_meta( $post_id, $key, sanitize_text_field( $val ) );
-		}
-
-		if ( ! isset( $_POST['carousel_slider']['_post_categories'] ) ) {
-			update_post_meta( $post_id, '_post_categories', '' );
-		}
-
-		if ( ! isset( $_POST['carousel_slider']['_post_tags'] ) ) {
-			update_post_meta( $post_id, '_post_tags', '' );
-		}
-
-		if ( ! isset( $_POST['carousel_slider']['_post_in'] ) ) {
-			update_post_meta( $post_id, '_post_in', '' );
 		}
 
 		do_action( 'carousel_slider/save_slider', $post_id );
@@ -154,7 +151,7 @@ class MetaBox {
 	/**
 	 * Load meta box content
 	 *
-	 * @param WP_Post $post
+	 * @param WP_Post $post The WP_Post object.
 	 */
 	public function carousel_slider_meta_boxes( WP_Post $post ) {
 		wp_nonce_field( 'carousel_slider_nonce', '_carousel_slider_nonce' );
@@ -174,9 +171,9 @@ class MetaBox {
 				<select name="carousel_slider[_slide_type]" id="_carousel_slider_slide_type" class="sp-input-text">
 					<?php
 					foreach ( $slide_types as $slug => $label ) {
-						$selected = ( $slug == $slide_type ) ? 'selected' : '';
+						$selected = ( $slug === $slide_type ) ? 'selected' : '';
 
-						if ( 'product-carousel' == $slug ) {
+						if ( 'product-carousel' === $slug ) {
 							$disabled = Helper::is_woocommerce_active() ? '' : 'disabled';
 							echo '<option value="' . $slug . '" ' . $selected . ' ' . $disabled . '>' . $label . '</option>';
 							continue;
@@ -206,6 +203,7 @@ class MetaBox {
 				'id'   => esc_html__( '_image_size', 'carousel-slider' ),
 				'name' => esc_html__( 'Carousel Image size', 'carousel-slider' ),
 				'desc' => sprintf(
+				/* translators: 1: setting media page link start, 2: setting media page link end */
 					esc_html__( 'Choose "original uploaded image" for full size image or your desired image size for carousel image. You can change the default size for thumbnail, medium and large from %1$s Settings >> Media %2$s.', 'carousel-slider' ),
 					'<a target="_blank" href="' . get_admin_url() . 'options-media.php">',
 					'</a>'
@@ -219,8 +217,8 @@ class MetaBox {
 				'desc'    => esc_html__( 'Enable image with lazy loading.', 'carousel-slider' ),
 				'std'     => Helper::get_default_setting( 'lazy_load_image' ),
 				'options' => array(
-					'on'  => esc_html__( 'Enable' ),
-					'off' => esc_html__( 'Disable' ),
+					'on'  => esc_html__( 'Enable', 'carousel-slider' ),
+					'off' => esc_html__( 'Disable', 'carousel-slider' ),
 				),
 			)
 		);
@@ -239,8 +237,8 @@ class MetaBox {
 				'desc'    => esc_html__( 'Enable or disable loop(circular) of carousel.', 'carousel-slider' ),
 				'std'     => 'on',
 				'options' => array(
-					'on'  => esc_html__( 'Enable' ),
-					'off' => esc_html__( 'Disable' ),
+					'on'  => esc_html__( 'Enable', 'carousel-slider' ),
+					'off' => esc_html__( 'Disable', 'carousel-slider' ),
 				),
 			)
 		);
@@ -259,8 +257,8 @@ class MetaBox {
 				'desc'    => esc_html__( 'Set item width according to its content width. Use width style on item to get the result you want. ', 'carousel-slider' ),
 				'std'     => 'off',
 				'options' => array(
-					'on'  => esc_html__( 'Enable' ),
-					'off' => esc_html__( 'Disable' ),
+					'on'  => esc_html__( 'Enable', 'carousel-slider' ),
+					'off' => esc_html__( 'Disable', 'carousel-slider' ),
 				),
 			)
 		);
@@ -269,7 +267,7 @@ class MetaBox {
 	/**
 	 * Render short code meta box content
 	 *
-	 * @param WP_Post $post
+	 * @param WP_Post $post The WP_Post object.
 	 */
 	public function usages_callback( $post ) {
 		ob_start();
@@ -288,9 +286,14 @@ class MetaBox {
 		echo ob_get_clean();
 	}
 
+	/**
+	 * Navigation settings callback
+	 *
+	 * @return void
+	 */
 	public function navigation_settings_callback() {
-		$metaBox = new MetaBoxForm();
-		$metaBox->field(
+		$form = new MetaBoxForm();
+		$form->field(
 			[
 				'type'    => 'select',
 				'id'      => '_nav_button',
@@ -306,7 +309,7 @@ class MetaBox {
 				'context' => 'side',
 			]
 		);
-		$metaBox->field(
+		$form->field(
 			[
 				'type'    => 'text',
 				'id'      => '_slide_by',
@@ -317,7 +320,7 @@ class MetaBox {
 				'context' => 'side',
 			]
 		);
-		$metaBox->select(
+		$form->select(
 			[
 				'id'      => '_arrow_position',
 				'class'   => 'small-text',
@@ -331,7 +334,7 @@ class MetaBox {
 				'context' => 'side',
 			]
 		);
-		$metaBox->number(
+		$form->number(
 			[
 				'id'      => '_arrow_size',
 				'class'   => 'small-text',
@@ -344,7 +347,7 @@ class MetaBox {
 
 		echo '<hr>';
 
-		$metaBox->select(
+		$form->select(
 			[
 				'id'      => '_dot_nav',
 				'class'   => 'small-text',
@@ -360,7 +363,7 @@ class MetaBox {
 			]
 		);
 
-		$metaBox->select(
+		$form->select(
 			[
 				'id'      => '_bullet_position',
 				'class'   => 'small-text',
@@ -375,7 +378,7 @@ class MetaBox {
 				'context' => 'side',
 			]
 		);
-		$metaBox->number(
+		$form->number(
 			[
 				'id'      => '_bullet_size',
 				'class'   => 'small-text',
@@ -385,7 +388,7 @@ class MetaBox {
 				'context' => 'side',
 			]
 		);
-		$metaBox->select(
+		$form->select(
 			[
 				'id'      => '_bullet_shape',
 				'class'   => 'small-text',
@@ -400,20 +403,18 @@ class MetaBox {
 			]
 		);
 		echo '<hr>';
-		$metaBox->color(
+		$form->color(
 			[
 				'id'      => '_nav_color',
 				'name'    => esc_html__( 'Arrows & Dots Color', 'carousel-slider' ),
-				// 'desc'    => esc_html__( 'Pick a color for navigation and dots.', 'carousel-slider' ),
 				'std'     => Helper::get_default_setting( 'nav_color' ),
 				'context' => 'side',
 			]
 		);
-		$metaBox->color(
+		$form->color(
 			[
 				'id'      => '_nav_active_color',
 				'name'    => esc_html__( 'Arrows & Dots Hover Color', 'carousel-slider' ),
-				// 'desc'    => esc_html__( 'Pick a color for navigation and dots.', 'carousel-slider' ),
 				'std'     => Helper::get_default_setting( 'nav_active_color' ),
 				'context' => 'side',
 			]
@@ -424,8 +425,8 @@ class MetaBox {
 	 * Autoplay settings
 	 */
 	public function autoplay_settings_callback() {
-		$metaBox = new MetaBoxForm();
-		$metaBox->select(
+		$form = new MetaBoxForm();
+		$form->select(
 			[
 				'id'      => '_autoplay',
 				'class'   => 'small-text',
@@ -439,7 +440,7 @@ class MetaBox {
 				'context' => 'side',
 			]
 		);
-		$metaBox->select(
+		$form->select(
 			[
 				'id'      => '_autoplay_pause',
 				'class'   => 'small-text',
@@ -453,7 +454,7 @@ class MetaBox {
 				'context' => 'side',
 			]
 		);
-		$metaBox->number(
+		$form->number(
 			[
 				'id'      => '_autoplay_timeout',
 				'class'   => 'small-text',
@@ -463,7 +464,7 @@ class MetaBox {
 				'context' => 'side',
 			]
 		);
-		$metaBox->number(
+		$form->number(
 			[
 				'id'      => '_autoplay_speed',
 				'class'   => 'small-text',
@@ -479,8 +480,8 @@ class MetaBox {
 	 * Renders the meta box.
 	 */
 	public function responsive_settings_callback() {
-		$metaBox = new MetaBoxForm();
-		$metaBox->number(
+		$form = new MetaBoxForm();
+		$form->number(
 			[
 				'id'      => '_items',
 				'class'   => 'small-text',
@@ -490,7 +491,7 @@ class MetaBox {
 				'context' => 'side',
 			]
 		);
-		$metaBox->number(
+		$form->number(
 			[
 				'id'      => '_items_desktop',
 				'class'   => 'small-text',
@@ -500,7 +501,7 @@ class MetaBox {
 				'context' => 'side',
 			]
 		);
-		$metaBox->number(
+		$form->number(
 			[
 				'id'      => '_items_small_desktop',
 				'class'   => 'small-text',
@@ -510,7 +511,7 @@ class MetaBox {
 				'context' => 'side',
 			]
 		);
-		$metaBox->number(
+		$form->number(
 			[
 				'id'      => '_items_portrait_tablet',
 				'class'   => 'small-text',
@@ -520,7 +521,7 @@ class MetaBox {
 				'context' => 'side',
 			]
 		);
-		$metaBox->number(
+		$form->number(
 			[
 				'id'      => '_items_small_portrait_tablet',
 				'class'   => 'small-text',
@@ -530,7 +531,7 @@ class MetaBox {
 				'context' => 'side',
 			]
 		);
-		$metaBox->number(
+		$form->number(
 			[
 				'id'      => '_items_portrait_mobile',
 				'class'   => 'small-text',

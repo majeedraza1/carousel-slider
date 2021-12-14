@@ -210,7 +210,7 @@ class SettingApi {
 	public function get_panels(): array {
 		$panels = apply_filters( 'carousel_slider/settings/panels', $this->panels );
 
-		// Sort by priority
+		// Sort by priority.
 		usort( $panels, [ $this, 'sort_by_priority' ] );
 
 		return $panels;
@@ -239,7 +239,7 @@ class SettingApi {
 	public function get_sections(): array {
 		$sections = apply_filters( 'carousel_slider/settings/sections', $this->sections );
 
-		// Sort by priority
+		// Sort by priority.
 		usort( $sections, [ $this, 'sort_by_priority' ] );
 
 		return $sections;
@@ -268,7 +268,7 @@ class SettingApi {
 	public function get_fields(): array {
 		$fields = apply_filters( 'carousel_slider/settings/fields', $this->fields );
 
-		// Sort by priority
+		// Sort by priority.
 		usort( $fields, [ $this, 'sort_by_priority' ] );
 
 		return $fields;

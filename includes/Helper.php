@@ -37,7 +37,7 @@ class Helper extends ViewHelper {
 	 * Get setting
 	 *
 	 * @param string $key
-	 * @param mixed  $default
+	 * @param mixed $default
 	 *
 	 * @return mixed|null
 	 */
@@ -109,7 +109,7 @@ class Helper extends ViewHelper {
 	 * Get default setting
 	 *
 	 * @param string $key
-	 * @param mixed  $default
+	 * @param mixed $default
 	 *
 	 * @return mixed|null
 	 */
@@ -156,9 +156,9 @@ class Helper extends ViewHelper {
 	 * @return bool
 	 */
 	public static function is_woocommerce_active(): bool {
-		return in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins' ) ) ||
-			   defined( 'WC_VERSION' ) ||
-			   defined( 'WOOCOMMERCE_VERSION' );
+		return in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins' ), true ) ||
+			defined( 'WC_VERSION' ) ||
+			defined( 'WOOCOMMERCE_VERSION' );
 	}
 
 	/**
@@ -178,16 +178,15 @@ class Helper extends ViewHelper {
 		}
 
 		foreach ( $ids as $id ) {
-			$_post         = get_post( $id );
+			$_post        = get_post( $id );
 			$page_content .= '<!-- wp:heading {"level":4} --><h4>' . $_post->post_title . '</h4><!-- /wp:heading -->';
-			// $page_content .= '<!-- wp:shortcode -->[carousel_slide id=\'' . $id . '\']<!-- /wp:shortcode -->';
 			$page_content .= '<!-- wp:carousel-slider/slider {"sliderID":' . $id . ',"sliderName":"' . $_post->post_title . ' ( ID: ' . $id . ' )"} -->';
 			$page_content .= '<div class="wp-block-carousel-slider-slider">[carousel_slide id=\'' . $id . '\']</div>';
 			$page_content .= '<!-- /wp:carousel-slider/slider -->';
 			$page_content .= '<!-- wp:spacer {"height":100} --><div style="height:100px" aria-hidden="true" class="wp-block-spacer"></div><!-- /wp:spacer -->';
 		}
 
-		// Check that the page doesn't exist already
+		// Check that the page doesn't exist already.
 		$_page     = get_page_by_path( $page_path );
 		$page_data = [
 			'post_content'   => $page_content,

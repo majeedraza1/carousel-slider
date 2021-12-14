@@ -27,9 +27,9 @@ class Admin {
 		if ( is_null( self::$instance ) ) {
 			self::$instance = new self();
 
-			// Register custom post type
+			// Register custom post type.
 			add_action( 'init', [ self::$instance, 'register_post_type' ] );
-			// Modify carousel slider list table columns
+			// Modify carousel slider list table columns.
 			add_filter( 'manage_edit-' . self::POST_TYPE . '_columns', [ self::$instance, 'columns_head' ] );
 			add_filter(
 				'manage_' . self::POST_TYPE . '_posts_custom_column',
@@ -37,7 +37,7 @@ class Admin {
 				10,
 				2
 			);
-			// Remove view and Quick Edit from Carousels
+			// Remove view and Quick Edit from Carousels.
 			add_filter( 'post_row_actions', [ self::$instance, 'post_row_actions' ], 10, 2 );
 			add_filter( 'preview_post_link', [ self::$instance, 'preview_post_link' ], 10, 2 );
 

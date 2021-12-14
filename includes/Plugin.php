@@ -75,22 +75,22 @@ class Plugin {
 		$this->container['divi_module']         = DiviBuilderModule::init();
 		$this->container['upgrader']            = Upgrader::init();
 
-		// Load classes for admin area
+		// Load classes for admin area.
 		if ( $this->is_request( 'admin' ) ) {
 			$this->admin_includes();
 		}
 
-		// Load classes for frontend area
+		// Load classes for frontend area.
 		if ( $this->is_request( 'frontend' ) ) {
 			$this->frontend_includes();
 		}
 
-		// Load classes for ajax functionality
+		// Load classes for ajax functionality.
 		if ( $this->is_request( 'ajax' ) ) {
 			$this->ajax_includes();
 		}
 
-		// WP-CLI Commands
+		// WP-CLI Commands.
 		if ( class_exists( WP_CLI::class ) && class_exists( WP_CLI_Command::class ) ) {
 			WP_CLI::add_command( 'carousel-slider', Command::class );
 		}

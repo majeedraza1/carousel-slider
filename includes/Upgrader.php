@@ -1,9 +1,17 @@
 <?php
+/**
+ * The upgrade-specific functionality of the plugin.
+ *
+ * @package CarouselSlider
+ */
 
 namespace CarouselSlider;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Upgrader class
+ */
 class Upgrader {
 
 	/**
@@ -38,7 +46,7 @@ class Upgrader {
 	/**
 	 * Show in plugin update message
 	 *
-	 * @param array $plugin_data
+	 * @param array $plugin_data plugin info data.
 	 */
 	public function in_plugin_update_message( array $plugin_data ) {
 		$current_version       = CAROUSEL_SLIDER_VERSION;
@@ -50,7 +58,12 @@ class Upgrader {
 		if ( version_compare( $current_version_array[0], $new_version_array[0], '<' ) ) {
 			$html .= '</p><div class="cs_plugin_upgrade_notice extensions_warning major_update">';
 			$html .= '<div class="cs_plugin_upgrade_notice__title">';
-			$html .= sprintf( __( '<strong>%1$s</strong> version <strong>%2$s</strong> is a major update.', 'carousel-slider' ), $plugin_data['Title'], $new_version );
+			$html .= sprintf(
+				/* translators: 1: plugin title, 2: plugin new version number */
+				__( '%1$s version %2$s is a major update.', 'carousel-slider' ),
+				'<strong>' . $plugin_data['Title'] . '</strong>',
+				'<strong>' . $new_version . '</strong>'
+			);
 			$html .= '</div>';
 			$html .= '<div class="cs_plugin_upgrade_notice__description">';
 			$html .= __( 'We made a lot of major changes to this version.', 'carousel-slider' ) . ' ';
@@ -105,7 +118,7 @@ class Upgrader {
 			static::fix_product_query_type_typo_error();
 		}
 
-		// Add plugin version to database
+		// Add plugin version to database.
 		update_option( 'carousel_slider_version', CAROUSEL_SLIDER_VERSION );
 
 		$message .= '<p>' . __( 'Database upgrade process has been started.', 'carousel-slider' ) . '</p>';

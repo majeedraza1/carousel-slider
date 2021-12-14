@@ -1,7 +1,15 @@
 <?php
+/**
+ * The owl carousel javascript option generator.
+ *
+ * @package CarouselSlider/Abstracts
+ */
 
 namespace CarouselSlider\Abstracts;
 
+/**
+ * OwlSetting class
+ */
 class OwlSetting {
 
 	/**
@@ -12,7 +20,9 @@ class OwlSetting {
 	protected $settings = [];
 
 	/**
-	 * @param SliderSetting $slider_setting
+	 * Class constructor
+	 *
+	 * @param SliderSetting $slider_setting slider setting class.
 	 */
 	public function __construct( SliderSetting $slider_setting ) {
 		$this->read( $slider_setting );
@@ -21,14 +31,14 @@ class OwlSetting {
 	/**
 	 * Read settings
 	 *
-	 * @param SliderSetting $setting
+	 * @param SliderSetting $setting slider setting class.
 	 *
 	 * @return void
 	 */
 	public function read( SliderSetting $setting ) {
 		$this->settings = [
-			'nav'                => $setting->get_prop( 'nav_visibility' ) != 'never',
-			'dots'               => $setting->get_prop( 'pagination_visibility' ) != 'never',
+			'nav'                => $setting->get_prop( 'nav_visibility' ) !== 'never',
+			'dots'               => $setting->get_prop( 'pagination_visibility' ) !== 'never',
 			'slideBy'            => $setting->get_prop( 'nav_steps' ),
 			'stagePadding'       => $setting->get_prop( 'stage_padding' ),
 			'margin'             => $setting->get_prop( 'space_between' ),

@@ -15,30 +15,30 @@ abstract class AbstractTemplate {
 	 */
 	public static function get_default_settings(): array {
 		return [
-			// General Settings
+			// General Settings.
 			'_image_size'                  => 'medium',
 			'_stage_padding'               => '0',
 			'_margin_right'                => (string) Helper::get_default_setting( 'margin_right' ),
 			'_lazy_load_image'             => Helper::get_default_setting( 'lazy_load_image' ),
 			'_infinity_loop'               => 'on',
 			'_auto_width'                  => 'off',
-			// Autoplay Settings
+			// Autoplay Settings.
 			'_autoplay'                    => 'on',
 			'_autoplay_pause'              => 'on',
 			'_autoplay_timeout'            => '5000',
 			'_autoplay_speed'              => '500',
-			// Navigation Settings
+			// Navigation Settings.
 			'_nav_button'                  => 'always',
 			'_slide_by'                    => '1',
 			'_arrow_position'              => 'outside',
 			'_arrow_size'                  => '48',
-			'_dot_nav'                     => 'on', // Always
+			'_dot_nav'                     => 'on', // Always.
 			'_bullet_position'             => 'center',
 			'_bullet_size'                 => '10',
 			'_bullet_shape'                => 'circle',
 			'_nav_color'                   => Helper::get_default_setting( 'nav_color' ),
 			'_nav_active_color'            => Helper::get_default_setting( 'nav_active_color' ),
-			// Responsive Settings
+			// Responsive Settings.
 			'_items_portrait_mobile'       => '1',
 			'_items_small_portrait_tablet' => '2',
 			'_items_portrait_tablet'       => '3',
@@ -93,7 +93,7 @@ abstract class AbstractTemplate {
 		$widths  = wp_list_pluck( $images, 'image_width' );
 		$heights = wp_list_pluck( $images, 'image_height' );
 
-		// Sort the $images with $widths and $heights descending
+		// Sort the $images with $widths and $heights descending.
 		array_multisort( $widths, SORT_DESC, $heights, SORT_DESC, $images );
 
 		return $images;

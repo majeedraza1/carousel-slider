@@ -38,11 +38,11 @@ class ViewHelper {
 	public static function array_to_attribute( array $array ): array {
 		return array_map(
 			function ( $key, $value ) {
-				// If boolean value
+				// If boolean value.
 				if ( is_bool( $value ) ) {
 					  return sprintf( '%s="%s"', $key, ( $value ? 'true' : 'false' ) );
 				}
-				// If array value
+				// If array value.
 				if ( is_array( $value ) ) {
 					return sprintf( '%s="%s"', $key, implode( ' ', $value ) );
 				}
@@ -51,7 +51,7 @@ class ViewHelper {
 					return sprintf( "%s='%s'", $key, $value );
 				}
 
-				// If string value
+				// If string value.
 				return sprintf( '%s="%s"', $key, esc_attr( $value ) );
 
 			},

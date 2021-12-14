@@ -1,9 +1,17 @@
 <?php
+/**
+ * The ajax-specific functionality of the plugin.
+ *
+ * @package CarouselSlider
+ */
 
 namespace CarouselSlider;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Ajax class
+ */
 class Ajax {
 
 	/**
@@ -36,7 +44,7 @@ class Ajax {
 			wp_die( 'Sorry. This link only for developer to do some testing.' );
 		}
 
-		var_dump( 'Testing some data on AJAX' );
+		var_dump( 'Testing some data on AJAX' ); // phpcs:ignore
 		die();
 	}
 }
