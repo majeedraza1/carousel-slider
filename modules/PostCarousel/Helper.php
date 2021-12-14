@@ -27,7 +27,7 @@ class Helper {
 			'post_status'    => 'publish',
 			'order'          => $order,
 			'orderby'        => $orderby,
-			'posts_per_page' => $per_page
+			'posts_per_page' => $per_page,
 		];
 
 		// Get posts by post IDs
@@ -58,33 +58,42 @@ class Helper {
 			$post_date_before = get_post_meta( $slider_id, '_post_date_before', true );
 
 			if ( $post_date_after && $post_date_before ) {
-				$args = array_merge( $args, [
-					'date_query' => [
-						[
-							'after'     => $post_date_after,
-							'before'    => $post_date_before,
-							'inclusive' => true,
+				$args = array_merge(
+					$args,
+					[
+						'date_query' => [
+							[
+								'after'     => $post_date_after,
+								'before'    => $post_date_before,
+								'inclusive' => true,
+							],
 						],
-					],
-				] );
+					]
+				);
 			} elseif ( $post_date_after ) {
-				$args = array_merge( $args, [
-					'date_query' => [
-						[
-							'before'    => $post_date_before,
-							'inclusive' => true,
+				$args = array_merge(
+					$args,
+					[
+						'date_query' => [
+							[
+								'before'    => $post_date_before,
+								'inclusive' => true,
+							],
 						],
-					],
-				] );
+					]
+				);
 			} elseif ( $post_date_before ) {
-				$args = array_merge( $args, [
-					'date_query' => [
-						[
-							'before'    => $post_date_before,
-							'inclusive' => true,
+				$args = array_merge(
+					$args,
+					[
+						'date_query' => [
+							[
+								'before'    => $post_date_before,
+								'inclusive' => true,
+							],
 						],
-					],
-				] );
+					]
+				);
 			}
 		}
 

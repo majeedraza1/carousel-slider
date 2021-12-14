@@ -72,7 +72,7 @@ class MetaBoxForm {
 
 		$className = array_key_exists( $type, $types ) ? $types[ $type ] : $types['text'];
 
-		return new $className;
+		return new $className();
 	}
 
 	/**
@@ -91,7 +91,7 @@ class MetaBoxForm {
 		$field->set_name( $name );
 		$field->set_value( $value );
 
-		$html = $this->field_before( $args );
+		$html  = $this->field_before( $args );
 		$html .= $field->render();
 		$html .= $this->field_after( $args );
 
@@ -117,11 +117,13 @@ class MetaBoxForm {
 	 * @param $args
 	 */
 	public function posts_list( $args ) {
-		$posts = get_posts( [
-			'post_type'      => $args['post_type'] ?? 'post',
-			'post_status'    => 'publish',
-			'posts_per_page' => - 1
-		] );
+		$posts = get_posts(
+			[
+				'post_type'      => $args['post_type'] ?? 'post',
+				'post_status'    => 'publish',
+				'posts_per_page' => - 1,
+			]
+		);
 
 		$args['type']        = 'select';
 		$args['field_class'] = 'select2 sp-input-text';
@@ -141,8 +143,8 @@ class MetaBoxForm {
 			return;
 		}
 		list( $name, $value ) = $this->get_name_and_value( $args );
-		$class       = isset( $args['class'] ) ? esc_attr( $args['class'] ) : 'sp-input-hidden';
-		$button_text = $value ? __( 'Update Image', 'carousel-slider' ) : __( 'Set Image', 'carousel-slider' );
+		$class                = isset( $args['class'] ) ? esc_attr( $args['class'] ) : 'sp-input-hidden';
+		$button_text          = $value ? __( 'Update Image', 'carousel-slider' ) : __( 'Set Image', 'carousel-slider' );
 
 		global $post;
 		$attrs = [
@@ -152,7 +154,7 @@ class MetaBoxForm {
 			'data-button-text' => esc_attr( $button_text ),
 		];
 
-		$html = $this->field_before( $args );
+		$html  = $this->field_before( $args );
 		$html .= '<input type="hidden" class="' . $class . '" name="' . $name . '" value="' . $value . '" />';
 		$html .= '<a ' . implode( ' ', Helper::array_to_attribute( $attrs ) ) . '>' . esc_html( $button_text ) . '</a>';
 		$html .= $this->field_after( $args );
@@ -177,7 +179,7 @@ class MetaBoxForm {
 
 		$btn_text = $value ? __( 'Edit URLs', 'carousel-slider' ) : __( 'Add URLs', 'carousel-slider' );
 
-		$html = $this->field_before( $args );
+		$html  = $this->field_before( $args );
 		$html .= sprintf( '<a id="_images_urls_btn" class="button" href="#">%s</a>', $btn_text );
 		$html .= '<ul class="carousel_slider_url_images_list">';
 		if ( is_array( $value ) && count( $value ) > 0 ) {
@@ -264,7 +266,7 @@ class MetaBoxForm {
 	 * @return string
 	 */
 	private function field_before( array $args ): string {
-		$_normal = sprintf( '<div class="sp-input-group" id="field-%s">', $args['id'] );
+		$_normal  = sprintf( '<div class="sp-input-group" id="field-%s">', $args['id'] );
 		$_normal .= '<div class="sp-input-label">';
 		$_normal .= sprintf( '<label for="%1$s">%2$s</label>', $args['id'], $args['name'] );
 		if ( ! empty( $args['desc'] ) ) {
@@ -274,7 +276,7 @@ class MetaBoxForm {
 		$_normal .= '<div class="sp-input-field">';
 
 		if ( isset( $args['context'] ) && 'side' == $args['context'] ) {
-			$_side = '<p id="field-' . $args['id'] . '">';
+			$_side  = '<p id="field-' . $args['id'] . '">';
 			$_side .= '<label for="' . $args['id'] . '"><strong>' . $args['name'] . '</strong></label>';
 
 			return $_side;

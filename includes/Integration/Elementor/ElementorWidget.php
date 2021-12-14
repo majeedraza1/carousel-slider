@@ -63,23 +63,32 @@ class ElementorWidget extends Widget_Base {
 			$options[ $post->ID ] = $post->post_title;
 		}
 
-		$this->start_controls_section( 'content_section', [
-			'label' => __( 'Slider Settings', 'carousel-slider' ),
-			'tab'   => Controls_Manager::TAB_CONTENT,
-		] );
+		$this->start_controls_section(
+			'content_section',
+			[
+				'label' => __( 'Slider Settings', 'carousel-slider' ),
+				'tab'   => Controls_Manager::TAB_CONTENT,
+			]
+		);
 
-		$this->add_control( 'slider_id', [
-			'label'      => __( 'Choose slider', 'carousel-slider' ),
-			'type'       => Controls_Manager::SELECT,
-			'input_type' => 'url',
-			'options'    => $options
-		] );
+		$this->add_control(
+			'slider_id',
+			[
+				'label'      => __( 'Choose slider', 'carousel-slider' ),
+				'type'       => Controls_Manager::SELECT,
+				'input_type' => 'url',
+				'options'    => $options,
+			]
+		);
 
-		$this->add_control( 'site_url', [
-			'type'       => Controls_Manager::HIDDEN,
-			'input_type' => 'hidden',
-			'value'      => site_url()
-		] );
+		$this->add_control(
+			'site_url',
+			[
+				'type'       => Controls_Manager::HIDDEN,
+				'input_type' => 'hidden',
+				'value'      => site_url(),
+			]
+		);
 
 		$this->end_controls_section();
 	}
@@ -106,13 +115,16 @@ class ElementorWidget extends Widget_Base {
 		$slider_id = intval( $settings['slider_id'] );
 
 		if ( 'elementor' == ( $_GET['action'] ?? '' ) ) {
-			$args = add_query_arg( [
-				'carousel_slider_preview' => true,
-				'carousel_slider_iframe'  => true,
-				'slider_id'               => $slider_id,
-			], site_url() );
+			$args = add_query_arg(
+				[
+					'carousel_slider_preview' => true,
+					'carousel_slider_iframe'  => true,
+					'slider_id'               => $slider_id,
+				],
+				site_url()
+			);
 
-			$html = '<div class="carousel-slider-iframe-container">';
+			$html  = '<div class="carousel-slider-iframe-container">';
 			$html .= '<div class="carousel-slider-iframe-overlay"></div>';
 			$html .= '<iframe class="carousel-slider-iframe" src="' . $args . '" height="0" width="500"></iframe>';
 			$html .= '</div>';
@@ -121,7 +133,7 @@ class ElementorWidget extends Widget_Base {
 			return;
 		}
 
-		$html = '<div class="carousel-slider-elementor-widget">';
+		$html  = '<div class="carousel-slider-elementor-widget">';
 		$html .= Frontend::init()->carousel_slide( [ 'id' => $slider_id ] );
 		$html .= '</div>';
 

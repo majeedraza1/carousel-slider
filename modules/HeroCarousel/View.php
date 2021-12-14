@@ -21,11 +21,17 @@ class View extends AbstractView {
 
 		$html = $this->start_wrapper_html( [ 'data-animation' => $content_animation ] );
 		foreach ( $items as $slide_id => $slide ) {
-			$item = new Item( $slide, array_merge( $settings, [
-				'item_id'         => $slide_id,
-				'slider_id'       => $slider_id,
-				'lazy_load_image' => $be_lazy
-			] ) );
+			$item  = new Item(
+				$slide,
+				array_merge(
+					$settings,
+					[
+						'item_id'         => $slide_id,
+						'slider_id'       => $slider_id,
+						'lazy_load_image' => $be_lazy,
+					]
+				)
+			);
 			$html .= $item->get_view() . PHP_EOL;
 		}
 

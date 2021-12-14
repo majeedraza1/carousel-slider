@@ -143,11 +143,11 @@ class Assets {
 	 */
 	public function get_scripts(): array {
 		return [
-			"carousel-slider-admin"    => [
+			'carousel-slider-admin'    => [
 				'src'  => static::get_assets_url( 'js/admin.js' ),
-				'deps' => [ 'jquery', 'wp-color-picker', 'jquery-ui-accordion', 'jquery-ui-tabs', 'jquery-ui-sortable' ]
+				'deps' => [ 'jquery', 'wp-color-picker', 'jquery-ui-accordion', 'jquery-ui-tabs', 'jquery-ui-sortable' ],
 			],
-			"carousel-slider-frontend" => [
+			'carousel-slider-frontend' => [
 				'src'  => static::get_assets_url( 'js/frontend.js' ),
 				'deps' => [ 'jquery' ],
 			],
@@ -161,10 +161,10 @@ class Assets {
 	 */
 	public function get_styles(): array {
 		return [
-			"carousel-slider-frontend" => [
-				'src' => static::get_assets_url( 'css/frontend.css' )
+			'carousel-slider-frontend' => [
+				'src' => static::get_assets_url( 'css/frontend.css' ),
 			],
-			"carousel-slider-admin"    => [
+			'carousel-slider-admin'    => [
 				'src'  => static::get_assets_url( 'css/admin.css' ),
 				'deps' => [ 'wp-color-picker' ],
 			],
@@ -180,9 +180,9 @@ class Assets {
 		$data       = self::get_assets_url( 'css/frontend.css' );
 		$javascript = file_get_contents( self::get_assets_url( '/js/style-loader.js' ) );
 		$script     = '<script id="carousel-slider-style-loader">' . PHP_EOL;
-		$script     .= 'window.carouselSliderCssUrl = ' . wp_json_encode( $data ) . ';' . PHP_EOL;
-		$script     .= $javascript . PHP_EOL;
-		$script     .= '</script>' . PHP_EOL;
+		$script    .= 'window.carouselSliderCssUrl = ' . wp_json_encode( $data ) . ';' . PHP_EOL;
+		$script    .= $javascript . PHP_EOL;
+		$script    .= '</script>' . PHP_EOL;
 
 		return $script;
 	}

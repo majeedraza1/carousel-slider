@@ -19,7 +19,7 @@ class Spacing extends BaseField {
 				continue;
 			}
 
-			$attr_name  = $name . "[" . $dimension . "]";
+			$attr_name  = $name . '[' . $dimension . ']';
 			$attr_value = $value[ $dimension ] ?? $default[ $dimension ];
 			if ( 'top' == $dimension ) {
 				$icon_class = 'dashicons dashicons-arrow-up-alt';

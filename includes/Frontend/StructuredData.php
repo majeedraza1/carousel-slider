@@ -11,9 +11,9 @@ defined( 'ABSPATH' ) || exit;
 
 class StructuredData {
 	protected static $instance = null;
-	private $_product_data = [];
-	private $_image_data = [];
-	private $_post_data = [];
+	private $_product_data     = [];
+	private $_image_data       = [];
+	private $_post_data        = [];
 
 	/**
 	 * Ensures only one instance of this class is loaded or can be loaded.
@@ -60,12 +60,13 @@ class StructuredData {
 
 	/**
 	 * Structures and returns product data.
+	 *
 	 * @return array
 	 */
 	private function get_structured_product_data(): array {
 		$data = [
 			'@context' => 'https://schema.org/',
-			"@graph"   => $this->get_product_data()
+			'@graph'   => $this->get_product_data(),
 		];
 
 		return $this->get_product_data() ? $data : [];
@@ -82,13 +83,14 @@ class StructuredData {
 
 	/**
 	 * Structures and returns image data.
+	 *
 	 * @return array
 	 */
 	private function get_structured_image_data(): array {
 		$data = [
 			'@context'        => 'https://schema.org/',
-			"@type"           => "ImageGallery",
-			"associatedMedia" => $this->get_image_data()
+			'@type'           => 'ImageGallery',
+			'associatedMedia' => $this->get_image_data(),
 		];
 
 		return $this->get_image_data() ? $data : [];
@@ -105,12 +107,13 @@ class StructuredData {
 
 	/**
 	 * Get structured data for post
+	 *
 	 * @return array
 	 */
 	private function get_structured_post_data(): array {
 		$data = array(
 			'@context' => 'https://schema.org/',
-			"@graph"   => $this->get_post_data()
+			'@graph'   => $this->get_post_data(),
 		);
 
 		return $this->get_post_data() ? $data : array();
@@ -184,9 +187,12 @@ class StructuredData {
 	private function maybe_image_added( string $image_id ): bool {
 		$image_data = $this->get_image_data();
 		if ( count( $image_data ) > 0 ) {
-			$image_data = array_map( function ( $data ) {
-				return $data['contentUrl'];
-			}, $image_data );
+			$image_data = array_map(
+				function ( $data ) {
+					return $data['contentUrl'];
+				},
+				$image_data
+			);
 
 			return in_array( $image_id, $image_data );
 		}
@@ -204,9 +210,12 @@ class StructuredData {
 	private function maybe_product_added( string $product_id ): bool {
 		$product_data = $this->get_product_data();
 		if ( count( $product_data ) > 0 ) {
-			$product_data = array_map( function ( $data ) {
-				return $data['@id'];
-			}, $product_data );
+			$product_data = array_map(
+				function ( $data ) {
+					return $data['@id'];
+				},
+				$product_data
+			);
 
 			return in_array( $product_id, $product_data );
 		}
@@ -224,9 +233,12 @@ class StructuredData {
 	private function maybe_post_added( string $post_id ): bool {
 		$post_data = $this->get_post_data();
 		if ( count( $post_data ) > 0 ) {
-			$post_data = array_map( function ( $data ) {
-				return $data['mainEntityOfPage']['@id'];
-			}, $post_data );
+			$post_data = array_map(
+				function ( $data ) {
+					return $data['mainEntityOfPage']['@id'];
+				},
+				$post_data
+			);
 
 			return in_array( $post_id, $post_data );
 		}
@@ -255,7 +267,6 @@ class StructuredData {
 			'@id'   => get_the_permalink(),
 		);
 
-
 		$json['publisher'] = array(
 			'@type' => 'organization',
 			'name'  => get_bloginfo( 'name' ),
@@ -280,7 +291,6 @@ class StructuredData {
 		$json['name']          = get_the_title();
 		$json['headline']      = $json['name'];
 		$json['description']   = get_the_excerpt();
-
 
 		$this->set_data( apply_filters( 'carousel_slider_structured_data_post', $json, $post ) );
 	}

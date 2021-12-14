@@ -15,33 +15,36 @@ class Template extends AbstractTemplate {
 	 * @return array
 	 */
 	public static function get_default_settings(): array {
-		return wp_parse_args( [
-			'_slide_type'                => 'product-carousel',
-			// Product Carousel Settings
-			'_product_query_type'        => 'query_product',
-			'_product_query'             => 'recent',
-			'_product_categories'        => '',
-			'_product_tags'              => '',
-			'_product_in'                => '',
-			'_products_per_page'         => '12',
-			'_product_title'             => 'on',
-			'_product_rating'            => 'on',
-			'_product_price'             => 'on',
-			'_product_cart_button'       => 'on',
-			'_product_onsale'            => 'on',
-			'_product_wishlist'          => 'off',
-			'_product_quick_view'        => 'off',
-			'_product_title_color'       => Helper::get_default_setting( 'product_title_color' ),
-			'_product_button_bg_color'   => Helper::get_default_setting( 'product_button_bg_color' ),
-			'_product_button_text_color' => Helper::get_default_setting( 'product_button_text_color' ),
-		], parent::get_default_settings() );
+		return wp_parse_args(
+			[
+				'_slide_type'                => 'product-carousel',
+				// Product Carousel Settings
+				'_product_query_type'        => 'query_product',
+				'_product_query'             => 'recent',
+				'_product_categories'        => '',
+				'_product_tags'              => '',
+				'_product_in'                => '',
+				'_products_per_page'         => '12',
+				'_product_title'             => 'on',
+				'_product_rating'            => 'on',
+				'_product_price'             => 'on',
+				'_product_cart_button'       => 'on',
+				'_product_onsale'            => 'on',
+				'_product_wishlist'          => 'off',
+				'_product_quick_view'        => 'off',
+				'_product_title_color'       => Helper::get_default_setting( 'product_title_color' ),
+				'_product_button_bg_color'   => Helper::get_default_setting( 'product_button_bg_color' ),
+				'_product_button_text_color' => Helper::get_default_setting( 'product_button_text_color' ),
+			],
+			parent::get_default_settings()
+		);
 	}
 
 	/**
 	 * Create gallery image carousel with random images
 	 *
 	 * @param string $slider_title
-	 * @param array $args
+	 * @param array  $args
 	 *
 	 * @return int The post ID on success. The value 0 on failure.
 	 */
@@ -109,15 +112,16 @@ class Template extends AbstractTemplate {
 	/**
 	 * Get random product categories id
 	 *
-	 *
 	 * @return array List of product categories id.
 	 */
 	private static function get_product_categories_ids(): array {
-		$terms = get_terms( [
-			'taxonomy'   => 'product_cat',
-			'hide_empty' => true,
-			'number'     => 5,
-		] );
+		$terms = get_terms(
+			[
+				'taxonomy'   => 'product_cat',
+				'hide_empty' => true,
+				'number'     => 5,
+			]
+		);
 
 		return wp_list_pluck( $terms, 'term_id' );
 	}
@@ -125,15 +129,16 @@ class Template extends AbstractTemplate {
 	/**
 	 * Get random product tags id
 	 *
-	 *
 	 * @return array List of product tags id.
 	 */
 	private static function get_product_tags_ids(): array {
-		$terms = get_terms( array(
-			'taxonomy'   => 'product_tag',
-			'hide_empty' => true,
-			'number'     => 5,
-		) );
+		$terms = get_terms(
+			array(
+				'taxonomy'   => 'product_tag',
+				'hide_empty' => true,
+				'number'     => 5,
+			)
+		);
 
 		return wp_list_pluck( $terms, 'term_id' );
 	}

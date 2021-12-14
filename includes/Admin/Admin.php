@@ -31,8 +31,12 @@ class Admin {
 			add_action( 'init', [ self::$instance, 'register_post_type' ] );
 			// Modify carousel slider list table columns
 			add_filter( 'manage_edit-' . self::POST_TYPE . '_columns', [ self::$instance, 'columns_head' ] );
-			add_filter( 'manage_' . self::POST_TYPE . '_posts_custom_column',
-				[ self::$instance, 'columns_content' ], 10, 2 );
+			add_filter(
+				'manage_' . self::POST_TYPE . '_posts_custom_column',
+				[ self::$instance, 'columns_content' ],
+				10,
+				2
+			);
 			// Remove view and Quick Edit from Carousels
 			add_filter( 'post_row_actions', [ self::$instance, 'post_row_actions' ], 10, 2 );
 			add_filter( 'preview_post_link', [ self::$instance, 'preview_post_link' ], 10, 2 );
@@ -48,7 +52,7 @@ class Admin {
 	/**
 	 * Modify preview post link for carousel slider
 	 *
-	 * @param string $preview_link
+	 * @param string  $preview_link
 	 * @param WP_Post $post
 	 *
 	 * @return string
@@ -114,7 +118,7 @@ class Admin {
 			'cb'         => '<input type="checkbox">',
 			'title'      => __( 'Carousel Slide Title', 'carousel-slider' ),
 			'usage'      => __( 'Shortcode', 'carousel-slider' ),
-			'slide_type' => __( 'Slide Type', 'carousel-slider' )
+			'slide_type' => __( 'Slide Type', 'carousel-slider' ),
 		];
 	}
 
@@ -122,7 +126,7 @@ class Admin {
 	 * Generate carousel slider list table content for each custom column
 	 *
 	 * @param string $column_name The name of the column to display.
-	 * @param int $post_id The current post ID.
+	 * @param int    $post_id The current post ID.
 	 *
 	 * @return void
 	 */
@@ -151,7 +155,7 @@ class Admin {
 				echo isset( $slide_types[ $slide_type ] ) ? esc_attr( $slide_types[ $slide_type ] ) : '';
 
 				break;
-			default :
+			default:
 				break;
 		}
 	}
@@ -159,7 +163,7 @@ class Admin {
 	/**
 	 * Hide view and quick edit from carousel slider admin
 	 *
-	 * @param array $actions
+	 * @param array   $actions
 	 * @param WP_Post $post
 	 *
 	 * @return array
@@ -196,16 +200,20 @@ class Admin {
 		wp_enqueue_media();
 		wp_enqueue_style( 'carousel-slider-admin' );
 		wp_enqueue_script( 'carousel-slider-admin' );
-		wp_localize_script( 'carousel-slider-admin', 'CarouselSliderAdminL10n', [
-			'url'           => esc_html__( 'URL', 'carousel-slider' ),
-			'title'         => esc_html__( 'Title', 'carousel-slider' ),
-			'caption'       => esc_html__( 'Caption', 'carousel-slider' ),
-			'altText'       => esc_html__( 'Alt Text', 'carousel-slider' ),
-			'linkToUrl'     => esc_html__( 'Link To URL', 'carousel-slider' ),
-			'addNew'        => esc_html__( 'Add New Item', 'carousel-slider' ),
-			'moveCurrent'   => esc_html__( 'Move Current Item', 'carousel-slider' ),
-			'deleteCurrent' => esc_html__( 'Delete Current Item', 'carousel-slider' ),
-		] );
+		wp_localize_script(
+			'carousel-slider-admin',
+			'CarouselSliderAdminL10n',
+			[
+				'url'           => esc_html__( 'URL', 'carousel-slider' ),
+				'title'         => esc_html__( 'Title', 'carousel-slider' ),
+				'caption'       => esc_html__( 'Caption', 'carousel-slider' ),
+				'altText'       => esc_html__( 'Alt Text', 'carousel-slider' ),
+				'linkToUrl'     => esc_html__( 'Link To URL', 'carousel-slider' ),
+				'addNew'        => esc_html__( 'Add New Item', 'carousel-slider' ),
+				'moveCurrent'   => esc_html__( 'Move Current Item', 'carousel-slider' ),
+				'deleteCurrent' => esc_html__( 'Delete Current Item', 'carousel-slider' ),
+			]
+		);
 	}
 
 	/**
@@ -227,23 +235,44 @@ class Admin {
 	 */
 	public function documentation_page_callback() {
 		$items = [
-			[ 'youtube_id' => '_hVsamgr1k4', 'title' => __( 'Hero Image Carousel', 'carousel-slider' ) ],
-			[ 'youtube_id' => 'ZzI1JhElrxc', 'title' => __( 'Image carousel (gallery images)', 'carousel-slider' ) ],
-			[ 'youtube_id' => 'a7hqn1yNzwM', 'title' => __( 'Image carousel (custom URLs)', 'carousel-slider' ) ],
-			[ 'youtube_id' => 'ImJB946azy0', 'title' => __( 'Posts Carousel', 'carousel-slider' ) ],
-			[ 'youtube_id' => 'yiAkvXyfakg', 'title' => __( 'WooCommerce Product Carousel', 'carousel-slider' ) ],
-			[ 'youtube_id' => 'kYgp6wp27lM', 'title' => __( 'In Widget Areas', 'carousel-slider' ) ],
-			[ 'youtube_id' => '-OaYQZfr1RM', 'title' => __( 'With Page Builder by SiteOrigin', 'carousel-slider' ) ],
+			[
+				'youtube_id' => '_hVsamgr1k4',
+				'title'      => __( 'Hero Image Carousel', 'carousel-slider' ),
+			],
+			[
+				'youtube_id' => 'ZzI1JhElrxc',
+				'title'      => __( 'Image carousel (gallery images)', 'carousel-slider' ),
+			],
+			[
+				'youtube_id' => 'a7hqn1yNzwM',
+				'title'      => __( 'Image carousel (custom URLs)', 'carousel-slider' ),
+			],
+			[
+				'youtube_id' => 'ImJB946azy0',
+				'title'      => __( 'Posts Carousel', 'carousel-slider' ),
+			],
+			[
+				'youtube_id' => 'yiAkvXyfakg',
+				'title'      => __( 'WooCommerce Product Carousel', 'carousel-slider' ),
+			],
+			[
+				'youtube_id' => 'kYgp6wp27lM',
+				'title'      => __( 'In Widget Areas', 'carousel-slider' ),
+			],
+			[
+				'youtube_id' => '-OaYQZfr1RM',
+				'title'      => __( 'With Page Builder by SiteOrigin', 'carousel-slider' ),
+			],
 			[
 				'youtube_id' => '4LhDXH81whk',
-				'title'      => __( 'With Visual Composer Website Builder', 'carousel-slider' )
+				'title'      => __( 'With Visual Composer Website Builder', 'carousel-slider' ),
 			],
 		];
 		$html  = '<div class="wrap">';
-		$html  .= '<h1 class="wp-heading">' . esc_html__( 'Carousel Slider Documentation', 'carousel-slider' ) . '</h1>';
-		$html  .= '<div class="clear"></div>';
-		$html  .= '<div class="postbox"><div class="inside">';
-		$html  .= '<div class="carousel_slider_columns">';
+		$html .= '<h1 class="wp-heading">' . esc_html__( 'Carousel Slider Documentation', 'carousel-slider' ) . '</h1>';
+		$html .= '<div class="clear"></div>';
+		$html .= '<div class="postbox"><div class="inside">';
+		$html .= '<div class="carousel_slider_columns">';
 		foreach ( $items as $item ) {
 			$html .= '<div class="carousel_slider_column">';
 			$html .= '<div class="carousel_slider_iframe">';

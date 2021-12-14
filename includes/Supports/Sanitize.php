@@ -21,7 +21,7 @@ class Sanitize {
 			return $value;
 		}
 
-		if ( preg_match( "/^\\d+\\.\\d+$/", $value ) === 1 ) {
+		if ( preg_match( '/^\\d+\\.\\d+$/', $value ) === 1 ) {
 			return floatval( $value );
 		}
 
@@ -173,7 +173,7 @@ class Sanitize {
 		$value = str_replace( ' ', '', $value );
 
 		// This pattern will check and match 3/6/8-character hex, rgb, rgba, hsl, & hsla colors.
-		$pattern = '/^(\#[\da-f]{3}|\#[\da-f]{6}|\#[\da-f]{8}|';
+		$pattern  = '/^(\#[\da-f]{3}|\#[\da-f]{6}|\#[\da-f]{8}|';
 		$pattern .= 'rgba\(((\d{1,2}|1\d\d|2([0-4]\d|5[0-5]))\s*,\s*){2}((\d{1,2}|1\d\d|2([0-4]\d|5[0-5]))\s*)(,\s*(0\.\d+|1))\)|';
 		$pattern .= 'hsla\(\s*((\d{1,2}|[1-2]\d{2}|3([0-5]\d|60)))\s*,\s*((\d{1,2}|100)\s*%)\s*,\s*((\d{1,2}|100)\s*%)(,\s*(0\.\d+|1))\)|';
 		$pattern .= 'rgb\(((\d{1,2}|1\d\d|2([0-4]\d|5[0-5]))\s*,\s*){2}((\d{1,2}|1\d\d|2([0-4]\d|5[0-5]))\s*)\)|';

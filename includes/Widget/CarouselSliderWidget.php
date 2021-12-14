@@ -49,7 +49,10 @@ class CarouselSliderWidget extends WP_Widget {
 
 		$items = [];
 		foreach ( $posts as $post ) {
-			$items[] = [ 'id' => $post->ID, 'title' => $post->post_title ];
+			$items[] = [
+				'id'    => $post->ID,
+				'title' => $post->post_title,
+			];
 		}
 
 		return $items;
@@ -119,10 +122,11 @@ class CarouselSliderWidget extends WP_Widget {
 					$selected
 				);
 			}
-			echo "</select></p>";
+			echo '</select></p>';
 
 		} else {
-			printf( '<p>%1$s <a href="' . admin_url( 'post-new.php?post_type=carousels' ) . '">%3$s</a> %2$s</p>',
+			printf(
+				'<p>%1$s <a href="' . admin_url( 'post-new.php?post_type=carousels' ) . '">%3$s</a> %2$s</p>',
 				__( 'You did not add any carousel slider yet.', 'carousel-slider' ),
 				__( 'to create a new carousel slider now.', 'carousel-slider' ),
 				__( 'click here', 'carousel-slider' )

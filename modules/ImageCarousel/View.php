@@ -40,7 +40,7 @@ class View extends AbstractView {
 			}
 			do_action( 'carousel_slider_image_gallery_loop', $_post );
 
-			$image_link_url = get_post_meta( $id, "_carousel_slider_link_url", true );
+			$image_link_url = get_post_meta( $id, '_carousel_slider_link_url', true );
 
 			$full_caption = $this->get_caption_html( $_post, $show_attachment_title, $show_attachment_caption );
 
@@ -49,11 +49,20 @@ class View extends AbstractView {
 			$html .= '<div class="carousel-slider__item">';
 			if ( Validate::checked( $show_lightbox ) ) {
 				$image_src = wp_get_attachment_image_src( $id, 'full' );
-				$html      .= sprintf( '<a class="magnific-popup" href="%1$s">%2$s%3$s</a>',
-					esc_url( $image_src[0] ), $image, $full_caption );
+				$html     .= sprintf(
+					'<a class="magnific-popup" href="%1$s">%2$s%3$s</a>',
+					esc_url( $image_src[0] ),
+					$image,
+					$full_caption
+				);
 			} elseif ( Validate::url( $image_link_url ) ) {
-				$html .= sprintf( '<a  href="%1$s" target="%4$s">%2$s%3$s</a>',
-					esc_url( $image_link_url ), $image, $full_caption, $image_target );
+				$html .= sprintf(
+					'<a  href="%1$s" target="%4$s">%2$s%3$s</a>',
+					esc_url( $image_link_url ),
+					$image,
+					$full_caption,
+					$image_target
+				);
 			} else {
 				$html .= $image;
 				$html .= $full_caption;
@@ -66,9 +75,9 @@ class View extends AbstractView {
 	}
 
 	/**
-	 * @param int $image_id
+	 * @param int    $image_id
 	 * @param string $image_size
-	 * @param bool $lazy_load_image
+	 * @param bool   $lazy_load_image
 	 *
 	 * @return string
 	 */
@@ -79,7 +88,10 @@ class View extends AbstractView {
 
 			return sprintf(
 				'<img class="owl-lazy" data-src="%1$s" width="%2$s" height="%3$s" alt="%4$s" />',
-				$image_src[0], $image_src[1], $image_src[2], $image_alt_text
+				$image_src[0],
+				$image_src[1],
+				$image_src[2],
+				$image_alt_text
 			);
 
 		}
@@ -89,8 +101,8 @@ class View extends AbstractView {
 
 	/**
 	 * @param WP_Post $post
-	 * @param bool $show_title
-	 * @param bool $show_caption
+	 * @param bool    $show_title
+	 * @param bool    $show_caption
 	 *
 	 * @return string
 	 */

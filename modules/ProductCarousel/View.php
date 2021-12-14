@@ -68,9 +68,9 @@ class View extends AbstractView {
 	 */
 	public function get_css_variable(): array {
 		$css_vars                            = parent::get_css_variable();
-		$css_vars["--cs-product-primary"]    = get_post_meta( $this->get_slider_id(), '_product_button_bg_color', true );
-		$css_vars["--cs-product-on-primary"] = get_post_meta( $this->get_slider_id(), '_product_button_text_color', true );
-		$css_vars["--cs-product-text"]       = get_post_meta( $this->get_slider_id(), '_product_title_color', true );
+		$css_vars['--cs-product-primary']    = get_post_meta( $this->get_slider_id(), '_product_button_bg_color', true );
+		$css_vars['--cs-product-on-primary'] = get_post_meta( $this->get_slider_id(), '_product_button_text_color', true );
+		$css_vars['--cs-product-text']       = get_post_meta( $this->get_slider_id(), '_product_title_color', true );
 
 		return $css_vars;
 	}
@@ -116,7 +116,7 @@ class View extends AbstractView {
 	 * Get item
 	 *
 	 * @param WC_Product $product
-	 * @param array $settings
+	 * @param array      $settings
 	 *
 	 * @return string
 	 */
@@ -181,7 +181,7 @@ class View extends AbstractView {
 	 * Get product slider item
 	 *
 	 * @param WC_Product $product
-	 * @param array $settings
+	 * @param array      $settings
 	 *
 	 * @return string
 	 */

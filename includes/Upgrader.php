@@ -25,8 +25,10 @@ class Upgrader {
 			add_action( 'admin_notices', [ self::$instance, 'show_upgrade_notice' ] );
 			add_action( 'wp_ajax_carousel_slider_upgrade', [ self::$instance, 'upgrade' ] );
 
-			add_action( 'in_plugin_update_message-carousel-slider/carousel-slider.php',
-				[ self::$instance, 'in_plugin_update_message' ] );
+			add_action(
+				'in_plugin_update_message-carousel-slider/carousel-slider.php',
+				[ self::$instance, 'in_plugin_update_message' ]
+			);
 		}
 
 		return self::$instance;
@@ -48,7 +50,7 @@ class Upgrader {
 		if ( version_compare( $current_version_array[0], $new_version_array[0], '<' ) ) {
 			$html .= '</p><div class="cs_plugin_upgrade_notice extensions_warning major_update">';
 			$html .= '<div class="cs_plugin_upgrade_notice__title">';
-			$html .= sprintf( __( "<strong>%s</strong> version <strong>%s</strong> is a major update.", 'carousel-slider' ), $plugin_data['Title'], $new_version );
+			$html .= sprintf( __( '<strong>%1$s</strong> version <strong>%2$s</strong> is a major update.', 'carousel-slider' ), $plugin_data['Title'], $new_version );
 			$html .= '</div>';
 			$html .= '<div class="cs_plugin_upgrade_notice__description">';
 			$html .= __( 'We made a lot of major changes to this version.', 'carousel-slider' ) . ' ';
@@ -69,17 +71,17 @@ class Upgrader {
 		if ( ! version_compare( $version, '1.10.0', '<' ) ) {
 			return;
 		}
-		$message     = __( "Carousel Slider need to update database.", 'carousel-slider' );
-		$message2    = __( "We strongly recommend creating a backup of your site before updating.", 'carousel-slider' );
-		$button_text = __( "Update database", 'carousel-slider' );
+		$message     = __( 'Carousel Slider need to update database.', 'carousel-slider' );
+		$message2    = __( 'We strongly recommend creating a backup of your site before updating.', 'carousel-slider' );
+		$button_text = __( 'Update database', 'carousel-slider' );
 		$update_url  = wp_nonce_url(
 			add_query_arg( [ 'action' => 'carousel_slider_upgrade' ], admin_url( 'admin-ajax.php' ) ),
 			'carousel_slider_upgrade'
 		);
 		$html        = '<div class="notice notice-info is-dismissible">';
-		$html        .= '<p><strong>' . $message . '</strong> ' . $message2 . '</p>';
-		$html        .= '<p><a href="' . $update_url . '" class="button">' . $button_text . '</a></p>';
-		$html        .= '</div>';
+		$html       .= '<p><strong>' . $message . '</strong> ' . $message2 . '</p>';
+		$html       .= '<p><a href="' . $update_url . '" class="button">' . $button_text . '</a></p>';
+		$html       .= '</div>';
 
 		echo $html;
 	}
@@ -119,8 +121,8 @@ class Upgrader {
 		$ids = static::get_sliders_ids();
 		if ( count( $ids ) ) {
 			global $wpdb;
-			$sql = "UPDATE {$wpdb->postmeta} SET `meta_key`= '_infinity_loop' WHERE `meta_key` = '_inifnity_loop'";
-			$sql .= " AND post_id IN(" . implode( ',', $ids ) . ")";
+			$sql  = "UPDATE {$wpdb->postmeta} SET `meta_key`= '_infinity_loop' WHERE `meta_key` = '_inifnity_loop'";
+			$sql .= ' AND post_id IN(' . implode( ',', $ids ) . ')';
 
 			return $wpdb->query( $sql );
 		}
@@ -137,8 +139,8 @@ class Upgrader {
 		$ids = static::get_sliders_ids();
 		if ( count( $ids ) ) {
 			global $wpdb;
-			$sql = "UPDATE {$wpdb->postmeta} SET `meta_value`= 'query_product' WHERE `meta_value` = 'query_porduct'";
-			$sql .= " AND `meta_key` = '_product_query_type' AND post_id IN(" . implode( ',', $ids ) . ")";
+			$sql  = "UPDATE {$wpdb->postmeta} SET `meta_value`= 'query_product' WHERE `meta_value` = 'query_porduct'";
+			$sql .= " AND `meta_key` = '_product_query_type' AND post_id IN(" . implode( ',', $ids ) . ')';
 
 			return $wpdb->query( $sql );
 		}

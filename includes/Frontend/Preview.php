@@ -60,7 +60,7 @@ class Preview {
 
 		$slider_id = isset( $_GET['slider_id'] ) ? intval( $_GET['slider_id'] ) : 0;
 
-		$html = '<!DOCTYPE html>' . PHP_EOL;
+		$html  = '<!DOCTYPE html>' . PHP_EOL;
 		$html .= '<html ' . get_language_attributes() . '>' . PHP_EOL;
 		$html .= '<head>' . PHP_EOL;
 		$html .= '<meta charset="' . get_bloginfo( 'charset' ) . '">' . PHP_EOL;

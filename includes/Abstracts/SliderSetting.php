@@ -18,6 +18,7 @@ class SliderSetting extends Data {
 
 	/**
 	 * Get slider Id
+	 *
 	 * @return int
 	 */
 	public function get_slider_id(): int {
@@ -78,6 +79,7 @@ class SliderSetting extends Data {
 
 	/**
 	 * Read setting from database
+	 *
 	 * @return void
 	 */
 	protected function read_metadata() {
@@ -100,7 +102,7 @@ class SliderSetting extends Data {
 
 	/**
 	 * @param string $type
-	 * @param mixed $value
+	 * @param mixed  $value
 	 *
 	 * @return mixed
 	 */
@@ -156,6 +158,7 @@ class SliderSetting extends Data {
 
 	/**
 	 * Map prop name to meta key
+	 *
 	 * @return string[]
 	 */
 	public static function props_to_meta_keys(): array {

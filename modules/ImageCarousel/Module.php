@@ -28,8 +28,8 @@ class Module {
 			add_filter( 'carousel_slider/register_view', [ self::$instance, 'view' ] );
 
 			// Add custom link to media gallery
-			add_filter( "attachment_fields_to_edit", [ self::$instance, "attachment_fields_to_edit" ], 10, 2 );
-			add_filter( "attachment_fields_to_save", [ self::$instance, "attachment_fields_to_save" ], 10, 2 );
+			add_filter( 'attachment_fields_to_edit', [ self::$instance, 'attachment_fields_to_edit' ], 10, 2 );
+			add_filter( 'attachment_fields_to_save', [ self::$instance, 'attachment_fields_to_save' ], 10, 2 );
 
 			Admin::init();
 		}
@@ -83,23 +83,23 @@ class Module {
 	/**
 	 * Adding our custom fields to the $form_fields array
 	 *
-	 * @param array $form_fields
+	 * @param array   $form_fields
 	 * @param WP_Post $post
 	 *
 	 * @return array
 	 */
 	public function attachment_fields_to_edit( array $form_fields, WP_Post $post ): array {
-		$value = get_post_meta( $post->ID, "_carousel_slider_link_url", true );
+		$value = get_post_meta( $post->ID, '_carousel_slider_link_url', true );
 		$field = [
-			"label"      => __( "Link to URL", "carousel-slider" ),
-			"input"      => "textarea",
-			"value"      => $value,
-			"extra_rows" => [
+			'label'      => __( 'Link to URL', 'carousel-slider' ),
+			'input'      => 'textarea',
+			'value'      => $value,
+			'extra_rows' => [
 				'carouselSliderInfo' => __( '"Link to URL" only works on Carousel Slider for linking image to a custom url.', 'carousel-slider' ),
-			]
+			],
 		];
 
-		$form_fields["carousel_slider_link_url"] = $field;
+		$form_fields['carousel_slider_link_url'] = $field;
 
 		return $form_fields;
 	}

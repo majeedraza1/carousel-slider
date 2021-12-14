@@ -54,9 +54,12 @@ class Module {
 	public function save_slider( int $slider_id ) {
 		if ( isset( $_POST['carousel_slider_content'] ) ) {
 			$_content_slides = is_array( $_POST['carousel_slider_content'] ) ? $_POST['carousel_slider_content'] : [];
-			$_slides         = array_map( function ( $slide ) {
-				return Item::sanitize( $slide );
-			}, $_content_slides );
+			$_slides         = array_map(
+				function ( $slide ) {
+					return Item::sanitize( $slide );
+				},
+				$_content_slides
+			);
 
 			update_post_meta( $slider_id, '_content_slider', $_slides );
 		}

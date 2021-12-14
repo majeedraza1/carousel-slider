@@ -70,6 +70,7 @@ class Setting extends SliderSetting {
 
 	/**
 	 * Slider extra props
+	 *
 	 * @return array
 	 */
 	public static function extra_props(): array {
@@ -77,87 +78,87 @@ class Setting extends SliderSetting {
 			'slide_type'         => [
 				'meta_key' => '_slide_type',
 				'type'     => 'string',
-				'default'  => 'product-carousel'
+				'default'  => 'product-carousel',
 			],
 			'product_query_type' => [
 				'meta_key' => '_product_query_type',
 				'type'     => 'string',
-				'default'  => 'query_product'
+				'default'  => 'query_product',
 			],
 			'product_query'      => [
 				'meta_key' => '_product_query',
 				'type'     => 'string',
-				'default'  => 'recent'
+				'default'  => 'recent',
 			],
 			'product_categories' => [
 				'meta_key' => '_product_categories',
 				'type'     => 'int[]',
-				'default'  => ''
+				'default'  => '',
 			],
 			'product_tags'       => [
 				'meta_key' => '_product_tags',
 				'type'     => 'int[]',
-				'default'  => ''
+				'default'  => '',
 			],
 			'product_in'         => [
 				'meta_key' => '_product_in',
 				'type'     => 'int[]',
-				'default'  => ''
+				'default'  => '',
 			],
 			'per_page'           => [
 				'meta_key' => '_products_per_page',
 				'type'     => 'int',
-				'default'  => 12
+				'default'  => 12,
 			],
 			'show_title'         => [
 				'meta_key' => '_product_title',
 				'type'     => 'bool',
-				'default'  => true
+				'default'  => true,
 			],
 			'show_rating'        => [
 				'meta_key' => '_product_rating',
 				'type'     => 'bool',
-				'default'  => true
+				'default'  => true,
 			],
 			'show_price'         => [
 				'meta_key' => '_product_price',
 				'type'     => 'bool',
-				'default'  => true
+				'default'  => true,
 			],
 			'show_cart_button'   => [
 				'meta_key' => '_product_cart_button',
 				'type'     => 'bool',
-				'default'  => true
+				'default'  => true,
 			],
 			'show_onsale_tag'    => [
 				'meta_key' => '_product_onsale',
 				'type'     => 'bool',
-				'default'  => true
+				'default'  => true,
 			],
 			'show_wishlist'      => [
 				'meta_key' => '_product_wishlist',
 				'type'     => 'bool',
-				'default'  => false
+				'default'  => false,
 			],
 			'show_quick_view'    => [
 				'meta_key' => '_product_quick_view',
 				'type'     => 'bool',
-				'default'  => false
+				'default'  => false,
 			],
 			'title_color'        => [
 				'meta_key' => '_product_title_color',
 				'type'     => 'string',
-				'default'  => GlobalHelper::get_default_setting( 'product_title_color' )
+				'default'  => GlobalHelper::get_default_setting( 'product_title_color' ),
 			],
 			'button_color'       => [
 				'meta_key' => '_product_button_bg_color',
 				'type'     => 'string',
-				'default'  => GlobalHelper::get_default_setting( 'product_button_bg_color' )
+				'default'  => GlobalHelper::get_default_setting( 'product_button_bg_color' ),
 			],
 			'button_on_color'    => [
 				'meta_key' => '_product_button_text_color',
 				'type'     => 'string',
-				'default'  => GlobalHelper::get_default_setting( 'product_button_text_color' )
+				'default'  => GlobalHelper::get_default_setting( 'product_button_text_color' ),
 			],
 		];
 	}

@@ -18,7 +18,7 @@ class Checkbox extends BaseField {
 			'checked' => 'on' == $this->get_value(),
 		);
 
-		$html = '<input type="hidden" name="' . $name . '" value="off">';
+		$html  = '<input type="hidden" name="' . $name . '" value="off">';
 		$html .= '<label for="' . $this->get_setting( 'id' ) . '">';
 		$html .= '<input ' . $this->array_to_attributes( $attributes ) . '>';
 		$html .= '<span>' . $this->get_setting( 'label' ) . '</span></label>';

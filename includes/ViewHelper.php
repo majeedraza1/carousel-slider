@@ -22,7 +22,7 @@ class ViewHelper {
 			if ( ! is_string( $key ) || empty( $value ) ) {
 				continue;
 			}
-			$_styles[] = sprintf( "%s:%s", $key, $value );
+			$_styles[] = sprintf( '%s:%s', $key, $value );
 		}
 
 		return implode( ';', $_styles );
@@ -36,23 +36,27 @@ class ViewHelper {
 	 * @return array
 	 */
 	public static function array_to_attribute( array $array ): array {
-		return array_map( function ( $key, $value ) {
-			// If boolean value
-			if ( is_bool( $value ) ) {
-				return sprintf( '%s="%s"', $key, ( $value ? 'true' : 'false' ) );
-			}
-			// If array value
-			if ( is_array( $value ) ) {
-				return sprintf( '%s="%s"', $key, implode( " ", $value ) );
-			}
+		return array_map(
+			function ( $key, $value ) {
+				// If boolean value
+				if ( is_bool( $value ) ) {
+					  return sprintf( '%s="%s"', $key, ( $value ? 'true' : 'false' ) );
+				}
+				// If array value
+				if ( is_array( $value ) ) {
+					return sprintf( '%s="%s"', $key, implode( ' ', $value ) );
+				}
 
-			if ( is_string( $value ) && Validate::json( $value ) ) {
-				return sprintf( "%s='%s'", $key, $value );
-			}
+				if ( is_string( $value ) && Validate::json( $value ) ) {
+					return sprintf( "%s='%s'", $key, $value );
+				}
 
-			// If string value
-			return sprintf( '%s="%s"', $key, esc_attr( $value ) );
+				// If string value
+				return sprintf( '%s="%s"', $key, esc_attr( $value ) );
 
-		}, array_keys( $array ), array_values( $array ) );
+			},
+			array_keys( $array ),
+			array_values( $array )
+		);
 	}
 }

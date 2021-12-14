@@ -13,21 +13,24 @@ class TemplateUrl extends AbstractTemplate {
 	 * @return array
 	 */
 	public static function get_default_settings(): array {
-		return wp_parse_args( array(
-			'_slide_type'              => 'image-carousel-url',
-			// Image Carousel Settings
-			'_show_attachment_title'   => 'off',
-			'_show_attachment_caption' => 'off',
-			'_image_lightbox'          => 'on',
-			'_image_target'            => '_self',
-		), parent::get_default_settings() );
+		return wp_parse_args(
+			array(
+				'_slide_type'              => 'image-carousel-url',
+				// Image Carousel Settings
+				'_show_attachment_title'   => 'off',
+				'_show_attachment_caption' => 'off',
+				'_image_lightbox'          => 'on',
+				'_image_target'            => '_self',
+			),
+			parent::get_default_settings()
+		);
 	}
 
 	/**
 	 * Create gallery image carousel with random images
 	 *
 	 * @param string $slider_title
-	 * @param array $args
+	 * @param array  $args
 	 *
 	 * @return int The post ID on success. The value 0 on failure.
 	 */

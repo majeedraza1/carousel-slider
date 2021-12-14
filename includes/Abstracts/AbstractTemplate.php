@@ -17,7 +17,7 @@ abstract class AbstractTemplate {
 		return [
 			// General Settings
 			'_image_size'                  => 'medium',
-			'_stage_padding'               => "0",
+			'_stage_padding'               => '0',
 			'_margin_right'                => (string) Helper::get_default_setting( 'margin_right' ),
 			'_lazy_load_image'             => Helper::get_default_setting( 'lazy_load_image' ),
 			'_infinity_loop'               => 'on',
@@ -32,7 +32,7 @@ abstract class AbstractTemplate {
 			'_slide_by'                    => '1',
 			'_arrow_position'              => 'outside',
 			'_arrow_size'                  => '48',
-			'_dot_nav'                     => 'on',// Always
+			'_dot_nav'                     => 'on', // Always
 			'_bullet_position'             => 'center',
 			'_bullet_size'                 => '10',
 			'_bullet_shape'                => 'circle',
@@ -52,7 +52,7 @@ abstract class AbstractTemplate {
 	 * Get list of images sorted by its width and height
 	 *
 	 * @param string $image_size
-	 * @param int $per_page
+	 * @param int    $per_page
 	 *
 	 * @return array
 	 */
@@ -105,12 +105,14 @@ abstract class AbstractTemplate {
 	 * @return int|WP_Error The post ID on success. The value 0 or \WP_Error on failure.
 	 */
 	public static function create_slider( $slider_title ) {
-		return wp_insert_post( [
-			'post_title'     => $slider_title,
-			'post_status'    => 'publish',
-			'post_type'      => 'carousels',
-			'comment_status' => 'closed',
-			'ping_status'    => 'closed',
-		] );
+		return wp_insert_post(
+			[
+				'post_title'     => $slider_title,
+				'post_status'    => 'publish',
+				'post_type'      => 'carousels',
+				'comment_status' => 'closed',
+				'ping_status'    => 'closed',
+			]
+		);
 	}
 }

@@ -10,7 +10,7 @@ defined( 'ABSPATH' ) || exit;
 
 class Module extends ET_Builder_Module {
 
-	public $slug = 'carousel_slider_divi_module';
+	public $slug       = 'carousel_slider_divi_module';
 	public $vb_support = 'on';
 
 	protected $module_credits = [
@@ -39,12 +39,12 @@ class Module extends ET_Builder_Module {
 				'description'     => esc_html__( 'Select a slider.', 'carousel-slider' ),
 				'type'            => 'select',
 				'option_category' => 'basic_option',
-				'options'         => $options
+				'options'         => $options,
 			],
 			'site_url'  => [
 				'type'  => 'hidden',
-				'value' => site_url()
-			]
+				'value' => site_url(),
+			],
 		];
 	}
 

@@ -17,11 +17,14 @@ class Helper {
 	 * @return array|WP_Term[]
 	 */
 	public static function product_categories( array $args = [] ): array {
-		$args = wp_parse_args( $args, [
-			'hide_empty' => true,
-			'orderby'    => 'name',
-			'order'      => 'ASC',
-		] );
+		$args = wp_parse_args(
+			$args,
+			[
+				'hide_empty' => true,
+				'orderby'    => 'name',
+				'order'      => 'ASC',
+			]
+		);
 
 		$args['taxonomy'] = 'product_cat';
 
@@ -31,7 +34,7 @@ class Helper {
 	/**
 	 * Format term slug
 	 *
-	 * @param array $tags
+	 * @param array  $tags
 	 * @param string $taxonomy
 	 *
 	 * @return array
@@ -45,7 +48,12 @@ class Helper {
 			}
 		}
 		if ( count( $ids ) ) {
-			$terms = get_terms( [ 'taxonomy' => $taxonomy, 'include' => $ids ] );
+			$terms = get_terms(
+				[
+					'taxonomy' => $taxonomy,
+					'include'  => $ids,
+				]
+			);
 			$slugs = is_array( $terms ) ? wp_list_pluck( $terms, 'slug' ) : [];
 			$tags  = array_merge( $slugs, array_values( $tags ) );
 		}
@@ -79,21 +87,24 @@ class Helper {
 	 * @return array
 	 */
 	private static function parse_args( array $args = [] ): array {
-		return wp_parse_args( $args, [
-			'limit'      => 12,
-			'order'      => 'DESC',
-			'orderby'    => 'date',
-			'visibility' => 'catalog',
-			'paginate'   => false,
-			'page'       => 1,
-			'return'     => 'objects',
-		] );
+		return wp_parse_args(
+			$args,
+			[
+				'limit'      => 12,
+				'order'      => 'DESC',
+				'orderby'    => 'date',
+				'visibility' => 'catalog',
+				'paginate'   => false,
+				'page'       => 1,
+				'return'     => 'objects',
+			]
+		);
 	}
 
 	/**
 	 * Get products
 	 *
-	 * @param int $slider_id
+	 * @param int   $slider_id
 	 * @param array $args
 	 *
 	 * @return array|WC_Product[]
@@ -118,7 +129,7 @@ class Helper {
 
 	/**
 	 * @param string $query_type
-	 * @param array $args
+	 * @param array  $args
 	 *
 	 * @return void
 	 */
@@ -132,7 +143,7 @@ class Helper {
 
 	/**
 	 * @param string $query_type
-	 * @param array $args
+	 * @param array  $args
 	 *
 	 * @return void
 	 */
@@ -144,7 +155,7 @@ class Helper {
 
 	/**
 	 * @param string $query_type
-	 * @param array $args
+	 * @param array  $args
 	 *
 	 * @return void
 	 */
@@ -157,7 +168,7 @@ class Helper {
 
 	/**
 	 * @param string $query_type
-	 * @param array $args
+	 * @param array  $args
 	 *
 	 * @return void
 	 */
@@ -171,7 +182,7 @@ class Helper {
 
 	/**
 	 * @param string $query_type
-	 * @param array $args
+	 * @param array  $args
 	 *
 	 * @return void
 	 */
@@ -183,7 +194,7 @@ class Helper {
 
 	/**
 	 * @param Setting $setting
-	 * @param array $args
+	 * @param array   $args
 	 *
 	 * @return void
 	 */
@@ -195,7 +206,7 @@ class Helper {
 
 	/**
 	 * @param Setting $setting
-	 * @param array $args
+	 * @param array   $args
 	 *
 	 * @return void
 	 */
@@ -207,7 +218,7 @@ class Helper {
 
 	/**
 	 * @param Setting $setting
-	 * @param array $args
+	 * @param array   $args
 	 *
 	 * @return void
 	 */

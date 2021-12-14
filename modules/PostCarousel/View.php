@@ -76,9 +76,9 @@ class View extends AbstractView {
 
 	/**
 	 * @param WP_Post $post
-	 * @param string $image_size
-	 * @param bool $lazy_load
-	 * @param string $permalink
+	 * @param string  $image_size
+	 * @param bool    $lazy_load
+	 * @param string  $permalink
 	 *
 	 * @return string
 	 */
@@ -107,13 +107,15 @@ class View extends AbstractView {
 		$updated = strtotime( $post->post_modified );
 
 		if ( $created !== $updated ) {
-			return sprintf( '<time class="carousel-slider__post-publication-date" datetime="%s">%s</time>',
+			return sprintf(
+				'<time class="carousel-slider__post-publication-date" datetime="%s">%s</time>',
 				date_i18n( 'c', $updated ),
 				date_i18n( get_option( 'date_format' ), $updated )
 			);
 		}
 
-		return sprintf( '<time class="carousel-slider__post-publication-date" datetime="%s">%s</time>',
+		return sprintf(
+			'<time class="carousel-slider__post-publication-date" datetime="%s">%s</time>',
 			date_i18n( 'c', $created ),
 			date_i18n( get_option( 'date_format' ), $created )
 		);
@@ -128,8 +130,9 @@ class View extends AbstractView {
 		if ( ! $category instanceof WP_Term ) {
 			return '';
 		}
-		$html = '<div class="carousel-slider__post-category">';
-		$html .= sprintf( '<a class="carousel-slider__post-category-link" href="%s">%s</a>',
+		$html  = '<div class="carousel-slider__post-category">';
+		$html .= sprintf(
+			'<a class="carousel-slider__post-category-link" href="%s">%s</a>',
 			esc_url( get_category_link( $category->term_id ) ),
 			esc_html( $category->name )
 		);
@@ -147,7 +150,7 @@ class View extends AbstractView {
 		$author_url  = esc_url( get_author_posts_url( intval( $post->post_author ) ) );
 		$author_name = esc_html( get_the_author_meta( 'display_name', intval( $post->post_author ) ) );
 
-		$html = '<div class="carousel-slider__post-author">';
+		$html  = '<div class="carousel-slider__post-author">';
 		$html .= '<a class="carousel-slider__post-author-link" href="' . $author_url . '">' . $author_name . '</a>';
 		$html .= '</div>';
 

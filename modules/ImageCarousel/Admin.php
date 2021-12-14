@@ -32,11 +32,11 @@ class Admin {
 	/**
 	 * Show meta box content for product carousel
 	 *
-	 * @param int $slider_id
+	 * @param int    $slider_id
 	 * @param string $slider_type
 	 */
 	public function meta_box_content( int $slider_id, string $slider_type ) {
-		$metabox       = new MetaBoxForm;
+		$metabox       = new MetaBoxForm();
 		$show_settings = in_array( $slider_type, [ 'image-carousel', 'image-carousel-url' ] );
 		$images_urls   = get_post_meta( $slider_id, '_images_urls', true );
 		?>
@@ -48,11 +48,13 @@ class Admin {
 			<div class="shapla-toggle-inner">
 				<div class="shapla-toggle-content">
 					<?php
-					$metabox->images_url( array(
-						'id'   => '_images_urls',
-						'name' => esc_html__( 'Images URLs', 'carousel-slider' ),
-						'desc' => esc_html__( 'Enter external images URLs.', 'carousel-slider' ),
-					) );
+					$metabox->images_url(
+						array(
+							'id'   => '_images_urls',
+							'name' => esc_html__( 'Images URLs', 'carousel-slider' ),
+							'desc' => esc_html__( 'Enter external images URLs.', 'carousel-slider' ),
+						)
+					);
 					?>
 				</div>
 			</div>
@@ -65,18 +67,22 @@ class Admin {
 			<div class="shapla-toggle-inner">
 				<div class="shapla-toggle-content">
 					<?php
-					$metabox->images_gallery( [
-						'id'   => '_wpdh_image_ids',
-						'name' => esc_html__( 'Carousel Images', 'carousel-slider' ),
-						'desc' => esc_html__( 'Choose carousel images from media library.', 'carousel-slider' ),
-					] );
-					$metabox->checkbox( [
-						'id'    => '_shuffle_images',
-						'name'  => esc_html__( 'Shuffle', 'carousel-slider' ),
-						'label' => esc_html__( 'Shuffle Images Order', 'carousel-slider' ),
-						'desc'  => esc_html__( 'Check to shuffle images order at each page refresh.', 'carousel-slider' ),
-						'std'   => 'off'
-					] );
+					$metabox->images_gallery(
+						[
+							'id'   => '_wpdh_image_ids',
+							'name' => esc_html__( 'Carousel Images', 'carousel-slider' ),
+							'desc' => esc_html__( 'Choose carousel images from media library.', 'carousel-slider' ),
+						]
+					);
+					$metabox->checkbox(
+						[
+							'id'    => '_shuffle_images',
+							'name'  => esc_html__( 'Shuffle', 'carousel-slider' ),
+							'label' => esc_html__( 'Shuffle Images Order', 'carousel-slider' ),
+							'desc'  => esc_html__( 'Check to shuffle images order at each page refresh.', 'carousel-slider' ),
+							'std'   => 'off',
+						]
+					);
 					?>
 				</div>
 			</div>
@@ -89,37 +95,45 @@ class Admin {
 			<div class="shapla-toggle-inner">
 				<div class="shapla-toggle-content">
 					<?php
-					$metabox->checkbox( array(
-						'id'    => '_show_attachment_title',
-						'name'  => esc_html__( 'Show Image Title', 'carousel-slider' ),
-						'label' => esc_html__( 'Show Image Title', 'carousel-slider' ),
-						'desc'  => esc_html__( 'Check to show title below image. Only works with image carousel.', 'carousel-slider' ),
-						'std'   => 'off'
-					) );
-					$metabox->checkbox( array(
-						'id'    => '_show_attachment_caption',
-						'name'  => esc_html__( 'Show Image Caption', 'carousel-slider' ),
-						'label' => esc_html__( 'Show Image Caption', 'carousel-slider' ),
-						'desc'  => esc_html__( 'Check to show caption below image. Only works with image carousel.', 'carousel-slider' ),
-						'std'   => 'off'
-					) );
-					$metabox->select( array(
-						'id'      => '_image_target',
-						'name'    => esc_html__( 'Image Target', 'carousel-slider' ),
-						'desc'    => esc_html__( 'Choose where to open the linked image.', 'carousel-slider' ),
-						'std'     => '_self',
-						'options' => array(
-							'_self'  => esc_html__( 'Open in the same frame as it was clicked', 'carousel-slider' ),
-							'_blank' => esc_html__( 'Open in a new window or tab', 'carousel-slider' ),
-						),
-					) );
-					$metabox->checkbox( array(
-						'id'    => '_image_lightbox',
-						'name'  => esc_html__( 'Show Lightbox Gallery', 'carousel-slider' ),
-						'label' => esc_html__( 'Show Lightbox Gallery', 'carousel-slider' ),
-						'desc'  => esc_html__( 'Check to show lightbox gallery.', 'carousel-slider' ),
-						'std'   => 'off'
-					) );
+					$metabox->checkbox(
+						array(
+							'id'    => '_show_attachment_title',
+							'name'  => esc_html__( 'Show Image Title', 'carousel-slider' ),
+							'label' => esc_html__( 'Show Image Title', 'carousel-slider' ),
+							'desc'  => esc_html__( 'Check to show title below image. Only works with image carousel.', 'carousel-slider' ),
+							'std'   => 'off',
+						)
+					);
+					$metabox->checkbox(
+						array(
+							'id'    => '_show_attachment_caption',
+							'name'  => esc_html__( 'Show Image Caption', 'carousel-slider' ),
+							'label' => esc_html__( 'Show Image Caption', 'carousel-slider' ),
+							'desc'  => esc_html__( 'Check to show caption below image. Only works with image carousel.', 'carousel-slider' ),
+							'std'   => 'off',
+						)
+					);
+					$metabox->select(
+						array(
+							'id'      => '_image_target',
+							'name'    => esc_html__( 'Image Target', 'carousel-slider' ),
+							'desc'    => esc_html__( 'Choose where to open the linked image.', 'carousel-slider' ),
+							'std'     => '_self',
+							'options' => array(
+								'_self'  => esc_html__( 'Open in the same frame as it was clicked', 'carousel-slider' ),
+								'_blank' => esc_html__( 'Open in a new window or tab', 'carousel-slider' ),
+							),
+						)
+					);
+					$metabox->checkbox(
+						array(
+							'id'    => '_image_lightbox',
+							'name'  => esc_html__( 'Show Lightbox Gallery', 'carousel-slider' ),
+							'label' => esc_html__( 'Show Lightbox Gallery', 'carousel-slider' ),
+							'desc'  => esc_html__( 'Check to show lightbox gallery.', 'carousel-slider' ),
+							'std'   => 'off',
+						)
+					);
 					?>
 				</div>
 			</div>
@@ -137,7 +151,10 @@ class Admin {
 					<div class="carousel_slider-modal-body">
 						<div>
 							<div id="carousel_slider_form" class="carousel_slider-form shapla-columns is-multiline">
-								<?php if ( is_array( $images_urls ) ): foreach ( $images_urls as $image ): ?>
+								<?php
+								if ( is_array( $images_urls ) ) :
+									foreach ( $images_urls as $image ) :
+										?>
 									<div class="media-url--column shapla-column is-12">
 										<div class="carousel_slider-fields media-url-form-field">
 											<div class="media-url-form-field__content">
@@ -183,7 +200,10 @@ class Admin {
 											</div>
 										</div>
 									</div>
-								<?php endforeach;endif; ?>
+																	<?php
+								endforeach;
+endif;
+								?>
 								<div class="shapla-column is-12">
 									<button class="button add_row">Add Item</button>
 								</div>

@@ -41,16 +41,24 @@ class UrlView extends AbstractView {
 			}
 
 			if ( Validate::checked( $lazy_load_image ) ) {
-				$image = sprintf( '<img class="owl-lazy" data-src="%1$s" alt="%2$s" />',
-					$imageInfo['url'], $imageInfo['alt'] );
+				$image = sprintf(
+					'<img class="owl-lazy" data-src="%1$s" alt="%2$s" />',
+					$imageInfo['url'],
+					$imageInfo['alt']
+				);
 			} else {
 				$image = sprintf( '<img src="%1$s" alt="%2$s" />', $imageInfo['url'], $imageInfo['alt'] );
 			}
 
 			$html .= '<div class="carousel-slider__item">';
 			if ( Validate::url( $imageInfo['link_url'] ) ) {
-				$html .= sprintf( '<a href="%1$s" target="%4$s">%2$s %3$s</a>', $imageInfo['link_url'], $image,
-					$full_caption, $image_target );
+				$html .= sprintf(
+					'<a href="%1$s" target="%4$s">%2$s %3$s</a>',
+					$imageInfo['link_url'],
+					$image,
+					$full_caption,
+					$image_target
+				);
 			} else {
 				$html .= $image;
 				$html .= $full_caption;

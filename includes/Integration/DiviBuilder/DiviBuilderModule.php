@@ -45,11 +45,20 @@ class DiviBuilderModule {
 			return;
 		}
 		wp_enqueue_style( 'carousel-slider-divi-modules', CAROUSEL_SLIDER_ASSETS . '/css/divi-modules.css', [] );
-		wp_enqueue_script( 'carousel-slider-divi-modules', CAROUSEL_SLIDER_ASSETS . '/js/divi-modules.js',
-			[ 'react', 'react-dom' ], '', true );
-		wp_localize_script( 'carousel-slider-divi-modules', 'csDivi', [
-			'site_url' => site_url(),
-		] );
+		wp_enqueue_script(
+			'carousel-slider-divi-modules',
+			CAROUSEL_SLIDER_ASSETS . '/js/divi-modules.js',
+			[ 'react', 'react-dom' ],
+			'',
+			true
+		);
+		wp_localize_script(
+			'carousel-slider-divi-modules',
+			'csDivi',
+			[
+				'site_url' => site_url(),
+			]
+		);
 	}
 
 	/**

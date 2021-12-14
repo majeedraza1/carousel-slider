@@ -18,12 +18,15 @@ class Helper extends ViewHelper {
 	 * @return WP_Post[]|int[] Array of post objects or post IDs.
 	 */
 	public static function get_sliders( array $args = [] ): array {
-		$args = wp_parse_args( $args, [
-			'post_status'    => 'publish',
-			'posts_per_page' => - 1,
-			'orderby'        => 'date',
-			'order'          => 'DESC',
-		] );
+		$args = wp_parse_args(
+			$args,
+			[
+				'post_status'    => 'publish',
+				'posts_per_page' => - 1,
+				'orderby'        => 'date',
+				'order'          => 'DESC',
+			]
+		);
 
 		$args['post_type'] = CAROUSEL_SLIDER_POST_TYPE;
 
@@ -34,7 +37,7 @@ class Helper extends ViewHelper {
 	 * Get setting
 	 *
 	 * @param string $key
-	 * @param mixed $default
+	 * @param mixed  $default
 	 *
 	 * @return mixed|null
 	 */
@@ -56,14 +59,17 @@ class Helper extends ViewHelper {
 	 * @return array
 	 */
 	public static function get_slide_types(): array {
-		return apply_filters( 'carousel_slider_slide_type', [
-			'image-carousel'     => __( 'Image Carousel', 'carousel-slider' ),
-			'image-carousel-url' => __( 'Image Carousel (URL)', 'carousel-slider' ),
-			'post-carousel'      => __( 'Post Carousel', 'carousel-slider' ),
-			'product-carousel'   => __( 'Product Carousel', 'carousel-slider' ),
-			'video-carousel'     => __( 'Video Carousel', 'carousel-slider' ),
-			'hero-banner-slider' => __( 'Hero Carousel', 'carousel-slider' ),
-		] );
+		return apply_filters(
+			'carousel_slider_slide_type',
+			[
+				'image-carousel'     => __( 'Image Carousel', 'carousel-slider' ),
+				'image-carousel-url' => __( 'Image Carousel (URL)', 'carousel-slider' ),
+				'post-carousel'      => __( 'Post Carousel', 'carousel-slider' ),
+				'product-carousel'   => __( 'Product Carousel', 'carousel-slider' ),
+				'video-carousel'     => __( 'Video Carousel', 'carousel-slider' ),
+				'hero-banner-slider' => __( 'Hero Carousel', 'carousel-slider' ),
+			]
+		);
 	}
 
 	/**
@@ -81,25 +87,29 @@ class Helper extends ViewHelper {
 
 	/**
 	 * Get default settings
+	 *
 	 * @return array
 	 */
 	public static function get_default_settings(): array {
-		return apply_filters( 'carousel_slider_default_settings', [
-			'product_title_color'       => '#323232',
-			'product_button_bg_color'   => '#00d1b2',
-			'product_button_text_color' => '#f1f1f1',
-			'nav_color'                 => '#f1f1f1',
-			'nav_active_color'          => '#00d1b2',
-			'margin_right'              => 10,
-			'lazy_load_image'           => 'off',
-		] );
+		return apply_filters(
+			'carousel_slider_default_settings',
+			[
+				'product_title_color'       => '#323232',
+				'product_button_bg_color'   => '#00d1b2',
+				'product_button_text_color' => '#f1f1f1',
+				'nav_color'                 => '#f1f1f1',
+				'nav_active_color'          => '#00d1b2',
+				'margin_right'              => 10,
+				'lazy_load_image'           => 'off',
+			]
+		);
 	}
 
 	/**
 	 * Get default setting
 	 *
 	 * @param string $key
-	 * @param mixed $default
+	 * @param mixed  $default
 	 *
 	 * @return mixed|null
 	 */
@@ -125,7 +135,7 @@ class Helper extends ViewHelper {
 				$height = get_option( "{$_size}_size_h" );
 				$crop   = get_option( "{$_size}_crop" ) ? 'hard' : 'soft';
 
-				$sizes[ $_size ] = sprintf( "%s - %s:%sx%s", $_size, $crop, $width, $height );
+				$sizes[ $_size ] = sprintf( '%s - %s:%sx%s', $_size, $crop, $width, $height );
 
 			} elseif ( isset( $_wp_additional_image_sizes[ $_size ] ) ) {
 
@@ -133,7 +143,7 @@ class Helper extends ViewHelper {
 				$height = $_wp_additional_image_sizes[ $_size ]['height'];
 				$crop   = $_wp_additional_image_sizes[ $_size ]['crop'] ? 'hard' : 'soft';
 
-				$sizes[ $_size ] = sprintf( "%s - %s:%sx%s", $_size, $crop, $width, $height );
+				$sizes[ $_size ] = sprintf( '%s - %s:%sx%s', $_size, $crop, $width, $height );
 			}
 		}
 
@@ -147,8 +157,8 @@ class Helper extends ViewHelper {
 	 */
 	public static function is_woocommerce_active(): bool {
 		return in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins' ) ) ||
-		       defined( 'WC_VERSION' ) ||
-		       defined( 'WOOCOMMERCE_VERSION' );
+			   defined( 'WC_VERSION' ) ||
+			   defined( 'WOOCOMMERCE_VERSION' );
 	}
 
 	/**
@@ -168,7 +178,7 @@ class Helper extends ViewHelper {
 		}
 
 		foreach ( $ids as $id ) {
-			$_post        = get_post( $id );
+			$_post         = get_post( $id );
 			$page_content .= '<!-- wp:heading {"level":4} --><h4>' . $_post->post_title . '</h4><!-- /wp:heading -->';
 			// $page_content .= '<!-- wp:shortcode -->[carousel_slide id=\'' . $id . '\']<!-- /wp:shortcode -->';
 			$page_content .= '<!-- wp:carousel-slider/slider {"sliderID":' . $id . ',"sliderName":"' . $_post->post_title . ' ( ID: ' . $id . ' )"} -->';
@@ -207,15 +217,15 @@ class Helper extends ViewHelper {
 	 */
 	public static function is_request( string $type ): bool {
 		switch ( $type ) {
-			case 'admin' :
+			case 'admin':
 				return is_admin();
-			case 'ajax' :
+			case 'ajax':
 				return defined( 'DOING_AJAX' );
-			case 'rest' :
+			case 'rest':
 				return defined( 'REST_REQUEST' );
-			case 'cron' :
+			case 'cron':
 				return defined( 'DOING_CRON' );
-			case 'frontend' :
+			case 'frontend':
 				return ( ! is_admin() || defined( 'DOING_AJAX' ) ) && ! defined( 'DOING_CRON' );
 		}
 

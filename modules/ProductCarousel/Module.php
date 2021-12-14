@@ -54,7 +54,7 @@ class Module {
 	 * Show quick view button on product slider
 	 *
 	 * @param WC_Product $product
-	 * @param int $slider_id
+	 * @param int        $slider_id
 	 */
 	public static function quick_view_button( $product, $slider_id ) {
 		$_show_btn = get_post_meta( $slider_id, '_product_quick_view', true );
@@ -62,7 +62,7 @@ class Module {
 		if ( $_show_btn == 'on' ) {
 			wp_enqueue_script( 'magnific-popup' );
 
-			$quick_view_html = '<div style="clear: both;"></div>';
+			$quick_view_html  = '<div style="clear: both;"></div>';
 			$quick_view_html .= sprintf(
 				'<a class="magnific-popup button quick_view" href="%1$s" data-product-id="%2$s">%3$s</a>',
 				Helper::get_product_quick_view_url( $product->get_id() ),
@@ -120,8 +120,13 @@ class Module {
 			<div class="images">
 				<?php echo get_the_post_thumbnail( $product->get_id(), 'medium_large' ); ?>
 				<?php if ( $product->is_on_sale() ) : ?>
-					<?php echo apply_filters( 'woocommerce_sale_flash',
-						'<span class="onsale">' . __( 'Sale!', 'carousel-slider' ) . '</span>', $product ); ?>
+					<?php
+					echo apply_filters(
+						'woocommerce_sale_flash',
+						'<span class="onsale">' . __( 'Sale!', 'carousel-slider' ) . '</span>',
+						$product
+					);
+					?>
 				<?php endif; ?>
 			</div>
 

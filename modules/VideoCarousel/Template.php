@@ -12,7 +12,7 @@ class Template extends AbstractTemplate {
 	 * Create gallery image carousel with random images
 	 *
 	 * @param string $slider_title
-	 * @param array $args
+	 * @param array  $args
 	 *
 	 * @return int The post ID on success. The value 0 on failure.
 	 */

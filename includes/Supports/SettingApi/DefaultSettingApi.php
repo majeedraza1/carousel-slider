@@ -59,8 +59,14 @@ class DefaultSettingApi extends SettingApi {
 		$parent_slug = $this->menu_fields['parent_slug'] ?? null;
 
 		if ( $parent_slug ) {
-			add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, $menu_slug,
-				[ $this, 'page_content' ] );
+			add_submenu_page(
+				$parent_slug,
+				$page_title,
+				$menu_title,
+				$capability,
+				$menu_slug,
+				[ $this, 'page_content' ]
+			);
 		} else {
 			add_menu_page( $page_title, $menu_title, $capability, $menu_slug, [ $this, 'page_content' ] );
 		}
@@ -78,7 +84,7 @@ class DefaultSettingApi extends SettingApi {
 		$sections     = [];
 		if ( $this->has_panels() ) {
 			$panels_ids   = wp_list_pluck( $this->get_panels(), 'id' );
-			$panel        = isset ( $_GET['tab'] ) && in_array( $_GET['tab'], $panels_ids ) ? $_GET['tab'] : $panels_ids[0];
+			$panel        = isset( $_GET['tab'] ) && in_array( $_GET['tab'], $panels_ids ) ? $_GET['tab'] : $panels_ids[0];
 			$sections     = $this->get_sections_by_panel( $panel );
 			$has_sections = count( $sections ) > 0;
 		}
@@ -113,7 +119,7 @@ class DefaultSettingApi extends SettingApi {
 	/**
 	 * Get fields HTML by section
 	 *
-	 * @param array $sections Array of section
+	 * @param array       $sections Array of section
 	 * @param string|null $panel Panel id
 	 *
 	 * @return string
@@ -132,7 +138,7 @@ class DefaultSettingApi extends SettingApi {
 			}
 
 			$fieldsArray = $this->get_fields_by( $section['id'], $panel );
-			$table       .= $this->get_form_builder()->get_fields_html( $fieldsArray, $option_name, $options );
+			$table      .= $this->get_form_builder()->get_fields_html( $fieldsArray, $option_name, $options );
 		}
 
 		return $table;
@@ -140,6 +146,7 @@ class DefaultSettingApi extends SettingApi {
 
 	/**
 	 * Generate Option Page Tabs
+	 *
 	 * @return string
 	 */
 	private function option_page_tabs(): string {
@@ -154,11 +161,16 @@ class DefaultSettingApi extends SettingApi {
 		$html = '<h2 class="nav-tab-wrapper wp-clearfix">';
 		foreach ( $panels as $tab ) {
 			$class    = ( $tab['id'] === $current_tab ) ? ' nav-tab-active' : '';
-			$page_url = esc_url( add_query_arg( [
-				'page' => $page,
-				'tab'  => $tab['id']
-			], admin_url( $this->menu_fields['parent_slug'] ) ) );
-			$html     .= '<a class="nav-tab' . $class . '" href="' . $page_url . '">' . $tab['title'] . '</a>';
+			$page_url = esc_url(
+				add_query_arg(
+					[
+						'page' => $page,
+						'tab'  => $tab['id'],
+					],
+					admin_url( $this->menu_fields['parent_slug'] )
+				)
+			);
+			$html    .= '<a class="nav-tab' . $class . '" href="' . $page_url . '">' . $tab['title'] . '</a>';
 		}
 		$html .= '</h2>';
 
@@ -300,7 +312,7 @@ class DefaultSettingApi extends SettingApi {
 	 */
 	public function get_form_builder(): FormBuilderInterface {
 		if ( ! $this->form_builder instanceof FormBuilderInterface ) {
-			$this->set_form_builder( new FormBuilder );
+			$this->set_form_builder( new FormBuilder() );
 		}
 
 		return $this->form_builder;

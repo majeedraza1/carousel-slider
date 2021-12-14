@@ -10,9 +10,9 @@ defined( 'ABSPATH' ) || die;
 
 class FormBuilder implements FormBuilderInterface {
 
-	protected $option_name = null;
+	protected $option_name     = null;
 	protected $fields_settings = [];
-	protected $values = [];
+	protected $values          = [];
 
 	public function set_fields_settings( array $settings ) {
 		$this->fields_settings = $settings;
@@ -34,11 +34,11 @@ class FormBuilder implements FormBuilderInterface {
 			$name  = sprintf( '%s[%s]', $this->option_name, $field['id'] );
 			$value = $this->values[ $field['id'] ] ?? '';
 
-			$table .= "<tr>";
+			$table .= '<tr>';
 			if ( ! empty( $field['title'] ) ) {
 				$table .= sprintf( '<th scope="row"><label for="%1$s">%2$s</label></th>', $field['id'], $field['title'] );
 			}
-			$table .= "<td>";
+			$table .= '<td>';
 
 			if ( method_exists( $this, $type ) ) {
 				$table .= $this->$type( $field, $name, $value );
@@ -47,14 +47,14 @@ class FormBuilder implements FormBuilderInterface {
 			}
 
 			if ( ! empty( $field['description'] ) ) {
-				$desc  = is_array( $field['description'] ) ? implode( "<br>", $field['description'] ) : $field['description'];
+				$desc   = is_array( $field['description'] ) ? implode( '<br>', $field['description'] ) : $field['description'];
 				$table .= sprintf( '<p class="description">%s</p>', $desc );
 			}
-			$table .= "</td>";
-			$table .= "</tr>";
+			$table .= '</td>';
+			$table .= '</tr>';
 		}
 
-		$table .= "</table>";
+		$table .= '</table>';
 
 		return $table;
 	}
@@ -62,9 +62,9 @@ class FormBuilder implements FormBuilderInterface {
 	/**
 	 * Settings fields
 	 *
-	 * @param array $fields
+	 * @param array  $fields
 	 * @param string $option_name
-	 * @param array $values
+	 * @param array  $values
 	 *
 	 * @return string
 	 */
@@ -79,9 +79,9 @@ class FormBuilder implements FormBuilderInterface {
 	/**
 	 * text input field
 	 *
-	 * @param array $field
+	 * @param array  $field
 	 * @param string $name
-	 * @param mixed $value
+	 * @param mixed  $value
 	 *
 	 * @return string
 	 */
@@ -89,68 +89,85 @@ class FormBuilder implements FormBuilderInterface {
 		$types = [ 'email', 'number', 'url', 'date', 'time' ];
 		$type  = in_array( $field['type'], $types ) ? $field['type'] : 'text';
 
-		return sprintf( '<input class="regular-text" value="%1$s" id="%2$s" name="%3$s" type="%4$s">',
-			esc_attr( $value ), esc_attr( $field['id'] ), esc_attr( $name ), esc_attr( $type ) );
+		return sprintf(
+			'<input class="regular-text" value="%1$s" id="%2$s" name="%3$s" type="%4$s">',
+			esc_attr( $value ),
+			esc_attr( $field['id'] ),
+			esc_attr( $name ),
+			esc_attr( $type )
+		);
 	}
 
 	/**
 	 * password input field
 	 *
-	 * @param array $field
+	 * @param array  $field
 	 * @param string $name
-	 * @param mixed $value
+	 * @param mixed  $value
 	 *
 	 * @return string
 	 */
 	public function password( array $field, string $name, $value ): string {
-		return sprintf( '<input type="password" class="regular-text" value="" id="%1$s" name="%2$s">',
-			$field['id'], $name );
+		return sprintf(
+			'<input type="password" class="regular-text" value="" id="%1$s" name="%2$s">',
+			$field['id'],
+			$name
+		);
 	}
 
 	/**
 	 * color input field
 	 *
-	 * @param array $field
+	 * @param array  $field
 	 * @param string $name
-	 * @param mixed $value
+	 * @param mixed  $value
 	 *
 	 * @return string
 	 */
 	public function color( array $field, string $name, $value ): string {
-		$default_color = $field['default'] ?? "";
+		$default_color = $field['default'] ?? '';
 
 		return sprintf(
 			'<input type="text" class="color-picker" value="%1$s" id="%2$s" name="%3$s" data-alpha="true" data-default-color="%4$s">',
-			$value, $field['id'], $name, $default_color );
+			$value,
+			$field['id'],
+			$name,
+			$default_color
+		);
 	}
 
 	/**
 	 * textarea input field
 	 *
-	 * @param array $field
+	 * @param array  $field
 	 * @param string $name
-	 * @param mixed $value
+	 * @param mixed  $value
 	 *
 	 * @return string
 	 */
 	public function textarea( array $field, string $name, $value ): string {
 		$rows        = ( isset( $field['rows'] ) ) ? $field['rows'] : 5;
 		$cols        = ( isset( $field['cols'] ) ) ? $field['cols'] : 40;
-		$placeholder = ( isset( $field['placeholder'] ) ) ? sprintf( 'placeholder="%s"',
-			esc_attr( $field['placeholder'] ) ) : '';
+		$placeholder = ( isset( $field['placeholder'] ) ) ? sprintf(
+			'placeholder="%s"',
+			esc_attr( $field['placeholder'] )
+		) : '';
 
 		return sprintf(
-			"<textarea id='%s' name='%s' rows='%s' cols='%s' " . $placeholder . ">" . esc_textarea( $value ) . "</textarea>",
-			esc_attr( $field['id'] ), esc_attr( $name ), esc_attr( $rows ), esc_attr( $cols )
+			"<textarea id='%s' name='%s' rows='%s' cols='%s' " . $placeholder . '>' . esc_textarea( $value ) . '</textarea>',
+			esc_attr( $field['id'] ),
+			esc_attr( $name ),
+			esc_attr( $rows ),
+			esc_attr( $cols )
 		);
 	}
 
 	/**
 	 * checkbox input field
 	 *
-	 * @param array $field
+	 * @param array  $field
 	 * @param string $name
-	 * @param mixed $value
+	 * @param mixed  $value
 	 *
 	 * @return string
 	 */
@@ -160,10 +177,10 @@ class FormBuilder implements FormBuilderInterface {
 
 		$checked = Validate::checked( $value ) ? 'checked' : '';
 		$table   = '<input type="hidden" name="' . $name . '" value="' . $false_value . '">';
-		$table   .= '<fieldset><legend class="screen-reader-text"><span>' . $field['title'] . '</span></legend>';
-		$table   .= '<label for="' . $field['id'] . '">';
-		$table   .= '<input type="checkbox" value="' . $true_value . '" id="' . $field['id'] . '" name="' . $name . '" ' . $checked . '>';
-		$table   .= $field['title'] . '</label></fieldset>';
+		$table  .= '<fieldset><legend class="screen-reader-text"><span>' . $field['title'] . '</span></legend>';
+		$table  .= '<label for="' . $field['id'] . '">';
+		$table  .= '<input type="checkbox" value="' . $true_value . '" id="' . $field['id'] . '" name="' . $name . '" ' . $checked . '>';
+		$table  .= $field['title'] . '</label></fieldset>';
 
 		return $table;
 	}
@@ -171,22 +188,22 @@ class FormBuilder implements FormBuilderInterface {
 	/**
 	 * multi checkbox input field
 	 *
-	 * @param array $field
+	 * @param array  $field
 	 * @param string $name
-	 * @param mixed $value
+	 * @param mixed  $value
 	 *
 	 * @return string
 	 */
 	public function multi_checkbox( array $field, string $name, $value ): string {
-		$table = "<fieldset>";
-		$name  = $name . "[]";
+		$table = '<fieldset>';
+		$name  = $name . '[]';
 
 		$table .= sprintf( '<input type="hidden" name="%1$s" value="0">', $name );
 		foreach ( $field['options'] as $key => $label ) {
 			$checked = ( in_array( $key, $value ) ) ? 'checked="checked"' : '';
-			$table   .= '<label for="' . $key . '"><input type="checkbox" value="' . $key . '" id="' . $key . '" name="' . $name . '" ' . $checked . '>' . $label . '</label><br>';
+			$table  .= '<label for="' . $key . '"><input type="checkbox" value="' . $key . '" id="' . $key . '" name="' . $name . '" ' . $checked . '>' . $label . '</label><br>';
 		}
-		$table .= "</fieldset>";
+		$table .= '</fieldset>';
 
 		return $table;
 	}
@@ -194,9 +211,9 @@ class FormBuilder implements FormBuilderInterface {
 	/**
 	 * radio input field
 	 *
-	 * @param array $field
+	 * @param array  $field
 	 * @param string $name
-	 * @param mixed $value
+	 * @param mixed  $value
 	 *
 	 * @return string
 	 */
@@ -206,9 +223,9 @@ class FormBuilder implements FormBuilderInterface {
 		foreach ( $field['options'] as $key => $label ) {
 
 			$checked = ( $value == $key ) ? 'checked="checked"' : '';
-			$table   .= '<label><input type="radio" ' . $checked . ' value="' . $key . '" name="' . $name . '">' . $label . '</label><br>';
+			$table  .= '<label><input type="radio" ' . $checked . ' value="' . $key . '" name="' . $name . '">' . $label . '</label><br>';
 		}
-		$table .= "</p></fieldset>";
+		$table .= '</p></fieldset>';
 
 		return $table;
 	}
@@ -216,9 +233,9 @@ class FormBuilder implements FormBuilderInterface {
 	/**
 	 * select input field
 	 *
-	 * @param array $field
+	 * @param array  $field
 	 * @param string $name
-	 * @param mixed $value
+	 * @param mixed  $value
 	 *
 	 * @return string
 	 */
@@ -226,9 +243,9 @@ class FormBuilder implements FormBuilderInterface {
 		$table = sprintf( '<select id="%1$s" name="%2$s" class="regular-text">', $field['id'], $name );
 		foreach ( $field['options'] as $key => $label ) {
 			$selected = ( $value == $key ) ? 'selected="selected"' : '';
-			$table    .= '<option value="' . $key . '" ' . $selected . '>' . $label . '</option>';
+			$table   .= '<option value="' . $key . '" ' . $selected . '>' . $label . '</option>';
 		}
-		$table .= "</select>";
+		$table .= '</select>';
 
 		return $table;
 	}
@@ -236,9 +253,9 @@ class FormBuilder implements FormBuilderInterface {
 	/**
 	 * Get available image sizes
 	 *
-	 * @param array $field
+	 * @param array  $field
 	 * @param string $name
-	 * @param mixed $value
+	 * @param mixed  $value
 	 *
 	 * @return string
 	 */
@@ -272,7 +289,7 @@ class FormBuilder implements FormBuilderInterface {
 		$table = '<select name="' . $name . '" id="' . $field['id'] . '" class="regular-text select2">';
 		foreach ( $sizes as $key => $option ) {
 			$selected = ( $value == $key ) ? ' selected="selected"' : '';
-			$table    .= '<option value="' . $key . '" ' . $selected . '>' . $option . '</option>';
+			$table   .= '<option value="' . $key . '" ' . $selected . '>' . $option . '</option>';
 		}
 		$table .= '</select>';
 
@@ -282,23 +299,27 @@ class FormBuilder implements FormBuilderInterface {
 	/**
 	 * wp_editor input field
 	 *
-	 * @param array $field
+	 * @param array  $field
 	 * @param string $name
-	 * @param mixed $value
+	 * @param mixed  $value
 	 *
 	 * @return string
 	 */
 	public function wp_editor( array $field, string $name, $value ): string {
 		ob_start();
 		echo "<div class='sp-wp-editor-container'>";
-		wp_editor( $value, $field['id'], array(
-			'textarea_name' => $name,
-			'tinymce'       => false,
-			'media_buttons' => false,
-			'textarea_rows' => $field['rows'] ?? 6,
-			'quicktags'     => array( "buttons" => "strong,em,link,img,ul,li,ol" ),
-		) );
-		echo "</div>";
+		wp_editor(
+			$value,
+			$field['id'],
+			array(
+				'textarea_name' => $name,
+				'tinymce'       => false,
+				'media_buttons' => false,
+				'textarea_rows' => $field['rows'] ?? 6,
+				'quicktags'     => array( 'buttons' => 'strong,em,link,img,ul,li,ol' ),
+			)
+		);
+		echo '</div>';
 
 		return ob_get_clean();
 	}
@@ -306,9 +327,9 @@ class FormBuilder implements FormBuilderInterface {
 	/**
 	 * Get html field
 	 *
-	 * @param array $field
+	 * @param array  $field
 	 * @param string $name
-	 * @param mixed $value
+	 * @param mixed  $value
 	 *
 	 * @return mixed
 	 */

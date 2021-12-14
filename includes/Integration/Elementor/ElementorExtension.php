@@ -31,8 +31,13 @@ class ElementorExtension {
 	 * Widget scrips
 	 */
 	public function widget_scripts() {
-		wp_register_script( 'carousel-slider-elementor', Assets::get_assets_url( 'js/frontend.js' ),
-			[ 'elementor-frontend', 'jquery' ], '1.0.0', true );
+		wp_register_script(
+			'carousel-slider-elementor',
+			Assets::get_assets_url( 'js/frontend.js' ),
+			[ 'elementor-frontend', 'jquery' ],
+			'1.0.0',
+			true
+		);
 		wp_register_style( 'carousel-slider-elementor', Assets::get_assets_url( 'css/frontend.css' ) );
 	}
 
@@ -40,6 +45,6 @@ class ElementorExtension {
 	 * Register Elementor widgets
 	 */
 	public function register_widgets() {
-		Plugin::instance()->widgets_manager->register_widget_type( new ElementorWidget );
+		Plugin::instance()->widgets_manager->register_widget_type( new ElementorWidget() );
 	}
 }

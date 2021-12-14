@@ -14,16 +14,19 @@ class Template extends AbstractTemplate {
 	 * @return array
 	 */
 	public static function get_default_settings(): array {
-		return wp_parse_args( [
-			'_slide_type'                  => 'hero-banner-slider',
-			// Responsive Settings
-			'_items_portrait_mobile'       => '1',
-			'_items_small_portrait_tablet' => '1',
-			'_items_portrait_tablet'       => '1',
-			'_items_small_desktop'         => '1',
-			'_items_desktop'               => '1',
-			'_items'                       => '1',
-		], parent::get_default_settings() );
+		return wp_parse_args(
+			[
+				'_slide_type'                  => 'hero-banner-slider',
+				// Responsive Settings
+				'_items_portrait_mobile'       => '1',
+				'_items_small_portrait_tablet' => '1',
+				'_items_portrait_tablet'       => '1',
+				'_items_small_desktop'         => '1',
+				'_items_desktop'               => '1',
+				'_items'                       => '1',
+			],
+			parent::get_default_settings()
+		);
 	}
 
 	/**
@@ -48,14 +51,14 @@ class Template extends AbstractTemplate {
 	/**
 	 * Hero Slider Content Settings
 	 *
-	 * @param int $index
-	 * @param int $image_id
+	 * @param int   $index
+	 * @param int   $image_id
 	 * @param array $args
 	 *
 	 * @return array
 	 */
 	protected static function get_content( $index = 0, $image_id = 0, $args = array() ): array {
-		$index    += 1;
+		$index   += 1;
 		$settings = [
 			// Slide Content
 			'slide_heading'            => 'Slide Heading ' . $index,
@@ -108,7 +111,7 @@ class Template extends AbstractTemplate {
 	 * Create hero carousel with random images
 	 *
 	 * @param string $slider_title
-	 * @param array $args
+	 * @param array  $args
 	 *
 	 * @return int The post ID on success. The value 0 on failure.
 	 */

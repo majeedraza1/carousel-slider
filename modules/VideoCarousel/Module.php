@@ -32,13 +32,14 @@ class Module {
 	/**
 	 * Meta box content
 	 *
-	 * @param int $slider_id
+	 * @param int    $slider_id
 	 * @param string $slider_type
 	 */
 	public function meta_box_content( int $slider_id, string $slider_type ) {
 		$is_video_carousel = $slider_type == 'video-carousel';
 		$urls              = get_post_meta( $slider_id, '_video_url', true );
-		$description       = sprintf( '%s<br><br>%s %s',
+		$description       = sprintf(
+			'%s<br><br>%s %s',
 			esc_html__( 'Only support youtube and vimeo. Enter video URL from youtube or vimeo separating each by comma', 'carousel-slider' ),
 			esc_html__( 'Example:', 'carousel-slider' ),
 			'https://www.youtube.com/watch?v=O4-EM32h7b4,https://www.youtube.com/watch?v=72IO4gzB8mU,https://vimeo.com/193773669,https://vimeo.com/193517656'
@@ -53,12 +54,12 @@ class Module {
 				<div class="shapla-toggle-content">
 					<div class="sp-input-group" id="field-_video_url">
 						<div class="sp-input-label">
-							<label for="_video_url"><?php esc_html_e( 'Video URLs', 'carousel-slider' ) ?></label>
-							<p class="sp-input-desc"><?php echo $description ?></p>
+							<label for="_video_url"><?php esc_html_e( 'Video URLs', 'carousel-slider' ); ?></label>
+							<p class="sp-input-desc"><?php echo $description; ?></p>
 						</div>
 						<div class="sp-input-field">
 							<textarea class="sp-input-textarea" id="_video_url" cols="35" rows="6"
-									  name="_video_url"><?php echo esc_textarea( $urls ) ?></textarea>
+									  name="_video_url"><?php echo esc_textarea( $urls ); ?></textarea>
 						</div>
 					</div>
 				</div>

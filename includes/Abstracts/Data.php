@@ -9,6 +9,7 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * Class Data
+ *
  * @package CarouselSlider\Abstracts
  */
 class Data implements ArrayAccess, JsonSerializable {
@@ -75,7 +76,7 @@ class Data implements ArrayAccess, JsonSerializable {
 	 * Set collection item
 	 *
 	 * @param string $key The data key
-	 * @param mixed $value The data value
+	 * @param mixed  $value The data value
 	 */
 	public function set_prop( string $key, $value ) {
 		$this->data[ $key ] = $value;
@@ -85,7 +86,7 @@ class Data implements ArrayAccess, JsonSerializable {
 	 * Get collection item for key
 	 *
 	 * @param string $key The data key
-	 * @param mixed $default The default value to return if data key does not exist
+	 * @param mixed  $default The default value to return if data key does not exist
 	 *
 	 * @return mixed The key's value, or the default value
 	 */

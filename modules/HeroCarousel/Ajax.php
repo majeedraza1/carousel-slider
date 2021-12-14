@@ -83,7 +83,7 @@ class Ajax {
 	}
 
 	/**
-	 * @param int $post_id
+	 * @param int   $post_id
 	 * @param array $slider_content
 	 *
 	 * @return array

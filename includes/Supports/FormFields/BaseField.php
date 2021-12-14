@@ -33,7 +33,7 @@ abstract class BaseField implements FieldInterface {
 	 * Get setting
 	 *
 	 * @param string $key
-	 * @param mixed $default
+	 * @param mixed  $default
 	 *
 	 * @return mixed
 	 */
@@ -45,7 +45,7 @@ abstract class BaseField implements FieldInterface {
 	 * Set setting
 	 *
 	 * @param string $key
-	 * @param mixed $value
+	 * @param mixed  $value
 	 */
 	public function set_setting( string $key, $value ) {
 		$this->settings[ $key ] = $value;
@@ -159,28 +159,32 @@ abstract class BaseField implements FieldInterface {
 	 * @return string
 	 */
 	protected function array_to_attributes( array $attributes ): string {
-		$string = array_map( function ( $key, $value ) {
-			if ( empty( $value ) && 'value' !== $key ) {
-				return null;
-			}
-			if ( in_array( $key, array( 'required', 'checked', 'multiple' ) ) && $value ) {
-				return $key;
-			}
+		$string = array_map(
+			function ( $key, $value ) {
+				if ( empty( $value ) && 'value' !== $key ) {
+					  return null;
+				}
+				if ( in_array( $key, array( 'required', 'checked', 'multiple' ) ) && $value ) {
+					return $key;
+				}
 
-			// If boolean value
-			if ( is_bool( $value ) ) {
-				return sprintf( '%s="%s"', $key, $value ? 'true' : 'false' );
-			}
+				// If boolean value
+				if ( is_bool( $value ) ) {
+					return sprintf( '%s="%s"', $key, $value ? 'true' : 'false' );
+				}
 
-			// If array value
-			if ( is_array( $value ) ) {
-				return sprintf( '%s="%s"', $key, implode( ",", $value ) );
-			}
+				// If array value
+				if ( is_array( $value ) ) {
+					return sprintf( '%s="%s"', $key, implode( ',', $value ) );
+				}
 
-			// If string value
-			return sprintf( '%s="%s"', $key, esc_attr( $value ) );
+				// If string value
+				return sprintf( '%s="%s"', $key, esc_attr( $value ) );
 
-		}, array_keys( $attributes ), array_values( $attributes ) );
+			},
+			array_keys( $attributes ),
+			array_values( $attributes )
+		);
 
 		return implode( ' ', array_filter( $string ) );
 	}
@@ -195,42 +199,46 @@ abstract class BaseField implements FieldInterface {
 		$extra_attributes = [
 			[
 				'include_types' => [ 'textarea' ],
-				'attrs'         => [ 'rows' => $this->get_setting( 'rows' ) ]
+				'attrs'         => [ 'rows' => $this->get_setting( 'rows' ) ],
 			],
 			[
 				'include_types' => [ 'file' ],
-				'attrs'         => [ 'accept' => $this->get_setting( 'accept' ) ]
+				'attrs'         => [ 'accept' => $this->get_setting( 'accept' ) ],
 			],
 			[
 				'include_types' => [ 'number', 'date' ],
 				'attrs'         => [
 					'max' => $this->get_setting( 'max' ),
 					'min' => $this->get_setting( 'min' ),
-				]
+				],
 			],
 			[
 				'include_types' => [ 'number' ],
-				'attrs'         => [ 'step' => $this->get_setting( 'step' ), ]
+				'attrs'         => [ 'step' => $this->get_setting( 'step' ) ],
 			],
 			[
 				'include_types' => [ 'email', 'file' ],
-				'attrs'         => [ 'multiple' => $this->get_setting( 'multiple' ), ]
+				'attrs'         => [ 'multiple' => $this->get_setting( 'multiple' ) ],
 			],
 			[
 				'include_types' => [ 'hidden' ],
-				'attrs'         => [ 'spellcheck' => 'false', 'tabindex' => '-1', 'autocomplete' => 'off' ]
+				'attrs'         => [
+					'spellcheck'   => 'false',
+					'tabindex'     => '-1',
+					'autocomplete' => 'off',
+				],
 			],
 			[
 				'exclude_types' => [ 'textarea', 'file' ],
-				'attrs'         => [ 'autocomplete' => $this->get_setting( 'autocomplete' ) ]
+				'attrs'         => [ 'autocomplete' => $this->get_setting( 'autocomplete' ) ],
 			],
 			[
 				'exclude_types' => [ 'textarea', 'file', 'password', 'select' ],
-				'attrs'         => [ 'value' => $this->get_value() ]
+				'attrs'         => [ 'value' => $this->get_value() ],
 			],
 			[
 				'exclude_types' => [ 'hidden', 'image', 'submit', 'reset', 'button' ],
-				'attrs'         => [ 'required' => $this->get_setting( 'required' ) ]
+				'attrs'         => [ 'required' => $this->get_setting( 'required' ) ],
 			],
 		];
 

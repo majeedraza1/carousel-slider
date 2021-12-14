@@ -131,7 +131,7 @@ class Item extends Data {
 	 */
 	public function lazy_load_image(): bool {
 		return ! isset( $this->slider_settings['lazy_load_image'] ) ||
-		       Validate::checked( $this->slider_settings['lazy_load_image'] );
+			   Validate::checked( $this->slider_settings['lazy_load_image'] );
 	}
 
 	/**
@@ -173,10 +173,14 @@ class Item extends Data {
 	 * @return array
 	 */
 	public function get_slide_padding(): array {
-		$default       = [ "top" => "1rem", "right" => "3rem", "bottom" => "1rem", "left" => "3rem" ];
+		$default       = [
+			'top'    => '1rem',
+			'right'  => '3rem',
+			'bottom' => '1rem',
+			'left'   => '3rem',
+		];
 		$slide_padding = isset( $this->slider_settings['slide_padding'] ) && is_array( $this->slider_settings['slide_padding'] ) ?
 			$this->slider_settings['slide_padding'] : [];
-
 
 		return wp_parse_args( $slide_padding, $default );
 	}
@@ -213,14 +217,20 @@ class Item extends Data {
 		$html         = '';
 
 		$cell_attr = [
-			"class" => "carousel-slider-hero__cell hero__cell-$slide_index",
-			"style" => "--cell-height: " . $this->get_slide_height(),
+			'class' => "carousel-slider-hero__cell hero__cell-$slide_index",
+			'style' => '--cell-height: ' . $this->get_slide_height(),
 		];
 		if ( $is_full_link ) {
-			$cell_attr = array_merge( $cell_attr, [ "href" => $slide_link, "target" => $link_target ] );
+			$cell_attr = array_merge(
+				$cell_attr,
+				[
+					'href'   => $slide_link,
+					'target' => $link_target,
+				]
+			);
 		}
 
-		$html .= '<' . ( $is_full_link ? 'a' : 'div' ) . ' ' . join( " ", Helper::array_to_attribute( $cell_attr ) ) . '>';
+		$html .= '<' . ( $is_full_link ? 'a' : 'div' ) . ' ' . join( ' ', Helper::array_to_attribute( $cell_attr ) ) . '>';
 
 		$html .= $this->get_cell_background();
 
@@ -234,8 +244,8 @@ class Item extends Data {
 			$html .= '<div class="carousel-slider-hero__cell__background_overlay" style="' . $overlay_style . '"></div>';
 		}
 
-		$content_style = "max-width:" . $this->get_content_width();
-		$html          .= '<div class="carousel-slider-hero__cell__content" style="' . $content_style . '">';
+		$content_style = 'max-width:' . $this->get_content_width();
+		$html         .= '<div class="carousel-slider-hero__cell__content" style="' . $content_style . '">';
 
 		// Slide Heading
 		$html .= $this->get_heading();
@@ -274,14 +284,14 @@ class Item extends Data {
 		$have_img         = is_array( $img_src ) && Validate::url( $img_src[0] );
 
 		$styles = [
-			"background-position" => $img_bg_position,
-			"background-size"     => $img_bg_size,
+			'background-position' => $img_bg_position,
+			'background-size'     => $img_bg_size,
 		];
 		if ( $have_img && ! $this->lazy_load_image() ) {
-			$styles["background-image"] = "url($img_src[0])";
+			$styles['background-image'] = "url($img_src[0])";
 		}
 		if ( ! empty( $bg_color ) ) {
-			$styles["background-color"] = $bg_color;
+			$styles['background-color'] = $bg_color;
 		}
 
 		$_slide_bg_class = 'carousel-slider-hero__cell__background';
@@ -297,16 +307,16 @@ class Item extends Data {
 		}
 
 		$attrs = [
-			"id"    => sprintf( "slide-item-%s-%s", $this->get_slider_id(), $this->get_item_id() ),
-			"class" => $_slide_bg_class,
-			"style" => Helper::array_to_style( $styles ),
+			'id'    => sprintf( 'slide-item-%s-%s', $this->get_slider_id(), $this->get_item_id() ),
+			'class' => $_slide_bg_class,
+			'style' => Helper::array_to_style( $styles ),
 		];
 
 		if ( $have_img && $this->lazy_load_image() ) {
-			$attrs["data-src"] = $img_src[0];
+			$attrs['data-src'] = $img_src[0];
 		}
 
-		return '<div ' . implode( " ", Helper::array_to_attribute( $attrs ) ) . '></div>';
+		return '<div ' . implode( ' ', Helper::array_to_attribute( $attrs ) ) . '></div>';
 	}
 
 	/**
@@ -323,17 +333,17 @@ class Item extends Data {
 			'carousel-slider-hero__cell__inner',
 			'carousel-slider--h-position-center',
 			'carousel-slider--v-position-middle',
-			'carousel-slider--text-' . $alignment
+			'carousel-slider--text-' . $alignment,
 		];
 
 		$styles = [
-			"padding-top"    => $slide_padding['top'],
-			"padding-right"  => $slide_padding['right'],
-			"padding-bottom" => $slide_padding['bottom'],
-			"padding-left"   => $slide_padding['left'],
+			'padding-top'    => $slide_padding['top'],
+			'padding-right'  => $slide_padding['right'],
+			'padding-bottom' => $slide_padding['bottom'],
+			'padding-left'   => $slide_padding['left'],
 		];
 
-		return '<div class="' . implode( " ", $classes ) . '" style="' . Helper::array_to_style( $styles ) . '">';
+		return '<div class="' . implode( ' ', $classes ) . '" style="' . Helper::array_to_style( $styles ) . '">';
 	}
 
 	/**
@@ -348,9 +358,9 @@ class Item extends Data {
 			return $html;
 		}
 		$styles = [
-			"--cs-heading-font-size" => (int) $this->get_prop( 'heading_font_size', 40 ) . "px",
-			"--cs-heading-gutter"    => $this->get_prop( 'heading_gutter', '30px' ),
-			"--cs-heading-color"     => $this->get_prop( 'heading_color', '#ffffff' ),
+			'--cs-heading-font-size' => (int) $this->get_prop( 'heading_font_size', 40 ) . 'px',
+			'--cs-heading-gutter'    => $this->get_prop( 'heading_gutter', '30px' ),
+			'--cs-heading-color'     => $this->get_prop( 'heading_color', '#ffffff' ),
 		];
 
 		$html .= '<div class="carousel-slider-hero__cell__heading" style="' . Helper::array_to_style( $styles ) . '">';
@@ -373,9 +383,9 @@ class Item extends Data {
 		}
 
 		$styles = [
-			"--cs-description-font-size" => (int) $this->get_prop( 'description_font_size', 20 ) . "px",
-			"--cs-description-gutter"    => $this->get_prop( 'description_gutter', '30px' ),
-			"--cs-description-color"     => $this->get_prop( 'description_color', '#ffffff' ),
+			'--cs-description-font-size' => (int) $this->get_prop( 'description_font_size', 20 ) . 'px',
+			'--cs-description-gutter'    => $this->get_prop( 'description_gutter', '30px' ),
+			'--cs-description-color'     => $this->get_prop( 'description_color', '#ffffff' ),
 		];
 
 		$html .= '<div class="carousel-slider-hero__cell__description" style="' . Helper::array_to_style( $styles ) . '">';
@@ -399,20 +409,20 @@ class Item extends Data {
 		$btn_text = $this->get_prop( 'button_one_text' );
 		$target   = $this->get_prop( 'button_one_target', '_self' );
 
-		$classes = 'button cs-hero-button';
+		$classes  = 'button cs-hero-button';
 		$classes .= ' cs-hero-button-' . $this->get_item_id() . '-1';
 		$classes .= ' cs-hero-button-' . $this->get_prop( 'button_one_type', 'normal' );
 		$classes .= ' cs-hero-button-' . $this->get_prop( 'button_one_size', 'medium' );
 
 		$style = [
-			"--cs-button-bg-color"      => $this->get_prop( 'button_one_bg_color', '#00d1b2' ),
-			"--cs-button-color"         => $this->get_prop( 'button_one_color', '#ffffff' ),
-			"--cs-button-border-width"  => $this->get_prop( 'button_one_border_width', '0px' ),
-			"--cs-button-border-radius" => $this->get_prop( 'button_one_border_radius', '3px' ),
+			'--cs-button-bg-color'      => $this->get_prop( 'button_one_bg_color', '#00d1b2' ),
+			'--cs-button-color'         => $this->get_prop( 'button_one_color', '#ffffff' ),
+			'--cs-button-border-width'  => $this->get_prop( 'button_one_border_width', '0px' ),
+			'--cs-button-border-radius' => $this->get_prop( 'button_one_border_radius', '3px' ),
 		];
 
 		$html .= '<span class="carousel-slider-hero__cell__button__one" style="' . Helper::array_to_style( $style ) . '">';
-		$html .= '<a class="' . $classes . '" href="' . $url . '" target="' . $target . '">' . esc_html( $btn_text ) . "</a>";
+		$html .= '<a class="' . $classes . '" href="' . $url . '" target="' . $target . '">' . esc_html( $btn_text ) . '</a>';
 		$html .= '</span>';
 
 		return $html;
@@ -432,20 +442,20 @@ class Item extends Data {
 		$text   = $this->get_prop( 'button_two_text' );
 		$target = $this->get_prop( 'button_two_target', '_self' );
 
-		$classes = 'button cs-hero-button';
+		$classes  = 'button cs-hero-button';
 		$classes .= ' cs-hero-button-' . $this->get_item_id() . '-2';
 		$classes .= ' cs-hero-button-' . $this->get_prop( 'button_two_type', 'normal' );
 		$classes .= ' cs-hero-button-' . $this->get_prop( 'button_two_size', 'medium' );
 
 		$style = [
-			"--cs-button-bg-color"      => $this->get_prop( 'button_two_bg_color', '#00d1b2' ),
-			"--cs-button-color"         => $this->get_prop( 'button_two_color', '#ffffff' ),
-			"--cs-button-border-width"  => $this->get_prop( 'button_two_border_width', '0px' ),
-			"--cs-button-border-radius" => $this->get_prop( 'button_two_border_radius', '3px' ),
+			'--cs-button-bg-color'      => $this->get_prop( 'button_two_bg_color', '#00d1b2' ),
+			'--cs-button-color'         => $this->get_prop( 'button_two_color', '#ffffff' ),
+			'--cs-button-border-width'  => $this->get_prop( 'button_two_border_width', '0px' ),
+			'--cs-button-border-radius' => $this->get_prop( 'button_two_border_radius', '3px' ),
 		];
 
 		$html .= '<span class="carousel-slider-hero__cell__button__two" style="' . Helper::array_to_style( $style ) . '">';
-		$html .= '<a class="' . $classes . '" href="' . esc_url( $url ) . '" target="' . esc_attr( $target ) . '">' . esc_html( $text ) . "</a>";
+		$html .= '<a class="' . $classes . '" href="' . esc_url( $url ) . '" target="' . esc_attr( $target ) . '">' . esc_html( $text ) . '</a>';
 		$html .= '</span>';
 
 		return $html;

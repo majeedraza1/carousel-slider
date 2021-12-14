@@ -91,15 +91,15 @@ abstract class AbstractView implements SliderViewInterface {
 	 */
 	public function start_wrapper_html( array $args = [] ): string {
 		$css_classes = [
-			"carousel-slider-outer",
-			"carousel-slider-outer-" . $this->get_slider_type(),
-			"carousel-slider-outer-" . $this->get_slider_id()
+			'carousel-slider-outer',
+			'carousel-slider-outer-' . $this->get_slider_type(),
+			'carousel-slider-outer-' . $this->get_slider_id(),
 		];
 
 		$attributes_array = $this->get_slider_attributes( $args );
 
-		$html = '<div class="' . join( ' ', $css_classes ) . '">' . PHP_EOL;
-		$html .= "<div " . join( " ", $attributes_array ) . ">" . PHP_EOL;
+		$html  = '<div class="' . join( ' ', $css_classes ) . '">' . PHP_EOL;
+		$html .= '<div ' . join( ' ', $attributes_array ) . '>' . PHP_EOL;
 
 		return $html;
 	}
@@ -110,7 +110,7 @@ abstract class AbstractView implements SliderViewInterface {
 	 * @return string
 	 */
 	public function end_wrapper_html(): string {
-		$html = '</div><!-- .carousel-slider-' . $this->get_slider_id() . ' -->' . PHP_EOL;
+		$html  = '</div><!-- .carousel-slider-' . $this->get_slider_id() . ' -->' . PHP_EOL;
 		$html .= '</div><!-- .carousel-slider-outer-' . $this->get_slider_id() . ' -->' . PHP_EOL;
 
 		return $html;
@@ -154,10 +154,10 @@ abstract class AbstractView implements SliderViewInterface {
 	public function get_css_variable(): array {
 		$setting = $this->get_slider_setting();
 		$css_var = [
-			"--carousel-slider-nav-color"        => $setting->get_prop( 'nav_color' ),
-			"--carousel-slider-active-nav-color" => $setting->get_prop( 'nav_active_color' ),
-			"--carousel-slider-arrow-size"       => $setting->get_prop( 'nav_size' ) . 'px',
-			"--carousel-slider-bullet-size"      => $setting->get_prop( 'pagination_size' ) . 'px',
+			'--carousel-slider-nav-color'        => $setting->get_prop( 'nav_color' ),
+			'--carousel-slider-active-nav-color' => $setting->get_prop( 'nav_active_color' ),
+			'--carousel-slider-arrow-size'       => $setting->get_prop( 'nav_size' ) . 'px',
+			'--carousel-slider-bullet-size'      => $setting->get_prop( 'pagination_size' ) . 'px',
 		];
 
 		return apply_filters( 'carousel_slider/css_var', $css_var, $this->get_slider_id() );

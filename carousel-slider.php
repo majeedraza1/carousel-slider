@@ -26,7 +26,11 @@
 defined( 'ABSPATH' ) || exit;
 
 if ( ! class_exists( 'Carousel_Slider' ) ) {
-
+	/**
+	 * The core plugin class.
+	 * This is used to define internationalization, admin-specific hooks, and public-facing site hooks.
+	 * Also maintains the unique identifier of this plugin as well as the current version of the plugin.
+	 */
 	final class Carousel_Slider {
 
 		/**
@@ -75,13 +79,13 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 			if ( is_null( self::$instance ) ) {
 				self::$instance = new self();
 
-				// define constants
+				// define plugin constants.
 				self::$instance->define_constants();
 
-				// Register autoloader
+				// Register autoloader.
 				self::$instance->register_autoloader();
 
-				// Check if PHP version is supported for our plugin
+				// Check if PHP version is supported for our plugin.
 				if ( ! self::$instance->is_supported_php() ) {
 					register_activation_hook( __FILE__, [ self::$instance, 'auto_deactivate' ] );
 					add_action( 'admin_notices', [ self::$instance, 'php_version_notice' ] );
@@ -91,7 +95,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 
 				do_action( 'carousel_slider/init' );
 
-				// bootstrap main class
+				// bootstrap plugin main class.
 				self::$instance->bootstrap_plugin();
 
 				register_activation_hook( __FILE__, [ self::$instance, 'activation' ] );
@@ -125,14 +129,14 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 			} else {
 				include_once CAROUSEL_SLIDER_PATH . '/includes/Autoloader.php';
 
-				// instantiate the loader
-				$loader = new CarouselSlider\Autoloader;
+				// instantiate the loader.
+				$loader = new CarouselSlider\Autoloader();
 
-				// register the base directories for the namespace prefix
+				// register the base directories for the namespace prefix.
 				$loader->add_namespace( 'CarouselSlider', CAROUSEL_SLIDER_PATH . '/includes' );
 				$loader->add_namespace( 'CarouselSlider\Modules', CAROUSEL_SLIDER_PATH . '/modules' );
 
-				// register the autoloader
+				// register the autoloader.
 				$loader->register();
 			}
 		}
@@ -148,6 +152,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 
 		/**
 		 * To be run when the plugin is activated
+		 *
 		 * @return void
 		 */
 		public function activation() {
@@ -156,6 +161,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 
 		/**
 		 * To be run when the plugin is deactivated
+		 *
 		 * @return void
 		 */
 		public function deactivation() {
@@ -173,12 +179,15 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 				return;
 			}
 
-			$error = __( 'Your installed PHP Version is: ', 'carousel-slider' ) . PHP_VERSION . '. ';
-			$error .= sprintf( __( 'The Carousel Slider plugin requires PHP version %s or greater.',
-				'carousel-slider' ), $this->min_php );
+			$error  = __( 'Your installed PHP Version is: ', 'carousel-slider' ) . PHP_VERSION . '. ';
+			$error .= sprintf(
+				/* translators: 1: min php version requires */
+				__( 'The Carousel Slider plugin requires PHP version %s or greater.', 'carousel-slider' ),
+				$this->min_php
+			);
 			?>
 			<div class="error">
-				<p><?php printf( $error ); ?></p>
+				<p><?php printf( esc_html( $error ) ); ?></p>
 			</div>
 			<?php
 		}
@@ -195,21 +204,24 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 
 			deactivate_plugins( plugin_basename( __FILE__ ) );
 
-			$error = '<h1>' . __( 'An Error Occurred', 'carousel-slider' ) . '</h1>';
+			$error  = '<h1>' . __( 'An Error Occurred', 'carousel-slider' ) . '</h1>';
 			$error .= '<h2>' . __( 'Your installed PHP Version is: ', 'carousel-slider' ) . PHP_VERSION . '</h2>';
+			/* translators: 1: min php version requires */
 			$error .= '<p>' . sprintf( __( 'The Carousel Slider plugin requires PHP version %s or greater', 'carousel-slider' ), $this->min_php ) . '</p>';
-			$error .= '<p>' . sprintf( __( 'The version of your PHP is %s unsupported and old %s. ', 'carousel-slider' ),
-					'<a href="https://php.net/supported-versions.php" target="_blank"><strong>',
-					'</strong></a>'
-				);
+			$error .= '<p>' . sprintf(
+				/* translators: 1: php doc page link start, 2: php doc page link end */
+				__( 'The version of your PHP is %1$s unsupported and old %2$s. ', 'carousel-slider' ),
+				'<a href="https://php.net/supported-versions.php" target="_blank"><strong>',
+				'</strong></a>'
+			);
 			$error .= __( 'You should update your PHP software or contact your host regarding this matter.', 'carousel-slider' ) . '</p>';
 
-			wp_die( $error, __( 'Plugin Activation Error', 'carousel-slider' ), array( 'back_link' => true ) );
+			$title = __( 'Plugin Activation Error', 'carousel-slider' );
+			wp_die( wp_kses_post( $error ), esc_html( $title ), [ 'back_link' => true ] );
 		}
 
 		/**
 		 * Check if the PHP version is supported
-		 *
 		 *
 		 * @return bool
 		 */

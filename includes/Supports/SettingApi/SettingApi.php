@@ -131,7 +131,7 @@ class SettingApi {
 	/**
 	 * Validate the option's value
 	 *
-	 * @param mixed $value
+	 * @param mixed  $value
 	 * @param string $type
 	 *
 	 * @return string|numeric
@@ -193,7 +193,7 @@ class SettingApi {
 	 * Update options
 	 *
 	 * @param array $options
-	 * @param bool $sanitize
+	 * @param bool  $sanitize
 	 */
 	public function update_options( array $options, bool $sanitize = true ) {
 		if ( $sanitize ) {
@@ -299,12 +299,15 @@ class SettingApi {
 	 * @return self
 	 */
 	public function set_panel( array $panel ): SettingApi {
-		$panel = wp_parse_args( $panel, array(
-			'id'          => '',
-			'title'       => '',
-			'description' => '',
-			'priority'    => 200,
-		) );
+		$panel = wp_parse_args(
+			$panel,
+			array(
+				'id'          => '',
+				'title'       => '',
+				'description' => '',
+				'priority'    => 200,
+			)
+		);
 
 		$this->panels[] = $panel;
 
@@ -319,13 +322,16 @@ class SettingApi {
 	 * @return self
 	 */
 	public function set_section( array $section ): SettingApi {
-		$section = wp_parse_args( $section, array(
-			'id'          => 'general',
-			'panel'       => '',
-			'title'       => '',
-			'description' => '',
-			'priority'    => 200,
-		) );
+		$section = wp_parse_args(
+			$section,
+			array(
+				'id'          => 'general',
+				'panel'       => '',
+				'title'       => '',
+				'description' => '',
+				'priority'    => 200,
+			)
+		);
 
 		$this->sections[] = $section;
 
@@ -341,14 +347,17 @@ class SettingApi {
 	 * @return self
 	 */
 	public function set_field( array $field ): SettingApi {
-		$field = wp_parse_args( $field, array(
-			'type'        => 'text',
-			'section'     => 'general',
-			'id'          => '',
-			'title'       => '',
-			'description' => '',
-			'priority'    => 200,
-		) );
+		$field = wp_parse_args(
+			$field,
+			array(
+				'type'        => 'text',
+				'section'     => 'general',
+				'id'          => '',
+				'title'       => '',
+				'description' => '',
+				'priority'    => 200,
+			)
+		);
 
 		$this->fields[ $field['id'] ] = $field;
 

@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
 
 class Command extends WP_CLI_Command {
 	/**
-	 * @param array $assoc_args
+	 * @param array  $assoc_args
 	 * @param string $slider_title
 	 *
 	 * @return int
@@ -114,26 +114,35 @@ class Command extends WP_CLI_Command {
 	 * wp carousel-slider create_slider 'Post Carousel - PT' --type='post-carousel' --post-query='post_tags'
 	 */
 	public function create_slider( $args, $assoc_args ) {
-		$slider_id = 0;
+		$slider_id            = 0;
 		list( $slider_title ) = $args;
-		$type = ! empty( $assoc_args['type'] ) ? $assoc_args['type'] : 'image-carousel';
+		$type                 = ! empty( $assoc_args['type'] ) ? $assoc_args['type'] : 'image-carousel';
 
 		if ( 'image-carousel' == $type ) {
-			$slider_id = TemplateImageCarousel::create( $slider_title, array(
-				'_created_via' => 'wp-cli',
-			) );
+			$slider_id = TemplateImageCarousel::create(
+				$slider_title,
+				array(
+					'_created_via' => 'wp-cli',
+				)
+			);
 		}
 
 		if ( 'image-carousel-url' == $type ) {
-			$slider_id = TemplateUrlImageCarousel::create( $slider_title, array(
-				'_created_via' => 'wp-cli',
-			) );
+			$slider_id = TemplateUrlImageCarousel::create(
+				$slider_title,
+				array(
+					'_created_via' => 'wp-cli',
+				)
+			);
 		}
 
 		if ( 'video-carousel' == $type ) {
-			$slider_id = TemplateVideoCarousel::create( $slider_title, array(
-				'_created_via' => 'wp-cli',
-			) );
+			$slider_id = TemplateVideoCarousel::create(
+				$slider_title,
+				array(
+					'_created_via' => 'wp-cli',
+				)
+			);
 		}
 
 		if ( 'post-carousel' == $type ) {
@@ -146,7 +155,7 @@ class Command extends WP_CLI_Command {
 			return;
 		}
 
-		$response = sprintf( __( "#%s - %s has been created successfully.", "carousel-slider" ), $slider_id, $slider_title );
+		$response = sprintf( __( '#%1$s - %2$s has been created successfully.', 'carousel-slider' ), $slider_id, $slider_title );
 		WP_CLI::success( $response );
 	}
 
@@ -156,84 +165,115 @@ class Command extends WP_CLI_Command {
 	public function create_sliders() {
 		$ids     = [];
 		$sliders = [
-			[ 'type' => 'hero-banner-slider', 'title' => 'Test: Hero Carousel', 'args' => [] ],
-			[ 'type' => 'image-carousel', 'title' => 'Test: Image Carousel - Gallery', 'args' => [] ],
-			[ 'type' => 'image-carousel-url', 'title' => 'Test: Image Carousel - URL', 'args' => [] ],
-			[ 'type' => 'video-carousel', 'title' => 'Test: Video Carousel - Youtube', 'args' => [] ],
+			[
+				'type'  => 'hero-banner-slider',
+				'title' => 'Test: Hero Carousel',
+				'args'  => [],
+			],
+			[
+				'type'  => 'image-carousel',
+				'title' => 'Test: Image Carousel - Gallery',
+				'args'  => [],
+			],
+			[
+				'type'  => 'image-carousel-url',
+				'title' => 'Test: Image Carousel - URL',
+				'args'  => [],
+			],
+			[
+				'type'  => 'video-carousel',
+				'title' => 'Test: Video Carousel - Youtube',
+				'args'  => [],
+			],
 			// Post Carousel
 			[
 				'type'  => 'post-carousel',
 				'title' => 'Test: Post Carousel - Latest Posts',
-				'args'  => [ '_post_query_type' => 'latest_posts' ]
+				'args'  => [ '_post_query_type' => 'latest_posts' ],
 			],
 			[
 				'type'  => 'post-carousel',
 				'title' => 'Test: Post Carousel - Date Range',
-				'args'  => [ '_post_query_type' => 'date_range' ]
+				'args'  => [ '_post_query_type' => 'date_range' ],
 			],
 			[
 				'type'  => 'post-carousel',
 				'title' => 'Test: Post Carousel - Categories',
-				'args'  => [ '_post_query_type' => 'post_categories' ]
+				'args'  => [ '_post_query_type' => 'post_categories' ],
 			],
 			[
 				'type'  => 'post-carousel',
 				'title' => 'Test: Post Carousel - Tags',
-				'args'  => [ '_post_query_type' => 'post_tags' ]
+				'args'  => [ '_post_query_type' => 'post_tags' ],
 			],
 			[
 				'type'  => 'post-carousel',
 				'title' => 'Test: Post Carousel - IDs',
-				'args'  => [ '_post_query_type' => 'specific_posts' ]
+				'args'  => [ '_post_query_type' => 'specific_posts' ],
 			],
 			// Product Carousel
 			[
 				'type'  => 'product-carousel',
 				'title' => 'Test: Product Carousel - IDs',
-				'args'  => [ '_product_query_type' => 'specific_products' ]
+				'args'  => [ '_product_query_type' => 'specific_products' ],
 			],
 			[
 				'type'  => 'product-carousel',
 				'title' => 'Test: Product Carousel - Categories',
-				'args'  => [ '_product_query_type' => 'product_categories' ]
+				'args'  => [ '_product_query_type' => 'product_categories' ],
 			],
 			[
 				'type'  => 'product-carousel',
 				'title' => 'Test: Product Carousel - Tags',
-				'args'  => [ '_product_query_type' => 'product_tags' ]
+				'args'  => [ '_product_query_type' => 'product_tags' ],
 			],
 			[
 				'type'  => 'product-carousel',
 				'title' => 'Test: Product Carousel - Recent Products',
-				'args'  => [ '_product_query_type' => 'query_product', '_product_query' => 'recent' ]
+				'args'  => [
+					'_product_query_type' => 'query_product',
+					'_product_query'      => 'recent',
+				],
 			],
 			[
 				'type'  => 'product-carousel',
 				'title' => 'Test: Product Carousel - Featured Products',
-				'args'  => [ '_product_query_type' => 'query_product', '_product_query' => 'featured' ]
+				'args'  => [
+					'_product_query_type' => 'query_product',
+					'_product_query'      => 'featured',
+				],
 			],
 			[
 				'type'  => 'product-carousel',
 				'title' => 'Test: Product Carousel - Sale Products',
-				'args'  => [ '_product_query_type' => 'query_product', '_product_query' => 'sale' ]
+				'args'  => [
+					'_product_query_type' => 'query_product',
+					'_product_query'      => 'sale',
+				],
 			],
 			[
 				'type'  => 'product-carousel',
 				'title' => 'Test: Product Carousel - Best Selling Products',
-				'args'  => [ '_product_query_type' => 'query_product', '_product_query' => 'best_selling' ]
+				'args'  => [
+					'_product_query_type' => 'query_product',
+					'_product_query'      => 'best_selling',
+				],
 			],
 			[
 				'type'  => 'product-carousel',
 				'title' => 'Test: Product Carousel - Top Rated Products',
-				'args'  => [ '_product_query_type' => 'query_product', '_product_query' => 'top_rated' ]
+				'args'  => [
+					'_product_query_type' => 'query_product',
+					'_product_query'      => 'top_rated',
+				],
 			],
 			[
 				'type'  => 'product-carousel',
 				'title' => 'Test: Product Carousel - Product Categories List',
 				'args'  => [
 					'_product_query_type' => 'query_product',
-					'_product_query'      => 'product_categories_list'
-				]
+					'_product_query'      => 'product_categories_list',
+				],
 			],
 		];
 
@@ -268,7 +308,7 @@ class Command extends WP_CLI_Command {
 
 		Helper::create_test_page( $ids );
 
-		WP_CLI::success( "All test sliders has been created successfully." );
+		WP_CLI::success( 'All test sliders has been created successfully.' );
 	}
 
 	/**
@@ -294,7 +334,13 @@ class Command extends WP_CLI_Command {
 	 */
 	public function delete_sliders() {
 		/** @var WP_Post[] $sliders */
-		$sliders = get_posts( [ 'post_type' => 'carousels', 'post_status' => 'any', 'numberposts' => - 1 ] );
+		$sliders = get_posts(
+			[
+				'post_type'   => 'carousels',
+				'post_status' => 'any',
+				'numberposts' => - 1,
+			]
+		);
 		foreach ( $sliders as $slider ) {
 			if ( wp_delete_post( $slider->ID, true ) ) {
 				WP_CLI::line( "Carousel Slider #{$slider->ID} has been deleted successfully." );
