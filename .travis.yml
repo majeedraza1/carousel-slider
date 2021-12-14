@@ -17,8 +17,8 @@ php:
 
 matrix:
   include:
-    - php: 5.6
-      env: WP_VERSION=4.9.*
+    - php: 7.0
+      env: WP_VERSION=5.8.*
 
 before_script:
   - mysql -u root -e "GRANT ALL PRIVILEGES ON ${WP_DB_NAME}.* TO ${WP_DB_USER} IDENTIFIED BY '${WP_DB_PASS}';"
@@ -32,4 +32,5 @@ install:
   - composer show
 
 script:
+  - composer lint
   - composer test
