@@ -32,13 +32,18 @@
     "phpunit/phpunit": "^7.0",
     "roots/wordpress": "^5.0",
     "wp-phpunit/wp-phpunit": "^5.0",
-    "yoast/phpunit-polyfills": "^1.0"
+    "yoast/phpunit-polyfills": "^1.0",
+    "squizlabs/php_codesniffer": "^3.6",
+    "dealerdirect/phpcodesniffer-composer-installer": "^0.7.1",
+    "wp-coding-standards/wpcs": "*"
   },
   "scripts": {
-    "generate-pot": "wp i18n make-pot . languages/carousel-slider.pot",
+    "make-pot": "wp i18n make-pot . languages/carousel-slider.pot",
     "show-plugin-info": "wp carousel-slider info",
     "create-sliders": "wp carousel-slider create_sliders",
     "delete-sliders": "wp carousel-slider delete_sliders",
-    "test": "./vendor/bin/phpunit"
+    "test": "vendor/bin/phpunit",
+    "lint": "phpcs --standard=phpcs.xml",
+    "lint:fix": "phpcbf --standard=phpcs.xml"
   }
 }
