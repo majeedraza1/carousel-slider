@@ -29,6 +29,7 @@
     "ext-json": "*"
   },
   "require-dev": {
+    "wp-cli/wp-cli-bundle": "*",
     "phpunit/phpunit": "^7.0",
     "roots/wordpress": "^5.0",
     "wp-phpunit/wp-phpunit": "^5.0",
@@ -38,11 +39,11 @@
     "wp-coding-standards/wpcs": "*"
   },
   "scripts": {
+    "show-info": "wp carousel-slider info",
+    "mk:sliders": "wp carousel-slider create_sliders",
+    "del:sliders": "wp carousel-slider delete_sliders",
     "make-pot": "wp i18n make-pot . languages/carousel-slider.pot",
-    "show-plugin-info": "wp carousel-slider info",
-    "create-sliders": "wp carousel-slider create_sliders",
-    "delete-sliders": "wp carousel-slider delete_sliders",
-    "test": "vendor/bin/phpunit",
+    "test": "phpunit",
     "lint": "phpcs --standard=phpcs.xml",
     "lint:fix": "phpcbf --standard=phpcs.xml"
   }
