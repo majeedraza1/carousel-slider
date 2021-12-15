@@ -7,6 +7,12 @@ use WP_Post;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * GutenbergBlock class
+ * The admin gutenberg editor functionality specific class of the plugin
+ *
+ * @package CarouselSlider/Admin
+ */
 class GutenbergBlock {
 	/**
 	 * The instance of the class
@@ -40,12 +46,15 @@ class GutenbergBlock {
 		wp_register_script(
 			'carousel-slider-gutenberg-block',
 			CAROUSEL_SLIDER_ASSETS . '/js/gutenberg-block.js',
-			[ 'wp-blocks', 'wp-components', 'wp-block-editor' ]
+			[ 'wp-blocks', 'wp-components', 'wp-block-editor' ],
+			CAROUSEL_SLIDER_VERSION,
+			true
 		);
 		wp_register_style(
 			'carousel-slider-gutenberg-style',
 			CAROUSEL_SLIDER_ASSETS . '/css/gutenberg-block.css',
-			[ 'wp-edit-blocks' ]
+			[ 'wp-edit-blocks' ],
+			CAROUSEL_SLIDER_VERSION
 		);
 		wp_localize_script(
 			'carousel-slider-gutenberg-block',

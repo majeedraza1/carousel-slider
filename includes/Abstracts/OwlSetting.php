@@ -1,14 +1,12 @@
 <?php
-/**
- * The owl carousel javascript option generator.
- *
- * @package CarouselSlider/Abstracts
- */
 
 namespace CarouselSlider\Abstracts;
 
 /**
  * OwlSetting class
+ * The owl carousel javascript option generator.
+ *
+ * @package CarouselSlider/Abstracts
  */
 class OwlSetting {
 

@@ -15,20 +15,28 @@ use WP_Post;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Command class
+ * The command line interface class handle plugin cli functionality
+ *
+ * @package CarouselSlider/CLI
+ */
 class Command extends WP_CLI_Command {
 	/**
-	 * @param array  $assoc_args
-	 * @param string $slider_title
+	 * Create post carousel
+	 *
+	 * @param array  $args The arguments.
+	 * @param string $slider_title The slider title.
 	 *
 	 * @return int
 	 */
-	protected static function create_post_carousel( array $assoc_args, string $slider_title ): int {
-		$post_query      = ! empty( $assoc_args['post-query'] ) ? $assoc_args['post-query'] : 'latest_posts';
-		$date_from       = ! empty( $assoc_args['date-from'] ) ? $assoc_args['date-from'] : '';
-		$date_to         = ! empty( $assoc_args['date-to'] ) ? $assoc_args['date-to'] : '';
-		$post_categories = ! empty( $assoc_args['post-categories'] ) ? $assoc_args['post-categories'] : '';
-		$post_tags       = ! empty( $assoc_args['post-tags'] ) ? $assoc_args['post-tags'] : '';
-		$post_in         = ! empty( $assoc_args['post-in'] ) ? $assoc_args['post-in'] : '';
+	protected static function create_post_carousel( array $args, string $slider_title ): int {
+		$post_query      = ! empty( $args['post-query'] ) ? $args['post-query'] : 'latest_posts';
+		$date_from       = ! empty( $args['date-from'] ) ? $args['date-from'] : '';
+		$date_to         = ! empty( $args['date-to'] ) ? $args['date-to'] : '';
+		$post_categories = ! empty( $args['post-categories'] ) ? $args['post-categories'] : '';
+		$post_tags       = ! empty( $args['post-tags'] ) ? $args['post-tags'] : '';
+		$post_in         = ! empty( $args['post-in'] ) ? $args['post-in'] : '';
 		$post_args       = array(
 			'_created_via'      => 'wp-cli',
 			'_post_query_type'  => $post_query,
@@ -112,13 +120,18 @@ class Command extends WP_CLI_Command {
 	 * wp carousel-slider create_slider 'Post Carousel - DR' --type='post-carousel' --post-query='date_range'
 	 * wp carousel-slider create_slider 'Post Carousel - PC' --type='post-carousel' --post-query='post_categories'
 	 * wp carousel-slider create_slider 'Post Carousel - PT' --type='post-carousel' --post-query='post_tags'
+	 *
+	 * @param mixed $args The arguments.
+	 * @param mixed $assoc_args The additional arguments.
+	 *
+	 * @throws WP_CLI\ExitException The Exception.
 	 */
 	public function create_slider( $args, $assoc_args ) {
-		$slider_id            = 0;
 		list( $slider_title ) = $args;
 		$type                 = ! empty( $assoc_args['type'] ) ? $assoc_args['type'] : 'image-carousel';
+		$slider_id            = 0;
 
-		if ( 'image-carousel' == $type ) {
+		if ( 'image-carousel' === $type ) {
 			$slider_id = TemplateImageCarousel::create(
 				$slider_title,
 				array(
@@ -127,7 +140,7 @@ class Command extends WP_CLI_Command {
 			);
 		}
 
-		if ( 'image-carousel-url' == $type ) {
+		if ( 'image-carousel-url' === $type ) {
 			$slider_id = TemplateUrlImageCarousel::create(
 				$slider_title,
 				array(
@@ -136,7 +149,7 @@ class Command extends WP_CLI_Command {
 			);
 		}
 
-		if ( 'video-carousel' == $type ) {
+		if ( 'video-carousel' === $type ) {
 			$slider_id = TemplateVideoCarousel::create(
 				$slider_title,
 				array(
@@ -145,7 +158,7 @@ class Command extends WP_CLI_Command {
 			);
 		}
 
-		if ( 'post-carousel' == $type ) {
+		if ( 'post-carousel' === $type ) {
 			$slider_id = self::create_post_carousel( $assoc_args, (string) $slider_title );
 		}
 
@@ -155,6 +168,7 @@ class Command extends WP_CLI_Command {
 			return;
 		}
 
+		/* translators: 1: the slider id, 2: the slider title */
 		$response = sprintf( __( '#%1$s - %2$s has been created successfully.', 'carousel-slider' ), $slider_id, $slider_title );
 		WP_CLI::success( $response );
 	}
@@ -279,27 +293,27 @@ class Command extends WP_CLI_Command {
 
 		foreach ( $sliders as $slider ) {
 			switch ( $slider['type'] ) {
-				case 'image-carousel';
+				case 'image-carousel':
 					$ids[] = TemplateImageCarousel::create( $slider['title'], $slider['args'] );
 					WP_CLI::line( "{$slider['title']} has been created successfully." );
 					break;
-				case 'image-carousel-url';
+				case 'image-carousel-url':
 					$ids[] = TemplateUrlImageCarousel::create( $slider['title'], $slider['args'] );
 					WP_CLI::line( "{$slider['title']} has been created successfully." );
 					break;
-				case 'video-carousel';
+				case 'video-carousel':
 					$ids[] = TemplateVideoCarousel::create( $slider['title'], $slider['args'] );
 					WP_CLI::line( "{$slider['title']} has been created successfully." );
 					break;
-				case 'post-carousel';
+				case 'post-carousel':
 					$ids[] = TemplatePostCarousel::create( $slider['title'], $slider['args'] );
 					WP_CLI::line( "{$slider['title']} has been created successfully." );
 					break;
-				case 'hero-banner-slider';
+				case 'hero-banner-slider':
 					$ids[] = TemplateHeroCarousel::create( $slider['title'], $slider['args'] );
 					WP_CLI::line( "{$slider['title']} has been created successfully." );
 					break;
-				case 'product-carousel';
+				case 'product-carousel':
 					$ids[] = TemplateProductCarousel::create( $slider['title'], $slider['args'] );
 					WP_CLI::line( "{$slider['title']} has been created successfully." );
 					break;
@@ -319,7 +333,7 @@ class Command extends WP_CLI_Command {
 	 * <id>
 	 * : The slider id.
 	 *
-	 * @param $args
+	 * @param array|mixed $args The arguments.
 	 */
 	public function delete_slider( $args ) {
 		list( $id ) = $args;
@@ -333,7 +347,6 @@ class Command extends WP_CLI_Command {
 	 * Delete all sliders
 	 */
 	public function delete_sliders() {
-		/** @var WP_Post[] $sliders */
 		$sliders = get_posts(
 			[
 				'post_type'   => 'carousels',

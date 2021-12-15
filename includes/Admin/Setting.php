@@ -1,9 +1,4 @@
 <?php
-/**
- * The setting-specific file of the plugin
- *
- * @package CarouselSlider/Admin
- */
 
 namespace CarouselSlider\Admin;
 
@@ -14,6 +9,8 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * Setting class to register global setting.
+ *
+ * @package CarouselSlider/Admin
  */
 class Setting {
 	/**

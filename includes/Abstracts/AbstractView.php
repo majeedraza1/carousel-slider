@@ -7,6 +7,12 @@ use CarouselSlider\Interfaces\SliderViewInterface;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * AbstractView class
+ * The base view class for any slider type
+ *
+ * @package CarouselSlider/Abstracts
+ */
 abstract class AbstractView implements SliderViewInterface {
 	/**
 	 * Slider id
@@ -23,12 +29,17 @@ abstract class AbstractView implements SliderViewInterface {
 	protected $slider_type = '';
 
 	/**
+	 * The slider setting class
+	 *
 	 * @var SliderSetting
 	 */
 	protected $slider_setting;
 
 	/**
-	 * @inheritDoc
+	 * Render element.
+	 * Generates the final HTML on the frontend.
+	 *
+	 * @return string
 	 */
 	abstract public function render(): string;
 
@@ -42,7 +53,9 @@ abstract class AbstractView implements SliderViewInterface {
 	}
 
 	/**
-	 * @inheritDoc
+	 * Set slider id
+	 *
+	 * @param int $slider_id The slider id.
 	 */
 	public function set_slider_id( int $slider_id ) {
 		$this->slider_id = $slider_id;
@@ -58,13 +71,17 @@ abstract class AbstractView implements SliderViewInterface {
 	}
 
 	/**
-	 * @inheritDoc
+	 * Set slider type
+	 *
+	 * @param string $slider_type The slider type.
 	 */
 	public function set_slider_type( string $slider_type ) {
 		$this->slider_type = $slider_type;
 	}
 
 	/**
+	 * Get slider setting
+	 *
 	 * @return SliderSetting
 	 */
 	public function get_slider_setting(): SliderSetting {
@@ -76,7 +93,9 @@ abstract class AbstractView implements SliderViewInterface {
 	}
 
 	/**
-	 * @param SliderSetting $slider_setting
+	 * Set slider setting class
+	 *
+	 * @param SliderSetting $slider_setting The SliderSetting class.
 	 */
 	public function set_slider_setting( SliderSetting $slider_setting ) {
 		$this->slider_setting = $slider_setting;
@@ -85,7 +104,7 @@ abstract class AbstractView implements SliderViewInterface {
 	/**
 	 * Get slider start wrapper html
 	 *
-	 * @param array $args
+	 * @param array $args The additional arguments.
 	 *
 	 * @return string
 	 */
@@ -119,7 +138,7 @@ abstract class AbstractView implements SliderViewInterface {
 	/**
 	 * Get slider default attributes
 	 *
-	 * @param array $args
+	 * @param array $args The additional arguments.
 	 *
 	 * @return array
 	 */

@@ -10,7 +10,6 @@
 	<arg name="extensions" value="php"/>
 	<arg name="basepath" value="."/>
 
-
 	<!-- What to exclude from scan -->
 	<exclude-pattern>/node_modules/*</exclude-pattern>
 	<exclude-pattern>/resources/*</exclude-pattern>
@@ -41,6 +40,8 @@
 		<exclude name="WordPress.Files.FileName"/>
 		<!-- Allow short array syntax -->
 		<exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
+		<!-- Ignore file comment, only class comment is enough for our project -->
+		<exclude name="Squiz.Commenting.FileComment.Missing"/>
 	</rule>
 
 	<rule ref="WordPress.WP.DeprecatedFunctions">

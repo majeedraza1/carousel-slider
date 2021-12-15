@@ -27,13 +27,13 @@ class Data implements ArrayAccess, JsonSerializable {
 	 * @return string
 	 */
 	public function __toString() {
-		return json_encode( $this->to_array() );
+		return wp_json_encode( $this->to_array() );
 	}
 
 	/**
 	 * Get collection item for key
 	 *
-	 * @param string $name
+	 * @param string $name The property name.
 	 *
 	 * @return mixed
 	 */
@@ -44,7 +44,7 @@ class Data implements ArrayAccess, JsonSerializable {
 	/**
 	 * Does this collection have a given key?
 	 *
-	 * @param string $name
+	 * @param string $name The property name.
 	 *
 	 * @return bool
 	 */
@@ -64,7 +64,7 @@ class Data implements ArrayAccess, JsonSerializable {
 	/**
 	 * Does this collection have a given key?
 	 *
-	 * @param string $key The data key
+	 * @param string $key The data key.
 	 *
 	 * @return bool
 	 */
@@ -75,8 +75,8 @@ class Data implements ArrayAccess, JsonSerializable {
 	/**
 	 * Set collection item
 	 *
-	 * @param string $key The data key
-	 * @param mixed  $value The data value
+	 * @param string $key The data key.
+	 * @param mixed  $value The data value.
 	 */
 	public function set_prop( string $key, $value ) {
 		$this->data[ $key ] = $value;
@@ -85,8 +85,8 @@ class Data implements ArrayAccess, JsonSerializable {
 	/**
 	 * Get collection item for key
 	 *
-	 * @param string $key The data key
-	 * @param mixed  $default The default value to return if data key does not exist
+	 * @param string $key The data key.
+	 * @param mixed  $default The default value to return if data key does not exist.
 	 *
 	 * @return mixed The key's value, or the default value
 	 */
@@ -101,7 +101,7 @@ class Data implements ArrayAccess, JsonSerializable {
 	/**
 	 * Remove item from collection
 	 *
-	 * @param string $key The data key
+	 * @param string $key The data key.
 	 */
 	public function remove_prop( string $key ) {
 		if ( $this->has_prop( $key ) ) {

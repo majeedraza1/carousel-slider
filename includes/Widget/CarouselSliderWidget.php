@@ -8,6 +8,9 @@ use WP_Widget;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * CarouselSliderWidget class
+ */
 class CarouselSliderWidget extends WP_Widget {
 
 	/**
@@ -84,14 +87,14 @@ class CarouselSliderWidget extends WP_Widget {
 			return;
 		}
 
-		echo $args['before_widget'];
+		echo $args['before_widget']; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
 
 		if ( ! empty( $title ) ) {
-			echo $args['before_title'] . $title . $args['after_title'];
+			echo $args['before_title'] . $title . $args['after_title']; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
 		}
 
-		echo Frontend::init()->carousel_slide( [ 'id' => $carousel_id ] );
-		echo $args['after_widget'];
+		echo Frontend::init()->carousel_slide( [ 'id' => $carousel_id ] ); // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
+		echo $args['after_widget']; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -137,8 +140,8 @@ class CarouselSliderWidget extends WP_Widget {
 	/**
 	 * Processing widget options on save
 	 *
-	 * @param array $new_instance The new options
-	 * @param array $old_instance The previous options
+	 * @param array $new_instance The new options.
+	 * @param array $old_instance The previous options.
 	 *
 	 * @return array
 	 */

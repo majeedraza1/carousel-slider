@@ -4,6 +4,9 @@ namespace CarouselSlider\Frontend;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Preview class
+ */
 class Preview {
 	/**
 	 * The instance of the class
@@ -33,6 +36,7 @@ class Preview {
 	 * @return void
 	 */
 	public function show_preview() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( ! isset( $_GET['carousel_slider_preview'], $_GET['carousel_slider_iframe'], $_GET['slider_id'] ) ) {
 			return;
 		}
@@ -40,12 +44,12 @@ class Preview {
 			return;
 		}
 		add_filter( 'carousel_slider_load_scripts', '__return_true' );
-		echo $this->preview_html();
+		echo $this->preview_html(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		exit();
 	}
 
 	/**
-	 * preview html
+	 * Preview html
 	 *
 	 * @return string
 	 */
@@ -58,6 +62,7 @@ class Preview {
 		wp_footer();
 		$wp_footer = ob_get_clean();
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$slider_id = isset( $_GET['slider_id'] ) ? intval( $_GET['slider_id'] ) : 0;
 
 		$html  = '<!DOCTYPE html>' . PHP_EOL;

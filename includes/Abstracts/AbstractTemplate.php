@@ -7,6 +7,12 @@ use WP_Error;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * AbstractTemplate class
+ * The base template class for any slider type
+ *
+ * @package CarouselSlider/Abstracts
+ */
 abstract class AbstractTemplate {
 	/**
 	 * Get default image carousel settings
@@ -51,8 +57,8 @@ abstract class AbstractTemplate {
 	/**
 	 * Get list of images sorted by its width and height
 	 *
-	 * @param string $image_size
-	 * @param int    $per_page
+	 * @param string $image_size The image size.
+	 * @param int    $per_page Item per page.
 	 *
 	 * @return array
 	 */
@@ -69,7 +75,7 @@ abstract class AbstractTemplate {
 		$images = [];
 
 		foreach ( $attachments as $attachment ) {
-			if ( ! in_array( $attachment->post_mime_type, [ 'image/jpeg', 'image/png' ] ) ) {
+			if ( ! in_array( $attachment->post_mime_type, [ 'image/jpeg', 'image/png' ], true ) ) {
 				continue;
 			}
 
@@ -100,11 +106,13 @@ abstract class AbstractTemplate {
 	}
 
 	/**
-	 * @param $slider_title
+	 * Create a new slider.
+	 *
+	 * @param string $slider_title The slider title.
 	 *
 	 * @return int|WP_Error The post ID on success. The value 0 or \WP_Error on failure.
 	 */
-	public static function create_slider( $slider_title ) {
+	public static function create_slider( string $slider_title ) {
 		return wp_insert_post(
 			[
 				'post_title'     => $slider_title,

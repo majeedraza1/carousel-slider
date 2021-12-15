@@ -1,4 +1,9 @@
 <?php
+/**
+ * The structure-data specific file of the plugin
+ *
+ * @package CarouselSlider/Frontend
+ */
 
 namespace CarouselSlider\Frontend;
 
@@ -9,11 +14,39 @@ use WP_Post;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * StructuredData class
+ *
+ * The structure-data specific class of the plugin
+ */
 class StructuredData {
-	protected static $instance = null;
-	private $_product_data     = [];
-	private $_image_data       = [];
-	private $_post_data        = [];
+	/**
+	 * The instance of the class
+	 *
+	 * @var null | self
+	 */
+	private static $instance = null;
+
+	/**
+	 * Product structured data
+	 *
+	 * @var array
+	 */
+	private $product_data = [];
+
+	/**
+	 * Image structured data
+	 *
+	 * @var array
+	 */
+	private $image_data = [];
+
+	/**
+	 * Post structured data
+	 *
+	 * @var array
+	 */
+	private $post_data = [];
 
 	/**
 	 * Ensures only one instance of this class is loaded or can be loaded.
@@ -78,7 +111,7 @@ class StructuredData {
 	 * @return array
 	 */
 	private function get_product_data(): array {
-		return $this->_product_data;
+		return $this->product_data;
 	}
 
 	/**
@@ -102,7 +135,7 @@ class StructuredData {
 	 * @return array
 	 */
 	private function get_image_data(): array {
-		return $this->_image_data;
+		return $this->image_data;
 	}
 
 	/**
@@ -125,7 +158,7 @@ class StructuredData {
 	 * @return array
 	 */
 	private function get_post_data(): array {
-		return $this->_post_data;
+		return $this->post_data;
 	}
 
 	/**
@@ -149,38 +182,36 @@ class StructuredData {
 	 *
 	 * @param array $data Structured data.
 	 *
-	 * @return bool
+	 * @return void
 	 */
-	private function set_data( array $data ): bool {
+	private function set_data( array $data ) {
 		if ( ! isset( $data['@type'] ) || ! preg_match( '|^[a-zA-Z]{1,20}$|', $data['@type'] ) ) {
-			return false;
+			return;
 		}
 
-		if ( $data['@type'] == 'ImageObject' ) {
+		if ( 'ImageObject' === $data['@type'] ) {
 			if ( ! $this->maybe_image_added( $data['contentUrl'] ) ) {
-				$this->_image_data[] = $data;
+				$this->image_data[] = $data;
 			}
 		}
 
-		if ( $data['@type'] == 'Product' ) {
+		if ( 'Product' === $data['@type'] ) {
 			if ( ! $this->maybe_product_added( $data['@id'] ) ) {
-				$this->_product_data[] = $data;
+				$this->product_data[] = $data;
 			}
 		}
 
-		if ( $data['@type'] == 'BlogPosting' ) {
+		if ( 'BlogPosting' === $data['@type'] ) {
 			if ( ! $this->maybe_post_added( $data['mainEntityOfPage']['@id'] ) ) {
-				$this->_post_data[] = $data;
+				$this->post_data[] = $data;
 			}
 		}
-
-		return true;
 	}
 
 	/**
 	 * Check if image is already added to list
 	 *
-	 * @param string|null $image_id
+	 * @param string|null $image_id The image id.
 	 *
 	 * @return boolean
 	 */
@@ -194,7 +225,7 @@ class StructuredData {
 				$image_data
 			);
 
-			return in_array( $image_id, $image_data );
+			return in_array( $image_id, $image_data, true );
 		}
 
 		return false;
@@ -203,7 +234,7 @@ class StructuredData {
 	/**
 	 * Check if product is already added to list
 	 *
-	 * @param string $product_id
+	 * @param string $product_id The product id.
 	 *
 	 * @return boolean
 	 */
@@ -217,7 +248,7 @@ class StructuredData {
 				$product_data
 			);
 
-			return in_array( $product_id, $product_data );
+			return in_array( $product_id, $product_data, true );
 		}
 
 		return false;
@@ -226,7 +257,7 @@ class StructuredData {
 	/**
 	 * Check if post is already added to list
 	 *
-	 * @param string $post_id
+	 * @param string $post_id The post id.
 	 *
 	 * @return boolean
 	 */
@@ -240,7 +271,7 @@ class StructuredData {
 				$post_data
 			);
 
-			return in_array( $post_id, $post_data );
+			return in_array( $post_id, $post_data, true );
 		}
 
 		return false;
@@ -251,7 +282,7 @@ class StructuredData {
 	 *
 	 * Hooked into `carousel_slider_post_loop` action hook.
 	 *
-	 * @param WP_Post|mixed $post
+	 * @param WP_Post|mixed $post The WP_Post object.
 	 */
 	public function generate_post_data( $post ) {
 		if ( ! $post instanceof WP_Post ) {

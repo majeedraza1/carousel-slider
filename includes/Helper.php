@@ -37,7 +37,7 @@ class Helper extends ViewHelper {
 	 * Get setting
 	 *
 	 * @param string $key
-	 * @param mixed $default
+	 * @param mixed  $default
 	 *
 	 * @return mixed|null
 	 */
@@ -109,7 +109,7 @@ class Helper extends ViewHelper {
 	 * Get default setting
 	 *
 	 * @param string $key
-	 * @param mixed $default
+	 * @param mixed  $default
 	 *
 	 * @return mixed|null
 	 */
@@ -178,7 +178,7 @@ class Helper extends ViewHelper {
 		}
 
 		foreach ( $ids as $id ) {
-			$_post        = get_post( $id );
+			$_post         = get_post( $id );
 			$page_content .= '<!-- wp:heading {"level":4} --><h4>' . $_post->post_title . '</h4><!-- /wp:heading -->';
 			$page_content .= '<!-- wp:carousel-slider/slider {"sliderID":' . $id . ',"sliderName":"' . $_post->post_title . ' ( ID: ' . $id . ' )"} -->';
 			$page_content .= '<div class="wp-block-carousel-slider-slider">[carousel_slide id=\'' . $id . '\']</div>';

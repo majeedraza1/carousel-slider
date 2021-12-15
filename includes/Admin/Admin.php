@@ -7,6 +7,12 @@ use WP_Post;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Admin class
+ * The admin functionality specific class of the plugin
+ *
+ * @package CarouselSlider/Admin
+ */
 class Admin {
 
 	const POST_TYPE = 'carousels';
@@ -52,13 +58,13 @@ class Admin {
 	/**
 	 * Modify preview post link for carousel slider
 	 *
-	 * @param string  $preview_link
-	 * @param WP_Post $post
+	 * @param string  $preview_link The preview link.
+	 * @param WP_Post $post The WP_Post object.
 	 *
 	 * @return string
 	 */
 	public function preview_post_link( string $preview_link, WP_Post $post ): string {
-		if ( $post->post_type == self::POST_TYPE ) {
+		if ( self::POST_TYPE === $post->post_type ) {
 			$preview_link = Helper::get_preview_link( $post );
 		}
 
@@ -136,15 +142,16 @@ class Admin {
 
 			case 'usage':
 				?>
-				<label class="screen-reader-text" for="carousel_slider_usage_<?php echo $post_id; ?>">Copy
-					shortcode</label>
+				<label class="screen-reader-text" for="carousel_slider_usage_<?php echo esc_attr( $post_id ); ?>">
+					Copy shortcode
+				</label>
 				<input
-					id="carousel_slider_usage_<?php echo $post_id; ?>"
+					id="carousel_slider_usage_<?php echo esc_attr( $post_id ); ?>"
 					type="text"
 					onmousedown="this.clicked = 1;"
 					onfocus="if (!this.clicked) this.select(); else this.clicked = 2;"
 					onclick="if (this.clicked === 2) this.select(); this.clicked = 0;"
-					value="[carousel_slide id='<?php echo $post_id; ?>']"
+					value="[carousel_slide id='<?php echo esc_attr( $post_id ); ?>']"
 					style="background-color: #f1f1f1;min-width: 250px;padding: 5px 8px;"
 				>
 				<?php
@@ -163,13 +170,13 @@ class Admin {
 	/**
 	 * Hide view and quick edit from carousel slider admin
 	 *
-	 * @param array   $actions
-	 * @param WP_Post $post
+	 * @param array   $actions The post row actions list.
+	 * @param WP_Post $post The WP_Post object.
 	 *
 	 * @return array
 	 */
 	public function post_row_actions( array $actions, WP_Post $post ): array {
-		if ( $post->post_type != self::POST_TYPE ) {
+		if ( self::POST_TYPE !== $post->post_type ) {
 			return $actions;
 		}
 
@@ -184,14 +191,14 @@ class Admin {
 	/**
 	 * Load admin scripts
 	 *
-	 * @param $hook
+	 * @param string|mixed $hook Page hook.
 	 */
 	public function admin_scripts( $hook ) {
 		global $post;
 
-		$_is_carousel    = is_a( $post, 'WP_Post' ) && ( 'carousels' == $post->post_type );
-		$_is_doc         = ( 'carousels_page_carousel-slider-documentation' == $hook );
-		$_is_plugin_page = 'plugins.php' == $hook;
+		$_is_carousel    = is_a( $post, 'WP_Post' ) && ( 'carousels' === $post->post_type );
+		$_is_doc         = ( 'carousels_page_carousel-slider-documentation' === $hook );
+		$_is_plugin_page = 'plugins.php' === $hook;
 
 		if ( ! ( $_is_carousel || $_is_doc || $_is_plugin_page ) ) {
 			return;
@@ -292,27 +299,26 @@ class Admin {
 		$html .= '</div>';
 		$html .= '</div></div>';
 		$html .= '</div>';
-		echo $html;
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
 	 * Add custom footer text on plugins page.
 	 *
-	 * @param string $text
+	 * @param string $text The custom admin footer text.
 	 *
 	 * @return string
 	 */
-	public function admin_footer_text( $text ) {
+	public function admin_footer_text( string $text ): string {
 		global $post_type, $hook_suffix;
 
 		$footer_text = sprintf(
-			__( 'If you like %1$s Carousel Slider %2$s please leave us a %3$s rating. A huge thanks in advance!', 'carousel-slider' ),
-			'<strong>',
-			'</strong>',
+		/* translators: 1: plugin review page link */
+			__( 'If you like <strong>Carousel Slider</strong> please leave us a %s rating. A huge thanks in advance!', 'carousel-slider' ),
 			'<a href="https://wordpress.org/support/view/plugin-reviews/carousel-slider?filter=5#postform" target="_blank" data-rated="Thanks :)">&starf;&starf;&starf;&starf;&starf;</a>'
 		);
 
-		if ( $post_type == 'carousels' || $hook_suffix == 'carousels_page_carousel-slider-documentation' ) {
+		if ( 'carousels' === $post_type || 'carousels_page_carousel-slider-documentation' === $hook_suffix ) {
 			return $footer_text;
 		}
 

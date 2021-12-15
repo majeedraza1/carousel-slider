@@ -175,11 +175,17 @@ class MetaBox {
 
 						if ( 'product-carousel' === $slug ) {
 							$disabled = Helper::is_woocommerce_active() ? '' : 'disabled';
-							echo '<option value="' . $slug . '" ' . $selected . ' ' . $disabled . '>' . $label . '</option>';
+							echo sprintf(
+								'<option value="%s" %s %s>%s</option>',
+								esc_attr( $slug ),
+								esc_attr( $selected ),
+								esc_attr( $disabled ),
+								esc_html( $label )
+							);
 							continue;
 						}
 
-						echo '<option value="' . $slug . '" ' . $selected . '>' . $label . '</option>';
+						echo '<option value="' . esc_attr( $slug ) . '" ' . esc_attr( $selected ) . '>' . esc_html( $label ) . '</option>';
 					}
 					?>
 				</select>
@@ -269,21 +275,22 @@ class MetaBox {
 	 *
 	 * @param WP_Post $post The WP_Post object.
 	 */
-	public function usages_callback( $post ) {
+	public function usages_callback( WP_Post $post ) {
 		ob_start();
 		?>
-		<p><strong>
+		<p>
+			<strong>
 				<?php esc_html_e( 'Copy the following shortcode and paste in post or page where you want to show.', 'carousel-slider' ); ?>
 			</strong>
 		</p>
 		<input type="text" onmousedown="this.clicked = 1;"
-			   onfocus="if (!this.clicked) this.select(); else this.clicked = 2;"
-			   onclick="if (this.clicked === 2) this.select(); this.clicked = 0;"
-			   value="[carousel_slide id='<?php echo $post->ID; ?>']"
-			   style="background-color: #f1f1f1; width: 100%; padding: 8px;"
+			onfocus="if (!this.clicked) this.select(); else this.clicked = 2;"
+			onclick="if (this.clicked === 2) this.select(); this.clicked = 0;"
+			value="[carousel_slide id='<?php echo absint( $post->ID ); ?>']"
+			style="background-color: #f1f1f1; width: 100%; padding: 8px;"
 		>
 		<?php
-		echo ob_get_clean();
+		echo ob_get_clean(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**

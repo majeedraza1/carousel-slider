@@ -5,11 +5,32 @@ namespace CarouselSlider\Abstracts;
 use CarouselSlider\Helper;
 use CarouselSlider\Supports\Validate;
 
+/**
+ * SliderSetting class
+ * The base slider setting for any slider type
+ *
+ * @package CarouselSlider/Abstracts
+ */
 class SliderSetting extends Data {
-
+	/**
+	 * The slider id.
+	 *
+	 * @var int
+	 */
 	protected $slider_id = 0;
+
+	/**
+	 * Is data read from server?
+	 *
+	 * @var bool
+	 */
 	protected $data_read = false;
 
+	/**
+	 * Class constructor
+	 *
+	 * @param int $slider_id The slider id.
+	 */
 	public function __construct( int $slider_id ) {
 		$this->slider_id = $slider_id;
 		$this->data      = self::get_defaults();
@@ -28,13 +49,13 @@ class SliderSetting extends Data {
 	/**
 	 * Set nav visibility
 	 *
-	 * @param mixed $value
+	 * @param mixed $value The navigation visibility.
 	 */
 	public function set_nav_visibility( $value ) {
 		// For backup compatability.
 		$value = str_replace( [ 'off', 'on' ], [ 'never', 'hover' ], $value );
 
-		if ( in_array( $value, [ 'always', 'never', 'hover' ] ) ) {
+		if ( in_array( $value, [ 'always', 'never', 'hover' ], true ) ) {
 			$this->data['nav_visibility'] = $value;
 		}
 	}
@@ -42,10 +63,10 @@ class SliderSetting extends Data {
 	/**
 	 * Set nav position
 	 *
-	 * @param mixed $value
+	 * @param mixed $value The navigation position.
 	 */
 	public function set_nav_position( $value ) {
-		if ( in_array( $value, [ 'inside', 'outside' ] ) ) {
+		if ( in_array( $value, [ 'inside', 'outside' ], true ) ) {
 			$this->data['nav_position'] = $value;
 		}
 	}
@@ -53,7 +74,7 @@ class SliderSetting extends Data {
 	/**
 	 * Set nav steps
 	 *
-	 * @param mixed $value
+	 * @param mixed $value The navigation steps.
 	 */
 	public function set_nav_steps( $value ) {
 		if ( in_array( $value, [ 'page', '-1', - 1 ], true ) ) {
@@ -66,13 +87,13 @@ class SliderSetting extends Data {
 	/**
 	 * Set pagination visibility
 	 *
-	 * @param mixed $value
+	 * @param mixed $value The pagination visibility value.
 	 */
 	public function set_pagination_visibility( $value ) {
 		// For backup compatability.
 		$value = str_replace( [ 'off', 'on' ], [ 'never', 'always' ], $value );
 
-		if ( in_array( $value, [ 'always', 'never', 'hover' ] ) ) {
+		if ( in_array( $value, [ 'always', 'never', 'hover' ], true ) ) {
 			$this->data['pagination_visibility'] = $value;
 		}
 	}
@@ -101,22 +122,24 @@ class SliderSetting extends Data {
 	}
 
 	/**
-	 * @param string $type
-	 * @param mixed  $value
+	 * Sanitize value by data type
+	 *
+	 * @param string $type The type.
+	 * @param mixed  $value The value.
 	 *
 	 * @return mixed
 	 */
 	protected function sanitize_by_type( string $type, $value ) {
-		if ( 'array' == $type && is_string( $value ) ) {
+		if ( 'array' === $type && is_string( $value ) ) {
 			$value = explode( ',', $value );
 		}
-		if ( 'int[]' == $type && is_string( $value ) ) {
+		if ( 'int[]' === $type && is_string( $value ) ) {
 			$value = array_filter( array_map( 'intval', explode( ',', $value ) ) );
 		}
-		if ( 'int' == $type ) {
+		if ( 'int' === $type ) {
 			$value = (int) $value;
 		}
-		if ( 'bool' == $type ) {
+		if ( 'bool' === $type ) {
 			$value = Validate::checked( $value );
 		}
 
@@ -133,10 +156,7 @@ class SliderSetting extends Data {
 	public function write_metadata() {
 		$props_to_meta_keys = self::props_to_meta_keys();
 		foreach ( $props_to_meta_keys as $prop_name => $meta_key ) {
-			/**
-			 * @TODO
-			 * convert bool value to yes no
-			 */
+			// @TODO convert bool value to yes no.
 			update_post_meta( $this->slider_id, $meta_key, $this->get_prop( $prop_name ) );
 		}
 	}
@@ -172,6 +192,8 @@ class SliderSetting extends Data {
 	}
 
 	/**
+	 * Default properties
+	 *
 	 * @return array
 	 */
 	public static function props(): array {

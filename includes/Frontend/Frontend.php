@@ -9,6 +9,11 @@ use WP_Post;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Frontend class
+ *
+ * The frontend functionality specific class of the plugin
+ */
 class Frontend {
 
 	/**
@@ -50,7 +55,7 @@ class Frontend {
 
 		// Check if id is valid or not.
 		$post = get_post( $slider_id );
-		if ( ! ( $post instanceof WP_Post && $post->post_type == CAROUSEL_SLIDER_POST_TYPE ) ) {
+		if ( ! ( $post instanceof WP_Post && CAROUSEL_SLIDER_POST_TYPE === $post->post_type ) ) {
 			return '';
 		}
 
@@ -63,7 +68,7 @@ class Frontend {
 			add_action(
 				'wp_footer',
 				function () {
-					echo Assets::get_style_loader_script();
+					echo Assets::get_style_loader_script(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				},
 				0
 			);
@@ -99,13 +104,13 @@ class Frontend {
 	 */
 	private function should_load_scripts(): bool {
 		$load_scripts = Helper::get_setting( 'load_scripts', 'optimized' );
-		if ( 'always' == $load_scripts ) {
+		if ( 'always' === $load_scripts ) {
 			return true;
 		}
 
 		global $post;
 		$load_scripts = is_active_widget( false, false, 'widget_carousel_slider', true ) ||
-						( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'carousel_slide' ) );
+			( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'carousel_slide' ) );
 
 		return apply_filters( 'carousel_slider_load_scripts', $load_scripts );
 	}
