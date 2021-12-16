@@ -4,6 +4,11 @@ namespace CarouselSlider\Modules\VideoCarousel;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Module class
+ *
+ * @package Modules/VideoCarousel
+ */
 class Module {
 	/**
 	 * The instance of the class
@@ -32,11 +37,11 @@ class Module {
 	/**
 	 * Meta box content
 	 *
-	 * @param int    $slider_id
-	 * @param string $slider_type
+	 * @param int    $slider_id The slider id.
+	 * @param string $slider_type The slider type.
 	 */
 	public function meta_box_content( int $slider_id, string $slider_type ) {
-		$is_video_carousel = $slider_type == 'video-carousel';
+		$is_video_carousel = 'video-carousel' === $slider_type;
 		$urls              = get_post_meta( $slider_id, '_video_url', true );
 		$description       = sprintf(
 			'%s<br><br>%s %s',
@@ -46,7 +51,7 @@ class Module {
 		);
 		?>
 		<div data-id="open" id="section_video_settings" class="shapla-toggle shapla-toggle--stroke"
-			 style="display: <?php echo $is_video_carousel ? 'block' : 'none'; ?>">
+			style="display: <?php echo $is_video_carousel ? 'block' : 'none'; ?>">
 			<span class="shapla-toggle-title">
 				<?php esc_html_e( 'Video Settings', 'carousel-slider' ); ?>
 			</span>
@@ -55,11 +60,11 @@ class Module {
 					<div class="sp-input-group" id="field-_video_url">
 						<div class="sp-input-label">
 							<label for="_video_url"><?php esc_html_e( 'Video URLs', 'carousel-slider' ); ?></label>
-							<p class="sp-input-desc"><?php echo $description; ?></p>
+							<p class="sp-input-desc"><?php echo wp_kses_post( $description ); ?></p>
 						</div>
 						<div class="sp-input-field">
 							<textarea class="sp-input-textarea" id="_video_url" cols="35" rows="6"
-									  name="_video_url"><?php echo esc_textarea( $urls ); ?></textarea>
+								name="_video_url"><?php echo esc_textarea( $urls ); ?></textarea>
 						</div>
 					</div>
 				</div>
@@ -71,11 +76,13 @@ class Module {
 	/**
 	 * Save slider video url
 	 *
-	 * @param int $slider_id
+	 * @param int $slider_id The slider id.
 	 */
 	public function save_slider( int $slider_id ) {
-		if ( isset( $_POST['_video_url'] ) ) {
-			$urls          = is_string( $_POST['_video_url'] ) ? explode( ',', $_POST['_video_url'] ) : $_POST['_video_url'];
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$urls = isset( $_POST['_video_url'] ) ?? '';
+		if ( $urls ) {
+			$urls          = is_string( $urls ) ? explode( ',', $urls ) : $urls;
 			$sanitize_urls = [];
 			if ( is_array( $urls ) ) {
 				foreach ( $urls as $url ) {
@@ -91,7 +98,7 @@ class Module {
 	/**
 	 * Register view
 	 *
-	 * @param array $views
+	 * @param array $views Registered views.
 	 *
 	 * @return array
 	 */

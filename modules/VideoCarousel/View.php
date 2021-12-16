@@ -8,8 +8,15 @@ use CarouselSlider\Supports\Validate;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * View class
+ *
+ * @package Modules/VideoCarousel
+ */
 class View extends AbstractView {
 	/**
+	 * Render html view
+	 *
 	 * @inheritDoc
 	 */
 	public function render(): string {

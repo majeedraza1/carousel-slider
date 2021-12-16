@@ -4,16 +4,21 @@ namespace CarouselSlider\Modules\VideoCarousel;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Helper class
+ *
+ * @package Modules/VideoCarousel
+ */
 class Helper {
 	/**
 	 * Get Youtube video ID from URL
 	 *
-	 * @param string $url
+	 * @param string $url The url string.
 	 *
 	 * @return false|string Youtube video ID or FALSE if not found
 	 */
 	public static function get_youtube_id_from_url( string $url ) {
-		$parts = parse_url( $url );
+		$parts = wp_parse_url( $url );
 		if ( isset( $parts['query'] ) ) {
 			parse_str( $parts['query'], $qs );
 			if ( isset( $qs['v'] ) ) {
@@ -34,12 +39,12 @@ class Helper {
 	/**
 	 * Get Vimeo video ID from URL
 	 *
-	 * @param string $url
+	 * @param string $url The url string.
 	 *
 	 * @return false|string Vimeo video ID or FALSE if not found
 	 */
 	public static function get_vimeo_id_from_url( string $url ) {
-		$parts = parse_url( $url );
+		$parts = wp_parse_url( $url );
 		if ( isset( $parts['path'] ) ) {
 			$path = explode( '/', trim( $parts['path'], '/' ) );
 
@@ -50,7 +55,9 @@ class Helper {
 	}
 
 	/**
-	 * @param array $video_urls
+	 * Get video URL
+	 *
+	 * @param array $video_urls The video urls.
 	 *
 	 * @return array
 	 */

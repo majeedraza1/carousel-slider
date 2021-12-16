@@ -6,13 +6,18 @@ use CarouselSlider\Abstracts\AbstractTemplate;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Template class
+ *
+ * @package Modules/VideoCarousel
+ */
 class Template extends AbstractTemplate {
 
 	/**
 	 * Create gallery image carousel with random images
 	 *
-	 * @param string $slider_title
-	 * @param array  $args
+	 * @param string $slider_title The slider title.
+	 * @param array  $args Additional arguments.
 	 *
 	 * @return int The post ID on success. The value 0 on failure.
 	 */
@@ -23,7 +28,7 @@ class Template extends AbstractTemplate {
 
 		$default = self::get_default_settings();
 		$urls    = self::get_video_urls();
-		$urls    = is_array( $urls ) ? implode( ',', $urls ) : $urls;
+		$urls    = implode( ',', $urls );
 
 		$default['_slide_type'] = 'video-carousel';
 		$default['_video_url']  = $urls;
