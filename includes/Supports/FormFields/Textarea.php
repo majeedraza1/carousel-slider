@@ -2,9 +2,14 @@
 
 namespace CarouselSlider\Supports\FormFields;
 
+/**
+ * Textarea class
+ */
 class Textarea extends BaseField {
 
 	/**
+	 * Render field html
+	 *
 	 * @inheritDoc
 	 */
 	public function render(): string {

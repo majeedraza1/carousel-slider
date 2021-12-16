@@ -4,6 +4,9 @@ namespace CarouselSlider\Supports;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Sanitize class
+ */
 class Sanitize {
 
 	/**
@@ -17,9 +20,6 @@ class Sanitize {
 		if ( ! is_numeric( $value ) ) {
 			return 0;
 		}
-		if ( is_int( $value ) || is_float( $value ) ) {
-			return $value;
-		}
 
 		if ( preg_match( '/^\\d+\\.\\d+$/', $value ) === 1 ) {
 			return floatval( $value );
@@ -31,7 +31,7 @@ class Sanitize {
 	/**
 	 * Sanitize float number
 	 *
-	 * @param mixed $value
+	 * @param mixed $value The value to be sanitized.
 	 *
 	 * @return float
 	 */
@@ -46,7 +46,7 @@ class Sanitize {
 	/**
 	 * Sanitize integer number
 	 *
-	 * @param mixed $value
+	 * @param mixed $value The value to be sanitized.
 	 *
 	 * @return int
 	 */
@@ -61,7 +61,7 @@ class Sanitize {
 	/**
 	 * Sanitize email
 	 *
-	 * @param mixed $value
+	 * @param mixed $value The value to be sanitized.
 	 *
 	 * @return string
 	 */
@@ -72,7 +72,7 @@ class Sanitize {
 	/**
 	 * Sanitize url
 	 *
-	 * @param mixed $value
+	 * @param mixed $value The value to be sanitized.
 	 *
 	 * @return string
 	 */
@@ -89,7 +89,7 @@ class Sanitize {
 	 * - Removes line breaks, tabs, and extra whitespace
 	 * - Strips octets
 	 *
-	 * @param mixed $value
+	 * @param mixed $value The value to be sanitized.
 	 *
 	 * @return string
 	 */
@@ -104,7 +104,7 @@ class Sanitize {
 	 * new lines (\n) and other whitespace, which are legitimate
 	 * input in textarea elements.
 	 *
-	 * @param mixed $value
+	 * @param mixed $value The value to be sanitized.
 	 *
 	 * @return string
 	 */
@@ -117,7 +117,7 @@ class Sanitize {
 	 * one of the following values: 'yes', 'on', '1', 1, true, or 'true'.
 	 * This can be used for determining if an HTML checkbox has been checked.
 	 *
-	 * @param mixed $value
+	 * @param mixed $value The value to be sanitized.
 	 *
 	 * @return mixed|boolean|string
 	 */
@@ -131,7 +131,7 @@ class Sanitize {
 	/**
 	 * Check if the given input is a valid date.
 	 *
-	 * @param mixed $value
+	 * @param mixed $value The value to be sanitized.
 	 *
 	 * @return boolean
 	 */
@@ -139,7 +139,7 @@ class Sanitize {
 		$time = strtotime( $value );
 
 		if ( $time ) {
-			return date( 'Y-m-d', $time );
+			return gmdate( 'Y-m-d', $time );
 		}
 
 		return '';
@@ -148,7 +148,7 @@ class Sanitize {
 	/**
 	 * Sanitize short block html input
 	 *
-	 * @param mixed $value
+	 * @param mixed $value The value to be sanitized.
 	 *
 	 * @return string
 	 */
@@ -192,7 +192,7 @@ class Sanitize {
 	/**
 	 * Sanitize meta value
 	 *
-	 * @param mixed $value
+	 * @param mixed $value The value to be sanitized.
 	 *
 	 * @return mixed
 	 */

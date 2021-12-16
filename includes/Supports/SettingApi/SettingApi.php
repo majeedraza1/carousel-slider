@@ -28,25 +28,35 @@ class SettingApi {
 
 	/**
 	 * Settings options array
+	 *
+	 * @var array
 	 */
 	protected $options = [];
 
 	/**
 	 * Settings menu fields array
+	 *
+	 * @var array
 	 */
 	protected $menu_fields = [];
 
 	/**
 	 * Settings fields array
+	 *
+	 * @var array
 	 */
 	protected $fields = [];
 
 	/**
 	 * Settings tabs array
+	 *
+	 * @var array
 	 */
 	protected $panels = [];
 
 	/**
+	 * The setting sections
+	 *
 	 * @var array
 	 */
 	protected $sections = [];
@@ -59,6 +69,8 @@ class SettingApi {
 	protected $option_name = '';
 
 	/**
+	 * The only one instance of the class can be loaded
+	 *
 	 * @return self
 	 */
 	public static function init() {
@@ -74,7 +86,7 @@ class SettingApi {
 	 *
 	 * This method is accessible outside the class for creating menu
 	 *
-	 * @param array $menu_fields
+	 * @param array $menu_fields The setting arguments.
 	 *
 	 * @return WP_Error|SettingApi
 	 */
@@ -93,7 +105,9 @@ class SettingApi {
 	}
 
 	/**
-	 * @param array $input
+	 * Sanitize options values
+	 *
+	 * @param array $input The setting arguments.
 	 *
 	 * @return array
 	 */
@@ -108,11 +122,11 @@ class SettingApi {
 			$value   = $input[ $field['id'] ] ?? $options[ $field['id'] ];
 
 			if ( isset( $field['options'] ) && is_array( $field['options'] ) ) {
-				$output_array[ $key ] = in_array( $value, array_keys( $field['options'] ) ) ? $value : $default;
+				$output_array[ $key ] = in_array( $value, array_keys( $field['options'] ), true ) ? $value : $default;
 				continue;
 			}
 
-			if ( 'checkbox' == $type ) {
+			if ( 'checkbox' === $type ) {
 				$output_array[ $key ] = Validate::checked( $value ) ? 1 : 0;
 				continue;
 			}
@@ -131,8 +145,8 @@ class SettingApi {
 	/**
 	 * Validate the option's value
 	 *
-	 * @param mixed  $value
-	 * @param string $type
+	 * @param mixed  $value The value.
+	 * @param string $type The input field type.
 	 *
 	 * @return string|numeric
 	 */
@@ -192,8 +206,8 @@ class SettingApi {
 	/**
 	 * Update options
 	 *
-	 * @param array $options
-	 * @param bool  $sanitize
+	 * @param array $options The options.
+	 * @param bool  $sanitize If it should sanitize options.
 	 */
 	public function update_options( array $options, bool $sanitize = true ) {
 		if ( $sanitize ) {
@@ -219,7 +233,7 @@ class SettingApi {
 	/**
 	 * Set panels
 	 *
-	 * @param array $panels
+	 * @param array $panels The setting arguments.
 	 *
 	 * @return self
 	 */
@@ -248,7 +262,7 @@ class SettingApi {
 	/**
 	 * Set sections
 	 *
-	 * @param array $sections
+	 * @param array $sections The setting arguments.
 	 *
 	 * @return self
 	 */
@@ -277,7 +291,7 @@ class SettingApi {
 	/**
 	 * Set fields
 	 *
-	 * @param array $fields
+	 * @param array $fields The setting arguments.
 	 *
 	 * @return self
 	 */
@@ -294,7 +308,7 @@ class SettingApi {
 	 *
 	 * This method is accessible outside the class for creating page tab
 	 *
-	 * @param array $panel
+	 * @param array $panel The setting arguments.
 	 *
 	 * @return self
 	 */
@@ -317,7 +331,7 @@ class SettingApi {
 	/**
 	 * Add Setting page section
 	 *
-	 * @param array $section
+	 * @param array $section The setting arguments.
 	 *
 	 * @return self
 	 */
@@ -342,7 +356,7 @@ class SettingApi {
 	 * Add new settings field
 	 * This method is accessible outside the class for creating settings field
 	 *
-	 * @param array $field
+	 * @param array $field The setting arguments.
 	 *
 	 * @return self
 	 */
@@ -367,8 +381,8 @@ class SettingApi {
 	/**
 	 * Sort array by its priority field
 	 *
-	 * @param array $array1
-	 * @param array $array2
+	 * @param array $array1 First array.
+	 * @param array $array2 Second array.
 	 *
 	 * @return mixed
 	 */
@@ -390,7 +404,9 @@ class SettingApi {
 	}
 
 	/**
-	 * @param string $option_name
+	 * Set option name
+	 *
+	 * @param string $option_name The option name.
 	 *
 	 * @return SettingApi
 	 */

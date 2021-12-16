@@ -59,7 +59,7 @@ class Upgrader {
 			$html .= '</p><div class="cs_plugin_upgrade_notice extensions_warning major_update">';
 			$html .= '<div class="cs_plugin_upgrade_notice__title">';
 			$html .= sprintf(
-				/* translators: 1: plugin title, 2: plugin new version number */
+			/* translators: 1: plugin title, 2: plugin new version number */
 				__( '%1$s version %2$s is a major update.', 'carousel-slider' ),
 				'<strong>' . $plugin_data['Title'] . '</strong>',
 				'<strong>' . $new_version . '</strong>'
@@ -73,7 +73,8 @@ class Upgrader {
 			$html .= '</div><p class="dummy" style="display: none">';
 		}
 
-		echo apply_filters( 'carousel_slider/in_plugin_update_message', $html, $plugin_data );
+		$message = apply_filters( 'carousel_slider/in_plugin_update_message', $html, $plugin_data );
+		echo wp_kses_post( $message );
 	}
 
 	/**
@@ -96,14 +97,15 @@ class Upgrader {
 		$html       .= '<p><a href="' . $update_url . '" class="button">' . $button_text . '</a></p>';
 		$html       .= '</div>';
 
-		echo $html;
+		echo wp_kses_post( $html );
 	}
 
 	/**
 	 * Run upgrade function
 	 */
 	public function upgrade() {
-		$nonce       = $_REQUEST['_wpnonce'] ?: null;
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$nonce       = $_REQUEST['_wpnonce'] ? sanitize_text_field( $_REQUEST['_wpnonce'] ) : null;
 		$is_verified = wp_verify_nonce( $nonce, 'carousel_slider_upgrade' );
 
 		$message = '<h1>' . __( 'Carousel Slider', 'carousel-slider' ) . '</h1>';
@@ -137,6 +139,7 @@ class Upgrader {
 			$sql  = "UPDATE {$wpdb->postmeta} SET `meta_key`= '_infinity_loop' WHERE `meta_key` = '_inifnity_loop'";
 			$sql .= ' AND post_id IN(' . implode( ',', $ids ) . ')';
 
+			// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			return $wpdb->query( $sql );
 		}
 
@@ -155,6 +158,7 @@ class Upgrader {
 			$sql  = "UPDATE {$wpdb->postmeta} SET `meta_value`= 'query_product' WHERE `meta_value` = 'query_porduct'";
 			$sql .= " AND `meta_key` = '_product_query_type' AND post_id IN(" . implode( ',', $ids ) . ')';
 
+			// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 			return $wpdb->query( $sql );
 		}
 
@@ -168,7 +172,8 @@ class Upgrader {
 	 */
 	public static function get_sliders_ids(): array {
 		global $wpdb;
-		$sql     = $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE post_type = %s", CAROUSEL_SLIDER_POST_TYPE );
+		$sql = $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE post_type = %s", CAROUSEL_SLIDER_POST_TYPE );
+		// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
 		$results = $wpdb->get_results( $sql, ARRAY_A );
 		$ids     = [];
 		foreach ( $results as $result ) {

@@ -17,6 +17,8 @@ use CarouselSlider\Supports\FormFields\Textarea;
 defined( 'ABSPATH' ) || exit;
 
 /**
+ * MetaBoxForm class
+ *
  * @method void text( array $args )
  * @method void textarea( array $args )
  * @method void spacing( array $args )
@@ -31,7 +33,7 @@ class MetaBoxForm {
 	/**
 	 * Map field settings
 	 *
-	 * @param array $settings
+	 * @param array $settings The settings arguments.
 	 *
 	 * @return array
 	 */
@@ -54,7 +56,9 @@ class MetaBoxForm {
 	}
 
 	/**
-	 * @param string $type
+	 * Get field class
+	 *
+	 * @param string $type The field type.
 	 *
 	 * @return BaseField|FieldInterface
 	 */
@@ -70,22 +74,21 @@ class MetaBoxForm {
 			'images_gallery' => ImagesGallery::class,
 		];
 
-		$className = array_key_exists( $type, $types ) ? $types[ $type ] : $types['text'];
+		$class = array_key_exists( $type, $types ) ? $types[ $type ] : $types['text'];
 
-		return new $className();
+		return new $class();
 	}
 
 	/**
 	 * Generate text field
 	 *
-	 * @param array $args
+	 * @param array $args The settings arguments.
 	 *
 	 * @return string
 	 */
 	public function field( array $args ): string {
 		list( $name, $value ) = $this->get_name_and_value( $args );
 
-		/** @var BaseField $field */
 		$field = self::get_field_class( $args['type'] ?? 'text' );
 		$field->set_settings( $this->map_field_settings( $args ) );
 		$field->set_name( $name );
@@ -101,22 +104,22 @@ class MetaBoxForm {
 	/**
 	 * Generate select field
 	 *
-	 * @param $args
+	 * @param array $args The settings arguments.
 	 */
-	public function select( $args ) {
+	public function select( array $args ) {
 		$args['type']        = 'select';
 		$args['field_class'] = 'select2 sp-input-text';
 
-		echo $this->field( $args );
+		echo $this->field( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
 	 * Generate posts list dropdown
 	 * Also support for any custom post type
 	 *
-	 * @param $args
+	 * @param array $args The settings arguments.
 	 */
-	public function posts_list( $args ) {
+	public function posts_list( array $args ) {
 		$posts = get_posts(
 			[
 				'post_type'      => $args['post_type'] ?? 'post',
@@ -132,11 +135,13 @@ class MetaBoxForm {
 			$args['choices'][ $post->ID ] = $post->post_title;
 		}
 
-		echo $this->field( $args );
+		echo $this->field( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
-	 * @param array $args
+	 * Upload iFrame field
+	 *
+	 * @param array $args The settings arguments.
 	 */
 	public function upload_iframe( array $args ) {
 		if ( ! isset( $args['id'], $args['name'] ) ) {
@@ -158,13 +163,13 @@ class MetaBoxForm {
 		$html .= '<input type="hidden" class="' . $class . '" name="' . $name . '" value="' . $value . '" />';
 		$html .= '<a ' . implode( ' ', Helper::array_to_attribute( $attrs ) ) . '>' . esc_html( $button_text ) . '</a>';
 		$html .= $this->field_after( $args );
-		echo $html;
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
 	 * Generate image gallery list from images URL
 	 *
-	 * @param array $args
+	 * @param array $args The settings arguments.
 	 */
 	public function images_url( array $args ) {
 		if ( ! isset( $args['id'], $args['name'] ) ) {
@@ -189,25 +194,25 @@ class MetaBoxForm {
 		}
 		$html .= '</ul>';
 		$html .= $this->field_after( $args );
-		echo $html;
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
 	 * Generate image sizes dropdown from available image sizes
 	 *
-	 * @param array $args
+	 * @param array $args The settings arguments.
 	 */
 	public function image_sizes( array $args ) {
 		$args['type']    = 'select';
 		$args['choices'] = Helper::get_available_image_sizes();
 
-		echo $this->field( $args );
+		echo $this->field( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
 	 * Get post terms drowdown list
 	 *
-	 * @param array $args
+	 * @param array $args The settings arguments.
 	 */
 	public function post_terms( array $args ) {
 		$terms = get_terms( [ 'taxonomy' => $args['taxonomy'] ?? 'category' ] );
@@ -220,13 +225,13 @@ class MetaBoxForm {
 			}
 		}
 
-		echo $this->field( $args );
+		echo $this->field( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
 	 * Generate field name and field value
 	 *
-	 * @param array $args
+	 * @param array $args The settings arguments.
 	 *
 	 * @return array
 	 */
@@ -251,7 +256,7 @@ class MetaBoxForm {
 			$value = ! empty( $meta ) ? $meta : $default;
 		}
 
-		if ( $value == 'zero' ) {
+		if ( 'zero' === $value ) {
 			$value = 0;
 		}
 
@@ -261,7 +266,7 @@ class MetaBoxForm {
 	/**
 	 * Generate field before template
 	 *
-	 * @param array $args
+	 * @param array $args The settings arguments.
 	 *
 	 * @return string
 	 */
@@ -275,7 +280,7 @@ class MetaBoxForm {
 		$_normal .= '</div>';
 		$_normal .= '<div class="sp-input-field">';
 
-		if ( isset( $args['context'] ) && 'side' == $args['context'] ) {
+		if ( isset( $args['context'] ) && 'side' === $args['context'] ) {
 			$_side  = '<p id="field-' . $args['id'] . '">';
 			$_side .= '<label for="' . $args['id'] . '"><strong>' . $args['name'] . '</strong></label>';
 
@@ -288,13 +293,13 @@ class MetaBoxForm {
 	/**
 	 * Generate field after template
 	 *
-	 * @param array $args
+	 * @param array $args The settings arguments.
 	 *
 	 * @return string
 	 */
 	private function field_after( array $args = [] ): string {
 
-		if ( isset( $args['context'] ) && 'side' == $args['context'] ) {
+		if ( isset( $args['context'] ) && 'side' === $args['context'] ) {
 			$_side = '';
 			if ( ! empty( $args['desc'] ) ) {
 				$_side .= '<span class="cs-tooltip" title="' . esc_attr( $args['desc'] ) . '"></span>';
@@ -307,8 +312,16 @@ class MetaBoxForm {
 		return '</div></div>';
 	}
 
-	public function __call( $name, $arguments ) {
+	/**
+	 * Handle wildcard method call
+	 *
+	 * @param string $name The method name.
+	 * @param array  $arguments The arguments for the method.
+	 *
+	 * @return void
+	 */
+	public function __call( string $name, array $arguments = [] ) {
 		$args = array_merge( ( is_array( $arguments[0] ) ? $arguments[0] : [] ), [ 'type' => $name ] );
-		echo $this->field( $args );
+		echo $this->field( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 }

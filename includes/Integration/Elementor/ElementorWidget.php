@@ -9,9 +9,14 @@ use Elementor\Widget_Base;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * ElementorWidget class
+ */
 class ElementorWidget extends Widget_Base {
 
 	/**
+	 * Get element name.
+	 *
 	 * @inheritDoc
 	 */
 	public function get_name(): string {
@@ -19,6 +24,8 @@ class ElementorWidget extends Widget_Base {
 	}
 
 	/**
+	 * Get element title.
+	 *
 	 * @inheritDoc
 	 */
 	public function get_title(): string {
@@ -26,6 +33,8 @@ class ElementorWidget extends Widget_Base {
 	}
 
 	/**
+	 * Get widget icon.
+	 *
 	 * @inheritDoc
 	 */
 	public function get_icon(): string {
@@ -33,6 +42,8 @@ class ElementorWidget extends Widget_Base {
 	}
 
 	/**
+	 * Get script dependencies.
+	 *
 	 * @inheritDoc
 	 */
 	public function get_script_depends(): array {
@@ -40,6 +51,8 @@ class ElementorWidget extends Widget_Base {
 	}
 
 	/**
+	 * Get style dependencies.
+	 *
 	 * @inheritDoc
 	 */
 	public function get_style_depends(): array {
@@ -47,6 +60,8 @@ class ElementorWidget extends Widget_Base {
 	}
 
 	/**
+	 * Get widget keywords.
+	 *
 	 * @inheritDoc
 	 */
 	public function get_keywords(): array {
@@ -54,6 +69,8 @@ class ElementorWidget extends Widget_Base {
 	}
 
 	/**
+	 * Register controls.
+	 *
 	 * @inheritDoc
 	 */
 	protected function register_controls() {
@@ -94,6 +111,8 @@ class ElementorWidget extends Widget_Base {
 	}
 
 	/**
+	 * Render element output in the editor.
+	 *
 	 * @inheritDoc
 	 */
 	public function content_template() {
@@ -108,13 +127,15 @@ class ElementorWidget extends Widget_Base {
 	}
 
 	/**
+	 * Render element.
+	 *
 	 * @inheritDoc
 	 */
 	protected function render() {
 		$settings  = $this->get_settings_for_display();
 		$slider_id = intval( $settings['slider_id'] );
 
-		if ( 'elementor' == ( $_GET['action'] ?? '' ) ) {
+		if ( 'elementor' === ( $_GET['action'] ?? '' ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$args = add_query_arg(
 				[
 					'carousel_slider_preview' => true,
@@ -128,7 +149,7 @@ class ElementorWidget extends Widget_Base {
 			$html .= '<div class="carousel-slider-iframe-overlay"></div>';
 			$html .= '<iframe class="carousel-slider-iframe" src="' . $args . '" height="0" width="500"></iframe>';
 			$html .= '</div>';
-			echo $html;
+			echo wp_kses_post( $html );
 
 			return;
 		}
@@ -137,6 +158,6 @@ class ElementorWidget extends Widget_Base {
 		$html .= Frontend::init()->carousel_slide( [ 'id' => $slider_id ] );
 		$html .= '</div>';
 
-		echo $html;
+		echo wp_kses_post( $html );
 	}
 }

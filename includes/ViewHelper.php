@@ -6,13 +6,16 @@ use CarouselSlider\Supports\Validate;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * ViewHelper class
+ */
 class ViewHelper {
 
 
 	/**
 	 * Array to style
 	 *
-	 * @param array $styles
+	 * @param array $styles The styles array.
 	 *
 	 * @return string
 	 */
@@ -31,7 +34,7 @@ class ViewHelper {
 	/**
 	 * Convert array to html data attribute
 	 *
-	 * @param array $array
+	 * @param array $array The attributes list.
 	 *
 	 * @return array
 	 */
@@ -40,7 +43,7 @@ class ViewHelper {
 			function ( $key, $value ) {
 				// If boolean value.
 				if ( is_bool( $value ) ) {
-					  return sprintf( '%s="%s"', $key, ( $value ? 'true' : 'false' ) );
+					return sprintf( '%s="%s"', $key, ( $value ? 'true' : 'false' ) );
 				}
 				// If array value.
 				if ( is_array( $value ) ) {

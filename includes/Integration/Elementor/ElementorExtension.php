@@ -7,8 +7,16 @@ use Elementor\Plugin;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * ElementorExtension class
+ */
 class ElementorExtension {
 
+	/**
+	 * The instance of the class.
+	 *
+	 * @var self
+	 */
 	private static $instance = null;
 
 	/**
@@ -38,7 +46,12 @@ class ElementorExtension {
 			'1.0.0',
 			true
 		);
-		wp_register_style( 'carousel-slider-elementor', Assets::get_assets_url( 'css/frontend.css' ) );
+		wp_register_style(
+			'carousel-slider-elementor',
+			Assets::get_assets_url( 'css/frontend.css' ),
+			[],
+			CAROUSEL_SLIDER_VERSION
+		);
 	}
 
 	/**

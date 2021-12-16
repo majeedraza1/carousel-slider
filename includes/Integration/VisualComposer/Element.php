@@ -4,6 +4,9 @@ namespace CarouselSlider\Integration\VisualComposer;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Element class
+ */
 class Element {
 	/**
 	 * The instance of the class

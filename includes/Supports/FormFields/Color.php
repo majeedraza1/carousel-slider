@@ -2,9 +2,14 @@
 
 namespace CarouselSlider\Supports\FormFields;
 
+/**
+ * Color class
+ */
 class Color extends BaseField {
 
 	/**
+	 * Render field html
+	 *
 	 * @inheritDoc
 	 */
 	public function render(): string {

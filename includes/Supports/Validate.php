@@ -4,11 +4,14 @@ namespace CarouselSlider\Supports;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Validate class
+ */
 class Validate {
 	/**
 	 * Check if url is valid as per RFC 2396 Generic Syntax
 	 *
-	 * @param mixed $url
+	 * @param mixed $url The URL string.
 	 *
 	 * @return bool
 	 */
@@ -21,7 +24,7 @@ class Validate {
 	 * one of the following values: 'yes', 'on', '1', 1, true, or 'true'.
 	 * This can be used for determining if an HTML checkbox has been checked.
 	 *
-	 * @param mixed $value
+	 * @param mixed $value The value to be checked.
 	 *
 	 * @return boolean
 	 */
@@ -32,7 +35,7 @@ class Validate {
 	/**
 	 * Check if value is json
 	 *
-	 * @param mixed $string
+	 * @param mixed $string The value to be checked.
 	 *
 	 * @return bool
 	 */
@@ -42,6 +45,6 @@ class Validate {
 		}
 		json_decode( $string );
 
-		return ( json_last_error() == JSON_ERROR_NONE );
+		return ( json_last_error() === JSON_ERROR_NONE );
 	}
 }

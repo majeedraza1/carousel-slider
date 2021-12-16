@@ -4,6 +4,9 @@ namespace CarouselSlider\Supports\FormFields;
 
 use CarouselSlider\Interfaces\FieldInterface;
 
+/**
+ * BaseField class
+ */
 abstract class BaseField implements FieldInterface {
 	/**
 	 * Field settings
@@ -13,11 +16,15 @@ abstract class BaseField implements FieldInterface {
 	protected $settings = [];
 
 	/**
+	 * The name to be used for input field name
+	 *
 	 * @var string
 	 */
 	protected $name;
 
 	/**
+	 * The value of the field
+	 *
 	 * @var mixed
 	 */
 	protected $value;
@@ -32,8 +39,8 @@ abstract class BaseField implements FieldInterface {
 	/**
 	 * Get setting
 	 *
-	 * @param string $key
-	 * @param mixed  $default
+	 * @param string $key The setting key.
+	 * @param mixed  $default The default value for the setting.
 	 *
 	 * @return mixed
 	 */
@@ -44,8 +51,8 @@ abstract class BaseField implements FieldInterface {
 	/**
 	 * Set setting
 	 *
-	 * @param string $key
-	 * @param mixed  $value
+	 * @param string $key The setting key.
+	 * @param mixed  $value The value for the setting.
 	 */
 	public function set_setting( string $key, $value ) {
 		$this->settings[ $key ] = $value;
@@ -63,7 +70,7 @@ abstract class BaseField implements FieldInterface {
 	/**
 	 * Set Settings
 	 *
-	 * @param array $settings
+	 * @param array $settings The field settings.
 	 */
 	public function set_settings( array $settings ) {
 		$default        = [
@@ -93,7 +100,7 @@ abstract class BaseField implements FieldInterface {
 	/**
 	 * Set name
 	 *
-	 * @param string $name
+	 * @param string $name The name of the field.
 	 */
 	public function set_name( string $name ) {
 		$this->name = $name;
@@ -111,7 +118,7 @@ abstract class BaseField implements FieldInterface {
 	/**
 	 * Set value
 	 *
-	 * @param mixed $value
+	 * @param mixed $value The value of the field.
 	 */
 	public function set_value( $value ) {
 		$this->value = $value;
@@ -120,11 +127,11 @@ abstract class BaseField implements FieldInterface {
 	/**
 	 * Generate input attribute
 	 *
-	 * @param bool $string
+	 * @param bool $to_string Convert attribute to string.
 	 *
 	 * @return array|string
 	 */
-	protected function build_attributes( bool $string = true ) {
+	protected function build_attributes( bool $to_string = true ) {
 		$input_type = $this->get_setting( 'type' );
 		$attributes = [
 			'id'          => $this->get_setting( 'id' ),
@@ -133,7 +140,7 @@ abstract class BaseField implements FieldInterface {
 			'placeholder' => $this->get_setting( 'placeholder' ),
 		];
 
-		if ( ! in_array( $input_type, [ 'textarea', 'select' ] ) ) {
+		if ( ! in_array( $input_type, [ 'textarea', 'select' ], true ) ) {
 			$attributes['type'] = $input_type;
 		}
 
@@ -144,7 +151,7 @@ abstract class BaseField implements FieldInterface {
 			$attributes[ $attr_name ] = $attr_val;
 		}
 
-		if ( $string ) {
+		if ( $to_string ) {
 			return $this->array_to_attributes( $attributes );
 		}
 
@@ -154,7 +161,7 @@ abstract class BaseField implements FieldInterface {
 	/**
 	 * Convert array to input attributes
 	 *
-	 * @param array $attributes
+	 * @param array $attributes The attributes list.
 	 *
 	 * @return string
 	 */
@@ -162,9 +169,9 @@ abstract class BaseField implements FieldInterface {
 		$string = array_map(
 			function ( $key, $value ) {
 				if ( empty( $value ) && 'value' !== $key ) {
-					  return null;
+					return null;
 				}
-				if ( in_array( $key, array( 'required', 'checked', 'multiple' ) ) && $value ) {
+				if ( in_array( $key, array( 'required', 'checked', 'multiple' ), true ) && $value ) {
 					return $key;
 				}
 
@@ -192,7 +199,7 @@ abstract class BaseField implements FieldInterface {
 	/**
 	 * Add extra attributes
 	 *
-	 * @param array $attributes
+	 * @param array $attributes The attributes list.
 	 */
 	protected function add_extra_attributes( array &$attributes ) {
 		$input_type       = $this->get_setting( 'type' );
@@ -243,12 +250,12 @@ abstract class BaseField implements FieldInterface {
 		];
 
 		foreach ( $extra_attributes as $attribute ) {
-			if ( isset( $attribute['include_types'] ) && in_array( $input_type, $attribute['include_types'] ) ) {
+			if ( isset( $attribute['include_types'] ) && in_array( $input_type, $attribute['include_types'], true ) ) {
 				foreach ( $attribute['attrs'] as $attr_key => $attr_val ) {
 					$attributes[ $attr_key ] = $attr_val;
 				}
 			}
-			if ( isset( $attribute['exclude_types'] ) && ! in_array( $input_type, $attribute['exclude_types'] ) ) {
+			if ( isset( $attribute['exclude_types'] ) && ! in_array( $input_type, $attribute['exclude_types'], true ) ) {
 				foreach ( $attribute['attrs'] as $attr_key => $attr_val ) {
 					$attributes[ $attr_key ] = $attr_val;
 				}

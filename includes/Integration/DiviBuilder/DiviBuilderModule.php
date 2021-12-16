@@ -6,8 +6,16 @@ use ET_Builder_Module;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * DiviBuilderModule class
+ */
 class DiviBuilderModule {
 
+	/**
+	 * The instance of the class
+	 *
+	 * @var self
+	 */
 	private static $instance = null;
 
 	/**
@@ -41,24 +49,18 @@ class DiviBuilderModule {
 	 * Load module script
 	 */
 	public function load_scripts() {
-		if ( empty( $_GET['et_fb'] ) ) {
+		if ( empty( $_GET['et_fb'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return;
 		}
-		wp_enqueue_style( 'carousel-slider-divi-modules', CAROUSEL_SLIDER_ASSETS . '/css/divi-modules.css', [] );
+		wp_enqueue_style( 'carousel-slider-divi-modules', CAROUSEL_SLIDER_ASSETS . '/css/divi-modules.css', [], CAROUSEL_SLIDER_VERSION );
 		wp_enqueue_script(
 			'carousel-slider-divi-modules',
 			CAROUSEL_SLIDER_ASSETS . '/js/divi-modules.js',
 			[ 'react', 'react-dom' ],
-			'',
+			CAROUSEL_SLIDER_VERSION,
 			true
 		);
-		wp_localize_script(
-			'carousel-slider-divi-modules',
-			'csDivi',
-			[
-				'site_url' => site_url(),
-			]
-		);
+		wp_localize_script( 'carousel-slider-divi-modules', 'csDivi', [ 'site_url' => site_url() ] );
 	}
 
 	/**

@@ -8,12 +8,15 @@ use WP_Post;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Helper class
+ */
 class Helper extends ViewHelper {
 
 	/**
 	 * Get sliders
 	 *
-	 * @param array $args
+	 * @param array $args Optional arguments.
 	 *
 	 * @return WP_Post[]|int[] Array of post objects or post IDs.
 	 */
@@ -36,8 +39,8 @@ class Helper extends ViewHelper {
 	/**
 	 * Get setting
 	 *
-	 * @param string $key
-	 * @param mixed  $default
+	 * @param string $key The setting key.
+	 * @param mixed  $default Setting default value.
 	 *
 	 * @return mixed|null
 	 */
@@ -75,7 +78,7 @@ class Helper extends ViewHelper {
 	/**
 	 * Get slider view
 	 *
-	 * @param string $key
+	 * @param string $key The slider type slug.
 	 *
 	 * @return false|SliderViewInterface
 	 */
@@ -108,8 +111,8 @@ class Helper extends ViewHelper {
 	/**
 	 * Get default setting
 	 *
-	 * @param string $key
-	 * @param mixed  $default
+	 * @param string $key The setting key.
+	 * @param mixed  $default Default value.
 	 *
 	 * @return mixed|null
 	 */
@@ -129,7 +132,7 @@ class Helper extends ViewHelper {
 
 		$sizes = [];
 		foreach ( get_intermediate_image_sizes() as $_size ) {
-			if ( in_array( $_size, [ 'thumbnail', 'medium', 'medium_large', 'large' ] ) ) {
+			if ( in_array( $_size, [ 'thumbnail', 'medium', 'medium_large', 'large' ], true ) ) {
 
 				$width  = get_option( "{$_size}_size_w" );
 				$height = get_option( "{$_size}_size_h" );
@@ -164,7 +167,7 @@ class Helper extends ViewHelper {
 	/**
 	 * Creates Carousel Slider test page
 	 *
-	 * @param array $ids
+	 * @param array $ids The sliders ids.
 	 *
 	 * @return int|WP_Error
 	 */
@@ -234,7 +237,7 @@ class Helper extends ViewHelper {
 	/**
 	 * Get preview link
 	 *
-	 * @param WP_Post $post
+	 * @param WP_Post $post The WP_Post object.
 	 *
 	 * @return string
 	 */

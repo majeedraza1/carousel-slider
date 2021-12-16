@@ -4,6 +4,9 @@ namespace CarouselSlider;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Autoloader class
+ */
 class Autoloader {
 	/**
 	 * An associative array where the key is a namespace prefix and the value
@@ -68,6 +71,7 @@ class Autoloader {
 
 		// work backwards through the namespace names of the fully-qualified
 		// class name to find a mapped file name.
+		// phpcs:ignore WordPress.CodeAnalysis.AssignmentInCondition.FoundInWhileCondition
 		while ( false !== $pos = strrpos( $prefix, '\\' ) ) {
 
 			// retain the trailing namespace separator in the prefix.

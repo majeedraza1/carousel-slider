@@ -2,9 +2,14 @@
 
 namespace CarouselSlider\Supports\FormFields;
 
+/**
+ * ButtonGroup class
+ */
 class ButtonGroup extends BaseField {
 
 	/**
+	 * Render field html
+	 *
 	 * @inheritDoc
 	 */
 	public function render(): string {

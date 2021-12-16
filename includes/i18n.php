@@ -4,6 +4,9 @@ namespace CarouselSlider;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Class i18n to handle plugin translation
+ */
 class i18n {
 
 	/**

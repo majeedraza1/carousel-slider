@@ -2,14 +2,19 @@
 
 namespace CarouselSlider\Supports\FormFields;
 
+/**
+ * ImageGallery class
+ */
 class ImagesGallery extends BaseField {
 
 	/**
+	 * Render field html
+	 *
 	 * @inheritDoc
 	 */
 	public function render(): string {
 		global $post;
-		$value = strip_tags( rtrim( $this->get_value(), ',' ) );
+		$value = wp_strip_all_tags( rtrim( $this->get_value(), ',' ) );
 		$html  = '';
 
 		$button_attr = [

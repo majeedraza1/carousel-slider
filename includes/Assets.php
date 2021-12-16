@@ -4,6 +4,9 @@ namespace CarouselSlider;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Assets class
+ */
 class Assets {
 
 	/**
@@ -21,7 +24,7 @@ class Assets {
 	private $plugin_name;
 
 	/**
-	 * plugin version
+	 * The plugin version
 	 *
 	 * @var string
 	 */
@@ -61,7 +64,7 @@ class Assets {
 			return true;
 		} elseif ( 0 === stripos( get_option( 'siteurl' ), 'https://' ) ) {
 			return true;
-		} elseif ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && 'https' == $_SERVER['HTTP_X_FORWARDED_PROTO'] ) {
+		} elseif ( isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) && 'https' === $_SERVER['HTTP_X_FORWARDED_PROTO'] ) {
 			return true;
 		}
 
@@ -71,7 +74,7 @@ class Assets {
 	/**
 	 * Get assets URL
 	 *
-	 * @param string $path
+	 * @param string $path Optional path.
 	 *
 	 * @return string
 	 */
@@ -109,7 +112,7 @@ class Assets {
 	/**
 	 * Register scripts
 	 *
-	 * @param array $scripts
+	 * @param array $scripts The scripts to register.
 	 *
 	 * @return void
 	 */
@@ -125,7 +128,7 @@ class Assets {
 	/**
 	 * Register styles
 	 *
-	 * @param array $styles
+	 * @param array $styles The styles to register.
 	 *
 	 * @return void
 	 */
@@ -177,7 +180,8 @@ class Assets {
 	 * @return string
 	 */
 	public static function get_style_loader_script(): string {
-		$data       = self::get_assets_url( 'css/frontend.css' );
+		$data = self::get_assets_url( 'css/frontend.css' );
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		$javascript = file_get_contents( self::get_assets_url( '/js/style-loader.js' ) );
 		$script     = '<script id="carousel-slider-style-loader">' . PHP_EOL;
 		$script    .= 'window.carouselSliderCssUrl = ' . wp_json_encode( $data ) . ';' . PHP_EOL;

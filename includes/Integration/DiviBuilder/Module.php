@@ -8,22 +8,47 @@ use ET_Builder_Module;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Module class
+ */
 class Module extends ET_Builder_Module {
+	/**
+	 * Module slug
+	 *
+	 * @var string
+	 */
+	public $slug = 'carousel_slider_divi_module';
 
-	public $slug       = 'carousel_slider_divi_module';
+	/**
+	 * Enable support visual builder
+	 *
+	 * @var string
+	 */
 	public $vb_support = 'on';
 
+	/**
+	 * Credits of our custom modules.
+	 *
+	 * @var string[]
+	 */
 	protected $module_credits = [
 		'module_uri' => 'https://wordpress.org/plugins/carousel-slider',
 		'author'     => 'Sayful Islam',
 		'author_uri' => 'https://sayfulislam.com',
 	];
 
+	/**
+	 * Init module
+	 *
+	 * @return void
+	 */
 	public function init() {
 		$this->name = esc_html__( 'Carousel Slider', 'carousel-slider' );
 	}
 
 	/**
+	 * Get the settings fields data for this element.
+	 *
 	 * @inheritDoc
 	 */
 	public function get_fields(): array {
@@ -48,6 +73,16 @@ class Module extends ET_Builder_Module {
 		];
 	}
 
+	/**
+	 * Generates the module's HTML output based on {@see self::$props}. This method should be
+	 * overridden in module classes.
+	 *
+	 * @param array  $unprocessed_props List of unprocessed attributes.
+	 * @param string $content Content being processed.
+	 * @param string $render_slug Slug of module that is used for rendering output.
+	 *
+	 * @return string The module's HTML output.
+	 */
 	public function render( $unprocessed_props, $content = null, $render_slug ) {
 		$slider_id = intval( $this->props['slider_id'] );
 

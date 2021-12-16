@@ -108,33 +108,34 @@ class CarouselSliderWidget extends WP_Widget {
 		$carousels   = static::carousels_list();
 		$carousel_id = ! empty( $instance['carousel_id'] ) ? absint( $instance['carousel_id'] ) : null;
 		$title       = ! empty( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
-
+		$html        = '';
 		if ( count( $carousels ) > 0 ) {
+			$html .= sprintf( '<p><label for="%1$s">%2$s</label>', $this->get_field_id( 'title' ), __( 'Title (optional):', 'carousel-slider' ) );
+			$html .= sprintf( '<input type="text" class="widefat" id="%1$s" name="%2$s" value="%3$s" /></p>', $this->get_field_id( 'title' ), $this->get_field_name( 'title' ), $title );
 
-			printf( '<p><label for="%1$s">%2$s</label>', $this->get_field_id( 'title' ), __( 'Title (optional):', 'carousel-slider' ) );
-			printf( '<input type="text" class="widefat" id="%1$s" name="%2$s" value="%3$s" /></p>', $this->get_field_id( 'title' ), $this->get_field_name( 'title' ), $title );
-
-			printf( '<p><label>%s</label>', __( 'Choose Slide', 'carousel-slider' ) );
-			printf( '<select class="widefat" name="%s">', $this->get_field_name( 'carousel_id' ) );
+			$html .= sprintf( '<p><label>%s</label>', __( 'Choose Slide', 'carousel-slider' ) );
+			$html .= sprintf( '<select class="widefat" name="%s">', $this->get_field_name( 'carousel_id' ) );
 			foreach ( $carousels as $carousel ) {
-				$selected = $carousel['id'] == $carousel_id ? 'selected="selected"' : '';
-				printf(
+				$selected = $carousel['id'] === $carousel_id ? 'selected="selected"' : '';
+				$html    .= sprintf(
 					'<option value="%1$d" %3$s>%2$s</option>',
 					absint( $carousel['id'] ),
 					esc_html( $carousel['title'] ),
 					$selected
 				);
 			}
-			echo '</select></p>';
+			$html .= '</select></p>';
 
 		} else {
-			printf(
+			$html .= sprintf(
 				'<p>%1$s <a href="' . admin_url( 'post-new.php?post_type=carousels' ) . '">%3$s</a> %2$s</p>',
 				__( 'You did not add any carousel slider yet.', 'carousel-slider' ),
 				__( 'to create a new carousel slider now.', 'carousel-slider' ),
 				__( 'click here', 'carousel-slider' )
 			);
 		}
+
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**

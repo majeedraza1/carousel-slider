@@ -2,9 +2,14 @@
 
 namespace CarouselSlider\Supports\FormFields;
 
+/**
+ * Checkbox class
+ */
 class Checkbox extends BaseField {
 
 	/**
+	 * Render field html
+	 *
 	 * @inheritDoc
 	 */
 	public function render(): string {
@@ -15,7 +20,7 @@ class Checkbox extends BaseField {
 			'id'      => $this->get_setting( 'id' ),
 			'name'    => $name,
 			'value'   => 'on',
-			'checked' => 'on' == $this->get_value(),
+			'checked' => 'on' === $this->get_value(),
 		);
 
 		$html  = '<input type="hidden" name="' . $name . '" value="off">';

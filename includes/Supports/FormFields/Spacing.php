@@ -2,9 +2,14 @@
 
 namespace CarouselSlider\Supports\FormFields;
 
+/**
+ * Spacing class
+ */
 class Spacing extends BaseField {
 
 	/**
+	 * Render field html
+	 *
 	 * @inheritDoc
 	 */
 	public function render(): string {
@@ -21,9 +26,9 @@ class Spacing extends BaseField {
 
 			$attr_name  = $name . '[' . $dimension . ']';
 			$attr_value = $value[ $dimension ] ?? $default[ $dimension ];
-			if ( 'top' == $dimension ) {
+			if ( 'top' === $dimension ) {
 				$icon_class = 'dashicons dashicons-arrow-up-alt';
-			} elseif ( 'bottom' == $dimension ) {
+			} elseif ( 'bottom' === $dimension ) {
 				$icon_class = 'dashicons dashicons-arrow-down-alt';
 			} else {
 				$icon_class = 'dashicons dashicons-arrow-' . $dimension . '-alt';
