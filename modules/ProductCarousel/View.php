@@ -12,8 +12,18 @@ use WC_Product;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * View class
+ *
+ * @package Modules/ProductCarousel
+ */
 class View extends AbstractView {
 
+	/**
+	 * Get slider setting
+	 *
+	 * @return SliderSetting
+	 */
 	public function get_slider_setting(): SliderSetting {
 		if ( ! $this->slider_setting instanceof Setting ) {
 			$this->slider_setting = new Setting( $this->get_slider_id() );
@@ -23,15 +33,17 @@ class View extends AbstractView {
 	}
 
 	/**
+	 * Render html view
+	 *
 	 * @inheritDoc
 	 */
 	public function render(): string {
 		$query_type    = get_post_meta( $this->slider_id, '_product_query_type', true );
 		$query_type    = empty( $query_type ) ? 'query_product' : $query_type;
-		$query_type    = ( 'query_porduct' == $query_type ) ? 'query_product' : $query_type; // Type mistake
+		$query_type    = ( 'query_porduct' === $query_type ) ? 'query_product' : $query_type; // Fix type mistake.
 		$product_query = get_post_meta( $this->slider_id, '_product_query', true );
 
-		if ( $query_type == 'query_product' && $product_query == 'product_categories_list' ) {
+		if ( 'query_product' === $query_type && 'product_categories_list' === $product_query ) {
 			return $this->get_category_view();
 		}
 
@@ -41,7 +53,7 @@ class View extends AbstractView {
 	/**
 	 * Get slider settings
 	 *
-	 * @param int $slider_id
+	 * @param int $slider_id The slider id.
 	 *
 	 * @return array
 	 */
@@ -64,6 +76,8 @@ class View extends AbstractView {
 	}
 
 	/**
+	 * Get CSS variable
+	 *
 	 * @return array
 	 */
 	public function get_css_variable(): array {
@@ -76,6 +90,8 @@ class View extends AbstractView {
 	}
 
 	/**
+	 * Get view
+	 *
 	 * @return string
 	 */
 	public function get_view(): string {
@@ -88,8 +104,8 @@ class View extends AbstractView {
 		global $product;
 
 		foreach ( $products as $product ) {
-			$post = get_post( $product->get_id() );
-			setup_postdata( $post );
+			$_post = get_post( $product->get_id() );
+			setup_postdata( $_post );
 
 			if ( ! $product->is_visible() ) {
 				continue;
@@ -99,7 +115,7 @@ class View extends AbstractView {
 				continue;
 			}
 			$template = GlobalSetting::get_option( 'woocommerce_shop_loop_item_template' );
-			if ( 'v1-compatibility' == $template ) {
+			if ( 'v1-compatibility' === $template ) {
 				$html .= self::get_item( $product, $settings ) . PHP_EOL;
 			} else {
 				$html .= self::get_slider_item( $product, $settings ) . PHP_EOL;
@@ -115,8 +131,8 @@ class View extends AbstractView {
 	/**
 	 * Get item
 	 *
-	 * @param WC_Product $product
-	 * @param array      $settings
+	 * @param WC_Product $product The WC_Product object.
+	 * @param array      $settings Settings array.
 	 *
 	 * @return string
 	 */
@@ -127,42 +143,46 @@ class View extends AbstractView {
 
 		do_action( 'carousel_slider_before_shop_loop_item', $product );
 
-		// Show product image
+		// Show product image.
 		if ( $product->get_image_id() ) {
-			echo '<a class="woocommerce-LoopProduct-link" href="' . $product->get_permalink() . '">';
+			echo '<a class="woocommerce-LoopProduct-link" href="' . esc_url( $product->get_permalink() ) . '">';
 			if ( $settings['lazy_load_image'] ) {
 				$image = wp_get_attachment_image_src( $product->get_image_id(), $settings['image_size'] );
-				echo '<img class="owl-lazy" data-src="' . $image[0] . '" />';
+				echo '<img class="owl-lazy" data-src="' . esc_url( $image[0] ) . '" />';
 			} else {
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo $product->get_image( $settings['image_size'] );
 			}
 			echo '</a>';
 		}
 
-		// Show title
+		// Show title.
 		if ( $settings['show_title'] ) {
 			echo '<a href="' . esc_attr( $product->get_permalink() ) . '">';
 			echo '<h3 class="woocommerce-loop-product__title">' . esc_html( $product->get_title() ) . '</h3>';
 			echo '</a>';
 		}
 
-		// Show Rating
+		// Show Rating.
 		if ( $settings['show_rating'] ) {
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo wc_get_rating_html( $product->get_average_rating() );
 		}
 
-		// Sale Product batch
+		// Sale Product batch.
 		if ( $product->is_on_sale() && $settings['show_onsale'] ) {
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo apply_filters( 'woocommerce_sale_flash', '<span class="onsale">' . __( 'Sale!', 'carousel-slider' ) . '</span>', $product );
 		}
 
-		// Show Price
+		// Show Price.
 		if ( $settings['show_price'] ) {
 			$price_html = '<span class="price">' . $product->get_price_html() . '</span>';
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo apply_filters( 'carousel_slider_product_price', $price_html, $product );
 		}
 
-		// Show button
+		// Show button.
 		if ( $settings['show_cart_button'] ) {
 			echo '<div style="clear: both;"></div>';
 			woocommerce_template_loop_add_to_cart();
@@ -180,8 +200,8 @@ class View extends AbstractView {
 	/**
 	 * Get product slider item
 	 *
-	 * @param WC_Product $product
-	 * @param array      $settings
+	 * @param WC_Product $product The WC_Product object.
+	 * @param array      $settings Settings array.
 	 *
 	 * @return string
 	 */
@@ -215,6 +235,7 @@ class View extends AbstractView {
 		$categories = ProductCarouselHelper::product_categories();
 
 		ob_start();
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $this->start_wrapper_html();
 		foreach ( $categories as $category ) {
 			echo '<div class="product carousel-slider__product">';
@@ -226,6 +247,7 @@ class View extends AbstractView {
 			echo '</div>' . PHP_EOL;
 		}
 
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $this->end_wrapper_html();
 		$html = ob_get_clean();
 

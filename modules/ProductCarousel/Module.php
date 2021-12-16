@@ -6,6 +6,11 @@ use WC_Product;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Module class
+ *
+ * @package Modules/ProductCarousel
+ */
 class Module {
 	/**
 	 * The instance of the class
@@ -40,7 +45,7 @@ class Module {
 	/**
 	 * Register view
 	 *
-	 * @param array $views
+	 * @param array $views Registered views.
 	 *
 	 * @return array
 	 */
@@ -53,13 +58,13 @@ class Module {
 	/**
 	 * Show quick view button on product slider
 	 *
-	 * @param WC_Product $product
-	 * @param int        $slider_id
+	 * @param WC_Product $product The WC_Product object.
+	 * @param int        $slider_id The slider id.
 	 */
 	public static function quick_view_button( $product, $slider_id ) {
 		$_show_btn = get_post_meta( $slider_id, '_product_quick_view', true );
 
-		if ( $_show_btn == 'on' ) {
+		if ( 'on' === $_show_btn ) {
 			wp_enqueue_script( 'magnific-popup' );
 
 			$quick_view_html  = '<div style="clear: both;"></div>';
@@ -69,6 +74,7 @@ class Module {
 				$product->get_id(),
 				__( 'Quick View', 'carousel-slider' )
 			);
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo apply_filters( 'carousel_slider_product_quick_view', $quick_view_html, $product );
 		}
 	}
@@ -76,12 +82,12 @@ class Module {
 	/**
 	 * Show YITH Wishlist button on product slider
 	 *
-	 * @param WC_Product $product
-	 * @param $slider_id
+	 * @param WC_Product $product The WC_Product object.
+	 * @param int        $slider_id The slider id.
 	 */
 	public static function wish_list_button( $product, $slider_id ) {
 		$_product_wish_list = get_post_meta( $slider_id, '_product_wishlist', true );
-		if ( class_exists( 'YITH_WCWL' ) && $_product_wish_list == 'on' ) {
+		if ( class_exists( 'YITH_WCWL' ) && 'on' === $_product_wish_list ) {
 			echo do_shortcode( '[yith_wcwl_add_to_wishlist product_id="' . $product->get_id() . '"]' );
 		}
 	}
@@ -101,6 +107,7 @@ class Module {
 		global $product;
 		$product = wc_get_product( intval( $_GET['product_id'] ) );
 		$html    = static::get_quick_view_html( $product );
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo apply_filters( 'carousel_slider/product_quick_view_html', $html, $product );
 		wp_die();
 	}
@@ -108,19 +115,22 @@ class Module {
 	/**
 	 * Get quick view html
 	 *
-	 * @param WC_Product $product
+	 * @param WC_Product $product The WC_Product object.
 	 *
 	 * @return string
 	 */
 	public static function get_quick_view_html( WC_Product $product ): string {
 		ob_start();
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$slider_id = isset( $_GET['slide_id'] ) ? intval( $_GET['slide_id'] ) : 0;
 		?>
-		<div id="pmid-<?php echo intval( $_GET['slide_id'] ); ?>" class="product carousel-slider__product-modal">
+		<div id="pmid-<?php echo esc_attr( $slider_id ); ?>" class="product carousel-slider__product-modal">
 
 			<div class="images">
 				<?php echo get_the_post_thumbnail( $product->get_id(), 'medium_large' ); ?>
 				<?php if ( $product->is_on_sale() ) : ?>
 					<?php
+					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo apply_filters(
 						'woocommerce_sale_flash',
 						'<span class="onsale">' . __( 'Sale!', 'carousel-slider' ) . '</span>',
@@ -137,16 +147,25 @@ class Module {
 				</h1>
 
 				<div class="woocommerce-product-rating">
-					<?php echo wc_get_rating_html( $product->get_average_rating() ); ?>
+					<?php
+					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo wc_get_rating_html( $product->get_average_rating() );
+					?>
 				</div>
 
 				<div class="price">
-					<?php echo $product->get_price_html(); ?>
+					<?php
+					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo $product->get_price_html();
+					?>
 				</div>
 
 				<div class="description">
 					<div style="clear: both;"></div>
-					<?php echo apply_filters( 'woocommerce_short_description', $product->get_description() ); ?>
+					<?php
+					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					echo apply_filters( 'woocommerce_short_description', $product->get_description() );
+					?>
 				</div>
 
 				<div>

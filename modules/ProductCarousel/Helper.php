@@ -7,12 +7,17 @@ use WP_Term;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Helper class
+ *
+ * @package Modules/ProductCarousel
+ */
 class Helper {
 
 	/**
 	 * List all (or limited) product categories.
 	 *
-	 * @param array $args
+	 * @param array $args Optional arguments.
 	 *
 	 * @return array|WP_Term[]
 	 */
@@ -34,8 +39,8 @@ class Helper {
 	/**
 	 * Format term slug
 	 *
-	 * @param array  $tags
-	 * @param string $taxonomy
+	 * @param array  $tags List of term slug or term id.
+	 * @param string $taxonomy Taxonomy slug.
 	 *
 	 * @return array
 	 */
@@ -64,7 +69,7 @@ class Helper {
 	/**
 	 * Get product quick view url
 	 *
-	 * @param int $product_id
+	 * @param int $product_id The product id.
 	 *
 	 * @return string
 	 */
@@ -82,7 +87,7 @@ class Helper {
 	/**
 	 * Parse arguments
 	 *
-	 * @param array $args
+	 * @param array $args Arguments.
 	 *
 	 * @return array
 	 */
@@ -104,8 +109,8 @@ class Helper {
 	/**
 	 * Get products
 	 *
-	 * @param int   $slider_id
-	 * @param array $args
+	 * @param int   $slider_id The slider id.
+	 * @param array $args Arguments.
 	 *
 	 * @return array|WC_Product[]
 	 */
@@ -128,13 +133,15 @@ class Helper {
 	}
 
 	/**
-	 * @param string $query_type
-	 * @param array  $args
+	 * Add top-rated query args.
+	 *
+	 * @param string $query_type Query type.
+	 * @param array  $args Query arguments.
 	 *
 	 * @return void
 	 */
 	protected static function add_top_rated_query_args( string $query_type, array &$args ) {
-		if ( $query_type == 'top_rated' ) {
+		if ( 'top_rated' === $query_type ) {
 			$args['order']    = 'DESC';
 			$args['orderby']  = 'meta_value_num';
 			$args['meta_key'] = '_wc_average_rating';
@@ -142,38 +149,44 @@ class Helper {
 	}
 
 	/**
-	 * @param string $query_type
-	 * @param array  $args
+	 * Add on sale query args.
+	 *
+	 * @param string $query_type Query type.
+	 * @param array  $args Query arguments.
 	 *
 	 * @return void
 	 */
 	protected static function add_on_sale_query_args( string $query_type, array &$args ) {
-		if ( $query_type == 'sale' ) {
+		if ( 'sale' === $query_type ) {
 			$args['include'] = array_merge( [ 0 ], wc_get_product_ids_on_sale() );
 		}
 	}
 
 	/**
-	 * @param string $query_type
-	 * @param array  $args
+	 * Add recent product query args.
+	 *
+	 * @param string $query_type Query type.
+	 * @param array  $args Query arguments.
 	 *
 	 * @return void
 	 */
 	protected static function add_recent_product_query_args( string $query_type, array &$args ) {
-		if ( $query_type == 'recent' ) {
+		if ( 'recent' === $query_type ) {
 			$args['order']   = 'DESC';
 			$args['orderby'] = 'date';
 		}
 	}
 
 	/**
-	 * @param string $query_type
-	 * @param array  $args
+	 * Add bestselling product query args.
+	 *
+	 * @param string $query_type Query type.
+	 * @param array  $args Query arguments.
 	 *
 	 * @return void
 	 */
 	protected static function add_best_selling_query_args( string $query_type, array &$args ) {
-		if ( $query_type == 'best_selling' ) {
+		if ( 'best_selling' === $query_type ) {
 			$args['order']    = 'DESC';
 			$args['orderby']  = 'meta_value_num';
 			$args['meta_key'] = 'total_sales';
@@ -181,49 +194,57 @@ class Helper {
 	}
 
 	/**
-	 * @param string $query_type
-	 * @param array  $args
+	 * Add featured product query args.
+	 *
+	 * @param string $query_type Query type.
+	 * @param array  $args Query arguments.
 	 *
 	 * @return void
 	 */
 	protected static function add_featured_product_query_args( string $query_type, array &$args ) {
-		if ( $query_type == 'featured' ) {
+		if ( 'featured' === $query_type ) {
 			$args['featured'] = true;
 		}
 	}
 
 	/**
-	 * @param Setting $setting
-	 * @param array   $args
+	 * Add product tags query args.
+	 *
+	 * @param Setting $setting The Setting object.
+	 * @param array   $args Query arguments.
 	 *
 	 * @return void
 	 */
 	protected static function add_product_tags_query_args( Setting $setting, array &$args ) {
-		if ( $setting->get_query_type() == 'product_tags' ) {
+		if ( 'product_tags' === $setting->get_query_type() ) {
 			$args['tag'] = $setting->get_tags_slug();
 		}
 	}
 
 	/**
-	 * @param Setting $setting
-	 * @param array   $args
+	 * Add product categories query args.
+	 *
+	 * @param Setting $setting The Setting object.
+	 * @param array   $args Query arguments.
 	 *
 	 * @return void
 	 */
 	protected static function add_product_categories_query_args( Setting $setting, array &$args ) {
-		if ( $setting->get_query_type() == 'product_categories' ) {
+		if ( 'product_categories' === $setting->get_query_type() ) {
 			$args['category'] = $setting->get_categories_slug();
 		}
 	}
 
 	/**
-	 * @param Setting $setting
-	 * @param array   $args
+	 * Add specific product query args.
+	 *
+	 * @param Setting $setting The Setting object.
+	 * @param array   $args Query arguments.
 	 *
 	 * @return void
 	 */
 	protected static function add_specific_products_query_args( Setting $setting, array &$args ) {
-		if ( $setting->get_query_type() == 'specific_products' ) {
+		if ( 'specific_products' === $setting->get_query_type() ) {
 			$args['include'] = $setting->get_prop( 'product_in' );
 		}
 	}

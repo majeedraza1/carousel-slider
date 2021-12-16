@@ -7,6 +7,11 @@ use CarouselSlider\Helper;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Template class
+ *
+ * @package Modules/ProductCarousel
+ */
 class Template extends AbstractTemplate {
 
 	/**
@@ -18,7 +23,7 @@ class Template extends AbstractTemplate {
 		return wp_parse_args(
 			[
 				'_slide_type'                => 'product-carousel',
-				// Product Carousel Settings
+				// Product Carousel Settings.
 				'_product_query_type'        => 'query_product',
 				'_product_query'             => 'recent',
 				'_product_categories'        => '',
@@ -43,8 +48,8 @@ class Template extends AbstractTemplate {
 	/**
 	 * Create gallery image carousel with random images
 	 *
-	 * @param string $slider_title
-	 * @param array  $args
+	 * @param string $slider_title The slider title.
+	 * @param array  $args Arguments.
 	 *
 	 * @return int The post ID on success. The value 0 on failure.
 	 */

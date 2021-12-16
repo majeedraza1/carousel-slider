@@ -5,8 +5,18 @@ namespace CarouselSlider\Modules\ProductCarousel;
 use CarouselSlider\Abstracts\SliderSetting;
 use CarouselSlider\Helper as GlobalHelper;
 
+/**
+ * Setting class
+ *
+ * @package Modules/ProductCarousel
+ */
 class Setting extends SliderSetting {
 
+	/**
+	 * Available types
+	 *
+	 * @var string[]
+	 */
 	protected static $types = [
 		'product_categories_list',
 		'product_categories',
@@ -26,14 +36,14 @@ class Setting extends SliderSetting {
 	 */
 	public function get_query_type(): string {
 		$slide_type = $this->get_prop( 'product_query_type' );
-		// For backward compatibility of typo
+		// For backward compatibility of typo.
 		$slide_type    = str_replace( 'query_porduct', 'query_product', $slide_type );
 		$product_query = $this->get_prop( 'product_query' );
-		if ( 'query_product' == $slide_type ) {
+		if ( 'query_product' === $slide_type ) {
 			$slide_type = $product_query;
 		}
 
-		return in_array( $slide_type, self::$types ) ? $slide_type : 'recent';
+		return in_array( $slide_type, self::$types, true ) ? $slide_type : 'recent';
 	}
 
 	/**
@@ -59,6 +69,8 @@ class Setting extends SliderSetting {
 	}
 
 	/**
+	 * Default properties
+	 *
 	 * @inerhitDoc
 	 */
 	public static function props(): array {
