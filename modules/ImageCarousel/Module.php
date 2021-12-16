@@ -7,6 +7,11 @@ use WP_Post;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Module class
+ *
+ * @package Modules/ImageCarousel
+ */
 class Module {
 	/**
 	 * The instance of the class
@@ -27,7 +32,7 @@ class Module {
 			add_action( 'carousel_slider/save_slider', [ self::$instance, 'save_slider' ] );
 			add_filter( 'carousel_slider/register_view', [ self::$instance, 'view' ] );
 
-			// Add custom link to media gallery
+			// Add custom link to media gallery.
 			add_filter( 'attachment_fields_to_edit', [ self::$instance, 'attachment_fields_to_edit' ], 10, 2 );
 			add_filter( 'attachment_fields_to_save', [ self::$instance, 'attachment_fields_to_save' ], 10, 2 );
 
@@ -40,7 +45,7 @@ class Module {
 	/**
 	 * Register view
 	 *
-	 * @param array $views
+	 * @param array $views Registered views.
 	 *
 	 * @return array
 	 */
@@ -54,19 +59,22 @@ class Module {
 	/**
 	 * Save slider info
 	 *
-	 * @param int $slider_id
+	 * @param int $slider_id The slider id.
 	 */
 	public function save_slider( int $slider_id ) {
-		if ( isset( $_POST['_images_urls'] ) ) {
-			$url      = $_POST['_images_urls']['url'];
-			$title    = $_POST['_images_urls']['title'];
-			$caption  = $_POST['_images_urls']['caption'];
-			$alt      = $_POST['_images_urls']['alt'];
-			$link_url = $_POST['_images_urls']['link_url'];
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$images_urls = isset( $_POST['_images_urls'] ) && is_array( $_POST['_images_urls'] ) ? $_POST['_images_urls'] : [];
+		if ( count( $images_urls ) ) {
+			$url         = $images_urls['url'] ?? [];
+			$title       = $images_urls['title'] ?? [];
+			$caption     = $images_urls['caption'] ?? [];
+			$alt         = $images_urls['alt'] ?? [];
+			$link_url    = $images_urls['link_url'] ?? [];
+			$total_items = count( $url );
 
 			$urls = array();
 
-			for ( $i = 0; $i < count( $url ); $i ++ ) {
+			for ( $i = 0; $i < $total_items; $i ++ ) {
 				$urls[] = array(
 					'url'      => esc_url_raw( $url[ $i ] ),
 					'title'    => sanitize_text_field( $title[ $i ] ),
@@ -83,8 +91,8 @@ class Module {
 	/**
 	 * Adding our custom fields to the $form_fields array
 	 *
-	 * @param array   $form_fields
-	 * @param WP_Post $post
+	 * @param array   $form_fields The form fields.
+	 * @param WP_Post $post The WP_Post object.
 	 *
 	 * @return array
 	 */
@@ -107,8 +115,8 @@ class Module {
 	/**
 	 * Save custom field value
 	 *
-	 * @param array $post
-	 * @param array $attachment
+	 * @param array $post The post object as array.
+	 * @param array $attachment Attachment data.
 	 *
 	 * @return array
 	 */

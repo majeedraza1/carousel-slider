@@ -6,6 +6,11 @@ use CarouselSlider\Abstracts\AbstractTemplate;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Template class
+ *
+ * @package Modules/ImageCarousel
+ */
 class Template extends AbstractTemplate {
 
 	/**
@@ -17,7 +22,7 @@ class Template extends AbstractTemplate {
 		return wp_parse_args(
 			[
 				'_slide_type'              => 'image-carousel',
-				// Image Carousel Settings
+				// Image Carousel Settings.
 				'_show_attachment_title'   => 'off',
 				'_show_attachment_caption' => 'off',
 				'_image_lightbox'          => 'on',
@@ -30,12 +35,12 @@ class Template extends AbstractTemplate {
 	/**
 	 * Create gallery image carousel with random images
 	 *
-	 * @param string $slider_title
-	 * @param array  $args
+	 * @param string $slider_title The slider title.
+	 * @param array  $args Arguments.
 	 *
 	 * @return int The post ID on success. The value 0 on failure.
 	 */
-	public static function create( $slider_title = null, $args = [] ): int {
+	public static function create( $slider_title = '', $args = [] ): int {
 		$images = self::get_images();
 		$images = array_slice( $images, 0, 10 );
 		$ids    = wp_list_pluck( $images, 'id' );

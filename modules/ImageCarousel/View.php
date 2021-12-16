@@ -8,9 +8,16 @@ use WP_Post;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * View class
+ *
+ * @package Modules/ImageCarousel
+ */
 class View extends AbstractView {
 
 	/**
+	 * Render html content
+	 *
 	 * @inheritDoc
 	 */
 	public function render(): string {
@@ -24,9 +31,9 @@ class View extends AbstractView {
 			shuffle( $ids );
 		}
 		$image_target            = get_post_meta( $slider_id, '_image_target', true );
-		$image_target            = in_array( $image_target, [ '_self', '_blank' ] ) ? $image_target : '_self';
+		$image_target            = in_array( $image_target, [ '_self', '_blank' ], true ) ? $image_target : '_self';
 		$image_size              = get_post_meta( $slider_id, '_image_size', true );
-		$image_size              = in_array( $image_size, get_intermediate_image_sizes() ) ? $image_size : 'medium_large';
+		$image_size              = in_array( $image_size, get_intermediate_image_sizes(), true ) ? $image_size : 'medium_large';
 		$lazy_load_image         = Validate::checked( get_post_meta( $slider_id, '_lazy_load_image', true ) );
 		$show_attachment_title   = Validate::checked( get_post_meta( $slider_id, '_show_attachment_title', true ) );
 		$show_attachment_caption = Validate::checked( get_post_meta( $slider_id, '_show_attachment_caption', true ) );
@@ -75,14 +82,16 @@ class View extends AbstractView {
 	}
 
 	/**
-	 * @param int    $image_id
-	 * @param string $image_size
-	 * @param bool   $lazy_load_image
+	 * Get image html
+	 *
+	 * @param int    $image_id The image id.
+	 * @param string $image_size The image size.
+	 * @param bool   $lazy_load_image Lazy load image.
 	 *
 	 * @return string
 	 */
 	protected function get_image_html( int $image_id, string $image_size, bool $lazy_load_image ): string {
-		$image_alt_text = trim( strip_tags( get_post_meta( $image_id, '_wp_attachment_image_alt', true ) ) );
+		$image_alt_text = trim( wp_strip_all_tags( get_post_meta( $image_id, '_wp_attachment_image_alt', true ) ) );
 		if ( $lazy_load_image ) {
 			$image_src = wp_get_attachment_image_src( $image_id, $image_size );
 
@@ -100,9 +109,11 @@ class View extends AbstractView {
 	}
 
 	/**
-	 * @param WP_Post $post
-	 * @param bool    $show_title
-	 * @param bool    $show_caption
+	 * Get caption html
+	 *
+	 * @param WP_Post $post The WP_Post object.
+	 * @param bool    $show_title Show title.
+	 * @param bool    $show_caption Show caption.
 	 *
 	 * @return string
 	 */

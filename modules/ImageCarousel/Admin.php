@@ -6,6 +6,11 @@ use CarouselSlider\Supports\MetaBoxForm;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Admin class
+ *
+ * @package Modules/ImageCarousel
+ */
 class Admin {
 	/**
 	 * The instance of the class
@@ -32,23 +37,23 @@ class Admin {
 	/**
 	 * Show meta box content for product carousel
 	 *
-	 * @param int    $slider_id
-	 * @param string $slider_type
+	 * @param int    $slider_id The slider id.
+	 * @param string $slider_type The slider type.
 	 */
 	public function meta_box_content( int $slider_id, string $slider_type ) {
-		$metabox       = new MetaBoxForm();
-		$show_settings = in_array( $slider_type, [ 'image-carousel', 'image-carousel-url' ] );
+		$form          = new MetaBoxForm();
+		$show_settings = in_array( $slider_type, [ 'image-carousel', 'image-carousel-url' ], true );
 		$images_urls   = get_post_meta( $slider_id, '_images_urls', true );
 		?>
 		<div data-id="open" id="section_url_images_settings" class="shapla-toggle shapla-toggle--stroke"
-			 style="display: <?php echo $slider_type != 'image-carousel-url' ? 'none' : 'block'; ?>">
+			style="display: <?php echo 'image-carousel-url' !== $slider_type ? 'none' : 'block'; ?>">
 			<span class="shapla-toggle-title">
 				<?php esc_html_e( 'URL Images', 'carousel-slider' ); ?>
 			</span>
 			<div class="shapla-toggle-inner">
 				<div class="shapla-toggle-content">
 					<?php
-					$metabox->images_url(
+					$form->images_url(
 						array(
 							'id'   => '_images_urls',
 							'name' => esc_html__( 'Images URLs', 'carousel-slider' ),
@@ -60,21 +65,21 @@ class Admin {
 			</div>
 		</div>
 		<div data-id="open" id="section_images_settings" class="shapla-toggle shapla-toggle--stroke"
-			 style="display: <?php echo $slider_type != 'image-carousel' ? 'none' : 'block'; ?>">
+			style="display: <?php echo 'image-carousel' !== $slider_type ? 'none' : 'block'; ?>">
 			<span class="shapla-toggle-title">
 				<?php esc_html_e( 'Media Images', 'carousel-slider' ); ?>
 			</span>
 			<div class="shapla-toggle-inner">
 				<div class="shapla-toggle-content">
 					<?php
-					$metabox->images_gallery(
+					$form->images_gallery(
 						[
 							'id'   => '_wpdh_image_ids',
 							'name' => esc_html__( 'Carousel Images', 'carousel-slider' ),
 							'desc' => esc_html__( 'Choose carousel images from media library.', 'carousel-slider' ),
 						]
 					);
-					$metabox->checkbox(
+					$form->checkbox(
 						[
 							'id'    => '_shuffle_images',
 							'name'  => esc_html__( 'Shuffle', 'carousel-slider' ),
@@ -88,14 +93,14 @@ class Admin {
 			</div>
 		</div>
 		<div data-id="open" id="section_images_general_settings" class="shapla-toggle shapla-toggle--stroke"
-			 style="display: <?php echo $show_settings ? 'block' : 'none'; ?>">
+			style="display: <?php echo $show_settings ? 'block' : 'none'; ?>">
 			<span class="shapla-toggle-title">
 				<?php esc_html_e( 'Image Carousel Settings', 'carousel-slider' ); ?>
 			</span>
 			<div class="shapla-toggle-inner">
 				<div class="shapla-toggle-content">
 					<?php
-					$metabox->checkbox(
+					$form->checkbox(
 						array(
 							'id'    => '_show_attachment_title',
 							'name'  => esc_html__( 'Show Image Title', 'carousel-slider' ),
@@ -104,7 +109,7 @@ class Admin {
 							'std'   => 'off',
 						)
 					);
-					$metabox->checkbox(
+					$form->checkbox(
 						array(
 							'id'    => '_show_attachment_caption',
 							'name'  => esc_html__( 'Show Image Caption', 'carousel-slider' ),
@@ -113,7 +118,7 @@ class Admin {
 							'std'   => 'off',
 						)
 					);
-					$metabox->select(
+					$form->select(
 						array(
 							'id'      => '_image_target',
 							'name'    => esc_html__( 'Image Target', 'carousel-slider' ),
@@ -125,7 +130,7 @@ class Admin {
 							),
 						)
 					);
-					$metabox->checkbox(
+					$form->checkbox(
 						array(
 							'id'    => '_image_lightbox',
 							'name'  => esc_html__( 'Show Lightbox Gallery', 'carousel-slider' ),
@@ -155,54 +160,53 @@ class Admin {
 								if ( is_array( $images_urls ) ) :
 									foreach ( $images_urls as $image ) :
 										?>
-									<div class="media-url--column shapla-column is-12">
-										<div class="carousel_slider-fields media-url-form-field">
-											<div class="media-url-form-field__content">
-												<label class="setting media-url-form-field__item">
+										<div class="media-url--column shapla-column is-12">
+											<div class="carousel_slider-fields media-url-form-field">
+												<div class="media-url-form-field__content">
+													<label class="setting media-url-form-field__item">
 													<span
 														class="name"><?php esc_html_e( 'URL', 'carousel-slider' ); ?></span>
-													<input type="url" name="_images_urls[url][]"
-														   value="<?php echo $image['url']; ?>"
-														   autocomplete="off">
-												</label>
-												<label class="setting media-url-form-field__item">
+														<input type="url" name="_images_urls[url][]"
+															value="<?php echo esc_url( $image['url'] ); ?>" autocomplete="off">
+													</label>
+													<label class="setting media-url-form-field__item">
 													<span
 														class="name"><?php esc_html_e( 'Title', 'carousel-slider' ); ?></span>
-													<input type="text" name="_images_urls[title][]"
-														   value="<?php echo $image['title']; ?>"
-														   autocomplete="off">
-												</label>
-												<label class="setting media-url-form-field__item">
+														<input type="text" name="_images_urls[title][]"
+															value="<?php echo esc_attr( $image['title'] ); ?>" autocomplete="off">
+													</label>
+													<label class="setting media-url-form-field__item">
 													<span
 														class="name"><?php esc_html_e( 'Caption', 'carousel-slider' ); ?></span>
-													<textarea
-														name="_images_urls[caption][]"><?php echo $image['caption']; ?></textarea>
-												</label>
-												<label class="setting media-url-form-field__item">
+														<textarea name="_images_urls[caption][]"><?php echo esc_textarea( $image['caption'] ); ?></textarea>
+													</label>
+													<label class="setting media-url-form-field__item">
 													<span
 														class="name"><?php esc_html_e( 'Alt Text', 'carousel-slider' ); ?></span>
-													<input type="text" name="_images_urls[alt][]"
-														   value="<?php echo $image['alt']; ?>"
-														   autocomplete="off">
-												</label>
-												<label class="setting media-url-form-field__item">
+														<input type="text" name="_images_urls[alt][]"
+															value="<?php echo esc_attr( $image['alt'] ); ?>"
+															autocomplete="off">
+													</label>
+													<label class="setting media-url-form-field__item">
 													<span
 														class="name"><?php esc_html_e( 'Link To URL', 'carousel-slider' ); ?></span>
-													<input type="text" name="_images_urls[link_url][]"
-														   value="<?php echo $image['link_url']; ?>"
-														   autocomplete="off">
-												</label>
-											</div>
-											<div class="media-url-form-field__actions">
-												<span><span class="dashicons dashicons-move"></span></span>
-												<span class="add_row"><span class="dashicons dashicons-plus-alt"></span></span>
-												<span class="delete_row"><span class="dashicons dashicons-trash"></span></span>
+														<input type="text" name="_images_urls[link_url][]"
+															value="<?php echo esc_url( $image['link_url'] ); ?>"
+															autocomplete="off">
+													</label>
+												</div>
+												<div class="media-url-form-field__actions">
+													<span><span class="dashicons dashicons-move"></span></span>
+													<span class="add_row"><span
+															class="dashicons dashicons-plus-alt"></span></span>
+													<span class="delete_row"><span
+															class="dashicons dashicons-trash"></span></span>
+												</div>
 											</div>
 										</div>
-									</div>
-																	<?php
-								endforeach;
-endif;
+										<?php
+									endforeach;
+								endif;
 								?>
 								<div class="shapla-column is-12">
 									<button class="button add_row">Add Item</button>
