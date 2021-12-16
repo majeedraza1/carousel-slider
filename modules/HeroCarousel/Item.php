@@ -9,6 +9,11 @@ use CarouselSlider\Supports\Validate;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Item class
+ *
+ * @package Modules/HeroCarousel
+ */
 class Item extends Data {
 	/**
 	 * Default content
@@ -16,17 +21,17 @@ class Item extends Data {
 	 * @var string[]
 	 */
 	protected static $default = [
-		// Slide Content
+		// Slide Content.
 		'slide_heading'            => '',
 		'slide_description'        => '',
-		// Slide Background
+		// Slide Background.
 		'img_id'                   => '',
 		'img_bg_position'          => 'center center',
 		'img_bg_size'              => 'contain',
 		'bg_color'                 => 'rgba(0,0,0,0.6)',
 		'ken_burns_effect'         => '',
 		'bg_overlay'               => '',
-		// Slide Style
+		// Slide Style.
 		'content_alignment'        => 'center',
 		'heading_font_size'        => '40',
 		'heading_gutter'           => '30px',
@@ -34,11 +39,11 @@ class Item extends Data {
 		'description_font_size'    => '20',
 		'description_gutter'       => '30px',
 		'description_color'        => '#ffffff',
-		// Slide Link
+		// Slide Link.
 		'link_type'                => 'none',
 		'slide_link'               => '',
 		'link_target'              => '_self',
-		// Slide Button #1
+		// Slide Button #1.
 		'button_one_text'          => '',
 		'button_one_url'           => '',
 		'button_one_target'        => '_self',
@@ -48,7 +53,7 @@ class Item extends Data {
 		'button_one_border_radius' => '0px',
 		'button_one_bg_color'      => '#ffffff',
 		'button_one_color'         => '#323232',
-		// Slide Button #2
+		// Slide Button #2.
 		'button_two_text'          => '',
 		'button_two_url'           => '',
 		'button_two_target'        => '_self',
@@ -70,8 +75,8 @@ class Item extends Data {
 	/**
 	 * Class constructor.
 	 *
-	 * @param array $args
-	 * @param array $slider_settings
+	 * @param array $args Optional arguments.
+	 * @param array $slider_settings Slider settings.
 	 */
 	public function __construct( array $args = [], array $slider_settings = [] ) {
 		$this->data            = wp_parse_args( $args, self::get_default() );
@@ -90,7 +95,7 @@ class Item extends Data {
 	/**
 	 * Sanitize item data
 	 *
-	 * @param array $data
+	 * @param array $data The data to be sanitized.
 	 *
 	 * @return array
 	 */
@@ -108,13 +113,13 @@ class Item extends Data {
 		$data          = wp_parse_args( $data, self::get_default() );
 		$sanitize_data = [];
 		foreach ( $data as $key => $value ) {
-			if ( in_array( $key, [ 'slide_heading', 'slide_description' ] ) ) {
+			if ( in_array( $key, [ 'slide_heading', 'slide_description' ], true ) ) {
 				$sanitize_data[ $key ] = Sanitize::html( $value );
-			} elseif ( in_array( $key, [ 'img_id', 'heading_font_size', 'description_font_size' ] ) ) {
+			} elseif ( in_array( $key, [ 'img_id', 'heading_font_size', 'description_font_size' ], true ) ) {
 				$sanitize_data[ $key ] = Sanitize::int( $value );
-			} elseif ( in_array( $key, [ 'slide_link', 'button_one_url', 'button_two_url' ] ) ) {
+			} elseif ( in_array( $key, [ 'slide_link', 'button_one_url', 'button_two_url' ], true ) ) {
 				$sanitize_data[ $key ] = Sanitize::url( $value );
-			} elseif ( in_array( $key, $color_fields ) ) {
+			} elseif ( in_array( $key, $color_fields, true ) ) {
 				$sanitize_data[ $key ] = Sanitize::color( $value );
 			} else {
 				$sanitize_data[ $key ] = Sanitize::text( $value );
@@ -131,7 +136,7 @@ class Item extends Data {
 	 */
 	public function lazy_load_image(): bool {
 		return ! isset( $this->slider_settings['lazy_load_image'] ) ||
-			   Validate::checked( $this->slider_settings['lazy_load_image'] );
+			Validate::checked( $this->slider_settings['lazy_load_image'] );
 	}
 
 	/**
@@ -164,7 +169,7 @@ class Item extends Data {
 	public function get_link_type(): string {
 		$link_type = $this->get_prop( 'link_type', 'full' );
 
-		return in_array( $link_type, [ 'full', 'button' ] ) ? $link_type : 'full';
+		return in_array( $link_type, [ 'full', 'button' ], true ) ? $link_type : 'full';
 	}
 
 	/**
@@ -212,7 +217,7 @@ class Item extends Data {
 		$link_type    = $this->get_link_type();
 		$slide_link   = $this->get_prop( 'slide_link' );
 		$link_target  = $this->get_prop( 'link_target', '_self' );
-		$is_full_link = $link_type == 'full' && Validate::url( $slide_link );
+		$is_full_link = 'full' === $link_type && Validate::url( $slide_link );
 		$slide_index  = $this->get_item_id();
 		$html         = '';
 
@@ -236,7 +241,7 @@ class Item extends Data {
 
 		$html .= $this->get_cell_inner_start();
 
-		// Background Overlay
+		// Background Overlay.
 		$bg_overlay = $this->get_prop( 'bg_overlay' );
 		if ( ! empty( $bg_overlay ) ) {
 			$overlay_style = 'background-color: ' . $bg_overlay . ';';
@@ -247,13 +252,13 @@ class Item extends Data {
 		$content_style = 'max-width:' . $this->get_content_width();
 		$html         .= '<div class="carousel-slider-hero__cell__content" style="' . $content_style . '">';
 
-		// Slide Heading
+		// Slide Heading.
 		$html .= $this->get_heading();
 
-		// Slide Description
+		// Slide Description.
 		$html .= $this->get_description();
 
-		if ( $link_type == 'button' ) {
+		if ( 'button' === $link_type ) {
 			$html .= '<div class="carousel-slider-hero__cell__buttons">';
 			$html .= $this->get_button_one();
 			$html .= $this->get_button_two();
@@ -274,7 +279,7 @@ class Item extends Data {
 	 * @return string
 	 */
 	public function get_cell_background(): string {
-		// Slide Background
+		// Slide Background.
 		$img_bg_position  = $this->get_prop( 'img_bg_position' );
 		$img_bg_size      = $this->get_prop( 'img_bg_size' );
 		$bg_color         = $this->get_prop( 'bg_color' );
@@ -300,9 +305,9 @@ class Item extends Data {
 			$_slide_bg_class .= ' owl-lazy';
 		}
 
-		if ( 'zoom-in' == $ken_burns_effect ) {
+		if ( 'zoom-in' === $ken_burns_effect ) {
 			$_slide_bg_class .= ' carousel-slider-hero-ken-in';
-		} elseif ( 'zoom-out' == $ken_burns_effect ) {
+		} elseif ( 'zoom-out' === $ken_burns_effect ) {
 			$_slide_bg_class .= ' carousel-slider-hero-ken-out';
 		}
 
@@ -327,7 +332,7 @@ class Item extends Data {
 	public function get_cell_inner_start(): string {
 		$slide_padding = $this->get_slide_padding();
 		$alignment     = $this->get_prop( 'content_alignment', 'left' );
-		$alignment     = in_array( $alignment, [ 'left', 'center', 'right' ] ) ? $alignment : 'left';
+		$alignment     = in_array( $alignment, [ 'left', 'center', 'right' ], true ) ? $alignment : 'left';
 
 		$classes = [
 			'carousel-slider-hero__cell__inner',

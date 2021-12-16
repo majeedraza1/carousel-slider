@@ -4,6 +4,11 @@ namespace CarouselSlider\Modules\HeroCarousel;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Helper class
+ *
+ * @package Modules/HeroCarousel
+ */
 class Helper {
 	/**
 	 * Get background size
@@ -14,7 +19,7 @@ class Helper {
 		return [
 			'auto'      => 'auto',
 			'contain'   => 'contain',
-			'cover'     => 'cover', // Default
+			'cover'     => 'cover',
 			'100% 100%' => '100%',
 			'100% auto' => '100% width',
 			'auto 100%' => '100% height',
@@ -32,7 +37,7 @@ class Helper {
 			'left center'   => 'left center',
 			'left bottom'   => 'left bottom',
 			'center top'    => 'center top',
-			'center center' => 'center', // Default
+			'center center' => 'center',
 			'center bottom' => 'center bottom',
 			'right top'     => 'right top',
 			'right center'  => 'right center',

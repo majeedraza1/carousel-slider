@@ -6,16 +6,23 @@ use CarouselSlider\Abstracts\AbstractView;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * View class
+ *
+ * @package Modules/HeroCarousel
+ */
 class View extends AbstractView {
 
 	/**
+	 * Render html content
+	 *
 	 * @inheritDoc
 	 */
 	public function render(): string {
 		$slider_id         = $this->get_slider_id();
 		$items             = get_post_meta( $slider_id, '_content_slider', true );
 		$lazy_load_image   = get_post_meta( $slider_id, '_lazy_load_image', true );
-		$be_lazy           = in_array( $lazy_load_image, array( 'on', 'off' ) ) ? $lazy_load_image : 'on';
+		$be_lazy           = in_array( $lazy_load_image, [ 'on', 'off' ], true ) ? $lazy_load_image : 'on';
 		$settings          = get_post_meta( $slider_id, '_content_slider_settings', true );
 		$content_animation = ! empty( $settings['content_animation'] ) ? esc_attr( $settings['content_animation'] ) : '';
 

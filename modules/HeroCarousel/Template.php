@@ -6,6 +6,11 @@ use CarouselSlider\Abstracts\AbstractTemplate;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Template class
+ *
+ * @package Modules/HeroCarousel
+ */
 class Template extends AbstractTemplate {
 
 	/**
@@ -17,7 +22,7 @@ class Template extends AbstractTemplate {
 		return wp_parse_args(
 			[
 				'_slide_type'                  => 'hero-banner-slider',
-				// Responsive Settings
+				// Responsive Settings.
 				'_items_portrait_mobile'       => '1',
 				'_items_small_portrait_tablet' => '1',
 				'_items_portrait_tablet'       => '1',
@@ -51,26 +56,26 @@ class Template extends AbstractTemplate {
 	/**
 	 * Hero Slider Content Settings
 	 *
-	 * @param int   $index
-	 * @param int   $image_id
-	 * @param array $args
+	 * @param int   $index The index number.
+	 * @param int   $image_id Image id.
+	 * @param array $args Additional arguments.
 	 *
 	 * @return array
 	 */
-	protected static function get_content( $index = 0, $image_id = 0, $args = array() ): array {
-		$index   += 1;
+	protected static function get_content( int $index = 0, int $image_id = 0, array $args = array() ): array {
+		++ $index;
 		$settings = [
-			// Slide Content
+			// Slide Content.
 			'slide_heading'            => 'Slide Heading ' . $index,
 			'slide_description'        => 'Slide Description form slide ' . $index,
-			// Slide Background
+			// Slide Background.
 			'img_id'                   => $image_id,
 			'img_bg_position'          => 'center center',
 			'img_bg_size'              => 'cover',
 			'ken_burns_effect'         => ( $index % 2 ) ? 'zoom-in' : 'zoom-out',
 			'bg_color'                 => 'rgba(255,255,255,0.5)',
 			'bg_overlay'               => 'rgba(0,0,0,0.5)',
-			// Slide Style
+			// Slide Style.
 			'content_alignment'        => 'left',
 			'heading_font_size'        => 40,
 			'heading_gutter'           => '30px',
@@ -78,11 +83,11 @@ class Template extends AbstractTemplate {
 			'description_font_size'    => '20',
 			'description_gutter'       => '30px',
 			'description_color'        => '#ffffff',
-			// Slide Link
+			// Slide Link.
 			'link_type'                => 'button',
 			'slide_link'               => '',
 			'link_target'              => '_self',
-			// Slide Button #1
+			// Slide Button #1.
 			'button_one_text'          => 'Button ' . $index,
 			'button_one_url'           => 'https://sayfulislam.com',
 			'button_one_target'        => '_self',
@@ -92,7 +97,7 @@ class Template extends AbstractTemplate {
 			'button_one_border_radius' => '3px',
 			'button_one_bg_color'      => '#00d1b2',
 			'button_one_color'         => '#ffffff',
-			// Slide Button #2
+			// Slide Button #2.
 			'button_two_text'          => '',
 			'button_two_url'           => '',
 			'button_two_target'        => '_self',
@@ -110,8 +115,8 @@ class Template extends AbstractTemplate {
 	/**
 	 * Create hero carousel with random images
 	 *
-	 * @param string $slider_title
-	 * @param array  $args
+	 * @param string $slider_title The slider title.
+	 * @param array  $args Additional arguments.
 	 *
 	 * @return int The post ID on success. The value 0 on failure.
 	 */
@@ -126,16 +131,16 @@ class Template extends AbstractTemplate {
 			return 0;
 		}
 
-		// Update General Settings
+		// Update General Settings.
 		$data = wp_parse_args( $args, self::get_default_settings() );
 		foreach ( $data as $meta_key => $meta_value ) {
 			update_post_meta( $post_id, $meta_key, $meta_value );
 		}
 
-		// Update Content settings
+		// Update Content settings.
 		update_post_meta( $post_id, '_content_slider_settings', self::get_content_settings() );
 
-		// Update Content
+		// Update Content.
 		$images     = self::get_images();
 		$images_ids = wp_list_pluck( $images, 'id' );
 		$images_ids = array_splice( $images_ids, 0, 5 );

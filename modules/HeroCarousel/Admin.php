@@ -8,9 +8,16 @@ use CarouselSlider\Supports\MetaBoxForm;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Admin class
+ *
+ * @package Modules/HeroCarousel
+ */
 class Admin {
 
 	/**
+	 * The instance of the class
+	 *
 	 * @var self
 	 */
 	private static $instance;
@@ -33,20 +40,21 @@ class Admin {
 	/**
 	 * Load meta box content
 	 *
-	 * @param int    $slider_id
-	 * @param string $slide_type
+	 * @param int    $slider_id The slider id.
+	 * @param string $slide_type The slider type.
 	 */
 	public function meta_box_content( int $slider_id, string $slide_type ) {
 		global $post;
 		?>
 		<div data-id="open" id="section_content_carousel" class="shapla-toggle shapla-toggle--stroke"
-			 style="display: <?php echo $slide_type != 'hero-banner-slider' ? 'none' : 'block'; ?>">
+			style="display: <?php echo ( 'hero-banner-slider' !== $slide_type ) ? 'none' : 'block'; ?>">
 			<span class="shapla-toggle-title">
 				<?php esc_html_e( 'Hero Banner Slider', 'carousel-slider' ); ?>
 			</span>
 			<div class="shapla-toggle-inner">
 				<div class="shapla-toggle-content">
-					<button class="button carousel-slider__add-slide" data-post-id="<?php echo $slider_id; ?>">
+					<button class="button carousel-slider__add-slide"
+							data-post-id="<?php echo esc_attr( $slider_id ); ?>">
 						Add Slide
 					</button>
 					<div id="carouselSliderContentInside">
@@ -86,21 +94,19 @@ class Admin {
 	/**
 	 * Item meta box
 	 *
-	 * @param Item $item
-	 * @param int  $total_items
+	 * @param Item $item The Item object.
+	 * @param int  $total_items Total items.
 	 */
 	public static function item_meta_box( Item $item, int $total_items = 0 ) {
+		$title       = sprintf( '%s %s', __( 'Slide', 'carousel-slider' ), $item->get_item_id() + 1 );
+		$action_html = self::get_actions_html( $item->get_slider_id(), $item->get_item_id(), $total_items );
 		?>
 		<div class="shapla-toggle shapla-toggle--normal" data-id="closed">
-			<div class="shapla-toggle-title">
-				<?php printf( '%s %s', esc_html__( 'Slide', 'carousel-slider' ), $item->get_item_id() + 1 ); ?>
-			</div>
+			<div class="shapla-toggle-title"><?php echo esc_html( $title ); ?></div>
 			<div class="shapla-toggle-inner">
 				<div class="shapla-toggle-content">
 
-					<div class="carousel_slider__slide_actions">
-						<?php echo self::get_actions_html( $item->get_slider_id(), $item->get_item_id(), $total_items ); ?>
-					</div>
+					<div class="carousel_slider__slide_actions"><?php echo wp_kses_post( $action_html ); ?></div>
 					<div class="clear" style="width: 100%; margin-bottom: 1rem; height: 1px;"></div>
 
 					<div class="shapla-section shapla-tabs shapla-tabs--stroke">
@@ -109,43 +115,43 @@ class Admin {
 							<ul class="shapla-nav shapla-clearfix">
 								<li>
 									<a href="#carousel-slider-tab-background">
-									<?php
-									esc_html_e(
-										'Slide Background',
-										'carousel-slider'
-									);
-									?>
-											</a>
+										<?php
+										esc_html_e(
+											'Slide Background',
+											'carousel-slider'
+										);
+										?>
+									</a>
 								</li>
 								<li>
 									<a href="#carousel-slider-tab-content">
-									<?php
-									esc_html_e(
-										'Slide Content',
-										'carousel-slider'
-									);
-									?>
-											</a>
+										<?php
+										esc_html_e(
+											'Slide Content',
+											'carousel-slider'
+										);
+										?>
+									</a>
 								</li>
 								<li>
 									<a href="#carousel-slider-tab-link">
-									<?php
-									esc_html_e(
-										'Slide Link',
-										'carousel-slider'
-									);
-									?>
-											</a>
+										<?php
+										esc_html_e(
+											'Slide Link',
+											'carousel-slider'
+										);
+										?>
+									</a>
 								</li>
 								<li>
 									<a href="#carousel-slider-tab-style">
-									<?php
-									esc_html_e(
-										'Slide Style',
-										'carousel-slider'
-									);
-									?>
-											</a>
+										<?php
+										esc_html_e(
+											'Slide Style',
+											'carousel-slider'
+										);
+										?>
+									</a>
 								</li>
 							</ul>
 
@@ -174,12 +180,12 @@ class Admin {
 	/**
 	 * Get loop item content
 	 *
-	 * @param Item $item
+	 * @param Item $item The Item object.
 	 */
 	public static function get_item_tab_content( Item $item ) {
-		$metaBox = new MetaBoxForm();
+		$form = new MetaBoxForm();
 
-		$metaBox->textarea(
+		$form->textarea(
 			[
 				'id'               => 'slide_heading',
 				'name'             => esc_html__( 'Slide Heading', 'carousel-slider' ),
@@ -191,7 +197,7 @@ class Admin {
 				],
 			]
 		);
-		$metaBox->textarea(
+		$form->textarea(
 			[
 				'id'               => 'slide_description',
 				'name'             => esc_html__( 'Slide Description', 'carousel-slider' ),
@@ -208,13 +214,13 @@ class Admin {
 	/**
 	 * Get item tab link
 	 *
-	 * @param Item $item
+	 * @param Item $item The Item object.
 	 */
 	public static function get_item_tab_link( Item $item ) {
-		$metaBox   = new MetaBoxForm();
+		$form      = new MetaBoxForm();
 		$link_type = $item->get_prop( 'link_type', 'full' );
 
-		$metaBox->select(
+		$form->select(
 			[
 				'id'               => 'link_type',
 				'class'            => 'sp-input-text link_type',
@@ -232,8 +238,8 @@ class Admin {
 			]
 		);
 
-		echo '<div class="ContentCarouselLinkFull" style="' . ( $link_type == 'full' ? 'display:block' : 'display:none' ) . '">';
-		$metaBox->text(
+		echo '<div class="ContentCarouselLinkFull" style="' . ( 'full' === $link_type ? 'display:block' : 'display:none' ) . '">';
+		$form->text(
 			[
 				'id'               => 'slide_link',
 				'name'             => esc_html__( 'Slide Link', 'carousel-slider' ),
@@ -244,7 +250,7 @@ class Admin {
 				],
 			]
 		);
-		$metaBox->select(
+		$form->select(
 			[
 				'id'               => 'link_target',
 				'name'             => esc_html__( 'Open Slide Link In New Window', 'carousel-slider' ),
@@ -260,7 +266,7 @@ class Admin {
 		);
 		echo '</div>';
 
-		echo '<div class="ContentCarouselLinkButtons" style="' . ( $link_type == 'button' ? 'display:block' : 'display:none' ) . '">';
+		echo '<div class="ContentCarouselLinkButtons" style="' . ( 'button' === $link_type ? 'display:block' : 'display:none' ) . '">';
 		self::get_item_tab_link_button_one( $item );
 		self::get_item_tab_link_button_two( $item );
 		echo '</div>';
@@ -269,10 +275,10 @@ class Admin {
 	/**
 	 * Get loop item button one link
 	 *
-	 * @param Item $item
+	 * @param Item $item The Item object.
 	 */
 	public static function get_item_tab_link_button_one( Item $item ) {
-		$metaBox = new MetaBoxForm();
+		$form = new MetaBoxForm();
 		?>
 		<div data-id="closed" id="content_carousel_button_one" class="shapla-toggle shapla-toggle--stroke">
 			<span class="shapla-toggle-title">
@@ -281,7 +287,7 @@ class Admin {
 			<div class="shapla-toggle-inner">
 				<div class="shapla-toggle-content">
 					<?php
-					$metaBox->text(
+					$form->text(
 						[
 							'id'               => 'button_one_text',
 							'name'             => esc_html__( 'Button Text', 'carousel-slider' ),
@@ -292,7 +298,7 @@ class Admin {
 							],
 						]
 					);
-					$metaBox->text(
+					$form->text(
 						[
 							'id'               => 'button_one_url',
 							'name'             => esc_html__( 'Button URL', 'carousel-slider' ),
@@ -303,7 +309,7 @@ class Admin {
 							],
 						]
 					);
-					$metaBox->select(
+					$form->select(
 						[
 							'id'               => 'button_one_target',
 							'name'             => esc_html__( 'Open Button Link In', 'carousel-slider' ),
@@ -318,7 +324,7 @@ class Admin {
 							],
 						]
 					);
-					$metaBox->select(
+					$form->select(
 						[
 							'id'               => 'button_one_type',
 							'name'             => esc_html__( 'Button Type', 'carousel-slider' ),
@@ -332,7 +338,7 @@ class Admin {
 							],
 						]
 					);
-					$metaBox->select(
+					$form->select(
 						[
 							'id'               => 'button_one_size',
 							'name'             => esc_html__( 'Button Size', 'carousel-slider' ),
@@ -347,7 +353,7 @@ class Admin {
 							],
 						]
 					);
-					$metaBox->text(
+					$form->text(
 						[
 							'id'               => 'button_one_border_width',
 							'name'             => esc_html__( 'Border Width', 'carousel-slider' ),
@@ -358,7 +364,7 @@ class Admin {
 							],
 						]
 					);
-					$metaBox->text(
+					$form->text(
 						[
 							'id'               => 'button_one_border_radius',
 							'name'             => esc_html__( 'Border Radius', 'carousel-slider' ),
@@ -369,7 +375,7 @@ class Admin {
 							],
 						]
 					);
-					$metaBox->color(
+					$form->color(
 						[
 							'id'               => 'button_one_bg_color',
 							'name'             => esc_html__( 'Button Color', 'carousel-slider' ),
@@ -380,7 +386,7 @@ class Admin {
 							],
 						]
 					);
-					$metaBox->color(
+					$form->color(
 						[
 							'id'               => 'button_one_color',
 							'name'             => esc_html__( 'Button Text Color', 'carousel-slider' ),
@@ -401,10 +407,10 @@ class Admin {
 	/**
 	 * Get loop item button two link
 	 *
-	 * @param Item $item
+	 * @param Item $item The Item object.
 	 */
 	public static function get_item_tab_link_button_two( Item $item ) {
-		$metaBox = new MetaBoxForm();
+		$form = new MetaBoxForm();
 		?>
 		<div data-id="closed" id="content_carousel_button_one" class="shapla-toggle shapla-toggle--stroke">
 			<span class="shapla-toggle-title">
@@ -413,7 +419,7 @@ class Admin {
 			<div class="shapla-toggle-inner">
 				<div class="shapla-toggle-content">
 					<?php
-					$metaBox->text(
+					$form->text(
 						[
 							'id'               => 'button_two_text',
 							'name'             => esc_html__( 'Button Text', 'carousel-slider' ),
@@ -424,7 +430,7 @@ class Admin {
 							],
 						]
 					);
-					$metaBox->text(
+					$form->text(
 						[
 							'id'               => 'button_two_url',
 							'name'             => esc_html__( 'Button URL', 'carousel-slider' ),
@@ -435,7 +441,7 @@ class Admin {
 							],
 						]
 					);
-					$metaBox->select(
+					$form->select(
 						[
 							'id'               => 'button_two_target',
 							'name'             => esc_html__( 'Open Button Link In', 'carousel-slider' ),
@@ -450,7 +456,7 @@ class Admin {
 							],
 						]
 					);
-					$metaBox->select(
+					$form->select(
 						[
 							'id'               => 'button_two_type',
 							'name'             => esc_html__( 'Button Type', 'carousel-slider' ),
@@ -464,7 +470,7 @@ class Admin {
 							],
 						]
 					);
-					$metaBox->select(
+					$form->select(
 						[
 							'id'               => 'button_two_size',
 							'name'             => esc_html__( 'Button Size', 'carousel-slider' ),
@@ -479,7 +485,7 @@ class Admin {
 							],
 						]
 					);
-					$metaBox->text(
+					$form->text(
 						[
 							'id'               => 'button_two_border_width',
 							'name'             => esc_html__( 'Border Width', 'carousel-slider' ),
@@ -490,7 +496,7 @@ class Admin {
 							],
 						]
 					);
-					$metaBox->text(
+					$form->text(
 						[
 							'id'               => 'button_two_border_radius',
 							'name'             => esc_html__( 'Border Radius', 'carousel-slider' ),
@@ -501,7 +507,7 @@ class Admin {
 							],
 						]
 					);
-					$metaBox->color(
+					$form->color(
 						[
 							'id'               => 'button_two_bg_color',
 							'name'             => esc_html__( 'Button Color', 'carousel-slider' ),
@@ -512,7 +518,7 @@ class Admin {
 							],
 						]
 					);
-					$metaBox->color(
+					$form->color(
 						[
 							'id'               => 'button_two_color',
 							'name'             => esc_html__( 'Button Text Color', 'carousel-slider' ),
@@ -533,13 +539,13 @@ class Admin {
 	/**
 	 * Get loop item background
 	 *
-	 * @param Item $item
+	 * @param Item $item The Item object.
 	 */
 	public static function get_item_tab_background( Item $item ) {
-		$metaBox  = new MetaBoxForm();
+		$form     = new MetaBoxForm();
 		$bg_image = wp_get_attachment_image_src( $item->get_prop( 'img_id' ), 'full' );
 
-		// Canvas style
+		// Canvas style.
 		$canvas_style = [
 			'background-repeat'   => 'no-repeat',
 			'background-position' => $item->get_prop( 'img_bg_position', 'center center' ),
@@ -549,19 +555,20 @@ class Admin {
 		if ( is_array( $bg_image ) ) {
 			$canvas_style['background-image'] = 'url(' . $bg_image[0] . ')';
 		}
+		$canvas_style = Helper::array_to_style( $canvas_style );
 		?>
 		<div class="slide_bg_wrapper">
 			<div class="slide-media-left">
 				<div class="slide_thumb">
 					<div class="content_slide_canvas"
-						 style="<?php echo Helper::array_to_style( $canvas_style ); ?>"></div>
+						style="<?php echo esc_attr( $canvas_style ); ?>"></div>
 					<span class="delete-bg-img<?php echo ! is_array( $bg_image ) ? ' hidden' : ''; ?>"
-						  title="<?php esc_html_e( 'Delete the background image for this slide', 'carousel-slider' ); ?>">&times;</span>
+						title="<?php esc_html_e( 'Delete the background image for this slide', 'carousel-slider' ); ?>">&times;</span>
 				</div>
 			</div>
 			<div class="slide-media-right">
 				<?php
-				$metaBox->upload_iframe(
+				$form->upload_iframe(
 					[
 						'id'               => 'img_id',
 						'class'            => 'background_image_id',
@@ -572,7 +579,7 @@ class Admin {
 						],
 					]
 				);
-				$metaBox->select(
+				$form->select(
 					[
 						'id'               => 'img_bg_position',
 						'class'            => 'sp-input-text background_image_position',
@@ -584,7 +591,7 @@ class Admin {
 						],
 					]
 				);
-				$metaBox->select(
+				$form->select(
 					[
 						'id'               => 'img_bg_size',
 						'class'            => 'sp-input-text background_image_size',
@@ -596,7 +603,7 @@ class Admin {
 						],
 					]
 				);
-				$metaBox->select(
+				$form->select(
 					[
 						'id'               => 'ken_burns_effect',
 						'name'             => esc_html__( 'Ken Burns Effect', 'carousel-slider' ),
@@ -607,7 +614,7 @@ class Admin {
 						],
 					]
 				);
-				$metaBox->color(
+				$form->color(
 					[
 						'id'               => 'bg_color',
 						'name'             => esc_html__( 'Background Color', 'carousel-slider' ),
@@ -618,7 +625,7 @@ class Admin {
 						],
 					]
 				);
-				$metaBox->color(
+				$form->color(
 					[
 						'id'               => 'bg_overlay',
 						'name'             => esc_html__( 'Background Overlay', 'carousel-slider' ),
@@ -638,12 +645,12 @@ class Admin {
 	/**
 	 * Get item tab style
 	 *
-	 * @param Item $item
+	 * @param Item $item The Item object.
 	 */
 	public static function get_item_tab_style( Item $item ) {
-		$metaBox = new MetaBoxForm();
+		$form = new MetaBoxForm();
 
-		$metaBox->select(
+		$form->select(
 			[
 				'id'               => 'content_alignment',
 				'name'             => esc_html__( 'Content Alignment', 'carousel-slider' ),
@@ -656,7 +663,7 @@ class Admin {
 				],
 			]
 		);
-		$metaBox->number(
+		$form->number(
 			[
 				'id'               => 'heading_font_size',
 				'name'             => esc_html__( 'Heading Font Size', 'carousel-slider' ),
@@ -668,7 +675,7 @@ class Admin {
 				],
 			]
 		);
-		$metaBox->text(
+		$form->text(
 			[
 				'id'               => 'heading_gutter',
 				'name'             => esc_html__( 'Spacing/Gutter', 'carousel-slider' ),
@@ -680,7 +687,7 @@ class Admin {
 				],
 			]
 		);
-		$metaBox->color(
+		$form->color(
 			[
 				'id'               => 'heading_color',
 				'name'             => esc_html__( 'Heading Color', 'carousel-slider' ),
@@ -692,7 +699,7 @@ class Admin {
 				],
 			]
 		);
-		$metaBox->text(
+		$form->text(
 			[
 				'id'               => 'description_font_size',
 				'name'             => esc_html__( 'Description Font Size', 'carousel-slider' ),
@@ -704,7 +711,7 @@ class Admin {
 				],
 			]
 		);
-		$metaBox->text(
+		$form->text(
 			[
 				'id'               => 'description_gutter',
 				'name'             => esc_html__( 'Description Spacing/Gutter', 'carousel-slider' ),
@@ -716,7 +723,7 @@ class Admin {
 				],
 			]
 		);
-		$metaBox->color(
+		$form->color(
 			[
 				'id'               => 'description_color',
 				'name'             => esc_html__( 'Description Color', 'carousel-slider' ),
@@ -733,15 +740,15 @@ class Admin {
 	/**
 	 * Get action html
 	 *
-	 * @param int $slider_id
-	 * @param int $item_index
-	 * @param int $total_items
+	 * @param int $slider_id The slider id.
+	 * @param int $item_index The slider item index number.
+	 * @param int $total_items Total slide in a slider.
 	 *
 	 * @return string
 	 */
 	public static function get_actions_html( int $slider_id, int $item_index, int $total_items ): string {
-		$can_move_up   = $item_index !== 0;
-		$can_move_down = $item_index !== ( $total_items - 1 );
+		$can_move_up   = 0 !== $item_index;
+		$can_move_down = ( $total_items - 1 ) !== $item_index;
 		$buttons       = [
 			[
 				'action' => 'delete_slide',
@@ -792,7 +799,7 @@ class Admin {
 	/**
 	 * Get content settings
 	 *
-	 * @param int $slider_id
+	 * @param int $slider_id The slider id.
 	 */
 	public static function content_meta_box_settings( int $slider_id ) {
 		$content_settings   = get_post_meta( $slider_id, '_content_slider_settings', true );

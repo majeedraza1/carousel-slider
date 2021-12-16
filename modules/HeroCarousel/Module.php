@@ -6,6 +6,11 @@ use CarouselSlider\Helper;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Module class
+ *
+ * @package Modules/HeroCarousel
+ */
 class Module {
 	/**
 	 * The instance of the class
@@ -36,7 +41,9 @@ class Module {
 	}
 
 	/**
-	 * @param array $views
+	 * Register view for hero carousel
+	 *
+	 * @param array $views List of views.
 	 *
 	 * @return array
 	 */
@@ -49,10 +56,12 @@ class Module {
 	/**
 	 * Save slider content and settings
 	 *
-	 * @param int $slider_id
+	 * @param int $slider_id The slider id.
 	 */
 	public function save_slider( int $slider_id ) {
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( isset( $_POST['carousel_slider_content'] ) ) {
+			// phpcs:ignore WordPress.Security.NonceVerification.Missing
 			$_content_slides = is_array( $_POST['carousel_slider_content'] ) ? $_POST['carousel_slider_content'] : [];
 			$_slides         = array_map(
 				function ( $slide ) {
@@ -64,6 +73,7 @@ class Module {
 			update_post_meta( $slider_id, '_content_slider', $_slides );
 		}
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
 		if ( isset( $_POST['content_settings'] ) ) {
 			$this->update_content_settings( $slider_id );
 		}
@@ -72,10 +82,11 @@ class Module {
 	/**
 	 * Update hero carousel settings
 	 *
-	 * @param int $post_id post id
+	 * @param int $post_id post id.
 	 */
 	private function update_content_settings( int $post_id ) {
-		$setting   = $_POST['content_settings'];
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing
+		$setting   = $_POST['content_settings'] ?? [];
 		$_settings = [
 			'slide_height'      => sanitize_text_field( $setting['slide_height'] ),
 			'content_width'     => sanitize_text_field( $setting['content_width'] ),
