@@ -6,6 +6,11 @@ use CarouselSlider\Supports\MetaBoxForm;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Admin class
+ *
+ * @package Modules/PostCarousel
+ */
 class Admin {
 	/**
 	 * The instance of the class
@@ -57,23 +62,23 @@ class Admin {
 	/**
 	 * Metabox content
 	 *
-	 * @param int $slider_id The slider id.
+	 * @param int    $slider_id The slider id.
 	 * @param string $slider_type The slider type.
 	 *
 	 * @return void
 	 */
 	public function meta_box_content( int $slider_id, string $slider_type ) {
-		$metabox = new MetaBoxForm();
+		$form = new MetaBoxForm();
 		?>
 		<div data-id="open" id="section_post_query" class="shapla-toggle shapla-toggle--stroke"
-			 style="display: <?php echo $slider_type != 'post-carousel' ? 'none' : 'block'; ?>">
+			style="display: <?php echo 'post-carousel' !== $slider_type ? 'none' : 'block'; ?>">
 			<span class="shapla-toggle-title">
 				<?php esc_html_e( 'Post Query', 'carousel-slider' ); ?>
 			</span>
 			<div class="shapla-toggle-inner">
 				<div class="shapla-toggle-content">
 					<?php
-					$metabox->select(
+					$form->select(
 						array(
 							'id'      => '_post_query_type',
 							'name'    => esc_html__( 'Query Type', 'carousel-slider' ),
@@ -87,21 +92,23 @@ class Admin {
 							),
 						)
 					);
-					$metabox->date(
+					$form->date(
 						array(
 							'id'   => '_post_date_after',
 							'name' => esc_html__( 'Date from', 'carousel-slider' ),
-							'desc' => sprintf( esc_html__( 'Example: %s', 'carousel-slider' ), date( 'F d, Y', strtotime( '-3 months' ) ) ),
+							/* translators: 1: an example date string */
+							'desc' => sprintf( esc_html__( 'Example: %s', 'carousel-slider' ), gmdate( 'F d, Y', strtotime( '-3 months' ) ) ),
 						)
 					);
-					$metabox->date(
+					$form->date(
 						array(
 							'id'   => '_post_date_before',
 							'name' => esc_html__( 'Date to', 'carousel-slider' ),
-							'desc' => sprintf( esc_html__( 'Example: %s', 'carousel-slider' ), date( 'F d, Y', strtotime( '-7 days' ) ) ),
+							/* translators: 1: an example date string */
+							'desc' => sprintf( esc_html__( 'Example: %s', 'carousel-slider' ), gmdate( 'F d, Y', strtotime( '-7 days' ) ) ),
 						)
 					);
-					$metabox->post_terms(
+					$form->post_terms(
 						array(
 							'id'       => '_post_categories',
 							'taxonomy' => 'category',
@@ -110,7 +117,7 @@ class Admin {
 							'desc'     => esc_html__( 'Show posts associated with selected categories.', 'carousel-slider' ),
 						)
 					);
-					$metabox->post_terms(
+					$form->post_terms(
 						array(
 							'id'       => '_post_tags',
 							'taxonomy' => 'post_tag',
@@ -119,7 +126,7 @@ class Admin {
 							'desc'     => esc_html__( 'Show posts associated with selected tags.', 'carousel-slider' ),
 						)
 					);
-					$metabox->posts_list(
+					$form->posts_list(
 						array(
 							'id'       => '_post_in',
 							'multiple' => true,
@@ -127,7 +134,7 @@ class Admin {
 							'desc'     => esc_html__( 'Select posts that you want to show as slider. Select at least 5 posts', 'carousel-slider' ),
 						)
 					);
-					$metabox->number(
+					$form->number(
 						array(
 							'id'   => '_posts_per_page',
 							'name' => esc_html__( 'Posts per page', 'carousel-slider' ),
@@ -135,7 +142,7 @@ class Admin {
 							'desc' => esc_html__( 'How many post you want to show on carousel slide.', 'carousel-slider' ),
 						)
 					);
-					$metabox->select(
+					$form->select(
 						array(
 							'id'      => '_post_order',
 							'name'    => esc_html__( 'Order', 'carousel-slider' ),
@@ -146,7 +153,7 @@ class Admin {
 							),
 						)
 					);
-					$metabox->select(
+					$form->select(
 						array(
 							'id'      => '_post_orderby',
 							'name'    => esc_html__( 'Order by', 'carousel-slider' ),

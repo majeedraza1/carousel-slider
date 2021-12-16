@@ -7,6 +7,11 @@ use WP_Term;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Template class
+ *
+ * @package Modules/PostCarousel
+ */
 class Template extends AbstractTemplate {
 
 	/**
@@ -18,7 +23,7 @@ class Template extends AbstractTemplate {
 		return wp_parse_args(
 			[
 				'_slide_type'       => 'post-carousel',
-				// Post Carousel Settings
+				// Post Carousel Settings.
 				'_post_query_type'  => 'latest_posts',
 				'_post_date_after'  => '',
 				'_post_date_before' => '',
@@ -37,8 +42,8 @@ class Template extends AbstractTemplate {
 	/**
 	 * Create gallery image carousel with random images
 	 *
-	 * @param string $slider_title
-	 * @param array  $args
+	 * @param string $slider_title The slider title.
+	 * @param array  $args Optional arguments.
 	 *
 	 * @return int The post ID on success. The value 0 on failure.
 	 */
@@ -61,8 +66,8 @@ class Template extends AbstractTemplate {
 			'post_categories' => [ '_post_categories' => implode( ',', self::get_post_categories_ids() ) ],
 			'post_tags'       => [ '_post_tags' => implode( ',', self::get_post_tags_ids() ) ],
 			'date_range'      => [
-				'_post_date_after'  => date( 'Y-m-d', strtotime( '-3 years' ) ),
-				'_post_date_before' => date( 'Y-m-d', strtotime( '-2 hours' ) ),
+				'_post_date_after'  => gmdate( 'Y-m-d', strtotime( '-3 years' ) ),
+				'_post_date_before' => gmdate( 'Y-m-d', strtotime( '-2 hours' ) ),
 			],
 		];
 

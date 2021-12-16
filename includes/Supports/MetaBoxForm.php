@@ -20,6 +20,7 @@ defined( 'ABSPATH' ) || exit;
  * MetaBoxForm class
  *
  * @method void text( array $args )
+ * @method void date( array $args )
  * @method void textarea( array $args )
  * @method void spacing( array $args )
  * @method void button_group( array $args )

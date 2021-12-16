@@ -2,11 +2,13 @@
 
 namespace CarouselSlider\Modules\PostCarousel;
 
-use CarouselSlider\Helper;
-use CarouselSlider\Supports\Validate;
-
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Module class
+ *
+ * @package Modules/PostCarousel
+ */
 class Module {
 	/**
 	 * The instance of the class
@@ -34,7 +36,7 @@ class Module {
 	/**
 	 * Render view
 	 *
-	 * @param array $views
+	 * @param array $views Registered views.
 	 *
 	 * @return array
 	 */

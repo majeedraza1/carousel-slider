@@ -10,9 +10,16 @@ use WP_Term;
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * View class
+ *
+ * @package Modules/PostCarousel
+ */
 class View extends AbstractView {
 
 	/**
+	 * Render html view
+	 *
 	 * @inheritDoc
 	 */
 	public function render(): string {
@@ -36,31 +43,32 @@ class View extends AbstractView {
 
 			$_permalink = esc_url( get_permalink( $post->ID ) );
 
-			// Post Thumbnail
+			// Post Thumbnail.
 			$html .= $this->get_thumbnail_html( $post, $_image_size, $_lazy_load_image, $_permalink );
 
-			// Post Title
+			// Post Title.
 			$html .= sprintf( '<a class="carousel-slider__post-title" href="%s"><h2>%s</h2></a>', $_permalink, $post->post_title );
-			$html .= '</div>'; // End Post Header
+			$html .= '</div>'; // End Post Header.
 
-			// Post summery
+			// Post summery.
 			$html .= $this->get_summery_html( $post );
 
-			// Footer
+			// Footer.
 			$html .= '<footer class="carousel-slider__post-meta">';
+			// phpcs:ignore Squiz.PHP.CommentedOutCode.Found
 			// $html .= '<div class="carousel-slider__post-excerpt-overlay"></div>';
 			$html .= '<div class="carousel-slider__post-publication-meta">';
 			$html .= '<div class="carousel-slider__post-details-info">';
 
-			// Post author
+			// Post author.
 			$html .= $this->get_author_html( $post );
 
-			// Post date
+			// Post date.
 			$html .= $this->get_date_html( $post );
 			$html .= '</div>';
 			$html .= '</div>';
 
-			// Post category
+			// Post category.
 			$html .= $this->get_category_html( count( $category ) ? $category[0] : [] );
 
 			$html .= '</footer>';
@@ -75,10 +83,12 @@ class View extends AbstractView {
 	}
 
 	/**
-	 * @param WP_Post $post
-	 * @param string  $image_size
-	 * @param bool    $lazy_load
-	 * @param string  $permalink
+	 * Get thumbnail html
+	 *
+	 * @param WP_Post $post The WP_Post object.
+	 * @param string  $image_size Image size slug.
+	 * @param bool    $lazy_load Lazy load images.
+	 * @param string  $permalink Permalink.
 	 *
 	 * @return string
 	 */
@@ -98,7 +108,9 @@ class View extends AbstractView {
 	}
 
 	/**
-	 * @param WP_Post $post
+	 * Get date html
+	 *
+	 * @param WP_Post $post The WP_Post object.
 	 *
 	 * @return string
 	 */
@@ -122,7 +134,9 @@ class View extends AbstractView {
 	}
 
 	/**
-	 * @param WP_Term|mixed $category
+	 * Get category html
+	 *
+	 * @param WP_Term|mixed $category The WP_Term object.
 	 *
 	 * @return string
 	 */
@@ -142,7 +156,9 @@ class View extends AbstractView {
 	}
 
 	/**
-	 * @param WP_Post $post
+	 * Get author html
+	 *
+	 * @param WP_Post $post The WP_Post object.
 	 *
 	 * @return string
 	 */
@@ -158,7 +174,9 @@ class View extends AbstractView {
 	}
 
 	/**
-	 * @param WP_Post $post
+	 * Get summery html
+	 *
+	 * @param WP_Post $post The WP_Post object.
 	 *
 	 * @return string
 	 */
