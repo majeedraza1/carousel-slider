@@ -1,6 +1,10 @@
-#### version 2.0.6 - 2021-11-00
+#### version 2.0.6 - 2022-01-03
 
 * Add - Add custom module for "Divi Builder"
+* Add - Add functionality to add css file link dynamically if it is not added yet
+* Fix - Showing data update message on admin area.
+* Dev - Add unit testing for helpers classes.
+* Dev - Update code according to WordPress Coding Standards
 
 #### version 2.0.5 - 2021-11-20
 

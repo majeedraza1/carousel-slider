@@ -25,9 +25,6 @@
       "CarouselSlider\\Test\\Modules\\": "tests/unit/modules"
     }
   },
-  "require": {
-    "ext-json": "*"
-  },
   "require-dev": {
     "wp-cli/wp-cli-bundle": "*",
     "phpunit/phpunit": "^7.0",

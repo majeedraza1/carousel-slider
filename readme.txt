@@ -92,9 +92,12 @@ Update to get new features and better security.
 
 == Changelog ==
 
-= version 2.0.6 - 2021-11-00 =
+= version 2.0.6 - 2022-01-03 =
 * Add - Add functionality to add css file link dynamically if it is not added yet
 * Add - Add custom module for "Divi Builder"
+* Fix - Showing data update message on admin area.
+* Dev - Add unit testing for helpers classes.
+* Dev - Update code according to WordPress Coding Standards
 
 = version 2.0.5 - 2021-11-20 =
 * Fix - Product carousel button style is not working for 'read more' button

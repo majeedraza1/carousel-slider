@@ -81,8 +81,8 @@ class Upgrader {
 	 * Show upgrade notice
 	 */
 	public function show_upgrade_notice() {
-		$version = get_option( 'carousel_slider_version', '1.0.0' );
-		if ( ! version_compare( $version, '1.10.0', '<' ) ) {
+		$version = get_option( 'carousel_slider_version' );
+		if ( ! ( false !== $version && version_compare( $version, '2.0', '<' ) ) ) {
 			return;
 		}
 		$message     = __( 'Carousel Slider need to update database.', 'carousel-slider' );

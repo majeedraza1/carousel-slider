@@ -92,10 +92,17 @@ class Setting {
 				'type'    => 'radio',
 				'std'     => 'optimized',
 				'name'    => __( 'Style & Scrips', 'carousel-slider' ),
-				'desc'    => __( 'If you choose Optimized, then scrips and styles will be loaded only on page where you are using shortcode. If Optimized is not working for you then choose Always.', 'carousel-slider' ),
+				'desc'    => __(
+					'If you choose <strong>Optimized</strong>, then scrips and styles will be loaded only on page where
+ 				you are using shortcode. If <strong>Optimized</strong> is not working for you then choose
+ 				<strong>Optimized with style loader</strong>. Then it will add a small javascript at footer to load css
+ 				 file in header. If none of these is not working for you then choose <strong>Always</strong>',
+					'carousel-slider'
+				),
 				'options' => [
-					'always'    => __( 'Always', 'carousel-slider' ),
-					'optimized' => __( 'Optimized (recommended)', 'carousel-slider' ),
+					'always'           => __( 'Always', 'carousel-slider' ),
+					'optimized'        => __( 'Optimized (recommended)', 'carousel-slider' ),
+					'optimized-loader' => __( 'Optimized with style loader', 'carousel-slider' ),
 				],
 				'panel'   => 'general',
 			]
@@ -106,7 +113,11 @@ class Setting {
 				'type'  => 'checkbox',
 				'std'   => '1',
 				'name'  => __( 'Show Structured Data', 'carousel-slider' ),
-				'desc'  => __( 'If you enable to show, then it will generate structured data for every slider for better SEO. But if you are using some other SEO plugin to handle SEO, then you can disabled it.', 'carousel-slider' ),
+				'desc'  => __(
+					'If you enable to show, then it will generate structured data for every slider for better SEO.
+					But if you are using some other SEO plugin to handle SEO, then you can disabled it.',
+					'carousel-slider'
+				),
 				'panel' => 'general',
 			]
 		);
@@ -117,8 +128,16 @@ class Setting {
 				'std'     => 'v1-compatibility',
 				'name'    => __( 'Slider item template', 'carousel-slider' ),
 				'desc'    => [
-					__( '<strong>WooCommerce Default</strong> use hook to load shop loop template and does not allow hiding/showing title, rating, price, card button, sale tag using slider settings.', 'carousel-slider' ),
-					__( '<strong>Compatibility mode</strong> use custom template and allow hiding/showing title, rating, price, card button, sale tag.', 'carousel-slider' ),
+					__(
+						'<strong>WooCommerce Default</strong> use hook to load shop loop template and does not allow
+						hiding/showing title, rating, price, card button, sale tag using slider settings.',
+						'carousel-slider'
+					),
+					__(
+						'<strong>Compatibility mode</strong> use custom template and allow hiding/showing title,
+						rating, price, card button, sale tag.',
+						'carousel-slider'
+					),
 				],
 				'options' => [
 					'wc-default'       => __( 'WooCommerce Default (recommended)', 'carousel-slider' ),

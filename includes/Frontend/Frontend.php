@@ -63,16 +63,7 @@ class Frontend {
 		$slide_type = array_key_exists( $slide_type, Helper::get_slide_types() ) ? $slide_type : 'image-carousel';
 
 		// If script & style is not enqueued yet, then enqueued it now.
-		if ( ! wp_script_is( 'carousel-slider-frontend', 'enqueued' ) ) {
-			wp_enqueue_script( 'carousel-slider-frontend' );
-			add_action(
-				'wp_footer',
-				function () {
-					echo Assets::get_style_loader_script(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				},
-				0
-			);
-		}
+		$this->load_scripts_if_not_loaded();
 
 		$view = Helper::get_slider_view( $slide_type );
 		if ( $view instanceof SliderViewInterface ) {
@@ -110,8 +101,30 @@ class Frontend {
 
 		global $post;
 		$load_scripts = is_active_widget( false, false, 'widget_carousel_slider', true ) ||
-			( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'carousel_slide' ) );
+						( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'carousel_slide' ) );
 
 		return apply_filters( 'carousel_slider_load_scripts', $load_scripts );
+	}
+
+	/**
+	 * Load scripts if not loaded yet
+	 *
+	 * @return void
+	 */
+	protected function load_scripts_if_not_loaded() {
+		if ( wp_script_is( 'carousel-slider-frontend', 'enqueued' ) ) {
+			return;
+		}
+		if ( 'optimized-loader' !== Helper::get_setting( 'load_scripts' ) ) {
+			return;
+		}
+		wp_enqueue_script( 'carousel-slider-frontend' );
+		add_action(
+			'wp_footer',
+			function () {
+				echo Assets::get_style_loader_script(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			},
+			0
+		);
 	}
 }
