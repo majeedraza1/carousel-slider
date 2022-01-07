@@ -5,7 +5,7 @@ Tags: carousel, carousel slider, image carousel, product carousel, woocommerce, 
 Requires at least: 5.6
 Tested up to: 5.8
 Requires PHP: 7.0
-Stable tag: 2.0.7
+Stable tag: 2.0.8
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -91,6 +91,9 @@ If you still need help. visit [WordPress codex](https://codex.wordpress.org/Mana
 Update to get new features and better security.
 
 == Changelog ==
+
+= version 2.0.8 - 2022-01-07 =
+* Dev - Remove return type declaration from admin footer text.
 
 = version 2.0.7 - 2022-01-07 =
 * Fix - Fix null value issue on admin footer text.
