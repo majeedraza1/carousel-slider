@@ -305,11 +305,11 @@ class Admin {
 	/**
 	 * Add custom footer text on plugins page.
 	 *
-	 * @param string $text The custom admin footer text.
+	 * @param string|null $text The custom admin footer text.
 	 *
 	 * @return string
 	 */
-	public function admin_footer_text( string $text ): string {
+	public function admin_footer_text( $text ): string {
 		global $post_type, $hook_suffix;
 
 		$footer_text = sprintf(

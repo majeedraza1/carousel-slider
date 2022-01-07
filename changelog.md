@@ -1,3 +1,8 @@
+#### version 2.0.7 - 2022-01-07
+
+* Fix - Fix null value issue on admin footer text.
+
+
 #### version 2.0.6 - 2022-01-03
 
 * Add - Add custom module for "Divi Builder"
