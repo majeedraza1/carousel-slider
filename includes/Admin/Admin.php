@@ -307,9 +307,9 @@ class Admin {
 	 *
 	 * @param string|null $text The custom admin footer text.
 	 *
-	 * @return string
+	 * @return string|null Admin footer text
 	 */
-	public function admin_footer_text( $text ): string {
+	public function admin_footer_text( $text ) {
 		global $post_type, $hook_suffix;
 
 		$footer_text = sprintf(
