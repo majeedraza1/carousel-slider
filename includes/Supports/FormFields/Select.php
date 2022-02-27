@@ -21,7 +21,7 @@ class Select extends BaseField {
 		$html = '<select ' . $this->build_attributes() . '>';
 		foreach ( $this->get_setting( 'choices' ) as $key => $label ) {
 			if ( $is_multiple ) {
-				$selected = in_array( $key, $value, true ) ? 'selected' : '';
+				$selected = in_array( $key, $value ) ? 'selected' : ''; // phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict
 			} else {
 				$selected = $this->get_value() === $key ? 'selected' : '';
 			}
