@@ -3,15 +3,15 @@
  * Plugin Name: Carousel Slider
  * Plugin URI: https://wordpress.org/plugins/carousel-slider
  * Description: <strong>Carousel Slider</strong> allows you to create beautiful, touch enabled, responsive carousels and sliders. It let you create SEO friendly Image carousel from Media Library or from custom URL, Video carousel using Youtube and Vimeo video, Post carousel, Hero banner slider and various types of WooCommerce products carousels.
- * Version: 2.0.8
+ * Version: 2.0.9
  * Author: Sayful Islam
  * Author URI: https://sayfulislam.com
  * Requires PHP: 7.0
  * Requires at least: 5.6
- * Tested up to: 5.8
+ * Tested up to: 5.9
  *
  * WC requires at least: 3.0
- * WC tested up to: 6.0
+ * WC tested up to: 6.2
  *
  * Text Domain: carousel-slider
  *
@@ -52,7 +52,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		 *
 		 * @var string
 		 */
-		private $version = '2.0.8';
+		private $version = '2.0.9';
 
 		/**
 		 * Minimum PHP version required
@@ -66,7 +66,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		 *
 		 * @var self
 		 */
-		protected static $instance;
+		private static $instance;
 
 		/**
 		 * Main Carousel_Slider Instance

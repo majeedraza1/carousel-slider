@@ -1,12 +1,14 @@
+#### version 2.0.9 - 2022-02-27 =
+
+* Fix - Fix multi select field is showing as single select.
+
 #### version 2.0.8 - 2022-01-07
 
 * Dev - Remove return type declaration from admin footer text.
 
-
 #### version 2.0.7 - 2022-01-07
 
 * Fix - Fix null value issue on admin footer text.
-
 
 #### version 2.0.6 - 2022-01-03
 
@@ -15,7 +17,6 @@
 * Fix - Showing data update message on admin area.
 * Dev - Add unit testing for helpers classes.
 * Dev - Update code according to WordPress Coding Standards
-
 
 #### version 2.0.5 - 2021-11-20
 
