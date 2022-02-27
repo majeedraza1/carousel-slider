@@ -224,7 +224,7 @@ abstract class BaseField implements FieldInterface {
 				'attrs'         => [ 'step' => $this->get_setting( 'step' ) ],
 			],
 			[
-				'include_types' => [ 'email', 'file' ],
+				'include_types' => [ 'email', 'file', 'select' ],
 				'attrs'         => [ 'multiple' => $this->get_setting( 'multiple' ) ],
 			],
 			[
