@@ -112,6 +112,11 @@ function loadImages(images) {
 	if (!images) {
 		return false;
 	}
+
+	if (typeof images !== 'string') {
+		images = images.toString();
+	}
+
 	let shortcode = new wp.shortcode({
 		tag: 'gallery',
 		attrs: {ids: images},

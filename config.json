@@ -1,5 +1,5 @@
 {
-  "proxyURL": "http://plugins.test/wp-admin/edit.php?post_type=carousels",
+  "proxyURL": "http://cs.test/wp-admin/edit.php?post_type=carousels",
   "entryPoints": {
     "style-loader": [
       "./resources/frontend/style-loader.js"

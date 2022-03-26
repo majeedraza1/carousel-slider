@@ -42,6 +42,6 @@
     "make-pot": "wp i18n make-pot . languages/carousel-slider.pot",
     "test": "phpunit",
     "lint": "phpcs --standard=phpcs.xml",
-    "lint:fix": "phpcbf --standard=phpcs.xml"
+    "format": "phpcbf --standard=phpcs.xml"
   }
 }

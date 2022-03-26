@@ -1,3 +1,7 @@
+#### version 2.0.10 - 2022-03-26 =
+
+* Fix - Fix image carousel image edit button is not working for single image.
+
 #### version 2.0.9 - 2022-02-27 =
 
 * Fix - Fix multi select field is showing as single select.

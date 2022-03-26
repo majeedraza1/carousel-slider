@@ -5,7 +5,7 @@ Tags: carousel, carousel slider, image carousel, product carousel, woocommerce, 
 Requires at least: 5.6
 Tested up to: 5.9
 Requires PHP: 7.0
-Stable tag: 2.0.9
+Stable tag: 2.0.10
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -91,6 +91,9 @@ If you still need help. visit [WordPress codex](https://codex.wordpress.org/Mana
 Update to get new features and better security.
 
 == Changelog ==
+
+= version 2.0.10 - 2022-03-26 =
+* Fix - Fix image carousel image edit button is not working for single image.
 
 = version 2.0.9 - 2022-02-27 =
 * Fix - Fix multi select field is showing as single select.
