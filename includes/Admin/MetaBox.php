@@ -91,7 +91,7 @@ class MetaBox {
 			update_post_meta( $post_id, $key, sanitize_text_field( $val ) );
 		}
 
-		do_action( 'carousel_slider/save_slider', $post_id );
+		do_action( 'carousel_slider/save_slider', $post_id, $_POST );
 	}
 
 	/**
@@ -284,10 +284,10 @@ class MetaBox {
 			</strong>
 		</p>
 		<input type="text" onmousedown="this.clicked = 1;"
-			onfocus="if (!this.clicked) this.select(); else this.clicked = 2;"
-			onclick="if (this.clicked === 2) this.select(); this.clicked = 0;"
-			value="[carousel_slide id='<?php echo absint( $post->ID ); ?>']"
-			style="background-color: #f1f1f1; width: 100%; padding: 8px;"
+			   onfocus="if (!this.clicked) this.select(); else this.clicked = 2;"
+			   onclick="if (this.clicked === 2) this.select(); this.clicked = 0;"
+			   value="[carousel_slide id='<?php echo absint( $post->ID ); ?>']"
+			   style="background-color: #f1f1f1; width: 100%; padding: 8px;"
 		>
 		<?php
 		echo ob_get_clean(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -488,6 +488,7 @@ class MetaBox {
 	 */
 	public function responsive_settings_callback() {
 		$form = new MetaBoxForm();
+		ob_start();
 		$form->number(
 			[
 				'id'      => '_items',
@@ -548,5 +549,7 @@ class MetaBox {
 				'context' => 'side',
 			]
 		);
+
+		echo apply_filters( 'carousel_slider/admin/metabox_responsive_settings', ob_get_clean(), $form );
 	}
 }

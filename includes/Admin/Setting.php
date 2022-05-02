@@ -77,12 +77,14 @@ class Setting {
 			[
 				'id'    => 'general',
 				'title' => __( 'General', 'carousel-slider' ),
+				'priority'    => 10,
 			]
 		);
 		$settings->set_panel(
 			[
 				'id'    => 'woocommerce',
 				'title' => __( 'WooCommerce', 'carousel-slider' ),
+				'priority'    => 10,
 			]
 		);
 
