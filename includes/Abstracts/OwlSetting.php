@@ -18,11 +18,19 @@ class OwlSetting {
 	protected $settings = [];
 
 	/**
+	 * Get slider settings
+	 *
+	 * @var SliderSetting|null
+	 */
+	protected $slider_setting = null;
+
+	/**
 	 * Class constructor
 	 *
 	 * @param SliderSetting $slider_setting slider setting class.
 	 */
 	public function __construct( SliderSetting $slider_setting ) {
+		$this->slider_setting = $slider_setting;
 		$this->read( $slider_setting );
 	}
 
@@ -64,6 +72,6 @@ class OwlSetting {
 	 * @return array
 	 */
 	public function all(): array {
-		return $this->settings;
+		return apply_filters( 'carousel_slider/settings/owl_settings', $this->settings, $this->slider_setting );
 	}
 }

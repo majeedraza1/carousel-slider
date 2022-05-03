@@ -250,4 +250,13 @@ class Helper extends ViewHelper {
 
 		return add_query_arg( $args, site_url( '/' ) );
 	}
+
+	/**
+	 * Print internal content (not user input) without escaping.
+	 *
+	 * @param string $string The string to be print.
+	 */
+	public static function print_unescaped_internal_string( string $string ) {
+		echo $string; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
 }

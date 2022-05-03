@@ -26,13 +26,6 @@ class MetaBox {
 	private static $instance = null;
 
 	/**
-	 * Post type
-	 *
-	 * @var string
-	 */
-	private $post_type;
-
-	/**
 	 * Ensures only one instance of this class is loaded or can be loaded.
 	 *
 	 * @return MetaBox
@@ -41,7 +34,6 @@ class MetaBox {
 		if ( is_null( self::$instance ) ) {
 			self::$instance = new self();
 
-			self::$instance->post_type = CAROUSEL_SLIDER_POST_TYPE;
 			add_action( 'add_meta_boxes', array( self::$instance, 'add_meta_boxes' ) );
 			add_action( 'save_post', array( self::$instance, 'save_meta_box' ) );
 		}
@@ -102,7 +94,7 @@ class MetaBox {
 			'carousel-slider-meta-boxes',
 			__( 'Carousel Slider', 'carousel-slider' ),
 			array( $this, 'carousel_slider_meta_boxes' ),
-			$this->post_type,
+			CAROUSEL_SLIDER_POST_TYPE,
 			'normal',
 			'high'
 		);
@@ -110,7 +102,7 @@ class MetaBox {
 			'carousel-slider-usages-info',
 			__( 'Usage (Shortcode)', 'carousel-slider' ),
 			array( $this, 'usages_callback' ),
-			$this->post_type,
+			CAROUSEL_SLIDER_POST_TYPE,
 			'side',
 			'high'
 		);
@@ -118,7 +110,7 @@ class MetaBox {
 			'carousel-slider-navigation-settings',
 			__( 'Navigation Settings', 'carousel-slider' ),
 			array( $this, 'navigation_settings_callback' ),
-			$this->post_type,
+			CAROUSEL_SLIDER_POST_TYPE,
 			'side',
 			'low'
 		);
@@ -126,7 +118,15 @@ class MetaBox {
 			'carousel-slider-autoplay-settings',
 			__( 'Autoplay Settings', 'carousel-slider' ),
 			array( $this, 'autoplay_settings_callback' ),
-			$this->post_type,
+			CAROUSEL_SLIDER_POST_TYPE,
+			'side',
+			'low'
+		);
+		add_meta_box(
+			'carousel-slider-color-settings',
+			__( 'Color Settings', 'carousel-slider' ),
+			array( $this, 'color_settings_callback' ),
+			CAROUSEL_SLIDER_POST_TYPE,
 			'side',
 			'low'
 		);
@@ -134,7 +134,7 @@ class MetaBox {
 			'carousel-slider-responsive-settings',
 			__( 'Responsive Settings', 'carousel-slider' ),
 			array( $this, 'responsive_settings_callback' ),
-			$this->post_type,
+			CAROUSEL_SLIDER_POST_TYPE,
 			'side',
 			'low'
 		);
@@ -142,7 +142,7 @@ class MetaBox {
 			'carousel-slider-general-settings',
 			__( 'General Settings', 'carousel-slider' ),
 			array( $this, 'general_settings_callback' ),
-			$this->post_type,
+			CAROUSEL_SLIDER_POST_TYPE,
 			'advanced',
 			'low'
 		);
@@ -409,23 +409,6 @@ class MetaBox {
 				'context' => 'side',
 			]
 		);
-		echo '<hr>';
-		$form->color(
-			[
-				'id'      => '_nav_color',
-				'name'    => esc_html__( 'Arrows & Dots Color', 'carousel-slider' ),
-				'std'     => Helper::get_default_setting( 'nav_color' ),
-				'context' => 'side',
-			]
-		);
-		$form->color(
-			[
-				'id'      => '_nav_active_color',
-				'name'    => esc_html__( 'Arrows & Dots Hover Color', 'carousel-slider' ),
-				'std'     => Helper::get_default_setting( 'nav_active_color' ),
-				'context' => 'side',
-			]
-		);
 	}
 
 	/**
@@ -481,6 +464,34 @@ class MetaBox {
 				'context' => 'side',
 			]
 		);
+	}
+
+	/**
+	 * Metabox color settings callback
+	 *
+	 * @return void
+	 */
+	public function color_settings_callback() {
+		$form = new MetaBoxForm();
+		ob_start();
+		$form->color(
+			[
+				'id'      => '_nav_color',
+				'name'    => esc_html__( 'Arrows & Dots Color', 'carousel-slider' ),
+				'std'     => Helper::get_default_setting( 'nav_color' ),
+				'context' => 'side',
+			]
+		);
+		$form->color(
+			[
+				'id'      => '_nav_active_color',
+				'name'    => esc_html__( 'Arrows & Dots Hover Color', 'carousel-slider' ),
+				'std'     => Helper::get_default_setting( 'nav_active_color' ),
+				'context' => 'side',
+			]
+		);
+
+		echo apply_filters( 'carousel_slider/admin/metabox_color_settings', ob_get_clean(), $form );
 	}
 
 	/**
