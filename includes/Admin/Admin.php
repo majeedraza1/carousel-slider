@@ -58,7 +58,7 @@ class Admin {
 	/**
 	 * Modify preview post link for carousel slider
 	 *
-	 * @param string  $preview_link The preview link.
+	 * @param string $preview_link The preview link.
 	 * @param WP_Post $post The WP_Post object.
 	 *
 	 * @return string
@@ -132,7 +132,7 @@ class Admin {
 	 * Generate carousel slider list table content for each custom column
 	 *
 	 * @param string $column_name The name of the column to display.
-	 * @param int    $post_id The current post ID.
+	 * @param int $post_id The current post ID.
 	 *
 	 * @return void
 	 */
@@ -170,7 +170,7 @@ class Admin {
 	/**
 	 * Hide view and quick edit from carousel slider admin
 	 *
-	 * @param array   $actions The post row actions list.
+	 * @param array $actions The post row actions list.
 	 * @param WP_Post $post The WP_Post object.
 	 *
 	 * @return array
@@ -198,9 +198,10 @@ class Admin {
 
 		$_is_carousel    = is_a( $post, 'WP_Post' ) && ( 'carousels' === $post->post_type );
 		$_is_doc         = ( 'carousels_page_carousel-slider-documentation' === $hook );
+		$_is_settings    = ( 'carousels_page_settings' === $hook );
 		$_is_plugin_page = 'plugins.php' === $hook;
 
-		if ( ! ( $_is_carousel || $_is_doc || $_is_plugin_page ) ) {
+		if ( ! ( $_is_carousel || $_is_doc || $_is_plugin_page || $_is_settings ) ) {
 			return;
 		}
 
@@ -276,10 +277,10 @@ class Admin {
 			],
 		];
 		$html  = '<div class="wrap">';
-		$html .= '<h1 class="wp-heading">' . esc_html__( 'Carousel Slider Documentation', 'carousel-slider' ) . '</h1>';
-		$html .= '<div class="clear"></div>';
-		$html .= '<div class="postbox"><div class="inside">';
-		$html .= '<div class="carousel_slider_columns">';
+		$html  .= '<h1 class="wp-heading">' . esc_html__( 'Carousel Slider Documentation', 'carousel-slider' ) . '</h1>';
+		$html  .= '<div class="clear"></div>';
+		$html  .= '<div class="postbox"><div class="inside">';
+		$html  .= '<div class="carousel_slider_columns">';
 		foreach ( $items as $item ) {
 			$html .= '<div class="carousel_slider_column">';
 			$html .= '<div class="carousel_slider_iframe">';
