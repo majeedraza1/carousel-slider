@@ -89,7 +89,7 @@ class DefaultSettingApi extends SettingApi {
 		$sections     = [];
 		if ( $this->has_panels() ) {
 			$panels_ids   = wp_list_pluck( $this->get_panels(), 'id' );
-			$current_tab  = isset( $_GET['tab'] ) ?? null; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$current_tab  = isset( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : null; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$panel        = in_array( $current_tab, $panels_ids, true ) ? $current_tab : $panels_ids[0];
 			$sections     = $this->get_sections_by_panel( $panel );
 			$has_sections = count( $sections ) > 0;
@@ -127,7 +127,7 @@ class DefaultSettingApi extends SettingApi {
 	/**
 	 * Get fields HTML by section
 	 *
-	 * @param array       $sections Array of section.
+	 * @param array $sections Array of section.
 	 * @param string|null $panel Panel id.
 	 *
 	 * @return string
@@ -139,14 +139,14 @@ class DefaultSettingApi extends SettingApi {
 		$table = '';
 		foreach ( $sections as $section ) {
 			if ( ! empty( $section['title'] ) ) {
-				$table .= '<h2 class="title">' . esc_html( $section['title'] ) . '</h2>';
+				$table .= '<h2 id="title--' . esc_attr( $section['id'] ) . '" class="title">' . esc_html( $section['title'] ) . '</h2>';
 			}
 			if ( ! empty( $section['description'] ) ) {
 				$table .= '<p class="description">' . esc_js( $section['description'] ) . '</p>';
 			}
 
 			$fields = $this->get_fields_by( $section['id'], $panel );
-			$table .= $this->get_form_builder()->get_fields_html( $fields, $option_name, $options );
+			$table  .= $this->get_form_builder()->get_fields_html( $fields, $option_name, $options );
 		}
 
 		return $table;
@@ -178,7 +178,7 @@ class DefaultSettingApi extends SettingApi {
 					admin_url( $this->menu_fields['parent_slug'] )
 				)
 			);
-			$html    .= '<a class="nav-tab' . $class . '" href="' . $page_url . '">' . $tab['title'] . '</a>';
+			$html     .= '<a class="nav-tab' . $class . '" href="' . $page_url . '">' . $tab['title'] . '</a>';
 		}
 		$html .= '</h2>';
 

@@ -115,6 +115,14 @@ class MetaBox {
 			'low'
 		);
 		add_meta_box(
+			'carousel-slider-pagination-settings',
+			__( 'Pagination Settings', 'carousel-slider' ),
+			array( $this, 'pagination_settings_callback' ),
+			CAROUSEL_SLIDER_POST_TYPE,
+			'side',
+			'low'
+		);
+		add_meta_box(
 			'carousel-slider-autoplay-settings',
 			__( 'Autoplay Settings', 'carousel-slider' ),
 			array( $this, 'autoplay_settings_callback' ),
@@ -204,6 +212,7 @@ class MetaBox {
 	 */
 	public function general_settings_callback() {
 		$form = new MetaBoxForm();
+		ob_start();
 		$form->image_sizes(
 			array(
 				'id'   => esc_html__( '_image_size', 'carousel-slider' ),
@@ -268,6 +277,8 @@ class MetaBox {
 				),
 			)
 		);
+
+		echo apply_filters( 'carousel_slider/admin/metabox_general_settings', ob_get_clean(), $form );
 	}
 
 	/**
@@ -300,7 +311,8 @@ class MetaBox {
 	 */
 	public function navigation_settings_callback() {
 		$form = new MetaBoxForm();
-		$form->field(
+		ob_start();
+		$form->select(
 			[
 				'type'    => 'select',
 				'id'      => '_nav_button',
@@ -316,7 +328,7 @@ class MetaBox {
 				'context' => 'side',
 			]
 		);
-		$form->field(
+		$form->text(
 			[
 				'type'    => 'text',
 				'id'      => '_slide_by',
@@ -352,8 +364,12 @@ class MetaBox {
 			]
 		);
 
-		echo '<hr>';
+		echo apply_filters( 'carousel_slider/admin/metabox_navigation_settings', ob_get_clean(), $form );
+	}
 
+	public function pagination_settings_callback() {
+		$form = new MetaBoxForm();
+		ob_start();
 		$form->select(
 			[
 				'id'      => '_dot_nav',
@@ -369,7 +385,6 @@ class MetaBox {
 				'context' => 'side',
 			]
 		);
-
 		$form->select(
 			[
 				'id'      => '_bullet_position',
@@ -409,6 +424,8 @@ class MetaBox {
 				'context' => 'side',
 			]
 		);
+
+		echo apply_filters( 'carousel_slider/admin/metabox_pagination_settings', ob_get_clean(), $form );
 	}
 
 	/**
@@ -416,6 +433,7 @@ class MetaBox {
 	 */
 	public function autoplay_settings_callback() {
 		$form = new MetaBoxForm();
+		ob_start();
 		$form->select(
 			[
 				'id'      => '_autoplay',
@@ -464,6 +482,8 @@ class MetaBox {
 				'context' => 'side',
 			]
 		);
+
+		echo apply_filters( 'carousel_slider/admin/metabox_autoplay_settings', ob_get_clean(), $form );
 	}
 
 	/**
