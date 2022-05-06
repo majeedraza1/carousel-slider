@@ -34,7 +34,7 @@ class MetaBox {
 		if ( is_null( self::$instance ) ) {
 			self::$instance = new self();
 
-			add_action( 'add_meta_boxes', array( self::$instance, 'add_meta_boxes' ) );
+			add_action( 'add_meta_boxes', array( self::$instance, 'add_meta_boxes' ), 10, 2 );
 			add_action( 'save_post', array( self::$instance, 'save_meta_box' ) );
 		}
 
@@ -89,71 +89,87 @@ class MetaBox {
 	/**
 	 * Add carousel slider meta box
 	 */
-	public function add_meta_boxes() {
-		add_meta_box(
-			'carousel-slider-meta-boxes',
-			__( 'Carousel Slider', 'carousel-slider' ),
-			array( $this, 'carousel_slider_meta_boxes' ),
-			CAROUSEL_SLIDER_POST_TYPE,
-			'normal',
-			'high'
-		);
-		add_meta_box(
-			'carousel-slider-usages-info',
-			__( 'Usage (Shortcode)', 'carousel-slider' ),
-			array( $this, 'usages_callback' ),
-			CAROUSEL_SLIDER_POST_TYPE,
-			'side',
-			'high'
-		);
-		add_meta_box(
-			'carousel-slider-navigation-settings',
-			__( 'Navigation Settings', 'carousel-slider' ),
-			array( $this, 'navigation_settings_callback' ),
-			CAROUSEL_SLIDER_POST_TYPE,
-			'side',
-			'low'
-		);
-		add_meta_box(
-			'carousel-slider-pagination-settings',
-			__( 'Pagination Settings', 'carousel-slider' ),
-			array( $this, 'pagination_settings_callback' ),
-			CAROUSEL_SLIDER_POST_TYPE,
-			'side',
-			'low'
-		);
-		add_meta_box(
-			'carousel-slider-autoplay-settings',
-			__( 'Autoplay Settings', 'carousel-slider' ),
-			array( $this, 'autoplay_settings_callback' ),
-			CAROUSEL_SLIDER_POST_TYPE,
-			'side',
-			'low'
-		);
-		add_meta_box(
-			'carousel-slider-color-settings',
-			__( 'Color Settings', 'carousel-slider' ),
-			array( $this, 'color_settings_callback' ),
-			CAROUSEL_SLIDER_POST_TYPE,
-			'side',
-			'low'
-		);
-		add_meta_box(
-			'carousel-slider-responsive-settings',
-			__( 'Responsive Settings', 'carousel-slider' ),
-			array( $this, 'responsive_settings_callback' ),
-			CAROUSEL_SLIDER_POST_TYPE,
-			'side',
-			'low'
-		);
-		add_meta_box(
-			'carousel-slider-general-settings',
-			__( 'General Settings', 'carousel-slider' ),
-			array( $this, 'general_settings_callback' ),
-			CAROUSEL_SLIDER_POST_TYPE,
-			'advanced',
-			'low'
-		);
+	public function add_meta_boxes( $post_type, $post ) {
+		if ( $post_type !== CAROUSEL_SLIDER_POST_TYPE ) {
+			return;
+		}
+
+		$slide_type = get_post_meta( $post->ID, '_slide_type', true );
+		if ( empty( $slide_type ) ) {
+			add_meta_box(
+				'carousel-slider-slide-types',
+				__( 'Slider Type', 'carousel-slider' ),
+				[ $this, 'carousel_slider_slide_types' ],
+				CAROUSEL_SLIDER_POST_TYPE,
+				'side',
+				'high'
+			);
+
+			return;
+		}
+
+		$meta_boxes = [
+			'carousel-slider-meta-boxes'          => [
+				'title'    => __( 'Carousel Slider', 'carousel-slider' ),
+				'callback' => [ $this, 'carousel_slider_meta_boxes' ],
+				'context'  => 'normal',
+				'priority' => 'high',
+			],
+			'carousel-slider-usages-info'         => [
+				'title'    => __( 'Usage (Shortcode)', 'carousel-slider' ),
+				'callback' => [ $this, 'usages_callback' ],
+				'priority' => 'high',
+			],
+			'carousel-slider-general-settings'    => [
+				'title'    => __( 'General Settings', 'carousel-slider' ),
+				'callback' => [ $this, 'general_settings_callback' ],
+			],
+			'carousel-slider-navigation-settings' => [
+				'title'    => __( 'Navigation Settings', 'carousel-slider' ),
+				'callback' => [ $this, 'navigation_settings_callback' ],
+			],
+			'carousel-slider-pagination-settings' => [
+				'title'    => __( 'Pagination Settings', 'carousel-slider' ),
+				'callback' => [ $this, 'pagination_settings_callback' ],
+			],
+			'carousel-slider-autoplay-settings'   => [
+				'title'    => __( 'Autoplay Settings', 'carousel-slider' ),
+				'callback' => [ $this, 'autoplay_settings_callback' ],
+			],
+			'carousel-slider-color-settings'      => [
+				'title'    => __( 'Color Settings', 'carousel-slider' ),
+				'callback' => [ $this, 'color_settings_callback' ],
+			],
+			'carousel-slider-responsive-settings' => [
+				'title'    => __( 'Responsive Settings', 'carousel-slider' ),
+				'callback' => [ $this, 'responsive_settings_callback' ],
+			],
+		];
+		foreach ( $meta_boxes as $id => $meta_box ) {
+			add_meta_box(
+				$id,
+				$meta_box['title'],
+				$meta_box['callback'],
+				CAROUSEL_SLIDER_POST_TYPE,
+				$meta_box['context'] ?? 'side',
+				$meta_box['priority'] ?? 'low'
+			);
+		}
+	}
+
+	public function carousel_slider_slide_types( WP_Post $post ) {
+		wp_nonce_field( 'carousel_slider_nonce', '_carousel_slider_nonce' );
+		$slide_types = Helper::get_slide_types();
+		$html        = '';
+		foreach ( $slide_types as $slug => $label ) {
+			$id   = sprintf( '_slide_type__%s', $slug );
+			$html .= '<div style="margin-bottom: .5rem">';
+			$html .= '<input type="radio" id="' . esc_attr( $id ) . '" name="carousel_slider[_slide_type]" value="' . esc_attr( $slug ) . '">';
+			$html .= '<label for="' . esc_attr( $id ) . '">' . esc_html( $label ) . '</label>';
+			$html .= '</div>';
+		}
+
+		Helper::print_unescaped_internal_string( $html );
 	}
 
 	/**
@@ -166,40 +182,6 @@ class MetaBox {
 
 		$slide_type = get_post_meta( $post->ID, '_slide_type', true );
 		$slide_type = array_key_exists( $slide_type, Helper::get_slide_types() ) ? $slide_type : 'image-carousel';
-
-		$slide_types = Helper::get_slide_types();
-		?>
-		<div class="sp-input-group" style="margin: 10px 0 30px;">
-			<div class="sp-input-label">
-				<label for="_carousel_slider_slide_type">
-					<?php esc_html_e( 'Slide Type', 'carousel-slider' ); ?>
-				</label>
-			</div>
-			<div class="sp-input-field">
-				<select name="carousel_slider[_slide_type]" id="_carousel_slider_slide_type" class="sp-input-text">
-					<?php
-					foreach ( $slide_types as $slug => $label ) {
-						$selected = ( $slug === $slide_type ) ? 'selected' : '';
-
-						if ( 'product-carousel' === $slug ) {
-							$disabled = Helper::is_woocommerce_active() ? '' : 'disabled';
-							echo sprintf(
-								'<option value="%s" %s %s>%s</option>',
-								esc_attr( $slug ),
-								esc_attr( $selected ),
-								esc_attr( $disabled ),
-								esc_html( $label )
-							);
-							continue;
-						}
-
-						echo '<option value="' . esc_attr( $slug ) . '" ' . esc_attr( $selected ) . '>' . esc_html( $label ) . '</option>';
-					}
-					?>
-				</select>
-			</div>
-		</div>
-		<?php
 
 		/**
 		 * Allow third part plugin to add custom fields
@@ -215,14 +197,15 @@ class MetaBox {
 		ob_start();
 		$form->image_sizes(
 			array(
-				'id'   => esc_html__( '_image_size', 'carousel-slider' ),
-				'name' => esc_html__( 'Carousel Image size', 'carousel-slider' ),
-				'desc' => sprintf(
+				'id'      => esc_html__( '_image_size', 'carousel-slider' ),
+				'name'    => esc_html__( 'Carousel Image size', 'carousel-slider' ),
+				'desc'    => sprintf(
 				/* translators: 1: setting media page link start, 2: setting media page link end */
 					esc_html__( 'Choose "original uploaded image" for full size image or your desired image size for carousel image. You can change the default size for thumbnail, medium and large from %1$s Settings >> Media %2$s.', 'carousel-slider' ),
 					'<a target="_blank" href="' . get_admin_url() . 'options-media.php">',
 					'</a>'
 				),
+				'context' => 'side',
 			)
 		);
 		$form->select(
@@ -235,14 +218,17 @@ class MetaBox {
 					'on'  => esc_html__( 'Enable', 'carousel-slider' ),
 					'off' => esc_html__( 'Disable', 'carousel-slider' ),
 				),
+				'context' => 'side',
 			)
 		);
 		$form->number(
 			array(
-				'id'   => '_margin_right',
-				'name' => esc_html__( 'Item Spacing.', 'carousel-slider' ),
-				'desc' => esc_html__( 'Space between two slide. Enter 10 for 10px', 'carousel-slider' ),
-				'std'  => Helper::get_default_setting( 'margin_right' ),
+				'id'      => '_margin_right',
+				'class'   => 'widefat',
+				'name'    => esc_html__( 'Item Spacing.', 'carousel-slider' ),
+				'desc'    => esc_html__( 'Space between two slide. Enter 10 for 10px', 'carousel-slider' ),
+				'std'     => Helper::get_default_setting( 'margin_right' ),
+				'context' => 'side',
 			)
 		);
 		$form->select(
@@ -255,14 +241,17 @@ class MetaBox {
 					'on'  => esc_html__( 'Enable', 'carousel-slider' ),
 					'off' => esc_html__( 'Disable', 'carousel-slider' ),
 				),
+				'context' => 'side',
 			)
 		);
 		$form->number(
 			array(
-				'id'   => '_stage_padding',
-				'name' => esc_html__( 'Stage Padding', 'carousel-slider' ),
-				'desc' => esc_html__( 'Add left and right padding on carousel slider stage wrapper.', 'carousel-slider' ),
-				'std'  => '0',
+				'id'      => '_stage_padding',
+				'class'   => 'widefat',
+				'name'    => esc_html__( 'Stage Padding', 'carousel-slider' ),
+				'desc'    => esc_html__( 'Add left and right padding on carousel slider stage wrapper.', 'carousel-slider' ),
+				'std'     => '0',
+				'context' => 'side',
 			)
 		);
 		$form->select(
@@ -275,6 +264,7 @@ class MetaBox {
 					'on'  => esc_html__( 'Enable', 'carousel-slider' ),
 					'off' => esc_html__( 'Disable', 'carousel-slider' ),
 				),
+				'context' => 'side',
 			)
 		);
 
