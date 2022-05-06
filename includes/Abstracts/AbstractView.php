@@ -179,7 +179,7 @@ abstract class AbstractView implements SliderViewInterface {
 			'--carousel-slider-bullet-size'      => $setting->get_prop( 'pagination_size' ) . 'px',
 		];
 
-		return apply_filters( 'carousel_slider/css_var', $css_var, $this->get_slider_id() );
+		return apply_filters( 'carousel_slider/css_var', $css_var, $setting );
 	}
 
 	/**
@@ -190,7 +190,7 @@ abstract class AbstractView implements SliderViewInterface {
 	public function get_css_classes(): array {
 		$setting = $this->get_slider_setting();
 
-		return [
+		$css_classes = [
 			'owl-carousel',
 			'carousel-slider',
 			'carousel-slider-' . $this->get_slider_id(),
@@ -200,5 +200,7 @@ abstract class AbstractView implements SliderViewInterface {
 			'dots-' . $setting->get_prop( 'pagination_position' ),
 			'dots-' . $setting->get_prop( 'pagination_shape' ),
 		];
+
+		return apply_filters( 'carousel_slider/css_classes', $css_classes, $setting );
 	}
 }

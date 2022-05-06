@@ -197,27 +197,88 @@ class SliderSetting extends Data {
 	 * @return array
 	 */
 	public static function props(): array {
+		return array_merge(
+			self::navigation_props(),
+			self::pagination_props(),
+			self::autoplay_props(),
+			self::breakpoints_props(),
+			self::color_props(),
+			self::general_props()
+		);
+	}
+
+	/**
+	 * Get navigation props
+	 *
+	 * @return array
+	 */
+	public static function general_props(): array {
 		return [
-			'nav_visibility'        => [
+			'space_between' => [
+				'meta_key' => '_margin_right',
+				'type'     => 'int',
+				'default'  => 30,
+			],
+			'stage_padding' => [
+				'meta_key' => '_stage_padding',
+				'type'     => 'int',
+				'default'  => 0,
+			],
+			'loop'          => [
+				'meta_key' => '_infinity_loop',
+				'type'     => 'bool',
+				'default'  => true,
+			],
+			'lazy_load'     => [
+				'meta_key' => '_lazy_load_image',
+				'type'     => 'bool',
+				'default'  => true,
+			],
+			'auto_width'    => [
+				'meta_key' => '_auto_width',
+				'type'     => 'bool',
+				'default'  => false,
+			],
+		];
+	}
+
+	/**
+	 * Get navigation props
+	 *
+	 * @return array
+	 */
+	public static function navigation_props(): array {
+		return [
+			'nav_visibility' => [
 				'meta_key' => '_nav_button',
 				'type'     => 'string',
 				'default'  => 'hover',
 			],
-			'nav_position'          => [
+			'nav_position'   => [
 				'meta_key' => '_arrow_position',
 				'type'     => 'string',
 				'default'  => 'outside',
 			],
-			'nav_size'              => [
+			'nav_size'       => [
 				'meta_key' => '_arrow_size',
 				'type'     => 'int',
 				'default'  => 48,
 			],
-			'nav_steps'             => [
+			'nav_steps'      => [
 				'meta_key' => '_slide_by',
 				'type'     => [ 'string', 'int' ],
 				'default'  => 1,
 			],
+		];
+	}
+
+	/**
+	 * Get pagination props
+	 *
+	 * @return array
+	 */
+	public static function pagination_props(): array {
+		return [
 			'pagination_visibility' => [
 				'meta_key' => '_dot_nav',
 				'type'     => 'string',
@@ -238,16 +299,46 @@ class SliderSetting extends Data {
 				'type'     => 'string',
 				'default'  => 'circle',
 			],
-			'nav_color'             => [
-				'meta_key' => '_nav_color',
-				'type'     => 'string',
-				'default'  => Helper::get_default_setting( 'nav_color' ),
+		];
+	}
+
+	/**
+	 * Get pagination props
+	 *
+	 * @return array
+	 */
+	public static function autoplay_props(): array {
+		return [
+			'autoplay_delay'       => [
+				'meta_key' => '_autoplay_timeout',
+				'type'     => 'int',
+				'default'  => 5000,
 			],
-			'nav_active_color'      => [
-				'meta_key' => '_nav_active_color',
-				'type'     => 'string',
-				'default'  => Helper::get_default_setting( 'nav_active_color' ),
+			'autoplay_speed'       => [
+				'meta_key' => '_autoplay_speed',
+				'type'     => 'int',
+				'default'  => 300,
 			],
+			'autoplay'             => [
+				'meta_key' => '_autoplay',
+				'type'     => 'bool',
+				'default'  => true,
+			],
+			'autoplay_hover_pause' => [
+				'meta_key' => '_autoplay_pause',
+				'type'     => 'bool',
+				'default'  => true,
+			],
+		];
+	}
+
+	/**
+	 * Get breakpoints props
+	 *
+	 * @return array
+	 */
+	public static function breakpoints_props(): array {
+		return [
 			'items_on_mobile'       => [
 				'meta_key' => '_items_portrait_mobile',
 				'type'     => 'int',
@@ -278,50 +369,25 @@ class SliderSetting extends Data {
 				'type'     => 'int',
 				'default'  => 5,
 			],
-			'space_between'         => [
-				'meta_key' => '_margin_right',
-				'type'     => 'int',
-				'default'  => 30,
+		];
+	}
+
+	/**
+	 * Get color props
+	 *
+	 * @return array
+	 */
+	public static function color_props(): array {
+		return [
+			'nav_color'        => [
+				'meta_key' => '_nav_color',
+				'type'     => 'string',
+				'default'  => Helper::get_default_setting( 'nav_color' ),
 			],
-			'stage_padding'         => [
-				'meta_key' => '_stage_padding',
-				'type'     => 'int',
-				'default'  => 0,
-			],
-			'autoplay_delay'        => [
-				'meta_key' => '_autoplay_timeout',
-				'type'     => 'int',
-				'default'  => 5000,
-			],
-			'autoplay_speed'        => [
-				'meta_key' => '_autoplay_speed',
-				'type'     => 'int',
-				'default'  => 300,
-			],
-			'autoplay'              => [
-				'meta_key' => '_autoplay',
-				'type'     => 'bool',
-				'default'  => true,
-			],
-			'autoplay_hover_pause'  => [
-				'meta_key' => '_autoplay_pause',
-				'type'     => 'bool',
-				'default'  => true,
-			],
-			'loop'                  => [
-				'meta_key' => '_infinity_loop',
-				'type'     => 'bool',
-				'default'  => true,
-			],
-			'lazy_load'             => [
-				'meta_key' => '_lazy_load_image',
-				'type'     => 'bool',
-				'default'  => true,
-			],
-			'auto_width'            => [
-				'meta_key' => '_auto_width',
-				'type'     => 'bool',
-				'default'  => false,
+			'nav_active_color' => [
+				'meta_key' => '_nav_active_color',
+				'type'     => 'string',
+				'default'  => Helper::get_default_setting( 'nav_active_color' ),
 			],
 		];
 	}
