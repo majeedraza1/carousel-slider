@@ -55,7 +55,7 @@ class View extends AbstractView {
 
 			$item_html = '<div class="carousel-slider__item">';
 			if ( Validate::checked( $show_lightbox ) ) {
-				$image_src = wp_get_attachment_image_src( $id, 'full' );
+				$image_src  = wp_get_attachment_image_src( $id, 'full' );
 				$item_html .= sprintf(
 					'<a class="magnific-popup" href="%1$s">%2$s%3$s</a>',
 					esc_url( $image_src[0] ),
@@ -86,9 +86,9 @@ class View extends AbstractView {
 	/**
 	 * Get image html
 	 *
-	 * @param int $image_id The image id.
+	 * @param int    $image_id The image id.
 	 * @param string $image_size The image size.
-	 * @param bool $lazy_load_image Lazy load image.
+	 * @param bool   $lazy_load_image Lazy load image.
 	 *
 	 * @return string
 	 */
@@ -114,8 +114,8 @@ class View extends AbstractView {
 	 * Get caption html
 	 *
 	 * @param WP_Post $post The WP_Post object.
-	 * @param bool $show_title Show title.
-	 * @param bool $show_caption Show caption.
+	 * @param bool    $show_title Show title.
+	 * @param bool    $show_caption Show caption.
 	 *
 	 * @return string
 	 */

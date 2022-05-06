@@ -95,14 +95,14 @@ class FormBuilder implements FormBuilderInterface {
 				$field_class->set_name( $name );
 				$field_class->set_value( $value );
 				$table .= $field_class->render();
-			} else if ( method_exists( $this, $type ) ) {
+			} elseif ( method_exists( $this, $type ) ) {
 				$table .= $this->$type( $field, $name, $value );
 			} else {
 				$table .= $this->text( $field, $name, $value );
 			}
 
 			if ( ! empty( $field['description'] ) ) {
-				$desc  = is_array( $field['description'] ) ?
+				$desc   = is_array( $field['description'] ) ?
 					implode( '<br>', $field['description'] ) :
 					$field['description'];
 				$table .= sprintf( '<p class="description">%s</p>', $desc );
@@ -136,9 +136,9 @@ class FormBuilder implements FormBuilderInterface {
 	/**
 	 * Settings fields
 	 *
-	 * @param array $fields The fields settings.
+	 * @param array  $fields The fields settings.
 	 * @param string $option_name The option name.
-	 * @param array $values The values.
+	 * @param array  $values The values.
 	 *
 	 * @return string
 	 */
@@ -153,9 +153,9 @@ class FormBuilder implements FormBuilderInterface {
 	/**
 	 * Text input field
 	 *
-	 * @param array $field The field settings.
+	 * @param array  $field The field settings.
 	 * @param string $name The field name.
-	 * @param mixed $value The field value.
+	 * @param mixed  $value The field value.
 	 *
 	 * @return string
 	 */
@@ -175,9 +175,9 @@ class FormBuilder implements FormBuilderInterface {
 	/**
 	 * Password input field
 	 *
-	 * @param array $field The field settings.
+	 * @param array  $field The field settings.
 	 * @param string $name The field name.
-	 * @param mixed $value The field value.
+	 * @param mixed  $value The field value.
 	 *
 	 * @return string
 	 */
@@ -192,9 +192,9 @@ class FormBuilder implements FormBuilderInterface {
 	/**
 	 * Color input field
 	 *
-	 * @param array $field The field settings.
+	 * @param array  $field The field settings.
 	 * @param string $name The field name.
-	 * @param mixed $value The field value.
+	 * @param mixed  $value The field value.
 	 *
 	 * @return string
 	 */
@@ -213,9 +213,9 @@ class FormBuilder implements FormBuilderInterface {
 	/**
 	 * Textarea input field
 	 *
-	 * @param array $field The field settings.
+	 * @param array  $field The field settings.
 	 * @param string $name The field name.
-	 * @param mixed $value The field value.
+	 * @param mixed  $value The field value.
 	 *
 	 * @return string
 	 */
@@ -239,9 +239,9 @@ class FormBuilder implements FormBuilderInterface {
 	/**
 	 * Checkbox input field
 	 *
-	 * @param array $field The field settings.
+	 * @param array  $field The field settings.
 	 * @param string $name The field name.
-	 * @param mixed $value The field value.
+	 * @param mixed  $value The field value.
 	 *
 	 * @return string
 	 */
@@ -251,10 +251,10 @@ class FormBuilder implements FormBuilderInterface {
 
 		$checked = Validate::checked( $value ) ? 'checked' : '';
 		$table   = '<input type="hidden" name="' . $name . '" value="' . $false_value . '">';
-		$table   .= '<fieldset><legend class="screen-reader-text"><span>' . $field['title'] . '</span></legend>';
-		$table   .= '<label for="' . $field['id'] . '">';
-		$table   .= '<input type="checkbox" value="' . $true_value . '" id="' . $field['id'] . '" name="' . $name . '" ' . $checked . '>';
-		$table   .= $field['title'] . '</label></fieldset>';
+		$table  .= '<fieldset><legend class="screen-reader-text"><span>' . $field['title'] . '</span></legend>';
+		$table  .= '<label for="' . $field['id'] . '">';
+		$table  .= '<input type="checkbox" value="' . $true_value . '" id="' . $field['id'] . '" name="' . $name . '" ' . $checked . '>';
+		$table  .= $field['title'] . '</label></fieldset>';
 
 		return $table;
 	}
@@ -262,9 +262,9 @@ class FormBuilder implements FormBuilderInterface {
 	/**
 	 * Multi checkbox input field
 	 *
-	 * @param array $field The field settings.
+	 * @param array  $field The field settings.
 	 * @param string $name The field name.
-	 * @param mixed $value The field value.
+	 * @param mixed  $value The field value.
 	 *
 	 * @return string
 	 */
@@ -275,7 +275,7 @@ class FormBuilder implements FormBuilderInterface {
 		$table .= sprintf( '<input type="hidden" name="%1$s" value="0">', $name );
 		foreach ( $field['options'] as $key => $label ) {
 			$checked = ( in_array( $key, $value, true ) ) ? 'checked="checked"' : '';
-			$table   .= '<label for="' . $key . '"><input type="checkbox" value="' . $key . '" id="' . $key . '" name="' . $name . '" ' . $checked . '>' . $label . '</label><br>';
+			$table  .= '<label for="' . $key . '"><input type="checkbox" value="' . $key . '" id="' . $key . '" name="' . $name . '" ' . $checked . '>' . $label . '</label><br>';
 		}
 		$table .= '</fieldset>';
 
@@ -285,9 +285,9 @@ class FormBuilder implements FormBuilderInterface {
 	/**
 	 * Radio input field
 	 *
-	 * @param array $field The field settings.
+	 * @param array  $field The field settings.
 	 * @param string $name The field name.
-	 * @param mixed $value The field value.
+	 * @param mixed  $value The field value.
 	 *
 	 * @return string
 	 */
@@ -297,7 +297,7 @@ class FormBuilder implements FormBuilderInterface {
 		foreach ( $field['options'] as $key => $label ) {
 
 			$checked = ( $value === $key ) ? 'checked="checked"' : '';
-			$table   .= '<label><input type="radio" ' . $checked . ' value="' . $key . '" name="' . $name . '">' . $label . '</label><br>';
+			$table  .= '<label><input type="radio" ' . $checked . ' value="' . $key . '" name="' . $name . '">' . $label . '</label><br>';
 		}
 		$table .= '</p></fieldset>';
 
@@ -307,9 +307,9 @@ class FormBuilder implements FormBuilderInterface {
 	/**
 	 * Select input field
 	 *
-	 * @param array $field The field settings.
+	 * @param array  $field The field settings.
 	 * @param string $name The field name.
-	 * @param mixed $value The field value.
+	 * @param mixed  $value The field value.
 	 *
 	 * @return string
 	 */
@@ -317,7 +317,7 @@ class FormBuilder implements FormBuilderInterface {
 		$table = sprintf( '<select id="%1$s" name="%2$s" class="regular-text">', $field['id'], $name );
 		foreach ( $field['options'] as $key => $label ) {
 			$selected = ( $value === $key ) ? 'selected="selected"' : '';
-			$table    .= '<option value="' . $key . '" ' . $selected . '>' . $label . '</option>';
+			$table   .= '<option value="' . $key . '" ' . $selected . '>' . $label . '</option>';
 		}
 		$table .= '</select>';
 
@@ -327,9 +327,9 @@ class FormBuilder implements FormBuilderInterface {
 	/**
 	 * Get available image sizes
 	 *
-	 * @param array $field The field settings.
+	 * @param array  $field The field settings.
 	 * @param string $name The field name.
-	 * @param mixed $value The field value.
+	 * @param mixed  $value The field value.
 	 *
 	 * @return string
 	 */
@@ -363,7 +363,7 @@ class FormBuilder implements FormBuilderInterface {
 		$table = '<select name="' . $name . '" id="' . $field['id'] . '" class="regular-text select2">';
 		foreach ( $sizes as $key => $option ) {
 			$selected = ( $value === $key ) ? ' selected="selected"' : '';
-			$table    .= '<option value="' . $key . '" ' . $selected . '>' . $option . '</option>';
+			$table   .= '<option value="' . $key . '" ' . $selected . '>' . $option . '</option>';
 		}
 		$table .= '</select>';
 
@@ -373,9 +373,9 @@ class FormBuilder implements FormBuilderInterface {
 	/**
 	 * The wp_editor input field
 	 *
-	 * @param array $field The field settings.
+	 * @param array  $field The field settings.
 	 * @param string $name The field name.
-	 * @param mixed $value The field value.
+	 * @param mixed  $value The field value.
 	 *
 	 * @return string
 	 */
@@ -401,9 +401,9 @@ class FormBuilder implements FormBuilderInterface {
 	/**
 	 * Get html field
 	 *
-	 * @param array $field The field settings.
+	 * @param array  $field The field settings.
 	 * @param string $name The field name.
-	 * @param mixed $value The field value.
+	 * @param mixed  $value The field value.
 	 *
 	 * @return mixed
 	 */
@@ -415,7 +415,14 @@ class FormBuilder implements FormBuilderInterface {
 		return '';
 	}
 
-	private function map_field_settings( $field ) {
+	/**
+	 * Map field settings.
+	 *
+	 * @param array $field The settings.
+	 *
+	 * @return array
+	 */
+	private function map_field_settings( array $field ): array {
 		return $field;
 	}
 }

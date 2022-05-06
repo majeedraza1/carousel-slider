@@ -44,50 +44,42 @@ class Admin {
 	 * @param string $slide_type The slider type.
 	 */
 	public function meta_box_content( int $slider_id, string $slide_type ) {
+		if ( 'hero-banner-slider' !== $slide_type ) {
+			return;
+		}
 		global $post;
 		?>
-		<div data-id="open" id="section_content_carousel" class="shapla-toggle shapla-toggle--stroke"
-			style="display: <?php echo ( 'hero-banner-slider' !== $slide_type ) ? 'none' : 'block'; ?>">
-			<span class="shapla-toggle-title">
-				<?php esc_html_e( 'Hero Banner Slider', 'carousel-slider' ); ?>
-			</span>
-			<div class="shapla-toggle-inner">
-				<div class="shapla-toggle-content">
-					<button class="button carousel-slider__add-slide"
-							data-post-id="<?php echo esc_attr( $slider_id ); ?>">
-						Add Slide
-					</button>
-					<div id="carouselSliderContentInside">
-						<?php
-						$content_sliders  = get_post_meta( $post->ID, '_content_slider', true );
-						$content_settings = get_post_meta( $post->ID, '_content_slider_settings', true );
+		<button class="button carousel-slider__add-slide" data-post-id="<?php echo esc_attr( $slider_id ); ?>">
+			Add Slide
+		</button>
+		<div id="carouselSliderContentInside">
+			<?php
+			$content_sliders  = get_post_meta( $post->ID, '_content_slider', true );
+			$content_settings = get_post_meta( $post->ID, '_content_slider_settings', true );
 
-						if ( is_array( $content_sliders ) && count( $content_sliders ) > 0 ) {
-							$total_sliders = count( $content_sliders );
-							foreach ( $content_sliders as $slide_num => $content_slider ) {
-								$item = new Item(
-									$content_slider,
-									array_merge(
-										$content_settings,
-										[
-											'item_id'     => $slide_num,
-											'slider_id'   => $post->ID,
-											'total_items' => $total_sliders,
-											'lazy_load_image' => true,
-										]
-									)
-								);
+			if ( is_array( $content_sliders ) && count( $content_sliders ) > 0 ) {
+				$total_sliders = count( $content_sliders );
+				foreach ( $content_sliders as $slide_num => $content_slider ) {
+					$item = new Item(
+						$content_slider,
+						array_merge(
+							$content_settings,
+							[
+								'item_id'         => $slide_num,
+								'slider_id'       => $post->ID,
+								'total_items'     => $total_sliders,
+								'lazy_load_image' => true,
+							]
+						)
+					);
 
-								self::item_meta_box( $item, $total_sliders );
-							}
-						}
-						?>
-					</div>
-
-					<?php self::content_meta_box_settings( $post->ID ); ?>
-				</div>
-			</div>
+					self::item_meta_box( $item, $total_sliders );
+				}
+			}
+			?>
 		</div>
+
+		<?php self::content_meta_box_settings( $post->ID ); ?>
 		<?php
 	}
 
@@ -561,9 +553,9 @@ class Admin {
 			<div class="slide-media-left">
 				<div class="slide_thumb">
 					<div class="content_slide_canvas"
-						style="<?php echo esc_attr( $canvas_style ); ?>"></div>
+						 style="<?php echo esc_attr( $canvas_style ); ?>"></div>
 					<span class="delete-bg-img<?php echo ! is_array( $bg_image ) ? ' hidden' : ''; ?>"
-						title="<?php esc_html_e( 'Delete the background image for this slide', 'carousel-slider' ); ?>">&times;</span>
+						  title="<?php esc_html_e( 'Delete the background image for this slide', 'carousel-slider' ); ?>">&times;</span>
 				</div>
 			</div>
 			<div class="slide-media-right">

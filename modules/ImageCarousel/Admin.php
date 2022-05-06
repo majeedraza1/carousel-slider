@@ -41,108 +41,82 @@ class Admin {
 	 * @param string $slider_type The slider type.
 	 */
 	public function meta_box_content( int $slider_id, string $slider_type ) {
-		$form          = new MetaBoxForm();
-		$show_settings = in_array( $slider_type, [ 'image-carousel', 'image-carousel-url' ], true );
-		$images_urls   = get_post_meta( $slider_id, '_images_urls', true );
+		if ( ! in_array( $slider_type, [ 'image-carousel', 'image-carousel-url' ], true ) ) {
+			return;
+		}
+		$form        = new MetaBoxForm();
+		$images_urls = get_post_meta( $slider_id, '_images_urls', true );
+
+		if ( 'image-carousel-url' === $slider_type ) {
+			$form->images_url(
+				array(
+					'id'   => '_images_urls',
+					'name' => esc_html__( 'Images URLs', 'carousel-slider' ),
+					'desc' => esc_html__( 'Enter external images URLs.', 'carousel-slider' ),
+				)
+			);
+		}
+
+		if ( 'image-carousel' === $slider_type ) {
+			$form->images_gallery(
+				[
+					'id'   => '_wpdh_image_ids',
+					'name' => esc_html__( 'Carousel Images', 'carousel-slider' ),
+					'desc' => esc_html__( 'Choose carousel images from media library.', 'carousel-slider' ),
+				]
+			);
+			$form->checkbox(
+				[
+					'id'    => '_shuffle_images',
+					'name'  => esc_html__( 'Shuffle', 'carousel-slider' ),
+					'label' => esc_html__( 'Shuffle Images Order', 'carousel-slider' ),
+					'desc'  => esc_html__( 'Check to shuffle images order at each page refresh.', 'carousel-slider' ),
+					'std'   => 'off',
+				]
+			);
+			$form->checkbox(
+				array(
+					'id'    => '_image_lightbox',
+					'name'  => esc_html__( 'Show Lightbox Gallery', 'carousel-slider' ),
+					'label' => esc_html__( 'Show Lightbox Gallery', 'carousel-slider' ),
+					'desc'  => esc_html__( 'Check to show lightbox gallery.', 'carousel-slider' ),
+					'std'   => 'off',
+				)
+			);
+		}
+
+		$form->checkbox(
+			array(
+				'id'    => '_show_attachment_title',
+				'name'  => esc_html__( 'Show Image Title', 'carousel-slider' ),
+				'label' => esc_html__( 'Show Image Title', 'carousel-slider' ),
+				'desc'  => esc_html__( 'Check to show title below image. Only works with image carousel.', 'carousel-slider' ),
+				'std'   => 'off',
+			)
+		);
+		$form->checkbox(
+			array(
+				'id'    => '_show_attachment_caption',
+				'name'  => esc_html__( 'Show Image Caption', 'carousel-slider' ),
+				'label' => esc_html__( 'Show Image Caption', 'carousel-slider' ),
+				'desc'  => esc_html__( 'Check to show caption below image. Only works with image carousel.', 'carousel-slider' ),
+				'std'   => 'off',
+			)
+		);
+		$form->select(
+			array(
+				'id'      => '_image_target',
+				'name'    => esc_html__( 'Image Target', 'carousel-slider' ),
+				'desc'    => esc_html__( 'Choose where to open the linked image.', 'carousel-slider' ),
+				'std'     => '_self',
+				'options' => array(
+					'_self'  => esc_html__( 'Open in the same frame as it was clicked', 'carousel-slider' ),
+					'_blank' => esc_html__( 'Open in a new window or tab', 'carousel-slider' ),
+				),
+			)
+		);
+
 		?>
-		<div data-id="open" id="section_url_images_settings" class="shapla-toggle shapla-toggle--stroke"
-			style="display: <?php echo 'image-carousel-url' !== $slider_type ? 'none' : 'block'; ?>">
-			<span class="shapla-toggle-title">
-				<?php esc_html_e( 'URL Images', 'carousel-slider' ); ?>
-			</span>
-			<div class="shapla-toggle-inner">
-				<div class="shapla-toggle-content">
-					<?php
-					$form->images_url(
-						array(
-							'id'   => '_images_urls',
-							'name' => esc_html__( 'Images URLs', 'carousel-slider' ),
-							'desc' => esc_html__( 'Enter external images URLs.', 'carousel-slider' ),
-						)
-					);
-					?>
-				</div>
-			</div>
-		</div>
-		<div data-id="open" id="section_images_settings" class="shapla-toggle shapla-toggle--stroke"
-			style="display: <?php echo 'image-carousel' !== $slider_type ? 'none' : 'block'; ?>">
-			<span class="shapla-toggle-title">
-				<?php esc_html_e( 'Media Images', 'carousel-slider' ); ?>
-			</span>
-			<div class="shapla-toggle-inner">
-				<div class="shapla-toggle-content">
-					<?php
-					$form->images_gallery(
-						[
-							'id'   => '_wpdh_image_ids',
-							'name' => esc_html__( 'Carousel Images', 'carousel-slider' ),
-							'desc' => esc_html__( 'Choose carousel images from media library.', 'carousel-slider' ),
-						]
-					);
-					$form->checkbox(
-						[
-							'id'    => '_shuffle_images',
-							'name'  => esc_html__( 'Shuffle', 'carousel-slider' ),
-							'label' => esc_html__( 'Shuffle Images Order', 'carousel-slider' ),
-							'desc'  => esc_html__( 'Check to shuffle images order at each page refresh.', 'carousel-slider' ),
-							'std'   => 'off',
-						]
-					);
-					?>
-				</div>
-			</div>
-		</div>
-		<div data-id="open" id="section_images_general_settings" class="shapla-toggle shapla-toggle--stroke"
-			style="display: <?php echo $show_settings ? 'block' : 'none'; ?>">
-			<span class="shapla-toggle-title">
-				<?php esc_html_e( 'Image Carousel Settings', 'carousel-slider' ); ?>
-			</span>
-			<div class="shapla-toggle-inner">
-				<div class="shapla-toggle-content">
-					<?php
-					$form->checkbox(
-						array(
-							'id'    => '_show_attachment_title',
-							'name'  => esc_html__( 'Show Image Title', 'carousel-slider' ),
-							'label' => esc_html__( 'Show Image Title', 'carousel-slider' ),
-							'desc'  => esc_html__( 'Check to show title below image. Only works with image carousel.', 'carousel-slider' ),
-							'std'   => 'off',
-						)
-					);
-					$form->checkbox(
-						array(
-							'id'    => '_show_attachment_caption',
-							'name'  => esc_html__( 'Show Image Caption', 'carousel-slider' ),
-							'label' => esc_html__( 'Show Image Caption', 'carousel-slider' ),
-							'desc'  => esc_html__( 'Check to show caption below image. Only works with image carousel.', 'carousel-slider' ),
-							'std'   => 'off',
-						)
-					);
-					$form->select(
-						array(
-							'id'      => '_image_target',
-							'name'    => esc_html__( 'Image Target', 'carousel-slider' ),
-							'desc'    => esc_html__( 'Choose where to open the linked image.', 'carousel-slider' ),
-							'std'     => '_self',
-							'options' => array(
-								'_self'  => esc_html__( 'Open in the same frame as it was clicked', 'carousel-slider' ),
-								'_blank' => esc_html__( 'Open in a new window or tab', 'carousel-slider' ),
-							),
-						)
-					);
-					$form->checkbox(
-						array(
-							'id'    => '_image_lightbox',
-							'name'  => esc_html__( 'Show Lightbox Gallery', 'carousel-slider' ),
-							'label' => esc_html__( 'Show Lightbox Gallery', 'carousel-slider' ),
-							'desc'  => esc_html__( 'Check to show lightbox gallery.', 'carousel-slider' ),
-							'std'   => 'off',
-						)
-					);
-					?>
-				</div>
-			</div>
-		</div>
 		<div class="shapla-modal" id="CarouselSliderModal">
 			<div class="shapla-modal-background" data-dismiss="shapla-modal"></div>
 			<div class="shapla-modal-content shapla-modal-card">
@@ -167,32 +141,35 @@ class Admin {
 													<span
 														class="name"><?php esc_html_e( 'URL', 'carousel-slider' ); ?></span>
 														<input type="url" name="_images_urls[url][]"
-															value="<?php echo esc_url( $image['url'] ); ?>" autocomplete="off">
+															   value="<?php echo esc_url( $image['url'] ); ?>"
+															   autocomplete="off">
 													</label>
 													<label class="setting media-url-form-field__item">
 													<span
 														class="name"><?php esc_html_e( 'Title', 'carousel-slider' ); ?></span>
 														<input type="text" name="_images_urls[title][]"
-															value="<?php echo esc_attr( $image['title'] ); ?>" autocomplete="off">
+															   value="<?php echo esc_attr( $image['title'] ); ?>"
+															   autocomplete="off">
 													</label>
 													<label class="setting media-url-form-field__item">
 													<span
 														class="name"><?php esc_html_e( 'Caption', 'carousel-slider' ); ?></span>
-														<textarea name="_images_urls[caption][]"><?php echo esc_textarea( $image['caption'] ); ?></textarea>
+														<textarea
+															name="_images_urls[caption][]"><?php echo esc_textarea( $image['caption'] ); ?></textarea>
 													</label>
 													<label class="setting media-url-form-field__item">
 													<span
 														class="name"><?php esc_html_e( 'Alt Text', 'carousel-slider' ); ?></span>
 														<input type="text" name="_images_urls[alt][]"
-															value="<?php echo esc_attr( $image['alt'] ); ?>"
-															autocomplete="off">
+															   value="<?php echo esc_attr( $image['alt'] ); ?>"
+															   autocomplete="off">
 													</label>
 													<label class="setting media-url-form-field__item">
 													<span
 														class="name"><?php esc_html_e( 'Link To URL', 'carousel-slider' ); ?></span>
 														<input type="text" name="_images_urls[link_url][]"
-															value="<?php echo esc_url( $image['link_url'] ); ?>"
-															autocomplete="off">
+															   value="<?php echo esc_url( $image['link_url'] ); ?>"
+															   autocomplete="off">
 													</label>
 												</div>
 												<div class="media-url-form-field__actions">

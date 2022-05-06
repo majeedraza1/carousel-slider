@@ -42,6 +42,7 @@
 		<exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
 		<!-- Ignore file comment, only class comment is enough for our project -->
 		<exclude name="Squiz.Commenting.FileComment.Missing"/>
+		<exclude name="WordPress.WhiteSpace.PrecisionAlignment.Found"/>
 	</rule>
 
 	<rule ref="WordPress.WP.DeprecatedFunctions">

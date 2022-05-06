@@ -42,55 +42,44 @@ class MetaBox {
 	}
 
 	/**
-	 * Check current user can save slider
-	 *
-	 * @param int $post_id post id.
-	 *
-	 * @return bool
-	 */
-	public function current_user_can_save( int $post_id ): bool {
-		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-			return false;
-		}
-
-		if ( ! current_user_can( 'edit_post', $post_id ) ) {
-			return false;
-		}
-
-		return false !== wp_verify_nonce( $_POST['_carousel_slider_nonce'] ?? '', 'carousel_slider_nonce' );
-	}
-
-	/**
 	 * Save custom meta box
 	 *
 	 * @param int $post_id The post ID.
 	 */
 	public function save_meta_box( int $post_id ) {
 		// Check if user has permissions to save data.
-		if ( ! $this->current_user_can_save( $post_id ) ) {
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 			return;
 		}
 
-		// phpcs:ignore: WordPress.Security.NonceVerification.Missing
-		foreach ( $_POST['carousel_slider'] as $key => $val ) {
-			if ( is_array( $val ) ) {
-				$val = implode( ',', $val );
-			}
-
-			if ( '_margin_right' === $key && 0 === $val ) {
-				$val = 'zero';
-			}
-			update_post_meta( $post_id, $key, sanitize_text_field( $val ) );
+		if ( ! current_user_can( 'edit_post', $post_id ) ) {
+			return;
 		}
 
-		do_action( 'carousel_slider/save_slider', $post_id, $_POST );
+		if ( wp_verify_nonce( $_POST['_carousel_slider_nonce'] ?? '', 'carousel_slider_nonce' ) ) {
+
+			foreach ( $_POST['carousel_slider'] as $key => $val ) {
+				if ( is_array( $val ) ) {
+					$val = implode( ',', $val );
+				}
+
+				update_post_meta( $post_id, $key, sanitize_text_field( $val ) );
+			}
+
+			update_post_meta( $post_id, '_carousel_slider_version', CAROUSEL_SLIDER_VERSION );
+
+			do_action( 'carousel_slider/save_slider', $post_id, $_POST );
+		}
 	}
 
 	/**
 	 * Add carousel slider meta box
+	 *
+	 * @param string  $post_type The post type.
+	 * @param WP_Post $post The post object.
 	 */
 	public function add_meta_boxes( $post_type, $post ) {
-		if ( $post_type !== CAROUSEL_SLIDER_POST_TYPE ) {
+		if ( CAROUSEL_SLIDER_POST_TYPE !== $post_type ) {
 			return;
 		}
 
@@ -108,9 +97,15 @@ class MetaBox {
 			return;
 		}
 
+		$slide_types = Helper::get_slide_types();
+
 		$meta_boxes = [
 			'carousel-slider-meta-boxes'          => [
-				'title'    => __( 'Carousel Slider', 'carousel-slider' ),
+				'title'    => sprintf(
+				/* translators: 1 - Slider type label */
+					__( 'Carousel Slider : %s', 'carousel-slider' ),
+					$slide_types[ $slide_type ] ?? ''
+				),
 				'callback' => [ $this, 'carousel_slider_meta_boxes' ],
 				'context'  => 'normal',
 				'priority' => 'high',
@@ -157,12 +152,50 @@ class MetaBox {
 		}
 	}
 
-	public function carousel_slider_slide_types( WP_Post $post ) {
+	/**
+	 * Submit div html
+	 *
+	 * @param WP_Post $post The post object.
+	 *
+	 * @return void
+	 */
+	public function carousel_slider_submitdiv( $post ) {
+		$slide_type   = get_post_meta( $post->ID, '_slide_type', true );
+		$preview_link = esc_url( get_preview_post_link( $post ) );
+		$btn_text     = empty( $slide_type ) ? __( 'Next', 'carousel-slider' ) : __( 'Update', 'carousel-slider' );
+		?>
+		<div id="major-publishing-actions">
+			<?php if ( ! empty( $slide_type ) ) { ?>
+				<div id="delete-action">
+					<a href="<?php echo esc_url( $preview_link ); ?>"
+					   target="wp-preview-<?php echo esc_attr( $post->ID ); ?>" id="post-preview" class="preview">
+						<?php esc_html_e( 'Preview Changes', 'carousel-slider' ); ?>
+					</a>
+					<input type="hidden" name="wp-preview" id="wp-preview" value="">
+				</div>
+			<?php } ?>
+			<div id="publishing-action">
+				<input name="original_publish" type="hidden" id="original_publish" value="Publish">
+				<input type="submit" name="publish" id="publish" class="button button-primary button-large"
+					   value="<?php echo esc_attr( $btn_text ); ?>">
+			</div>
+			<div class="clear"></div>
+		</div>
+		<?php
+	}
+
+	/**
+	 * Post type metabox.
+	 *
+	 * @return void
+	 */
+	public function carousel_slider_slide_types() {
 		wp_nonce_field( 'carousel_slider_nonce', '_carousel_slider_nonce' );
 		$slide_types = Helper::get_slide_types();
 		$html        = '';
 		foreach ( $slide_types as $slug => $label ) {
-			$id   = sprintf( '_slide_type__%s', $slug );
+			$id = sprintf( '_slide_type__%s', $slug );
+
 			$html .= '<div style="margin-bottom: .5rem">';
 			$html .= '<input type="radio" id="' . esc_attr( $id ) . '" name="carousel_slider[_slide_type]" value="' . esc_attr( $slug ) . '">';
 			$html .= '<label for="' . esc_attr( $id ) . '">' . esc_html( $label ) . '</label>';
@@ -268,7 +301,9 @@ class MetaBox {
 			)
 		);
 
-		echo apply_filters( 'carousel_slider/admin/metabox_general_settings', ob_get_clean(), $form );
+		Helper::print_unescaped_internal_string(
+			apply_filters( 'carousel_slider/admin/metabox_general_settings', ob_get_clean(), $form )
+		);
 	}
 
 	/**
@@ -354,9 +389,16 @@ class MetaBox {
 			]
 		);
 
-		echo apply_filters( 'carousel_slider/admin/metabox_navigation_settings', ob_get_clean(), $form );
+		Helper::print_unescaped_internal_string(
+			apply_filters( 'carousel_slider/admin/metabox_navigation_settings', ob_get_clean(), $form )
+		);
 	}
 
+	/**
+	 * Pagination setting callback
+	 *
+	 * @return void
+	 */
 	public function pagination_settings_callback() {
 		$form = new MetaBoxForm();
 		ob_start();
@@ -415,7 +457,9 @@ class MetaBox {
 			]
 		);
 
-		echo apply_filters( 'carousel_slider/admin/metabox_pagination_settings', ob_get_clean(), $form );
+		Helper::print_unescaped_internal_string(
+			apply_filters( 'carousel_slider/admin/metabox_pagination_settings', ob_get_clean(), $form )
+		);
 	}
 
 	/**
@@ -473,7 +517,9 @@ class MetaBox {
 			]
 		);
 
-		echo apply_filters( 'carousel_slider/admin/metabox_autoplay_settings', ob_get_clean(), $form );
+		Helper::print_unescaped_internal_string(
+			apply_filters( 'carousel_slider/admin/metabox_autoplay_settings', ob_get_clean(), $form )
+		);
 	}
 
 	/**
@@ -501,7 +547,9 @@ class MetaBox {
 			]
 		);
 
-		echo apply_filters( 'carousel_slider/admin/metabox_color_settings', ob_get_clean(), $form );
+		Helper::print_unescaped_internal_string(
+			apply_filters( 'carousel_slider/admin/metabox_color_settings', ob_get_clean(), $form )
+		);
 	}
 
 	/**
@@ -571,6 +619,8 @@ class MetaBox {
 			]
 		);
 
-		echo apply_filters( 'carousel_slider/admin/metabox_responsive_settings', ob_get_clean(), $form );
+		Helper::print_unescaped_internal_string(
+			apply_filters( 'carousel_slider/admin/metabox_responsive_settings', ob_get_clean(), $form )
+		);
 	}
 }

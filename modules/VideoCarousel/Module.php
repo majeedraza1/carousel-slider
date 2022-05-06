@@ -41,33 +41,25 @@ class Module {
 	 * @param string $slider_type The slider type.
 	 */
 	public function meta_box_content( int $slider_id, string $slider_type ) {
-		$is_video_carousel = 'video-carousel' === $slider_type;
-		$urls              = get_post_meta( $slider_id, '_video_url', true );
-		$description       = sprintf(
+		if ( 'video-carousel' !== $slider_type ) {
+			return;
+		}
+		$urls        = get_post_meta( $slider_id, '_video_url', true );
+		$description = sprintf(
 			'%s<br><br>%s %s',
 			esc_html__( 'Only support youtube and vimeo. Enter video URL from youtube or vimeo separating each by comma', 'carousel-slider' ),
 			esc_html__( 'Example:', 'carousel-slider' ),
 			'https://www.youtube.com/watch?v=O4-EM32h7b4,https://www.youtube.com/watch?v=72IO4gzB8mU,https://vimeo.com/193773669,https://vimeo.com/193517656'
 		);
 		?>
-		<div data-id="open" id="section_video_settings" class="shapla-toggle shapla-toggle--stroke"
-			style="display: <?php echo $is_video_carousel ? 'block' : 'none'; ?>">
-			<span class="shapla-toggle-title">
-				<?php esc_html_e( 'Video Settings', 'carousel-slider' ); ?>
-			</span>
-			<div class="shapla-toggle-inner">
-				<div class="shapla-toggle-content">
-					<div class="sp-input-group" id="field-_video_url">
-						<div class="sp-input-label">
-							<label for="_video_url"><?php esc_html_e( 'Video URLs', 'carousel-slider' ); ?></label>
-							<p class="sp-input-desc"><?php echo wp_kses_post( $description ); ?></p>
-						</div>
-						<div class="sp-input-field">
-							<textarea class="sp-input-textarea" id="_video_url" cols="35" rows="6"
-								name="_video_url"><?php echo esc_textarea( $urls ); ?></textarea>
-						</div>
-					</div>
-				</div>
+		<div class="sp-input-group" id="field-_video_url">
+			<div class="sp-input-label">
+				<label for="_video_url"><?php esc_html_e( 'Video URLs', 'carousel-slider' ); ?></label>
+				<p class="sp-input-desc"><?php echo wp_kses_post( $description ); ?></p>
+			</div>
+			<div class="sp-input-field">
+				<textarea class="sp-input-textarea" id="_video_url" cols="35" rows="6"
+						  name="_video_url"><?php echo esc_textarea( $urls ); ?></textarea>
 			</div>
 		</div>
 		<?php

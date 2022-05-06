@@ -39,3 +39,13 @@ $imagePath: '../img/';
 		padding-top: 1rem;
 	}
 }
+
+.post-type-carousels {
+	#minor-publishing-actions {
+		padding-bottom: 10px !important;
+	}
+
+	#misc-publishing-actions {
+		display: none !important;
+	}
+}

@@ -75,16 +75,16 @@ class Setting {
 		// Add settings page tab.
 		$settings->set_panel(
 			[
-				'id'    => 'general',
-				'title' => __( 'General', 'carousel-slider' ),
-				'priority'    => 10,
+				'id'       => 'general',
+				'title'    => __( 'General', 'carousel-slider' ),
+				'priority' => 10,
 			]
 		);
 		$settings->set_panel(
 			[
-				'id'    => 'woocommerce',
-				'title' => __( 'WooCommerce', 'carousel-slider' ),
-				'priority'    => 10,
+				'id'       => 'woocommerce',
+				'title'    => __( 'WooCommerce', 'carousel-slider' ),
+				'priority' => 10,
 			]
 		);
 
