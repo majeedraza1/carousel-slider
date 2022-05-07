@@ -1,0 +1,26 @@
+<?php
+
+namespace CarouselSlider\Supports\FormFields;
+
+/**
+ * TermsList class
+ */
+class SelectTerms extends Select {
+	/**
+	 * Render field html
+	 *
+	 * @inerhitDoc
+	 */
+	public function render(): string {
+		$terms   = get_terms( [ 'taxonomy' => $this->get_setting( 'taxonomy', 'category' ) ] );
+		$choices = [];
+		if ( ! is_wp_error( $terms ) ) {
+			foreach ( $terms as $term ) {
+				$choices[ $term->term_id ] = sprintf( '%s (%s)', $term->name, $term->count );
+			}
+		}
+		$this->set_setting( 'choices', $choices );
+
+		return parent::render();
+	}
+}

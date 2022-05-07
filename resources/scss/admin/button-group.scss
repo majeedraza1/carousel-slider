@@ -1,0 +1,30 @@
+.buttonset {
+	display: flex;
+	flex-wrap: wrap;
+	font-size: 1rem;
+
+	.switch-label {
+		background: rgba(0, 0, 0, .05);
+		border-right: 1px solid rgba(0, 0, 0, .2);
+		color: #555;
+		margin: 0;
+		padding: 0.5em;
+		flex-grow: 1;
+		text-align: center;
+
+		&:last-child {
+			border-right: none;
+		}
+	}
+
+	.switch-input {
+		display: none;
+
+		&:checked {
+			+ .switch-label {
+				background-color: #3498DB;
+				color: #fff;
+			}
+		}
+	}
+}

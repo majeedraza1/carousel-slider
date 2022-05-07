@@ -7,10 +7,17 @@ use CarouselSlider\Interfaces\FieldInterface;
 use CarouselSlider\Supports\FormFields\BaseField;
 use CarouselSlider\Supports\FormFields\ButtonGroup;
 use CarouselSlider\Supports\FormFields\Checkbox;
+use CarouselSlider\Supports\FormFields\CheckboxSwitch;
 use CarouselSlider\Supports\FormFields\Color;
 use CarouselSlider\Supports\FormFields\ImagesGallery;
+use CarouselSlider\Supports\FormFields\ImageUploader;
+use CarouselSlider\Supports\FormFields\ImageUrl;
+use CarouselSlider\Supports\FormFields\Radio;
+use CarouselSlider\Supports\FormFields\SelectImageSize;
+use CarouselSlider\Supports\FormFields\SelectPosts;
 use CarouselSlider\Supports\FormFields\Select;
 use CarouselSlider\Supports\FormFields\Spacing;
+use CarouselSlider\Supports\FormFields\SelectTerms;
 use CarouselSlider\Supports\FormFields\Text;
 use CarouselSlider\Supports\FormFields\Textarea;
 
@@ -26,8 +33,14 @@ defined( 'ABSPATH' ) || exit;
  * @method void button_group( array $args )
  * @method void color( array $args )
  * @method void images_gallery( array $args )
+ * @method void upload_iframe( array $args )
+ * @method void images_url( array $args )
+ * @method void posts_list( array $args )
  * @method void number( array $args )
  * @method void checkbox( array $args )
+ * @method void post_terms( array $args )
+ * @method void image_sizes( array $args )
+ * @method void radio( array $args )
  */
 class MetaBoxForm {
 
@@ -38,7 +51,7 @@ class MetaBoxForm {
 	 *
 	 * @return array
 	 */
-	public function map_field_settings( array $settings ): array {
+	private static function map_field_settings( array $settings ): array {
 		$attrs = [
 			'name'    => 'label',
 			'desc'    => 'description',
@@ -63,170 +76,28 @@ class MetaBoxForm {
 	 *
 	 * @return BaseField|FieldInterface
 	 */
-	public function get_field_class( string $type = 'text' ) {
+	private static function get_field_class( string $type = 'text' ) {
 		$types = [
 			'text'           => Text::class,
 			'textarea'       => Textarea::class,
 			'spacing'        => Spacing::class,
 			'checkbox'       => Checkbox::class,
 			'button_group'   => ButtonGroup::class,
-			'select'         => Select::class,
 			'color'          => Color::class,
 			'images_gallery' => ImagesGallery::class,
+			'upload_iframe'  => ImageUploader::class,
+			'images_url'     => ImageUrl::class,
+			'select'         => Select::class,
+			'posts_list'     => SelectPosts::class,
+			'post_terms'     => SelectTerms::class,
+			'image_sizes'    => SelectImageSize::class,
+			'radio'          => Radio::class,
+			'switch'         => CheckboxSwitch::class,
 		];
 
 		$class = array_key_exists( $type, $types ) ? $types[ $type ] : $types['text'];
 
 		return new $class();
-	}
-
-	/**
-	 * Generate text field
-	 *
-	 * @param array $args The settings arguments.
-	 *
-	 * @return string
-	 */
-	public function field( array $args ): string {
-		list( $name, $value ) = $this->get_name_and_value( $args );
-
-		$field = self::get_field_class( $args['type'] ?? 'text' );
-		$field->set_settings( $this->map_field_settings( $args ) );
-		$field->set_name( $name );
-		$field->set_value( $value );
-
-		$html  = $this->field_before( $args );
-		$html .= $field->render();
-		$html .= $this->field_after( $args );
-
-		return $html;
-	}
-
-	/**
-	 * Generate select field
-	 *
-	 * @param array $args The settings arguments.
-	 */
-	public function select( array $args ) {
-		$args['type']        = 'select';
-		$args['field_class'] = 'select2 sp-input-text';
-
-		echo $this->field( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	}
-
-	/**
-	 * Generate posts list dropdown
-	 * Also support for any custom post type
-	 *
-	 * @param array $args The settings arguments.
-	 */
-	public function posts_list( array $args ) {
-		$posts = get_posts(
-			[
-				'post_type'      => $args['post_type'] ?? 'post',
-				'post_status'    => 'publish',
-				'posts_per_page' => - 1,
-			]
-		);
-
-		$args['type']        = 'select';
-		$args['field_class'] = 'select2 sp-input-text';
-		$args['choices']     = [];
-		foreach ( $posts as $post ) {
-			$args['choices'][ $post->ID ] = $post->post_title;
-		}
-
-		echo $this->field( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	}
-
-	/**
-	 * Upload iFrame field
-	 *
-	 * @param array $args The settings arguments.
-	 */
-	public function upload_iframe( array $args ) {
-		if ( ! isset( $args['id'], $args['name'] ) ) {
-			return;
-		}
-		list( $name, $value ) = $this->get_name_and_value( $args );
-		$class                = isset( $args['class'] ) ? esc_attr( $args['class'] ) : 'sp-input-hidden';
-		$button_text          = $value ? __( 'Update Image', 'carousel-slider' ) : __( 'Set Image', 'carousel-slider' );
-
-		global $post;
-		$attrs = [
-			'class'            => 'button slide_image_add',
-			'href'             => esc_url( get_upload_iframe_src( 'image', $post->ID ) ),
-			'data-title'       => esc_attr__( 'Select or Upload Slide Background Image', 'carousel-slider' ),
-			'data-button-text' => esc_attr( $button_text ),
-		];
-
-		$html  = $this->field_before( $args );
-		$html .= '<input type="hidden" class="' . $class . '" name="' . $name . '" value="' . $value . '" />';
-		$html .= '<a ' . implode( ' ', Helper::array_to_attribute( $attrs ) ) . '>' . esc_html( $button_text ) . '</a>';
-		$html .= $this->field_after( $args );
-		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	}
-
-	/**
-	 * Generate image gallery list from images URL
-	 *
-	 * @param array $args The settings arguments.
-	 */
-	public function images_url( array $args ) {
-		if ( ! isset( $args['id'], $args['name'] ) ) {
-			return;
-		}
-
-		global $post;
-
-		$std_value = $args['std'] ?? '';
-		$meta      = get_post_meta( $post->ID, $args['id'], true );
-		$value     = ! empty( $meta ) ? $meta : $std_value;
-
-		$btn_text = $value ? __( 'Edit URLs', 'carousel-slider' ) : __( 'Add URLs', 'carousel-slider' );
-
-		$html  = $this->field_before( $args );
-		$html .= sprintf( '<a id="_images_urls_btn" class="button" href="#">%s</a>', $btn_text );
-		$html .= '<ul class="carousel_slider_url_images_list">';
-		if ( is_array( $value ) && count( $value ) > 0 ) {
-			foreach ( $value as $image ) {
-				$html .= '<li><img src="' . $image['url'] . '" alt="' . $image['alt'] . '" width="75" height="75"></li>';
-			}
-		}
-		$html .= '</ul>';
-		$html .= $this->field_after( $args );
-		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	}
-
-	/**
-	 * Generate image sizes dropdown from available image sizes
-	 *
-	 * @param array $args The settings arguments.
-	 */
-	public function image_sizes( array $args ) {
-		$args['type']    = 'select';
-		$args['choices'] = Helper::get_available_image_sizes();
-
-		echo $this->field( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	}
-
-	/**
-	 * Get post terms drowdown list
-	 *
-	 * @param array $args The settings arguments.
-	 */
-	public function post_terms( array $args ) {
-		$terms = get_terms( [ 'taxonomy' => $args['taxonomy'] ?? 'category' ] );
-
-		$args['type']    = 'select';
-		$args['choices'] = [];
-		if ( ! is_wp_error( $terms ) ) {
-			foreach ( $terms as $term ) {
-				$args['choices'][ $term->term_id ] = sprintf( '%s (%s)', $term->name, $term->count );
-			}
-		}
-
-		echo $this->field( $args ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
@@ -236,7 +107,7 @@ class MetaBoxForm {
 	 *
 	 * @return array
 	 */
-	private function get_name_and_value( array $args ): array {
+	private static function get_name_and_value( array $args ): array {
 		global $post;
 		$input_attributes = $args['input_attributes'] ?? [];
 		// Meta Name.
@@ -249,7 +120,7 @@ class MetaBoxForm {
 		}
 
 		// Meta Value.
-		$default = $args['std'] ?? '';
+		$default = $args['default'] ?? '';
 		if ( isset( $input_attributes['value'] ) ) {
 			$value = ! empty( $input_attributes['value'] ) ? $input_attributes['value'] : $default;
 		} else {
@@ -271,19 +142,19 @@ class MetaBoxForm {
 	 *
 	 * @return string
 	 */
-	private function field_before( array $args ): string {
-		$_normal  = sprintf( '<div class="sp-input-group" id="field-%s">', $args['id'] );
+	private static function field_before( array $args ): string {
+		$_normal = sprintf( '<div class="sp-input-group" id="field-%s">', $args['id'] );
 		$_normal .= '<div class="sp-input-label">';
-		$_normal .= sprintf( '<label for="%1$s">%2$s</label>', $args['id'], $args['name'] );
-		if ( ! empty( $args['desc'] ) ) {
-			$_normal .= sprintf( '<p class="sp-input-desc">%s</p>', $args['desc'] );
+		$_normal .= sprintf( '<label for="%1$s">%2$s</label>', $args['id'], $args['label'] );
+		if ( ! empty( $args['description'] ) ) {
+			$_normal .= sprintf( '<p class="sp-input-desc">%s</p>', $args['description'] );
 		}
 		$_normal .= '</div>';
 		$_normal .= '<div class="sp-input-field">';
 
 		if ( isset( $args['context'] ) && 'side' === $args['context'] ) {
-			$_side  = '<p id="field-' . $args['id'] . '">';
-			$_side .= '<label for="' . $args['id'] . '"><strong>' . $args['name'] . '</strong></label>';
+			$_side = '<p id="field-' . $args['id'] . '">';
+			$_side .= '<label for="' . $args['id'] . '"><strong>' . $args['label'] . '</strong></label>';
 
 			return $_side;
 		}
@@ -298,12 +169,12 @@ class MetaBoxForm {
 	 *
 	 * @return string
 	 */
-	private function field_after( array $args = [] ): string {
+	private static function field_after( array $args = [] ): string {
 
 		if ( isset( $args['context'] ) && 'side' === $args['context'] ) {
 			$_side = '';
-			if ( ! empty( $args['desc'] ) ) {
-				$_side .= '<span class="cs-tooltip" title="' . esc_attr( $args['desc'] ) . '"></span>';
+			if ( ! empty( $args['description'] ) ) {
+				$_side .= '<span class="cs-tooltip" title="' . esc_attr( $args['description'] ) . '"></span>';
 			}
 			$_side .= '</p>';
 
@@ -314,15 +185,39 @@ class MetaBoxForm {
 	}
 
 	/**
+	 * Generate text field
+	 *
+	 * @param array $args The settings arguments.
+	 *
+	 * @return string
+	 */
+	public static function field( array $args ): string {
+		$settings = self::map_field_settings( $args );
+
+		list( $name, $value ) = self::get_name_and_value( $settings );
+
+		$field = self::get_field_class( $args['type'] ?? 'text' );
+		$field->set_settings( $settings );
+		$field->set_name( $name );
+		$field->set_value( $value );
+
+		$html = self::field_before( $settings );
+		$html .= $field->render();
+		$html .= self::field_after( $settings );
+
+		return $html;
+	}
+
+	/**
 	 * Handle wildcard method call
 	 *
 	 * @param string $name The method name.
-	 * @param array  $arguments The arguments for the method.
+	 * @param array $arguments The arguments for the method.
 	 *
 	 * @return void
 	 */
 	public function __call( string $name, array $arguments = [] ) {
 		$args = array_merge( ( is_array( $arguments[0] ) ? $arguments[0] : [] ), [ 'type' => $name ] );
-		Helper::print_unescaped_internal_string( $this->field( $args ) );
+		Helper::print_unescaped_internal_string( self::field( $args ) );
 	}
 }

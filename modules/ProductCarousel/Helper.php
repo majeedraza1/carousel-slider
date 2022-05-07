@@ -37,6 +37,28 @@ class Helper {
 	}
 
 	/**
+	 * List all (or limited) product tags.
+	 *
+	 * @param array $args Optional arguments.
+	 *
+	 * @return array|WP_Term[]
+	 */
+	public static function product_tags( array $args = [] ): array {
+		$args = wp_parse_args(
+			$args,
+			[
+				'hide_empty' => true,
+				'orderby'    => 'name',
+				'order'      => 'ASC',
+			]
+		);
+
+		$args['taxonomy'] = 'product_tag';
+
+		return get_terms( $args );
+	}
+
+	/**
 	 * Format term slug
 	 *
 	 * @param array  $tags List of term slug or term id.

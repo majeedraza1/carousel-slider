@@ -13,6 +13,9 @@ class Select extends BaseField {
 	 * @inerhitDoc
 	 */
 	public function render(): string {
+		$this->set_setting( 'field_class', 'select2 sp-input-text' );
+		$this->set_setting( 'type', 'select' );
+
 		$is_multiple = $this->get_setting( 'multiple' );
 		$value       = $this->get_value();
 		if ( $is_multiple && is_string( $value ) ) {

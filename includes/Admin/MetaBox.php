@@ -75,7 +75,7 @@ class MetaBox {
 	/**
 	 * Add carousel slider meta box
 	 *
-	 * @param string  $post_type The post type.
+	 * @param string $post_type The post type.
 	 * @param WP_Post $post The post object.
 	 */
 	public function add_meta_boxes( $post_type, $post ) {
@@ -191,14 +191,24 @@ class MetaBox {
 	 */
 	public function carousel_slider_slide_types() {
 		wp_nonce_field( 'carousel_slider_nonce', '_carousel_slider_nonce' );
-		$slide_types = Helper::get_slide_types();
+		$slide_types = Helper::get_slider_types();
 		$html        = '';
-		foreach ( $slide_types as $slug => $label ) {
-			$id = sprintf( '_slide_type__%s', $slug );
+		foreach ( $slide_types as $slug => $args ) {
+			$id    = sprintf( '_slide_type__%s', $slug );
+			$attrs = [
+				'type'  => 'radio',
+				'name'  => 'carousel_slider[_slide_type]',
+				'id'    => $id,
+				'value' => $slug,
+			];
+
+			if ( false === $args['enabled'] ) {
+				$attrs['disabled'] = true;
+			}
 
 			$html .= '<div style="margin-bottom: .5rem">';
-			$html .= '<input type="radio" id="' . esc_attr( $id ) . '" name="carousel_slider[_slide_type]" value="' . esc_attr( $slug ) . '">';
-			$html .= '<label for="' . esc_attr( $id ) . '">' . esc_html( $label ) . '</label>';
+			$html .= '<input ' . implode( ' ', Helper::array_to_attribute( $attrs ) ) . '>';
+			$html .= '<label for="' . esc_attr( $id ) . '">' . esc_html( $args['label'] ) . '</label>';
 			$html .= '</div>';
 		}
 

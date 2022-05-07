@@ -40,7 +40,7 @@ class Helper extends ViewHelper {
 	 * Get setting
 	 *
 	 * @param string $key The setting key.
-	 * @param mixed  $default Setting default value.
+	 * @param mixed $default Setting default value.
 	 *
 	 * @return mixed|null
 	 */
@@ -62,15 +62,47 @@ class Helper extends ViewHelper {
 	 * @return array
 	 */
 	public static function get_slide_types(): array {
+		$types = [];
+		foreach ( self::get_slider_types() as $slug => $args ) {
+			$types[ $slug ] = $args['label'];
+		}
+
+		return apply_filters( 'carousel_slider_slide_type', $types );
+	}
+
+	/**
+	 * Get slider types
+	 *
+	 * @return array
+	 */
+	public static function get_slider_types(): array {
 		return apply_filters(
-			'carousel_slider_slide_type',
+			'carousel_slider/slider_types',
 			[
-				'image-carousel'     => __( 'Image Carousel', 'carousel-slider' ),
-				'image-carousel-url' => __( 'Image Carousel (URL)', 'carousel-slider' ),
-				'post-carousel'      => __( 'Post Carousel', 'carousel-slider' ),
-				'product-carousel'   => __( 'Product Carousel', 'carousel-slider' ),
-				'video-carousel'     => __( 'Video Carousel', 'carousel-slider' ),
-				'hero-banner-slider' => __( 'Hero Carousel', 'carousel-slider' ),
+				'image-carousel'     => [
+					'label'   => __( 'Image Carousel', 'carousel-slider' ),
+					'enabled' => true,
+				],
+				'image-carousel-url' => [
+					'label'   => __( 'Image Carousel (URL)', 'carousel-slider' ),
+					'enabled' => true,
+				],
+				'post-carousel'      => [
+					'label'   => __( 'Post Carousel', 'carousel-slider' ),
+					'enabled' => true,
+				],
+				'video-carousel'     => [
+					'label'   => __( 'Video Carousel', 'carousel-slider' ),
+					'enabled' => true,
+				],
+				'hero-banner-slider' => [
+					'label'   => __( 'Hero Carousel', 'carousel-slider' ),
+					'enabled' => true,
+				],
+				'product-carousel'   => [
+					'label'   => __( 'Product Carousel', 'carousel-slider' ),
+					'enabled' => self::is_woocommerce_active(),
+				],
 			]
 		);
 	}
@@ -112,7 +144,7 @@ class Helper extends ViewHelper {
 	 * Get default setting
 	 *
 	 * @param string $key The setting key.
-	 * @param mixed  $default Default value.
+	 * @param mixed $default Default value.
 	 *
 	 * @return mixed|null
 	 */
@@ -160,8 +192,8 @@ class Helper extends ViewHelper {
 	 */
 	public static function is_woocommerce_active(): bool {
 		return in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins' ), true ) ||
-			defined( 'WC_VERSION' ) ||
-			defined( 'WOOCOMMERCE_VERSION' );
+		       defined( 'WC_VERSION' ) ||
+		       defined( 'WOOCOMMERCE_VERSION' );
 	}
 
 	/**
@@ -181,7 +213,7 @@ class Helper extends ViewHelper {
 		}
 
 		foreach ( $ids as $id ) {
-			$_post         = get_post( $id );
+			$_post        = get_post( $id );
 			$page_content .= '<!-- wp:heading {"level":4} --><h4>' . $_post->post_title . '</h4><!-- /wp:heading -->';
 			$page_content .= '<!-- wp:carousel-slider/slider {"sliderID":' . $id . ',"sliderName":"' . $_post->post_title . ' ( ID: ' . $id . ' )"} -->';
 			$page_content .= '<div class="wp-block-carousel-slider-slider">[carousel_slide id=\'' . $id . '\']</div>';

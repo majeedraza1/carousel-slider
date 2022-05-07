@@ -37,7 +37,7 @@ class Admin {
 	/**
 	 * Show meta box content for product carousel
 	 *
-	 * @param int    $slider_id The slider id.
+	 * @param int $slider_id The slider id.
 	 * @param string $slider_type The slider type.
 	 */
 	public function meta_box_content( int $slider_id, string $slider_type ) {
@@ -50,9 +50,9 @@ class Admin {
 		if ( 'image-carousel-url' === $slider_type ) {
 			$form->images_url(
 				array(
-					'id'   => '_images_urls',
-					'name' => esc_html__( 'Images URLs', 'carousel-slider' ),
-					'desc' => esc_html__( 'Enter external images URLs.', 'carousel-slider' ),
+					'id'          => '_images_urls',
+					'label'       => esc_html__( 'Images URLs', 'carousel-slider' ),
+					'description' => esc_html__( 'Enter external images URLs.', 'carousel-slider' ),
 				)
 			);
 		}
@@ -181,7 +181,7 @@ class Admin {
 												</div>
 											</div>
 										</div>
-										<?php
+									<?php
 									endforeach;
 								endif;
 								?>
