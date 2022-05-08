@@ -127,6 +127,7 @@ class Data implements ArrayAccess, JsonSerializable {
 	 *
 	 * @return mixed Can return all value types.
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetGet( $offset ) {
 		return $this->get_prop( $offset );
 	}
@@ -139,6 +140,7 @@ class Data implements ArrayAccess, JsonSerializable {
 	 *
 	 * @return void
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetSet( $offset, $value ) {
 		$this->set_prop( $offset, $value );
 	}
@@ -150,6 +152,7 @@ class Data implements ArrayAccess, JsonSerializable {
 	 *
 	 * @return void
 	 */
+	#[\ReturnTypeWillChange]
 	public function offsetUnset( $offset ) {
 		$this->remove_prop( $offset );
 	}

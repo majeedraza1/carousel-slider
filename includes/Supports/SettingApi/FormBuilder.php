@@ -5,7 +5,15 @@ namespace CarouselSlider\Supports\SettingApi;
 use CarouselSlider\Interfaces\FieldInterface;
 use CarouselSlider\Interfaces\FormBuilderInterface;
 use CarouselSlider\Supports\FormFields\BaseField;
-use CarouselSlider\Supports\Validate;
+use CarouselSlider\Supports\FormFields\Breakpoint;
+use CarouselSlider\Supports\FormFields\Checkbox;
+use CarouselSlider\Supports\FormFields\Color;
+use CarouselSlider\Supports\FormFields\Html;
+use CarouselSlider\Supports\FormFields\Radio;
+use CarouselSlider\Supports\FormFields\Select;
+use CarouselSlider\Supports\FormFields\SelectImageSize;
+use CarouselSlider\Supports\FormFields\Text;
+use CarouselSlider\Supports\FormFields\Textarea;
 
 // If this file is called directly, abort.
 defined( 'ABSPATH' ) || die;
@@ -78,7 +86,11 @@ class FormBuilder implements FormBuilderInterface {
 		$table = "<table class='form-table'>";
 
 		foreach ( $this->fields_settings as $field ) {
-			$type  = $field['type'] ?? 'text';
+			$type        = $field['type'] ?? 'text';
+			$field_class = self::get_field_class( $type );
+			if ( ! $field_class instanceof FieldInterface ) {
+				continue;
+			}
 			$name  = sprintf( '%s[%s]', $this->option_name, $field['id'] );
 			$value = $this->values[ $field['id'] ] ?? '';
 
@@ -88,21 +100,13 @@ class FormBuilder implements FormBuilderInterface {
 			}
 			$table .= '<td>';
 
-			$field_class = self::get_field_class( $type );
-
-			if ( $field_class instanceof FieldInterface ) {
-				$field_class->set_settings( $this->map_field_settings( $field ) );
-				$field_class->set_name( $name );
-				$field_class->set_value( $value );
-				$table .= $field_class->render();
-			} elseif ( method_exists( $this, $type ) ) {
-				$table .= $this->$type( $field, $name, $value );
-			} else {
-				$table .= $this->text( $field, $name, $value );
-			}
+			$field_class->set_settings( $this->map_field_settings( $field ) );
+			$field_class->set_name( $name );
+			$field_class->set_value( $value );
+			$table .= $field_class->render();
 
 			if ( ! empty( $field['description'] ) ) {
-				$desc   = is_array( $field['description'] ) ?
+				$desc  = is_array( $field['description'] ) ?
 					implode( '<br>', $field['description'] ) :
 					$field['description'];
 				$table .= sprintf( '<p class="description">%s</p>', $desc );
@@ -117,28 +121,11 @@ class FormBuilder implements FormBuilderInterface {
 	}
 
 	/**
-	 * Get field class
-	 *
-	 * @param string $type The field type.
-	 *
-	 * @return BaseField|FieldInterface|null
-	 */
-	public function get_field_class( string $type = 'text' ) {
-		$types = apply_filters( 'carousel_slider/settings/available_fields', [] );
-
-		if ( array_key_exists( $type, $types ) ) {
-			return new $types[ $type ]();
-		}
-
-		return null;
-	}
-
-	/**
 	 * Settings fields
 	 *
-	 * @param array  $fields The fields settings.
+	 * @param array $fields The fields settings.
 	 * @param string $option_name The option name.
-	 * @param array  $values The values.
+	 * @param array $values The values.
 	 *
 	 * @return string
 	 */
@@ -151,278 +138,58 @@ class FormBuilder implements FormBuilderInterface {
 	}
 
 	/**
-	 * Text input field
+	 * Get field class
 	 *
-	 * @param array  $field The field settings.
-	 * @param string $name The field name.
-	 * @param mixed  $value The field value.
+	 * @param string $type The field type.
 	 *
-	 * @return string
+	 * @return BaseField|FieldInterface|null
 	 */
-	public function text( array $field, string $name, $value ): string {
-		$types = [ 'email', 'number', 'url', 'date', 'time' ];
-		$type  = in_array( $field['type'], $types, true ) ? $field['type'] : 'text';
-
-		return sprintf(
-			'<input class="regular-text" value="%1$s" id="%2$s" name="%3$s" type="%4$s">',
-			esc_attr( $value ),
-			esc_attr( $field['id'] ),
-			esc_attr( $name ),
-			esc_attr( $type )
+	public function get_field_class( string $type = 'text' ) {
+		$types = apply_filters(
+			'carousel_slider/settings/available_fields',
+			[
+				'text'        => Text::class,
+				'textarea'    => Textarea::class,
+				'color'       => Color::class,
+				'radio'       => Radio::class,
+				'checkbox'    => Checkbox::class,
+				'select'      => Select::class,
+				'image_sizes' => SelectImageSize::class,
+				'html'        => Html::class,
+				'breakpoint'  => Breakpoint::class,
+			]
 		);
-	}
 
-	/**
-	 * Password input field
-	 *
-	 * @param array  $field The field settings.
-	 * @param string $name The field name.
-	 * @param mixed  $value The field value.
-	 *
-	 * @return string
-	 */
-	public function password( array $field, string $name, $value ): string {
-		return sprintf(
-			'<input type="password" class="regular-text" value="" id="%1$s" name="%2$s">',
-			$field['id'],
-			$name
-		);
-	}
-
-	/**
-	 * Color input field
-	 *
-	 * @param array  $field The field settings.
-	 * @param string $name The field name.
-	 * @param mixed  $value The field value.
-	 *
-	 * @return string
-	 */
-	public function color( array $field, string $name, $value ): string {
-		$default_color = $field['default'] ?? '';
-
-		return sprintf(
-			'<input type="text" class="color-picker" value="%1$s" id="%2$s" name="%3$s" data-alpha="true" data-default-color="%4$s">',
-			$value,
-			$field['id'],
-			$name,
-			$default_color
-		);
-	}
-
-	/**
-	 * Textarea input field
-	 *
-	 * @param array  $field The field settings.
-	 * @param string $name The field name.
-	 * @param mixed  $value The field value.
-	 *
-	 * @return string
-	 */
-	public function textarea( array $field, string $name, $value ): string {
-		$rows        = ( isset( $field['rows'] ) ) ? $field['rows'] : 5;
-		$cols        = ( isset( $field['cols'] ) ) ? $field['cols'] : 40;
-		$placeholder = ( isset( $field['placeholder'] ) ) ? sprintf(
-			'placeholder="%s"',
-			esc_attr( $field['placeholder'] )
-		) : '';
-
-		return sprintf(
-			"<textarea id='%s' name='%s' rows='%s' cols='%s' " . $placeholder . '>' . esc_textarea( $value ) . '</textarea>',
-			esc_attr( $field['id'] ),
-			esc_attr( $name ),
-			esc_attr( $rows ),
-			esc_attr( $cols )
-		);
-	}
-
-	/**
-	 * Checkbox input field
-	 *
-	 * @param array  $field The field settings.
-	 * @param string $name The field name.
-	 * @param mixed  $value The field value.
-	 *
-	 * @return string
-	 */
-	public function checkbox( array $field, string $name, $value ): string {
-		$true_value  = isset( $field['true-value'] ) ? esc_attr( $field['true-value'] ) : '1';
-		$false_value = isset( $field['false-value'] ) ? esc_attr( $field['false-value'] ) : '0';
-
-		$checked = Validate::checked( $value ) ? 'checked' : '';
-		$table   = '<input type="hidden" name="' . $name . '" value="' . $false_value . '">';
-		$table  .= '<fieldset><legend class="screen-reader-text"><span>' . $field['title'] . '</span></legend>';
-		$table  .= '<label for="' . $field['id'] . '">';
-		$table  .= '<input type="checkbox" value="' . $true_value . '" id="' . $field['id'] . '" name="' . $name . '" ' . $checked . '>';
-		$table  .= $field['title'] . '</label></fieldset>';
-
-		return $table;
-	}
-
-	/**
-	 * Multi checkbox input field
-	 *
-	 * @param array  $field The field settings.
-	 * @param string $name The field name.
-	 * @param mixed  $value The field value.
-	 *
-	 * @return string
-	 */
-	public function multi_checkbox( array $field, string $name, $value ): string {
-		$table = '<fieldset>';
-		$name  = $name . '[]';
-
-		$table .= sprintf( '<input type="hidden" name="%1$s" value="0">', $name );
-		foreach ( $field['options'] as $key => $label ) {
-			$checked = ( in_array( $key, $value, true ) ) ? 'checked="checked"' : '';
-			$table  .= '<label for="' . $key . '"><input type="checkbox" value="' . $key . '" id="' . $key . '" name="' . $name . '" ' . $checked . '>' . $label . '</label><br>';
-		}
-		$table .= '</fieldset>';
-
-		return $table;
-	}
-
-	/**
-	 * Radio input field
-	 *
-	 * @param array  $field The field settings.
-	 * @param string $name The field name.
-	 * @param mixed  $value The field value.
-	 *
-	 * @return string
-	 */
-	public function radio( array $field, string $name, $value ): string {
-		$table = '<fieldset><legend class="screen-reader-text"><span>' . $field['title'] . '</span></legend><p>';
-
-		foreach ( $field['options'] as $key => $label ) {
-
-			$checked = ( $value === $key ) ? 'checked="checked"' : '';
-			$table  .= '<label><input type="radio" ' . $checked . ' value="' . $key . '" name="' . $name . '">' . $label . '</label><br>';
-		}
-		$table .= '</p></fieldset>';
-
-		return $table;
-	}
-
-	/**
-	 * Select input field
-	 *
-	 * @param array  $field The field settings.
-	 * @param string $name The field name.
-	 * @param mixed  $value The field value.
-	 *
-	 * @return string
-	 */
-	public function select( array $field, string $name, $value ): string {
-		$table = sprintf( '<select id="%1$s" name="%2$s" class="regular-text">', $field['id'], $name );
-		foreach ( $field['options'] as $key => $label ) {
-			$selected = ( $value === $key ) ? 'selected="selected"' : '';
-			$table   .= '<option value="' . $key . '" ' . $selected . '>' . $label . '</option>';
-		}
-		$table .= '</select>';
-
-		return $table;
-	}
-
-	/**
-	 * Get available image sizes
-	 *
-	 * @param array  $field The field settings.
-	 * @param string $name The field name.
-	 * @param mixed  $value The field value.
-	 *
-	 * @return string
-	 */
-	public function image_sizes( array $field, string $name, $value ): string {
-
-		global $_wp_additional_image_sizes;
-
-		$sizes = [];
-
-		foreach ( get_intermediate_image_sizes() as $_size ) {
-			if ( in_array( $_size, [ 'thumbnail', 'medium', 'medium_large', 'large' ], true ) ) {
-
-				$width  = get_option( "{$_size}_size_w" );
-				$height = get_option( "{$_size}_size_h" );
-				$crop   = get_option( "{$_size}_crop" ) ? 'hard' : 'soft';
-
-				$sizes[ $_size ] = "{$_size} - {$width}x{$height} ($crop crop)";
-
-			} elseif ( isset( $_wp_additional_image_sizes[ $_size ] ) ) {
-
-				$width  = $_wp_additional_image_sizes[ $_size ]['width'];
-				$height = $_wp_additional_image_sizes[ $_size ]['height'];
-				$crop   = $_wp_additional_image_sizes[ $_size ]['crop'] ? 'hard' : 'soft';
-
-				$sizes[ $_size ] = "{$_size} - {$width}x{$height} ($crop crop)";
-			}
+		if ( array_key_exists( $type, $types ) ) {
+			return new $types[ $type ]();
 		}
 
-		$sizes = array_merge( $sizes, array( 'full' => 'original uploaded image' ) );
-
-		$table = '<select name="' . $name . '" id="' . $field['id'] . '" class="regular-text select2">';
-		foreach ( $sizes as $key => $option ) {
-			$selected = ( $value === $key ) ? ' selected="selected"' : '';
-			$table   .= '<option value="' . $key . '" ' . $selected . '>' . $option . '</option>';
-		}
-		$table .= '</select>';
-
-		return $table;
-	}
-
-	/**
-	 * The wp_editor input field
-	 *
-	 * @param array  $field The field settings.
-	 * @param string $name The field name.
-	 * @param mixed  $value The field value.
-	 *
-	 * @return string
-	 */
-	public function wp_editor( array $field, string $name, $value ): string {
-		ob_start();
-		echo "<div class='sp-wp-editor-container'>";
-		wp_editor(
-			$value,
-			$field['id'],
-			array(
-				'textarea_name' => $name,
-				'tinymce'       => false,
-				'media_buttons' => false,
-				'textarea_rows' => $field['rows'] ?? 6,
-				'quicktags'     => array( 'buttons' => 'strong,em,link,img,ul,li,ol' ),
-			)
-		);
-		echo '</div>';
-
-		return ob_get_clean();
-	}
-
-	/**
-	 * Get html field
-	 *
-	 * @param array  $field The field settings.
-	 * @param string $name The field name.
-	 * @param mixed  $value The field value.
-	 *
-	 * @return mixed
-	 */
-	public function html( array $field, string $name, $value ): string {
-		if ( isset( $field['html'] ) && is_string( $field['html'] ) ) {
-			return $field['html'];
-		}
-
-		return '';
+		return null;
 	}
 
 	/**
 	 * Map field settings.
 	 *
-	 * @param array $field The settings.
+	 * @param array $settings The settings.
 	 *
 	 * @return array
 	 */
-	private function map_field_settings( array $field ): array {
-		return $field;
+	private function map_field_settings( array $settings ): array {
+		$attrs = [
+			'name'    => 'label',
+			'title'   => 'label',
+			'desc'    => 'description',
+			'class'   => 'field_class',
+			'options' => 'choices',
+			'std'     => 'default',
+		];
+		foreach ( $settings as $key => $value ) {
+			if ( isset( $attrs[ $key ] ) ) {
+				$settings[ $attrs[ $key ] ] = $value;
+				unset( $settings[ $key ] );
+			}
+		}
+
+		return $settings;
 	}
 }

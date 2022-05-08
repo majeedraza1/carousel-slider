@@ -49,11 +49,11 @@ class Admin {
 
 		if ( 'image-carousel-url' === $slider_type ) {
 			$form->images_url(
-				array(
+				[
 					'id'          => '_images_urls',
 					'label'       => esc_html__( 'Images URLs', 'carousel-slider' ),
 					'description' => esc_html__( 'Enter external images URLs.', 'carousel-slider' ),
-				)
+				]
 			);
 		}
 
@@ -65,7 +65,7 @@ class Admin {
 					'desc' => esc_html__( 'Choose carousel images from media library.', 'carousel-slider' ),
 				]
 			);
-			$form->checkbox(
+			$form->switch(
 				[
 					'id'    => '_shuffle_images',
 					'name'  => esc_html__( 'Shuffle', 'carousel-slider' ),
@@ -74,46 +74,44 @@ class Admin {
 					'std'   => 'off',
 				]
 			);
-			$form->checkbox(
-				array(
+			$form->switch(
+				[
 					'id'    => '_image_lightbox',
 					'name'  => esc_html__( 'Show Lightbox Gallery', 'carousel-slider' ),
 					'label' => esc_html__( 'Show Lightbox Gallery', 'carousel-slider' ),
 					'desc'  => esc_html__( 'Check to show lightbox gallery.', 'carousel-slider' ),
 					'std'   => 'off',
-				)
+				]
 			);
 		}
 
-		$form->checkbox(
-			array(
-				'id'    => '_show_attachment_title',
-				'name'  => esc_html__( 'Show Image Title', 'carousel-slider' ),
-				'label' => esc_html__( 'Show Image Title', 'carousel-slider' ),
-				'desc'  => esc_html__( 'Check to show title below image. Only works with image carousel.', 'carousel-slider' ),
-				'std'   => 'off',
-			)
+		$form->switch(
+			[
+				'id'          => '_show_attachment_title',
+				'label'       => esc_html__( 'Show Image Title', 'carousel-slider' ),
+				'description' => esc_html__( 'Check to show title below image. Only works with image carousel.', 'carousel-slider' ),
+				'default'     => 'off',
+			]
 		);
-		$form->checkbox(
-			array(
-				'id'    => '_show_attachment_caption',
-				'name'  => esc_html__( 'Show Image Caption', 'carousel-slider' ),
-				'label' => esc_html__( 'Show Image Caption', 'carousel-slider' ),
-				'desc'  => esc_html__( 'Check to show caption below image. Only works with image carousel.', 'carousel-slider' ),
-				'std'   => 'off',
-			)
+		$form->switch(
+			[
+				'id'          => '_show_attachment_caption',
+				'label'       => esc_html__( 'Show Image Caption', 'carousel-slider' ),
+				'description' => esc_html__( 'Check to show caption below image. Only works with image carousel.', 'carousel-slider' ),
+				'default'     => 'off',
+			]
 		);
 		$form->select(
-			array(
-				'id'      => '_image_target',
-				'name'    => esc_html__( 'Image Target', 'carousel-slider' ),
-				'desc'    => esc_html__( 'Choose where to open the linked image.', 'carousel-slider' ),
-				'std'     => '_self',
-				'options' => array(
+			[
+				'id'          => '_image_target',
+				'label'       => esc_html__( 'Image Target', 'carousel-slider' ),
+				'description' => esc_html__( 'Choose where to open the linked image.', 'carousel-slider' ),
+				'default'     => '_self',
+				'choices'     => [
 					'_self'  => esc_html__( 'Open in the same frame as it was clicked', 'carousel-slider' ),
 					'_blank' => esc_html__( 'Open in a new window or tab', 'carousel-slider' ),
-				),
-			)
+				],
+			]
 		);
 
 		?>

@@ -5,6 +5,7 @@ namespace CarouselSlider\Supports;
 use CarouselSlider\Helper;
 use CarouselSlider\Interfaces\FieldInterface;
 use CarouselSlider\Supports\FormFields\BaseField;
+use CarouselSlider\Supports\FormFields\Breakpoint;
 use CarouselSlider\Supports\FormFields\ButtonGroup;
 use CarouselSlider\Supports\FormFields\Checkbox;
 use CarouselSlider\Supports\FormFields\CheckboxSwitch;
@@ -41,6 +42,9 @@ defined( 'ABSPATH' ) || exit;
  * @method void post_terms( array $args )
  * @method void image_sizes( array $args )
  * @method void radio( array $args )
+ * @method void switch ( array $args )
+ * @method void select( array $args )
+ * @method void breakpoint( array $args )
  */
 class MetaBoxForm {
 
@@ -54,6 +58,7 @@ class MetaBoxForm {
 	private static function map_field_settings( array $settings ): array {
 		$attrs = [
 			'name'    => 'label',
+			'title'   => 'label',
 			'desc'    => 'description',
 			'class'   => 'field_class',
 			'options' => 'choices',
@@ -93,6 +98,7 @@ class MetaBoxForm {
 			'image_sizes'    => SelectImageSize::class,
 			'radio'          => Radio::class,
 			'switch'         => CheckboxSwitch::class,
+			'breakpoint'     => Breakpoint::class,
 		];
 
 		$class = array_key_exists( $type, $types ) ? $types[ $type ] : $types['text'];
@@ -153,8 +159,13 @@ class MetaBoxForm {
 		$_normal .= '<div class="sp-input-field">';
 
 		if ( isset( $args['context'] ) && 'side' === $args['context'] ) {
-			$_side = '<p id="field-' . $args['id'] . '">';
+			$_side = '<div id="field-' . $args['id'] . '" class="cs-flex cs-flex-wrap cs-justify-between cs-my-4">';
+			$_side .= '<span class="cs-inline-flex cs-space-x-1">';
 			$_side .= '<label for="' . $args['id'] . '"><strong>' . $args['label'] . '</strong></label>';
+			if ( ! empty( $args['description'] ) ) {
+				$_side .= '<span class="cs-tooltip" title="' . esc_attr( $args['description'] ) . '"></span>';
+			}
+			$_side .= '</span>';
 
 			return $_side;
 		}
@@ -172,13 +183,7 @@ class MetaBoxForm {
 	private static function field_after( array $args = [] ): string {
 
 		if ( isset( $args['context'] ) && 'side' === $args['context'] ) {
-			$_side = '';
-			if ( ! empty( $args['description'] ) ) {
-				$_side .= '<span class="cs-tooltip" title="' . esc_attr( $args['description'] ) . '"></span>';
-			}
-			$_side .= '</p>';
-
-			return $_side;
+			return '</div>';
 		}
 
 		return '</div></div>';

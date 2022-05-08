@@ -2,6 +2,7 @@
 
 namespace CarouselSlider\Supports\SettingApi;
 
+use CarouselSlider\Helper;
 use CarouselSlider\Interfaces\FormBuilderInterface;
 
 defined( 'ABSPATH' ) || exit;
@@ -103,7 +104,7 @@ class DefaultSettingApi extends SettingApi {
 			<?php } ?>
 			<?php
 			if ( $this->has_panels() ) {
-				echo $this->option_page_tabs(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				Helper::print_unescaped_internal_string( $this->option_page_tabs() );
 			}
 			?>
 			<form autocomplete="off" method="POST" action="<?php echo esc_attr( $this->action ); ?>">
@@ -127,7 +128,7 @@ class DefaultSettingApi extends SettingApi {
 	/**
 	 * Get fields HTML by section
 	 *
-	 * @param array       $sections Array of section.
+	 * @param array $sections Array of section.
 	 * @param string|null $panel Panel id.
 	 *
 	 * @return string
@@ -146,7 +147,7 @@ class DefaultSettingApi extends SettingApi {
 			}
 
 			$fields = $this->get_fields_by( $section['id'], $panel );
-			$table .= $this->get_form_builder()->get_fields_html( $fields, $option_name, $options );
+			$table  .= $this->get_form_builder()->get_fields_html( $fields, $option_name, $options );
 		}
 
 		return $table;
@@ -178,7 +179,7 @@ class DefaultSettingApi extends SettingApi {
 					admin_url( $this->menu_fields['parent_slug'] )
 				)
 			);
-			$html    .= '<a class="nav-tab' . $class . '" href="' . $page_url . '">' . $tab['title'] . '</a>';
+			$html     .= '<a class="nav-tab' . $class . '" href="' . $page_url . '">' . $tab['title'] . '</a>';
 		}
 		$html .= '</h2>';
 

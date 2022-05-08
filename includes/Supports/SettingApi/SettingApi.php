@@ -126,11 +126,6 @@ class SettingApi {
 				continue;
 			}
 
-			if ( 'checkbox' === $type ) {
-				$output_array[ $key ] = Validate::checked( $value ) ? 1 : 0;
-				continue;
-			}
-
 			if ( isset( $field['sanitize_callback'] ) && is_callable( $field['sanitize_callback'] ) ) {
 				$output_array[ $key ] = call_user_func( $field['sanitize_callback'], $value );
 				continue;

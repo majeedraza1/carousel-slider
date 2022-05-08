@@ -1,5 +1,9 @@
 .switch-container {
 
+	.switch-label {
+		display: inline-flex;
+	}
+
 	.switch {
 		border: 1px solid #b4b9be;
 		display: inline-block;

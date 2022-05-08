@@ -1,0 +1,65 @@
+// Utility CSS, inspired by Tailwind CSS
+.cs-flex {
+	display: flex;
+}
+
+.cs-inline-flex {
+	display: inline-flex;
+}
+
+.cs-flex-wrap {
+	flex-wrap: wrap;
+}
+
+.cs-items-center {
+	align-items: center;
+}
+
+.cs-justify-center {
+	justify-content: center;
+}
+
+.cs-justify-between {
+	justify-content: space-between;
+}
+
+// Margin and Padding
+.cs-mt-4 {
+	margin-top: 1rem;
+}
+
+.cs-mb-4 {
+	margin-bottom: 1rem;
+}
+
+.cs-my-4 {
+	margin-top: 1rem;
+	margin-bottom: 1rem;
+}
+
+.cs-p-2 {
+	padding: .5rem;
+}
+
+// Spacing
+.cs-space-x-1 > * + * {
+	margin-left: 0.25rem;
+}
+
+// Colors
+.cs-bg-gray-200 {
+	background-color: #e5e7eb;
+}
+
+.cs-text-red-600 {
+	color: #dc2626;
+}
+
+// Width and Height
+.cs-w-8 {
+	width: 2rem;
+}
+
+.cs-h-8 {
+	height: 2rem;
+}

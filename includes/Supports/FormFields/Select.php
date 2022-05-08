@@ -2,6 +2,8 @@
 
 namespace CarouselSlider\Supports\FormFields;
 
+use CarouselSlider\Supports\Validate;
+
 /**
  * Select class
  */
@@ -13,7 +15,10 @@ class Select extends BaseField {
 	 * @inerhitDoc
 	 */
 	public function render(): string {
-		$this->set_setting( 'field_class', 'select2 sp-input-text' );
+		$choices = $this->get_setting( 'choices' );
+		if ( Validate::checked( $this->get_setting( 'searchable' ) ) ) {
+			$this->set_setting( 'field_class', $this->get_setting( 'field_class' ) . ' select2' );
+		}
 		$this->set_setting( 'type', 'select' );
 
 		$is_multiple = $this->get_setting( 'multiple' );
@@ -22,7 +27,7 @@ class Select extends BaseField {
 			$value = explode( ',', wp_strip_all_tags( rtrim( $value, ',' ) ) );
 		}
 		$html = '<select ' . $this->build_attributes() . '>';
-		foreach ( $this->get_setting( 'choices' ) as $key => $label ) {
+		foreach ( $choices as $key => $label ) {
 			if ( $is_multiple ) {
 				$selected = in_array( $key, $value ) ? 'selected' : ''; // phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict
 			} else {

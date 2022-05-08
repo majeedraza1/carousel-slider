@@ -114,7 +114,7 @@ class Admin {
 			)
 		);
 		if ( 'v1-compatibility' === $template ) {
-			$form->checkbox(
+			$form->switch(
 				array(
 					'id'    => '_product_title',
 					'name'  => esc_html__( 'Show Title', 'carousel-slider' ),
@@ -123,7 +123,7 @@ class Admin {
 					'std'   => 'on',
 				)
 			);
-			$form->checkbox(
+			$form->switch(
 				array(
 					'id'    => '_product_rating',
 					'name'  => esc_html__( 'Show Rating', 'carousel-slider' ),
@@ -132,7 +132,7 @@ class Admin {
 					'std'   => 'on',
 				)
 			);
-			$form->checkbox(
+			$form->switch(
 				array(
 					'id'    => '_product_price',
 					'name'  => esc_html__( 'Show Price', 'carousel-slider' ),
@@ -141,7 +141,7 @@ class Admin {
 					'std'   => 'on',
 				)
 			);
-			$form->checkbox(
+			$form->switch(
 				array(
 					'id'    => '_product_cart_button',
 					'name'  => esc_html__( 'Show Cart Button', 'carousel-slider' ),
@@ -150,7 +150,7 @@ class Admin {
 					'std'   => 'on',
 				)
 			);
-			$form->checkbox(
+			$form->switch(
 				array(
 					'id'    => '_product_onsale',
 					'name'  => esc_html__( 'Show Sale Tag', 'carousel-slider' ),
@@ -159,7 +159,7 @@ class Admin {
 					'std'   => 'on',
 				)
 			);
-			$form->checkbox(
+			$form->switch(
 				array(
 					'id'    => '_product_wishlist',
 					'name'  => esc_html__( 'Show Wishlist Button', 'carousel-slider' ),
@@ -169,7 +169,7 @@ class Admin {
 					'desc'  => sprintf( esc_html__( 'Check to show wishlist button. This feature needs %s plugin to be installed.', 'carousel-slider' ), sprintf( '<a href="https://wordpress.org/plugins/yith-woocommerce-wishlist/" target="_blank" >%s</a>', __( 'YITH WooCommerce Wishlist', 'carousel-slider' ) ) ),
 				)
 			);
-			$form->checkbox(
+			$form->switch(
 				array(
 					'id'    => '_product_quick_view',
 					'name'  => esc_html__( 'Show Quick View', 'carousel-slider' ),
