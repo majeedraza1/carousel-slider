@@ -6,12 +6,20 @@ use CarouselSlider\Interfaces\FieldInterface;
 use CarouselSlider\Interfaces\FormBuilderInterface;
 use CarouselSlider\Supports\FormFields\BaseField;
 use CarouselSlider\Supports\FormFields\Breakpoint;
+use CarouselSlider\Supports\FormFields\ButtonGroup;
 use CarouselSlider\Supports\FormFields\Checkbox;
+use CarouselSlider\Supports\FormFields\CheckboxSwitch;
 use CarouselSlider\Supports\FormFields\Color;
 use CarouselSlider\Supports\FormFields\Html;
+use CarouselSlider\Supports\FormFields\ImagesGallery;
+use CarouselSlider\Supports\FormFields\ImageUploader;
+use CarouselSlider\Supports\FormFields\ImageUrl;
 use CarouselSlider\Supports\FormFields\Radio;
 use CarouselSlider\Supports\FormFields\Select;
 use CarouselSlider\Supports\FormFields\SelectImageSize;
+use CarouselSlider\Supports\FormFields\SelectPosts;
+use CarouselSlider\Supports\FormFields\SelectTerms;
+use CarouselSlider\Supports\FormFields\Spacing;
 use CarouselSlider\Supports\FormFields\Text;
 use CarouselSlider\Supports\FormFields\Textarea;
 
@@ -106,7 +114,7 @@ class FormBuilder implements FormBuilderInterface {
 			$table .= $field_class->render();
 
 			if ( ! empty( $field['description'] ) ) {
-				$desc  = is_array( $field['description'] ) ?
+				$desc   = is_array( $field['description'] ) ?
 					implode( '<br>', $field['description'] ) :
 					$field['description'];
 				$table .= sprintf( '<p class="description">%s</p>', $desc );
@@ -123,9 +131,9 @@ class FormBuilder implements FormBuilderInterface {
 	/**
 	 * Settings fields
 	 *
-	 * @param array $fields The fields settings.
+	 * @param array  $fields The fields settings.
 	 * @param string $option_name The option name.
-	 * @param array $values The values.
+	 * @param array  $values The values.
 	 *
 	 * @return string
 	 */
@@ -148,15 +156,22 @@ class FormBuilder implements FormBuilderInterface {
 		$types = apply_filters(
 			'carousel_slider/settings/available_fields',
 			[
-				'text'        => Text::class,
-				'textarea'    => Textarea::class,
-				'color'       => Color::class,
-				'radio'       => Radio::class,
-				'checkbox'    => Checkbox::class,
-				'select'      => Select::class,
-				'image_sizes' => SelectImageSize::class,
-				'html'        => Html::class,
-				'breakpoint'  => Breakpoint::class,
+				'text'           => Text::class,
+				'textarea'       => Textarea::class,
+				'spacing'        => Spacing::class,
+				'checkbox'       => Checkbox::class,
+				'button_group'   => ButtonGroup::class,
+				'color'          => Color::class,
+				'images_gallery' => ImagesGallery::class,
+				'upload_iframe'  => ImageUploader::class,
+				'images_url'     => ImageUrl::class,
+				'select'         => Select::class,
+				'posts_list'     => SelectPosts::class,
+				'post_terms'     => SelectTerms::class,
+				'image_sizes'    => SelectImageSize::class,
+				'radio'          => Radio::class,
+				'switch'         => CheckboxSwitch::class,
+				'breakpoint'     => Breakpoint::class,
 			]
 		);
 
@@ -164,7 +179,7 @@ class FormBuilder implements FormBuilderInterface {
 			return new $types[ $type ]();
 		}
 
-		return null;
+		return new $types['text']();
 	}
 
 	/**

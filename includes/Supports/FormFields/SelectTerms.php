@@ -12,6 +12,7 @@ class SelectTerms extends Select {
 	 * @inerhitDoc
 	 */
 	public function render(): string {
+		$this->set_setting( 'searchable', true );
 		$terms   = get_terms( [ 'taxonomy' => $this->get_setting( 'taxonomy', 'category' ) ] );
 		$choices = [];
 		if ( ! is_wp_error( $terms ) ) {

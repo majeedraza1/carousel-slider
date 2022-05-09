@@ -75,7 +75,7 @@ class MetaBox {
 	/**
 	 * Add carousel slider meta box
 	 *
-	 * @param string $post_type The post type.
+	 * @param string  $post_type The post type.
 	 * @param WP_Post $post The post object.
 	 */
 	public function add_meta_boxes( $post_type, $post ) {

@@ -12,6 +12,7 @@ class SelectPosts extends Select {
 	 * @inerhitDoc
 	 */
 	public function render(): string {
+		$this->set_setting( 'searchable', true );
 		$posts = get_posts(
 			[
 				'post_type'      => $this->get_setting( 'post_type', 'post' ),

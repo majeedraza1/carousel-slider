@@ -217,4 +217,19 @@ class Sanitize {
 
 		return $sanitized_value;
 	}
+
+	/**
+	 * Sanitize array of integer
+	 *
+	 * @param mixed $value The value to be sanitized.
+	 *
+	 * @return array
+	 */
+	public static function deep_int( $value ): array {
+		if ( ! is_array( $value ) ) {
+			return [];
+		}
+
+		return map_deep( $value, 'intval' );
+	}
 }
