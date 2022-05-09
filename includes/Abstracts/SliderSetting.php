@@ -125,7 +125,7 @@ class SliderSetting extends Data {
 	 * Sanitize value by data type
 	 *
 	 * @param string $type The type.
-	 * @param mixed  $value The value.
+	 * @param mixed $value The value.
 	 *
 	 * @return mixed
 	 */
@@ -214,6 +214,11 @@ class SliderSetting extends Data {
 	 */
 	public static function general_props(): array {
 		return [
+			'image_size'    => [
+				'meta_key' => '_image_size',
+				'type'     => 'string',
+				'default'  => 'medium_large',
+			],
 			'space_between' => [
 				'meta_key' => '_margin_right',
 				'type'     => 'int',
