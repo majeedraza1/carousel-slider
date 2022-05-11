@@ -38,6 +38,28 @@ class SliderSetting extends Data {
 	}
 
 	/**
+	 * Get option
+	 *
+	 * @param string $key option key.
+	 * @param mixed $default default value.
+	 *
+	 * @return mixed
+	 */
+	public function get_global_option( string $key, $default = '' ) {
+		$default_args = apply_filters(
+			'carousel_slider/global_options/default_args',
+			[
+				'load_scripts'                        => 'optimized',
+				'show_structured_data'                => '1',
+				'woocommerce_shop_loop_item_template' => 'v1-compatibility',
+			]
+		);
+		$options      = wp_parse_args( get_option( 'carousel_slider_settings', [] ), $default_args );
+
+		return $options[ $key ] ?? $default;
+	}
+
+	/**
 	 * Get slider Id
 	 *
 	 * @return int
@@ -189,6 +211,20 @@ class SliderSetting extends Data {
 		}
 
 		return $data;
+	}
+
+	/**
+	 * Get group meta keys
+	 *
+	 * @param string $group The group name.
+	 *
+	 * @return array
+	 */
+	public function get_group_meta_keys( string $group = 'general' ): array {
+		$method_name = $group . '_props';
+		$props       = method_exists( $this, $method_name ) ? $this->$method_name() : self::general_props();
+
+		return wp_list_pluck( $props, 'meta_key' );
 	}
 
 	/**

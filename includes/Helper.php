@@ -3,6 +3,7 @@
 namespace CarouselSlider;
 
 use CarouselSlider\Interfaces\SliderViewInterface;
+use CarouselSlider\Interfaces\TemplateParserInterface;
 use WP_Error;
 use WP_Post;
 
@@ -116,6 +117,19 @@ class Helper extends ViewHelper {
 	 */
 	public static function get_slider_view( string $key ) {
 		$views = apply_filters( 'carousel_slider/register_view', [] );
+
+		return $views[ $key ] ?? false;
+	}
+
+	/**
+	 * Get slider template parser
+	 *
+	 * @param string $key The slider type slug.
+	 *
+	 * @return false|TemplateParserInterface
+	 */
+	public static function get_template_parser( string $key ) {
+		$views = apply_filters( 'carousel_slider/template_parser', [] );
 
 		return $views[ $key ] ?? false;
 	}

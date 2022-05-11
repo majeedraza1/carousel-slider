@@ -5,6 +5,7 @@ namespace CarouselSlider\Modules\ProductCarousel;
 use CarouselSlider\Helper;
 use CarouselSlider\Supports\MetaBoxForm;
 use CarouselSlider\Admin\Setting;
+use CarouselSlider\Supports\Sanitize;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -40,7 +41,7 @@ class Admin {
 	/**
 	 * Show meta box content for product carousel
 	 *
-	 * @param int    $slider_id The slider id.
+	 * @param int $slider_id The slider id.
 	 * @param string $slider_type The slider type.
 	 */
 	public function meta_box_content( int $slider_id, string $slider_type ) {
@@ -114,70 +115,11 @@ class Admin {
 			)
 		);
 		if ( 'v1-compatibility' === $template ) {
-			$form->switch(
-				array(
-					'id'    => '_product_title',
-					'name'  => esc_html__( 'Show Title', 'carousel-slider' ),
-					'label' => esc_html__( 'Show Title.', 'carousel-slider' ),
-					'desc'  => esc_html__( 'Check to show product title.', 'carousel-slider' ),
-					'std'   => 'on',
-				)
-			);
-			$form->switch(
-				array(
-					'id'    => '_product_rating',
-					'name'  => esc_html__( 'Show Rating', 'carousel-slider' ),
-					'label' => esc_html__( 'Show Rating.', 'carousel-slider' ),
-					'desc'  => esc_html__( 'Check to show product rating.', 'carousel-slider' ),
-					'std'   => 'on',
-				)
-			);
-			$form->switch(
-				array(
-					'id'    => '_product_price',
-					'name'  => esc_html__( 'Show Price', 'carousel-slider' ),
-					'label' => esc_html__( 'Show Price.', 'carousel-slider' ),
-					'desc'  => esc_html__( 'Check to show product price.', 'carousel-slider' ),
-					'std'   => 'on',
-				)
-			);
-			$form->switch(
-				array(
-					'id'    => '_product_cart_button',
-					'name'  => esc_html__( 'Show Cart Button', 'carousel-slider' ),
-					'label' => esc_html__( 'Show Cart Button.', 'carousel-slider' ),
-					'desc'  => esc_html__( 'Check to show product add to cart button.', 'carousel-slider' ),
-					'std'   => 'on',
-				)
-			);
-			$form->switch(
-				array(
-					'id'    => '_product_onsale',
-					'name'  => esc_html__( 'Show Sale Tag', 'carousel-slider' ),
-					'label' => esc_html__( 'Show Sale Tag', 'carousel-slider' ),
-					'desc'  => esc_html__( 'Check to show product sale tag for onsale products.', 'carousel-slider' ),
-					'std'   => 'on',
-				)
-			);
-			$form->switch(
-				array(
-					'id'    => '_product_wishlist',
-					'name'  => esc_html__( 'Show Wishlist Button', 'carousel-slider' ),
-					'label' => esc_html__( 'Show Wishlist Button', 'carousel-slider' ),
-					'std'   => 'off',
-					/* translators: 1: YITH WooCommerce Wishlist plugin url*/
-					'desc'  => sprintf( esc_html__( 'Check to show wishlist button. This feature needs %s plugin to be installed.', 'carousel-slider' ), sprintf( '<a href="https://wordpress.org/plugins/yith-woocommerce-wishlist/" target="_blank" >%s</a>', __( 'YITH WooCommerce Wishlist', 'carousel-slider' ) ) ),
-				)
-			);
-			$form->switch(
-				array(
-					'id'    => '_product_quick_view',
-					'name'  => esc_html__( 'Show Quick View', 'carousel-slider' ),
-					'label' => esc_html__( 'Show Quick View', 'carousel-slider' ),
-					'desc'  => esc_html__( 'Check to show quick view button.', 'carousel-slider' ),
-					'std'   => 'on',
-				)
-			);
+			$settings = self::get_settings_for_toggle_sections();
+
+			foreach ( $settings as $setting ) {
+				Helper::print_unescaped_internal_string( MetaBoxForm::field( $setting ) );
+			}
 		}
 	}
 
@@ -229,5 +171,73 @@ class Admin {
 		$content = ob_get_clean();
 
 		return $html . $content;
+	}
+
+	/**
+	 * Get settings for toggle sections
+	 *
+	 * @return array[]
+	 */
+	public static function get_settings_for_toggle_sections(): array {
+		return [
+			[
+				'type'              => 'switch',
+				'id'                => '_product_title',
+				'label'             => esc_html__( 'Show Title.', 'carousel-slider' ),
+				'description'       => esc_html__( 'Check to show product title.', 'carousel-slider' ),
+				'default'           => 'on',
+				'sanitize_callback' => [ Sanitize::class, 'checked' ],
+			],
+			[
+				'type'              => 'switch',
+				'id'                => '_product_rating',
+				'label'             => esc_html__( 'Show Rating.', 'carousel-slider' ),
+				'description'       => esc_html__( 'Check to show product rating.', 'carousel-slider' ),
+				'default'           => 'on',
+				'sanitize_callback' => [ Sanitize::class, 'checked' ],
+			],
+			[
+				'type'              => 'switch',
+				'id'                => '_product_price',
+				'label'             => esc_html__( 'Show Price.', 'carousel-slider' ),
+				'description'       => esc_html__( 'Check to show product price.', 'carousel-slider' ),
+				'default'           => 'on',
+				'sanitize_callback' => [ Sanitize::class, 'checked' ],
+			],
+
+			[
+				'type'              => 'switch',
+				'id'                => '_product_cart_button',
+				'label'             => esc_html__( 'Show Cart Button.', 'carousel-slider' ),
+				'description'       => esc_html__( 'Check to show product add to cart button.', 'carousel-slider' ),
+				'default'           => 'on',
+				'sanitize_callback' => [ Sanitize::class, 'checked' ],
+			],
+			[
+				'type'              => 'switch',
+				'id'                => '_product_onsale',
+				'label'             => esc_html__( 'Show Sale Tag', 'carousel-slider' ),
+				'description'       => esc_html__( 'Check to show product sale tag for onsale products.', 'carousel-slider' ),
+				'default'           => 'on',
+				'sanitize_callback' => [ Sanitize::class, 'checked' ],
+			],
+			[
+				'type'              => 'switch',
+				'id'                => '_product_wishlist',
+				'label'             => esc_html__( 'Show Wishlist Button', 'carousel-slider' ),
+				/* translators: 1: YITH WooCommerce Wishlist plugin url*/
+				'description'       => sprintf( esc_html__( 'Check to show wishlist button. This feature needs %s plugin to be installed.', 'carousel-slider' ), sprintf( '<a href="https://wordpress.org/plugins/yith-woocommerce-wishlist/" target="_blank" >%s</a>', __( 'YITH WooCommerce Wishlist', 'carousel-slider' ) ) ),
+				'default'           => 'off',
+				'sanitize_callback' => [ Sanitize::class, 'checked' ],
+			],
+			[
+				'type'              => 'switch',
+				'id'                => '_product_quick_view',
+				'label'             => esc_html__( 'Show Quick View', 'carousel-slider' ),
+				'description'       => esc_html__( 'Check to show quick view button.', 'carousel-slider' ),
+				'default'           => 'on',
+				'sanitize_callback' => [ Sanitize::class, 'checked' ],
+			],
+		];
 	}
 }
