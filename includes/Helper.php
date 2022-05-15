@@ -41,7 +41,7 @@ class Helper extends ViewHelper {
 	 * Get setting
 	 *
 	 * @param string $key The setting key.
-	 * @param mixed  $default Setting default value.
+	 * @param mixed $default Setting default value.
 	 *
 	 * @return mixed|null
 	 */
@@ -80,29 +80,47 @@ class Helper extends ViewHelper {
 		return apply_filters(
 			'carousel_slider/slider_types',
 			[
-				'image-carousel'     => [
+				'image-carousel'              => [
 					'label'   => __( 'Image Carousel', 'carousel-slider' ),
 					'enabled' => true,
+					'icon'    => '<span class="dashicons dashicons-format-image"></span>',
 				],
-				'image-carousel-url' => [
+				'image-carousel-url'          => [
 					'label'   => __( 'Image Carousel (URL)', 'carousel-slider' ),
 					'enabled' => true,
+					'icon'    => '<span class="dashicons dashicons-admin-links"></span>',
 				],
-				'post-carousel'      => [
+				'post-carousel'               => [
 					'label'   => __( 'Post Carousel', 'carousel-slider' ),
 					'enabled' => true,
+					'icon'    => '<span class="dashicons dashicons-admin-post"></span>',
 				],
-				'video-carousel'     => [
+				'video-carousel'              => [
 					'label'   => __( 'Video Carousel', 'carousel-slider' ),
 					'enabled' => true,
+					'icon'    => '<span class="dashicons dashicons-video-alt3"></span>',
 				],
-				'hero-banner-slider' => [
+				'hero-banner-slider'          => [
 					'label'   => __( 'Hero Carousel', 'carousel-slider' ),
 					'enabled' => true,
+					'icon'    => '<span class="dashicons dashicons-media-interactive"></span>',
 				],
-				'product-carousel'   => [
+				'product-carousel'            => [
 					'label'   => __( 'Product Carousel', 'carousel-slider' ),
 					'enabled' => self::is_woocommerce_active(),
+					'icon'    => '<span class="dashicons dashicons-products"></span>',
+				],
+				'product-carousel-pro'        => [
+					'label'   => __( 'WooCommerce Product Carousel', 'carousel-slider' ),
+					'enabled' => self::is_woocommerce_active() && self::is_pro_active(),
+					'icon'    => '<span class="dashicons dashicons-products"></span>',
+					'pro'     => true,
+				],
+				'product-categories-list-pro' => [
+					'label'   => __( 'Product Categories List', 'carousel-slider' ),
+					'enabled' => self::is_woocommerce_active() && self::is_pro_active(),
+					'icon'    => '<span class="dashicons dashicons-category"></span>',
+					'pro'     => true,
 				],
 			]
 		);
@@ -158,7 +176,7 @@ class Helper extends ViewHelper {
 	 * Get default setting
 	 *
 	 * @param string $key The setting key.
-	 * @param mixed  $default Default value.
+	 * @param mixed $default Default value.
 	 *
 	 * @return mixed|null
 	 */
@@ -206,8 +224,17 @@ class Helper extends ViewHelper {
 	 */
 	public static function is_woocommerce_active(): bool {
 		return in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins' ), true ) ||
-			   defined( 'WC_VERSION' ) ||
-			   defined( 'WOOCOMMERCE_VERSION' );
+		       defined( 'WC_VERSION' ) ||
+		       defined( 'WOOCOMMERCE_VERSION' );
+	}
+
+	/**
+	 * Check if pro version is active.
+	 *
+	 * @return bool
+	 */
+	public static function is_pro_active(): bool {
+		return in_array( 'carousel-slider-pro/carousel-slider-pro.php', get_option( 'active_plugins' ), true );
 	}
 
 	/**
@@ -227,7 +254,7 @@ class Helper extends ViewHelper {
 		}
 
 		foreach ( $ids as $id ) {
-			$_post         = get_post( $id );
+			$_post        = get_post( $id );
 			$page_content .= '<!-- wp:heading {"level":4} --><h4>' . $_post->post_title . '</h4><!-- /wp:heading -->';
 			$page_content .= '<!-- wp:carousel-slider/slider {"sliderID":' . $id . ',"sliderName":"' . $_post->post_title . ' ( ID: ' . $id . ' )"} -->';
 			$page_content .= '<div class="wp-block-carousel-slider-slider">[carousel_slide id=\'' . $id . '\']</div>';

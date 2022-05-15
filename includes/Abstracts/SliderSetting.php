@@ -69,6 +69,18 @@ class SliderSetting extends Data {
 	}
 
 	/**
+	 * Get image size
+	 *
+	 * @return string
+	 */
+	public function get_image_size(): string {
+		$default = $this->get_global_option( 'image_size', 'medium_large' );
+		$size    = $this->get_prop( 'image_size' );
+
+		return array_key_exists( $size, Helper::get_available_image_sizes() ) ? $size : $default;
+	}
+
+	/**
 	 * Set nav visibility
 	 *
 	 * @param mixed $value The navigation visibility.
@@ -234,12 +246,12 @@ class SliderSetting extends Data {
 	 */
 	public static function props(): array {
 		return array_merge(
+			self::general_props(),
 			self::navigation_props(),
 			self::pagination_props(),
 			self::autoplay_props(),
 			self::breakpoints_props(),
-			self::color_props(),
-			self::general_props()
+			self::color_props()
 		);
 	}
 

@@ -3,6 +3,7 @@
 namespace CarouselSlider\Modules\ImageCarousel;
 
 use CarouselSlider\Abstracts\AbstractView;
+use CarouselSlider\Abstracts\SliderSetting;
 use CarouselSlider\Supports\Validate;
 use WP_Post;
 
@@ -16,31 +17,28 @@ defined( 'ABSPATH' ) || exit;
 class View extends AbstractView {
 
 	/**
+	 * Get slider setting
+	 *
+	 * @return SliderSetting|Setting
+	 */
+	public function get_slider_setting(): SliderSetting {
+		if ( ! $this->slider_setting instanceof SliderSetting ) {
+			$this->slider_setting = new Setting( $this->get_slider_id() );
+		}
+
+		return $this->slider_setting;
+	}
+
+	/**
 	 * Render html content
 	 *
 	 * @inheritDoc
 	 */
 	public function render(): string {
-		$slider_id = $this->get_slider_id();
-		$ids       = get_post_meta( $slider_id, '_wpdh_image_ids', true );
-		if ( is_string( $ids ) ) {
-			$ids = array_filter( explode( ',', $ids ) );
-		}
-		$shuffle_images = get_post_meta( $slider_id, '_shuffle_images', true );
-		if ( Validate::checked( $shuffle_images ) ) {
-			shuffle( $ids );
-		}
-		$image_target            = get_post_meta( $slider_id, '_image_target', true );
-		$image_target            = in_array( $image_target, [ '_self', '_blank' ], true ) ? $image_target : '_self';
-		$image_size              = get_post_meta( $slider_id, '_image_size', true );
-		$image_size              = in_array( $image_size, get_intermediate_image_sizes(), true ) ? $image_size : 'medium_large';
-		$lazy_load_image         = Validate::checked( get_post_meta( $slider_id, '_lazy_load_image', true ) );
-		$show_attachment_title   = Validate::checked( get_post_meta( $slider_id, '_show_attachment_title', true ) );
-		$show_attachment_caption = Validate::checked( get_post_meta( $slider_id, '_show_attachment_caption', true ) );
-		$show_lightbox           = get_post_meta( $slider_id, '_image_lightbox', true );
+		$setting = $this->get_slider_setting();
 
 		$html = $this->start_wrapper_html();
-		foreach ( $ids as $id ) {
+		foreach ( $setting->get_image_ids() as $id ) {
 			$_post = get_post( $id );
 			if ( ! $_post instanceof WP_Post ) {
 				continue;
@@ -49,12 +47,12 @@ class View extends AbstractView {
 
 			$image_link_url = get_post_meta( $id, '_carousel_slider_link_url', true );
 
-			$full_caption = $this->get_caption_html( $_post, $show_attachment_title, $show_attachment_caption );
+			$full_caption = $this->get_caption_html( $_post, $setting->get_prop( 'show_title' ), $setting->get_prop( 'show_caption' ) );
 
-			$image = $this->get_image_html( $id, $image_size, $lazy_load_image );
+			$image = $this->get_image_html( $id, $setting->get_image_size(), $setting->get_prop( 'lazy_load' ) );
 
 			$item_html = '<div class="carousel-slider__item">';
-			if ( Validate::checked( $show_lightbox ) ) {
+			if ( Validate::checked( $setting->get_prop( 'show_lightbox' ) ) ) {
 				$image_src  = wp_get_attachment_image_src( $id, 'full' );
 				$item_html .= sprintf(
 					'<a class="magnific-popup" href="%1$s">%2$s%3$s</a>',
@@ -68,7 +66,7 @@ class View extends AbstractView {
 					esc_url( $image_link_url ),
 					$image,
 					$full_caption,
-					$image_target
+					$setting->get_image_target()
 				);
 			} else {
 				$item_html .= $image;
@@ -76,7 +74,7 @@ class View extends AbstractView {
 			}
 			$item_html .= '</div>' . PHP_EOL;
 
-			$html .= apply_filters( 'carousel_slider/loop/image-carousel', $item_html, $this->get_slider_id(), $this->get_slider_setting() );
+			$html .= apply_filters( 'carousel_slider/loop/image-carousel', $item_html, $_post, $this->get_slider_setting() );
 		}
 		$html .= $this->end_wrapper_html();
 
@@ -86,9 +84,9 @@ class View extends AbstractView {
 	/**
 	 * Get image html
 	 *
-	 * @param int    $image_id The image id.
+	 * @param int $image_id The image id.
 	 * @param string $image_size The image size.
-	 * @param bool   $lazy_load_image Lazy load image.
+	 * @param bool $lazy_load_image Lazy load image.
 	 *
 	 * @return string
 	 */
@@ -114,8 +112,8 @@ class View extends AbstractView {
 	 * Get caption html
 	 *
 	 * @param WP_Post $post The WP_Post object.
-	 * @param bool    $show_title Show title.
-	 * @param bool    $show_caption Show caption.
+	 * @param bool $show_title Show title.
+	 * @param bool $show_caption Show caption.
 	 *
 	 * @return string
 	 */

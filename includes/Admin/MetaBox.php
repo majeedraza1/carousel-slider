@@ -75,7 +75,7 @@ class MetaBox {
 	/**
 	 * Add carousel slider meta box
 	 *
-	 * @param string  $post_type The post type.
+	 * @param string $post_type The post type.
 	 * @param WP_Post $post The post object.
 	 */
 	public function add_meta_boxes( $post_type, $post ) {
@@ -90,7 +90,7 @@ class MetaBox {
 				__( 'Slider Type', 'carousel-slider' ),
 				[ $this, 'carousel_slider_slide_types' ],
 				CAROUSEL_SLIDER_POST_TYPE,
-				'side',
+				'normal',
 				'high'
 			);
 
@@ -192,13 +192,15 @@ class MetaBox {
 	public function carousel_slider_slide_types() {
 		wp_nonce_field( 'carousel_slider_nonce', '_carousel_slider_nonce' );
 		$slide_types = Helper::get_slider_types();
-		$html        = '';
+		$html        = '<div class="carousel-slider-slider-type-container">';
+		$html        .= '<div class="shapla-columns is-multiline">';
 		foreach ( $slide_types as $slug => $args ) {
 			$id    = sprintf( '_slide_type__%s', $slug );
 			$attrs = [
 				'type'  => 'radio',
 				'name'  => 'carousel_slider[_slide_type]',
 				'id'    => $id,
+				'class' => 'screen-reader-text',
 				'value' => $slug,
 			];
 
@@ -206,11 +208,25 @@ class MetaBox {
 				$attrs['disabled'] = true;
 			}
 
-			$html .= '<div style="margin-bottom: .5rem">';
+			$is_pro = isset( $args['pro'] ) && true === $args['pro'];
+
+			$html .= '<div class="shapla-column is-6-tablet is-4-desktop is-3-fullhd">';
 			$html .= '<input ' . implode( ' ', Helper::array_to_attribute( $attrs ) ) . '>';
-			$html .= '<label for="' . esc_attr( $id ) . '">' . esc_html( $args['label'] ) . '</label>';
+			$html .= '<label for="' . esc_attr( $id ) . '" class="option-slider-type">';
+			$html .= '<span class="option-slider-type__content">';
+			if ( isset( $args['icon'] ) ) {
+				$html .= '<span class="option-slider-type__icon">' . $args['icon'] . '</span>';
+			}
+			$html .= '<span class="option-slider-type__label">' . esc_html( $args['label'] ) . '</span>';
+			if ( $is_pro ) {
+				$html .= '<span class="option-slider-type__pro">' . esc_html__( 'Pro', 'carousel-slider' ) . '</span>';
+			}
+			$html .= '</span>';
+			$html .= '</label>';
 			$html .= '</div>';
 		}
+		$html .= '</div>';
+		$html .= '</div>';
 
 		Helper::print_unescaped_internal_string( $html );
 	}
