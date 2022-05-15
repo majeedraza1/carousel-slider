@@ -81,6 +81,19 @@ class SliderSetting extends Data {
 	}
 
 	/**
+	 * If it should lazy load image
+	 *
+	 * @return bool
+	 */
+	public function lazy_load_image(): bool {
+		$default        = Helper::get_default_setting( 'lazy_load_image' );
+		$global_setting = $this->get_global_option( 'lazy_load', $default );
+		$lazy_load      = $this->get_prop( 'lazy_load', $global_setting );
+
+		return Validate::checked( $lazy_load );
+	}
+
+	/**
 	 * Set nav visibility
 	 *
 	 * @param mixed $value The navigation visibility.

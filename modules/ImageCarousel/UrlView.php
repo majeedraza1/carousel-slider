@@ -3,6 +3,7 @@
 namespace CarouselSlider\Modules\ImageCarousel;
 
 use CarouselSlider\Abstracts\AbstractView;
+use CarouselSlider\Abstracts\SliderSetting;
 use CarouselSlider\Supports\Validate;
 
 defined( 'ABSPATH' ) || exit;
@@ -13,6 +14,19 @@ defined( 'ABSPATH' ) || exit;
  * @package Modules/ImageCarousel
  */
 class UrlView extends AbstractView {
+
+	/**
+	 * Get slider setting
+	 *
+	 * @return SliderSetting
+	 */
+	public function get_slider_setting(): SliderSetting {
+		if ( ! $this->slider_setting instanceof SliderSetting ) {
+			$this->slider_setting = new Setting( $this->get_slider_id() );
+		}
+
+		return $this->slider_setting;
+	}
 
 	/**
 	 * Render html content
@@ -57,9 +71,9 @@ class UrlView extends AbstractView {
 				$image = sprintf( '<img src="%1$s" alt="%2$s" />', $images_url['url'], $images_url['alt'] );
 			}
 
-			$html .= '<div class="carousel-slider__item">';
+			$item_html = '<div class="carousel-slider__item">';
 			if ( Validate::url( $images_url['link_url'] ) ) {
-				$html .= sprintf(
+				$item_html .= sprintf(
 					'<a href="%1$s" target="%4$s">%2$s %3$s</a>',
 					$images_url['link_url'],
 					$image,
@@ -67,10 +81,12 @@ class UrlView extends AbstractView {
 					$image_target
 				);
 			} else {
-				$html .= $image;
-				$html .= $full_caption;
+				$item_html .= $image;
+				$item_html .= $full_caption;
 			}
-			$html .= '</div>' . PHP_EOL;
+			$item_html .= '</div>' . PHP_EOL;
+
+			$html .= apply_filters( 'carousel_slider/loop/image-carousel-url', $item_html, $images_url, $this->get_slider_setting() );
 		}
 
 		$html .= $this->end_wrapper_html();
