@@ -3,6 +3,7 @@
 namespace CarouselSlider;
 
 use CarouselSlider\Admin\Admin;
+use CarouselSlider\Admin\Feedback;
 use CarouselSlider\Admin\GutenbergBlock;
 use CarouselSlider\Admin\MetaBox;
 use CarouselSlider\Admin\Setting;
@@ -120,6 +121,7 @@ class Plugin {
 	 */
 	public function admin_includes() {
 		$this->container['admin']           = Admin::init();
+		$this->container['feedback']        = Feedback::init();
 		$this->container['meta_box']        = MetaBox::init();
 		$this->container['setting']         = Setting::init();
 		$this->container['gutenberg_block'] = GutenbergBlock::init();

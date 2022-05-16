@@ -12,6 +12,9 @@
       "./resources/scss/admin.scss",
       "./resources/admin/main.js"
     ],
+    "admin-feedback": [
+      "./resources/admin/feedback.js"
+    ],
     "gutenberg-block": [
       "./resources/admin/gutenberg-block.js",
       "./resources/scss/gutenberg-block.scss"
