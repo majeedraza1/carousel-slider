@@ -3,6 +3,7 @@
 namespace CarouselSlider\Modules\HeroCarousel;
 
 use CarouselSlider\Abstracts\Data;
+use CarouselSlider\Abstracts\SliderSetting;
 use CarouselSlider\Helper;
 use CarouselSlider\Supports\Sanitize;
 use CarouselSlider\Supports\Validate;
@@ -73,6 +74,13 @@ class Item extends Data {
 	protected $slider_settings = [];
 
 	/**
+	 * SliderSetting class
+	 *
+	 * @var SliderSetting
+	 */
+	protected $setting;
+
+	/**
 	 * Class constructor.
 	 *
 	 * @param array $args Optional arguments.
@@ -81,6 +89,25 @@ class Item extends Data {
 	public function __construct( array $args = [], array $slider_settings = [] ) {
 		$this->data            = wp_parse_args( $args, self::get_default() );
 		$this->slider_settings = $slider_settings;
+	}
+
+	/**
+	 * Get slider setting
+	 *
+	 * @return SliderSetting
+	 */
+	public function get_setting(): SliderSetting {
+		return $this->setting;
+	}
+
+	/**
+	 * Set setting
+	 *
+	 * @param Setting|SliderSetting $setting The SliderSetting object.
+	 */
+	public function set_setting( Setting $setting ) {
+		$this->setting         = $setting;
+		$this->slider_settings = $this->setting->get_content_settings();
 	}
 
 	/**
@@ -135,8 +162,7 @@ class Item extends Data {
 	 * @return bool
 	 */
 	public function lazy_load_image(): bool {
-		return ! isset( $this->slider_settings['lazy_load_image'] ) ||
-			Validate::checked( $this->slider_settings['lazy_load_image'] );
+		return $this->setting->lazy_load_image();
 	}
 
 	/**
@@ -145,7 +171,7 @@ class Item extends Data {
 	 * @return int
 	 */
 	public function get_slider_id(): int {
-		return isset( $this->slider_settings['slider_id'] ) ? intval( $this->slider_settings['slider_id'] ) : 0;
+		return $this->setting->get_slider_id();
 	}
 
 	/**
@@ -154,11 +180,7 @@ class Item extends Data {
 	 * @return int
 	 */
 	public function get_item_id(): int {
-		if ( $this->has_prop( 'id' ) ) {
-			return (int) $this->get_prop( 'id' );
-		}
-
-		return isset( $this->slider_settings['item_id'] ) ? intval( $this->slider_settings['item_id'] ) : 0;
+		return (int) $this->get_prop( 'id' );
 	}
 
 	/**
@@ -250,7 +272,7 @@ class Item extends Data {
 		}
 
 		$content_style = 'max-width:' . $this->get_content_width();
-		$html         .= '<div class="carousel-slider-hero__cell__content" style="' . $content_style . '">';
+		$html          .= '<div class="carousel-slider-hero__cell__content" style="' . $content_style . '">';
 
 		// Slide Heading.
 		$html .= $this->get_heading();
@@ -414,7 +436,7 @@ class Item extends Data {
 		$btn_text = $this->get_prop( 'button_one_text' );
 		$target   = $this->get_prop( 'button_one_target', '_self' );
 
-		$classes  = 'button cs-hero-button';
+		$classes = 'button cs-hero-button';
 		$classes .= ' cs-hero-button-' . $this->get_item_id() . '-1';
 		$classes .= ' cs-hero-button-' . $this->get_prop( 'button_one_type', 'normal' );
 		$classes .= ' cs-hero-button-' . $this->get_prop( 'button_one_size', 'medium' );
@@ -447,7 +469,7 @@ class Item extends Data {
 		$text   = $this->get_prop( 'button_two_text' );
 		$target = $this->get_prop( 'button_two_target', '_self' );
 
-		$classes  = 'button cs-hero-button';
+		$classes = 'button cs-hero-button';
 		$classes .= ' cs-hero-button-' . $this->get_item_id() . '-2';
 		$classes .= ' cs-hero-button-' . $this->get_prop( 'button_two_type', 'normal' );
 		$classes .= ' cs-hero-button-' . $this->get_prop( 'button_two_size', 'medium' );

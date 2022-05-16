@@ -3,6 +3,7 @@
 namespace CarouselSlider\Modules\HeroCarousel;
 
 use CarouselSlider\Abstracts\AbstractView;
+use CarouselSlider\Abstracts\SliderSetting;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -12,6 +13,19 @@ defined( 'ABSPATH' ) || exit;
  * @package Modules/HeroCarousel
  */
 class View extends AbstractView {
+
+	/**
+	 * Get slider setting
+	 *
+	 * @return Setting
+	 */
+	public function get_slider_setting(): Setting {
+		if ( ! $this->slider_setting instanceof SliderSetting ) {
+			$this->slider_setting = new Setting( $this->get_slider_id() );
+		}
+
+		return $this->slider_setting;
+	}
 
 	/**
 	 * Render html content
@@ -28,18 +42,11 @@ class View extends AbstractView {
 
 		$html = $this->start_wrapper_html( [ 'data-animation' => $content_animation ] );
 		foreach ( $items as $slide_id => $slide ) {
-			$item  = new Item(
-				$slide,
-				array_merge(
-					$settings,
-					[
-						'item_id'         => $slide_id,
-						'slider_id'       => $slider_id,
-						'lazy_load_image' => $be_lazy,
-					]
-				)
-			);
-			$html .= $item->get_view() . PHP_EOL;
+			$item = new Item( $slide );
+			$item->set_prop( 'id', $slide_id + 1 );
+			$item->set_setting( $this->get_slider_setting() );
+
+			$html .= apply_filters( 'carousel_slider/loop/hero-banner-slider', $item->get_view(), $item, $this->get_slider_setting() ) . PHP_EOL;
 		}
 
 		$html .= $this->end_wrapper_html();

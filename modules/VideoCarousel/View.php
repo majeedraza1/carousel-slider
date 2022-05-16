@@ -30,19 +30,21 @@ class View extends AbstractView {
 
 		$html = $this->start_wrapper_html();
 		foreach ( $urls as $url ) {
-			$html .= '<div class="carousel-slider-item-video">';
-			$html .= '<div class="carousel-slider-video-wrapper">';
-			$html .= '<a class="magnific-popup" href="' . esc_url( $url['url'] ) . '">';
-			$html .= '<div class="carousel-slider-video-play-icon"></div>';
-			$html .= '<div class="carousel-slider-video-overlay"></div>';
+			$item_html = '<div class="carousel-slider-item-video">';
+			$item_html .= '<div class="carousel-slider-video-wrapper">';
+			$item_html .= '<a class="magnific-popup" href="' . esc_url( $url['url'] ) . '">';
+			$item_html .= '<div class="carousel-slider-video-play-icon"></div>';
+			$item_html .= '<div class="carousel-slider-video-overlay"></div>';
 			if ( Validate::checked( $lazy_load_image ) ) {
-				$html .= '<img class="owl-lazy" data-src="' . esc_url( $url['thumbnail']['large'] ) . '"/>';
+				$item_html .= '<img class="owl-lazy" data-src="' . esc_url( $url['thumbnail']['large'] ) . '"/>';
 			} else {
-				$html .= '<img src="' . esc_url( $url['thumbnail']['large'] ) . '"/>';
+				$item_html .= '<img src="' . esc_url( $url['thumbnail']['large'] ) . '"/>';
 			}
-			$html .= '</a>';
-			$html .= '</div>';
-			$html .= '</div>' . PHP_EOL;
+			$item_html .= '</a>';
+			$item_html .= '</div>';
+			$item_html .= '</div>' . PHP_EOL;
+
+			$html .= apply_filters( 'carousel_slider/loop/video-carousel', $item_html, $url, $this->get_slider_setting() );
 		}
 
 		$html .= $this->end_wrapper_html();
