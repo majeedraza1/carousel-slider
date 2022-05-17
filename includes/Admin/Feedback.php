@@ -148,28 +148,31 @@ class Feedback {
 	 */
 	public function print_deactivate_feedback_dialog() {
 		$deactivate_reasons = [
-			'no_longer_needed'                 => [
+			'no_longer_needed'       => [
 				'title'             => esc_html__( 'I no longer need the plugin', 'carousel-slider' ),
-				'input_placeholder' => '',
+				'input_placeholder' => esc_html__( 'Please share the reason', 'carousel-slider' ),
 			],
-			'found_a_better_plugin'            => [
+			'found_a_better_plugin'  => [
 				'title'             => esc_html__( 'I found a better plugin', 'carousel-slider' ),
 				'input_placeholder' => esc_html__( 'Please share which plugin', 'carousel-slider' ),
 			],
-			'could_not_get_the_plugin_to_work' => [
+			'not_working'            => [
 				'title'             => esc_html__( 'I couldn\'t get the plugin to work', 'carousel-slider' ),
-				'input_placeholder' => '',
+				'input_placeholder' => esc_html__( 'Could you tell us a bit more whats not working?', 'carousel-slider' ),
 			],
-			'temporary_deactivation'           => [
+			'missing_a_feature'      => [
+				'title'             => esc_html__( 'Missing a specific feature', 'carousel-slider' ),
+				'input_placeholder' => esc_html__( 'Could you tell us more about that feature?', 'carousel-slider' ),
+			],
+			'temporary_deactivation' => [
 				'title'             => esc_html__( 'It\'s a temporary deactivation', 'carousel-slider' ),
-				'input_placeholder' => '',
+				'input_placeholder' => esc_html__( 'Are you facing any problem?', 'carousel-slider' ),
 			],
-			'carousel_slider_pro'              => [
-				'title'             => esc_html__( 'I have Carousel Slider Pro', 'carousel-slider' ),
-				'input_placeholder' => '',
-				'alert'             => esc_html__( 'Wait! Don\'t deactivate Carousel Slider. You have to activate both Carousel Slider and Carousel Slider Pro in order for the plugin to work.', 'carousel-slider' ),
+			'carousel_slider_pro'    => [
+				'title' => esc_html__( 'I have Carousel Slider Pro', 'carousel-slider' ),
+				'alert' => esc_html__( 'Wait! Don\'t deactivate Carousel Slider. You have to activate both Carousel Slider and Carousel Slider Pro in order for the plugin to work.', 'carousel-slider' ),
 			],
-			'other'                            => [
+			'other'                  => [
 				'title'             => esc_html__( 'Other', 'carousel-slider' ),
 				'input_placeholder' => esc_html__( 'Please share the reason', 'carousel-slider' ),
 			],
@@ -203,9 +206,12 @@ class Feedback {
 								<label for="elementor-deactivate-feedback-<?php echo esc_attr( $reason_key ); ?>"
 									   class="feedback-dialog__form-label"><?php echo esc_html( $reason['title'] ); ?></label>
 								<?php if ( ! empty( $reason['input_placeholder'] ) ) : ?>
-									<input class="carousel-slider-feedback-text" type="text"
-										   name="reason_<?php echo esc_attr( $reason_key ); ?>"
-										   placeholder="<?php echo esc_attr( $reason['input_placeholder'] ); ?>"/>
+									<textarea
+										class="carousel-slider-feedback-text"
+										name="reason_<?php echo esc_attr( $reason_key ); ?>"
+										placeholder="<?php echo esc_attr( $reason['input_placeholder'] ); ?>"
+										rows="2"
+									></textarea>
 								<?php endif; ?>
 								<?php if ( ! empty( $reason['alert'] ) ) : ?>
 									<div class="carousel-slider-feedback-alert">
@@ -217,7 +223,7 @@ class Feedback {
 					</div>
 				</form>
 				<div>
-					We share your data with us to troubleshoot problems & make product improvements.
+					We collect non sensitive data to troubleshoot problems & make product improvements.
 					<a href="<?php echo esc_url( Api::PRIVACY_URL ); ?>" target="_blank">Learn more</a> about how we
 					handle your data.
 				</div>
