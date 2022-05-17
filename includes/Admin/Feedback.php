@@ -2,9 +2,11 @@
 
 namespace CarouselSlider\Admin;
 
-// If this file is called directly, abort.
 use CarouselSlider\Api;
+use CarouselSlider\Helper;
+use CarouselSlider\TrackingData;
 
+// If this file is called directly, abort.
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -39,9 +41,33 @@ class Feedback {
 			);
 
 			add_action( 'wp_ajax_carousel_slider_deactivate_feedback', [ self::$instance, 'deactivate_feedback' ] );
+
+			add_action( 'admin_notices', [ self::$instance, 'admin_notice' ] );
+			add_action( 'admin_init', [ self::$instance, 'handle_optin_optout' ] );
+
+			add_filter( 'cron_schedules', [ self::$instance, 'add_weekly_schedule' ] );
+			add_action( 'carousel_slider_tracker_send_event', [ self::$instance, 'send_tracking_data' ] );
 		}
 
 		return self::$instance;
+	}
+
+	/**
+	 * Add weekly cron schedule
+	 *
+	 * @param array $schedules List of schedules.
+	 *
+	 * @return array
+	 */
+	public function add_weekly_schedule( $schedules ) {
+		if ( ! isset( $schedules['weekly'] ) ) {
+			$schedules['weekly'] = array(
+				'interval' => DAY_IN_SECONDS * 7,
+				'display'  => 'Once Weekly',
+			);
+		}
+
+		return $schedules;
 	}
 
 	/**
@@ -79,9 +105,14 @@ class Feedback {
 			$reason_text = $_POST["reason_{$reason_key}"];
 		}
 
-		Api::send_feedback( $reason_key, $reason_text );
+		Api::send_deactivation_feedback( $reason_key, $reason_text );
 
-		wp_send_json_success();
+		wp_send_json_success(
+			[
+				'reason_key'  => $reason_key,
+				'reason_text' => $reason_text,
+			]
+		);
 	}
 
 	/**
@@ -185,10 +216,225 @@ class Feedback {
 						<?php endforeach; ?>
 					</div>
 				</form>
+				<div>
+					We share your data with us to troubleshoot problems & make product improvements.
+					<a href="<?php echo esc_url( Api::PRIVACY_URL ); ?>" target="_blank">Learn more</a> about how we
+					handle your data.
+				</div>
 			</div>
 			<div class="feedback-dialog__footer">
 			</div>
 		</dialog>
 		<?php
+	}
+
+	/**
+	 * Show tracker notice to admin
+	 *
+	 * @return void
+	 */
+	public function admin_notice() {
+		if ( ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+		if ( $this->notice_dismissed() || $this->tracking_allowed() ) {
+			return;
+		}
+
+		/* translators: 1 - Plugin name */
+		$message = sprintf( __( 'Want to help make <strong>%1$s</strong> even more awesome? Allow %1$s to collect non-sensitive diagnostic data and usage information.', 'carousel-slider' ), 'Carousel Slider' );
+
+		$message .= ' (<a class="carousel-slider-insights-data-we-collect" href="#">' . __( 'what we collect', 'carousel-slider' ) . '</a>)';
+		$message .= '<p class="description" style="display:none;">' . implode( ', ', $this->data_we_collect() ) . '. No sensitive data is tracked. ';
+		$message .= '<a href="' . Api::PRIVACY_URL . '" target="_blank">Learn more</a> about how Carousel Slider collects and handle your data.</p>';
+
+		$optin_url  = add_query_arg( 'carousel_slider_tracker_optin', 'true' );
+		$optout_url = add_query_arg( 'carousel_slider_tracker_optout', 'true' );
+
+		$html = '<div class="updated"><p>';
+		$html .= $message;
+		$html .= '</p><p class="submit">';
+		$html .= '&nbsp;<a href="' . esc_url( $optin_url ) . '" class="button-primary button-large">' . __( 'Allow', 'carousel-slider' ) . '</a>';
+		$html .= '&nbsp;<a href="' . esc_url( $optout_url ) . '" class="button-secondary button-large">' . __( 'No thanks', 'carousel-slider' ) . '</a>';
+		$html .= '</p></div>';
+
+		$html .= "<script type='text/javascript'>
+			jQuery('.carousel-slider-insights-data-we-collect').on('click', function(e) {
+                e.preventDefault();
+                jQuery(this).parents('.updated').find('p.description').slideToggle('fast');
+            });
+            </script>
+        ";
+
+		Helper::print_unescaped_internal_string( $html );
+	}
+
+	/**
+	 * handle the optin/optout
+	 *
+	 * @return void
+	 */
+	public function handle_optin_optout() {
+
+		if ( isset( $_GET['carousel_slider_tracker_optin'] ) && $_GET['carousel_slider_tracker_optin'] == 'true' ) {
+			$this->optin();
+
+			wp_redirect( remove_query_arg( 'carousel_slider_tracker_optin' ) );
+			exit;
+		}
+
+		if ( isset( $_GET['carousel_slider_tracker_optout'] ) && $_GET['carousel_slider_tracker_optout'] == 'true' ) {
+			$this->optout();
+
+			wp_redirect( remove_query_arg( 'carousel_slider_tracker_optout' ) );
+			exit;
+		}
+	}
+
+	/**
+	 * Check if the notice has been dismissed or enabled
+	 *
+	 * @return boolean
+	 */
+	public function notice_dismissed(): bool {
+		$hide_notice = get_option( 'carousel_slider_tracking_notice', null );
+
+		if ( 'hide' === $hide_notice ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Check if the user has opted into tracking
+	 *
+	 * @return bool
+	 */
+	public function tracking_allowed(): bool {
+		return 'yes' === get_option( 'carousel_slider_allow_tracking', 'no' );
+	}
+
+	/**
+	 * Explain the user which data we collect
+	 *
+	 * @return array
+	 */
+	protected function data_we_collect(): array {
+		return [
+			'Server environment details (php, mysql, server, WordPress versions)',
+			'Number of users in your site',
+			'Site language',
+			'Number of active and inactive plugins',
+			'Configuration of carousel slider',
+			'Site name and url',
+			'Your name and email address',
+		];
+	}
+
+	/**
+	 * Tracking optin
+	 *
+	 * @return void
+	 */
+	public function optin() {
+		update_option( 'carousel_slider_allow_tracking', 'yes' );
+		update_option( 'carousel_slider_tracking_notice', 'hide' );
+
+		$this->clear_schedule_event();
+		$this->schedule_event();
+		$this->send_tracking_data();
+	}
+
+	/**
+	 * Optout from tracking
+	 *
+	 * @return void
+	 */
+	public function optout() {
+		update_option( 'carousel_slider_allow_tracking', 'no' );
+		update_option( 'carousel_slider_tracking_notice', 'hide' );
+
+		$this->send_tracking_skipped_request();
+		$this->clear_schedule_event();
+	}
+
+	/**
+	 * Clear any scheduled hook
+	 *
+	 * @return void
+	 */
+	private function clear_schedule_event() {
+		wp_clear_scheduled_hook( 'carousel_slider_tracker_send_event' );
+	}
+
+	/**
+	 * Schedule the event weekly
+	 *
+	 * @return void
+	 */
+	private function schedule_event() {
+		$hook_name = 'carousel_slider_tracker_send_event';
+
+		if ( ! wp_next_scheduled( $hook_name ) ) {
+			wp_schedule_event( time(), 'weekly', $hook_name );
+		}
+	}
+
+	/**
+	 * Get the last time a tracking was sent
+	 *
+	 * @return false|string
+	 */
+	private function get_last_send() {
+		return get_option( 'carousel_slider_tracking_last_send', false );
+	}
+
+	/**
+	 * Send request to appsero if user skip to send tracking data
+	 */
+	private function send_tracking_skipped_request() {
+		$skipped = get_option( 'carousel_slider_tracking_skipped' );
+
+		$data = [
+			'hash'               => '',
+			'previously_skipped' => false,
+		];
+
+		if ( 'yes' === $skipped ) {
+			$data['previously_skipped'] = true;
+		} else {
+			update_option( 'carousel_slider_tracking_skipped', 'yes' );
+		}
+	}
+
+	/**
+	 * Send tracking data to AppSero server
+	 *
+	 * @param boolean $override
+	 *
+	 * @return void
+	 */
+	public function send_tracking_data( bool $override = false ) {
+		// skip on AJAX Requests.
+		if ( defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+			return;
+		}
+
+		if ( ! $this->tracking_allowed() && ! $override ) {
+			return;
+		}
+
+		// Send a maximum of once per week.
+		$last_send = $this->get_last_send();
+
+		if ( $last_send && $last_send > strtotime( '-1 week' ) ) {
+			return;
+		}
+
+		$response = Api::send_tracking_data( TrackingData::all() );
+		if ( ! is_wp_error( $response ) ) {
+			update_option( 'carousel_slider_tracking_last_send', time() );
+		}
 	}
 }

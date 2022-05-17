@@ -2,6 +2,8 @@
 
 namespace CarouselSlider;
 
+use WP_Error;
+
 /**
  * Carousel Slider API.
  *
@@ -11,13 +13,39 @@ namespace CarouselSlider;
  * @since 2.1.0
  */
 class Api {
+	const BASE_URL = 'http://api.carousel-slider.com/v1';
+	const PRIVACY_URL = 'https://carousel-slider.com/privacy-policy';
+
 	/**
-	 * API feedback URL.
-	 * Holds the URL of the feedback API.
+	 * Send remote request
 	 *
-	 * @var string API feedback URL.
+	 * @param string $endpoint The REST endpoint.
+	 * @param array $data The data to be sent.
+	 *
+	 * @return array|WP_Error
 	 */
-	private static $api_feedback_url = 'https://carousel-slider.com/api/v1/feedback/';
+	public static function send_request( string $endpoint, array $data = [] ) {
+		$endpoint = self::BASE_URL . '/' . ltrim( $endpoint, '/' );
+		$data     = wp_parse_args(
+			$data,
+			[
+				'api_version' => CAROUSEL_SLIDER_VERSION,
+				'site_lang'   => get_bloginfo( 'language' ),
+			]
+		);
+
+		return wp_remote_post(
+			$endpoint,
+			[
+				'method'      => 'POST',
+				'timeout'     => 30,
+				'redirection' => 5,
+				'httpversion' => '1.0',
+				'blocking'    => false,
+				'body'        => $data,
+			]
+		);
+	}
 
 	/**
 	 * Send Feedback.
@@ -29,18 +57,25 @@ class Api {
 	 * @return array The response of the request.
 	 * @since 2.1.0
 	 */
-	public static function send_feedback( $feedback_key, $feedback_text ) {
-		return wp_remote_post(
-			self::$api_feedback_url,
+	public static function send_deactivation_feedback( $feedback_key, $feedback_text ) {
+		return self::send_request(
+			'feedback',
 			[
-				'timeout' => 30,
-				'body'    => [
-					'api_version'  => CAROUSEL_SLIDER_VERSION,
-					'site_lang'    => get_bloginfo( 'language' ),
-					'feedback_key' => $feedback_key,
-					'feedback'     => $feedback_text,
-				],
+				'feedback_key' => $feedback_key,
+				'feedback'     => $feedback_text,
 			]
 		);
+	}
+
+	/**
+	 * Send tracking to remote site.
+	 *
+	 * @param array $data The tracking data.
+	 *
+	 * @return array|WP_Error The response of the request.
+	 * @since 2.1.0
+	 */
+	public static function send_tracking_data( array $data ) {
+		return self::send_request( 'tracker', $data );
 	}
 }

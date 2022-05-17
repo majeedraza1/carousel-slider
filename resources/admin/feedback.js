@@ -4,6 +4,7 @@ let deactivateLink = $('#the-list').find('[data-slug="carousel-slider"] span.dea
 let dialog = document.querySelector('#carousel-slider-deactivate-feedback-dialog-wrapper'),
 	cross = dialog.querySelector('.feedback-dialog__cross'),
 	footer = dialog.querySelector('.feedback-dialog__footer'),
+	form = dialog.querySelector('form'),
 	inputs = dialog.querySelectorAll('input[type=radio]');
 
 const deActivateLink = document.createElement('a');
@@ -19,7 +20,23 @@ footer.append(deActivateLink, submitBtn);
 
 submitBtn.addEventListener('click', event => {
 	event.preventDefault();
-	console.log('send data to remote server.')
+
+	const sendRequest = () => {
+		return new Promise(resolve => {
+			let httpRequest = new XMLHttpRequest();
+			httpRequest.open('POST', window.ajaxurl);
+			httpRequest.onreadystatechange = () => { // Call a function when the state changes.
+				if (httpRequest.readyState === XMLHttpRequest.DONE && httpRequest.status === 200) {
+					resolve(true);
+				}
+			}
+			httpRequest.send(new FormData(form));
+		})
+	}
+
+	sendRequest().then(() => {
+		deActivateLink.click();
+	})
 })
 
 deactivateLink.on('click', event => {
