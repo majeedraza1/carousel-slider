@@ -47,7 +47,7 @@ class TrackingData {
 			'inactive_plugins' => count( $all_plugins['inactive_plugins'] ),
 			'ip_address'       => self::get_user_ip_address(),
 			'project_version'  => CAROUSEL_SLIDER_VERSION,
-			'tracking_skipped' => false,
+			'tracking_skipped' => 'no',
 		];
 
 		// Add metadata.
@@ -62,7 +62,7 @@ class TrackingData {
 		if ( 'yes' === $skipped ) {
 			delete_option( 'carousel_slider_tracking_skipped' );
 
-			$data['tracking_skipped'] = true;
+			$data['tracking_skipped'] = 'yes';
 		}
 
 		return apply_filters( 'carousel_slider_tracker_data', $data );

@@ -70,6 +70,7 @@ class Plugin {
 	public function includes() {
 		$this->container['i18n']                = i18n::init();
 		$this->container['assets']              = Assets::init();
+		$this->container['feedback']            = Feedback::init();
 		$this->container['widget']              = CarouselSliderWidget::init();
 		$this->container['vc_element']          = Element::init();
 		$this->container['elementor_extension'] = ElementorExtension::init();
@@ -121,7 +122,6 @@ class Plugin {
 	 */
 	public function admin_includes() {
 		$this->container['admin']           = Admin::init();
-		$this->container['feedback']        = Feedback::init();
 		$this->container['meta_box']        = MetaBox::init();
 		$this->container['setting']         = Setting::init();
 		$this->container['gutenberg_block'] = GutenbergBlock::init();

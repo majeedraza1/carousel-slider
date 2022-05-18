@@ -62,7 +62,7 @@ class Feedback {
 	public function add_weekly_schedule( $schedules ) {
 		if ( ! isset( $schedules['weekly'] ) ) {
 			$schedules['weekly'] = array(
-				'interval' => DAY_IN_SECONDS * 7,
+				'interval' => WEEK_IN_SECONDS,
 				'display'  => 'Once Weekly',
 			);
 		}
