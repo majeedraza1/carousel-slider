@@ -27,7 +27,7 @@ class Module {
 			self::$instance = new self();
 
 			add_action( 'carousel_slider/meta_box_content', [ self::$instance, 'meta_box_content' ], 10, 2 );
-			add_action( 'carousel_slider/save_slider', [ self::$instance, 'save_slider' ] );
+			add_action( 'carousel_slider/save_slider', [ self::$instance, 'save_slider' ], 10, 2 );
 			add_filter( 'carousel_slider/register_view', [ self::$instance, 'view' ] );
 		}
 
@@ -37,7 +37,7 @@ class Module {
 	/**
 	 * Meta box content
 	 *
-	 * @param int    $slider_id The slider id.
+	 * @param int $slider_id The slider id.
 	 * @param string $slider_type The slider type.
 	 */
 	public function meta_box_content( int $slider_id, string $slider_type ) {
@@ -70,9 +70,8 @@ class Module {
 	 *
 	 * @param int $slider_id The slider id.
 	 */
-	public function save_slider( int $slider_id ) {
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		$urls = isset( $_POST['_video_url'] ) ?? '';
+	public function save_slider( int $slider_id, $data ) {
+		$urls = $data['_video_url'] ?? '';
 		if ( $urls ) {
 			$urls          = is_string( $urls ) ? explode( ',', $urls ) : $urls;
 			$sanitize_urls = [];
