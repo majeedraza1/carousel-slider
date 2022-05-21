@@ -2,6 +2,7 @@
 
 $imagePath: '../img/';
 
+@include shapla.button;
 @include shapla.columns;
 @include shapla.delete-icon;
 @include shapla.modal;
@@ -18,13 +19,14 @@ $imagePath: '../img/';
 @import 'admin/switch';
 @import 'admin/utilities';
 
+shapla-dialog,
 .shapla-modal {
 	box-sizing: border-box;
 
 	*,
 	*:before,
 	*:after {
-		box-sizing: inherit;
+		box-sizing: border-box;
 	}
 }
 

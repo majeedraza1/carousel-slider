@@ -11,6 +11,7 @@ import '@/admin/carousels/image-carousel-url.js';
 import '@/admin/carousels/post-carousel.js';
 import '@/admin/carousels/product-carousel.js';
 import '@/admin/carousels/video-carousel.js';
+import '@/admin/add-new.js';
 
 
 let slide_type = $('#_carousel_slider_slide_type');

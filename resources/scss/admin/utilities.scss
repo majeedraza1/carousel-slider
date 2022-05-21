@@ -43,7 +43,7 @@
 
 // Spacing
 .cs-space-x-1 > * + * {
-	margin-left: 0.25rem;
+	margin-left: 0.25rem !important;
 }
 
 // Colors

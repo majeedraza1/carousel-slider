@@ -202,11 +202,18 @@ class Assets {
 	 * Global localize data both for admin and frontend
 	 */
 	public static function admin_localize_data() {
+		$user              = wp_get_current_user();
+		$is_user_logged_in = $user->exists();
+
 		$data = [
 			'homeUrl'  => home_url(),
 			'ajaxUrl'  => admin_url( 'admin-ajax.php' ),
 			'restRoot' => esc_url_raw( rest_url( 'carousel-slider/v1' ) ),
 		];
+
+		if ( $is_user_logged_in ) {
+			$data['restNonce'] = wp_create_nonce( 'wp_rest' );
+		}
 
 		if ( is_admin() ) {
 			$slider_types = [];
