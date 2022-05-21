@@ -1,22 +1,21 @@
-import $ from 'jquery';
-
-let deactivateLink = $('#the-list').find('[data-slug="carousel-slider"] span.deactivate a');
-let dialog = document.querySelector('#carousel-slider-deactivate-feedback-dialog-wrapper'),
-	cross = dialog.querySelector('.feedback-dialog__cross'),
-	footer = dialog.querySelector('.feedback-dialog__footer'),
-	form = dialog.querySelector('form'),
-	inputs = dialog.querySelectorAll('input[type=radio]');
+let list = document.querySelector('#the-list'),
+	deactivateLink = list?.querySelector('[data-slug="carousel-slider"] span.deactivate a') as HTMLAnchorElement,
+	dialog = document.querySelector('#carousel-slider-deactivate-feedback-dialog-wrapper') as HTMLDialogElement,
+	cross = dialog?.querySelector('.feedback-dialog__cross') as HTMLElement,
+	footer = dialog?.querySelector('.feedback-dialog__footer') as HTMLElement,
+	form = dialog?.querySelector('form') as HTMLFormElement,
+	inputs = dialog?.querySelectorAll('input[type=radio]') as NodeListOf<HTMLInputElement>;
 
 const deActivateLink = document.createElement('a');
 deActivateLink.classList.add('button--skip-feedback');
 deActivateLink.textContent = 'Skip & Deactivate'
-deActivateLink.href = deactivateLink.attr('href');
+deActivateLink.href = deactivateLink?.getAttribute('href') as string;
 
 const submitBtn = document.createElement('button');
 submitBtn.classList.add('button', 'button-primary', 'button--submit-feedback');
 submitBtn.textContent = 'Submit & Deactivate'
 
-footer.append(deActivateLink, submitBtn);
+footer?.append(deActivateLink, submitBtn);
 
 submitBtn.addEventListener('click', event => {
 	event.preventDefault();
@@ -39,19 +38,15 @@ submitBtn.addEventListener('click', event => {
 	})
 })
 
-deactivateLink.on('click', event => {
+deactivateLink.addEventListener('click', event => {
 	event.preventDefault();
 	if (dialog) {
+		// @ts-ignore - TS dom lib need to be updated
 		dialog.showModal();
 	}
 })
 
 cross.addEventListener('click', () => {
+	// @ts-ignore - TS dom lib need to be updated
 	dialog.close();
 });
-
-inputs.forEach(input => {
-	input.addEventListener('change', event => {
-		console.log(event.target.value);
-	})
-})

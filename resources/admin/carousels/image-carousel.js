@@ -1,30 +1,10 @@
 /** global: wp */
 import $ from 'jquery';
-import EventBus from "@/admin/EventBus";
 
 let frame,
 	_this = $('#carousel_slider_gallery_btn'),
-	section_images_settings = $('#section_images_settings'),
-	section_url_images_settings = $('#section_url_images_settings'),
-	section_images_general_settings = $('#section_images_general_settings'),
 	images = _this.data('ids'),
 	selection = loadImages(images);
-
-EventBus.onChangeSlideType(_type => {
-	if ('image-carousel' === _type) {
-		section_url_images_settings.hide('fast');
-		section_images_settings.slideDown();
-		section_images_general_settings.slideDown();
-	} else if ('image-carousel-url' === _type) {
-		section_images_settings.hide('fast');
-		section_url_images_settings.slideDown();
-		section_images_general_settings.slideDown();
-	} else {
-		section_images_settings.hide('fast');
-		section_url_images_settings.hide('fast');
-		section_images_general_settings.hide('fast');
-	}
-});
 
 const updateDom = (ids_string, gallery_html) => {
 	$('#_carousel_slider_images_ids').val(ids_string);

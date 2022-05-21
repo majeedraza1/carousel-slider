@@ -1,5 +1,5 @@
-import '../web-components/ShaplaCross.js'
-import '../web-components/ShaplaDialog.js'
+import '../web-components/ShaplaCross.ts'
+import '../web-components/ShaplaDialog.ts'
 
 /**
  * Create dynamic element

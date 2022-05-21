@@ -1,4 +1,4 @@
-import {createEl} from "@/utils/misc";
+import {createEl} from "../utils/misc";
 
 class ShaplaBaseComponent extends HTMLElement {
 	/**
@@ -9,14 +9,14 @@ class ShaplaBaseComponent extends HTMLElement {
 	 * @param {array} children
 	 * @returns {HTMLElement}
 	 */
-	el(tagName, attributes = {}, children = []) {
+	el(tagName: string, attributes: Record<string, string> = {}, children: (Node | string)[] = []) {
 		return createEl(tagName, attributes, children);
 	}
 
 	/**
 	 * Trigger 'close' event
 	 */
-	triggerCustomEvent(name) {
+	triggerCustomEvent(name: string) {
 		this.dispatchEvent(new CustomEvent(name));
 	}
 }

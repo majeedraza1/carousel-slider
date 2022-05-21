@@ -30,13 +30,19 @@ module.exports = (env, argv) => {
 		module: {
 			rules: [
 				{
+					test: /\.tsx?$/,
+					use: 'ts-loader',
+					exclude: /node_modules/,
+				},
+				{
 					test: /\.(js|jsx)$/i,
 					use: {
 						loader: "babel-loader",
 						options: {
 							presets: [
 								'@babel/preset-env',
-								'@babel/preset-react'
+								'@babel/preset-react',
+								"@babel/preset-typescript"
 							],
 							plugins: [
 								['@babel/plugin-proposal-class-properties'],
@@ -119,7 +125,7 @@ module.exports = (env, argv) => {
 			fallback: {
 				url: false
 			},
-			extensions: ['*', '.js', '.vue', '.json']
+			extensions: ['.js', '.jsx', '.ts', '.tsx']
 		},
 		plugins: plugins
 	}

@@ -1,15 +1,4 @@
 import $ from "jquery";
-import EventBus from "@/admin/EventBus";
-
-let section_content_carousel = $('#section_content_carousel');
-
-EventBus.onChangeSlideType(_type => {
-	if ('hero-banner-slider' === _type) {
-		section_content_carousel.slideDown();
-	} else {
-		section_content_carousel.hide('fast');
-	}
-});
 
 let body = $('body'),
 	contentButtonModal = $('#contentButtonModal'),

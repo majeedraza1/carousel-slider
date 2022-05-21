@@ -42,14 +42,18 @@ let template = `<div class="media-url--column shapla-column is-12">
 // URL Images Model
 $(document).on('click', '#_images_urls_btn', event => {
 	event.preventDefault();
-	dialog.setAttribute('open', '');
 	$("body").addClass("overflowHidden");
+	if (dialog) {
+		dialog.setAttribute('open', '');
+	}
 });
 
-dialog.addEventListener('close', () => {
-	$("body").removeClass("overflowHidden");
-	dialog.removeAttribute('open');
-})
+if (dialog) {
+	dialog.addEventListener('close', () => {
+		$("body").removeClass("overflowHidden");
+		dialog.removeAttribute('open');
+	});
+}
 
 // Append new row
 $(document).on('click', '.add_row', function (event) {

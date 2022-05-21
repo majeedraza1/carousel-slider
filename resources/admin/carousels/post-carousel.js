@@ -1,7 +1,4 @@
-import EventBus from "@/admin/EventBus";
 import $ from "jquery";
-
-let section_post_query = $('#section_post_query');
 
 const togglePostCarouselSettings = () => {
 	let queryType = $('#_post_query_type').val(),
@@ -34,14 +31,6 @@ const togglePostCarouselSettings = () => {
 		_posts_per_page.hide('fast');
 	}
 }
-
-EventBus.onChangeSlideType(_type => {
-	if ('post-carousel' === _type) {
-		section_post_query.slideDown();
-	} else {
-		section_post_query.hide('fast');
-	}
-})
 
 $('#_post_query_type').on('change', () => togglePostCarouselSettings());
 $(document).ready(() => togglePostCarouselSettings());

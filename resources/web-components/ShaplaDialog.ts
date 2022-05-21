@@ -1,4 +1,4 @@
-import ShaplaBaseComponent from "./ShaplaBaseComponent.js";
+import ShaplaBaseComponent from "./ShaplaBaseComponent";
 
 class ShaplaDialog extends ShaplaBaseComponent {
 
@@ -13,39 +13,40 @@ class ShaplaDialog extends ShaplaBaseComponent {
 		// Create CSS to apply to the shadow DOM
 		const style = document.createElement('style');
 		style.textContent = ShaplaDialog.getStyle();
-		this.shadowRoot.append(style, ...this.getWrapperTemplate());
+		(this.shadowRoot as ShadowRoot).append(style, ...this.getWrapperTemplate());
 	}
 
 	connectedCallback() {
-		this.type = this.getAttribute('type');
+		const type = this.getAttribute('type');
 
-		if ('card' === this.type) {
+		if ('card' === type) {
 			this.renderCardTemplate();
-			const cardFooter = this.shadowRoot.querySelector('.shapla-modal-card__footer');
+			const cardFooter = (this.shadowRoot as ShadowRoot).querySelector('.shapla-modal-card__footer') as HTMLElement;
+			// @ts-ignore
 			if (cardFooter.querySelector('slot').assignedNodes().length < 1) {
 				cardFooter.classList.add('no-content')
 			}
 		}
-		if ('confirm' === this.type) {
+		if ('confirm' === type) {
 			this.updateConfirmDom();
 		}
 
-		const cardFixedCross = this.shadowRoot.querySelector('.shapla-modal-close.is-fixed');
+		const cardFixedCross = (this.shadowRoot as ShadowRoot).querySelector('.shapla-modal-close.is-fixed') as HTMLElement;
 
 		// Add card type class.
-		const elContent = this.shadowRoot.querySelector('.shapla-modal-content');
+		const elContent = (this.shadowRoot as ShadowRoot).querySelector('.shapla-modal-content') as HTMLElement;
 
-		if ('confirm' === this.type) {
+		if ('confirm' === type) {
 			cardFixedCross.remove();
 			elContent.classList.add('shapla-modal-confirm');
 			elContent.innerHTML = '';
 			elContent.append(...this.getConfirmTemplate());
-		} else if ('box' === this.type) {
+		} else if ('box' === type) {
 			elContent.classList.add('shapla-modal-box');
 		}
 
-		const cardBackdrop = this.shadowRoot.querySelector('.shapla-modal-background')
-		const backgroundTheme = this.getAttribute('backdrop-theme');
+		const cardBackdrop = (this.shadowRoot as ShadowRoot).querySelector('.shapla-modal-background') as HTMLElement;
+		const backgroundTheme = this.getAttribute('backdrop-theme') as string;
 		if (["dark", "light"].indexOf(backgroundTheme) !== -1) {
 			cardBackdrop.classList.add(`is-${backgroundTheme}`)
 		}
@@ -61,8 +62,8 @@ class ShaplaDialog extends ShaplaBaseComponent {
 	}
 
 	renderCardTemplate() {
-		const cardFixedCross = this.shadowRoot.querySelector('.shapla-modal-close.is-fixed');
-		const elContent = this.shadowRoot.querySelector('.shapla-modal-content');
+		const cardFixedCross = (this.shadowRoot as ShadowRoot).querySelector('.shapla-modal-close.is-fixed') as HTMLElement;
+		const elContent = (this.shadowRoot as ShadowRoot).querySelector('.shapla-modal-content') as HTMLElement;
 
 		// Add card type class.
 		cardFixedCross.remove();
@@ -71,28 +72,30 @@ class ShaplaDialog extends ShaplaBaseComponent {
 		elContent.innerHTML = '';
 		elContent.append(...this.getCartTemplate());
 
-		const heading = this.getAttribute('heading');
+		const heading = this.getAttribute('heading') as string;
 		if (heading) {
-			this.shadowRoot.querySelector('.shapla-modal-card__title').innerHTML = heading;
+			// @ts-ignore
+			(this.shadowRoot as ShadowRoot).querySelector('.shapla-modal-card__title').innerHTML = heading;
 		}
 	}
 
 	updateContentSize() {
-		const contentSize = this.getAttribute('content-size');
+		const contentSize = this.getAttribute('content-size') as string;
 		if (["small", "medium", "large", "full", 'custom'].indexOf(contentSize) !== -1) {
-			this.shadowRoot.querySelector('.shapla-modal-content').classList.add(`is-${contentSize}`);
+			// @ts-ignore
+			(this.shadowRoot as ShadowRoot).querySelector('.shapla-modal-content').classList.add(`is-${contentSize}`);
 		}
 	}
 
 	updateConfirmDom() {
 		const icon = this.getAttribute('icon') ?? 'primary';
-		const title = this.getAttribute('heading');
-		const message = this.getAttribute('message') ?? 'Are you sure?';
+		const title = this.getAttribute('heading') as string;
+		const message = this.getAttribute('message') as string ?? 'Are you sure?';
 		const confirmButtonText = this.getAttribute('confirm-button') ?? 'Ok';
 		const cancelButtonText = this.getAttribute('cancel-button') ?? 'Cancel';
 
-		const confirmBtn = this.shadowRoot.querySelector('.button--confirm');
-		const cancelBtn = this.shadowRoot.querySelector('.button--cancel');
+		const confirmBtn = (this.shadowRoot as ShadowRoot).querySelector('.button--confirm') as HTMLButtonElement;
+		const cancelBtn = (this.shadowRoot as ShadowRoot).querySelector('.button--cancel') as HTMLButtonElement;
 
 		if (confirmButtonText) {
 			confirmBtn.innerHTML = confirmButtonText;
@@ -102,10 +105,10 @@ class ShaplaDialog extends ShaplaBaseComponent {
 			cancelBtn.innerHTML = cancelButtonText;
 		}
 
-		const contentDom = this.shadowRoot.querySelector('.shapla-modal-confirm');
+		const contentDom = (this.shadowRoot as ShadowRoot).querySelector('.shapla-modal-confirm') as HTMLElement;
 
 		if (["primary", "success", "error"].indexOf(icon) !== -1) {
-			contentDom.querySelector('.shapla-modal-confirm__icon').classList.add(`is-${icon}`)
+			contentDom.querySelector('.shapla-modal-confirm__icon')?.classList.add(`is-${icon}`)
 		}
 
 		if (!this.hasAttribute('content-size')) {
@@ -118,10 +121,12 @@ class ShaplaDialog extends ShaplaBaseComponent {
 		}
 
 		if (title.length) {
+			// @ts-ignore
 			contentDom.querySelector('.shapla-modal-confirm__title').innerHTML = title;
 		}
 
 		if (message.length) {
+			// @ts-ignore
 			contentDom.querySelector('.shapla-modal-confirm__message').innerHTML = message;
 		}
 
@@ -129,15 +134,15 @@ class ShaplaDialog extends ShaplaBaseComponent {
 	}
 
 	closeOnCrossClick() {
-		(this.shadowRoot.querySelectorAll('.shapla-modal-close, .button--cancel') || []).forEach(cardCross => {
+		((this.shadowRoot as ShadowRoot).querySelectorAll('.shapla-modal-close, .button--cancel') || []).forEach(cardCross => {
 			cardCross.addEventListener('click', () => this.triggerCloseEvent());
 		})
 	}
 
 	closeOnBackdropClick() {
-		const cardBackdrop = this.shadowRoot.querySelector('.shapla-modal-background')
+		const cardBackdrop = (this.shadowRoot as ShadowRoot).querySelector('.shapla-modal-background') as HTMLElement
 		if (!this.hasAttribute('disabled-backdrop-click')) {
-			if ('confirm' !== this.type) {
+			if ('confirm' !== this.getAttribute('type') as string) {
 				cardBackdrop.addEventListener('click', () => this.triggerCloseEvent());
 			}
 		}
@@ -171,8 +176,8 @@ class ShaplaDialog extends ShaplaBaseComponent {
 	 * @param {any} oldValue
 	 * @param {any} newValue
 	 */
-	attributeChangedCallback(name, oldValue, newValue) {
-		const modal = this.shadowRoot.querySelector('.shapla-modal');
+	attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+		const modal = (this.shadowRoot as ShadowRoot).querySelector('.shapla-modal') as HTMLElement;
 		if ('open' === name && this.hasAttribute('open')) {
 			modal.classList.add('is-active')
 		} else {

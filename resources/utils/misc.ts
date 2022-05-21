@@ -6,7 +6,7 @@
  * @param {array} children
  * @returns {HTMLElement}
  */
-const createEl = (tagName, attributes = {}, children = []) => {
+const createEl = (tagName: string, attributes: Record<string, string> = {}, children: (Node | string)[] = []): Node => {
 	let el = document.createElement(tagName);
 	if (Object.keys(attributes).length) {
 		Object.entries(attributes).forEach(([key, value]) => {
@@ -24,7 +24,7 @@ const createEl = (tagName, attributes = {}, children = []) => {
  *
  * @returns {string}
  */
-const createUUID = () => {
+const createUUID = (): string => {
 	const pattern = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
 	return pattern.replace(/[xy]/g, (c) => {
 		const r = (Math.random() * 16) | 0;

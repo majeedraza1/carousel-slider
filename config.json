@@ -2,7 +2,7 @@
   "proxyURL": "http://cs.test/wp-admin/edit.php?post_type=carousels",
   "entryPoints": {
     "style-loader": [
-      "./resources/frontend/style-loader.js"
+      "./resources/frontend/style-loader.ts"
     ],
     "frontend": [
       "./resources/scss/frontend.scss",
@@ -13,7 +13,7 @@
       "./resources/admin/main.js"
     ],
     "admin-feedback": [
-      "./resources/admin/feedback.js"
+      "./resources/admin/feedback.ts"
     ],
     "gutenberg-block": [
       "./resources/admin/gutenberg-block.js",

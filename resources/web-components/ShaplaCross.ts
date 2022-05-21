@@ -1,61 +1,61 @@
 class ShaplaCross extends HTMLElement {
-  constructor() {
-    super();
-    this.attachShadow({mode: 'open'});
+	constructor() {
+		super();
+		this.attachShadow({mode: 'open'});
 
-    // Create CSS to apply to the shadow DOM
-    const style = document.createElement('style');
-    style.textContent = ShaplaCross.getStyle();
+		// Create CSS to apply to the shadow DOM
+		const style = document.createElement('style');
+		style.textContent = ShaplaCross.getStyle();
 
-    // attach the created elements to the shadow DOM
-    this.shadowRoot.append(style, this.getElement());
-  }
+		// attach the created elements to the shadow DOM
+		(this.shadowRoot as ShadowRoot).append(style, this.getElement());
+	}
 
-  /**
-   * Get component shadow element
-   *
-   * @returns {HTMLButtonElement}
-   */
-  getElement() {
-    const button = document.createElement('button');
-    button.classList.add('shapla-cross')
+	/**
+	 * Get component shadow element
+	 *
+	 * @returns {HTMLButtonElement}
+	 */
+	getElement() {
+		const button = document.createElement('button');
+		button.classList.add('shapla-cross')
 
-    if (this.hasAttribute('size')) {
-      button.classList.add(`is-${this.getAttribute('size')}`)
-    }
-    return button;
-  }
+		if (this.hasAttribute('size')) {
+			button.classList.add(`is-${this.getAttribute('size')}`)
+		}
+		return button;
+	}
 
-  /**
-   * Update dom when attribute changed
-   *
-   * @param {string} name
-   * @param {any} oldValue
-   * @param {any} newValue
-   */
-  attributeChangedCallback(name, oldValue, newValue) {
-    const button = this.shadowRoot.querySelector('button');
-    if ('size' === name && this.hasAttribute('size')) {
-      button.classList.add(`is-${this.getAttribute('size')}`)
-    }
-  }
+	/**
+	 * Update dom when attribute changed
+	 *
+	 * @param {string} name
+	 * @param {any} oldValue
+	 * @param {any} newValue
+	 */
+	attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+		const button = (this.shadowRoot as ShadowRoot).querySelector('button') as HTMLButtonElement;
+		if ('size' === name && this.hasAttribute('size')) {
+			button.classList.add(`is-${this.getAttribute('size')}`)
+		}
+	}
 
-  /**
-   * List of attribute to observe
-   *
-   * @returns {string[]}
-   */
-  static get observedAttributes() {
-    return ['size'];
-  }
+	/**
+	 * List of attribute to observe
+	 *
+	 * @returns {string[]}
+	 */
+	static get observedAttributes() {
+		return ['size'];
+	}
 
-  /**
-   * Get component style
-   *
-   * @returns {string}
-   */
-  static getStyle() {
-    return `.shapla-cross {
+	/**
+	 * Get component style
+	 *
+	 * @returns {string}
+	 */
+	static getStyle() {
+		return `.shapla-cross {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -123,7 +123,7 @@ class ShaplaCross extends HTMLElement {
   --delete-icon-background-dark: var(--shapla-error-variant, #d32535);
   --delete-icon-color: var(--shapla-on-error, #fff)
 }`
-  }
+	}
 }
 
 customElements.define('shapla-cross', ShaplaCross);

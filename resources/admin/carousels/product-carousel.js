@@ -1,18 +1,4 @@
-import EventBus from "@/admin/EventBus";
 import $ from "jquery";
-
-let section_product_query = $('#section_product_query');
-let productColorSection = $('.cs-admin-metabox-product-color-container');
-
-EventBus.onChangeSlideType(_type => {
-	if ('product-carousel' === _type) {
-		section_product_query.slideDown();
-		productColorSection.slideDown();
-	} else {
-		section_product_query.hide('fast');
-		productColorSection.hide('fast');
-	}
-})
 
 const toggleProductCarouselSettings = () => {
 	let queryType = $('#_product_query_type').val(),
