@@ -5,7 +5,7 @@
 import $ from 'jquery';
 
 const _l10n = window.CarouselSliderAdminL10n,
-	modal = $('#CarouselSliderModal');
+	dialog = document.querySelector('#CarouselSliderModal');
 
 let template = `<div class="media-url--column shapla-column is-12">
 <div class="carousel_slider-fields media-url-form-field">
@@ -42,20 +42,20 @@ let template = `<div class="media-url--column shapla-column is-12">
 // URL Images Model
 $(document).on('click', '#_images_urls_btn', event => {
 	event.preventDefault();
-	$(document).find('.shapla-modal').addClass('is-active');
+	dialog.setAttribute('open', '');
 	$("body").addClass("overflowHidden");
 });
 
-$(document).on('click', '[data-dismiss="shapla-modal"]', event => {
-	event.preventDefault();
-	$(event.target).closest('.shapla-modal').removeClass('is-active');
+dialog.addEventListener('close', () => {
 	$("body").removeClass("overflowHidden");
-});
+	dialog.removeAttribute('open');
+})
 
 // Append new row
 $(document).on('click', '.add_row', function (event) {
 	event.preventDefault();
-	let currentColumn = $(this).closest('.media-url--column');
+	let modal = $('#CarouselSliderModal'),
+		currentColumn = $(this).closest('.media-url--column');
 	if (currentColumn.length) {
 		currentColumn.after(template);
 	} else {
@@ -70,7 +70,7 @@ $(document).on('click', '.add_row', function (event) {
 
 // Delete current row
 $(document).on('click', '.delete_row', function () {
-	if (confirm("Are you sure to delete")) {
+	if (confirm("Are you sure to delete?")) {
 		$(this).closest('.media-url--column').remove();
 	}
 });

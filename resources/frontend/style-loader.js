@@ -1,12 +1,15 @@
+import {createEl} from "@/utils/misc";
+
 // Load stylesheet
 if (window.carouselSliderCssUrl) {
 	let element = document.querySelector('#carousel-slider-frontend-css');
 	if (!element) {
-		let elementLink = document.createElement('link');
-		elementLink.id = 'carousel-slider-frontend-css';
-		elementLink.rel = 'stylesheet'
-		elementLink.media = 'all'
-		elementLink.href = window.carouselSliderCssUrl
+		let elementLink = createEl('link', {
+			id: 'carousel-slider-frontend-css',
+			rel: 'stylesheet',
+			media: 'all',
+			href: window.carouselSliderCssUrl,
+		});
 		document.head.append(elementLink);
 	}
 }

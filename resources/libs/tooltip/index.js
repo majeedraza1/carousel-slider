@@ -1,4 +1,5 @@
 import {createPopper} from '@popperjs/core'
+import {createEl, createUUID} from "@/utils/misc";
 
 class Tooltip {
 
@@ -17,7 +18,7 @@ class Tooltip {
 	 * @param {object} options
 	 */
 	constructor(element, options = {}) {
-		this.uuid = this.createUUID();
+		this.uuid = createUUID();
 		this.forElement = this.updateTooltipTargetElement(element);
 		this.element = null;
 		this.options = Object.assign({
@@ -126,13 +127,13 @@ class Tooltip {
 	 */
 	createTooltipElement(content) {
 		// Create arrow element, <div class="tooltip__arrow"></div>
-		let arrowElement = document.createElement("div");
-		arrowElement.setAttribute('data-popper-arrow', '');
-		arrowElement.classList.add(this.options.mainClass + '__arrow');
+		let arrowElement = createEl('div', {
+			'data-popper-arrow': '',
+			class: this.options.mainClass + '__arrow'
+		});
 
 		// Create arrow element, <div class="tooltip__inner"></div>
-		let innerElement = document.createElement("div");
-		innerElement.classList.add(this.options.mainClass + '__inner');
+		let innerElement = createEl("div", {class: this.options.mainClass + '__inner'});
 		if (this.options.html) {
 			innerElement.innerHTML = content;
 		} else {
@@ -140,14 +141,15 @@ class Tooltip {
 		}
 
 		// Create main element, <div class="tooltip"></div>
-		let mainElement = document.createElement("div");
-		mainElement.classList.add(this.options.mainClass);
-		mainElement.classList.add(`is-theme-${this.options.theme}`);
-		mainElement.setAttribute('data-tooltip-for', this.uuid);
-		mainElement.setAttribute('data-remove-on-close', '');
-		mainElement.setAttribute('role', 'tooltip');
-		mainElement.appendChild(arrowElement);
-		mainElement.appendChild(innerElement);
+		let mainElement = createEl("div",
+			{
+				'data-tooltip-for': this.uuid,
+				'data-remove-on-close': '',
+				role: 'tooltip',
+				class: `${this.options.mainClass} is-theme-${this.options.theme}`
+			},
+			[arrowElement, innerElement]
+		);
 
 		let containerElement = document.querySelector(this.options.container);
 		containerElement.appendChild(mainElement);
@@ -170,20 +172,6 @@ class Tooltip {
 			targetElement.removeAttribute('title');
 		}
 		return targetElement
-	}
-
-	/**
-	 * Create UUID
-	 *
-	 * @returns {string}
-	 */
-	createUUID() {
-		const pattern = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
-		return pattern.replace(/[xy]/g, (c) => {
-			const r = (Math.random() * 16) | 0;
-			const v = c === 'x' ? r : ((r & 0x3) | 0x8);
-			return v.toString(16);
-		});
 	}
 }
 
