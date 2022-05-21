@@ -58,7 +58,7 @@ abstract class AbstractTemplate {
 	 * Get list of images sorted by its width and height
 	 *
 	 * @param string $image_size The image size.
-	 * @param int    $per_page Item per page.
+	 * @param int $per_page Item per page.
 	 *
 	 * @return array
 	 */
@@ -113,20 +113,6 @@ abstract class AbstractTemplate {
 	 * @return int|WP_Error The post ID on success. The value 0 or \WP_Error on failure.
 	 */
 	public static function create_slider( string $slider_title ) {
-		$post_id = wp_insert_post(
-			[
-				'post_title'     => $slider_title,
-				'post_status'    => 'publish',
-				'post_type'      => 'carousels',
-				'comment_status' => 'closed',
-				'ping_status'    => 'closed',
-			]
-		);
-
-		if ( ! is_wp_error( $post_id ) ) {
-			update_post_meta( $post_id, '_carousel_slider_version', CAROUSEL_SLIDER_VERSION );
-		}
-
-		return $post_id;
+		return Helper::create_slider( $slider_title );
 	}
 }

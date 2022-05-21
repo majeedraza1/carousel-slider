@@ -13,14 +13,14 @@ use WP_Error;
  * @since 2.1.0
  */
 class Api {
-	const BASE_URL = 'http://api.carousel-slider.com/v1';
+	const BASE_URL    = 'https://api.carousel-slider.com/v1';
 	const PRIVACY_URL = 'https://carousel-slider.com/privacy-policy';
 
 	/**
 	 * Send remote request
 	 *
 	 * @param string $endpoint The REST endpoint.
-	 * @param array $data The data to be sent.
+	 * @param array  $data The data to be sent.
 	 *
 	 * @return array|WP_Error
 	 */
@@ -31,6 +31,8 @@ class Api {
 			[
 				'api_version' => CAROUSEL_SLIDER_VERSION,
 				'site_lang'   => get_bloginfo( 'language' ),
+				'wp_version'  => get_bloginfo( 'version' ),
+				'site_url'    => esc_url( home_url() ),
 			]
 		);
 

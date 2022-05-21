@@ -19,6 +19,7 @@ use CarouselSlider\Modules\ImageCarousel\Module as ImageCarouselModule;
 use CarouselSlider\Modules\PostCarousel\Module as PostCarouselModule;
 use CarouselSlider\Modules\ProductCarousel\Module as ProductCarouselModule;
 use CarouselSlider\Modules\VideoCarousel\Module as VideoCarouselModule;
+use CarouselSlider\REST\CarouselController;
 use CarouselSlider\Widget\CarouselSliderWidget;
 use WP_CLI;
 use WP_CLI_Command;
@@ -68,6 +69,9 @@ class Plugin {
 	 * @return void
 	 */
 	public function includes() {
+		// Register custom post type.
+		add_action( 'init', [ $this, 'register_post_type' ] );
+
 		$this->container['i18n']                = i18n::init();
 		$this->container['assets']              = Assets::init();
 		$this->container['feedback']            = Feedback::init();
@@ -136,6 +140,8 @@ class Plugin {
 		$this->container['frontend']        = Frontend::init();
 		$this->container['preview']         = Preview::init();
 		$this->container['structured_data'] = StructuredData::init();
+
+		add_action( 'rest_api_init', [ new CarouselController(), 'register_routes' ] );
 	}
 
 	/**
@@ -145,6 +151,49 @@ class Plugin {
 	 */
 	public function ajax_includes() {
 		$this->container['ajax'] = Ajax::init();
+	}
+
+	/**
+	 * Carousel slider post type
+	 */
+	public function register_post_type() {
+		$labels = [
+			'name'               => _x( 'Sliders', 'Post Type General Name', 'carousel-slider' ),
+			'singular_name'      => _x( 'Slider', 'Post Type Singular Name', 'carousel-slider' ),
+			'menu_name'          => __( 'Carousel Slider', 'carousel-slider' ),
+			'parent_item_colon'  => __( 'Parent Slider:', 'carousel-slider' ),
+			'all_items'          => __( 'All Sliders', 'carousel-slider' ),
+			'view_item'          => __( 'View Slider', 'carousel-slider' ),
+			'add_new_item'       => __( 'Add New Slider', 'carousel-slider' ),
+			'add_new'            => __( 'Add New', 'carousel-slider' ),
+			'edit_item'          => __( 'Edit Slider', 'carousel-slider' ),
+			'update_item'        => __( 'Update Slider', 'carousel-slider' ),
+			'search_items'       => __( 'Search Slider', 'carousel-slider' ),
+			'not_found'          => __( 'Not found', 'carousel-slider' ),
+			'not_found_in_trash' => __( 'Not found in Trash', 'carousel-slider' ),
+		];
+		$args   = [
+			'label'               => __( 'Slider', 'carousel-slider' ),
+			'description'         => __( 'The easiest way to create carousel slider', 'carousel-slider' ),
+			'labels'              => $labels,
+			'supports'            => [ 'title' ],
+			'hierarchical'        => false,
+			'public'              => false,
+			'show_ui'             => true,
+			'show_in_menu'        => true,
+			'show_in_nav_menus'   => true,
+			'show_in_admin_bar'   => false,
+			'menu_position'       => 5.55525,
+			'menu_icon'           => 'dashicons-slides',
+			'can_export'          => true,
+			'has_archive'         => false,
+			'exclude_from_search' => true,
+			'publicly_queryable'  => true,
+			'rewrite'             => false,
+			'capability_type'     => 'page',
+		];
+
+		register_post_type( CAROUSEL_SLIDER_POST_TYPE, $args );
 	}
 
 	/**

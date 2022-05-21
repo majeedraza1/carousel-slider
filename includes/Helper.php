@@ -41,7 +41,7 @@ class Helper extends ViewHelper {
 	 * Get setting
 	 *
 	 * @param string $key The setting key.
-	 * @param mixed $default Setting default value.
+	 * @param mixed  $default Setting default value.
 	 *
 	 * @return mixed|null
 	 */
@@ -111,7 +111,7 @@ class Helper extends ViewHelper {
 					'icon'    => '<span class="dashicons dashicons-products"></span>',
 				],
 				'product-carousel-pro'        => [
-					'label'   => __( 'WooCommerce Product Carousel', 'carousel-slider' ),
+					'label'   => __( 'Product Carousel (Advance)', 'carousel-slider' ),
 					'enabled' => self::is_woocommerce_active() && self::is_pro_active(),
 					'icon'    => '<span class="dashicons dashicons-products"></span>',
 					'pro'     => true,
@@ -124,6 +124,23 @@ class Helper extends ViewHelper {
 				],
 			]
 		);
+	}
+
+	/**
+	 * Get enabled slider types slug
+	 *
+	 * @return array
+	 */
+	public static function get_enabled_slider_types_slug(): array {
+		$slugs = [];
+		foreach ( self::get_slider_types() as $slug => $slider_type ) {
+			if ( ! $slider_type['enabled'] ) {
+				continue;
+			}
+			$slugs[] = $slug;
+		}
+
+		return $slugs;
 	}
 
 	/**
@@ -176,7 +193,7 @@ class Helper extends ViewHelper {
 	 * Get default setting
 	 *
 	 * @param string $key The setting key.
-	 * @param mixed $default Default value.
+	 * @param mixed  $default Default value.
 	 *
 	 * @return mixed|null
 	 */
@@ -224,8 +241,8 @@ class Helper extends ViewHelper {
 	 */
 	public static function is_woocommerce_active(): bool {
 		return in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins' ), true ) ||
-		       defined( 'WC_VERSION' ) ||
-		       defined( 'WOOCOMMERCE_VERSION' );
+			   defined( 'WC_VERSION' ) ||
+			   defined( 'WOOCOMMERCE_VERSION' );
 	}
 
 	/**
@@ -254,7 +271,7 @@ class Helper extends ViewHelper {
 		}
 
 		foreach ( $ids as $id ) {
-			$_post        = get_post( $id );
+			$_post         = get_post( $id );
 			$page_content .= '<!-- wp:heading {"level":4} --><h4>' . $_post->post_title . '</h4><!-- /wp:heading -->';
 			$page_content .= '<!-- wp:carousel-slider/slider {"sliderID":' . $id . ',"sliderName":"' . $_post->post_title . ' ( ID: ' . $id . ' )"} -->';
 			$page_content .= '<div class="wp-block-carousel-slider-slider">[carousel_slide id=\'' . $id . '\']</div>';
@@ -305,6 +322,41 @@ class Helper extends ViewHelper {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Create a new slider.
+	 *
+	 * @param string $title The slider title.
+	 * @param string $type The slider type.
+	 * @param array  $args Additional arguments.
+	 *
+	 * @return int|WP_Error The post ID on success. The value 0 or \WP_Error on failure.
+	 */
+	public static function create_slider( string $title, string $type = '', array $args = [] ) {
+		$data = wp_parse_args(
+			$args,
+			[
+				'post_status'    => 'publish',
+				'post_type'      => 'carousels',
+				'comment_status' => 'closed',
+				'ping_status'    => 'closed',
+			]
+		);
+
+		$data['post_title'] = $title;
+		$data['post_type']  = CAROUSEL_SLIDER_POST_TYPE;
+
+		$post_id = wp_insert_post( $data );
+
+		if ( ! is_wp_error( $post_id ) ) {
+			if ( ! empty( $type ) ) {
+				update_post_meta( $post_id, '_slide_type', $type );
+			}
+			update_post_meta( $post_id, '_carousel_slider_version', CAROUSEL_SLIDER_VERSION );
+		}
+
+		return $post_id;
 	}
 
 	/**

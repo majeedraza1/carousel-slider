@@ -40,6 +40,7 @@ class Assets {
 			self::$instance = new self();
 
 			add_action( 'wp_loaded', [ self::$instance, 'register' ] );
+			add_action( 'admin_head', [ self::$instance, 'admin_localize_data' ], 9 );
 		}
 
 		return self::$instance;
@@ -148,7 +149,13 @@ class Assets {
 		return [
 			'carousel-slider-admin'    => [
 				'src'  => static::get_assets_url( 'js/admin.js' ),
-				'deps' => [ 'jquery', 'wp-color-picker', 'jquery-ui-accordion', 'jquery-ui-tabs', 'jquery-ui-sortable' ],
+				'deps' => [
+					'jquery',
+					'wp-color-picker',
+					'jquery-ui-accordion',
+					'jquery-ui-tabs',
+					'jquery-ui-sortable'
+				],
 			],
 			'carousel-slider-frontend' => [
 				'src'  => static::get_assets_url( 'js/frontend.js' ),
@@ -184,10 +191,31 @@ class Assets {
 		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		$javascript = file_get_contents( self::get_assets_url( '/js/style-loader.js' ) );
 		$script     = '<script id="carousel-slider-style-loader">' . PHP_EOL;
-		$script    .= 'window.carouselSliderCssUrl = ' . wp_json_encode( $data ) . ';' . PHP_EOL;
-		$script    .= $javascript . PHP_EOL;
-		$script    .= '</script>' . PHP_EOL;
+		$script     .= 'window.carouselSliderCssUrl = ' . wp_json_encode( $data ) . ';' . PHP_EOL;
+		$script     .= $javascript . PHP_EOL;
+		$script     .= '</script>' . PHP_EOL;
 
 		return $script;
+	}
+
+	/**
+	 * Global localize data both for admin and frontend
+	 */
+	public static function admin_localize_data() {
+		$data = [
+			'homeUrl'  => home_url(),
+			'ajaxUrl'  => admin_url( 'admin-ajax.php' ),
+			'restRoot' => esc_url_raw( rest_url( 'carousel-slider/v1' ) ),
+		];
+
+		if ( is_admin() ) {
+			$slider_types = [];
+			foreach ( Helper::get_slider_types() as $slug => $args ) {
+				$slider_types[] = array_merge( [ 'slug' => $slug ], $args );
+			}
+			$data['sliderTypes'] = $slider_types;
+		}
+
+		echo '<script>window.CarouselSliderL10n = ' . wp_json_encode( $data ) . '</script>' . PHP_EOL;
 	}
 }

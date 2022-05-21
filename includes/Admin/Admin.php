@@ -33,8 +33,6 @@ class Admin {
 		if ( is_null( self::$instance ) ) {
 			self::$instance = new self();
 
-			// Register custom post type.
-			add_action( 'init', [ self::$instance, 'register_post_type' ] );
 			// Modify carousel slider list table columns.
 			add_filter( 'manage_edit-' . self::POST_TYPE . '_columns', [ self::$instance, 'columns_head' ] );
 			add_filter(
@@ -58,7 +56,7 @@ class Admin {
 	/**
 	 * Modify preview post link for carousel slider
 	 *
-	 * @param string  $preview_link The preview link.
+	 * @param string $preview_link The preview link.
 	 * @param WP_Post $post The WP_Post object.
 	 *
 	 * @return string
@@ -69,49 +67,6 @@ class Admin {
 		}
 
 		return $preview_link;
-	}
-
-	/**
-	 * Carousel slider post type
-	 */
-	public function register_post_type() {
-		$labels = [
-			'name'               => _x( 'Sliders', 'Post Type General Name', 'carousel-slider' ),
-			'singular_name'      => _x( 'Slider', 'Post Type Singular Name', 'carousel-slider' ),
-			'menu_name'          => __( 'Carousel Slider', 'carousel-slider' ),
-			'parent_item_colon'  => __( 'Parent Slider:', 'carousel-slider' ),
-			'all_items'          => __( 'All Sliders', 'carousel-slider' ),
-			'view_item'          => __( 'View Slider', 'carousel-slider' ),
-			'add_new_item'       => __( 'Add New Slider', 'carousel-slider' ),
-			'add_new'            => __( 'Add New', 'carousel-slider' ),
-			'edit_item'          => __( 'Edit Slider', 'carousel-slider' ),
-			'update_item'        => __( 'Update Slider', 'carousel-slider' ),
-			'search_items'       => __( 'Search Slider', 'carousel-slider' ),
-			'not_found'          => __( 'Not found', 'carousel-slider' ),
-			'not_found_in_trash' => __( 'Not found in Trash', 'carousel-slider' ),
-		];
-		$args   = [
-			'label'               => __( 'Slider', 'carousel-slider' ),
-			'description'         => __( 'The easiest way to create carousel slider', 'carousel-slider' ),
-			'labels'              => $labels,
-			'supports'            => [ 'title' ],
-			'hierarchical'        => false,
-			'public'              => false,
-			'show_ui'             => true,
-			'show_in_menu'        => true,
-			'show_in_nav_menus'   => true,
-			'show_in_admin_bar'   => false,
-			'menu_position'       => 5.55525,
-			'menu_icon'           => 'dashicons-slides',
-			'can_export'          => true,
-			'has_archive'         => false,
-			'exclude_from_search' => true,
-			'publicly_queryable'  => true,
-			'rewrite'             => false,
-			'capability_type'     => 'post',
-		];
-
-		register_post_type( self::POST_TYPE, $args );
 	}
 
 	/**
@@ -132,7 +87,7 @@ class Admin {
 	 * Generate carousel slider list table content for each custom column
 	 *
 	 * @param string $column_name The name of the column to display.
-	 * @param int    $post_id The current post ID.
+	 * @param int $post_id The current post ID.
 	 *
 	 * @return void
 	 */
@@ -170,7 +125,7 @@ class Admin {
 	/**
 	 * Hide view and quick edit from carousel slider admin
 	 *
-	 * @param array   $actions The post row actions list.
+	 * @param array $actions The post row actions list.
 	 * @param WP_Post $post The WP_Post object.
 	 *
 	 * @return array
@@ -277,10 +232,10 @@ class Admin {
 			],
 		];
 		$html  = '<div class="wrap">';
-		$html .= '<h1 class="wp-heading">' . esc_html__( 'Carousel Slider Documentation', 'carousel-slider' ) . '</h1>';
-		$html .= '<div class="clear"></div>';
-		$html .= '<div class="postbox"><div class="inside">';
-		$html .= '<div class="carousel_slider_columns">';
+		$html  .= '<h1 class="wp-heading">' . esc_html__( 'Carousel Slider Documentation', 'carousel-slider' ) . '</h1>';
+		$html  .= '<div class="clear"></div>';
+		$html  .= '<div class="postbox"><div class="inside">';
+		$html  .= '<div class="carousel_slider_columns">';
 		foreach ( $items as $item ) {
 			$html .= '<div class="carousel_slider_column">';
 			$html .= '<div class="carousel_slider_iframe">';
