@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import Tooltip from "@/libs/tooltip/index.js";
+import Tooltip from "@/libs/tooltip/index.ts";
 import '@/libs/tooltip/index.scss';
 import '@/libs/color-picker/index.js';
 import 'select2/dist/js/select2.js'
@@ -9,12 +9,11 @@ import '@/admin/carousels/image-carousel.js';
 import '@/admin/carousels/image-carousel-url.js';
 import '@/admin/carousels/post-carousel.js';
 import '@/admin/carousels/product-carousel.js';
-import '@/admin/carousels/video-carousel.js';
-import '@/admin/add-new.js';
+import '@/admin/add-new.ts';
 
 let elements = document.querySelectorAll(".cs-tooltip");
 if (elements.length) {
-	elements.forEach(element => new Tooltip(element));
+	elements.forEach(element => new Tooltip(element, {theme: 'light'}));
 }
 
 // Initializing WP Color Picker

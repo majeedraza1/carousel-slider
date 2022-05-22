@@ -16,11 +16,11 @@
       "./resources/admin/feedback.ts"
     ],
     "gutenberg-block": [
-      "./resources/admin/gutenberg-block.js",
+      "./resources/admin/gutenberg-block.jsx",
       "./resources/scss/gutenberg-block.scss"
     ],
     "divi-modules": [
-      "./resources/admin/divi-builder-module.jsx",
+      "./resources/admin/divi-builder-module.tsx",
       "./resources/scss/divi-builder-module.scss"
     ]
   }

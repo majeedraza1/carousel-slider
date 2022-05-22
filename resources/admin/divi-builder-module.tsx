@@ -5,6 +5,7 @@ class DiviBuilderModule extends Component {
 	static slug = 'carousel_slider_divi_module';
 
 	render() {
+		// @ts-ignore
 		const slider_id = this.props.slider_id;
 
 		if (!slider_id) {
@@ -26,8 +27,6 @@ class DiviBuilderModule extends Component {
 		)
 	}
 }
-
-export default DiviBuilderModule;
 
 $(window).on('et_builder_api_ready', (event, API) => {
 	API.registerModules([DiviBuilderModule]);

@@ -20,7 +20,7 @@ $tooltip-arrow-color: $tooltip-background-color !default;
 
 	&.is-theme-light {
 		background-color: rgba(#f5f5f5, 0.92);
-		background-image: linear-gradient(to bottom, transparent, #f5f5f5);
+		background-image: linear-gradient(to bottom, #f1f1f1, #f5f5f5);
 		color: #323232;
 	}
 

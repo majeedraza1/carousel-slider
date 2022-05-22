@@ -12,13 +12,19 @@ deActivateLink.textContent = 'Skip & Deactivate'
 deActivateLink.href = deactivateLink?.getAttribute('href') as string;
 
 const submitBtn = document.createElement('button');
-submitBtn.classList.add('button', 'button-primary', 'button--submit-feedback');
+submitBtn.classList.add('shapla-button', 'is-primary', 'is-small','button--submit-feedback');
 submitBtn.textContent = 'Submit & Deactivate'
 
 footer?.append(deActivateLink, submitBtn);
 
+deActivateLink.addEventListener('click', () => {
+	// @ts-ignore - TS dom lib need to be updated
+	dialog.close();
+});
+
 submitBtn.addEventListener('click', event => {
 	event.preventDefault();
+	submitBtn.classList.add('is-loading');
 
 	const sendRequest = () => {
 		return new Promise(resolve => {
@@ -35,6 +41,8 @@ submitBtn.addEventListener('click', event => {
 
 	sendRequest().then(() => {
 		deActivateLink.click();
+	}).finally(() => {
+		submitBtn.classList.add('is-loading');
 	})
 })
 

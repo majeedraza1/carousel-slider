@@ -1,7 +1,14 @@
 import {createPopper} from '@popperjs/core'
-import {createEl, createUUID} from "@/utils/misc";
+import {createEl, createUUID} from "../../utils/misc";
 
 class Tooltip {
+	private readonly uuid: string;
+	private readonly forElement: HTMLElement;
+	private popperInstance: any;
+	private element?: HTMLElement;
+	private options: {
+		container: string; mainClass: string; activeClass: string; removeOnClose: boolean; theme: string; html: boolean
+	};
 
 	/**
 	 * Register automatically
@@ -9,7 +16,10 @@ class Tooltip {
 	static register() {
 		let elements = document.querySelectorAll(".cs-tooltip, [data-tooltip-target], [data-tooltip]");
 		if (elements.length) {
-			elements.forEach(element => new Tooltip(element));
+			// @ts-ignore
+			elements.forEach((element: HTMLElement) => {
+				new Tooltip(element)
+			});
 		}
 	}
 
@@ -17,10 +27,9 @@ class Tooltip {
 	 * @param {HTMLElement} element
 	 * @param {object} options
 	 */
-	constructor(element, options = {}) {
+	constructor(element: HTMLElement, options: Record<string, string | boolean> = {}) {
 		this.uuid = createUUID();
 		this.forElement = this.updateTooltipTargetElement(element);
-		this.element = null;
 		this.options = Object.assign({
 			theme: 'dark',
 			html: true,
@@ -58,9 +67,9 @@ class Tooltip {
 	show() {
 		this.createTooltipElementIfNotExists();
 
-		this.element.classList.add(this.options.activeClass);
+		this.element?.classList.add(this.options.activeClass);
 
-		this.popperInstance = createPopper(this.forElement, this.element, {
+		this.popperInstance = createPopper(this.forElement, this.element as HTMLElement, {
 			modifiers: [
 				{
 					name: 'offset',
@@ -72,6 +81,7 @@ class Tooltip {
 		});
 
 		// Enable the event listeners
+		// @ts-ignore
 		this.popperInstance.setOptions((options) => ({
 			...options,
 			modifiers: [
@@ -87,10 +97,11 @@ class Tooltip {
 	 * Hide tooltip
 	 */
 	hide() {
-		this.element.classList.remove(this.options.activeClass);
+		this.element?.classList.remove(this.options.activeClass);
 
 		// Disable the event listeners
 		if (this.popperInstance) {
+			// @ts-ignore
 			this.popperInstance.setOptions((options) => ({
 				...options,
 				modifiers: [
@@ -101,7 +112,7 @@ class Tooltip {
 		}
 
 		if (this.options.removeOnClose) {
-			setTimeout(() => this.element.remove(), 10);
+			setTimeout(() => this.element?.remove(), 10);
 		}
 	}
 
@@ -109,13 +120,15 @@ class Tooltip {
 	 * Validate tooltip and tooltip for elements
 	 */
 	createTooltipElementIfNotExists() {
-		this.element = document.querySelector(`[data-tooltip-for="${this.uuid}"]`)
+		this.element = document.querySelector(`[data-tooltip-for="${this.uuid}"]`) as HTMLElement;
 
 		if (!this.element) {
-			let content = this.forElement.getAttribute('data-tooltip') ||
-				this.forElement.getAttribute('title');
+			let content = (
+				this.forElement.getAttribute('data-tooltip') ||
+				this.forElement.getAttribute('title')
+			) as string;
 
-			this.element = this.createTooltipElement(content);
+			this.element = this.createTooltipElement(content) as HTMLElement;
 		}
 	}
 
@@ -125,7 +138,7 @@ class Tooltip {
 	 * @param {string} content
 	 * @returns {HTMLDivElement}
 	 */
-	createTooltipElement(content) {
+	createTooltipElement(content: string) {
 		// Create arrow element, <div class="tooltip__arrow"></div>
 		let arrowElement = createEl('div', {
 			'data-popper-arrow': '',
@@ -133,7 +146,7 @@ class Tooltip {
 		});
 
 		// Create arrow element, <div class="tooltip__inner"></div>
-		let innerElement = createEl("div", {class: this.options.mainClass + '__inner'});
+		let innerElement = createEl("div", {class: this.options.mainClass + '__inner'}) as HTMLElement;
 		if (this.options.html) {
 			innerElement.innerHTML = content;
 		} else {
@@ -151,7 +164,7 @@ class Tooltip {
 			[arrowElement, innerElement]
 		);
 
-		let containerElement = document.querySelector(this.options.container);
+		let containerElement = document.querySelector(this.options.container) as HTMLElement;
 		containerElement.appendChild(mainElement);
 
 		return mainElement;
@@ -163,8 +176,11 @@ class Tooltip {
 	 * @param {HTMLDivElement} targetElement
 	 * @returns {HTMLDivElement}
 	 */
-	updateTooltipTargetElement(targetElement) {
-		let _content = targetElement.getAttribute('data-tooltip') || targetElement.getAttribute('title');
+	updateTooltipTargetElement(targetElement: HTMLElement) {
+		let _content = (
+			targetElement.getAttribute('data-tooltip') ||
+			targetElement.getAttribute('title')
+		) as string;
 		targetElement.setAttribute('aria-describedby', 'tooltip');
 		targetElement.setAttribute('data-tooltip-target', this.uuid);
 		targetElement.setAttribute('data-tooltip', _content);
