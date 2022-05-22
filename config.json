@@ -1,25 +1,28 @@
 {
   "proxyURL": "http://cs.test/wp-admin/edit.php?post_type=carousels",
   "entryPoints": {
-    "style-loader": [
-      "./resources/frontend/style-loader.ts"
-    ],
     "frontend": [
       "./resources/scss/frontend.scss",
       "./resources/frontend/main.js"
+    ],
+    "frontend-style-loader": [
+      "./resources/frontend/style-loader.ts"
     ],
     "admin": [
       "./resources/scss/admin.scss",
       "./resources/admin/main.js"
     ],
+    "admin-add-new-carousel": [
+      "./resources/admin/add-new.ts"
+    ],
     "admin-feedback": [
       "./resources/admin/feedback.ts"
     ],
-    "gutenberg-block": [
-      "./resources/admin/gutenberg-block.jsx",
+    "admin-gutenberg-block": [
+      "./resources/admin/gutenberg-block.tsx",
       "./resources/scss/gutenberg-block.scss"
     ],
-    "divi-modules": [
+    "admin-divi-modules": [
       "./resources/admin/divi-builder-module.tsx",
       "./resources/scss/divi-builder-module.scss"
     ]

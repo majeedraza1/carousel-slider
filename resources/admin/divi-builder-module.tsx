@@ -17,8 +17,6 @@ class DiviBuilderModule extends Component {
 		previewUrl.searchParams.append('slider_id', slider_id);
 		let iFrameSrc = previewUrl.toString();
 
-		console.log(window.location.origin, window.csDivi.site_url, slider_id, iFrameSrc)
-
 		return (
 			<div className="carousel-slider-iframe-container">
 				<div className="carousel-slider-iframe-overlay"/>

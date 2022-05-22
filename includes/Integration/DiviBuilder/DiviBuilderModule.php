@@ -52,10 +52,15 @@ class DiviBuilderModule {
 		if ( empty( $_GET['et_fb'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return;
 		}
-		wp_enqueue_style( 'carousel-slider-divi-modules', CAROUSEL_SLIDER_ASSETS . '/css/divi-modules.css', [], CAROUSEL_SLIDER_VERSION );
+		wp_enqueue_style(
+			'carousel-slider-divi-modules',
+			CAROUSEL_SLIDER_ASSETS . '/css/admin-divi-modules.css',
+			[],
+			CAROUSEL_SLIDER_VERSION
+		);
 		wp_enqueue_script(
 			'carousel-slider-divi-modules',
-			CAROUSEL_SLIDER_ASSETS . '/js/divi-modules.js',
+			CAROUSEL_SLIDER_ASSETS . '/js/admin-divi-modules.js',
 			[ 'react', 'react-dom' ],
 			CAROUSEL_SLIDER_VERSION,
 			true

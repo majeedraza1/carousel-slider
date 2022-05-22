@@ -11,6 +11,7 @@ const settings = window.i18nCarouselSliderBlock ||
  *
  * A block for embedding a carousel slider into a post/page.
  */
+// @ts-ignore
 registerBlockType('carousel-slider/slider', {
 	title: settings.block_title,
 	icon: 'slides',
@@ -28,15 +29,16 @@ registerBlockType('carousel-slider/slider', {
 		let previewUrl = new URL(settings.site_url);
 		previewUrl.searchParams.append('carousel_slider_preview', '1');
 		previewUrl.searchParams.append('carousel_slider_iframe', '1');
-		previewUrl.searchParams.append('slider_id', sliderID);
+		previewUrl.searchParams.append('slider_id', sliderID as string);
 		let iFrameSrc = previewUrl.toString();
 
-		const changeSlider = (slider_id) => {
+		const changeSlider = (slider_id: string) => {
 			props.setAttributes({sliderID: parseInt(slider_id)});
 		}
 
 		const selectControl = (
-			<SelectControl label={settings.select_slider} value={sliderID} options={settings.sliders}
+			// @ts-ignore
+			<SelectControl label={settings.select_slider} value={sliderID as string} options={settings.sliders}
 						   onChange={changeSlider}/>
 		)
 

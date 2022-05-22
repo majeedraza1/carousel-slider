@@ -45,14 +45,14 @@ class GutenbergBlock {
 		}
 		wp_register_script(
 			'carousel-slider-gutenberg-block',
-			CAROUSEL_SLIDER_ASSETS . '/js/gutenberg-block.js',
+			CAROUSEL_SLIDER_ASSETS . '/js/admin-gutenberg-block.js',
 			[ 'wp-blocks', 'wp-components', 'wp-block-editor' ],
 			CAROUSEL_SLIDER_VERSION,
 			true
 		);
 		wp_register_style(
 			'carousel-slider-gutenberg-style',
-			CAROUSEL_SLIDER_ASSETS . '/css/gutenberg-block.css',
+			CAROUSEL_SLIDER_ASSETS . '/css/admin-gutenberg-block.css',
 			[ 'wp-edit-blocks' ],
 			CAROUSEL_SLIDER_VERSION
 		);
