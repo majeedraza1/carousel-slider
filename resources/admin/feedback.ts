@@ -3,7 +3,8 @@ let list = document.querySelector('#the-list'),
 	dialog = document.querySelector('#carousel-slider-deactivate-feedback-dialog-wrapper') as HTMLElement,
 	deActivateLink = dialog?.querySelector('.button--skip-feedback') as HTMLAnchorElement,
 	submitBtn = dialog?.querySelector('.button--submit-feedback') as HTMLButtonElement,
-	form = dialog?.querySelector('form') as HTMLFormElement;
+	form = dialog?.querySelector('form') as HTMLFormElement,
+	inputs = form.querySelectorAll('input[type=radio]');
 
 deActivateLink.href = deactivateLink?.getAttribute('href') as string;
 
@@ -45,3 +46,11 @@ deactivateLink.addEventListener('click', event => {
 dialog.addEventListener('close', () => {
 	dialog.removeAttribute('open');
 });
+
+inputs.forEach(input => {
+	input.addEventListener('change', (event) => {
+		if ((event.target as HTMLInputElement).value && submitBtn.hasAttribute('disabled')) {
+			submitBtn.removeAttribute('disabled');
+		}
+	})
+})

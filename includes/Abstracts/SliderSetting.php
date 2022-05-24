@@ -41,7 +41,7 @@ class SliderSetting extends Data {
 	 * Get option
 	 *
 	 * @param string $key option key.
-	 * @param mixed $default default value.
+	 * @param mixed  $default default value.
 	 *
 	 * @return mixed
 	 */
@@ -172,7 +172,7 @@ class SliderSetting extends Data {
 	 * Sanitize value by data type
 	 *
 	 * @param string $type The type.
-	 * @param mixed $value The value.
+	 * @param mixed  $value The value.
 	 *
 	 * @return mixed
 	 */

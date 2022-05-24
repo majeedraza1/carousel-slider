@@ -62,7 +62,7 @@ class Admin {
 	/**
 	 * Add custom links on plugins page.
 	 *
-	 * @param array $links
+	 * @param array $links An array of plugin action links.
 	 *
 	 * @return array
 	 */
@@ -87,7 +87,7 @@ class Admin {
 	/**
 	 * Modify preview post link for carousel slider
 	 *
-	 * @param string $preview_link The preview link.
+	 * @param string  $preview_link The preview link.
 	 * @param WP_Post $post The WP_Post object.
 	 *
 	 * @return string
@@ -118,7 +118,7 @@ class Admin {
 	 * Generate carousel slider list table content for each custom column
 	 *
 	 * @param string $column_name The name of the column to display.
-	 * @param int $post_id The current post ID.
+	 * @param int    $post_id The current post ID.
 	 *
 	 * @return void
 	 */
@@ -156,7 +156,7 @@ class Admin {
 	/**
 	 * Hide view and quick edit from carousel slider admin
 	 *
-	 * @param array $actions The post row actions list.
+	 * @param array   $actions The post row actions list.
 	 * @param WP_Post $post The WP_Post object.
 	 *
 	 * @return array
@@ -267,10 +267,10 @@ class Admin {
 			],
 		];
 		$html  = '<div class="wrap">';
-		$html  .= '<h1 class="wp-heading">' . esc_html__( 'Carousel Slider Documentation', 'carousel-slider' ) . '</h1>';
-		$html  .= '<div class="clear"></div>';
-		$html  .= '<div class="postbox"><div class="inside">';
-		$html  .= '<div class="carousel_slider_columns">';
+		$html .= '<h1 class="wp-heading">' . esc_html__( 'Carousel Slider Documentation', 'carousel-slider' ) . '</h1>';
+		$html .= '<div class="clear"></div>';
+		$html .= '<div class="postbox"><div class="inside">';
+		$html .= '<div class="carousel_slider_columns">';
 		foreach ( $items as $item ) {
 			$html .= '<div class="carousel_slider_column">';
 			$html .= '<div class="carousel_slider_iframe">';
@@ -349,12 +349,14 @@ class Admin {
 	 * @access public
 	 */
 	public function handle_external_redirects() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( empty( $_GET['page'] ) ) {
 			return;
 		}
 
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		if ( 'go_carousel_slider_pro' === $_GET['page'] ) {
-			wp_redirect( Api::GO_PRO_URL );
+			wp_redirect( Api::GO_PRO_URL ); // phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect
 			die;
 		}
 	}

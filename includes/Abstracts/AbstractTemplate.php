@@ -58,7 +58,7 @@ abstract class AbstractTemplate {
 	 * Get list of images sorted by its width and height
 	 *
 	 * @param string $image_size The image size.
-	 * @param int $per_page Item per page.
+	 * @param int    $per_page Item per page.
 	 *
 	 * @return array
 	 */

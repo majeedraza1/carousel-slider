@@ -3,15 +3,15 @@
  * Plugin Name: Carousel Slider
  * Plugin URI: https://wordpress.org/plugins/carousel-slider
  * Description: <strong>Carousel Slider</strong> allows you to create beautiful, touch enabled, responsive carousels and sliders. It let you create SEO friendly Image carousel from Media Library or from custom URL, Video carousel using Youtube and Vimeo video, Post carousel, Hero banner slider and various types of WooCommerce products carousels.
- * Version: 2.0.10
+ * Version: 2.1.0
  * Author: Sayful Islam
  * Author URI: https://sayfulislam.com
  * Requires PHP: 7.0
  * Requires at least: 5.6
- * Tested up to: 5.9
+ * Tested up to: 6.0
  *
  * WC requires at least: 3.0
- * WC tested up to: 6.2
+ * WC tested up to: 6.5
  *
  * Text Domain: carousel-slider
  *
@@ -52,7 +52,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		 *
 		 * @var string
 		 */
-		private $version = '2.0.10';
+		private $version = '2.1.0';
 
 		/**
 		 * Minimum PHP version required
@@ -118,7 +118,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 			define( 'CAROUSEL_SLIDER_PATH', dirname( CAROUSEL_SLIDER_FILE ) );
 			define( 'CAROUSEL_SLIDER_URL', plugins_url( '', CAROUSEL_SLIDER_FILE ) );
 			define( 'CAROUSEL_SLIDER_ASSETS', CAROUSEL_SLIDER_URL . '/assets' );
-			define( 'CAROUSEL_SLIDER_PRO_PROMOTION', true );
+			define( 'CAROUSEL_SLIDER_PRO_PROMOTION', false );
 		}
 
 		/**
@@ -182,7 +182,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 
 			$error  = __( 'Your installed PHP Version is: ', 'carousel-slider' ) . PHP_VERSION . '. ';
 			$error .= sprintf(
-				/* translators: 1: min php version requires */
+			/* translators: 1: min php version requires */
 				__( 'The Carousel Slider plugin requires PHP version %s or greater.', 'carousel-slider' ),
 				$this->min_php
 			);

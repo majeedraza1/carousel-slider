@@ -101,8 +101,8 @@ class Feedback {
 			$reason_key = $_POST['reason_key'];
 		}
 
-		if ( ! empty( $_POST["reason_{$reason_key}"] ) ) {
-			$reason_text = $_POST["reason_{$reason_key}"];
+		if ( ! empty( $_POST[ "reason_{$reason_key}" ] ) ) {
+			$reason_text = $_POST[ "reason_{$reason_key}" ];
 		}
 
 		Api::send_deactivation_feedback( $reason_key, $reason_text );
@@ -224,10 +224,12 @@ class Feedback {
 				</div>
 			</div>
 			<div class="feedback-dialog__footer cs-flex cs-justify-between" slot="footer">
-				<a href="#"
-				   class="button--skip-feedback"><?php esc_html_e( 'Skip & Deactivate', 'carousel-slider' ); ?></a>
-				<button
-					class="button--submit-feedback shapla-button is-primary is-small"><?php esc_html_e( 'Submit & Deactivate', 'carousel-slider' ); ?></button>
+				<a href="#" class="button--skip-feedback">
+					<?php esc_html_e( 'Skip & Deactivate', 'carousel-slider' ); ?>
+				</a>
+				<button class="button--submit-feedback shapla-button is-primary is-small" disabled>
+					<?php esc_html_e( 'Submit & Deactivate', 'carousel-slider' ); ?>
+				</button>
 			</div>
 		</shapla-dialog>
 		<?php
@@ -256,7 +258,7 @@ class Feedback {
 		$optin_url  = add_query_arg( 'carousel_slider_tracker_optin', 'true' );
 		$optout_url = add_query_arg( 'carousel_slider_tracker_optout', 'true' );
 
-		$html = '<div class="updated"><p>';
+		$html  = '<div class="updated"><p>';
 		$html .= $message;
 		$html .= '</p><p class="submit">';
 		$html .= '&nbsp;<a href="' . esc_url( $optin_url ) . '" class="button-primary button-large">' . __( 'Allow', 'carousel-slider' ) . '</a>';
@@ -275,22 +277,25 @@ class Feedback {
 	}
 
 	/**
-	 * handle the optin/optout
+	 * Handle the optin/optout
 	 *
 	 * @return void
 	 */
 	public function handle_optin_optout() {
-
-		if ( isset( $_GET['carousel_slider_tracker_optin'] ) && $_GET['carousel_slider_tracker_optin'] == 'true' ) {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( isset( $_GET['carousel_slider_tracker_optin'] ) && 'true' === $_GET['carousel_slider_tracker_optin'] ) {
 			$this->optin();
 
+			// phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect
 			wp_redirect( remove_query_arg( 'carousel_slider_tracker_optin' ) );
 			exit;
 		}
 
-		if ( isset( $_GET['carousel_slider_tracker_optout'] ) && $_GET['carousel_slider_tracker_optout'] == 'true' ) {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		if ( isset( $_GET['carousel_slider_tracker_optout'] ) && 'true' === $_GET['carousel_slider_tracker_optout'] ) {
 			$this->optout();
 
+			// phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect
 			wp_redirect( remove_query_arg( 'carousel_slider_tracker_optout' ) );
 			exit;
 		}
@@ -396,27 +401,16 @@ class Feedback {
 	}
 
 	/**
-	 * Send request to appsero if user skip to send tracking data
+	 * Send request to server if user skip to send tracking data
 	 */
 	private function send_tracking_skipped_request() {
-		$skipped = get_option( 'carousel_slider_tracking_skipped' );
-
-		$data = [
-			'hash'               => '',
-			'previously_skipped' => false,
-		];
-
-		if ( 'yes' === $skipped ) {
-			$data['previously_skipped'] = true;
-		} else {
-			update_option( 'carousel_slider_tracking_skipped', 'yes' );
-		}
+		update_option( 'carousel_slider_tracking_skipped', 'yes' );
 	}
 
 	/**
-	 * Send tracking data to AppSero server
+	 * Send tracking data to server
 	 *
-	 * @param boolean $override
+	 * @param boolean $override Re-sent even if it is already sent data.
 	 *
 	 * @return void
 	 */

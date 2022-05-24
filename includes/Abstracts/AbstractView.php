@@ -117,7 +117,7 @@ abstract class AbstractView implements SliderViewInterface {
 
 		$attributes_array = $this->get_slider_attributes( $args );
 
-		$html = '<div class="' . join( ' ', $css_classes ) . '">' . PHP_EOL;
+		$html  = '<div class="' . join( ' ', $css_classes ) . '">' . PHP_EOL;
 		$html .= '<div ' . join( ' ', $attributes_array ) . '>' . PHP_EOL;
 
 		return $html;
@@ -129,7 +129,7 @@ abstract class AbstractView implements SliderViewInterface {
 	 * @return string
 	 */
 	public function end_wrapper_html(): string {
-		$html = '</div><!-- .carousel-slider-' . $this->get_slider_id() . ' -->' . PHP_EOL;
+		$html  = '</div><!-- .carousel-slider-' . $this->get_slider_id() . ' -->' . PHP_EOL;
 		$html .= '</div><!-- .carousel-slider-outer-' . $this->get_slider_id() . ' -->' . PHP_EOL;
 
 		return $html;

@@ -88,9 +88,9 @@ class View extends AbstractView {
 	 * Get thumbnail html
 	 *
 	 * @param WP_Post $post The WP_Post object.
-	 * @param string $image_size Image size slug.
-	 * @param bool $lazy_load Lazy load images.
-	 * @param string $permalink Permalink.
+	 * @param string  $image_size Image size slug.
+	 * @param bool    $lazy_load Lazy load images.
+	 * @param string  $permalink Permalink.
 	 *
 	 * @return string
 	 */
@@ -146,7 +146,7 @@ class View extends AbstractView {
 		if ( ! $category instanceof WP_Term ) {
 			return '';
 		}
-		$html = '<div class="carousel-slider__post-category">';
+		$html  = '<div class="carousel-slider__post-category">';
 		$html .= sprintf(
 			'<a class="carousel-slider__post-category-link" href="%s">%s</a>',
 			esc_url( get_category_link( $category->term_id ) ),
@@ -168,7 +168,7 @@ class View extends AbstractView {
 		$author_url  = esc_url( get_author_posts_url( intval( $post->post_author ) ) );
 		$author_name = esc_html( get_the_author_meta( 'display_name', intval( $post->post_author ) ) );
 
-		$html = '<div class="carousel-slider__post-author">';
+		$html  = '<div class="carousel-slider__post-author">';
 		$html .= '<a class="carousel-slider__post-author-link" href="' . $author_url . '">' . $author_name . '</a>';
 		$html .= '</div>';
 

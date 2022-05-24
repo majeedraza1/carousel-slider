@@ -19,6 +19,7 @@ $imagePath: '../img/';
 @import 'admin/switch';
 @import 'admin/utilities';
 @import 'admin/feedback';
+@import 'admin/gopro-link';
 @import 'admin/option-slider-type';
 
 shapla-dialog,
@@ -65,15 +66,4 @@ shapla-dialog,
 	*, *:before, *:after {
 		box-sizing: border-box;
 	}
-}
-
-.carousel-slider-plugins-gopro,
-#menu-posts-carousels a[href="edit.php?post_type=carousels&page=go_carousel_slider_pro"],
-#menu-posts-carousels a[href="edit.php?post_type=carousels&page=go_carousel_slider_pro"]:hover {
-	color: #93003c;
-	font-weight: bold;
-}
-
-.carousel-slider-plugins-gopro {
-	text-shadow: 1px 1px 1px #eee;
 }

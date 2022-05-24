@@ -39,7 +39,7 @@ class Setting {
 	 * Get option
 	 *
 	 * @param string $key option key.
-	 * @param mixed $default default value.
+	 * @param mixed  $default default value.
 	 *
 	 * @return mixed
 	 */

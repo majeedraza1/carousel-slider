@@ -37,7 +37,7 @@ class Module {
 	/**
 	 * Meta box content
 	 *
-	 * @param int $slider_id The slider id.
+	 * @param int    $slider_id The slider id.
 	 * @param string $slider_type The slider type.
 	 */
 	public function meta_box_content( int $slider_id, string $slider_type ) {
@@ -68,7 +68,8 @@ class Module {
 	/**
 	 * Save slider video url
 	 *
-	 * @param int $slider_id The slider id.
+	 * @param int   $slider_id The slider id.
+	 * @param array $data The raw data.
 	 */
 	public function save_slider( int $slider_id, $data ) {
 		$urls = $data['_video_url'] ?? '';

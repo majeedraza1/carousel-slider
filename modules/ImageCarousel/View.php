@@ -84,9 +84,9 @@ class View extends AbstractView {
 	/**
 	 * Get image html
 	 *
-	 * @param int $image_id The image id.
+	 * @param int    $image_id The image id.
 	 * @param string $image_size The image size.
-	 * @param bool $lazy_load_image Lazy load image.
+	 * @param bool   $lazy_load_image Lazy load image.
 	 *
 	 * @return string
 	 */
@@ -112,8 +112,8 @@ class View extends AbstractView {
 	 * Get caption html
 	 *
 	 * @param WP_Post $post The WP_Post object.
-	 * @param bool $show_title Show title.
-	 * @param bool $show_caption Show caption.
+	 * @param bool    $show_title Show title.
+	 * @param bool    $show_caption Show caption.
 	 *
 	 * @return string
 	 */

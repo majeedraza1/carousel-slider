@@ -3,9 +3,9 @@ Contributors: sayful, majeedraza
 Donate link: https://www.buymeacoffee.com/sayful1
 Tags: carousel, carousel slider, image carousel, product carousel, woocommerce, slider
 Requires at least: 5.6
-Tested up to: 5.9
+Tested up to: 6.0
 Requires PHP: 7.0
-Stable tag: 2.0.10
+Stable tag: 2.1.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -91,6 +91,28 @@ If you still need help. visit [WordPress codex](https://codex.wordpress.org/Mana
 Update to get new features and better security.
 
 == Changelog ==
+
+= version 2.1.0 - 2022-05-26 =
+* Feature - Add new javaScript dialog to create carousel slider with title and slider type.
+* Feature - Update metabox functionality separating create and edit functionality.
+* Feature - Update slider type metabox design.
+* Fix - Video Content is not saving.
+* Dev - Add typescript support.
+* Dev - Add new meta box fields (Radio, Switch, ButtonGroup, Breakpoint, Html, Switch).
+* Dev - Update metabox hiding slider change on edit mode.
+* Dev - Add REST endpoint to create slider.
+* Dev - Add admin feedback ui for plugin de-activation feedback.
+* Dev - Add admin ui to take user confirmation to send non-sensitive data.
+* Dev - Add sanitize method to sanitize array of integer.
+* Dev - Add 'image_size' attribute on SliderSetting class.
+* Dev - Add TemplateParserInterface class.
+* Dev - Fix `ReturnTypeWillChange` warning on PHP 8.0 onward
+* Dev - Add filter to modify slider css classes.
+* Dev - Add functionality to modify responsive breakpoint.
+* Dev - Group color metabox setting together.
+* Dev - Fix section setting and description is not showing.
+* Dev - Add SliderSetting::lazy_load_image() to get lazy load setting.
+* Dev - Add filter to modify hero and video carousel item html.
 
 = version 2.0.10 - 2022-03-26 =
 * Fix - Fix image carousel image edit button is not working for single image.

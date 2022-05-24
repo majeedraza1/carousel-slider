@@ -30,7 +30,7 @@ class View extends AbstractView {
 
 		$html = $this->start_wrapper_html();
 		foreach ( $urls as $url ) {
-			$item_html = '<div class="carousel-slider-item-video">';
+			$item_html  = '<div class="carousel-slider-item-video">';
 			$item_html .= '<div class="carousel-slider-video-wrapper">';
 			$item_html .= '<a class="magnific-popup" href="' . esc_url( $url['url'] ) . '">';
 			$item_html .= '<div class="carousel-slider-video-play-icon"></div>';

@@ -41,7 +41,7 @@ class Admin {
 	/**
 	 * Show meta box content for product carousel
 	 *
-	 * @param int $slider_id The slider id.
+	 * @param int    $slider_id The slider id.
 	 * @param string $slider_type The slider type.
 	 */
 	public function meta_box_content( int $slider_id, string $slider_type ) {
