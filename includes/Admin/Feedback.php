@@ -179,13 +179,8 @@ class Feedback {
 		];
 
 		?>
-		<dialog class="feedback-dialog" id="carousel-slider-deactivate-feedback-dialog-wrapper">
-			<div class="feedback-dialog__header">
-				<span class="feedback-dialog__title">
-					<?php echo esc_html__( 'Quick Feedback', 'carousel-slider' ); ?>
-				</span>
-				<span class="feedback-dialog__cross shapla-delete-icon is-medium"></span>
-			</div>
+		<shapla-dialog type="card" heading="<?php echo esc_html__( 'Quick Feedback', 'carousel-slider' ); ?>"
+					   class="feedback-dialog" id="carousel-slider-deactivate-feedback-dialog-wrapper">
 			<div class="feedback-dialog__body">
 				<form id="carousel-slider-deactivate-feedback-dialog-form" class="feedback-dialog__form" method="post">
 					<?php
@@ -228,9 +223,13 @@ class Feedback {
 					handle your data.
 				</div>
 			</div>
-			<div class="feedback-dialog__footer">
+			<div class="feedback-dialog__footer cs-flex cs-justify-between" slot="footer">
+				<a href="#"
+				   class="button--skip-feedback"><?php esc_html_e( 'Skip & Deactivate', 'carousel-slider' ); ?></a>
+				<button
+					class="button--submit-feedback shapla-button is-primary is-small"><?php esc_html_e( 'Submit & Deactivate', 'carousel-slider' ); ?></button>
 			</div>
-		</dialog>
+		</shapla-dialog>
 		<?php
 	}
 

@@ -147,17 +147,20 @@ class Assets {
 	 */
 	public function get_scripts(): array {
 		return [
-			'carousel-slider-admin'    => [
+			'carousel-slider-admin'              => [
 				'src'  => static::get_assets_url( 'js/admin.js' ),
 				'deps' => [
 					'jquery',
 					'wp-color-picker',
 					'jquery-ui-accordion',
 					'jquery-ui-tabs',
-					'jquery-ui-sortable'
+					'jquery-ui-sortable',
 				],
 			],
-			'carousel-slider-frontend' => [
+			'carousel-slider-admin-new-carousel' => [
+				'src' => static::get_assets_url( 'js/admin-add-new-carousel.js' ),
+			],
+			'carousel-slider-frontend'           => [
 				'src'  => static::get_assets_url( 'js/frontend.js' ),
 				'deps' => [ 'jquery' ],
 			],
@@ -171,12 +174,15 @@ class Assets {
 	 */
 	public function get_styles(): array {
 		return [
-			'carousel-slider-frontend' => [
+			'carousel-slider-frontend'           => [
 				'src' => static::get_assets_url( 'css/frontend.css' ),
 			],
-			'carousel-slider-admin'    => [
+			'carousel-slider-admin'              => [
 				'src'  => static::get_assets_url( 'css/admin.css' ),
 				'deps' => [ 'wp-color-picker' ],
+			],
+			'carousel-slider-admin-new-carousel' => [
+				'src' => static::get_assets_url( 'css/admin-add-new-carousel.css' ),
 			],
 		];
 	}

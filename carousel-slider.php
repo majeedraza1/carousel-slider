@@ -118,6 +118,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 			define( 'CAROUSEL_SLIDER_PATH', dirname( CAROUSEL_SLIDER_FILE ) );
 			define( 'CAROUSEL_SLIDER_URL', plugins_url( '', CAROUSEL_SLIDER_FILE ) );
 			define( 'CAROUSEL_SLIDER_ASSETS', CAROUSEL_SLIDER_URL . '/assets' );
+			define( 'CAROUSEL_SLIDER_PRO_PROMOTION', true );
 		}
 
 		/**

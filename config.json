@@ -13,7 +13,8 @@
       "./resources/admin/main.js"
     ],
     "admin-add-new-carousel": [
-      "./resources/admin/add-new.ts"
+      "./resources/admin/add-new.ts",
+      "./resources/scss/admin-add-new.scss"
     ],
     "admin-feedback": [
       "./resources/admin/feedback.ts"

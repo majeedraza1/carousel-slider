@@ -1,0 +1,29 @@
+@use "~shapla-css/src/index.scss" as shapla;
+
+@import 'admin/option-slider-type';
+@import 'admin/utilities';
+
+@include shapla.button;
+@include shapla.columns;
+
+shapla-dialog,
+.shapla-modal {
+	box-sizing: border-box;
+
+	*,
+	*:before,
+	*:after {
+		box-sizing: border-box;
+	}
+}
+
+.carousel-slider-plugins-gopro,
+#menu-posts-carousels a[href="edit.php?post_type=carousels&page=go_carousel_slider_pro"],
+#menu-posts-carousels a[href="edit.php?post_type=carousels&page=go_carousel_slider_pro"]:hover {
+	color: #93003c;
+	font-weight: bold;
+}
+
+.carousel-slider-plugins-gopro {
+	text-shadow: 1px 1px 1px #eee;
+}

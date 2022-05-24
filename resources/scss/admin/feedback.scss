@@ -1,52 +1,6 @@
-dialog.feedback-dialog {
-	border: none;
-	border-radius: 4px;
-	padding: 0;
-	max-width: 320px;
-	box-sizing: border-box;
-
-	*, *:before, *:after {
-		box-sizing: border-box;
-	}
-
-	&::backdrop {
-		background-color: rgba(#000, .58);
-	}
-
-	.button--skip-feedback {
-		color: rgba(#000, 0.38);
-		text-decoration: none;
-	}
-}
-
 .feedback-dialog {
-	&__header {
-		font-size: 15px;
-		color: #495157;
-		font-weight: 500;
-		padding: 18px 15px;
-		box-shadow: 0 0 8px rgb(0 0 0 / 10%);
-		text-align: left;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-	}
-
-	&__title {
-		font-size: 15px;
-		text-transform: uppercase;
-		font-weight: bold;
-		padding-left: 5px;
-	}
-
-	&__body {
-		padding: 18px 15px;
-	}
-
 	&__footer {
-		padding: 0 18px 15px;
-		display: flex;
-		justify-content: space-between;
+		width: 100%;
 		align-items: center;
 	}
 
@@ -102,5 +56,10 @@ dialog.feedback-dialog {
 
 	.button--carousel-slider-feedback {
 		font-size: 16px;
+	}
+
+	.button--skip-feedback {
+		color: rgba(#000, 0.38);
+		text-decoration: none;
 	}
 }

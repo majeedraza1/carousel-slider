@@ -2,6 +2,7 @@
 
 namespace CarouselSlider\Admin;
 
+use CarouselSlider\Api;
 use CarouselSlider\Helper;
 use WP_Post;
 
@@ -48,9 +49,39 @@ class Admin {
 			add_action( 'admin_enqueue_scripts', [ self::$instance, 'admin_scripts' ], 10 );
 			add_action( 'admin_menu', [ self::$instance, 'documentation_menu' ] );
 			add_filter( 'admin_footer_text', [ self::$instance, 'admin_footer_text' ] );
+			add_action( 'admin_menu', [ self::$instance, 'go_pro_menu' ], 999 );
+			add_filter(
+				'plugin_action_links_' . plugin_basename( CAROUSEL_SLIDER_FILE ),
+				[ self::$instance, 'action_links' ]
+			);
 		}
 
 		return self::$instance;
+	}
+
+	/**
+	 * Add custom links on plugins page.
+	 *
+	 * @param array $links
+	 *
+	 * @return array
+	 */
+	public function action_links( $links ) {
+		$setting_url  = admin_url( 'edit.php?post_type=carousels&page=settings' );
+		$plugin_links = [
+			'<a href="' . $setting_url . '">' . __( 'Settings', 'carousel-slider' ) . '</a>',
+		];
+
+		$pro_links = [];
+		if ( ! Helper::is_pro_active() ) {
+			if ( Helper::show_pro_features() ) {
+				$pro_links = [
+					'<a href="' . Api::GO_PRO_URL . '" target="_blank" class="carousel-slider-plugins-gopro">' . __( 'Go Pro', 'carousel-slider' ) . '</a>',
+				];
+			}
+		}
+
+		return array_merge( $plugin_links, $links, $pro_links );
 	}
 
 	/**
@@ -157,6 +188,10 @@ class Admin {
 		$_is_plugin_page = 'plugins.php' === $hook;
 
 		if ( ! ( $_is_carousel || $_is_doc || $_is_plugin_page || $_is_settings ) ) {
+			// Load add new carousel script and style on every page of admin.
+			wp_enqueue_script( 'carousel-slider-admin-new-carousel' );
+			wp_enqueue_style( 'carousel-slider-admin-new-carousel' );
+
 			return;
 		}
 
@@ -279,5 +314,48 @@ class Admin {
 		}
 
 		return $text;
+	}
+
+	/**
+	 * Go pro admin menu link
+	 *
+	 * @return void
+	 */
+	public function go_pro_menu() {
+		if ( Helper::is_pro_active() ) {
+			return;
+		}
+		if ( ! Helper::show_pro_features() ) {
+			return;
+		}
+		add_submenu_page(
+			'edit.php?post_type=carousels',
+			'',
+			'<span class="dashicons dashicons-star-filled" style="font-size: 17px"></span> ' . esc_html__( 'Go Pro', 'carousel-slider' ),
+			'manage_options',
+			'go_carousel_slider_pro',
+			[ $this, 'handle_external_redirects' ]
+		);
+	}
+
+	/**
+	 * Go Elementor Pro.
+	 *
+	 * Redirect the Elementor Pro page the clicking the Elementor Pro menu link.
+	 *
+	 * Fired by `admin_init` action.
+	 *
+	 * @since 2.0.3
+	 * @access public
+	 */
+	public function handle_external_redirects() {
+		if ( empty( $_GET['page'] ) ) {
+			return;
+		}
+
+		if ( 'go_carousel_slider_pro' === $_GET['page'] ) {
+			wp_redirect( Api::GO_PRO_URL );
+			die;
+		}
 	}
 }

@@ -81,7 +81,7 @@ if (addNewLinks) {
 				spellcheck: "true",
 				autocomplete: 'Off',
 				placeholder: 'Add Title',
-				class: 'widefat'
+				class: 'widefat cs-py-2'
 			})
 		])
 	]);

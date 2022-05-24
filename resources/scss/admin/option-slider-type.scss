@@ -1,0 +1,56 @@
+.option-slider-type {
+	display: inline-flex;
+	border: 2px solid rgba(0, 0, 0, .12);
+	position: relative;
+	width: 100%;
+	height: 100%;
+
+	input:checked ~ & {
+		border-color: #2271b1;
+	}
+
+	input:disabled ~ & {
+		opacity: .38;
+		cursor: not-allowed;
+	}
+
+	&__icon {
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
+		color: rgba(#000, .38);
+
+		&, & > * {
+			width: 32px;
+			height: 32px;
+			font-size: 32px;
+		}
+
+		svg {
+			fill: currentColor;
+		}
+
+		.dashicons, .dashicons-before:before {
+
+		}
+	}
+
+	&__content {
+		background-color: #e8ecef;
+		display: flex;
+		margin: .25rem;
+		padding: .25rem;
+		width: 100%;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	&__pro {
+		background-color: #cbd6df;
+		position: absolute;
+		right: .5rem;
+		top: .5rem;
+		padding: .125rem .25rem;
+		line-height: 1rem;
+	}
+}

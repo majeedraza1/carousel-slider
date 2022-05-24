@@ -15,6 +15,7 @@ use WP_Error;
 class Api {
 	const BASE_URL    = 'https://api.carousel-slider.com/v1';
 	const PRIVACY_URL = 'https://carousel-slider.com/privacy-policy';
+	const GO_PRO_URL  = 'https://carousel-slider.com/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash';
 
 	/**
 	 * Send remote request
