@@ -15,8 +15,6 @@ class ImageUploader extends BaseField {
 	 * @inheritDoc
 	 */
 	public function render(): string {
-		$this->set_setting( 'field_class', 'sp-input-hidden' );
-
 		$value       = $this->get_value();
 		$button_text = $value ? __( 'Update Image', 'carousel-slider' ) : __( 'Set Image', 'carousel-slider' );
 		global $post;

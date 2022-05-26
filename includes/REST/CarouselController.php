@@ -185,6 +185,8 @@ class CarouselController extends ApiController {
 			'edit_link' => get_edit_post_link( $post ),
 		];
 
+		do_action( 'carousel_slider/rest_create_slider', $response_data, $request->get_params() );
+
 		return $this->respond_created( $response_data );
 	}
 

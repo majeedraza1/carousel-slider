@@ -15,12 +15,13 @@ $imagePath: '../img/';
 @import 'admin/tab';
 @import 'admin/image-carouel-url';
 @import 'admin/documentation';
-@import 'admin/button-group';
-@import 'admin/switch';
+@import 'admin/input-switch';
+@import 'admin/input-buttonset';
+@import 'admin/input-dimension';
+@import 'admin/input-slider-type';
 @import 'admin/utilities';
 @import 'admin/feedback';
 @import 'admin/gopro-link';
-@import 'admin/option-slider-type';
 
 shapla-dialog,
 .shapla-modal {

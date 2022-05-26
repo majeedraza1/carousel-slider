@@ -231,6 +231,19 @@ class Item extends Data {
 	}
 
 	/**
+	 * Get content animation
+	 *
+	 * @return mixed|string
+	 */
+	public function get_content_animation() {
+		if ( $this->has_prop( 'content_animation' ) ) {
+			return $this->get_prop( 'content_animation' );
+		}
+
+		return $this->slider_settings['content_animation'] ?? '';
+	}
+
+	/**
 	 * Get item view
 	 *
 	 * @return string
@@ -271,8 +284,13 @@ class Item extends Data {
 			$html .= '<div class="carousel-slider-hero__cell__background_overlay" style="' . $overlay_style . '"></div>';
 		}
 
-		$content_style = 'max-width:' . $this->get_content_width();
-		$html         .= '<div class="carousel-slider-hero__cell__content" style="' . $content_style . '">';
+		$cell_content_attr = [
+			'class'          => 'carousel-slider-hero__cell__content',
+			'style'          => 'max-width:' . $this->get_content_width(),
+			'data-animation' => $this->get_content_animation(),
+		];
+
+		$html .= '<div ' . join( ' ', Helper::array_to_attribute( $cell_content_attr ) ) . '>';
 
 		// Slide Heading.
 		$html .= $this->get_heading();
@@ -436,7 +454,7 @@ class Item extends Data {
 		$btn_text = $this->get_prop( 'button_one_text' );
 		$target   = $this->get_prop( 'button_one_target', '_self' );
 
-		$classes  = 'button cs-hero-button';
+		$classes = 'button cs-hero-button';
 		$classes .= ' cs-hero-button-' . $this->get_item_id() . '-1';
 		$classes .= ' cs-hero-button-' . $this->get_prop( 'button_one_type', 'normal' );
 		$classes .= ' cs-hero-button-' . $this->get_prop( 'button_one_size', 'medium' );
@@ -469,7 +487,7 @@ class Item extends Data {
 		$text   = $this->get_prop( 'button_two_text' );
 		$target = $this->get_prop( 'button_two_target', '_self' );
 
-		$classes  = 'button cs-hero-button';
+		$classes = 'button cs-hero-button';
 		$classes .= ' cs-hero-button-' . $this->get_item_id() . '-2';
 		$classes .= ' cs-hero-button-' . $this->get_prop( 'button_two_type', 'normal' );
 		$classes .= ' cs-hero-button-' . $this->get_prop( 'button_two_size', 'medium' );

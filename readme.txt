@@ -13,16 +13,19 @@ Create SEO friendly Image, Logo, Video, Post, WooCommerce Product Carousel and S
 
 == Description ==
 
+https://www.youtube.com/watch?v=UOYK79yVrJ4&list=PL9GiQPpTzMv6aMEq449a7RPzjSVRf1bsc&index=1
+
+= Overview =
+
 **Create SEO friendly Image, Logo, Video, Post, WooCommerce Product Carousel and Slider.**
 
 Carousel Slider is a touch enabled WordPress plugin that lets you create highly customizable,
 stylish responsive carousel slider. With Carousel Slider, you can create image carousel using media gallery or
-custom url, post carousel, video carousel. We have integrated [Owl Carousel 2](https://github.com/OwlCarousel2/OwlCarousel2)
-into our plugin for the ultimate device support.
+custom url, post carousel, video carousel.
 
 **If you like this plugin, please give us [5 star](https://wordpress.org/support/plugin/carousel-slider/reviews/?rate=5#new-post) to encourage for future improvement.**
 
-= Full Feature Set =
+= Key Features List =
 
 * **Support major website/page builder**, including Gutenberg (WordPress core), Elementor, Visual Composer, SiteOrigin, Divi Builder
 * **Multiple types carousel**, images from media gallery, images from URL, videos from youtube and vimeo, posts, and WooCommerce products carousel slider
@@ -42,29 +45,12 @@ into our plugin for the ultimate device support.
 * Support image title, caption, link url
 * and more options
 
-= Hero Image Slider =
-https://www.youtube.com/watch?v=_hVsamgr1k4
+= How to Videos =
 
-= Images Carousel using gallery images =
-https://www.youtube.com/watch?v=ZzI1JhElrxc
-
-= Images Carousel using custom URLs =
-https://www.youtube.com/watch?v=a7hqn1yNzwM
-
-= Posts Carousel =
-https://www.youtube.com/watch?v=ImJB946azy0
-
-= WooCommerce Products Carousel =
-https://www.youtube.com/watch?v=yiAkvXyfakg
-
-= With Page Builder by SiteOrigin =
-https://www.youtube.com/watch?v=-OaYQZfr1RM
-
-= With Visual Composer Website Builder =
-https://www.youtube.com/watch?v=4LhDXH81whk
-
-= Using as a Widget =
-https://www.youtube.com/watch?v=kYgp6wp27lM
+Images Carousel: [https://www.youtube.com/watch?v=UOYK79yVrJ4](https://www.youtube.com/watch?v=UOYK79yVrJ4)
+Hero Slider: [https://www.youtube.com/watch?v=_hVsamgr1k4](https://www.youtube.com/watch?v=_hVsamgr1k4)
+Posts Carousel: [https://www.youtube.com/watch?v=ImJB946azy0](https://www.youtube.com/watch?v=ImJB946azy0)
+WooCommerce Products Carousel: [https://www.youtube.com/watch?v=yiAkvXyfakg](https://www.youtube.com/watch?v=yiAkvXyfakg)
 
 == Installation ==
 
@@ -90,6 +76,24 @@ If you still need help. visit [WordPress codex](https://codex.wordpress.org/Mana
 == Upgrade Notice ==
 Update to get new features and better security.
 
+== Frequently Asked Questions ==
+
+= Will Carousel Slider work with my theme? =
+Carousel Slider works with any WordPress theme if themes are developed according to WordPress standard.
+
+= Is Carousel Slider responsive? =
+Yes, Carousel Slider is fully responsive, mobile and touch-friendly.
+
+= Can I add Carousel Slider anywhere on my website?=
+Yes, you can add carousel inside your blog posts, pages, widgets, and anywhere else on your WordPress website with a shortcode.
+
+= Can I have multiple carousels on same post/page?
+Yes. You can add multiple carousel on save post/page.
+
+= How to use Carousel Slider in Gutenberg Block Editor (WordPress 5.0 or later) =
+Carousel Slider is first class citizen in Gutenberg Block Editor. Just search 'carousel slider'. There is
+a dedicated 'carousel slider' block with live preview for Gutenberg Block Editor.
+
 == Changelog ==
 
 = version 2.1.0 - 2022-05-26 =
@@ -97,6 +101,7 @@ Update to get new features and better security.
 * Feature - Update metabox functionality separating create and edit functionality.
 * Feature - Update slider type metabox design.
 * Fix - Video Content is not saving.
+* Fix - Content slider animation is too fast and not considering autoplay speed.
 * Dev - Add typescript support.
 * Dev - Add new meta box fields (Radio, Switch, ButtonGroup, Breakpoint, Html, Switch).
 * Dev - Update metabox hiding slider change on edit mode.

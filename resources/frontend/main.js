@@ -19,19 +19,22 @@ $('body').find('.carousel-slider').each(function () {
 	_this.owlCarousel(owlSettings);
 
 	if ('hero-banner-slider' === _this.data('slide-type')) {
-		let animation = _this.data('animation');
-		if (animation.length) {
-			_this.on('change.owl.carousel', function () {
-				let sliderContent = _this.find('.carousel-slider-hero__cell__content');
-				sliderContent.removeClass('animated' + ' ' + animation).hide();
-			});
-			_this.on('changed.owl.carousel', function (e) {
+		_this.on('change.owl.carousel', function () {
+			let sliderContent = _this.find('.carousel-slider-hero__cell__content'),
+				_animation = sliderContent.data('animation');
+			if (_animation) {
+				sliderContent.removeClass('animated' + ' ' + _animation).hide();
+			}
+		});
+		_this.on('changed.owl.carousel', function (e) {
+			let current = jQuery(e.target).find('.carousel-slider-hero__cell__content').eq(e.item.index),
+				_animation = current.data('animation');
+			if (_animation) {
 				setTimeout(function () {
-					let current = jQuery(e.target).find('.carousel-slider-hero__cell__content').eq(e.item.index);
-					current.show().addClass('animated' + ' ' + animation);
-				}, _this.data('autoplay-speed'));
-			});
-		}
+					current.show().addClass('animated' + ' ' + _animation);
+				}, owlSettings.autoplaySpeed);
+			}
+		});
 	}
 
 	if (_this.data('slide-type') === 'product-carousel') {

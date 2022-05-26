@@ -1,0 +1,52 @@
+.shapla-dimension {
+	margin-right: 10px;
+	font-size: 0;
+	white-space: nowrap;
+	display: inline-block;
+	margin-bottom: 6px;
+	overflow: hidden;
+
+	.add-on {
+		border: 1px solid rgba(0, 0, 0, 0.1) !important;
+		border-right: none !important;
+		height: 34px;
+		width: 34px;
+		font-size: 12px;
+		background-color: #fff;
+		box-sizing: border-box;
+		color: rgba(0, 0, 0, 0.5);
+		padding: 0;
+		font-weight: 400;
+		line-height: 32px;
+		text-align: center;
+		text-shadow: 0 1px 0 #ffffff;
+		display: block;
+		float: left;
+		min-width: 16px;
+
+		i {
+			font-size: 13px;
+			text-rendering: auto;
+			-webkit-font-smoothing: antialiased;
+			height: 32px;
+			line-height: 32px;
+		}
+	}
+
+	input[type="text"] {
+		box-sizing: border-box;
+		margin: 0;
+		border: 1px solid rgba(0, 0, 0, 0.05) !important;
+		border-radius: 0;
+		color: #333333;
+		font-size: 13px;
+		height: 34px;
+		line-height: 32px;
+		box-shadow: none !important;
+		background: rgba(0, 0, 0, 0.05) !important;
+		width: 68px;
+		padding: 0 0.75em;
+		float: left;
+		text-align: center;
+	}
+}

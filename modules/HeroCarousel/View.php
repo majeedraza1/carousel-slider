@@ -35,8 +35,7 @@ class View extends AbstractView {
 	public function render(): string {
 		$slider_id         = $this->get_slider_id();
 		$items             = get_post_meta( $slider_id, '_content_slider', true );
-		$lazy_load_image   = get_post_meta( $slider_id, '_lazy_load_image', true );
-		$be_lazy           = in_array( $lazy_load_image, [ 'on', 'off' ], true ) ? $lazy_load_image : 'on';
+		$items             = is_array( $items ) ? array_values( $items ) : [];
 		$settings          = get_post_meta( $slider_id, '_content_slider_settings', true );
 		$content_animation = ! empty( $settings['content_animation'] ) ? esc_attr( $settings['content_animation'] ) : '';
 

@@ -4,6 +4,7 @@
 * Feature - Update metabox functionality separating create and edit functionality.
 * Feature - Update slider type metabox design.
 * Fix - Video Content is not saving.
+* Fix - Content slider animation is too fast and not considering autoplay speed.
 * Dev - Add typescript support.
 * Dev - Add new meta box fields (Radio, Switch, ButtonGroup, Breakpoint, Html, Switch).
 * Dev - Update metabox hiding slider change on edit mode.
