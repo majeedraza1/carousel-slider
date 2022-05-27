@@ -88,7 +88,7 @@ Yes, Carousel Slider is fully responsive, mobile and touch-friendly.
 Yes, you can add carousel inside your blog posts, pages, widgets, and anywhere else on your WordPress website with a shortcode.
 
 = Can I have multiple carousels on same post/page?
-Yes. You can add multiple carousel on save post/page.
+Yes. You can add multiple carousel on same post/page.
 
 = How to use Carousel Slider in Gutenberg Block Editor (WordPress 5.0 or later) =
 Carousel Slider is first class citizen in Gutenberg Block Editor. Just search 'carousel slider'. There is
@@ -96,7 +96,7 @@ a dedicated 'carousel slider' block with live preview for Gutenberg Block Editor
 
 == Changelog ==
 
-= version 2.1.0 - 2022-05-26 =
+= version 2.1.0 - 2022-05-27 =
 * Feature - Add new javaScript dialog to create carousel slider with title and slider type.
 * Feature - Update metabox functionality separating create and edit functionality.
 * Feature - Update slider type metabox design.

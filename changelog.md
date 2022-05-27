@@ -1,4 +1,4 @@
-#### version 2.1.0 - 2022-05-26 =
+#### version 2.1.0 - 2022-05-27 =
 
 * Feature - Add new javaScript dialog to create carousel slider with title and slider type.
 * Feature - Update metabox functionality separating create and edit functionality.
