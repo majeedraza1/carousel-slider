@@ -30,12 +30,7 @@ module.exports = (env, argv) => {
 		module: {
 			rules: [
 				{
-					test: /\.tsx?$/,
-					use: 'ts-loader',
-					exclude: /node_modules/,
-				},
-				{
-					test: /\.(js|jsx)$/i,
+					test: /\.(js|jsx|ts|tsx)$/i,
 					use: {
 						loader: "babel-loader",
 						options: {

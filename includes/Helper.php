@@ -15,6 +15,20 @@ defined( 'ABSPATH' ) || exit;
 class Helper extends ViewHelper {
 
 	/**
+	 * Get placeholder image source.
+	 *
+	 * Retrieve the source of the placeholder image.
+	 *
+	 * @return string The source of the default placeholder image used by Elementor.
+	 */
+	public static function get_placeholder_image_src(): string {
+		return apply_filters(
+			'carousel_slider/placeholder_image_src',
+			CAROUSEL_SLIDER_ASSETS . '/static-images/placeholder.svg'
+		);
+	}
+
+	/**
 	 * Check if pro version is active.
 	 *
 	 * @return bool
@@ -132,7 +146,7 @@ class Helper extends ViewHelper {
 			],
 		];
 
-		if ( self::show_pro_features() ) {
+		if ( self::show_pro_features() || self::is_pro_active() ) {
 			$slider_types['product-carousel-pro'] = [
 				'label'   => __( 'Product Carousel (Advance)', 'carousel-slider' ),
 				'enabled' => self::is_woocommerce_active() && self::is_pro_active(),
