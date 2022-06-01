@@ -3,6 +3,7 @@
 namespace CarouselSlider\Admin;
 
 use CarouselSlider\Helper;
+use WP_Post;
 
 /**
  * MetaBoxConfig class
@@ -10,12 +11,67 @@ use CarouselSlider\Helper;
 class MetaBoxConfig {
 
 	/**
+	 * Get hook args
+	 *
+	 * @return array
+	 */
+	public static function get_args(): array {
+		global $post;
+		$data = [
+			'id'   => 0,
+			'type' => '',
+		];
+		if ( $post instanceof WP_Post ) {
+			$slide_type = get_post_meta( $post->ID, '_slide_type', true );
+
+			$data['id']   = $post->ID;
+			$data['type'] = array_key_exists( $slide_type, Helper::get_slide_types() ) ? $slide_type : '';
+		}
+
+		return $data;
+	}
+
+	/**
+	 * Get sections
+	 *
+	 * @return array[]
+	 */
+	public static function get_sections_settings(): array {
+		return [
+			'section_general_settings'    => [
+				'id'    => 'section_general_settings',
+				'label' => __( 'General Settings', 'carousel-slider' ),
+			],
+			'section_navigation_settings' => [
+				'id'    => 'section_navigation_settings',
+				'title' => __( 'Navigation Settings', 'carousel-slider' ),
+			],
+			'section_pagination_settings' => [
+				'id'    => 'section_pagination_settings',
+				'title' => __( 'Pagination Settings', 'carousel-slider' ),
+			],
+			'section_autoplay_settings'   => [
+				'id'    => 'section_autoplay_settings',
+				'title' => __( 'Autoplay Settings', 'carousel-slider' ),
+			],
+			'section_color_settings'      => [
+				'id'    => 'section_color_settings',
+				'title' => __( 'Color Settings', 'carousel-slider' ),
+			],
+			'section_responsive_settings' => [
+				'id'    => 'section_responsive_settings',
+				'title' => __( 'Responsive Settings', 'carousel-slider' ),
+			],
+		];
+	}
+
+	/**
 	 * Get all settings
 	 *
 	 * @return array
 	 */
-	public static function get_settings(): array {
-		return array_merge(
+	public static function get_fields_settings(): array {
+		$settings = array_merge(
 			self::get_general_settings(),
 			self::get_navigation_settings(),
 			self::get_pagination_settings(),
@@ -23,6 +79,8 @@ class MetaBoxConfig {
 			self::get_color_settings(),
 			self::get_responsive_settings()
 		);
+
+		return apply_filters( 'carousel_slider/admin/metabox_config', $settings, self::get_args() );
 	}
 
 	/**
@@ -87,7 +145,7 @@ class MetaBoxConfig {
 			],
 		];
 
-		return apply_filters( 'carousel_slider/admin/metabox_general_config', $settings );
+		return apply_filters( 'carousel_slider/admin/metabox_general_config', $settings, self::get_args() );
 	}
 
 	/**
@@ -141,7 +199,7 @@ class MetaBoxConfig {
 			],
 		];
 
-		return apply_filters( 'carousel_slider/admin/metabox_navigation_config', $settings );
+		return apply_filters( 'carousel_slider/admin/metabox_navigation_config', $settings, self::get_args() );
 	}
 
 	/**
@@ -199,7 +257,7 @@ class MetaBoxConfig {
 			],
 		];
 
-		return apply_filters( 'carousel_slider/admin/metabox_pagination_config', $settings );
+		return apply_filters( 'carousel_slider/admin/metabox_pagination_config', $settings, self::get_args() );
 	}
 
 	/**
@@ -243,7 +301,7 @@ class MetaBoxConfig {
 			],
 		];
 
-		return apply_filters( 'carousel_slider/admin/metabox_autoplay_config', $settings );
+		return apply_filters( 'carousel_slider/admin/metabox_autoplay_config', $settings, self::get_args() );
 	}
 
 	/**
@@ -269,7 +327,7 @@ class MetaBoxConfig {
 			],
 		];
 
-		return apply_filters( 'carousel_slider/admin/metabox_color_config', $settings );
+		return apply_filters( 'carousel_slider/admin/metabox_color_config', $settings, self::get_args() );
 	}
 
 	/**
@@ -329,6 +387,6 @@ class MetaBoxConfig {
 			],
 		];
 
-		return apply_filters( 'carousel_slider/admin/metabox_responsive_config', $settings );
+		return apply_filters( 'carousel_slider/admin/metabox_responsive_config', $settings, self::get_args() );
 	}
 }

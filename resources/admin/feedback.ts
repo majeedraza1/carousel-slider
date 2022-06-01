@@ -1,14 +1,33 @@
 let list = document.querySelector('#the-list'),
 	deactivateLink = list?.querySelector('[data-slug="carousel-slider"] span.deactivate a') as HTMLAnchorElement,
 	dialog = document.querySelector('#carousel-slider-deactivate-feedback-dialog-wrapper') as HTMLElement,
-	deActivateLink = dialog?.querySelector('.button--skip-feedback') as HTMLAnchorElement,
+	skipBtnLink = dialog?.querySelector('.button--skip-feedback') as HTMLAnchorElement,
 	submitBtn = dialog?.querySelector('.button--submit-feedback') as HTMLButtonElement,
 	form = dialog?.querySelector('form') as HTMLFormElement,
 	inputs = form.querySelectorAll('input[type=radio]');
 
-deActivateLink.href = deactivateLink?.getAttribute('href') as string;
+skipBtnLink.href = deactivateLink?.getAttribute('href') as string;
 
-deActivateLink.addEventListener('click', () => {
+const sendRequest = (body: any = null) => {
+	return new Promise(resolve => {
+		let xhr = new XMLHttpRequest();
+		xhr.open('POST', window.ajaxurl);
+		// Call a function when the state changes.
+		xhr.addEventListener('readystatechange', () => {
+			if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+				resolve(true);
+			}
+		})
+		xhr.send(body);
+	})
+}
+
+skipBtnLink.addEventListener('click', () => {
+	let formData = new FormData(form);
+	formData.append('reason_key', 'skip_and_deactivate');
+	sendRequest(formData).then(() => {
+		// Nothing to do here.
+	});
 	dialog.removeAttribute('open');
 });
 
@@ -16,21 +35,8 @@ submitBtn.addEventListener('click', event => {
 	event.preventDefault();
 	submitBtn.classList.add('is-loading');
 
-	const sendRequest = () => {
-		return new Promise(resolve => {
-			let httpRequest = new XMLHttpRequest();
-			httpRequest.open('POST', window.ajaxurl);
-			httpRequest.onreadystatechange = () => { // Call a function when the state changes.
-				if (httpRequest.readyState === XMLHttpRequest.DONE && httpRequest.status === 200) {
-					resolve(true);
-				}
-			}
-			httpRequest.send(new FormData(form));
-		})
-	}
-
-	sendRequest().then(() => {
-		deActivateLink.click();
+	sendRequest(new FormData(form)).then(() => {
+		skipBtnLink.click();
 	}).finally(() => {
 		submitBtn.classList.add('is-loading');
 	})

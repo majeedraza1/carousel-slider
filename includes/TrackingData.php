@@ -242,6 +242,36 @@ class TrackingData {
 	 * @return array
 	 */
 	public static function get_extra_data(): array {
-		return [];
+		return [
+			'sliders_count'    => Helper::get_sliders_count(),
+			'sliders_settings' => wp_json_encode( self::get_sliders_settings() ),
+		];
+	}
+
+	/**
+	 * Get slider settings
+	 *
+	 * @return array
+	 */
+	public static function get_sliders_settings(): array {
+		$items = Helper::get_sliders();
+		$data  = [];
+		foreach ( $items as $item ) {
+			$settings = [];
+			$meta     = get_post_meta( $item->ID );
+			foreach ( $meta as $key => $value ) {
+				if ( in_array( $key, [ '_edit_lock', '_edit_last' ], true ) ) {
+					continue;
+				}
+				$settings[ $key ] = maybe_unserialize( $value[0] );
+			}
+			$data[] = [
+				'id'       => $item->ID,
+				'title'    => $item->post_title,
+				'settings' => $settings,
+			];
+		}
+
+		return $data;
 	}
 }

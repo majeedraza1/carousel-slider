@@ -41,7 +41,7 @@ class Admin {
 	/**
 	 * Show meta box content for product carousel
 	 *
-	 * @param int    $slider_id The slider id.
+	 * @param int $slider_id The slider id.
 	 * @param string $slider_type The slider type.
 	 */
 	public function meta_box_content( int $slider_id, string $slider_type ) {
@@ -134,9 +134,11 @@ class Admin {
 		global $post;
 		$slide_type = get_post_meta( $post->ID, '_slide_type', true );
 		$slide_type = array_key_exists( $slide_type, Helper::get_slide_types() ) ? $slide_type : 'image-carousel';
-		$form       = new MetaBoxForm();
+		if ( 'product-carousel' !== $slide_type ) {
+			return $html;
+		}
+		$form = new MetaBoxForm();
 		ob_start();
-		echo '<div class="cs-admin-metabox-product-color-container" style="display: ' . ( 'product-carousel' === $slide_type ? 'block' : 'none' ) . '">';
 		$form->color(
 			array(
 				'id'      => '_product_title_color',
@@ -167,7 +169,6 @@ class Admin {
 				'context' => 'side',
 			)
 		);
-		echo '</div>';
 		$content = ob_get_clean();
 
 		return $html . $content;
