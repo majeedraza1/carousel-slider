@@ -13,8 +13,6 @@ use CarouselSlider\Supports\Validate;
  * SliderSetting class
  * The base slider setting for any slider type
  *
- * @method string get_nav_visibility()
- * @method string get_pagination_visibility()
  * @method string get_nav_steps()
  * @method int get_stage_padding()
  * @method int get_space_between()
@@ -66,7 +64,7 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	/**
 	 * Class constructor
 	 *
-	 * @param int $slider_id The slider id.
+	 * @param int  $slider_id The slider id.
 	 * @param bool $read_metadata Should read metadata immediately.
 	 */
 	public function __construct( int $slider_id, bool $read_metadata = true ) {
@@ -118,7 +116,7 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	 * Get option
 	 *
 	 * @param string $key option key.
-	 * @param mixed $default default value.
+	 * @param mixed  $default default value.
 	 *
 	 * @return mixed
 	 */
@@ -135,7 +133,7 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	 * If there is no option for key, return from global option.
 	 *
 	 * @param string $key option key.
-	 * @param mixed $default default value to return if data key does not exist.
+	 * @param mixed  $default default value to return if data key does not exist.
 	 *
 	 * @return mixed The key's value, or the default value
 	 */
@@ -163,11 +161,26 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	 */
 	public function get_slider_type(): string {
 		if ( is_null( $this->slider_type ) ) {
-			$slide_type        = get_post_meta( $this->get_slider_id(), '_slide_type', true );
-			$this->slider_type = array_key_exists( $slide_type, Helper::get_slide_types() ) ? $slide_type : 'image-carousel';
+			$slide_type = get_post_meta( $this->get_slider_id(), '_slide_type', true );
+			$this->set_slider_type( $slide_type );
 		}
 
 		return $this->slider_type;
+	}
+
+	/**
+	 * Set slider type
+	 *
+	 * @param mixed $type The slider type.
+	 *
+	 * @return void
+	 */
+	public function set_slider_type( $type ) {
+		if ( array_key_exists( $type, Helper::get_slide_types() ) ) {
+			$this->slider_type = $type;
+		} else {
+			$this->slider_type = 'image-carousel';
+		}
 	}
 
 	/**
@@ -204,6 +217,20 @@ class SliderSetting extends Data implements SliderSettingInterface {
 		if ( in_array( $value, [ 'always', 'never', 'hover' ], true ) ) {
 			$this->data['nav_visibility'] = $value;
 		}
+	}
+
+
+	/**
+	 * Get nav visibility
+	 *
+	 * @return string
+	 */
+	public function get_nav_visibility(): string {
+		$value = $this->get_prop( 'nav_visibility' );
+		// For backup compatability.
+		$value = str_replace( [ 'off', 'on' ], [ 'never', 'hover' ], $value );
+
+		return $value;
 	}
 
 	/**
@@ -245,6 +272,19 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	}
 
 	/**
+	 * Get pagination visibility
+	 *
+	 * @return string
+	 */
+	public function get_pagination_visibility(): string {
+		$value = $this->get_prop( 'pagination_visibility' );
+		// For backup compatability.
+		$value = str_replace( [ 'off', 'on' ], [ 'never', 'always' ], $value );
+
+		return $value;
+	}
+
+	/**
 	 * Read setting from database
 	 *
 	 * @param array $values The value to be read.
@@ -269,11 +309,25 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	}
 
 	/**
+	 * Read data from HTTP POST variable
+	 *
+	 * @param array $values The values from HTTP POST variables.
+	 *
+	 * @return void
+	 */
+	public function read_http_post_variables( array $values = [] ) {
+		$fields_settings = self::get_fields_settings();
+		foreach ( $fields_settings as $attribute => $config ) {
+			$this->read_single_metadata( $attribute, $config, $values );
+		}
+	}
+
+	/**
 	 * Read single metadata
 	 *
 	 * @param string $attribute property name.
-	 * @param array $field The field settings.
-	 * @param array $values The values.
+	 * @param array  $field The field settings.
+	 * @param array  $values The values.
 	 *
 	 * @return void
 	 */
@@ -314,7 +368,7 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	 * Sanitize value by data type
 	 *
 	 * @param string $type The type.
-	 * @param mixed $value The value.
+	 * @param mixed  $value The value.
 	 *
 	 * @return mixed
 	 */
@@ -383,14 +437,18 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	 * Handle calling property via method
 	 *
 	 * @param string $name The name of the method being called.
-	 * @param array $args An enumerated array containing the parameters passed to the $name'ed method.
+	 * @param array  $args An enumerated array containing the parameters passed to the $name'ed method.
 	 *
 	 * @return mixed
 	 * @throws BadMethodCallException Exception if not method available.
 	 */
 	public function __call( string $name, array $args ) {
-		if ( preg_match( '/^(get_|is_|has_)(?P<property>\s*.*)/', $name, $matches ) ) {
+		if ( preg_match( '/^(?P<prefix>get|is|has)_(?P<property>\s*.*)/', $name, $matches ) ) {
 			if ( $this->has_prop( $matches['property'] ) ) {
+				if ( in_array( $matches['prefix'], [ 'is', 'has' ], true ) ) {
+					return Validate::checked( $this->get_prop( $matches['property'] ) );
+				}
+
 				return $this->get_prop( $matches['property'] );
 			}
 			if ( static::has_global_option( $matches['property'] ) ) {

@@ -27,13 +27,19 @@ class Select extends BaseField {
 			$value = explode( ',', wp_strip_all_tags( rtrim( $value, ',' ) ) );
 		}
 		$html = '<select ' . $this->build_attributes() . '>';
-		foreach ( $choices as $key => $label ) {
-			if ( $is_multiple ) {
-				$selected = in_array( $key, $value ) ? 'selected' : ''; // phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict
-			} else {
-				$selected = $this->get_value() === $key ? 'selected' : '';
+		foreach ( $choices as $key => $choice ) {
+			if ( ! is_array( $choice ) ) {
+				$choice = [
+					'value' => $key,
+					'label' => $choice,
+				];
 			}
-			$html .= '<option value="' . esc_attr( $key ) . '" ' . $selected . '>' . esc_html( $label ) . '</option>';
+			if ( $is_multiple ) {
+				$selected = in_array( $choice['value'], $value ) ? 'selected' : ''; // phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict
+			} else {
+				$selected = $this->get_value() === $choice['value'] ? 'selected' : '';
+			}
+			$html .= '<option value="' . esc_attr( $choice['value'] ) . '" ' . $selected . '>' . esc_html( $choice['label'] ) . '</option>';
 		}
 		$html .= '</select>';
 

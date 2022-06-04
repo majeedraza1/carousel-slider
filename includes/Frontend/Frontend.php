@@ -122,7 +122,7 @@ class Frontend {
 		add_action(
 			'wp_footer',
 			function () {
-				echo Assets::get_style_loader_script(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				Helper::print_unescaped_internal_string( Assets::get_style_loader_script() );
 			},
 			0
 		);

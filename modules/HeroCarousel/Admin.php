@@ -40,7 +40,7 @@ class Admin {
 	/**
 	 * Load meta box content
 	 *
-	 * @param int $slider_id The slider id.
+	 * @param int    $slider_id The slider id.
 	 * @param string $slide_type The slider type.
 	 */
 	public function meta_box_content( int $slider_id, string $slide_type ) {
@@ -80,7 +80,7 @@ class Admin {
 	 * Item meta box
 	 *
 	 * @param Item $item The Item object.
-	 * @param int $total_items Total items.
+	 * @param int  $total_items Total items.
 	 */
 	public static function item_meta_box( Item $item, int $total_items = 0 ) {
 		$title       = sprintf( '%s %s', __( 'Slide', 'carousel-slider' ), $item->get_item_id() );

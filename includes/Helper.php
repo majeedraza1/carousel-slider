@@ -95,7 +95,7 @@ class Helper extends ViewHelper {
 	 * Get setting
 	 *
 	 * @param string $key The setting key.
-	 * @param mixed $default Setting default value.
+	 * @param mixed  $default Setting default value.
 	 *
 	 * @return mixed|null
 	 */
@@ -250,7 +250,7 @@ class Helper extends ViewHelper {
 	 * Get default setting
 	 *
 	 * @param string $key The setting key.
-	 * @param mixed $default Default value.
+	 * @param mixed  $default Default value.
 	 *
 	 * @return mixed|null
 	 */
@@ -298,8 +298,8 @@ class Helper extends ViewHelper {
 	 */
 	public static function is_woocommerce_active(): bool {
 		return in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins' ), true ) ||
-		       defined( 'WC_VERSION' ) ||
-		       defined( 'WOOCOMMERCE_VERSION' );
+			   defined( 'WC_VERSION' ) ||
+			   defined( 'WOOCOMMERCE_VERSION' );
 	}
 
 	/**
@@ -319,7 +319,7 @@ class Helper extends ViewHelper {
 		}
 
 		foreach ( $ids as $id ) {
-			$_post        = get_post( $id );
+			$_post         = get_post( $id );
 			$page_content .= '<!-- wp:heading {"level":4} --><h4>' . $_post->post_title . '</h4><!-- /wp:heading -->';
 			$page_content .= '<!-- wp:carousel-slider/slider {"sliderID":' . $id . ',"sliderName":"' . $_post->post_title . ' ( ID: ' . $id . ' )"} -->';
 			$page_content .= '<div class="wp-block-carousel-slider-slider">[carousel_slide id=\'' . $id . '\']</div>';
@@ -377,7 +377,7 @@ class Helper extends ViewHelper {
 	 *
 	 * @param string $title The slider title.
 	 * @param string $type The slider type.
-	 * @param array $args Additional arguments.
+	 * @param array  $args Additional arguments.
 	 *
 	 * @return int|WP_Error The post ID on success. The value 0 or \WP_Error on failure.
 	 */
@@ -431,5 +431,24 @@ class Helper extends ViewHelper {
 	 */
 	public static function print_unescaped_internal_string( string $string ) {
 		echo $string; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+
+	/**
+	 * Get slider ids from content
+	 *
+	 * @param string $content The content to be tested.
+	 *
+	 * @return array|int[]
+	 */
+	public static function get_slider_ids_from_content( string $content ): array {
+		$slider_ids = [];
+		if ( false === strpos( $content, '[carousel_slide' ) ) {
+			return $slider_ids;
+		}
+		if ( preg_match_all( '/(\[carousel_slide)\s*.*id=(\'?\"?)(?P<slider_id>\d+)(\'?\"?)\s*.*(\])/', $content, $matches ) ) {
+			$slider_ids = array_map( 'intval', $matches['slider_id'] );
+		}
+
+		return $slider_ids;
 	}
 }

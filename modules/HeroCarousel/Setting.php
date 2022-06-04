@@ -34,7 +34,10 @@ class Setting extends SliderSetting {
 			return;
 		}
 		foreach ( self::extra_props() as $attribute => $config ) {
-			$this->read_single_metadata( $attribute, $config );
+			$value = get_post_meta( $this->get_slider_id(), $config['id'], true );
+			$value = ! empty( $value ) ? $value : $config['default'];
+			$value = $this->prepare_item_for_response( $config['type'], $value );
+			$this->set_prop( $attribute, $value );
 		}
 		$this->extra_data_read = true;
 	}

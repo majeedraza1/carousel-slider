@@ -7,6 +7,7 @@
 
 namespace CarouselSlider\Admin;
 
+use CarouselSlider\Abstracts\SliderSetting;
 use CarouselSlider\Helper;
 use CarouselSlider\Supports\MetaBoxForm;
 use WP_Post;
@@ -57,25 +58,38 @@ class MetaBox {
 		}
 
 		if ( wp_verify_nonce( $_POST['_carousel_slider_nonce'] ?? '', 'carousel_slider_nonce' ) ) {
-
-			foreach ( $_POST['carousel_slider'] as $key => $val ) {
-				if ( is_array( $val ) ) {
-					$val = implode( ',', $val );
-				}
-
-				update_post_meta( $post_id, $key, sanitize_text_field( $val ) );
-			}
+			$settings = new SliderSetting( $post_id, false );
+			$settings->get_slider_type();
+			$settings->read_http_post_variables( $_POST['carousel_slider'] );
+			$settings->write_metadata();
 
 			update_post_meta( $post_id, '_carousel_slider_version', CAROUSEL_SLIDER_VERSION );
 
-			do_action( 'carousel_slider/save_slider', $post_id, $_POST );
+			$slider_type = $settings->get_slider_type();
+
+			/**
+			 * Fires once a post has been saved.
+			 *
+			 * @param int $post_id Slider post ID.
+			 * @param array $_POST User submitted data.
+			 */
+			do_action( "carousel_slider/save_slider/{$slider_type}", $post_id, $_POST );
+
+			/**
+			 * Fires once a post has been saved.
+			 *
+			 * @param int $post_id Slider post ID.
+			 * @param array $_POST User submitted data.
+			 * @param string $slider_type Slider type.
+			 */
+			do_action( 'carousel_slider/save_slider', $post_id, $_POST, $slider_type );
 		}
 	}
 
 	/**
 	 * Add carousel slider meta box
 	 *
-	 * @param string $post_type The post type.
+	 * @param string  $post_type The post type.
 	 * @param WP_Post $post The post object.
 	 */
 	public function add_meta_boxes( $post_type, $post ) {
@@ -186,7 +200,7 @@ class MetaBox {
 		wp_nonce_field( 'carousel_slider_nonce', '_carousel_slider_nonce' );
 		$slide_types = Helper::get_slider_types();
 		$html        = '<div class="carousel-slider-slider-type-container">';
-		$html        .= '<div class="shapla-columns is-multiline">';
+		$html       .= '<div class="shapla-columns is-multiline">';
 		foreach ( $slide_types as $slug => $args ) {
 			$id    = sprintf( '_slide_type__%s', $slug );
 			$attrs = [
@@ -235,6 +249,7 @@ class MetaBox {
 		$slide_type = get_post_meta( $post->ID, '_slide_type', true );
 		$slide_type = array_key_exists( $slide_type, Helper::get_slide_types() ) ? $slide_type : 'image-carousel';
 
+		do_action( 'carousel_slider/meta_box_content/' . $slide_type, $post->ID );
 		/**
 		 * Allow third-party plugin to add custom fields
 		 */

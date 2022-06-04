@@ -29,7 +29,7 @@ class Module {
 			self::$instance = new self();
 
 			add_filter( 'carousel_slider/register_view', [ self::$instance, 'view' ] );
-			add_action( 'carousel_slider/save_slider', [ self::$instance, 'save_slider' ] );
+			add_action( 'carousel_slider/save_slider', [ self::$instance, 'save_slider' ], 10, 2 );
 
 			if ( Helper::is_request( 'admin' ) ) {
 				Admin::init();
@@ -56,13 +56,12 @@ class Module {
 	/**
 	 * Save slider content and settings
 	 *
-	 * @param int $slider_id The slider id.
+	 * @param int   $slider_id The slider id.
+	 * @param array $data User submitted data.
 	 */
-	public function save_slider( int $slider_id ) {
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		if ( isset( $_POST['carousel_slider_content'] ) ) {
-			// phpcs:ignore WordPress.Security.NonceVerification.Missing
-			$_content_slides = is_array( $_POST['carousel_slider_content'] ) ? $_POST['carousel_slider_content'] : [];
+	public function save_slider( int $slider_id, array $data ) {
+		if ( isset( $data['carousel_slider_content'] ) ) {
+			$_content_slides = is_array( $data['carousel_slider_content'] ) ? $data['carousel_slider_content'] : [];
 			$_slides         = array_map(
 				function ( $slide ) {
 					return Item::sanitize( $slide );
@@ -73,8 +72,7 @@ class Module {
 			update_post_meta( $slider_id, '_content_slider', $_slides );
 		}
 
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		if ( isset( $_POST['content_settings'] ) ) {
+		if ( isset( $data['content_settings'] ) ) {
 			$this->update_content_settings( $slider_id );
 		}
 	}

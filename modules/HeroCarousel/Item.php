@@ -454,7 +454,7 @@ class Item extends Data {
 		$btn_text = $this->get_prop( 'button_one_text' );
 		$target   = $this->get_prop( 'button_one_target', '_self' );
 
-		$classes = 'button cs-hero-button';
+		$classes  = 'button cs-hero-button';
 		$classes .= ' cs-hero-button-' . $this->get_item_id() . '-1';
 		$classes .= ' cs-hero-button-' . $this->get_prop( 'button_one_type', 'normal' );
 		$classes .= ' cs-hero-button-' . $this->get_prop( 'button_one_size', 'medium' );
@@ -487,7 +487,7 @@ class Item extends Data {
 		$text   = $this->get_prop( 'button_two_text' );
 		$target = $this->get_prop( 'button_two_target', '_self' );
 
-		$classes = 'button cs-hero-button';
+		$classes  = 'button cs-hero-button';
 		$classes .= ' cs-hero-button-' . $this->get_item_id() . '-2';
 		$classes .= ' cs-hero-button-' . $this->get_prop( 'button_two_type', 'normal' );
 		$classes .= ' cs-hero-button-' . $this->get_prop( 'button_two_size', 'medium' );

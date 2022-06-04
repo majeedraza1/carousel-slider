@@ -194,9 +194,9 @@ abstract class AbstractView implements SliderViewInterface {
 			'owl-carousel',
 			'carousel-slider',
 			'carousel-slider-' . $this->get_slider_id(),
-			'arrows-visibility-' . $setting->get_prop( 'nav_visibility' ),
+			'arrows-visibility-' . $setting->get_nav_visibility(),
+			'dots-visibility-' . $setting->get_pagination_visibility(),
 			'arrows-' . $setting->get_prop( 'nav_position' ),
-			'dots-visibility-' . $setting->get_prop( 'pagination_visibility' ),
 			'dots-' . $setting->get_prop( 'pagination_position' ),
 			'dots-' . $setting->get_prop( 'pagination_shape' ),
 		];

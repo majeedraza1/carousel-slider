@@ -29,7 +29,6 @@ class Module {
 		if ( is_null( self::$instance ) ) {
 			self::$instance = new self();
 
-			add_action( 'carousel_slider/save_slider', [ self::$instance, 'save_slider' ] );
 			add_filter( 'carousel_slider/register_view', [ self::$instance, 'view' ] );
 
 			// Add custom link to media gallery.
@@ -54,37 +53,6 @@ class Module {
 		$views['image-carousel-url'] = new UrlView();
 
 		return $views;
-	}
-
-	/**
-	 * Save slider info
-	 *
-	 * @param int $slider_id The slider id.
-	 */
-	public function save_slider( int $slider_id ) {
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		$images_urls = isset( $_POST['_images_urls'] ) && is_array( $_POST['_images_urls'] ) ? $_POST['_images_urls'] : [];
-		if ( count( $images_urls ) ) {
-			$url         = $images_urls['url'] ?? [];
-			$title       = $images_urls['title'] ?? [];
-			$caption     = $images_urls['caption'] ?? [];
-			$alt         = $images_urls['alt'] ?? [];
-			$link_url    = $images_urls['link_url'] ?? [];
-			$total_items = count( $url );
-
-			$urls = array();
-
-			for ( $i = 0; $i < $total_items; $i ++ ) {
-				$urls[] = array(
-					'url'      => esc_url_raw( $url[ $i ] ),
-					'title'    => sanitize_text_field( $title[ $i ] ),
-					'caption'  => sanitize_text_field( $caption[ $i ] ),
-					'alt'      => sanitize_text_field( $alt[ $i ] ),
-					'link_url' => esc_url_raw( $link_url[ $i ] ),
-				);
-			}
-			update_post_meta( $slider_id, '_images_urls', $urls );
-		}
 	}
 
 

@@ -33,15 +33,36 @@ class Admin {
 
 			add_action( 'carousel_slider/meta_box_content', [ self::$instance, 'meta_box_content' ], 10, 2 );
 			add_filter( 'carousel_slider/admin/metabox_color_settings', [ self::$instance, 'color_settings' ] );
+
+			add_action( 'carousel_slider/save_slider', [ self::$instance, 'save_slider' ], 10, 2 );
 		}
 
 		return self::$instance;
 	}
 
 	/**
+	 * Save post carousel content
+	 *
+	 * @param int   $post_id The post id.
+	 * @param array $data User submitted data.
+	 *
+	 * @return void
+	 */
+	public function save_slider( int $post_id, array $data ) {
+		$raw_data = $data['product_carousel'] ?? [];
+		foreach ( $raw_data as $meta_key => $meta_value ) {
+			if ( is_array( $meta_value ) ) {
+				$meta_value = implode( ',', $meta_value );
+			}
+
+			update_post_meta( $post_id, $meta_key, sanitize_text_field( $meta_value ) );
+		}
+	}
+
+	/**
 	 * Show meta box content for product carousel
 	 *
-	 * @param int $slider_id The slider id.
+	 * @param int    $slider_id The slider id.
 	 * @param string $slider_type The slider type.
 	 */
 	public function meta_box_content( int $slider_id, string $slider_type ) {
@@ -53,6 +74,8 @@ class Admin {
 
 		$form->select(
 			array(
+				'group'   => 'product_carousel',
+				'type'    => 'select',
 				'id'      => '_product_query_type',
 				'name'    => esc_html__( 'Query Type', 'carousel-slider' ),
 				'std'     => 'query_product',
@@ -66,6 +89,8 @@ class Admin {
 		);
 		$form->select(
 			array(
+				'group'   => 'product_carousel',
+				'type'    => 'select',
 				'id'      => '_product_query',
 				'name'    => esc_html__( 'Choose Query', 'carousel-slider' ),
 				'std'     => 'featured',
@@ -81,6 +106,8 @@ class Admin {
 		);
 		$form->post_terms(
 			array(
+				'group'    => 'product_carousel',
+				'type'     => 'post_terms',
 				'id'       => '_product_categories',
 				'taxonomy' => 'product_cat',
 				'multiple' => true,
@@ -90,6 +117,8 @@ class Admin {
 		);
 		$form->post_terms(
 			array(
+				'group'    => 'product_carousel',
+				'type'     => 'post_terms',
 				'id'       => '_product_tags',
 				'taxonomy' => 'product_tag',
 				'multiple' => true,
@@ -99,6 +128,8 @@ class Admin {
 		);
 		$form->posts_list(
 			array(
+				'group'     => 'product_carousel',
+				'type'      => 'posts_list',
 				'id'        => '_product_in',
 				'post_type' => 'product',
 				'multiple'  => true,
@@ -108,10 +139,12 @@ class Admin {
 		);
 		$form->number(
 			array(
-				'id'   => '_products_per_page',
-				'name' => esc_html__( 'Product per page', 'carousel-slider' ),
-				'std'  => 12,
-				'desc' => esc_html__( 'How many products you want to show on carousel slide.', 'carousel-slider' ),
+				'group' => 'product_carousel',
+				'type'  => 'number',
+				'id'    => '_products_per_page',
+				'name'  => esc_html__( 'Product per page', 'carousel-slider' ),
+				'std'   => 12,
+				'desc'  => esc_html__( 'How many products you want to show on carousel slide.', 'carousel-slider' ),
 			)
 		);
 		if ( 'v1-compatibility' === $template ) {
@@ -141,6 +174,7 @@ class Admin {
 		ob_start();
 		$form->color(
 			array(
+				'group'   => 'product_carousel',
 				'id'      => '_product_title_color',
 				'type'    => 'color',
 				'name'    => esc_html__( 'Product Title Color', 'carousel-slider' ),
@@ -151,6 +185,7 @@ class Admin {
 		);
 		$form->color(
 			array(
+				'group'   => 'product_carousel',
 				'id'      => '_product_button_bg_color',
 				'type'    => 'color',
 				'name'    => esc_html__( 'Product Button Background Color', 'carousel-slider' ),
@@ -161,6 +196,7 @@ class Admin {
 		);
 		$form->color(
 			array(
+				'group'   => 'product_carousel',
 				'id'      => '_product_button_text_color',
 				'type'    => 'color',
 				'name'    => esc_html__( 'Product Button Text Color', 'carousel-slider' ),
@@ -182,6 +218,7 @@ class Admin {
 	public static function get_settings_for_toggle_sections(): array {
 		return [
 			[
+				'group'             => 'product_carousel',
 				'type'              => 'switch',
 				'id'                => '_product_title',
 				'label'             => esc_html__( 'Show Title.', 'carousel-slider' ),
@@ -190,6 +227,7 @@ class Admin {
 				'sanitize_callback' => [ Sanitize::class, 'checked' ],
 			],
 			[
+				'group'             => 'product_carousel',
 				'type'              => 'switch',
 				'id'                => '_product_rating',
 				'label'             => esc_html__( 'Show Rating.', 'carousel-slider' ),
@@ -198,6 +236,7 @@ class Admin {
 				'sanitize_callback' => [ Sanitize::class, 'checked' ],
 			],
 			[
+				'group'             => 'product_carousel',
 				'type'              => 'switch',
 				'id'                => '_product_price',
 				'label'             => esc_html__( 'Show Price.', 'carousel-slider' ),
@@ -207,6 +246,7 @@ class Admin {
 			],
 
 			[
+				'group'             => 'product_carousel',
 				'type'              => 'switch',
 				'id'                => '_product_cart_button',
 				'label'             => esc_html__( 'Show Cart Button.', 'carousel-slider' ),
@@ -215,6 +255,7 @@ class Admin {
 				'sanitize_callback' => [ Sanitize::class, 'checked' ],
 			],
 			[
+				'group'             => 'product_carousel',
 				'type'              => 'switch',
 				'id'                => '_product_onsale',
 				'label'             => esc_html__( 'Show Sale Tag', 'carousel-slider' ),
@@ -223,6 +264,7 @@ class Admin {
 				'sanitize_callback' => [ Sanitize::class, 'checked' ],
 			],
 			[
+				'group'             => 'product_carousel',
 				'type'              => 'switch',
 				'id'                => '_product_wishlist',
 				'label'             => esc_html__( 'Show Wishlist Button', 'carousel-slider' ),
@@ -232,6 +274,7 @@ class Admin {
 				'sanitize_callback' => [ Sanitize::class, 'checked' ],
 			],
 			[
+				'group'             => 'product_carousel',
 				'type'              => 'switch',
 				'id'                => '_product_quick_view',
 				'label'             => esc_html__( 'Show Quick View', 'carousel-slider' ),
