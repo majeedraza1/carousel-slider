@@ -43,8 +43,8 @@ class OwlSetting {
 	 */
 	public function read( SliderSetting $setting ) {
 		$this->settings = [
-			'nav'                => $setting->get_prop( 'nav_visibility' ) !== 'never',
-			'dots'               => $setting->get_prop( 'pagination_visibility' ) !== 'never',
+			'nav'                => $setting->get_nav_visibility() !== 'never',
+			'dots'               => $setting->get_pagination_visibility() !== 'never',
 			'slideBy'            => $setting->get_prop( 'nav_steps' ),
 			'stagePadding'       => $setting->get_prop( 'stage_padding' ),
 			'margin'             => $setting->get_prop( 'space_between' ),

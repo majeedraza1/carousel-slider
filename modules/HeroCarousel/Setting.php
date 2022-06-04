@@ -8,6 +8,12 @@ use CarouselSlider\Abstracts\SliderSetting;
  * Settings class
  */
 class Setting extends SliderSetting {
+	/**
+	 * Is data read from server?
+	 *
+	 * @var bool
+	 */
+	protected $extra_data_read = false;
 
 	/**
 	 * Get content settings
@@ -19,15 +25,18 @@ class Setting extends SliderSetting {
 	}
 
 	/**
-	 * Default properties
+	 * Read extra metadata
 	 *
-	 * @inerhitDoc
+	 * @return void
 	 */
-	public static function props(): array {
-		$parent_props = parent::props();
-		$extra_props  = self::extra_props();
-
-		return wp_parse_args( $extra_props, $parent_props );
+	public function read_extra_metadata() {
+		if ( $this->extra_data_read ) {
+			return;
+		}
+		foreach ( self::extra_props() as $attribute => $config ) {
+			$this->read_single_metadata( $attribute, $config );
+		}
+		$this->extra_data_read = true;
 	}
 
 	/**
@@ -38,9 +47,9 @@ class Setting extends SliderSetting {
 	public static function extra_props(): array {
 		return [
 			'slider_settings' => [
-				'meta_key' => '_content_slider_settings',
-				'type'     => 'array',
-				'default'  => [],
+				'id'      => '_content_slider_settings',
+				'type'    => 'array',
+				'default' => [],
 			],
 		];
 	}

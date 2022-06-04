@@ -2,22 +2,52 @@
 
 namespace CarouselSlider\Abstracts;
 
+use BadMethodCallException;
+use CarouselSlider\Admin\MetaBoxConfig;
 use CarouselSlider\Helper;
+use CarouselSlider\Interfaces\SliderSettingInterface;
+use CarouselSlider\Supports\Sanitize;
 use CarouselSlider\Supports\Validate;
 
 /**
  * SliderSetting class
  * The base slider setting for any slider type
  *
+ * @method string get_nav_visibility()
+ * @method string get_pagination_visibility()
+ * @method string get_nav_steps()
+ * @method int get_stage_padding()
+ * @method int get_space_between()
+ * @method bool is_loop()
+ * @method bool is_lazy_load()
+ * @method bool is_auto_width()
+ * @method bool is_autoplay()
+ * @method bool has_autoplay_hover_pause()
+ * @method int get_autoplay_delay()
+ * @method int get_autoplay_speed()
+ * @method int get_items_on_mobile()
+ * @method int get_items_on_small_tablet()
+ * @method int get_items_on_tablet()
+ * @method int get_items_on_desktop()
+ * @method int get_items_on_widescreen()
+ * @method int get_items_on_fullhd()
+ *
  * @package CarouselSlider/Abstracts
  */
-class SliderSetting extends Data {
+class SliderSetting extends Data implements SliderSettingInterface {
 	/**
 	 * The slider id.
 	 *
 	 * @var int
 	 */
 	protected $slider_id = 0;
+
+	/**
+	 * Get slider type
+	 *
+	 * @var string
+	 */
+	protected $slider_type = null;
 
 	/**
 	 * Is data read from server?
@@ -27,36 +57,94 @@ class SliderSetting extends Data {
 	protected $data_read = false;
 
 	/**
+	 * Global settings
+	 *
+	 * @var array
+	 */
+	protected static $global_settings = [];
+
+	/**
 	 * Class constructor
 	 *
 	 * @param int $slider_id The slider id.
+	 * @param bool $read_metadata Should read metadata immediately.
 	 */
-	public function __construct( int $slider_id ) {
+	public function __construct( int $slider_id, bool $read_metadata = true ) {
 		$this->slider_id = $slider_id;
-		$this->data      = self::get_defaults();
-		$this->read_metadata();
+		if ( $read_metadata ) {
+			$this->read_metadata();
+			if ( method_exists( $this, 'read_extra_metadata' ) ) {
+				$this->read_extra_metadata();
+			}
+		}
+	}
+
+	/**
+	 * Get global settings
+	 *
+	 * @return array
+	 */
+	public static function get_global_settings(): array {
+		if ( empty( static::$global_settings ) ) {
+			$default_args = apply_filters(
+				'carousel_slider/global_options/default_args',
+				[
+					'load_scripts'                        => 'optimized',
+					'show_structured_data'                => '1',
+					'woocommerce_shop_loop_item_template' => 'v1-compatibility',
+				]
+			);
+			$options      = get_option( 'carousel_slider_settings', [] );
+			$options      = is_array( $options ) ? $options : [];
+
+			static::$global_settings = wp_parse_args( $options, $default_args );
+		}
+
+		return static::$global_settings;
+	}
+
+	/**
+	 * Does this collection have a given key?
+	 *
+	 * @param string $key The data key.
+	 *
+	 * @return bool
+	 */
+	public static function has_global_option( string $key ): bool {
+		return array_key_exists( $key, self::get_global_settings() );
 	}
 
 	/**
 	 * Get option
 	 *
 	 * @param string $key option key.
-	 * @param mixed  $default default value.
+	 * @param mixed $default default value.
 	 *
 	 * @return mixed
 	 */
 	public function get_global_option( string $key, $default = '' ) {
-		$default_args = apply_filters(
-			'carousel_slider/global_options/default_args',
-			[
-				'load_scripts'                        => 'optimized',
-				'show_structured_data'                => '1',
-				'woocommerce_shop_loop_item_template' => 'v1-compatibility',
-			]
-		);
-		$options      = wp_parse_args( get_option( 'carousel_slider_settings', [] ), $default_args );
+		if ( static::has_global_option( $key ) ) {
+			return static::get_global_settings()[ $key ];
+		}
 
-		return $options[ $key ] ?? $default;
+		return $default;
+	}
+
+	/**
+	 * Get option for key
+	 * If there is no option for key, return from global option.
+	 *
+	 * @param string $key option key.
+	 * @param mixed $default default value to return if data key does not exist.
+	 *
+	 * @return mixed The key's value, or the default value
+	 */
+	public function get_option( string $key, $default = '' ) {
+		if ( $this->has_prop( $key ) ) {
+			return $this->get_prop( $key, $default );
+		}
+
+		return $this->get_global_option( $key, $default );
 	}
 
 	/**
@@ -69,15 +157,28 @@ class SliderSetting extends Data {
 	}
 
 	/**
+	 * Get slider type
+	 *
+	 * @return string
+	 */
+	public function get_slider_type(): string {
+		if ( is_null( $this->slider_type ) ) {
+			$slide_type        = get_post_meta( $this->get_slider_id(), '_slide_type', true );
+			$this->slider_type = array_key_exists( $slide_type, Helper::get_slide_types() ) ? $slide_type : 'image-carousel';
+		}
+
+		return $this->slider_type;
+	}
+
+	/**
 	 * Get image size
 	 *
 	 * @return string
 	 */
 	public function get_image_size(): string {
-		$default = $this->get_global_option( 'image_size', 'medium_large' );
-		$size    = $this->get_prop( 'image_size' );
+		$size = $this->get_option( 'image_size', 'medium_large' );
 
-		return array_key_exists( $size, Helper::get_available_image_sizes() ) ? $size : $default;
+		return array_key_exists( $size, Helper::get_available_image_sizes() ) ? $size : 'medium_large';
 	}
 
 	/**
@@ -86,11 +187,9 @@ class SliderSetting extends Data {
 	 * @return bool
 	 */
 	public function lazy_load_image(): bool {
-		$default        = Helper::get_default_setting( 'lazy_load_image' );
-		$global_setting = $this->get_global_option( 'lazy_load', $default );
-		$lazy_load      = $this->get_prop( 'lazy_load', $global_setting );
+		$default = Helper::get_default_setting( 'lazy_load_image' );
 
-		return Validate::checked( $lazy_load );
+		return Validate::checked( $this->get_option( 'lazy_load', $default ) );
 	}
 
 	/**
@@ -148,45 +247,88 @@ class SliderSetting extends Data {
 	/**
 	 * Read setting from database
 	 *
+	 * @param array $values The value to be read.
+	 *
 	 * @return void
 	 */
-	protected function read_metadata() {
+	public function read_metadata( array $values = [] ) {
 		if ( $this->data_read ) {
 			return;
 		}
-		$attribute_meta_key = static::props();
-		foreach ( $attribute_meta_key as $attribute => $config ) {
-			$method_name = 'set_' . $attribute;
-			$value       = get_post_meta( $this->get_slider_id(), $config['meta_key'], true );
-			if ( method_exists( $this, $method_name ) ) {
-				$this->$method_name( $value );
-			} else {
-				$value = $this->sanitize_by_type( $config['type'], $value );
-				$this->set_prop( $attribute, $value );
+		if ( empty( $values ) ) {
+			$metadata = get_post_meta( $this->get_slider_id() );
+			foreach ( $metadata as $meta_key => $meta_value ) {
+				$values[ $meta_key ] = maybe_unserialize( $meta_value[0] );
 			}
 		}
+		$fields_settings = self::get_fields_settings();
+		foreach ( $fields_settings as $attribute => $config ) {
+			$this->read_single_metadata( $attribute, $config, $values );
+		}
 		$this->data_read = true;
+	}
+
+	/**
+	 * Read single metadata
+	 *
+	 * @param string $attribute property name.
+	 * @param array $field The field settings.
+	 * @param array $values The values.
+	 *
+	 * @return void
+	 */
+	public function read_single_metadata( string $attribute, array $field, array $values ) {
+		$method_name = 'set_' . $attribute;
+		$value       = $values[ $field['id'] ] ?? ( $field['default'] ?? null );
+		if ( method_exists( $this, $method_name ) ) {
+			$this->$method_name( $value );
+		} else {
+			$value = $this->prepare_item_for_response( $field['type'], $value );
+			$this->set_prop( $attribute, $value );
+		}
+	}
+
+	/**
+	 * Write metadata
+	 * make sure to backward compatibility for the following props
+	 * --- nav_visibility, pagination_visibility, nav_steps
+	 * --- Convert boolean value to 'on' and 'off'
+	 *
+	 * @return void
+	 */
+	public function write_metadata() {
+		$fields_settings = self::get_fields_settings();
+		foreach ( $fields_settings as $prop_name => $field ) {
+			$value = $this->get_prop( $prop_name );
+			if ( 'nav_visibility' === $prop_name ) {
+				$value = str_replace( [ 'never', 'hover' ], [ 'off', 'on' ], $value );
+			}
+			if ( 'pagination_visibility' === $prop_name ) {
+				$value = str_replace( [ 'never', 'always' ], [ 'off', 'on' ], $value );
+			}
+			update_post_meta( $this->slider_id, $field['id'], $this->prepare_item_for_database( $value, $field ) );
+		}
 	}
 
 	/**
 	 * Sanitize value by data type
 	 *
 	 * @param string $type The type.
-	 * @param mixed  $value The value.
+	 * @param mixed $value The value.
 	 *
 	 * @return mixed
 	 */
-	protected function sanitize_by_type( string $type, $value ) {
+	protected function prepare_item_for_response( string $type, $value ) {
 		if ( 'array' === $type && is_string( $value ) ) {
 			$value = explode( ',', $value );
 		}
 		if ( 'int[]' === $type && is_string( $value ) ) {
 			$value = array_filter( array_map( 'intval', explode( ',', $value ) ) );
 		}
-		if ( 'int' === $type ) {
+		if ( in_array( $type, [ 'int', 'number' ], true ) ) {
 			$value = (int) $value;
 		}
-		if ( 'bool' === $type ) {
+		if ( in_array( $type, [ 'bool', 'switch' ], true ) ) {
 			$value = Validate::checked( $value );
 		}
 
@@ -194,62 +336,38 @@ class SliderSetting extends Data {
 	}
 
 	/**
-	 * Write metadata
+	 * Prepare item for database store
 	 *
-	 * @return void
-	 * @todo make sure to backward compatibility for the following props
-	 * --- nav_visibility, pagination_visibility, nav_steps
+	 * @param mixed $value The value to be sanitized.
+	 * @param array $setting The field setting.
+	 *
+	 * @return mixed
 	 */
-	public function write_metadata() {
-		$props_to_meta_keys = self::props_to_meta_keys();
-		foreach ( $props_to_meta_keys as $prop_name => $meta_key ) {
-			// @TODO convert bool value to yes no.
-			update_post_meta( $this->slider_id, $meta_key, $this->get_prop( $prop_name ) );
+	protected function prepare_item_for_database( $value, array $setting ) {
+		if ( isset( $setting['sanitize_callback'] ) && is_callable( $setting['sanitize_callback'] ) ) {
+			return call_user_func( $setting['sanitize_callback'], $value );
 		}
-	}
+		$default = $setting['default'] ?? null;
+		if ( isset( $setting['choices'] ) && is_array( $setting['choices'] ) ) {
+			$enum = array_keys( $setting['choices'] );
+			if ( isset( $setting['multiple'] ) ) {
+				$sanitized_value = [];
+				foreach ( (array) $value as $item ) {
+					if ( in_array( $item, $enum, true ) ) {
+						$sanitized_value[] = $item;
+					}
+				}
 
-	/**
-	 * Get default values
-	 *
-	 * @return array
-	 */
-	public static function get_defaults(): array {
-		$props = static::props();
-		$data  = [];
-		foreach ( $props as $prop => $config ) {
-			$data[ $prop ] = $config['default'];
+				return $sanitized_value;
+			}
+
+			return in_array( $value, $enum, true ) ? $value : $default;
 		}
-
-		return $data;
-	}
-
-	/**
-	 * Map prop name to meta key
-	 *
-	 * @return string[]
-	 */
-	public static function props_to_meta_keys(): array {
-		$props = static::props();
-		$data  = [];
-		foreach ( $props as $prop => $config ) {
-			$data[ $prop ] = $config['meta_key'];
+		if ( in_array( $setting['type'], [ 'bool', 'switch' ], true ) ) {
+			return Validate::checked( $value ) ? 'on' : 'off';
 		}
 
-		return $data;
-	}
-
-	/**
-	 * Get group meta keys
-	 *
-	 * @param string $group The group name.
-	 *
-	 * @return array
-	 */
-	public function get_group_meta_keys( string $group = 'general' ): array {
-		$method_name = $group . '_props';
-		$props       = method_exists( $this, $method_name ) ? $this->$method_name() : self::general_props();
-
-		return wp_list_pluck( $props, 'meta_key' );
+		return Sanitize::deep( $value );
 	}
 
 	/**
@@ -257,204 +375,30 @@ class SliderSetting extends Data {
 	 *
 	 * @return array
 	 */
-	public static function props(): array {
-		return array_merge(
-			self::general_props(),
-			self::navigation_props(),
-			self::pagination_props(),
-			self::autoplay_props(),
-			self::breakpoints_props(),
-			self::color_props()
+	protected static function get_fields_settings(): array {
+		return MetaBoxConfig::get_fields_settings();
+	}
+
+	/**
+	 * Handle calling property via method
+	 *
+	 * @param string $name The name of the method being called.
+	 * @param array $args An enumerated array containing the parameters passed to the $name'ed method.
+	 *
+	 * @return mixed
+	 * @throws BadMethodCallException Exception if not method available.
+	 */
+	public function __call( string $name, array $args ) {
+		if ( preg_match( '/^(get_|is_|has_)(?P<property>\s*.*)/', $name, $matches ) ) {
+			if ( $this->has_prop( $matches['property'] ) ) {
+				return $this->get_prop( $matches['property'] );
+			}
+			if ( static::has_global_option( $matches['property'] ) ) {
+				return static::get_global_option( $matches['property'] );
+			}
+		}
+		throw new BadMethodCallException(
+			'Call to undefined method ' . sprintf( '%s::%s()', __CLASS__, $name )
 		);
-	}
-
-	/**
-	 * Get navigation props
-	 *
-	 * @return array
-	 */
-	public static function general_props(): array {
-		return [
-			'image_size'    => [
-				'meta_key' => '_image_size',
-				'type'     => 'string',
-				'default'  => 'medium_large',
-			],
-			'space_between' => [
-				'meta_key' => '_margin_right',
-				'type'     => 'int',
-				'default'  => 30,
-			],
-			'stage_padding' => [
-				'meta_key' => '_stage_padding',
-				'type'     => 'int',
-				'default'  => 0,
-			],
-			'loop'          => [
-				'meta_key' => '_infinity_loop',
-				'type'     => 'bool',
-				'default'  => true,
-			],
-			'lazy_load'     => [
-				'meta_key' => '_lazy_load_image',
-				'type'     => 'bool',
-				'default'  => true,
-			],
-			'auto_width'    => [
-				'meta_key' => '_auto_width',
-				'type'     => 'bool',
-				'default'  => false,
-			],
-		];
-	}
-
-	/**
-	 * Get navigation props
-	 *
-	 * @return array
-	 */
-	public static function navigation_props(): array {
-		return [
-			'nav_visibility' => [
-				'meta_key' => '_nav_button',
-				'type'     => 'string',
-				'default'  => 'hover',
-			],
-			'nav_position'   => [
-				'meta_key' => '_arrow_position',
-				'type'     => 'string',
-				'default'  => 'outside',
-			],
-			'nav_size'       => [
-				'meta_key' => '_arrow_size',
-				'type'     => 'int',
-				'default'  => 48,
-			],
-			'nav_steps'      => [
-				'meta_key' => '_slide_by',
-				'type'     => [ 'string', 'int' ],
-				'default'  => 1,
-			],
-		];
-	}
-
-	/**
-	 * Get pagination props
-	 *
-	 * @return array
-	 */
-	public static function pagination_props(): array {
-		return [
-			'pagination_visibility' => [
-				'meta_key' => '_dot_nav',
-				'type'     => 'string',
-				'default'  => 'never',
-			],
-			'pagination_position'   => [
-				'meta_key' => '_bullet_position',
-				'type'     => 'string',
-				'default'  => 'center',
-			],
-			'pagination_size'       => [
-				'meta_key' => '_bullet_size',
-				'type'     => 'int',
-				'default'  => 10,
-			],
-			'pagination_shape'      => [
-				'meta_key' => '_bullet_shape',
-				'type'     => 'string',
-				'default'  => 'circle',
-			],
-		];
-	}
-
-	/**
-	 * Get pagination props
-	 *
-	 * @return array
-	 */
-	public static function autoplay_props(): array {
-		return [
-			'autoplay_delay'       => [
-				'meta_key' => '_autoplay_timeout',
-				'type'     => 'int',
-				'default'  => 5000,
-			],
-			'autoplay_speed'       => [
-				'meta_key' => '_autoplay_speed',
-				'type'     => 'int',
-				'default'  => 300,
-			],
-			'autoplay'             => [
-				'meta_key' => '_autoplay',
-				'type'     => 'bool',
-				'default'  => true,
-			],
-			'autoplay_hover_pause' => [
-				'meta_key' => '_autoplay_pause',
-				'type'     => 'bool',
-				'default'  => true,
-			],
-		];
-	}
-
-	/**
-	 * Get breakpoints props
-	 *
-	 * @return array
-	 */
-	public static function breakpoints_props(): array {
-		return [
-			'items_on_mobile'       => [
-				'meta_key' => '_items_portrait_mobile',
-				'type'     => 'int',
-				'default'  => 1,
-			],
-			'items_on_small_tablet' => [
-				'meta_key' => '_items_small_portrait_tablet',
-				'type'     => 'int',
-				'default'  => 1,
-			],
-			'items_on_tablet'       => [
-				'meta_key' => '_items_portrait_tablet',
-				'type'     => 'int',
-				'default'  => 2,
-			],
-			'items_on_desktop'      => [
-				'meta_key' => '_items_small_desktop',
-				'type'     => 'int',
-				'default'  => 3,
-			],
-			'items_on_widescreen'   => [
-				'meta_key' => '_items_desktop',
-				'type'     => 'int',
-				'default'  => 4,
-			],
-			'items_on_fullhd'       => [
-				'meta_key' => '_items',
-				'type'     => 'int',
-				'default'  => 5,
-			],
-		];
-	}
-
-	/**
-	 * Get color props
-	 *
-	 * @return array
-	 */
-	public static function color_props(): array {
-		return [
-			'nav_color'        => [
-				'meta_key' => '_nav_color',
-				'type'     => 'string',
-				'default'  => Helper::get_default_setting( 'nav_color' ),
-			],
-			'nav_active_color' => [
-				'meta_key' => '_nav_active_color',
-				'type'     => 'string',
-				'default'  => Helper::get_default_setting( 'nav_active_color' ),
-			],
-		];
 	}
 }

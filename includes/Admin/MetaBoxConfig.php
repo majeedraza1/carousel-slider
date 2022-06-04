@@ -90,7 +90,9 @@ class MetaBoxConfig {
 	 */
 	public static function get_general_settings(): array {
 		$settings = [
-			[
+			'image_size'    => [
+				'section'     => 'section_general_settings',
+				'default'     => 'medium_large',
 				'id'          => '_image_size',
 				'label'       => esc_html__( 'Carousel Image size', 'carousel-slider' ),
 				'description' => sprintf(
@@ -100,48 +102,46 @@ class MetaBoxConfig {
 					'</a>'
 				),
 				'type'        => 'image_sizes',
-				'default'     => 'medium_large',
-				'section'     => 'section_general_settings',
 			],
-			[
+			'space_between' => [
+				'section'     => 'section_general_settings',
+				'type'        => 'number',
 				'id'          => '_margin_right',
 				'label'       => esc_html__( 'Item Spacing.', 'carousel-slider' ),
 				'description' => esc_html__( 'Space between two slide. Enter 10 for 10px', 'carousel-slider' ),
 				'default'     => Helper::get_default_setting( 'margin_right' ),
-				'type'        => 'number',
-				'section'     => 'section_general_settings',
 			],
-			[
+			'stage_padding' => [
+				'section'     => 'section_general_settings',
+				'type'        => 'number',
 				'id'          => '_stage_padding',
 				'label'       => esc_html__( 'Stage Padding', 'carousel-slider' ),
 				'description' => esc_html__( 'Add left and right padding on carousel slider stage wrapper.', 'carousel-slider' ),
 				'default'     => 0,
-				'type'        => 'number',
-				'section'     => 'section_general_settings',
 			],
-			[
+			'lazy_load'     => [
+				'section'     => 'section_general_settings',
+				'type'        => 'switch',
 				'id'          => '_lazy_load_image',
 				'label'       => esc_html__( 'Lazy Loading', 'carousel-slider' ),
 				'description' => esc_html__( 'Enable image with lazy loading.', 'carousel-slider' ),
 				'default'     => Helper::get_default_setting( 'lazy_load_image' ),
-				'type'        => 'switch',
-				'section'     => 'section_general_settings',
 			],
-			[
+			'loop'          => [
+				'section'     => 'section_general_settings',
+				'type'        => 'switch',
 				'id'          => '_infinity_loop',
 				'label'       => esc_html__( 'Infinity loop', 'carousel-slider' ),
 				'description' => esc_html__( 'Enable or disable loop(circular) of carousel.', 'carousel-slider' ),
 				'default'     => 'on',
-				'type'        => 'switch',
-				'section'     => 'section_general_settings',
 			],
-			[
+			'auto_width'    => [
+				'section'     => 'section_general_settings',
+				'type'        => 'switch',
 				'id'          => '_auto_width',
 				'label'       => esc_html__( 'Auto Width', 'carousel-slider' ),
 				'description' => esc_html__( 'Set item width according to its content width. Use width style on item to get the result you want. ', 'carousel-slider' ),
 				'default'     => 'off',
-				'type'        => 'switch',
-				'section'     => 'section_general_settings',
 			],
 		];
 
@@ -155,7 +155,7 @@ class MetaBoxConfig {
 	 */
 	public static function get_navigation_settings(): array {
 		$settings = [
-			[
+			'nav_visibility' => [
 				'section'     => 'section_navigation_settings',
 				'type'        => 'select',
 				'id'          => '_nav_button',
@@ -169,7 +169,7 @@ class MetaBoxConfig {
 					'always' => esc_html__( 'Always', 'carousel-slider' ),
 				],
 			],
-			[
+			'nav_steps'      => [
 				'section'     => 'section_navigation_settings',
 				'type'        => 'text',
 				'id'          => '_slide_by',
@@ -177,7 +177,7 @@ class MetaBoxConfig {
 				'description' => esc_html__( 'Steps to go for each navigation request. Write -1 to slide by page.', 'carousel-slider' ),
 				'default'     => 1,
 			],
-			[
+			'nav_position'   => [
 				'section'     => 'section_navigation_settings',
 				'type'        => 'select',
 				'id'          => '_arrow_position',
@@ -189,7 +189,7 @@ class MetaBoxConfig {
 					'inside'  => esc_html__( 'Inside', 'carousel-slider' ),
 				],
 			],
-			[
+			'nav_size'       => [
 				'section'     => 'section_navigation_settings',
 				'type'        => 'number',
 				'id'          => '_arrow_size',
@@ -209,7 +209,7 @@ class MetaBoxConfig {
 	 */
 	public static function get_pagination_settings(): array {
 		$settings = [
-			[
+			'pagination_visibility' => [
 				'section'     => 'section_pagination_settings',
 				'type'        => 'select',
 				'id'          => '_dot_nav',
@@ -222,7 +222,7 @@ class MetaBoxConfig {
 					'hover' => esc_html__( 'Mouse Over', 'carousel-slider' ),
 				],
 			],
-			[
+			'pagination_position'   => [
 				'section'     => 'section_pagination_settings',
 				'type'        => 'select',
 				'id'          => '_bullet_position',
@@ -235,7 +235,7 @@ class MetaBoxConfig {
 					'right'  => esc_html__( 'Right', 'carousel-slider' ),
 				],
 			],
-			[
+			'pagination_size'       => [
 				'section'     => 'section_pagination_settings',
 				'type'        => 'number',
 				'id'          => '_bullet_size',
@@ -243,7 +243,7 @@ class MetaBoxConfig {
 				'description' => esc_html__( 'Enter bullet size in pixels.', 'carousel-slider' ),
 				'default'     => 10,
 			],
-			[
+			'pagination_shape'      => [
 				'section'     => 'section_pagination_settings',
 				'type'        => 'select',
 				'id'          => '_bullet_shape',
@@ -267,7 +267,7 @@ class MetaBoxConfig {
 	 */
 	public static function get_autoplay_settings(): array {
 		$settings = [
-			[
+			'autoplay'             => [
 				'section'     => 'section_autoplay_settings',
 				'type'        => 'switch',
 				'id'          => '_autoplay',
@@ -275,7 +275,7 @@ class MetaBoxConfig {
 				'description' => esc_html__( 'Choose whether slideshow should play automatically.', 'carousel-slider' ),
 				'default'     => 'on',
 			],
-			[
+			'autoplay_hover_pause' => [
 				'section'     => 'section_autoplay_settings',
 				'type'        => 'switch',
 				'id'          => '_autoplay_pause',
@@ -283,7 +283,7 @@ class MetaBoxConfig {
 				'description' => esc_html__( 'Pause automatic play on mouse hover.', 'carousel-slider' ),
 				'default'     => 'on',
 			],
-			[
+			'autoplay_delay'       => [
 				'section'     => 'section_autoplay_settings',
 				'type'        => 'number',
 				'id'          => '_autoplay_timeout',
@@ -291,7 +291,7 @@ class MetaBoxConfig {
 				'description' => esc_html__( 'Automatic play interval timeout in millisecond.', 'carousel-slider' ),
 				'default'     => 5000,
 			],
-			[
+			'autoplay_speed'       => [
 				'section'     => 'section_autoplay_settings',
 				'type'        => 'number',
 				'id'          => '_autoplay_speed',
@@ -311,14 +311,14 @@ class MetaBoxConfig {
 	 */
 	public static function get_color_settings(): array {
 		$settings = [
-			[
+			'nav_color'        => [
 				'section' => 'section_color_settings',
 				'type'    => 'color',
 				'id'      => '_nav_color',
 				'label'   => esc_html__( 'Arrows & Dots Color', 'carousel-slider' ),
 				'default' => Helper::get_default_setting( 'nav_color' ),
 			],
-			[
+			'nav_active_color' => [
 				'section' => 'section_color_settings',
 				'type'    => 'color',
 				'id'      => '_nav_active_color',
@@ -337,15 +337,15 @@ class MetaBoxConfig {
 	 */
 	public static function get_responsive_settings(): array {
 		$settings = [
-			[
+			'items_on_fullhd'       => [
 				'section'     => 'section_responsive_settings',
 				'type'        => 'number',
 				'id'          => '_items',
-				'label'       => esc_html__( 'Columns', 'carousel-slider' ),
+				'label'       => esc_html__( 'Columns: Full HD', 'carousel-slider' ),
 				'description' => esc_html__( 'The number of items you want to see on the Extra Large Desktop Layout (Screens size greater than 1921 pixels DP)', 'carousel-slider' ),
 				'default'     => 4,
 			],
-			[
+			'items_on_widescreen'   => [
 				'section'     => 'section_responsive_settings',
 				'type'        => 'number',
 				'id'          => '_items_desktop',
@@ -353,7 +353,7 @@ class MetaBoxConfig {
 				'description' => esc_html__( 'The number of items you want to see on the Desktop Layout (Screens size from 1200 pixels DP to 1920 pixels DP)', 'carousel-slider' ),
 				'default'     => 4,
 			],
-			[
+			'items_on_desktop'      => [
 				'section'     => 'section_responsive_settings',
 				'type'        => 'number',
 				'id'          => '_items_small_desktop',
@@ -361,7 +361,7 @@ class MetaBoxConfig {
 				'description' => esc_html__( 'The number of items you want to see on the Small Desktop Layout (Screens size from 993 pixels DP to 1199 pixels DP)', 'carousel-slider' ),
 				'default'     => 3,
 			],
-			[
+			'items_on_tablet'       => [
 				'section'     => 'section_responsive_settings',
 				'type'        => 'number',
 				'id'          => '_items_portrait_tablet',
@@ -369,7 +369,7 @@ class MetaBoxConfig {
 				'description' => esc_html__( 'The number of items you want to see on the Tablet Layout (Screens size from 768 pixels DP to 992 pixels DP)', 'carousel-slider' ),
 				'default'     => 2,
 			],
-			[
+			'items_on_small_tablet' => [
 				'section'     => 'section_responsive_settings',
 				'type'        => 'number',
 				'id'          => '_items_small_portrait_tablet',
@@ -377,7 +377,7 @@ class MetaBoxConfig {
 				'description' => esc_html__( 'The number of items you want to see on the Small Tablet Layout(Screens size from 600 pixels DP to 767 pixels DP)', 'carousel-slider' ),
 				'default'     => 2,
 			],
-			[
+			'items_on_mobile'       => [
 				'section'     => 'section_responsive_settings',
 				'type'        => 'number',
 				'id'          => '_items_portrait_mobile',
