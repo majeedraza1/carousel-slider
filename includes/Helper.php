@@ -95,13 +95,14 @@ class Helper extends ViewHelper {
 	 * Get setting
 	 *
 	 * @param string $key The setting key.
-	 * @param mixed  $default Setting default value.
+	 * @param mixed $default Setting default value.
 	 *
 	 * @return mixed|null
 	 */
 	public static function get_setting( string $key, $default = null ) {
 		$default_options = [
 			'load_scripts'                        => 'optimized',
+			'slider_js_package'                   => 'swiper', // owl.carousel.
 			'show_structured_data'                => '1',
 			'woocommerce_shop_loop_item_template' => 'v1-compatibility',
 		];
@@ -109,6 +110,17 @@ class Helper extends ViewHelper {
 		$settings        = wp_parse_args( $settings, $default_options );
 
 		return $settings[ $key ] ?? $default;
+	}
+
+	/**
+	 * Check if we are using swiper
+	 *
+	 * @return bool
+	 */
+	public static function is_using_swiper(): bool {
+		$is_swiper = 'swiper' === self::get_setting( 'slider_js_package' );
+
+		return apply_filters( 'carousel_slider/is_using_swiper', $is_swiper );
 	}
 
 	/**
@@ -250,7 +262,7 @@ class Helper extends ViewHelper {
 	 * Get default setting
 	 *
 	 * @param string $key The setting key.
-	 * @param mixed  $default Default value.
+	 * @param mixed $default Default value.
 	 *
 	 * @return mixed|null
 	 */
@@ -298,8 +310,8 @@ class Helper extends ViewHelper {
 	 */
 	public static function is_woocommerce_active(): bool {
 		return in_array( 'woocommerce/woocommerce.php', get_option( 'active_plugins' ), true ) ||
-			   defined( 'WC_VERSION' ) ||
-			   defined( 'WOOCOMMERCE_VERSION' );
+		       defined( 'WC_VERSION' ) ||
+		       defined( 'WOOCOMMERCE_VERSION' );
 	}
 
 	/**
@@ -319,7 +331,7 @@ class Helper extends ViewHelper {
 		}
 
 		foreach ( $ids as $id ) {
-			$_post         = get_post( $id );
+			$_post        = get_post( $id );
 			$page_content .= '<!-- wp:heading {"level":4} --><h4>' . $_post->post_title . '</h4><!-- /wp:heading -->';
 			$page_content .= '<!-- wp:carousel-slider/slider {"sliderID":' . $id . ',"sliderName":"' . $_post->post_title . ' ( ID: ' . $id . ' )"} -->';
 			$page_content .= '<div class="wp-block-carousel-slider-slider">[carousel_slide id=\'' . $id . '\']</div>';
@@ -377,7 +389,7 @@ class Helper extends ViewHelper {
 	 *
 	 * @param string $title The slider title.
 	 * @param string $type The slider type.
-	 * @param array  $args Additional arguments.
+	 * @param array $args Additional arguments.
 	 *
 	 * @return int|WP_Error The post ID on success. The value 0 or \WP_Error on failure.
 	 */

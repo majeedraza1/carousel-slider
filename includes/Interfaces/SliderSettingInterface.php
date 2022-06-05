@@ -2,10 +2,15 @@
 
 namespace CarouselSlider\Interfaces;
 
+use ArrayAccess;
+use JsonSerializable;
+
+defined( 'ABSPATH' ) || exit;
+
 /**
  * SliderSettingInterface class
  */
-interface SliderSettingInterface {
+interface SliderSettingInterface extends ArrayAccess, JsonSerializable {
 	/**
 	 * Get slider Id
 	 *

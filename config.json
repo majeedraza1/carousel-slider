@@ -5,6 +5,10 @@
       "./resources/scss/frontend.scss",
       "./resources/frontend/main.js"
     ],
+    "frontend-v2": [
+      "./resources/frontend-v2/style.scss",
+      "./resources/frontend-v2/main.ts"
+    ],
     "frontend-style-loader": [
       "./resources/frontend/style-loader.ts"
     ],

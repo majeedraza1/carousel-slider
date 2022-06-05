@@ -37,6 +37,7 @@
 		padding: 0.9em 1.6em;
 	}
 }
+
 .carousel-slider-hero {
 	// Cell background
 	&__cell__background {
@@ -53,7 +54,9 @@
 		}
 
 		// Active Slide
-		.carousel-slider .active & {
+		.carousel-slider .active &,
+		.carousel-slider .swiper-slide-duplicate-active &,
+		.carousel-slider .swiper-slide-active & {
 			animation-timing-function: linear;
 			animation-duration: 20s;
 
@@ -114,6 +117,10 @@
 		z-index: 1;
 		width: 100%;
 		max-width: 1140px;
+
+		&.hidden {
+			display: none;
+		}
 	}
 
 	&__cell__heading {

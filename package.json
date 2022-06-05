@@ -35,11 +35,11 @@
     ">= 1%"
   ],
   "devDependencies": {
-    "@babel/core": "^7.18.0",
+    "@babel/core": "^7.18.2",
     "@babel/plugin-proposal-class-properties": "^7.17.12",
     "@babel/plugin-proposal-object-rest-spread": "^7.18.0",
     "@babel/plugin-proposal-private-methods": "^7.17.12",
-    "@babel/preset-env": "^7.18.0",
+    "@babel/preset-env": "^7.18.2",
     "@babel/preset-react": "^7.17.12",
     "@babel/preset-typescript": "^7.17.12",
     "@types/jquery": "^3.5.14",
@@ -57,28 +57,29 @@
     "path": "^0.12.7",
     "postcss": "^8.4.14",
     "postcss-loader": "^7.0.0",
-    "postcss-preset-env": "^7.6.0",
-    "sass": "^1.52.1",
+    "postcss-preset-env": "^7.7.1",
+    "sass": "^1.52.2",
     "sass-loader": "^13.0.0",
     "style-loader": "^3.3.1",
-    "terser-webpack-plugin": "^5.3.1",
+    "terser-webpack-plugin": "^5.3.3",
     "ts-loader": "^9.3.0",
-    "typescript": "^4.6.4",
-    "webpack": "^5.72.1",
+    "typescript": "^4.7.3",
+    "webpack": "^5.73.0",
     "webpack-cli": "^4.9.2",
     "webpack-node-externals": "^3.0.0"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.5",
-    "@wordpress/block-editor": "^9.1.0",
-    "@wordpress/blocks": "^11.8.0",
-    "@wordpress/components": "^19.11.0",
+    "@wordpress/block-editor": "^9.2.0",
+    "@wordpress/blocks": "^11.9.0",
+    "@wordpress/components": "^19.12.0",
     "jquery": "^3.6.0",
     "magnific-popup": "^1.1.0",
     "owl.carousel": "^2.3.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "select2": "^4.0",
-    "shapla-css": "^2.5.0"
+    "shapla-css": "^2.5.0",
+    "swiper": "^8.2.2"
   }
 }

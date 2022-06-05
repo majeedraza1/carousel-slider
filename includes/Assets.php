@@ -164,6 +164,9 @@ class Assets {
 				'src'  => static::get_assets_url( 'js/frontend.js' ),
 				'deps' => [ 'jquery' ],
 			],
+			'carousel-slider-frontend-v2'        => [
+				'src' => static::get_assets_url( 'js/frontend-v2.js' ),
+			],
 		];
 	}
 
@@ -176,6 +179,9 @@ class Assets {
 		return [
 			'carousel-slider-frontend'           => [
 				'src' => static::get_assets_url( 'css/frontend.css' ),
+			],
+			'carousel-slider-frontend-v2'        => [
+				'src' => static::get_assets_url( 'css/frontend-v2.css' ),
 			],
 			'carousel-slider-admin'              => [
 				'src'  => static::get_assets_url( 'css/admin.css' ),
@@ -197,9 +203,9 @@ class Assets {
 		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		$javascript = file_get_contents( self::get_assets_url( '/js/frontend-style-loader.js' ) );
 		$script     = '<script id="carousel-slider-style-loader">' . PHP_EOL;
-		$script    .= 'window.carouselSliderCssUrl = ' . wp_json_encode( $data ) . ';' . PHP_EOL;
-		$script    .= $javascript . PHP_EOL;
-		$script    .= '</script>' . PHP_EOL;
+		$script     .= 'window.carouselSliderCssUrl = ' . wp_json_encode( $data ) . ';' . PHP_EOL;
+		$script     .= $javascript . PHP_EOL;
+		$script     .= '</script>' . PHP_EOL;
 
 		return $script;
 	}

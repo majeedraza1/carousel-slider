@@ -2,6 +2,8 @@
 
 namespace CarouselSlider\Interfaces;
 
+defined( 'ABSPATH' ) || exit;
+
 interface FieldInterface {
 	/**
 	 * Set settings

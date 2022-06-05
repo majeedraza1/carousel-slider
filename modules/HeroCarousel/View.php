@@ -45,7 +45,11 @@ class View extends AbstractView {
 			$item->set_prop( 'id', $slide_id + 1 );
 			$item->set_setting( $this->get_slider_setting() );
 
-			$html .= apply_filters( 'carousel_slider/loop/hero-banner-slider', $item->get_view(), $item, $this->get_slider_setting() ) . PHP_EOL;
+			$item_html  = $this->start_item_wrapper_html();
+			$item_html .= $item->get_view();
+			$item_html .= $this->end_item_wrapper_html();
+
+			$html .= apply_filters( 'carousel_slider/loop/hero-banner-slider', $item_html, $item, $this->get_slider_setting() ) . PHP_EOL;
 		}
 
 		$html .= $this->end_wrapper_html();

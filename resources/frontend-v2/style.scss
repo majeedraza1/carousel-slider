@@ -1,0 +1,13 @@
+$imagePath: '../img/';
+$owl-video-play-icon : "#{$imagePath}play.svg";
+
+@import "swiper/scss";
+@import "swiper/scss/navigation";
+@import "swiper/scss/pagination";
+@import "swiper/scss/scrollbar";
+@import "swiper/scss/autoplay";
+@import "swiper/scss/lazy";
+
+// Load slider style
+@import '../scss/public/carousels/all';
+@import '../scss/public/owl-carousel/animate';

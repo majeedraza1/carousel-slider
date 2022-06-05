@@ -4,6 +4,7 @@ namespace CarouselSlider\Modules\ImageCarousel;
 
 use CarouselSlider\Abstracts\AbstractView;
 use CarouselSlider\Abstracts\SliderSetting;
+use CarouselSlider\Helper;
 use CarouselSlider\Supports\Validate;
 use WP_Post;
 
@@ -51,7 +52,8 @@ class View extends AbstractView {
 
 			$image = $this->get_image_html( $id, $setting->get_image_size(), $setting->get_prop( 'lazy_load' ) );
 
-			$item_html = '<div class="carousel-slider__item">';
+			$item_html  = $this->start_item_wrapper_html();
+			$item_html .= '<div class="carousel-slider__item">';
 			if ( Validate::checked( $setting->get_prop( 'show_lightbox' ) ) ) {
 				$image_src  = wp_get_attachment_image_src( $id, 'full' );
 				$item_html .= sprintf(
@@ -73,6 +75,7 @@ class View extends AbstractView {
 				$item_html .= $full_caption;
 			}
 			$item_html .= '</div>' . PHP_EOL;
+			$item_html .= $this->end_item_wrapper_html() . PHP_EOL;
 
 			$html .= apply_filters( 'carousel_slider/loop/image-carousel', $item_html, $_post, $this->get_slider_setting() );
 		}
@@ -93,14 +96,16 @@ class View extends AbstractView {
 	protected function get_image_html( int $image_id, string $image_size, bool $lazy_load_image ): string {
 		$image_alt_text = trim( wp_strip_all_tags( get_post_meta( $image_id, '_wp_attachment_image_alt', true ) ) );
 		if ( $lazy_load_image ) {
-			$image_src = wp_get_attachment_image_src( $image_id, $image_size );
+			$image_src  = wp_get_attachment_image_src( $image_id, $image_size );
+			$lazy_class = Helper::is_using_swiper() ? 'swiper-lazy' : 'owl-lazy';
 
 			return sprintf(
-				'<img class="owl-lazy" data-src="%1$s" width="%2$s" height="%3$s" alt="%4$s" />',
+				'<img class="%5$s" data-src="%1$s" width="%2$s" height="%3$s" alt="%4$s" />',
 				$image_src[0],
 				$image_src[1],
 				$image_src[2],
-				$image_alt_text
+				$image_alt_text,
+				$lazy_class
 			);
 
 		}

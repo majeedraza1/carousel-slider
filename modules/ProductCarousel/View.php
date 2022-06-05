@@ -113,11 +113,14 @@ class View extends AbstractView {
 				continue;
 			}
 			$template = GlobalSetting::get_option( 'woocommerce_shop_loop_item_template' );
+
+			$html .= $this->start_item_wrapper_html();
 			if ( 'v1-compatibility' === $template ) {
 				$html .= self::get_item( $product, $this->get_slider_setting() ) . PHP_EOL;
 			} else {
 				$html .= self::get_slider_item( $product, $this->get_slider_setting() ) . PHP_EOL;
 			}
+			$html .= $this->end_item_wrapper_html();
 		}
 		wp_reset_postdata();
 
@@ -129,7 +132,7 @@ class View extends AbstractView {
 	/**
 	 * Get item
 	 *
-	 * @param WC_Product    $product The WC_Product object.
+	 * @param WC_Product $product The WC_Product object.
 	 * @param SliderSetting $settings Settings array.
 	 *
 	 * @return string
@@ -198,7 +201,7 @@ class View extends AbstractView {
 	/**
 	 * Get product slider item
 	 *
-	 * @param WC_Product    $product The WC_Product object.
+	 * @param WC_Product $product The WC_Product object.
 	 * @param SliderSetting $settings Settings array.
 	 *
 	 * @return string

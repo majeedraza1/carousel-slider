@@ -39,7 +39,7 @@ class Setting {
 	 * Get option
 	 *
 	 * @param string $key option key.
-	 * @param mixed  $default default value.
+	 * @param mixed $default default value.
 	 *
 	 * @return mixed
 	 */
@@ -105,6 +105,25 @@ class Setting {
 					'always'           => __( 'Always', 'carousel-slider' ),
 					'optimized'        => __( 'Optimized (recommended)', 'carousel-slider' ),
 					'optimized-loader' => __( 'Optimized with style loader', 'carousel-slider' ),
+				],
+				'panel'       => 'general',
+			]
+		);
+		$settings->add_field(
+			[
+				'id'          => 'slider_js_package',
+				'type'        => 'radio',
+				'default'     => 'swiper',
+				'name'        => __( 'Slider JavaScript package', 'carousel-slider' ),
+				'description' => __(
+					'<strong>Swiper</strong>, is the most modern mobile touch slider without any third party dependencies.
+ 					<strong>Owl Carousel 2</strong> was great but now it is <strong>PRETTY MUCH DEAD</strong> as there is
+ 					no development after Nov 12, 2018',
+					'carousel-slider'
+				),
+				'options'     => [
+					'swiper'       => __( 'Swiper (recommended)', 'carousel-slider' ),
+					'owl.carousel' => __( 'Owl Carousel 2', 'carousel-slider' ),
 				],
 				'panel'       => 'general',
 			]

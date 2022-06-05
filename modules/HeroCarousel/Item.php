@@ -285,7 +285,7 @@ class Item extends Data {
 		}
 
 		$cell_content_attr = [
-			'class'          => 'carousel-slider-hero__cell__content',
+			'class'          => 'carousel-slider-hero__cell__content hidden',
 			'style'          => 'max-width:' . $this->get_content_width(),
 			'data-animation' => $this->get_content_animation(),
 		];
@@ -342,7 +342,7 @@ class Item extends Data {
 		$_slide_bg_class = 'carousel-slider-hero__cell__background';
 
 		if ( $this->lazy_load_image() ) {
-			$_slide_bg_class .= ' owl-lazy';
+			$_slide_bg_class .= Helper::is_using_swiper() ? ' swiper-lazy' : ' owl-lazy';
 		}
 
 		if ( 'zoom-in' === $ken_burns_effect ) {
@@ -358,7 +358,11 @@ class Item extends Data {
 		];
 
 		if ( $have_img && $this->lazy_load_image() ) {
-			$attrs['data-src'] = $img_src[0];
+			if ( Helper::is_using_swiper() ) {
+				$attrs['data-background'] = $img_src[0];
+			} else {
+				$attrs['data-src'] = $img_src[0];
+			}
 		}
 
 		return '<div ' . implode( ' ', Helper::array_to_attribute( $attrs ) ) . '></div>';
@@ -454,7 +458,7 @@ class Item extends Data {
 		$btn_text = $this->get_prop( 'button_one_text' );
 		$target   = $this->get_prop( 'button_one_target', '_self' );
 
-		$classes  = 'button cs-hero-button';
+		$classes = 'button cs-hero-button';
 		$classes .= ' cs-hero-button-' . $this->get_item_id() . '-1';
 		$classes .= ' cs-hero-button-' . $this->get_prop( 'button_one_type', 'normal' );
 		$classes .= ' cs-hero-button-' . $this->get_prop( 'button_one_size', 'medium' );
@@ -487,7 +491,7 @@ class Item extends Data {
 		$text   = $this->get_prop( 'button_two_text' );
 		$target = $this->get_prop( 'button_two_target', '_self' );
 
-		$classes  = 'button cs-hero-button';
+		$classes = 'button cs-hero-button';
 		$classes .= ' cs-hero-button-' . $this->get_item_id() . '-2';
 		$classes .= ' cs-hero-button-' . $this->get_prop( 'button_two_type', 'normal' );
 		$classes .= ' cs-hero-button-' . $this->get_prop( 'button_two_size', 'medium' );

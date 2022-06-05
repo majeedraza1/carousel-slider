@@ -30,7 +30,8 @@ class View extends AbstractView {
 
 		$html = $this->start_wrapper_html();
 		foreach ( $urls as $url ) {
-			$item_html  = '<div class="carousel-slider-item-video">';
+			$item_html = $this->start_item_wrapper_html();
+			$item_html .= '<div class="carousel-slider-item-video">';
 			$item_html .= '<div class="carousel-slider-video-wrapper">';
 			$item_html .= '<a class="magnific-popup" href="' . esc_url( $url['url'] ) . '">';
 			$item_html .= '<div class="carousel-slider-video-play-icon"></div>';
@@ -43,6 +44,7 @@ class View extends AbstractView {
 			$item_html .= '</a>';
 			$item_html .= '</div>';
 			$item_html .= '</div>' . PHP_EOL;
+			$item_html .= $this->end_item_wrapper_html();
 
 			$html .= apply_filters( 'carousel_slider/loop/video-carousel', $item_html, $url, $this->get_slider_setting() );
 		}
