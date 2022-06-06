@@ -1,13 +1,38 @@
 $imagePath: '../img/';
-$owl-video-play-icon : "#{$imagePath}play.svg";
+$owl-video-play-icon: "#{$imagePath}play.svg";
 
 @import "swiper/scss";
+@import "swiper/scss/autoplay";
+@import "swiper/scss/lazy";
+@import "swiper/scss/mousewheel";
 @import "swiper/scss/navigation";
 @import "swiper/scss/pagination";
 @import "swiper/scss/scrollbar";
-@import "swiper/scss/autoplay";
-@import "swiper/scss/lazy";
 
 // Load slider style
 @import '../scss/public/carousels/all';
 @import '../scss/public/owl-carousel/animate';
+
+.carousel-slider-outer {
+	&.arrows-visibility-always {
+	}
+
+	&.navigation-position-outside {
+		.swiper-button-prev {
+			//left: -10px;
+		}
+
+		.swiper-button-next {
+			//right: 10px;
+		}
+	}
+
+	&.dots-visibility-hover {
+	}
+}
+
+iframe.cs-iframe {
+	width: 100%;
+	height: auto;
+	display: flex;
+}

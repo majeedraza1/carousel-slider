@@ -30,12 +30,20 @@ class View extends AbstractView {
 
 		$html = $this->start_wrapper_html();
 		foreach ( $urls as $url ) {
-			$item_html = $this->start_item_wrapper_html();
-			$item_html .= '<div class="carousel-slider-item-video">';
-			$item_html .= '<div class="carousel-slider-video-wrapper">';
-			$item_html .= '<a class="magnific-popup" href="' . esc_url( $url['url'] ) . '">';
-			$item_html .= '<div class="carousel-slider-video-play-icon"></div>';
-			$item_html .= '<div class="carousel-slider-video-overlay"></div>';
+			$item       = new Item( $url );
+			$popup_args = [
+				'class'          => 'magnific-popup',
+				'href'           => esc_url( $url['url'] ),
+				'data-provider'  => esc_attr( $item->get_provider() ),
+				'data-id'        => esc_attr( $item->get_video_id() ),
+				'data-embed_url' => esc_url( $item->get_embed_url() ),
+			];
+			$item_html  = $this->start_item_wrapper_html();
+			$item_html  .= '<div class="carousel-slider-item-video">';
+			$item_html  .= '<div class="carousel-slider-video-wrapper">';
+			$item_html  .= '<a ' . join( ' ', \CarouselSlider\Helper::array_to_attribute( $popup_args ) ) . '>';
+			$item_html  .= '<div class="carousel-slider-video-play-icon"></div>';
+			$item_html  .= '<div class="carousel-slider-video-overlay"></div>';
 			if ( Validate::checked( $lazy_load_image ) ) {
 				$item_html .= '<img class="owl-lazy" data-src="' . esc_url( $url['thumbnail']['large'] ) . '"/>';
 			} else {

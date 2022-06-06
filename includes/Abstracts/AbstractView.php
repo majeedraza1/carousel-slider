@@ -131,23 +131,27 @@ abstract class AbstractView implements SliderViewInterface {
 	 * @return string
 	 */
 	public function start_wrapper_html( array $args = [] ): string {
+		$setting     = $this->get_slider_setting();
+		$css_classes = [
+			'carousel-slider-outer',
+			'carousel-slider-outer-' . $this->get_slider_type(),
+			'carousel-slider-outer-' . $this->get_slider_id(),
+		];
 		if ( $this->is_using_swiper() ) {
-			$css_classes = [
-				'swiper carousel-slider-outer',
-				'carousel-slider-outer-' . $this->get_slider_type(),
-				'carousel-slider-outer-' . $this->get_slider_id(),
-			];
-		} else {
-			$css_classes = [
-				'carousel-slider-outer',
-				'carousel-slider-outer-' . $this->get_slider_type(),
-				'carousel-slider-outer-' . $this->get_slider_id(),
-			];
+			$css_classes[] = 'swiper';
+			$css_classes[] = sprintf( 'navigation-visibility-%s', $setting->get_nav_visibility() );
+			$css_classes[] = sprintf( 'navigation-position-%s', $setting->get_option( 'nav_position' ) );
+			$css_classes[] = sprintf( 'pagination-visibility-%s', $setting->get_pagination_visibility() );
 		}
+
+		$outer_attributes_array = [
+			'class' => implode( ' ', $css_classes ),
+			'style' => Helper::array_to_style( $this->get_css_variable() ),
+		];
 
 		$attributes_array = $this->get_slider_attributes( $args );
 
-		$html = '<div class="' . join( ' ', $css_classes ) . '">' . PHP_EOL;
+		$html = '<div ' . join( ' ', Helper::array_to_attribute( $outer_attributes_array ) ) . '>' . PHP_EOL;
 		$html .= '<div ' . join( ' ', $attributes_array ) . '>' . PHP_EOL;
 
 		return $html;
@@ -218,7 +222,6 @@ abstract class AbstractView implements SliderViewInterface {
 		$default_attributes = [
 			'id'              => sprintf( "'id-%s", $this->get_slider_id() ),
 			'class'           => implode( ' ', $this->get_css_classes() ),
-			'style'           => Helper::array_to_style( $this->get_css_variable() ),
 			'data-slide-type' => $this->get_slider_type(),
 		];
 
@@ -260,6 +263,11 @@ abstract class AbstractView implements SliderViewInterface {
 			'--carousel-slider-bullet-size'      => $setting->get_prop( 'pagination_size' ) . 'px',
 		];
 
+		if ( $this->is_using_swiper() ) {
+			$css_var['--swiper-theme-color']     = $setting->get_prop( 'nav_color' );
+			$css_var['--swiper-navigation-size'] = $setting->get_prop( 'nav_size' ) . 'px';
+		}
+
 		return apply_filters( 'carousel_slider/css_var', $css_var, $setting );
 	}
 
@@ -276,9 +284,9 @@ abstract class AbstractView implements SliderViewInterface {
 			'carousel-slider-' . $this->get_slider_id(),
 			'arrows-visibility-' . $setting->get_nav_visibility(),
 			'dots-visibility-' . $setting->get_pagination_visibility(),
-			'arrows-' . $setting->get_prop( 'nav_position' ),
-			'dots-' . $setting->get_prop( 'pagination_position' ),
-			'dots-' . $setting->get_prop( 'pagination_shape' ),
+			'arrows-' . $setting->get_option( 'nav_position' ),
+			'dots-' . $setting->get_option( 'pagination_position' ),
+			'dots-' . $setting->get_option( 'pagination_shape' ),
 		];
 
 		if ( $this->is_using_swiper() ) {

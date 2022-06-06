@@ -1,4 +1,10 @@
-import Swiper, {Navigation, Pagination, Scrollbar, Autoplay, Lazy} from 'swiper';
+import 'magnific-popup/dist/jquery.magnific-popup.js';
+import '../web-components/ShaplaCross.ts'
+import '../web-components/ShaplaDialog.ts'
+import '../web-components/ShaplaAspectRatio.ts'
+
+import Swiper, {Autoplay, Keyboard, Lazy, Mousewheel, Navigation, Pagination, Scrollbar} from 'swiper';
+import {createEl} from "../utils/misc";
 
 const dispatchEvent = (type: string, detail: any) => {
 	document.dispatchEvent(new CustomEvent(type, {detail: detail}))
@@ -13,12 +19,76 @@ sliders.forEach((slider: HTMLElement) => {
 	const swiperSettings = JSON.parse(swiperSettingsString as string);
 	const swiper = new Swiper(slider, {
 		...swiperSettings,
-		modules: [Navigation, Pagination, Scrollbar, Autoplay, Lazy],
+		modules: [Autoplay, Lazy, Mousewheel, Navigation, Pagination, Scrollbar, Keyboard],
 	});
 
 	setTimeout(() => {
 		dispatchEvent('CarouselSlider.init', {slider_type: sliderType, swiper: swiper})
-	}, 5)
+	}, 5);
+
+	const findOrCreateDialog = () => {
+		let dialog = document.querySelector('#carousel-slider-dialog');
+		if (dialog) {
+			return dialog;
+		}
+
+		let dialog2 = document.createElement('shapla-dialog');
+		dialog2.id = 'carousel-slider-dialog';
+		dialog2.setAttribute('type', 'lightbox');
+
+		document.body.append(dialog2);
+
+		dialog2.addEventListener('close', () => {
+			dialog2.remove();
+		})
+		return dialog2;
+	}
+
+	// support for lightbox
+	let links = slider.querySelectorAll('.magnific-popup');
+	links.forEach(link => {
+		link.addEventListener('click', event => {
+			event.preventDefault();
+			let modal = findOrCreateDialog();
+			if ('video-carousel' === sliderType) {
+				let url = link.getAttribute('data-embed_url');
+				let aspectRatio = createEl('shapla-aspect-ratio', {
+					'width-ratio': '16',
+					'height-ratio': '9'
+				}, [
+					createEl('iframe', {
+						class: 'cs-iframe',
+						src: `${url}`,
+						frameborder: '0',
+						allowfullscreen: '',
+					})
+				])
+				modal.setAttribute('content-size', 'large');
+				modal.innerHTML = aspectRatio.outerHTML
+			} else if ('product-carousel' === sliderType) {
+				const getDialogContent = () => {
+					let url = link.getAttribute('href') as string;
+					return new Promise(resolve => {
+						let xhr = new XMLHttpRequest();
+						xhr.addEventListener("load", () => {
+							resolve(xhr.responseText as string)
+						});
+						xhr.open("GET", url);
+						xhr.send();
+					})
+				}
+				getDialogContent().then((data: string) => {
+					modal.setAttribute('type', 'box');
+					// modal.setAttribute('content-size', 'large');
+					modal.innerHTML = data;
+				})
+			} else {
+				let url = link.getAttribute('href');
+				modal.innerHTML = `<img src="${url}" />`
+			}
+			modal.setAttribute('open', '');
+		})
+	})
 })
 
 document.addEventListener('CarouselSlider.init', (event: CustomEventInit) => {
@@ -50,5 +120,3 @@ document.addEventListener('CarouselSlider.init', (event: CustomEventInit) => {
 		});
 	}
 })
-
-
