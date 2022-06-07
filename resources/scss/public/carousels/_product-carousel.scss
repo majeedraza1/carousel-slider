@@ -128,7 +128,7 @@ $btn-background: #{var(--cs-product-primary,#96588a)};
 
 		.product_title,
 		.description {
-			margin: 1em 0;
+			margin: 0 0 1em;
 		}
 
 		// Price
@@ -257,7 +257,8 @@ $btn-background: #{var(--cs-product-primary,#96588a)};
 	}
 }
 
-.mfp-inline-holder .mfp-content, .mfp-ajax-holder .mfp-content {
+.mfp-inline-holder .mfp-content,
+.mfp-ajax-holder .mfp-content {
 	max-width: 945px;
 	margin-top: 40px;
 	margin-bottom: 40px;

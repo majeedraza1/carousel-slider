@@ -1,5 +1,11 @@
 @use "~shapla-css/src/index.scss" as shapla;
 
+:root {
+	--shapla-primary: #2271b1;
+	--shapla-primary-variant: #135e96;
+	----shapla-on-primary: #fff;
+}
+
 $imagePath: '../img/';
 
 @include shapla.button;

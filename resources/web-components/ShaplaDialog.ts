@@ -16,6 +16,39 @@ class ShaplaDialog extends ShaplaBaseComponent {
 		(this.shadowRoot as ShadowRoot).append(style, ...this.getWrapperTemplate());
 	}
 
+	/**
+	 * Update dom when attribute changed
+	 *
+	 * @param {string} name
+	 * @param {any} oldValue
+	 * @param {any} newValue
+	 */
+	attributeChangedCallback(name: string, oldValue: string, newValue: string) {
+		const modal = (this.shadowRoot as ShadowRoot).querySelector('.shapla-modal') as HTMLElement;
+		if ('open' === name && this.hasAttribute('open')) {
+			modal.classList.add('is-active')
+		} else {
+			modal.classList.remove('is-active')
+		}
+		if ('type' === name) {
+			const elContent = (this.shadowRoot as ShadowRoot).querySelector('.shapla-modal-content') as HTMLElement;
+			if ('box' === newValue) {
+				if (!elContent.classList.contains('shapla-modal-box')) {
+					elContent.classList.add('shapla-modal-box');
+				}
+			}
+		}
+	}
+
+	/**
+	 * List of attribute to observe
+	 *
+	 * @returns {string[]}
+	 */
+	static get observedAttributes() {
+		return ['open', 'type'];
+	}
+
 	connectedCallback() {
 		const type = this.getAttribute('type');
 
@@ -167,31 +200,6 @@ class ShaplaDialog extends ShaplaBaseComponent {
 	 */
 	triggerCloseEvent() {
 		this.triggerCustomEvent('close');
-	}
-
-	/**
-	 * Update dom when attribute changed
-	 *
-	 * @param {string} name
-	 * @param {any} oldValue
-	 * @param {any} newValue
-	 */
-	attributeChangedCallback(name: string, oldValue: string, newValue: string) {
-		const modal = (this.shadowRoot as ShadowRoot).querySelector('.shapla-modal') as HTMLElement;
-		if ('open' === name && this.hasAttribute('open')) {
-			modal.classList.add('is-active')
-		} else {
-			modal.classList.remove('is-active')
-		}
-	}
-
-	/**
-	 * List of attribute to observe
-	 *
-	 * @returns {string[]}
-	 */
-	static get observedAttributes() {
-		return ['open', 'content-size'];
 	}
 
 	/**

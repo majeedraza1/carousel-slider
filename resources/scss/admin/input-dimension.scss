@@ -1,6 +1,6 @@
 .shapla-dimension {
 	margin-right: 10px;
-	font-size: 0;
+	font-size: 12px;
 	white-space: nowrap;
 	display: inline-block;
 	margin-bottom: 6px;
@@ -9,20 +9,21 @@
 	.add-on {
 		border: 1px solid rgba(0, 0, 0, 0.1) !important;
 		border-right: none !important;
-		height: 34px;
-		width: 34px;
-		font-size: 12px;
+		height: 2.83em;
+		width: 2.83em;
+		line-height: calc(2.83em - 2px);
 		background-color: #fff;
-		box-sizing: border-box;
 		color: rgba(0, 0, 0, 0.5);
+		box-sizing: border-box;
 		padding: 0;
 		font-weight: 400;
-		line-height: 32px;
 		text-align: center;
 		text-shadow: 0 1px 0 #ffffff;
-		display: block;
 		float: left;
 		min-width: 16px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 
 		i {
 			font-size: 13px;
@@ -30,6 +31,12 @@
 			-webkit-font-smoothing: antialiased;
 			height: 32px;
 			line-height: 32px;
+		}
+
+		svg {
+			width: 1.5em;
+			height: 1.5em;
+			fill: currentColor;
 		}
 	}
 

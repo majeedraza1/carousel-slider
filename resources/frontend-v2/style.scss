@@ -31,8 +31,31 @@ $owl-video-play-icon: "#{$imagePath}play.svg";
 	}
 }
 
-iframe.cs-iframe {
-	width: 100%;
-	height: auto;
-	display: flex;
+.dialog--loading {
+	text-align: center;
+}
+
+.dialog--video-carousel {
+	max-height: 100%;
+	overflow: hidden;
+	background-color: #000;
+
+	.cs-iframe {
+		width: 100%;
+		height: auto;
+		display: flex;
+	}
+}
+
+.dialog--product-carousel {
+
+}
+
+.dialog--image-carousel {
+	max-height: 100%;
+	//overflow: hidden;
+
+	img {
+		max-height: 100%;
+	}
 }

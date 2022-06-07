@@ -1,3 +1,5 @@
+@import "shapla-css/src/colors";
+
 .switch-container {
 
 	.switch-label {
@@ -48,8 +50,9 @@
 		}
 	}
 
+	input[type="checkbox"],
 	input[type="checkbox"]:checked::before {
-		display: none;
+		display: none !important;
 	}
 
 	input:checked + .switch:before {
@@ -58,7 +61,7 @@
 	}
 
 	input:checked + .switch:after {
-		background: #0073aa;
+		background: $primary;
 		transform: translate3d(100%, -50%, 0);
 	}
 

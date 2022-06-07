@@ -252,7 +252,7 @@ class Admin {
 		];
 		$settings[] = [
 			'group'       => 'image_carousel',
-			'type'        => 'select',
+			'type'        => 'button_group',
 			'id'          => '_image_target',
 			'label'       => esc_html__( 'Image Target', 'carousel-slider' ),
 			'description' => esc_html__( 'Choose where to open the linked image.', 'carousel-slider' ),

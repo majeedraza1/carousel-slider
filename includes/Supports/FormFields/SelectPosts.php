@@ -23,7 +23,10 @@ class SelectPosts extends Select {
 
 		$choices = [];
 		foreach ( $posts as $post ) {
-			$choices[ $post->ID ] = $post->post_title;
+			$choices[] = [
+				'value' => $post->ID,
+				'label' => $post->post_title,
+			];
 		}
 
 		$this->set_setting( 'choices', $choices );

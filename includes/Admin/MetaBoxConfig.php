@@ -143,6 +143,21 @@ class MetaBoxConfig {
 				'description' => esc_html__( 'Set item width according to its content width. Use width style on item to get the result you want. ', 'carousel-slider' ),
 				'default'     => 'off',
 			],
+			'columns'       => [
+				'section'     => 'section_general_settings',
+				'type'        => 'columns',
+				'id'          => '_columns',
+				'label'       => esc_html__( 'Columns', 'carousel-slider' ),
+				'description' => esc_html__( '2X large device: ≥1536px<br>Extra large device: ≥1200px<br>Large device: ≥992px<br>Medium device: ≥768px<br>Small device: ≥576px<br>Extra small device: <576px', 'carousel-slider' ),
+				'default'     => [
+					'xs'  => 1,
+					'sm'  => 2,
+					'md'  => 2,
+					'lg'  => 3,
+					'xl'  => 4,
+					'2xl' => 5,
+				],
+			],
 		];
 
 		return apply_filters( 'carousel_slider/admin/metabox_general_config', $settings, self::get_args() );

@@ -2,6 +2,7 @@
 
 namespace CarouselSlider\Admin;
 
+use CarouselSlider\Helper;
 use CarouselSlider\Supports\SettingApi\DefaultSettingApi;
 use Exception;
 
@@ -102,9 +103,9 @@ class Setting {
 					'carousel-slider'
 				),
 				'options'     => [
-					'always'           => __( 'Always', 'carousel-slider' ),
 					'optimized'        => __( 'Optimized (recommended)', 'carousel-slider' ),
 					'optimized-loader' => __( 'Optimized with style loader', 'carousel-slider' ),
+					'always'           => __( 'Always', 'carousel-slider' ),
 				],
 				'panel'       => 'general',
 			]
@@ -121,9 +122,15 @@ class Setting {
  					no development after Nov 12, 2018',
 					'carousel-slider'
 				),
-				'options'     => [
-					'swiper'       => __( 'Swiper (recommended)', 'carousel-slider' ),
-					'owl.carousel' => __( 'Owl Carousel 2', 'carousel-slider' ),
+				'choices'     => [
+					[
+						'value' => 'swiper',
+						'label' => __( 'Swiper (recommended)', 'carousel-slider' ),
+					],
+					[
+						'value' => 'owl.carousel',
+						'label' => __( 'Owl Carousel 2 + Magnific Popup', 'carousel-slider' ),
+					],
 				],
 				'panel'       => 'general',
 			]
@@ -131,7 +138,7 @@ class Setting {
 		$settings->add_field(
 			[
 				'id'          => 'show_structured_data',
-				'type'        => 'checkbox',
+				'type'        => 'switch',
 				'default'     => 'on',
 				'name'        => __( 'Show Structured Data', 'carousel-slider' ),
 				'description' => __(
@@ -142,6 +149,22 @@ class Setting {
 				'panel'       => 'general',
 			]
 		);
+		$choices = [
+			[
+				'value' => 'wc-default',
+				'label' => __( 'WooCommerce Default (recommended)', 'carousel-slider' ),
+			],
+			[
+				'value' => 'v1-compatibility',
+				'label' => __( 'Compatibility mode (with version 1)', 'carousel-slider' ),
+			],
+		];
+		if ( Helper::is_pro_active() ) {
+			$choices[] = [
+				'value' => 'template-parser',
+				'label' => __( 'Custom Template (pro)', 'carousel-slider' ),
+			];
+		}
 		$settings->add_field(
 			[
 				'id'          => 'woocommerce_shop_loop_item_template',
@@ -160,11 +183,7 @@ class Setting {
 						'carousel-slider'
 					),
 				],
-				'options'     => [
-					'wc-default'       => __( 'WooCommerce Default (recommended)', 'carousel-slider' ),
-					'v1-compatibility' => __( 'Compatibility mode (with version 1)', 'carousel-slider' ),
-					'template-parser'  => __( 'Custom Template (pro)', 'carousel-slider' ),
-				],
+				'choices'     => $choices,
 				'panel'       => 'woocommerce',
 			]
 		);

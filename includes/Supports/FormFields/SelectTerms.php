@@ -17,7 +17,10 @@ class SelectTerms extends Select {
 		$choices = [];
 		if ( ! is_wp_error( $terms ) ) {
 			foreach ( $terms as $term ) {
-				$choices[ $term->term_id ] = sprintf( '%s (%s)', $term->name, $term->count );
+				$choices[] = [
+					'value' => $term->term_id,
+					'label' => sprintf( '%s (%s)', $term->name, $term->count ),
+				];
 			}
 		}
 		$this->set_setting( 'choices', $choices );

@@ -1,7 +1,19 @@
+@import "shapla-css/src/colors";
+
 .buttonset {
-	display: flex;
+	display: inline-flex;
 	flex-wrap: wrap;
 	font-size: 1rem;
+
+	input:first-child + .switch-label {
+		border-top-left-radius: 3px;
+		border-bottom-left-radius: 3px;
+	}
+
+	.switch-label:last-child {
+		border-top-right-radius: 3px;
+		border-bottom-right-radius: 3px;
+	}
 
 	.switch-label {
 		background: rgba(0, 0, 0, .05);
@@ -22,8 +34,8 @@
 
 		&:checked {
 			+ .switch-label {
-				background-color: #3498DB;
-				color: #fff;
+				background-color: $primary;
+				color: $on-primary;
 			}
 		}
 	}
