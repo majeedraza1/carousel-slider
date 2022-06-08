@@ -89,7 +89,7 @@ class MetaBox {
 	/**
 	 * Add carousel slider meta box
 	 *
-	 * @param string  $post_type The post type.
+	 * @param string $post_type The post type.
 	 * @param WP_Post $post The post object.
 	 */
 	public function add_meta_boxes( $post_type, $post ) {
@@ -114,7 +114,7 @@ class MetaBox {
 		$slide_types = Helper::get_slide_types();
 
 		$meta_boxes = [
-			'carousel-slider-meta-boxes'          => [
+			'carousel-slider-meta-boxes'  => [
 				'title'    => sprintf(
 				/* translators: 1 - Slider type label */
 					__( 'Carousel Slider : %s', 'carousel-slider' ),
@@ -124,34 +124,10 @@ class MetaBox {
 				'context'  => 'normal',
 				'priority' => 'high',
 			],
-			'carousel-slider-usages-info'         => [
+			'carousel-slider-usages-info' => [
 				'title'    => __( 'Usage (Shortcode)', 'carousel-slider' ),
 				'callback' => [ $this, 'usages_callback' ],
 				'priority' => 'high',
-			],
-			'carousel-slider-general-settings'    => [
-				'title'    => __( 'General Settings', 'carousel-slider' ),
-				'callback' => [ $this, 'general_settings_callback' ],
-			],
-			'carousel-slider-navigation-settings' => [
-				'title'    => __( 'Navigation Settings', 'carousel-slider' ),
-				'callback' => [ $this, 'navigation_settings_callback' ],
-			],
-			'carousel-slider-pagination-settings' => [
-				'title'    => __( 'Pagination Settings', 'carousel-slider' ),
-				'callback' => [ $this, 'pagination_settings_callback' ],
-			],
-			'carousel-slider-autoplay-settings'   => [
-				'title'    => __( 'Autoplay Settings', 'carousel-slider' ),
-				'callback' => [ $this, 'autoplay_settings_callback' ],
-			],
-			'carousel-slider-color-settings'      => [
-				'title'    => __( 'Color Settings', 'carousel-slider' ),
-				'callback' => [ $this, 'color_settings_callback' ],
-			],
-			'carousel-slider-responsive-settings' => [
-				'title'    => __( 'Responsive Settings', 'carousel-slider' ),
-				'callback' => [ $this, 'responsive_settings_callback' ],
 			],
 		];
 		foreach ( $meta_boxes as $id => $meta_box ) {
@@ -164,6 +140,15 @@ class MetaBox {
 				$meta_box['priority'] ?? 'low'
 			);
 		}
+
+		add_meta_box(
+			'carousel-slider-settings',
+			__( 'Slider Settings', 'carousel-slider' ),
+			[ $this, 'carousel_slider_settings' ],
+			CAROUSEL_SLIDER_POST_TYPE,
+			'normal',
+			'low'
+		);
 	}
 
 	/**
@@ -200,7 +185,7 @@ class MetaBox {
 		wp_nonce_field( 'carousel_slider_nonce', '_carousel_slider_nonce' );
 		$slide_types = Helper::get_slider_types();
 		$html        = '<div class="carousel-slider-slider-type-container">';
-		$html       .= '<div class="shapla-columns is-multiline">';
+		$html        .= '<div class="shapla-columns is-multiline">';
 		foreach ( $slide_types as $slug => $args ) {
 			$id    = sprintf( '_slide_type__%s', $slug );
 			$attrs = [
@@ -234,6 +219,30 @@ class MetaBox {
 		}
 		$html .= '</div>';
 		$html .= '</div>';
+
+		Helper::print_unescaped_internal_string( $html );
+	}
+
+	public function carousel_slider_settings() {
+		$sections = MetaBoxConfig::get_sections_settings();
+		$fields   = MetaBoxConfig::get_fields_settings();
+		$html     = '';
+		foreach ( $sections as $section ) {
+			$html .= '<section class="cs-setting-section">';
+			$html .= '<h2 class="cs-setting-section__title">' . esc_html( $section['label'] ) . '</h2>';
+			$html .= '<div class="cs-setting-section__content">';
+
+			$section_html = '';
+			foreach ( $fields as $field ) {
+				if ( $field['section'] === $section['id'] ) {
+					$section_html .= MetaBoxForm::field( $field );
+				}
+			}
+
+			$html .= apply_filters( 'carousel_slider/admin/' . $section['hook'], $section_html );
+			$html .= '</div>';
+			$html .= '</section>';
+		}
 
 		Helper::print_unescaped_internal_string( $html );
 	}

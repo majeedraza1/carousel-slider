@@ -14,7 +14,24 @@ $owl-video-play-icon: "#{$imagePath}play.svg";
 @import '../scss/public/owl-carousel/animate';
 
 .carousel-slider-outer {
-	&.arrows-visibility-always {
+	.swiper-button-prev:hover,
+	.swiper-button-next:hover {
+		--swiper-navigation-color: var(--carousel-slider-active-nav-color);
+	}
+
+	&.navigation-visibility-hover {
+		.swiper-button-prev,
+		.swiper-button-next {
+			opacity: 0;
+			transition: opacity 300ms ease-in-out;
+		}
+
+		&:hover {
+			.swiper-button-prev,
+			.swiper-button-next {
+				opacity: 1;
+			}
+		}
 	}
 
 	&.navigation-position-outside {
@@ -27,7 +44,36 @@ $owl-video-play-icon: "#{$imagePath}play.svg";
 		}
 	}
 
-	&.dots-visibility-hover {
+	&.pagination-visibility-hover {
+		.swiper-pagination {
+			opacity: 0;
+			transition: opacity 300ms ease-in-out;
+		}
+
+		&:hover .swiper-pagination {
+			opacity: 1;
+		}
+	}
+
+	&.pagination-shape-square {
+		.swiper-pagination-bullet {
+			border-radius: 0 !important;
+		}
+	}
+
+	&.pagination-align-left {
+		.swiper-pagination-horizontal {
+			left: 0 !important;
+			transform: none;
+		}
+	}
+
+	&.pagination-align-right {
+		.swiper-pagination-horizontal {
+			left: auto !important;
+			right: 0 !important;
+			transform: none;
+		}
 	}
 }
 
@@ -53,7 +99,6 @@ $owl-video-play-icon: "#{$imagePath}play.svg";
 
 .dialog--image-carousel {
 	max-height: 100%;
-	//overflow: hidden;
 
 	img {
 		max-height: 100%;

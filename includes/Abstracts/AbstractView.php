@@ -142,6 +142,8 @@ abstract class AbstractView implements SliderViewInterface {
 			$css_classes[] = sprintf( 'navigation-visibility-%s', $setting->get_nav_visibility() );
 			$css_classes[] = sprintf( 'navigation-position-%s', $setting->get_option( 'nav_position' ) );
 			$css_classes[] = sprintf( 'pagination-visibility-%s', $setting->get_pagination_visibility() );
+			$css_classes[] = sprintf( 'pagination-shape-%s', $setting->get_option( 'pagination_shape' ) );
+			$css_classes[] = sprintf( 'pagination-align-%s', $setting->get_option( 'pagination_position' ) );
 		}
 
 		$outer_attributes_array = [
@@ -264,8 +266,9 @@ abstract class AbstractView implements SliderViewInterface {
 		];
 
 		if ( $this->is_using_swiper() ) {
-			$css_var['--swiper-theme-color']     = $setting->get_prop( 'nav_color' );
-			$css_var['--swiper-navigation-size'] = $setting->get_prop( 'nav_size' ) . 'px';
+			$css_var['--swiper-theme-color']            = $setting->get_prop( 'nav_color' );
+			$css_var['--swiper-navigation-size']        = $setting->get_prop( 'nav_size' ) . 'px';
+			$css_var['--swiper-pagination-bullet-size'] = $setting->get_prop( 'pagination_size' ) . 'px';
 		}
 
 		return apply_filters( 'carousel_slider/css_var', $css_var, $setting );

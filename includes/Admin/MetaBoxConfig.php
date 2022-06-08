@@ -39,28 +39,34 @@ class MetaBoxConfig {
 	public static function get_sections_settings(): array {
 		return [
 			'section_general_settings'    => [
+				'hook'  => 'metabox_general_settings',
 				'id'    => 'section_general_settings',
 				'label' => __( 'General Settings', 'carousel-slider' ),
 			],
 			'section_navigation_settings' => [
+				'hook'  => 'metabox_navigation_settings',
 				'id'    => 'section_navigation_settings',
-				'title' => __( 'Navigation Settings', 'carousel-slider' ),
+				'label' => __( 'Navigation Settings', 'carousel-slider' ),
 			],
 			'section_pagination_settings' => [
+				'hook'  => 'metabox_pagination_settings',
 				'id'    => 'section_pagination_settings',
-				'title' => __( 'Pagination Settings', 'carousel-slider' ),
+				'label' => __( 'Pagination Settings', 'carousel-slider' ),
 			],
 			'section_autoplay_settings'   => [
+				'hook'  => 'metabox_autoplay_settings',
 				'id'    => 'section_autoplay_settings',
-				'title' => __( 'Autoplay Settings', 'carousel-slider' ),
+				'label' => __( 'Autoplay Settings', 'carousel-slider' ),
 			],
 			'section_color_settings'      => [
+				'hook'  => 'metabox_color_settings',
 				'id'    => 'section_color_settings',
-				'title' => __( 'Color Settings', 'carousel-slider' ),
+				'label' => __( 'Color Settings', 'carousel-slider' ),
 			],
 			'section_responsive_settings' => [
+				'hook'  => 'metabox_responsive_settings',
 				'id'    => 'section_responsive_settings',
-				'title' => __( 'Responsive Settings', 'carousel-slider' ),
+				'label' => __( 'Responsive Settings', 'carousel-slider' ),
 			],
 		];
 	}
@@ -144,12 +150,13 @@ class MetaBoxConfig {
 				'default'     => 'off',
 			],
 			'columns'       => [
-				'section'     => 'section_general_settings',
-				'type'        => 'columns',
-				'id'          => '_columns',
-				'label'       => esc_html__( 'Columns', 'carousel-slider' ),
-				'description' => esc_html__( '2X large device: ≥1536px<br>Extra large device: ≥1200px<br>Large device: ≥992px<br>Medium device: ≥768px<br>Small device: ≥576px<br>Extra small device: <576px', 'carousel-slider' ),
-				'default'     => [
+				'section'        => 'section_general_settings',
+				'type'           => 'responsive_control',
+				'id'             => '_slides_per_view',
+				'label'          => esc_html__( 'Slides Per View', 'carousel-slider' ),
+				'description'    => esc_html__( 'Set number of slides to show per view. If you enable "Auto Width", this option will be disabled.', 'carousel-slider' ),
+				'device_choices' => [ 'xs', 'sm', 'md', 'lg', 'xl', '2xl' ],
+				'default'        => [
 					'xs'  => 1,
 					'sm'  => 2,
 					'md'  => 2,
@@ -172,7 +179,7 @@ class MetaBoxConfig {
 		$settings = [
 			'nav_visibility' => [
 				'section'     => 'section_navigation_settings',
-				'type'        => 'select',
+				'type'        => 'button_group',
 				'id'          => '_nav_button',
 				'class'       => 'small-text',
 				'label'       => esc_html__( 'Show Arrow Nav', 'carousel-slider' ),
@@ -192,9 +199,17 @@ class MetaBoxConfig {
 				'description' => esc_html__( 'Steps to go for each navigation request. Write -1 to slide by page.', 'carousel-slider' ),
 				'default'     => 1,
 			],
+			'nav_size'       => [
+				'section'     => 'section_navigation_settings',
+				'type'        => 'number',
+				'id'          => '_arrow_size',
+				'label'       => esc_html__( 'Arrow Size', 'carousel-slider' ),
+				'description' => esc_html__( 'Enter arrow size in pixels.', 'carousel-slider' ),
+				'default'     => 48,
+			],
 			'nav_position'   => [
 				'section'     => 'section_navigation_settings',
-				'type'        => 'select',
+				'type'        => 'button_group',
 				'id'          => '_arrow_position',
 				'label'       => esc_html__( 'Arrow Position', 'carousel-slider' ),
 				'description' => esc_html__( 'Choose where to show arrow. Inside slider or outside slider.', 'carousel-slider' ),
@@ -203,14 +218,6 @@ class MetaBoxConfig {
 					'outside' => esc_html__( 'Outside', 'carousel-slider' ),
 					'inside'  => esc_html__( 'Inside', 'carousel-slider' ),
 				],
-			],
-			'nav_size'       => [
-				'section'     => 'section_navigation_settings',
-				'type'        => 'number',
-				'id'          => '_arrow_size',
-				'label'       => esc_html__( 'Arrow Size', 'carousel-slider' ),
-				'description' => esc_html__( 'Enter arrow size in pixels.', 'carousel-slider' ),
-				'default'     => 48,
 			],
 		];
 
@@ -226,10 +233,10 @@ class MetaBoxConfig {
 		$settings = [
 			'pagination_visibility' => [
 				'section'     => 'section_pagination_settings',
-				'type'        => 'select',
+				'type'        => 'button_group',
 				'id'          => '_dot_nav',
-				'label'       => esc_html__( 'Show Bullet Nav', 'carousel-slider' ),
-				'description' => esc_html__( 'Choose when to show bullet navigator.', 'carousel-slider' ),
+				'label'       => esc_html__( 'Show Pagination', 'carousel-slider' ),
+				'description' => esc_html__( 'Choose when to show pagination.', 'carousel-slider' ),
 				'default'     => 'off',
 				'choices'     => [
 					'off'   => esc_html__( 'Never', 'carousel-slider' ),
@@ -239,10 +246,10 @@ class MetaBoxConfig {
 			],
 			'pagination_position'   => [
 				'section'     => 'section_pagination_settings',
-				'type'        => 'select',
+				'type'        => 'button_group',
 				'id'          => '_bullet_position',
-				'label'       => esc_html__( 'Bullet Position', 'carousel-slider' ),
-				'description' => esc_html__( 'Choose where to show bullets.', 'carousel-slider' ),
+				'label'       => esc_html__( 'Pagination Position', 'carousel-slider' ),
+				'description' => esc_html__( 'Choose where to pagination.', 'carousel-slider' ),
 				'default'     => 'center',
 				'choices'     => [
 					'left'   => esc_html__( 'Left', 'carousel-slider' ),
@@ -254,16 +261,16 @@ class MetaBoxConfig {
 				'section'     => 'section_pagination_settings',
 				'type'        => 'number',
 				'id'          => '_bullet_size',
-				'label'       => esc_html__( 'Bullet Size', 'carousel-slider' ),
-				'description' => esc_html__( 'Enter bullet size in pixels.', 'carousel-slider' ),
+				'label'       => esc_html__( 'Pagination Size', 'carousel-slider' ),
+				'description' => esc_html__( 'Enter pagination size in pixels.', 'carousel-slider' ),
 				'default'     => 10,
 			],
 			'pagination_shape'      => [
 				'section'     => 'section_pagination_settings',
-				'type'        => 'select',
+				'type'        => 'button_group',
 				'id'          => '_bullet_shape',
-				'label'       => esc_html__( 'Bullet Shape', 'carousel-slider' ),
-				'description' => esc_html__( 'Choose bullet nav shape.', 'carousel-slider' ),
+				'label'       => esc_html__( 'Pagination Shape', 'carousel-slider' ),
+				'description' => esc_html__( 'Choose pagination shape.', 'carousel-slider' ),
 				'default'     => 'circle',
 				'choices'     => [
 					'square' => esc_html__( 'Square', 'carousel-slider' ),

@@ -10,7 +10,7 @@ use CarouselSlider\Supports\FormFields\ButtonGroup;
 use CarouselSlider\Supports\FormFields\Checkbox;
 use CarouselSlider\Supports\FormFields\CheckboxSwitch;
 use CarouselSlider\Supports\FormFields\Color;
-use CarouselSlider\Supports\FormFields\Columns;
+use CarouselSlider\Supports\FormFields\ResponsiveControl;
 use CarouselSlider\Supports\FormFields\ImagesGallery;
 use CarouselSlider\Supports\FormFields\ImageUploader;
 use CarouselSlider\Supports\FormFields\ImageUrl;
@@ -84,23 +84,23 @@ class MetaBoxForm {
 	 */
 	private static function get_field_class( string $type = 'text' ) {
 		$types = [
-			'text'           => Text::class,
-			'textarea'       => Textarea::class,
-			'spacing'        => Spacing::class,
-			'checkbox'       => Checkbox::class,
-			'button_group'   => ButtonGroup::class,
-			'color'          => Color::class,
-			'images_gallery' => ImagesGallery::class,
-			'upload_iframe'  => ImageUploader::class,
-			'images_url'     => ImageUrl::class,
-			'select'         => Select::class,
-			'posts_list'     => SelectPosts::class,
-			'post_terms'     => SelectTerms::class,
-			'image_sizes'    => SelectImageSize::class,
-			'radio'          => Radio::class,
-			'switch'         => CheckboxSwitch::class,
-			'breakpoint'     => Breakpoint::class,
-			'columns'        => Columns::class,
+			'text'               => Text::class,
+			'textarea'           => Textarea::class,
+			'spacing'            => Spacing::class,
+			'checkbox'           => Checkbox::class,
+			'button_group'       => ButtonGroup::class,
+			'color'              => Color::class,
+			'images_gallery'     => ImagesGallery::class,
+			'upload_iframe'      => ImageUploader::class,
+			'images_url'         => ImageUrl::class,
+			'select'             => Select::class,
+			'posts_list'         => SelectPosts::class,
+			'post_terms'         => SelectTerms::class,
+			'image_sizes'        => SelectImageSize::class,
+			'radio'              => Radio::class,
+			'switch'             => CheckboxSwitch::class,
+			'breakpoint'         => Breakpoint::class,
+			'responsive_control' => ResponsiveControl::class,
 		];
 
 		$class = array_key_exists( $type, $types ) ? $types[ $type ] : $types['text'];
