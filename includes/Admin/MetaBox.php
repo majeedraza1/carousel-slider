@@ -124,6 +124,12 @@ class MetaBox {
 				'context'  => 'normal',
 				'priority' => 'high',
 			],
+			'carousel-slider-settings'    => [
+				'title'    => __( 'Slider Settings', 'carousel-slider' ),
+				'callback' => [ $this, 'carousel_slider_settings' ],
+				'context'  => 'normal',
+				'priority' => 'low',
+			],
 			'carousel-slider-usages-info' => [
 				'title'    => __( 'Usage (Shortcode)', 'carousel-slider' ),
 				'callback' => [ $this, 'usages_callback' ],
@@ -140,15 +146,6 @@ class MetaBox {
 				$meta_box['priority'] ?? 'low'
 			);
 		}
-
-		add_meta_box(
-			'carousel-slider-settings',
-			__( 'Slider Settings', 'carousel-slider' ),
-			[ $this, 'carousel_slider_settings' ],
-			CAROUSEL_SLIDER_POST_TYPE,
-			'normal',
-			'low'
-		);
 	}
 
 	/**
@@ -223,14 +220,24 @@ class MetaBox {
 		Helper::print_unescaped_internal_string( $html );
 	}
 
+	/**
+	 * Get slider settings
+	 *
+	 * @return void
+	 */
 	public function carousel_slider_settings() {
 		$sections = MetaBoxConfig::get_sections_settings();
 		$fields   = MetaBoxConfig::get_fields_settings();
-		$html     = '';
+
+		$html = '<div class="shapla-section shapla-tabs shapla-tabs--normal">';
+		$html .= '<div class="shapla-tab-inner">';
+		$html .= '<ul class="shapla-nav shapla-clearfix">';
 		foreach ( $sections as $section ) {
-			$html .= '<section class="cs-setting-section">';
-			$html .= '<h2 class="cs-setting-section__title">' . esc_html( $section['label'] ) . '</h2>';
-			$html .= '<div class="cs-setting-section__content">';
+			$html .= '<li><a href="#' . esc_attr( $section['id'] ) . '">' . esc_html( $section['label'] ) . '</a></li>';
+		}
+		$html .= '</ul>';
+		foreach ( $sections as $section ) {
+			$html .= '<div id="' . esc_attr( $section['id'] ) . '" class="shapla-tab tab-content">';
 
 			$section_html = '';
 			foreach ( $fields as $field ) {
@@ -241,8 +248,9 @@ class MetaBox {
 
 			$html .= apply_filters( 'carousel_slider/admin/' . $section['hook'], $section_html );
 			$html .= '</div>';
-			$html .= '</section>';
 		}
+		$html .= '</div>';
+		$html .= '</div>';
 
 		Helper::print_unescaped_internal_string( $html );
 	}
@@ -263,149 +271,5 @@ class MetaBox {
 		 * Allow third-party plugin to add custom fields
 		 */
 		do_action( 'carousel_slider/meta_box_content', $post->ID, $slide_type );
-	}
-
-	/**
-	 * General settings
-	 */
-	public function general_settings_callback() {
-		$settings = MetaBoxConfig::get_general_settings();
-		$html     = '';
-		foreach ( $settings as $setting ) {
-			$html .= MetaBoxForm::field(
-				array_merge(
-					$setting,
-					[
-						'field_class' => 'widefat',
-						'context'     => 'side',
-					]
-				)
-			);
-		}
-
-		Helper::print_unescaped_internal_string(
-			apply_filters( 'carousel_slider/admin/metabox_general_settings', $html )
-		);
-	}
-
-	/**
-	 * Navigation settings callback
-	 *
-	 * @return void
-	 */
-	public function navigation_settings_callback() {
-		$settings = MetaBoxConfig::get_navigation_settings();
-		$html     = '';
-		foreach ( $settings as $setting ) {
-			$html .= MetaBoxForm::field(
-				array_merge(
-					$setting,
-					[
-						'field_class' => 'small-text',
-						'context'     => 'side',
-					]
-				)
-			);
-		}
-
-		Helper::print_unescaped_internal_string(
-			apply_filters( 'carousel_slider/admin/metabox_navigation_settings', $html )
-		);
-	}
-
-	/**
-	 * Pagination setting callback
-	 *
-	 * @return void
-	 */
-	public function pagination_settings_callback() {
-		$settings = MetaBoxConfig::get_pagination_settings();
-		$html     = '';
-		foreach ( $settings as $setting ) {
-			$html .= MetaBoxForm::field(
-				array_merge(
-					$setting,
-					[
-						'field_class' => 'small-text',
-						'context'     => 'side',
-					]
-				)
-			);
-		}
-
-		Helper::print_unescaped_internal_string(
-			apply_filters( 'carousel_slider/admin/metabox_pagination_settings', $html )
-		);
-	}
-
-	/**
-	 * Autoplay settings
-	 */
-	public function autoplay_settings_callback() {
-		$settings = MetaBoxConfig::get_autoplay_settings();
-		$html     = '';
-		foreach ( $settings as $setting ) {
-			$html .= MetaBoxForm::field(
-				array_merge(
-					$setting,
-					[
-						'field_class' => 'small-text',
-						'context'     => 'side',
-					]
-				)
-			);
-		}
-
-		Helper::print_unescaped_internal_string(
-			apply_filters( 'carousel_slider/admin/metabox_autoplay_settings', $html )
-		);
-	}
-
-	/**
-	 * Metabox color settings callback
-	 *
-	 * @return void
-	 */
-	public function color_settings_callback() {
-		$settings = MetaBoxConfig::get_color_settings();
-		$html     = '';
-		foreach ( $settings as $setting ) {
-			$html .= MetaBoxForm::field(
-				array_merge(
-					$setting,
-					[
-						'field_class' => 'small-text',
-						'context'     => 'side',
-					]
-				)
-			);
-		}
-
-		Helper::print_unescaped_internal_string(
-			apply_filters( 'carousel_slider/admin/metabox_color_settings', $html )
-		);
-	}
-
-	/**
-	 * Renders the meta box.
-	 */
-	public function responsive_settings_callback() {
-		$settings = MetaBoxConfig::get_responsive_settings();
-		$html     = '';
-		foreach ( $settings as $setting ) {
-			$html .= MetaBoxForm::field(
-				array_merge(
-					$setting,
-					[
-						'context' => 'side',
-						'class'   => 'small-text',
-					]
-				)
-			);
-		}
-
-		Helper::print_unescaped_internal_string(
-			apply_filters( 'carousel_slider/admin/metabox_responsive_settings', $html )
-		);
 	}
 }

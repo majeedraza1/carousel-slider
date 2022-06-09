@@ -83,22 +83,7 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	 * @return array
 	 */
 	public static function get_global_settings(): array {
-		if ( empty( static::$global_settings ) ) {
-			$default_args = apply_filters(
-				'carousel_slider/global_options/default_args',
-				[
-					'load_scripts'                        => 'optimized',
-					'show_structured_data'                => '1',
-					'woocommerce_shop_loop_item_template' => 'v1-compatibility',
-				]
-			);
-			$options      = get_option( 'carousel_slider_settings', [] );
-			$options      = is_array( $options ) ? $options : [];
-
-			static::$global_settings = wp_parse_args( $options, $default_args );
-		}
-
-		return static::$global_settings;
+		return Helper::get_global_settings();
 	}
 
 	/**
@@ -317,6 +302,27 @@ class SliderSetting extends Data implements SliderSettingInterface {
 		$effects = [ 'slide', 'fade', 'cube', 'coverflow', 'flip', 'creative', 'cards' ];
 
 		return in_array( $effect, $effects, true ) ? $effect : 'slide';
+	}
+
+	/**
+	 * Get sliders per view
+	 *
+	 * @return array
+	 */
+	public function get_slides_per_view(): array {
+		if ( ! $this->has_prop( 'slides_per_view' ) ) {
+			return [
+				'xs'  => $this->get_items_on_mobile(),
+				'sm'  => $this->get_items_on_small_tablet(),
+				'md'  => $this->get_items_on_tablet(),
+				'lg'  => $this->get_items_on_desktop(),
+				'xl'  => $this->get_items_on_widescreen(),
+				'2xl' => $this->get_items_on_fullhd(),
+			];
+		}
+		$slides = (array) $this->get_option( 'slides_per_view', [] );
+
+		return wp_parse_args( $slides, [ 'xs' => 1 ] );
 	}
 
 	/**

@@ -63,11 +63,6 @@ class MetaBoxConfig {
 				'id'    => 'section_color_settings',
 				'label' => __( 'Color Settings', 'carousel-slider' ),
 			],
-			'section_responsive_settings' => [
-				'hook'  => 'metabox_responsive_settings',
-				'id'    => 'section_responsive_settings',
-				'label' => __( 'Responsive Settings', 'carousel-slider' ),
-			],
 		];
 	}
 
@@ -82,8 +77,7 @@ class MetaBoxConfig {
 			self::get_navigation_settings(),
 			self::get_pagination_settings(),
 			self::get_autoplay_settings(),
-			self::get_color_settings(),
-			self::get_responsive_settings()
+			self::get_color_settings()
 		);
 
 		return apply_filters( 'carousel_slider/admin/metabox_config', $settings, self::get_args() );
@@ -96,7 +90,7 @@ class MetaBoxConfig {
 	 */
 	public static function get_general_settings(): array {
 		$settings = [
-			'image_size'    => [
+			'image_size'      => [
 				'section'     => 'section_general_settings',
 				'default'     => 'medium_large',
 				'id'          => '_image_size',
@@ -109,7 +103,7 @@ class MetaBoxConfig {
 				),
 				'type'        => 'image_sizes',
 			],
-			'space_between' => [
+			'space_between'   => [
 				'section'     => 'section_general_settings',
 				'type'        => 'number',
 				'id'          => '_margin_right',
@@ -117,7 +111,7 @@ class MetaBoxConfig {
 				'description' => esc_html__( 'Space between two slide. Enter 10 for 10px', 'carousel-slider' ),
 				'default'     => Helper::get_default_setting( 'margin_right' ),
 			],
-			'stage_padding' => [
+			'stage_padding'   => [
 				'section'     => 'section_general_settings',
 				'type'        => 'number',
 				'id'          => '_stage_padding',
@@ -125,7 +119,7 @@ class MetaBoxConfig {
 				'description' => esc_html__( 'Add left and right padding on carousel slider stage wrapper.', 'carousel-slider' ),
 				'default'     => 0,
 			],
-			'lazy_load'     => [
+			'lazy_load'       => [
 				'section'     => 'section_general_settings',
 				'type'        => 'switch',
 				'id'          => '_lazy_load_image',
@@ -133,7 +127,7 @@ class MetaBoxConfig {
 				'description' => esc_html__( 'Enable image with lazy loading.', 'carousel-slider' ),
 				'default'     => Helper::get_default_setting( 'lazy_load_image' ),
 			],
-			'loop'          => [
+			'loop'            => [
 				'section'     => 'section_general_settings',
 				'type'        => 'switch',
 				'id'          => '_infinity_loop',
@@ -141,7 +135,7 @@ class MetaBoxConfig {
 				'description' => esc_html__( 'Enable or disable loop(circular) of carousel.', 'carousel-slider' ),
 				'default'     => 'on',
 			],
-			'auto_width'    => [
+			'auto_width'      => [
 				'section'     => 'section_general_settings',
 				'type'        => 'switch',
 				'id'          => '_auto_width',
@@ -149,7 +143,7 @@ class MetaBoxConfig {
 				'description' => esc_html__( 'Set item width according to its content width. Use width style on item to get the result you want. ', 'carousel-slider' ),
 				'default'     => 'off',
 			],
-			'columns'       => [
+			'slides_per_view' => [
 				'section'        => 'section_general_settings',
 				'type'           => 'responsive_control',
 				'id'             => '_slides_per_view',
@@ -337,14 +331,14 @@ class MetaBoxConfig {
 				'section' => 'section_color_settings',
 				'type'    => 'color',
 				'id'      => '_nav_color',
-				'label'   => esc_html__( 'Arrows & Dots Color', 'carousel-slider' ),
+				'label'   => esc_html__( 'Navigation & Pagination Color', 'carousel-slider' ),
 				'default' => Helper::get_default_setting( 'nav_color' ),
 			],
 			'nav_active_color' => [
 				'section' => 'section_color_settings',
 				'type'    => 'color',
 				'id'      => '_nav_active_color',
-				'label'   => esc_html__( 'Arrows & Dots Hover Color', 'carousel-slider' ),
+				'label'   => esc_html__( 'Navigation & Pagination Hover Color', 'carousel-slider' ),
 				'default' => Helper::get_default_setting( 'nav_active_color' ),
 			],
 		];

@@ -2,6 +2,8 @@
 
 namespace CarouselSlider\Abstracts;
 
+use CarouselSlider\Helper;
+
 /**
  * OwlSetting class
  * The owl carousel javascript option generator.
@@ -50,20 +52,16 @@ class OwlSetting {
 			'margin'             => $setting->get_space_between(),
 			'loop'               => $setting->is_loop(),
 			'lazyLoad'           => $setting->lazy_load_image(),
-			'autoWidth'          => $setting->is_auto_width(),
 			'autoplay'           => $setting->is_autoplay(),
 			'autoplayTimeout'    => $setting->get_autoplay_delay(),
 			'autoplaySpeed'      => $setting->get_autoplay_speed(),
 			'autoplayHoverPause' => $setting->has_autoplay_hover_pause(),
-			'responsive'         => [
-				300  => [ 'items' => $setting->get_items_on_mobile() ],
-				600  => [ 'items' => $setting->get_items_on_small_tablet() ],
-				768  => [ 'items' => $setting->get_items_on_tablet() ],
-				1024 => [ 'items' => $setting->get_items_on_desktop() ],
-				1200 => [ 'items' => $setting->get_items_on_widescreen() ],
-				1921 => [ 'items' => $setting->get_items_on_fullhd() ],
-			],
+			'autoWidth'          => $setting->is_auto_width(),
 		];
+
+		foreach ( $this->slider_setting->get_slides_per_view() as $prefix => $item ) {
+			$this->settings['responsive'][ Helper::get_breakpoint_width( $prefix ) ] = [ 'items' => $item ];
+		}
 	}
 
 	/**

@@ -13,6 +13,12 @@ defined( 'ABSPATH' ) || exit;
  * Helper class
  */
 class Helper extends ViewHelper {
+	/**
+	 * Get global settings
+	 *
+	 * @var array
+	 */
+	protected static $global_settings = [];
 
 	/**
 	 * Get placeholder image source.
@@ -92,6 +98,31 @@ class Helper extends ViewHelper {
 	}
 
 	/**
+	 * Get global settings
+	 *
+	 * @return array
+	 */
+	public static function get_global_settings(): array {
+		if ( empty( static::$global_settings ) ) {
+			$default_args = apply_filters(
+				'carousel_slider/global_options/default_args',
+				[
+					'load_scripts'                        => 'optimized',
+					'show_structured_data'                => '1',
+					'woocommerce_shop_loop_item_template' => 'v1-compatibility',
+					'breakpoints_width'                   => [],
+				]
+			);
+			$options      = get_option( 'carousel_slider_settings', [] );
+			$options      = is_array( $options ) ? $options : [];
+
+			static::$global_settings = wp_parse_args( $options, $default_args );
+		}
+
+		return static::$global_settings;
+	}
+
+	/**
 	 * Get setting
 	 *
 	 * @param string $key The setting key.
@@ -100,16 +131,32 @@ class Helper extends ViewHelper {
 	 * @return mixed|null
 	 */
 	public static function get_setting( string $key, $default = null ) {
-		$default_options = [
-			'load_scripts'                        => 'optimized',
-			'slider_js_package'                   => 'swiper', // owl.carousel.
-			'show_structured_data'                => '1',
-			'woocommerce_shop_loop_item_template' => 'v1-compatibility',
-		];
-		$settings        = (array) get_option( 'carousel_slider_settings' );
-		$settings        = wp_parse_args( $settings, $default_options );
+		$settings = self::get_global_settings();
 
 		return $settings[ $key ] ?? $default;
+	}
+
+	/**
+	 * Get breakpoint width
+	 *
+	 * @param string $prefix The breakpoint prefix.
+	 *
+	 * @return int
+	 */
+	public static function get_breakpoint_width( string $prefix ): int {
+		$defaults    = [
+			'xs'  => 300,
+			'sm'  => 576,
+			'md'  => 768,
+			'lg'  => 1024,
+			'xl'  => 1280,
+			'2xl' => 1536,
+		];
+		$breakpoints = self::get_setting( 'breakpoints_width' );
+		$breakpoints = is_array( $breakpoints ) ? $breakpoints : [];
+		$breakpoints = wp_parse_args( $breakpoints, $defaults );
+
+		return isset( $breakpoints[ $prefix ] ) && is_int( $breakpoints[ $prefix ] ) ? $breakpoints[ $prefix ] : 0;
 	}
 
 	/**

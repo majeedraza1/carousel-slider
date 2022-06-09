@@ -43,7 +43,7 @@ class Admin {
 	/**
 	 * Save post carousel content
 	 *
-	 * @param int   $post_id The post id.
+	 * @param int $post_id The post id.
 	 * @param array $data User submitted data.
 	 *
 	 * @return void
@@ -62,7 +62,7 @@ class Admin {
 	/**
 	 * Show meta box content for product carousel
 	 *
-	 * @param int    $slider_id The slider id.
+	 * @param int $slider_id The slider id.
 	 * @param string $slider_type The slider type.
 	 */
 	public function meta_box_content( int $slider_id, string $slider_type ) {
@@ -174,35 +174,32 @@ class Admin {
 		ob_start();
 		$form->color(
 			array(
-				'group'   => 'product_carousel',
-				'id'      => '_product_title_color',
-				'type'    => 'color',
-				'name'    => esc_html__( 'Product Title Color', 'carousel-slider' ),
-				'desc'    => esc_html__( 'Pick a color for product title. This color will also apply to sale tag and price.', 'carousel-slider' ),
-				'std'     => Helper::get_default_setting( 'product_title_color' ),
-				'context' => 'side',
+				'group' => 'product_carousel',
+				'id'    => '_product_title_color',
+				'type'  => 'color',
+				'name'  => esc_html__( 'Product Title Color', 'carousel-slider' ),
+				'desc'  => esc_html__( 'Pick a color for product title. This color will also apply to sale tag and price.', 'carousel-slider' ),
+				'std'   => Helper::get_default_setting( 'product_title_color' ),
 			)
 		);
 		$form->color(
 			array(
-				'group'   => 'product_carousel',
-				'id'      => '_product_button_bg_color',
-				'type'    => 'color',
-				'name'    => esc_html__( 'Product Button Background Color', 'carousel-slider' ),
-				'desc'    => esc_html__( 'Pick a color for button background color. This color will also apply to product rating.', 'carousel-slider' ),
-				'std'     => Helper::get_default_setting( 'product_button_bg_color' ),
-				'context' => 'side',
+				'group' => 'product_carousel',
+				'id'    => '_product_button_bg_color',
+				'type'  => 'color',
+				'name'  => esc_html__( 'Product Button Background Color', 'carousel-slider' ),
+				'desc'  => esc_html__( 'Pick a color for button background color. This color will also apply to product rating.', 'carousel-slider' ),
+				'std'   => Helper::get_default_setting( 'product_button_bg_color' ),
 			)
 		);
 		$form->color(
 			array(
-				'group'   => 'product_carousel',
-				'id'      => '_product_button_text_color',
-				'type'    => 'color',
-				'name'    => esc_html__( 'Product Button Text Color', 'carousel-slider' ),
-				'desc'    => esc_html__( 'Pick a color for button text color.', 'carousel-slider' ),
-				'std'     => Helper::get_default_setting( 'product_button_text_color' ),
-				'context' => 'side',
+				'group' => 'product_carousel',
+				'id'    => '_product_button_text_color',
+				'type'  => 'color',
+				'name'  => esc_html__( 'Product Button Text Color', 'carousel-slider' ),
+				'desc'  => esc_html__( 'Pick a color for button text color.', 'carousel-slider' ),
+				'std'   => Helper::get_default_setting( 'product_button_text_color' ),
 			)
 		);
 		$content = ob_get_clean();

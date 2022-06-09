@@ -2,6 +2,7 @@
 
 namespace CarouselSlider\Abstracts;
 
+use CarouselSlider\Helper;
 use CarouselSlider\Supports\Validate;
 
 /**
@@ -104,14 +105,11 @@ class SwiperSetting {
 	 * @return array
 	 */
 	public function get_breakpoints(): array {
-		$slider_breakpoint = [
-			300  => [ 'slidesPerView' => $this->slider_setting->get_prop( 'items_on_mobile' ) ],
-			600  => [ 'slidesPerView' => $this->slider_setting->get_prop( 'items_on_small_tablet' ) ],
-			768  => [ 'slidesPerView' => $this->slider_setting->get_prop( 'items_on_tablet' ) ],
-			1024 => [ 'slidesPerView' => $this->slider_setting->get_prop( 'items_on_desktop' ) ],
-			1200 => [ 'slidesPerView' => $this->slider_setting->get_prop( 'items_on_widescreen' ) ],
-			1921 => [ 'slidesPerView' => $this->slider_setting->get_prop( 'items_on_fullhd' ) ],
-		];
+		$slider_breakpoint = [];
+
+		foreach ( $this->slider_setting->get_slides_per_view() as $prefix => $item ) {
+			$slider_breakpoint[ Helper::get_breakpoint_width( $prefix ) ] = [ 'slidesPerView' => $item ];
+		}
 
 		return $slider_breakpoint;
 	}

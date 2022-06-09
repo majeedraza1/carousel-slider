@@ -23,6 +23,7 @@ $accent: #323232;
 		z-index: 1;
 		outline: 0;
 	}
+
 	a {
 		text-decoration: none;
 		display: block;
@@ -39,6 +40,7 @@ $accent: #323232;
 	p:first-of-type {
 		margin-top: 0;
 	}
+
 	p:last-of-type {
 		margin-bottom: 0;
 	}
@@ -46,18 +48,29 @@ $accent: #323232;
 
 .shapla-tabs--normal {
 	.shapla-nav {
+		--shapla-primary: #cf4944;
+		--shapla-on-primary: #ffffff;
+
 		a {
-			background: $accent;
-			color: #fff;
+			background: var(--shapla-primary);
+			border: 1px solid var(--shapla-primary);
+			color: var(--shapla-on-primary);
 		}
+
 		.ui-tabs-active a {
-			background: #f1f1f1;
-			color: $accent;
+			background: #ffffff;
+			border-color: var(--shapla-primary);
+			color: var(--shapla-primary);
 			outline: 0;
 		}
 	}
+
 	.shapla-tab {
-		background: #f1f1f1;
+		background: #ffffff;
+
+		.sp-input-group {
+			margin-bottom: 1rem;
+		}
 	}
 }
 
@@ -65,13 +78,16 @@ $accent: #323232;
 	.shapla-nav li {
 		margin: 0 -1px 0 0 !important;
 	}
+
 	.shapla-nav a {
 		border: 1px solid $accent;
 		color: $accent;
 	}
+
 	.shapla-nav .ui-tabs-active a {
 		border-bottom-color: white;
 	}
+
 	.shapla-tab {
 		border: 1px solid $accent;
 		margin-top: -1px;
