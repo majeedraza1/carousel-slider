@@ -484,9 +484,9 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	 * @throws BadMethodCallException Exception if not method available.
 	 */
 	public function __call( string $name, array $args ) {
-		if ( preg_match( '/^(?P<prefix>get|is|has)_(?P<property>\s*.*)/', $name, $matches ) ) {
+		if ( preg_match( '/^(?P<prefix>get|is|has|should)_(?P<property>\s*.*)/', $name, $matches ) ) {
 			if ( $this->has_prop( $matches['property'] ) ) {
-				if ( in_array( $matches['prefix'], [ 'is', 'has' ], true ) ) {
+				if ( in_array( $matches['prefix'], [ 'is', 'has', 'should' ], true ) ) {
 					return Validate::checked( $this->get_prop( $matches['property'] ) );
 				}
 

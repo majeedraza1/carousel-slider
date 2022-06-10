@@ -72,9 +72,9 @@ class SwiperSetting {
 
 		if ( $show_pagination ) {
 			$this->settings['pagination'] = [
-				'el'             => '.swiper-pagination',
-				'dynamicBullets' => true,
-				'type'           => $setting->get_pagination_type(),
+				'el'   => '.swiper-pagination',
+				'type' => $setting->get_pagination_type(),
+				// 'dynamicBullets' => true,
 			];
 		}
 
@@ -86,7 +86,9 @@ class SwiperSetting {
 
 		$lazy = $setting->get_prop( 'lazy_load' );
 		if ( Validate::checked( $lazy ) ) {
-			$this->settings['lazy']          = true;
+			$this->settings['lazy']          = [
+				'loadPrevNext' => true,
+			];
 			$this->settings['preloadImages'] = false;
 		}
 

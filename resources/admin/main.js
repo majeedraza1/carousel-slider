@@ -40,3 +40,21 @@ $(".shapla-tabs").tabs({
 	hide: {effect: "fadeOut", duration: 200},
 	show: {effect: "fadeIn", duration: 200}
 });
+
+// input-copy-to-clipboard
+let inputs = document.querySelectorAll('.input-copy-to-clipboard');
+inputs.forEach(inputEl => {
+	inputEl.addEventListener('click', () => {
+		navigator.permissions.query({name: "clipboard-write"}).then((result) => {
+			if (result.state === "granted" || result.state === "prompt") {
+				navigator.clipboard.writeText(inputEl.innerHTML).then(() => {
+					window.console.log('Copied successfully');
+				}).catch(error => {
+					window.console.log('Fail to copy', error);
+				})
+			} else {
+				window.console.log('ClipBoard API status: ' + result.state);
+			}
+		});
+	})
+})

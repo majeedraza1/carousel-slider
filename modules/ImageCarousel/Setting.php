@@ -7,6 +7,11 @@ use CarouselSlider\Supports\Validate;
 
 /**
  * Setting class
+ *
+ * @method bool should_shuffle_images()
+ * @method bool should_show_title()
+ * @method bool should_show_caption()
+ * @method bool should_show_lightbox()
  */
 class Setting extends SliderSetting {
 	/**

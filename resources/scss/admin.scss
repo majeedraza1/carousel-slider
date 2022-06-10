@@ -40,6 +40,15 @@ shapla-dialog,
 	}
 }
 
+.input-copy-to-clipboard {
+	border: 1px solid rgba(0, 0, 0, 0.12) !important;
+	background: rgba(0, 0, 0, 0.05) !important;
+	padding: .75rem 1rem;
+	margin-top: .5rem;
+	user-select: all;
+	white-space: nowrap;
+}
+
 // Update message
 .cs_plugin_upgrade_notice {
 	border-top: 1px solid #dba617;
@@ -67,7 +76,8 @@ shapla-dialog,
 
 
 // Radio: Slider Type
-.carousel-slider-slider-type-container {
+.carousel-slider-slider-type-container,
+.shapla-columns {
 	box-sizing: border-box;
 
 	*, *:before, *:after {
@@ -93,5 +103,34 @@ shapla-dialog,
 
 	&__content {
 		padding: .5rem !important;
+	}
+}
+
+#carousel-slider-usages {
+	.postbox-header {
+		display: none;
+	}
+}
+
+#carousel-slider-settings {
+	.postbox-header {
+		display: none;
+	}
+
+	.inside {
+		margin: 0;
+		padding: 0;
+	}
+
+	.shapla-nav {
+		background-color: #f1f1f1;
+
+		li {
+			margin: 0 !important;
+
+			&.ui-tabs-active a {
+				border-bottom-color: white;
+			}
+		}
 	}
 }

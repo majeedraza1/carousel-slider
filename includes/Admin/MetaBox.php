@@ -114,7 +114,7 @@ class MetaBox {
 		$slide_types = Helper::get_slide_types();
 
 		$meta_boxes = [
-			'carousel-slider-meta-boxes'  => [
+			'carousel-slider-meta-boxes' => [
 				'title'    => sprintf(
 				/* translators: 1 - Slider type label */
 					__( 'Carousel Slider : %s', 'carousel-slider' ),
@@ -124,16 +124,16 @@ class MetaBox {
 				'context'  => 'normal',
 				'priority' => 'high',
 			],
-			'carousel-slider-settings'    => [
+			'carousel-slider-settings'   => [
 				'title'    => __( 'Slider Settings', 'carousel-slider' ),
 				'callback' => [ $this, 'carousel_slider_settings' ],
 				'context'  => 'normal',
 				'priority' => 'low',
 			],
-			'carousel-slider-usages-info' => [
-				'title'    => __( 'Usage (Shortcode)', 'carousel-slider' ),
+			'carousel-slider-usages'     => [
+				'title'    => __( 'Usage', 'carousel-slider' ),
 				'callback' => [ $this, 'usages_callback' ],
-				'priority' => 'high',
+				'priority' => 'low',
 			],
 		];
 		foreach ( $meta_boxes as $id => $meta_box ) {
@@ -142,8 +142,8 @@ class MetaBox {
 				$meta_box['title'],
 				$meta_box['callback'],
 				CAROUSEL_SLIDER_POST_TYPE,
-				$meta_box['context'] ?? 'side',
-				$meta_box['priority'] ?? 'low'
+				'normal',
+				'low'
 			);
 		}
 	}
@@ -154,21 +154,20 @@ class MetaBox {
 	 * @param WP_Post $post The WP_Post object.
 	 */
 	public function usages_callback( WP_Post $post ) {
+		$shortcode    = sprintf( '[carousel_slide id="%s"]', absint( $post->ID ) );
+		$shortcode_in = sprintf( 'echo do_shortcode( \'[carousel_slide id="%s"]\' );', absint( $post->ID ) );
 		ob_start();
 		?>
-		<p>
-			<strong>
-				<?php esc_html_e( 'Copy the following shortcode and paste in post or page where you want to show.', 'carousel-slider' ); ?>
-			</strong>
-		</p>
-		<input
-			type="text"
-			onmousedown="this.clicked = 1;"
-			onfocus="if (!this.clicked) this.select(); else this.clicked = 2;"
-			onclick="if (this.clicked === 2) this.select(); this.clicked = 0;"
-			value="[carousel_slide id='<?php echo absint( $post->ID ); ?>']"
-			style="background-color: #f1f1f1; width: 100%; padding: 8px;"
-		>
+		<div class="shapla-columns">
+			<div class="shapla-column is-6-tablet">
+				<strong><?php esc_html_e( 'Shortcode:', 'carousel-slider' ); ?></strong>
+				<div class="input-copy-to-clipboard"><?php Helper::print_unescaped_internal_string( $shortcode ); ?></div>
+			</div>
+			<div class="shapla-column is-6-tablet">
+				<strong><?php esc_html_e( 'Template Include:', 'carousel-slider' ); ?></strong>
+				<div class="input-copy-to-clipboard"><?php Helper::print_unescaped_internal_string( $shortcode_in ); ?></div>
+			</div>
+		</div>
 		<?php
 		Helper::print_unescaped_internal_string( ob_get_clean() );
 	}

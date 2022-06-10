@@ -44,43 +44,9 @@ class View extends AbstractView {
 			if ( ! $_post instanceof WP_Post ) {
 				continue;
 			}
-			$item = new Item( $_post, $setting );
-			do_action( 'carousel_slider_image_gallery_loop', $_post );
-
-			$image_link_url = get_post_meta( $id, '_carousel_slider_link_url', true );
-
-			$full_caption = $this->get_caption_html( $_post, $setting->get_prop( 'show_title' ), $setting->get_prop( 'show_caption' ) );
-
-			$image = $this->get_image_html( $id, $setting->get_image_size(), $setting->get_prop( 'lazy_load' ) );
-
-			$item_html = $this->start_item_wrapper_html();
-			$item_html .= '<div class="carousel-slider__item">';
-			if ( Validate::checked( $setting->get_prop( 'show_lightbox' ) ) ) {
-				$image_src = wp_get_attachment_image_src( $id, 'full' );
-				$item_html .= sprintf(
-					'<a class="magnific-popup" href="%1$s" data-width="%4$s" data-height="%5$s">%2$s%3$s</a>',
-					esc_url( $image_src[0] ),
-					$image,
-					$full_caption,
-					esc_attr( $image_src[1] ),
-					esc_attr( $image_src[2] )
-				);
-			} elseif ( Validate::url( $image_link_url ) ) {
-				$item_html .= sprintf(
-					'<a  href="%1$s" target="%4$s">%2$s%3$s</a>',
-					esc_url( $image_link_url ),
-					$image,
-					$full_caption,
-					$setting->get_image_target()
-				);
-			} else {
-				$item_html .= $image;
-				$item_html .= $full_caption;
-			}
-			$item_html .= '</div>' . PHP_EOL;
-			$item_html .= $this->end_item_wrapper_html() . PHP_EOL;
-
-			$html .= apply_filters( 'carousel_slider/loop/image-carousel', $item_html, $_post, $this->get_slider_setting() );
+			$html .= $this->start_item_wrapper_html();
+			$html .= $this->get_item_html( new Item( $_post ), $setting );
+			$html .= $this->end_item_wrapper_html() . PHP_EOL;
 		}
 		$html .= $this->end_wrapper_html();
 
@@ -150,5 +116,51 @@ class View extends AbstractView {
 		}
 
 		return '';
+	}
+
+	/**
+	 * Get item html
+	 *
+	 * @param Item $item The Item object.
+	 * @param Setting $setting The Setting object.
+	 *
+	 * @return string
+	 */
+	public function get_item_html( Item $item, Setting $setting ): string {
+		$_post = $item->get_post();
+		$id    = $item->get_id();
+		do_action( 'carousel_slider_image_gallery_loop', $_post );
+		$image_link_url = get_post_meta( $id, '_carousel_slider_link_url', true );
+
+		$full_caption = $this->get_caption_html( $_post, $setting->get_prop( 'show_title' ), $setting->get_prop( 'show_caption' ) );
+
+		$image = $this->get_image_html( $id, $setting->get_image_size(), $setting->get_prop( 'lazy_load' ) );
+
+		$item_html = '<div class="carousel-slider__item">';
+		if ( Validate::checked( $setting->get_prop( 'show_lightbox' ) ) ) {
+			$image_src = wp_get_attachment_image_src( $id, 'full' );
+			$item_html .= sprintf(
+				'<a class="magnific-popup" href="%1$s" data-width="%4$s" data-height="%5$s">%2$s%3$s</a>',
+				esc_url( $image_src[0] ),
+				$image,
+				$full_caption,
+				esc_attr( $image_src[1] ),
+				esc_attr( $image_src[2] )
+			);
+		} elseif ( Validate::url( $image_link_url ) ) {
+			$item_html .= sprintf(
+				'<a  href="%1$s" target="%4$s">%2$s%3$s</a>',
+				esc_url( $image_link_url ),
+				$image,
+				$full_caption,
+				$setting->get_image_target()
+			);
+		} else {
+			$item_html .= $image;
+			$item_html .= $full_caption;
+		}
+		$item_html .= '</div>' . PHP_EOL;
+
+		return apply_filters( 'carousel_slider/loop/image-carousel', $item_html, $item, $setting );
 	}
 }
