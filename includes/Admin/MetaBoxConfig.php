@@ -90,7 +90,7 @@ class MetaBoxConfig {
 	 */
 	public static function get_general_settings(): array {
 		$settings = [
-			'image_size'      => [
+			'image_size'       => [
 				'section'     => 'section_general_settings',
 				'default'     => 'medium_large',
 				'id'          => '_image_size',
@@ -103,7 +103,7 @@ class MetaBoxConfig {
 				),
 				'type'        => 'image_sizes',
 			],
-			'space_between'   => [
+			'space_between'    => [
 				'section'     => 'section_general_settings',
 				'type'        => 'number',
 				'id'          => '_margin_right',
@@ -111,7 +111,7 @@ class MetaBoxConfig {
 				'description' => esc_html__( 'Space between two slide. Enter 10 for 10px', 'carousel-slider' ),
 				'default'     => Helper::get_default_setting( 'margin_right' ),
 			],
-			'stage_padding'   => [
+			'stage_padding'    => [
 				'section'     => 'section_general_settings',
 				'type'        => 'number',
 				'id'          => '_stage_padding',
@@ -119,7 +119,7 @@ class MetaBoxConfig {
 				'description' => esc_html__( 'Add left and right padding on carousel slider stage wrapper.', 'carousel-slider' ),
 				'default'     => 0,
 			],
-			'lazy_load'       => [
+			'lazy_load'        => [
 				'section'     => 'section_general_settings',
 				'type'        => 'switch',
 				'id'          => '_lazy_load_image',
@@ -127,7 +127,7 @@ class MetaBoxConfig {
 				'description' => esc_html__( 'Enable image with lazy loading.', 'carousel-slider' ),
 				'default'     => Helper::get_default_setting( 'lazy_load_image' ),
 			],
-			'loop'            => [
+			'loop'             => [
 				'section'     => 'section_general_settings',
 				'type'        => 'switch',
 				'id'          => '_infinity_loop',
@@ -135,7 +135,25 @@ class MetaBoxConfig {
 				'description' => esc_html__( 'Enable or disable loop(circular) of carousel.', 'carousel-slider' ),
 				'default'     => 'on',
 			],
-			'auto_width'      => [
+			'type_of_slider'   => [
+				'section'     => 'section_general_settings',
+				'type'        => 'button_group',
+				'id'          => '_type_of_slider',
+				'label'       => esc_html__( 'Slider Type', 'carousel-slider' ),
+				'description' => esc_html__( 'Choose slider if you want to display one image/slide at a time. Choose carousel if you want to display multiple images/slides at a time.', 'carousel-slider' ),
+				'default'     => 'carousel',
+				'choices'     => [
+					[
+						'value' => 'carousel',
+						'label' => esc_html__( 'Carousel', 'carousel-slider' ),
+					],
+					[
+						'value' => 'slider',
+						'label' => esc_html__( 'Slider', 'carousel-slider' ),
+					],
+				],
+			],
+			'auto_width'       => [
 				'section'     => 'section_general_settings',
 				'type'        => 'switch',
 				'id'          => '_auto_width',
@@ -143,7 +161,7 @@ class MetaBoxConfig {
 				'description' => esc_html__( 'Set item width according to its content width. Use width style on item to get the result you want. ', 'carousel-slider' ),
 				'default'     => 'off',
 			],
-			'slides_per_view' => [
+			'slides_per_view'  => [
 				'section'        => 'section_general_settings',
 				'type'           => 'responsive_control',
 				'id'             => '_slides_per_view',
@@ -157,6 +175,69 @@ class MetaBoxConfig {
 					'lg'  => 3,
 					'xl'  => 4,
 					'2xl' => 5,
+				],
+			],
+			'slider_direction' => [
+				'section'     => 'section_general_settings',
+				'type'        => 'button_group',
+				'id'          => '_slider_direction',
+				'label'       => esc_html__( 'Slider Direction', 'carousel-slider' ),
+				'description' => esc_html__( 'Choose slider direction.', 'carousel-slider' ),
+				'default'     => 'horizontal',
+				'choices'     => [
+					[
+						'value' => 'horizontal',
+						'label' => esc_html__( 'Horizontal', 'carousel-slider' ),
+					],
+					[
+						'value'    => 'vertical',
+						'label'    => esc_html__( 'Vertical', 'carousel-slider' ),
+						'pro_only' => true,
+					],
+				],
+			],
+			'slider_effect'    => [
+				'section'     => 'section_general_settings',
+				'type'        => 'button_group',
+				'id'          => '_slider_effect',
+				'label'       => esc_html__( 'Slider Effect', 'carousel-slider' ),
+				'description' => esc_html__( 'Choose slider effect.', 'carousel-slider' ),
+				'default'     => 'slide',
+				'choices'     => [
+					[
+						'value' => 'slide',
+						'label' => esc_html__( 'Slide', 'carousel-slider' ),
+					],
+					[
+						'value'    => 'fade',
+						'label'    => esc_html__( 'Fade', 'carousel-slider' ),
+						'pro_only' => true,
+					],
+					[
+						'value'    => 'cube',
+						'label'    => esc_html__( 'Cube', 'carousel-slider' ),
+						'pro_only' => true,
+					],
+					[
+						'value'    => 'coverflow',
+						'label'    => esc_html__( 'Coverflow', 'carousel-slider' ),
+						'pro_only' => true,
+					],
+					[
+						'value'    => 'flip',
+						'label'    => esc_html__( 'Flip', 'carousel-slider' ),
+						'pro_only' => true,
+					],
+					[
+						'value'    => 'creative',
+						'label'    => esc_html__( 'Creative', 'carousel-slider' ),
+						'pro_only' => true,
+					],
+					[
+						'value'    => 'cards',
+						'label'    => esc_html__( 'Cards', 'carousel-slider' ),
+						'pro_only' => true,
+					],
 				],
 			],
 		];
@@ -175,8 +256,7 @@ class MetaBoxConfig {
 				'section'     => 'section_navigation_settings',
 				'type'        => 'button_group',
 				'id'          => '_nav_button',
-				'class'       => 'small-text',
-				'label'       => esc_html__( 'Show Arrow Nav', 'carousel-slider' ),
+				'label'       => esc_html__( 'Show Navigation', 'carousel-slider' ),
 				'description' => esc_html__( 'Choose when to show arrow navigator.', 'carousel-slider' ),
 				'default'     => 'on',
 				'choices'     => [
@@ -189,7 +269,7 @@ class MetaBoxConfig {
 				'section'     => 'section_navigation_settings',
 				'type'        => 'text',
 				'id'          => '_slide_by',
-				'label'       => esc_html__( 'Arrow Steps', 'carousel-slider' ),
+				'label'       => esc_html__( 'Navigation Steps', 'carousel-slider' ),
 				'description' => esc_html__( 'Steps to go for each navigation request. Write -1 to slide by page.', 'carousel-slider' ),
 				'default'     => 1,
 			],
@@ -197,7 +277,7 @@ class MetaBoxConfig {
 				'section'     => 'section_navigation_settings',
 				'type'        => 'number',
 				'id'          => '_arrow_size',
-				'label'       => esc_html__( 'Arrow Size', 'carousel-slider' ),
+				'label'       => esc_html__( 'Navigation Size', 'carousel-slider' ),
 				'description' => esc_html__( 'Enter arrow size in pixels.', 'carousel-slider' ),
 				'default'     => 48,
 			],
@@ -205,7 +285,7 @@ class MetaBoxConfig {
 				'section'     => 'section_navigation_settings',
 				'type'        => 'button_group',
 				'id'          => '_arrow_position',
-				'label'       => esc_html__( 'Arrow Position', 'carousel-slider' ),
+				'label'       => esc_html__( 'Navigation Position', 'carousel-slider' ),
 				'description' => esc_html__( 'Choose where to show arrow. Inside slider or outside slider.', 'carousel-slider' ),
 				'default'     => 'outside',
 				'choices'     => [
@@ -238,12 +318,12 @@ class MetaBoxConfig {
 					'hover' => esc_html__( 'Mouse Over', 'carousel-slider' ),
 				],
 			],
-			'pagination_position'   => [
+			'pagination_alignment'  => [
 				'section'     => 'section_pagination_settings',
 				'type'        => 'button_group',
 				'id'          => '_bullet_position',
-				'label'       => esc_html__( 'Pagination Position', 'carousel-slider' ),
-				'description' => esc_html__( 'Choose where to pagination.', 'carousel-slider' ),
+				'label'       => esc_html__( 'Pagination Alignment', 'carousel-slider' ),
+				'description' => esc_html__( 'Choose pagination alignment.', 'carousel-slider' ),
 				'default'     => 'center',
 				'choices'     => [
 					'left'   => esc_html__( 'Left', 'carousel-slider' ),
@@ -269,6 +349,55 @@ class MetaBoxConfig {
 				'choices'     => [
 					'square' => esc_html__( 'Square', 'carousel-slider' ),
 					'circle' => esc_html__( 'Circle', 'carousel-slider' ),
+				],
+			],
+		];
+
+		$settings['pagination_position'] = [
+			'section'     => 'section_pagination_settings',
+			'type'        => 'button_group',
+			'id'          => '_pagination_position',
+			'label'       => esc_html__( 'Pagination Position', 'carousel-slider' ),
+			'description' => esc_html__( 'Choose where to show pagination. Inside slider or outside slider.', 'carousel-slider' ),
+			'default'     => 'outside',
+			'choices'     => [
+				[
+					'value' => 'outside',
+					'label' => esc_html__( 'Outside', 'carousel-slider' ),
+				],
+				[
+					'value'    => 'inside',
+					'label'    => esc_html__( 'Inside', 'carousel-slider' ),
+					'pro_only' => true,
+				],
+			],
+		];
+		$settings['pagination_type']     = [
+			'section'     => 'section_pagination_settings',
+			'type'        => 'button_group',
+			'id'          => '_pagination_type',
+			'label'       => esc_html__( 'Pagination Type', 'carousel-slider' ),
+			'description' => esc_html__( 'Choose pagination type.', 'carousel-slider' ),
+			'default'     => 'bullets',
+			'choices'     => [
+				[
+					'value' => 'bullets',
+					'label' => esc_html__( 'Bullets', 'carousel-slider' ),
+				],
+				[
+					'value'    => 'fraction',
+					'label'    => esc_html__( 'Fraction', 'carousel-slider' ),
+					'pro_only' => true,
+				],
+				[
+					'value'    => 'progressbar',
+					'label'    => esc_html__( 'progressbar', 'carousel-slider' ),
+					'pro_only' => true,
+				],
+				[
+					'value'    => 'custom',
+					'label'    => esc_html__( 'custom', 'carousel-slider' ),
+					'pro_only' => true,
 				],
 			],
 		];
@@ -328,18 +457,20 @@ class MetaBoxConfig {
 	public static function get_color_settings(): array {
 		$settings = [
 			'nav_color'        => [
-				'section' => 'section_color_settings',
-				'type'    => 'color',
-				'id'      => '_nav_color',
-				'label'   => esc_html__( 'Navigation & Pagination Color', 'carousel-slider' ),
-				'default' => Helper::get_default_setting( 'nav_color' ),
+				'section'     => 'section_color_settings',
+				'type'        => 'color',
+				'id'          => '_nav_color',
+				'label'       => esc_html__( 'Navigation & Pagination Color', 'carousel-slider' ),
+				'description' => esc_html__( 'Set theme color to use with navigation and pagination.', 'carousel-slider' ),
+				'default'     => Helper::get_default_setting( 'nav_color' ),
 			],
 			'nav_active_color' => [
-				'section' => 'section_color_settings',
-				'type'    => 'color',
-				'id'      => '_nav_active_color',
-				'label'   => esc_html__( 'Navigation & Pagination Hover Color', 'carousel-slider' ),
-				'default' => Helper::get_default_setting( 'nav_active_color' ),
+				'section'     => 'section_color_settings',
+				'type'        => 'color',
+				'id'          => '_nav_active_color',
+				'label'       => esc_html__( 'Navigation & Pagination Hover Color', 'carousel-slider' ),
+				'description' => esc_html__( 'Set theme color for hover and active state to use with navigation and pagination.', 'carousel-slider' ),
+				'default'     => Helper::get_default_setting( 'nav_active_color' ),
 			],
 		];
 

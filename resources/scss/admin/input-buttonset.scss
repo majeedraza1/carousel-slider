@@ -25,6 +25,7 @@
 		flex-grow: 1;
 		text-align: center;
 		font-size: 14px;
+		position: relative;
 
 		&:last-child {
 			border-right-width: 1px;
@@ -34,11 +35,34 @@
 	.switch-input {
 		display: none;
 
-		&:checked {
+		&:disabled {
+			+ .switch-label {
+				cursor: not-allowed;
+				opacity: .6;
+			}
+		}
+
+		&:not(:disabled):checked {
 			+ .switch-label {
 				background-color: $primary;
 				color: $on-primary;
 			}
 		}
+	}
+
+	.pro-only {
+		position: absolute;
+		font-size: 8px;
+		line-height: 11px;
+		top: 0;
+		right: 0;
+		border-radius: 2px;
+		//background: #f1f1f1;
+		//color: rgba(#000, .86);
+		color: #a5a5a5;
+		background-color: #e0e0e0;
+		padding: 0 4px;
+		opacity: 1;
+		text-transform: uppercase;
 	}
 }

@@ -8,12 +8,35 @@ $owl-video-play-icon: "#{$imagePath}play.svg";
 @import "swiper/scss/navigation";
 @import "swiper/scss/pagination";
 @import "swiper/scss/scrollbar";
+@import "swiper/scss/effect-fade";
+@import "swiper/scss/effect-cube";
+@import "swiper/scss/effect-coverflow";
+@import "swiper/scss/effect-flip";
+@import "swiper/scss/effect-cards";
+@import "swiper/scss/effect-creative";
 
 // Load slider style
 @import '../scss/public/carousels/all';
 @import '../scss/public/owl-carousel/animate';
 
 .carousel-slider-outer {
+	// Make slider height equal
+	.swiper-slide {
+		height: auto;
+	}
+
+	&.swiper-vertical {
+		> .swiper-wrapper {
+			max-height: 100vh;
+		}
+	}
+
+	// Post carousel
+	.carousel-slider__post {
+		height: calc(100% - 3px);
+		width: calc(100% - 3px);
+	}
+
 	.swiper-button-prev:hover,
 	.swiper-button-next:hover {
 		--swiper-navigation-color: var(--carousel-slider-active-nav-color);
@@ -66,6 +89,10 @@ $owl-video-play-icon: "#{$imagePath}play.svg";
 			left: 0 !important;
 			transform: none;
 		}
+
+		.swiper-pagination {
+			text-align: left;
+		}
 	}
 
 	&.pagination-align-right {
@@ -73,6 +100,10 @@ $owl-video-play-icon: "#{$imagePath}play.svg";
 			left: auto !important;
 			right: 0 !important;
 			transform: none;
+		}
+
+		.swiper-pagination {
+			text-align: right;
 		}
 	}
 }

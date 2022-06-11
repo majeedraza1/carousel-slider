@@ -2,7 +2,10 @@ import '../web-components/ShaplaCross.ts'
 import '../web-components/ShaplaDialog.ts'
 import '../web-components/ShaplaAspectRatio.ts'
 
-import Swiper, {Autoplay, Keyboard, Lazy, Mousewheel, Navigation, Pagination, Scrollbar} from 'swiper';
+import Swiper, {
+	Autoplay, Keyboard, Lazy, Mousewheel, Navigation, Pagination, Scrollbar,
+	EffectFade, EffectCube, EffectCoverflow, EffectFlip, EffectCards, EffectCreative
+} from 'swiper';
 import {createEl} from "../utils/misc";
 
 const dispatchEvent = (type: string, detail: any) => {
@@ -49,7 +52,10 @@ sliders.forEach((slider: HTMLElement) => {
 	const swiperSettings = JSON.parse(swiperSettingsString as string);
 	const swiper = new Swiper(slider, {
 		...swiperSettings,
-		modules: [Autoplay, Lazy, Mousewheel, Navigation, Pagination, Scrollbar, Keyboard],
+		modules: [
+			Autoplay, Lazy, Mousewheel, Navigation, Pagination, Scrollbar, Keyboard,
+			EffectFade, EffectCube, EffectCoverflow, EffectFlip, EffectCards, EffectCreative
+		],
 	});
 
 	setTimeout(() => {

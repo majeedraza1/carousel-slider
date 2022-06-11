@@ -63,6 +63,10 @@ class SwiperSetting {
 			$this->settings['slidesPerView'] = 'auto';
 		}
 
+		if ( 'vertical' === $setting->get_slider_direction() || $setting->is_slider() ) {
+			unset( $this->settings['breakpoints'] );
+		}
+
 		if ( $show_navigation ) {
 			$this->settings['navigation'] = [
 				'nextEl' => '.swiper-button-next',
@@ -72,9 +76,9 @@ class SwiperSetting {
 
 		if ( $show_pagination ) {
 			$this->settings['pagination'] = [
-				'el'   => '.swiper-pagination',
-				'type' => $setting->get_pagination_type(),
-				// 'dynamicBullets' => true,
+				'el'        => '.swiper-pagination',
+				'type'      => $setting->get_pagination_type(),
+				'clickable' => true,
 			];
 		}
 

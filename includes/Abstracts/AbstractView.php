@@ -143,7 +143,7 @@ abstract class AbstractView implements SliderViewInterface {
 			$css_classes[] = sprintf( 'navigation-position-%s', $setting->get_option( 'nav_position' ) );
 			$css_classes[] = sprintf( 'pagination-visibility-%s', $setting->get_pagination_visibility() );
 			$css_classes[] = sprintf( 'pagination-shape-%s', $setting->get_option( 'pagination_shape' ) );
-			$css_classes[] = sprintf( 'pagination-align-%s', $setting->get_option( 'pagination_position' ) );
+			$css_classes[] = sprintf( 'pagination-align-%s', $setting->get_option( 'pagination_alignment' ) );
 		}
 
 		$outer_attributes_array = [
@@ -288,7 +288,7 @@ abstract class AbstractView implements SliderViewInterface {
 			'arrows-visibility-' . $setting->get_nav_visibility(),
 			'dots-visibility-' . $setting->get_pagination_visibility(),
 			'arrows-' . $setting->get_option( 'nav_position' ),
-			'dots-' . $setting->get_option( 'pagination_position' ),
+			'dots-' . $setting->get_option( 'pagination_alignment' ),
 			'dots-' . $setting->get_option( 'pagination_shape' ),
 		];
 

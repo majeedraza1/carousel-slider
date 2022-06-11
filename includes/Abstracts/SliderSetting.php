@@ -326,6 +326,15 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	}
 
 	/**
+	 * Is it a type of slider?
+	 *
+	 * @return bool
+	 */
+	public function is_slider(): bool {
+		return 'slider' === $this->get_prop( 'type_of_slider' );
+	}
+
+	/**
 	 * Read setting from database
 	 *
 	 * @param array $values The value to be read.
@@ -401,7 +410,8 @@ class SliderSetting extends Data implements SliderSettingInterface {
 			if ( 'pagination_visibility' === $prop_name ) {
 				$value = str_replace( [ 'never', 'always' ], [ 'off', 'on' ], $value );
 			}
-			update_post_meta( $this->slider_id, $field['id'], $this->prepare_item_for_database( $value, $field ) );
+			$sanitized_value = $this->prepare_item_for_database( $value, $field );
+			update_post_meta( $this->slider_id, $field['id'], $sanitized_value );
 		}
 	}
 
@@ -442,27 +452,47 @@ class SliderSetting extends Data implements SliderSettingInterface {
 		if ( isset( $setting['sanitize_callback'] ) && is_callable( $setting['sanitize_callback'] ) ) {
 			return call_user_func( $setting['sanitize_callback'], $value );
 		}
-		$default = $setting['default'] ?? null;
 		if ( isset( $setting['choices'] ) && is_array( $setting['choices'] ) ) {
-			$enum = array_keys( $setting['choices'] );
-			if ( isset( $setting['multiple'] ) ) {
-				$sanitized_value = [];
-				foreach ( (array) $value as $item ) {
-					if ( in_array( $item, $enum, true ) ) {
-						$sanitized_value[] = $item;
-					}
-				}
-
-				return $sanitized_value;
-			}
-
-			return in_array( $value, $enum, true ) ? $value : $default;
+			return $this->sanitize_choices( $value, $setting );
 		}
 		if ( in_array( $setting['type'], [ 'bool', 'switch' ], true ) ) {
 			return Validate::checked( $value ) ? 'on' : 'off';
 		}
 
 		return Sanitize::deep( $value );
+	}
+
+	/**
+	 * Sanitize choices value
+	 *
+	 * @param mixed $value The value to be sanitized.
+	 * @param array $setting The field setting.
+	 *
+	 * @return array|mixed|null
+	 */
+	public function sanitize_choices( $value, array $setting ) {
+		$enum = [];
+		foreach ( $setting['choices'] as $key => $choice ) {
+			if ( is_array( $choice ) && isset( $choice['value'] ) ) {
+				$enum[] = $choice['value'];
+			} else {
+				$enum[] = $key;
+			}
+		}
+
+		$default = $setting['default'] ?? null;
+		if ( isset( $setting['multiple'] ) ) {
+			$sanitized_value = [];
+			foreach ( (array) $value as $item ) {
+				if ( in_array( $item, $enum, true ) ) {
+					$sanitized_value[] = $item;
+				}
+			}
+
+			return $sanitized_value;
+		}
+
+		return in_array( $value, $enum, true ) ? $value : $default;
 	}
 
 	/**

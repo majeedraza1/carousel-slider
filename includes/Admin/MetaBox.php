@@ -58,14 +58,16 @@ class MetaBox {
 		}
 
 		if ( wp_verify_nonce( $_POST['_carousel_slider_nonce'] ?? '', 'carousel_slider_nonce' ) ) {
-			$settings = new SliderSetting( $post_id, false );
-			$settings->get_slider_type();
-			$settings->read_http_post_variables( $_POST['carousel_slider'] );
-			$settings->write_metadata();
+			$slider_type = get_post_meta( $post_id, '_slide_type', true );
+
+			if ( apply_filters( 'carousel_slider/save_common_settings', true ) ) {
+				$settings = new SliderSetting( $post_id, false );
+				$settings->get_slider_type();
+				$settings->read_http_post_variables( $_POST['carousel_slider'] );
+				$settings->write_metadata();
+			}
 
 			update_post_meta( $post_id, '_carousel_slider_version', CAROUSEL_SLIDER_VERSION );
-
-			$slider_type = $settings->get_slider_type();
 
 			/**
 			 * Fires once a post has been saved.
@@ -161,11 +163,13 @@ class MetaBox {
 		<div class="shapla-columns">
 			<div class="shapla-column is-6-tablet">
 				<strong><?php esc_html_e( 'Shortcode:', 'carousel-slider' ); ?></strong>
-				<div class="input-copy-to-clipboard"><?php Helper::print_unescaped_internal_string( $shortcode ); ?></div>
+				<div
+					class="input-copy-to-clipboard"><?php Helper::print_unescaped_internal_string( $shortcode ); ?></div>
 			</div>
 			<div class="shapla-column is-6-tablet">
 				<strong><?php esc_html_e( 'Template Include:', 'carousel-slider' ); ?></strong>
-				<div class="input-copy-to-clipboard"><?php Helper::print_unescaped_internal_string( $shortcode_in ); ?></div>
+				<div
+					class="input-copy-to-clipboard"><?php Helper::print_unescaped_internal_string( $shortcode_in ); ?></div>
 			</div>
 		</div>
 		<?php
