@@ -266,9 +266,11 @@ class TrackingData {
 				$settings[ $key ] = maybe_unserialize( $value[0] );
 			}
 			$data[] = [
-				'id'       => $item->ID,
-				'title'    => $item->post_title,
-				'settings' => $settings,
+				'id'             => $item->ID,
+				'title'          => $item->post_title,
+				'module'         => $settings['_slide_type'] ?? '',
+				'plugin_version' => $settings['_carousel_slider_version'] ?? '',
+				'settings'       => $settings,
 			];
 		}
 
