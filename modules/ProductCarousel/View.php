@@ -238,6 +238,7 @@ class View extends AbstractView {
 		$html = $this->start_wrapper_html();
 		foreach ( $categories as $category ) {
 			ob_start();
+			Helper::print_unescaped_internal_string( $this->start_item_wrapper_html() );
 			echo '<div class="product carousel-slider__product">';
 			do_action( 'woocommerce_before_subcategory', $category );
 			do_action( 'woocommerce_before_subcategory_title', $category );
@@ -245,6 +246,7 @@ class View extends AbstractView {
 			do_action( 'woocommerce_after_subcategory_title', $category );
 			do_action( 'woocommerce_after_subcategory', $category );
 			echo '</div>' . PHP_EOL;
+			Helper::print_unescaped_internal_string( $this->end_item_wrapper_html() );
 			$html .= apply_filters( 'carousel_slider/loop/product-category', ob_get_clean(), $category, $this->get_slider_setting() );
 		}
 

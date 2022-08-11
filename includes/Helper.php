@@ -35,6 +35,34 @@ class Helper extends ViewHelper {
 	}
 
 	/**
+	 * Is Elementor plugin active?
+	 *
+	 * @return bool
+	 */
+	public static function is_elementor_active(): bool {
+		return class_exists( \Elementor\Plugin::class );
+	}
+
+	/**
+	 * Is Divi builder active?
+	 *
+	 * @return bool
+	 */
+	public static function is_divi_builder_active(): bool {
+		return ( defined( 'ET_BUILDER_THEME' ) && ET_BUILDER_THEME ) ||
+		       class_exists( \ET_Builder_Plugin::class );
+	}
+
+	/**
+	 * Is WPBakery Page Builder active?
+	 *
+	 * @return bool
+	 */
+	public static function is_wp_bakery_page_builder_active(): bool {
+		return defined( 'WPB_VC_VERSION' );
+	}
+
+	/**
 	 * Check if pro version is active.
 	 *
 	 * @return bool

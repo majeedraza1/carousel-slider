@@ -5,7 +5,7 @@
  * @package CarouselSlider
  */
 
-namespace CarouselSlider;
+namespace CarouselSlider\Admin;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -93,9 +93,9 @@ class Upgrader {
 			'carousel_slider_upgrade'
 		);
 		$html        = '<div class="notice notice-info is-dismissible">';
-		$html       .= '<p><strong>' . $message . '</strong> ' . $message2 . '</p>';
-		$html       .= '<p><a href="' . $update_url . '" class="button">' . $button_text . '</a></p>';
-		$html       .= '</div>';
+		$html        .= '<p><strong>' . $message . '</strong> ' . $message2 . '</p>';
+		$html        .= '<p><a href="' . $update_url . '" class="button">' . $button_text . '</a></p>';
+		$html        .= '</div>';
 
 		echo wp_kses_post( $html );
 	}
@@ -136,7 +136,7 @@ class Upgrader {
 		$ids = static::get_sliders_ids();
 		if ( count( $ids ) ) {
 			global $wpdb;
-			$sql  = "UPDATE {$wpdb->postmeta} SET `meta_key`= '_infinity_loop' WHERE `meta_key` = '_inifnity_loop'";
+			$sql = "UPDATE {$wpdb->postmeta} SET `meta_key`= '_infinity_loop' WHERE `meta_key` = '_inifnity_loop'";
 			$sql .= ' AND post_id IN(' . implode( ',', $ids ) . ')';
 
 			// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
@@ -155,7 +155,7 @@ class Upgrader {
 		$ids = static::get_sliders_ids();
 		if ( count( $ids ) ) {
 			global $wpdb;
-			$sql  = "UPDATE {$wpdb->postmeta} SET `meta_value`= 'query_product' WHERE `meta_value` = 'query_porduct'";
+			$sql = "UPDATE {$wpdb->postmeta} SET `meta_value`= 'query_product' WHERE `meta_value` = 'query_porduct'";
 			$sql .= " AND `meta_key` = '_product_query_type' AND post_id IN(" . implode( ',', $ids ) . ')';
 
 			// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared

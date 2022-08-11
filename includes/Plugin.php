@@ -7,6 +7,7 @@ use CarouselSlider\Admin\Feedback;
 use CarouselSlider\Admin\GutenbergBlock;
 use CarouselSlider\Admin\MetaBox;
 use CarouselSlider\Admin\Setting;
+use CarouselSlider\Admin\Upgrader;
 use CarouselSlider\CLI\Command;
 use CarouselSlider\Frontend\Frontend;
 use CarouselSlider\Frontend\Preview;
@@ -47,6 +48,17 @@ class Plugin {
 	private $container = [];
 
 	/**
+	 * Get class from container
+	 *
+	 * @param string $key The key used for class name.
+	 *
+	 * @return false|mixed
+	 */
+	public function get( string $key ) {
+		return $this->container[ $key ] ?? false;
+	}
+
+	/**
 	 * Ensures only one instance of the class is loaded or can be loaded.
 	 *
 	 * @return self
@@ -64,22 +76,32 @@ class Plugin {
 	}
 
 	/**
+	 * Load the plugin text domain for translation.
+	 *
+	 * @return void
+	 */
+	public function load_plugin_textdomain() {
+		load_plugin_textdomain(
+			CAROUSEL_SLIDER,
+			false,
+			basename( CAROUSEL_SLIDER_PATH ) . '/languages'
+		);
+	}
+
+	/**
 	 * Instantiate the required classes
 	 *
 	 * @return void
 	 */
 	public function includes() {
 		// Register custom post type.
+		add_action( 'init', [ $this, 'load_plugin_textdomain' ] );
+		// Register custom post type.
 		add_action( 'init', [ $this, 'register_post_type' ] );
 
-		$this->container['i18n']                = i18n::init();
-		$this->container['assets']              = Assets::init();
-		$this->container['feedback']            = Feedback::init();
-		$this->container['widget']              = CarouselSliderWidget::init();
-		$this->container['vc_element']          = Element::init();
-		$this->container['elementor_extension'] = ElementorExtension::init();
-		$this->container['divi_module']         = DiviBuilderModule::init();
-		$this->container['upgrader']            = Upgrader::init();
+		$this->container['assets']   = Assets::init();
+		$this->container['feedback'] = Feedback::init();
+		$this->container['widget']   = CarouselSliderWidget::init();
 
 		// Load classes for admin area.
 		if ( $this->is_request( 'admin' ) ) {
@@ -114,8 +136,21 @@ class Plugin {
 		$this->container['module_video_carousel'] = VideoCarouselModule::init();
 		$this->container['module_post_carousel']  = PostCarouselModule::init();
 		$this->container['module_hero_carousel']  = HeroCarouselModule::init();
+
 		if ( Helper::is_woocommerce_active() ) {
 			$this->container['module_product_carousel'] = ProductCarouselModule::init();
+		}
+
+		if ( Helper::is_wp_bakery_page_builder_active() ) {
+			$this->container['vc_element'] = Element::init();
+		}
+
+		if ( Helper::is_divi_builder_active() ) {
+			$this->container['divi_module'] = DiviBuilderModule::init();
+		}
+
+		if ( Helper::is_elementor_active() ) {
+			$this->container['elementor_extension'] = ElementorExtension::init();
 		}
 	}
 
@@ -129,6 +164,7 @@ class Plugin {
 		$this->container['meta_box']        = MetaBox::init();
 		$this->container['setting']         = Setting::init();
 		$this->container['gutenberg_block'] = GutenbergBlock::init();
+		$this->container['upgrader']        = Upgrader::init();
 	}
 
 	/**
