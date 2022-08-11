@@ -91,7 +91,7 @@ class MetaBox {
 	/**
 	 * Add carousel slider meta box
 	 *
-	 * @param string $post_type The post type.
+	 * @param string  $post_type The post type.
 	 * @param WP_Post $post The post object.
 	 */
 	public function add_meta_boxes( $post_type, $post ) {
@@ -185,7 +185,7 @@ class MetaBox {
 		wp_nonce_field( 'carousel_slider_nonce', '_carousel_slider_nonce' );
 		$slide_types = Helper::get_slider_types();
 		$html        = '<div class="carousel-slider-slider-type-container">';
-		$html        .= '<div class="shapla-columns is-multiline">';
+		$html       .= '<div class="shapla-columns is-multiline">';
 		foreach ( $slide_types as $slug => $args ) {
 			$id    = sprintf( '_slide_type__%s', $slug );
 			$attrs = [
@@ -232,7 +232,7 @@ class MetaBox {
 		$sections = MetaBoxConfig::get_sections_settings();
 		$fields   = MetaBoxConfig::get_fields_settings();
 
-		$html = '<div class="shapla-section shapla-tabs shapla-tabs--normal">';
+		$html  = '<div class="shapla-section shapla-tabs shapla-tabs--normal">';
 		$html .= '<div class="shapla-tab-inner">';
 		$html .= '<ul class="shapla-nav shapla-clearfix">';
 		foreach ( $sections as $section ) {

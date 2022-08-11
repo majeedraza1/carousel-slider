@@ -203,9 +203,9 @@ class Assets {
 		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		$javascript = file_get_contents( self::get_assets_url( '/js/frontend-style-loader.js' ) );
 		$script     = '<script id="carousel-slider-style-loader">' . PHP_EOL;
-		$script     .= 'window.carouselSliderCssUrl = ' . wp_json_encode( $data ) . ';' . PHP_EOL;
-		$script     .= $javascript . PHP_EOL;
-		$script     .= '</script>' . PHP_EOL;
+		$script    .= 'window.carouselSliderCssUrl = ' . wp_json_encode( $data ) . ';' . PHP_EOL;
+		$script    .= $javascript . PHP_EOL;
+		$script    .= '</script>' . PHP_EOL;
 
 		return $script;
 	}

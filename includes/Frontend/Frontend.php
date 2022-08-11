@@ -106,7 +106,7 @@ class Frontend {
 
 		global $post;
 		$load_scripts = is_active_widget( false, false, 'widget_carousel_slider', true ) ||
-		                ( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'carousel_slide' ) );
+						( is_a( $post, 'WP_Post' ) && has_shortcode( $post->post_content, 'carousel_slide' ) );
 
 		return apply_filters( 'carousel_slider_load_scripts', $load_scripts );
 	}

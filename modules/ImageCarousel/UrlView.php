@@ -71,7 +71,7 @@ class UrlView extends AbstractView {
 				$image = sprintf( '<img src="%1$s" alt="%2$s" />', $images_url['url'], $images_url['alt'] );
 			}
 
-			$item_html = $this->start_item_wrapper_html();
+			$item_html  = $this->start_item_wrapper_html();
 			$item_html .= '<div class="carousel-slider__item">';
 			if ( Validate::url( $images_url['link_url'] ) ) {
 				$item_html .= sprintf(

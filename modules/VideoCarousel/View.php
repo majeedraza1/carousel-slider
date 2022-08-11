@@ -39,11 +39,11 @@ class View extends AbstractView {
 				'data-embed_url' => esc_url( $item->get_embed_url() ),
 			];
 			$item_html  = $this->start_item_wrapper_html();
-			$item_html  .= '<div class="carousel-slider-item-video">';
-			$item_html  .= '<div class="carousel-slider-video-wrapper">';
-			$item_html  .= '<a ' . join( ' ', \CarouselSlider\Helper::array_to_attribute( $popup_args ) ) . '>';
-			$item_html  .= '<div class="carousel-slider-video-play-icon"></div>';
-			$item_html  .= '<div class="carousel-slider-video-overlay"></div>';
+			$item_html .= '<div class="carousel-slider-item-video">';
+			$item_html .= '<div class="carousel-slider-video-wrapper">';
+			$item_html .= '<a ' . join( ' ', \CarouselSlider\Helper::array_to_attribute( $popup_args ) ) . '>';
+			$item_html .= '<div class="carousel-slider-video-play-icon"></div>';
+			$item_html .= '<div class="carousel-slider-video-overlay"></div>';
 			if ( Validate::checked( $lazy_load_image ) ) {
 				$item_html .= '<img class="owl-lazy" data-src="' . esc_url( $url['thumbnail']['large'] ) . '"/>';
 			} else {

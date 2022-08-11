@@ -153,7 +153,7 @@ abstract class AbstractView implements SliderViewInterface {
 
 		$attributes_array = $this->get_slider_attributes( $args );
 
-		$html = '<div ' . join( ' ', Helper::array_to_attribute( $outer_attributes_array ) ) . '>' . PHP_EOL;
+		$html  = '<div ' . join( ' ', Helper::array_to_attribute( $outer_attributes_array ) ) . '>' . PHP_EOL;
 		$html .= '<div ' . join( ' ', $attributes_array ) . '>' . PHP_EOL;
 
 		return $html;

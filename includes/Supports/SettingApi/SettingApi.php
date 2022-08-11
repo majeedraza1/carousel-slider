@@ -163,8 +163,10 @@ class SettingApi {
 				return Sanitize::textarea( $value );
 
 			case 'text':
-			default:
 				return Sanitize::text( $value );
+
+			default:
+				return Sanitize::deep( $value );
 		}
 	}
 

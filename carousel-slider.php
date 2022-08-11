@@ -125,7 +125,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 		 * Define constant if not defined
 		 *
 		 * @param string $constant_name The constant name.
-		 * @param mixed $value The constant value.
+		 * @param mixed  $value The constant value.
 		 *
 		 * @return void
 		 */
@@ -194,7 +194,7 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 				return;
 			}
 
-			$error = __( 'Your installed PHP Version is: ', 'carousel-slider' ) . PHP_VERSION . '. ';
+			$error  = __( 'Your installed PHP Version is: ', 'carousel-slider' ) . PHP_VERSION . '. ';
 			$error .= sprintf(
 			/* translators: 1: min php version requires */
 				__( 'The Carousel Slider plugin requires PHP version %s or greater.', 'carousel-slider' ),
@@ -219,16 +219,16 @@ if ( ! class_exists( 'Carousel_Slider' ) ) {
 
 			deactivate_plugins( plugin_basename( __FILE__ ) );
 
-			$error = '<h1>' . __( 'An Error Occurred', 'carousel-slider' ) . '</h1>';
+			$error  = '<h1>' . __( 'An Error Occurred', 'carousel-slider' ) . '</h1>';
 			$error .= '<h2>' . __( 'Your installed PHP Version is: ', 'carousel-slider' ) . PHP_VERSION . '</h2>';
 			/* translators: 1: min php version requires */
 			$error .= '<p>' . sprintf( __( 'The Carousel Slider plugin requires PHP version %s or greater', 'carousel-slider' ), $this->min_php ) . '</p>';
 			$error .= '<p>' . sprintf(
 				/* translators: 1: php doc page link start, 2: php doc page link end */
-					__( 'The version of your PHP is %1$s unsupported and old %2$s. ', 'carousel-slider' ),
-					'<a href="https://php.net/supported-versions.php" target="_blank"><strong>',
-					'</strong></a>'
-				);
+				__( 'The version of your PHP is %1$s unsupported and old %2$s. ', 'carousel-slider' ),
+				'<a href="https://php.net/supported-versions.php" target="_blank"><strong>',
+				'</strong></a>'
+			);
 			$error .= __( 'You should update your PHP software or contact your host regarding this matter.', 'carousel-slider' ) . '</p>';
 
 			$title = __( 'Plugin Activation Error', 'carousel-slider' );

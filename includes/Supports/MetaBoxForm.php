@@ -151,7 +151,7 @@ class MetaBoxForm {
 	 * @return string
 	 */
 	private static function field_before( array $args ): string {
-		$_normal = sprintf( '<div class="sp-input-group" id="field-%s">', $args['id'] );
+		$_normal  = sprintf( '<div class="sp-input-group" id="field-%s">', $args['id'] );
 		$_normal .= '<div class="sp-input-label">';
 		$_normal .= sprintf( '<label for="%1$s">%2$s</label>', $args['id'], $args['label'] ?? '' );
 		if ( ! empty( $args['description'] ) ) {
@@ -161,7 +161,7 @@ class MetaBoxForm {
 		$_normal .= '<div class="sp-input-field">';
 
 		if ( isset( $args['context'] ) && 'side' === $args['context'] ) {
-			$_side = '<div id="field-' . $args['id'] . '" class="cs-flex cs-flex-wrap cs-justify-between cs-my-4">';
+			$_side  = '<div id="field-' . $args['id'] . '" class="cs-flex cs-flex-wrap cs-justify-between cs-my-4">';
 			$_side .= '<span class="cs-inline-flex cs-space-x-1">';
 			$_side .= '<label for="' . $args['id'] . '"><strong>' . $args['label'] . '</strong></label>';
 			if ( ! empty( $args['description'] ) ) {
@@ -208,7 +208,7 @@ class MetaBoxForm {
 		$field->set_name( $name );
 		$field->set_value( $value );
 
-		$html = self::field_before( $settings );
+		$html  = self::field_before( $settings );
 		$html .= $field->render();
 		$html .= self::field_after( $settings );
 
@@ -219,7 +219,7 @@ class MetaBoxForm {
 	 * Handle wildcard method call
 	 *
 	 * @param string $name The method name.
-	 * @param array $arguments The arguments for the method.
+	 * @param array  $arguments The arguments for the method.
 	 *
 	 * @return void
 	 */

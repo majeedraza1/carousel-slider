@@ -40,7 +40,7 @@ class Setting {
 	 * Get option
 	 *
 	 * @param string $key option key.
-	 * @param mixed $default default value.
+	 * @param mixed  $default default value.
 	 *
 	 * @return mixed
 	 */
@@ -108,6 +108,7 @@ class Setting {
 					'always'           => __( 'Always', 'carousel-slider' ),
 				],
 				'panel'       => 'general',
+				'priority'    => 10,
 			]
 		);
 		$settings->add_field(
@@ -133,6 +134,7 @@ class Setting {
 					],
 				],
 				'panel'       => 'general',
+				'priority'    => 20,
 			]
 		);
 		$settings->add_field(
@@ -147,6 +149,20 @@ class Setting {
 					'carousel-slider'
 				),
 				'panel'       => 'general',
+				'priority'    => 30,
+			]
+		);
+
+		$settings->add_field(
+			[
+				'id'          => 'inactive_modules',
+				'type'        => 'multi_checkbox',
+				'default'     => [],
+				'name'        => __( 'Disable Modules', 'carousel-slider' ),
+				'description' => __( 'Check to disable modules.', 'carousel-slider' ),
+				'panel'       => 'general',
+				'choices'     => $this->get_modules_choices(),
+				'priority'    => 40,
 			]
 		);
 		$choices = [
@@ -187,5 +203,28 @@ class Setting {
 				'panel'       => 'woocommerce',
 			]
 		);
+	}
+
+	/**
+	 * Get modules choices
+	 *
+	 * @return array
+	 */
+	public function get_modules_choices(): array {
+		$slider_types   = Helper::get_slider_types();
+		$module_choices = [];
+		foreach ( $slider_types as $value => $option ) {
+			$choice = [
+				'value' => $value,
+				'label' => isset( $option['pro'] ) && true === $option['pro'] ?
+					sprintf( '%s - pro', $option['label'] ) : $option['label'],
+			];
+			if ( isset( $option['enabled'] ) && false === $option['enabled'] ) {
+				$choice['readonly'] = true;
+			}
+			$module_choices[] = $choice;
+		}
+
+		return $module_choices;
 	}
 }

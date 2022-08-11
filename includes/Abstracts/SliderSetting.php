@@ -64,7 +64,7 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	/**
 	 * Class constructor
 	 *
-	 * @param int $slider_id The slider id.
+	 * @param int  $slider_id The slider id.
 	 * @param bool $read_metadata Should read metadata immediately.
 	 */
 	public function __construct( int $slider_id, bool $read_metadata = true ) {
@@ -101,7 +101,7 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	 * Get option
 	 *
 	 * @param string $key option key.
-	 * @param mixed $default default value.
+	 * @param mixed  $default default value.
 	 *
 	 * @return mixed
 	 */
@@ -118,7 +118,7 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	 * If there is no option for key, return from global option.
 	 *
 	 * @param string $key option key.
-	 * @param mixed $default default value to return if data key does not exist.
+	 * @param mixed  $default default value to return if data key does not exist.
 	 *
 	 * @return mixed The key's value, or the default value
 	 */
@@ -376,8 +376,8 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	 * Read single metadata
 	 *
 	 * @param string $attribute property name.
-	 * @param array $field The field settings.
-	 * @param array $values The values.
+	 * @param array  $field The field settings.
+	 * @param array  $values The values.
 	 *
 	 * @return void
 	 */
@@ -419,7 +419,7 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	 * Sanitize value by data type
 	 *
 	 * @param string $type The type.
-	 * @param mixed $value The value.
+	 * @param mixed  $value The value.
 	 *
 	 * @return mixed
 	 */
@@ -508,7 +508,7 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	 * Handle calling property via method
 	 *
 	 * @param string $name The name of the method being called.
-	 * @param array $args An enumerated array containing the parameters passed to the $name'ed method.
+	 * @param array  $args An enumerated array containing the parameters passed to the $name'ed method.
 	 *
 	 * @return mixed
 	 * @throws BadMethodCallException Exception if not method available.

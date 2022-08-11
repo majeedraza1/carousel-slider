@@ -10,10 +10,10 @@ use CarouselSlider\Supports\FormFields\ButtonGroup;
 use CarouselSlider\Supports\FormFields\Checkbox;
 use CarouselSlider\Supports\FormFields\CheckboxSwitch;
 use CarouselSlider\Supports\FormFields\Color;
-use CarouselSlider\Supports\FormFields\Html;
 use CarouselSlider\Supports\FormFields\ImagesGallery;
 use CarouselSlider\Supports\FormFields\ImageUploader;
 use CarouselSlider\Supports\FormFields\ImageUrl;
+use CarouselSlider\Supports\FormFields\MultiCheckbox;
 use CarouselSlider\Supports\FormFields\Radio;
 use CarouselSlider\Supports\FormFields\Select;
 use CarouselSlider\Supports\FormFields\SelectImageSize;
@@ -160,6 +160,7 @@ class FormBuilder implements FormBuilderInterface {
 				'textarea'       => Textarea::class,
 				'spacing'        => Spacing::class,
 				'checkbox'       => Checkbox::class,
+				'multi_checkbox' => MultiCheckbox::class,
 				'button_group'   => ButtonGroup::class,
 				'color'          => Color::class,
 				'images_gallery' => ImagesGallery::class,
