@@ -4,7 +4,7 @@ namespace CarouselSlider\Modules\VideoCarousel;
 
 use CarouselSlider\Abstracts\AbstractView;
 use CarouselSlider\Modules\VideoCarousel\Helper as VideoCarouselHelper;
-use CarouselSlider\Supports\Validate;
+use CarouselSlider\TemplateParserBase;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -20,42 +20,29 @@ class View extends AbstractView {
 	 * @inheritDoc
 	 */
 	public function render(): string {
-		$setting         = $this->get_slider_setting();
-		$slider_id       = $this->get_slider_id();
-		$urls            = get_post_meta( $slider_id, '_video_url', true );
-		$lazy_load_image = get_post_meta( $slider_id, '_lazy_load_image', true );
+		$setting   = $this->get_slider_setting();
+		$slider_id = $this->get_slider_id();
+		$urls      = get_post_meta( $slider_id, '_video_url', true );
 		if ( is_string( $urls ) ) {
 			$urls = array_filter( explode( ',', $urls ) );
 		}
 		$urls = VideoCarouselHelper::get_video_url( $urls );
 
+		$template = new TemplateParserBase( $setting );
+		$template->set_template( 'loop/video-carousel.php' );
+
 		$html = $this->start_wrapper_html();
 		foreach ( $urls as $url ) {
-			$item       = new Item( $url );
-			$popup_args = [
-				'class'          => 'magnific-popup',
-				'href'           => esc_url( $url['url'] ),
-				'data-provider'  => esc_attr( $item->get_provider() ),
-				'data-id'        => esc_attr( $item->get_video_id() ),
-				'data-embed_url' => esc_url( $item->get_embed_url() ),
-			];
-			$item_html  = '<div class="carousel-slider-item-video">';
-			$item_html .= '<div class="carousel-slider-video-wrapper">';
-			$item_html .= '<a ' . join( ' ', \CarouselSlider\Helper::array_to_attribute( $popup_args ) ) . '>';
-			$item_html .= '<div class="carousel-slider-video-play-icon"></div>';
-			$item_html .= '<div class="carousel-slider-video-overlay"></div>';
-			if ( Validate::checked( $lazy_load_image ) ) {
-				$lazy_class = $setting->is_using_swiper() ? 'swiper-lazy' : 'owl-lazy';
-				$item_html .= '<img class="' . esc_attr( $lazy_class ) . '" data-src="' . esc_url( $url['thumbnail']['large'] ) . '"/>';
-			} else {
-				$item_html .= '<img src="' . esc_url( $url['thumbnail']['large'] ) . '"/>';
-			}
-			$item_html .= '</a>';
-			$item_html .= '</div>';
-			$item_html .= '</div>' . PHP_EOL;
+			$item = new Item( $url );
+			$template->set_object( $item );
 
 			$html .= $this->start_item_wrapper_html();
-			$html .= apply_filters( 'carousel_slider/loop/video-carousel', $item_html, $url, $this->get_slider_setting() );
+			$html .= apply_filters(
+				'carousel_slider/loop/video-carousel',
+				$template->render(),
+				$item,
+				$this->get_slider_setting()
+			);
 			$html .= $this->end_item_wrapper_html();
 		}
 

@@ -249,28 +249,7 @@ class Item extends Data {
 	 * @return string
 	 */
 	public function get_view(): string {
-		$link_type    = $this->get_link_type();
-		$slide_link   = $this->get_prop( 'slide_link' );
-		$link_target  = $this->get_prop( 'link_target', '_self' );
-		$is_full_link = 'full' === $link_type && Validate::url( $slide_link );
-		$slide_index  = $this->get_item_id();
-		$html         = '';
-
-		$cell_attr = [
-			'class' => "carousel-slider-hero__cell hero__cell-$slide_index",
-			'style' => '--cell-height: ' . $this->get_slide_height(),
-		];
-		if ( $is_full_link ) {
-			$cell_attr = array_merge(
-				$cell_attr,
-				[
-					'href'   => $slide_link,
-					'target' => $link_target,
-				]
-			);
-		}
-
-		$html .= '<' . ( $is_full_link ? 'a' : 'div' ) . ' ' . join( ' ', Helper::array_to_attribute( $cell_attr ) ) . '>';
+		$html = $this->get_cell_start();
 
 		$html .= $this->get_cell_background();
 
@@ -298,7 +277,7 @@ class Item extends Data {
 		// Slide Description.
 		$html .= $this->get_description();
 
-		if ( 'button' === $link_type ) {
+		if ( 'button' === $this->get_link_type() ) {
 			$html .= '<div class="carousel-slider-hero__cell__buttons">';
 			$html .= $this->get_button_one();
 			$html .= $this->get_button_two();
@@ -308,9 +287,9 @@ class Item extends Data {
 		$html .= '</div>';// .carousel-slider-hero__cell__content
 		$html .= '</div>';// .carousel-slider-hero__cell__inner
 
-		$html .= $is_full_link ? '</a>' : '</div>'; // .carousel-slider-hero__cell
+		$html .= $this->get_cell_end();
 
-		return apply_filters( 'carousel_slider_content', $html, $this->to_array(), $slide_index );
+		return apply_filters( 'carousel_slider_content', $html, $this->to_array(), $this->get_item_id() );
 	}
 
 	/**
@@ -458,7 +437,7 @@ class Item extends Data {
 		$btn_text = $this->get_prop( 'button_one_text' );
 		$target   = $this->get_prop( 'button_one_target', '_self' );
 
-		$classes  = 'button cs-hero-button';
+		$classes = 'button cs-hero-button';
 		$classes .= ' cs-hero-button-' . $this->get_item_id() . '-1';
 		$classes .= ' cs-hero-button-' . $this->get_prop( 'button_one_type', 'normal' );
 		$classes .= ' cs-hero-button-' . $this->get_prop( 'button_one_size', 'medium' );
@@ -491,7 +470,7 @@ class Item extends Data {
 		$text   = $this->get_prop( 'button_two_text' );
 		$target = $this->get_prop( 'button_two_target', '_self' );
 
-		$classes  = 'button cs-hero-button';
+		$classes = 'button cs-hero-button';
 		$classes .= ' cs-hero-button-' . $this->get_item_id() . '-2';
 		$classes .= ' cs-hero-button-' . $this->get_prop( 'button_two_type', 'normal' );
 		$classes .= ' cs-hero-button-' . $this->get_prop( 'button_two_size', 'medium' );
@@ -508,5 +487,44 @@ class Item extends Data {
 		$html .= '</span>';
 
 		return $html;
+	}
+
+	/**
+	 * Get cell start html
+	 *
+	 * @return string
+	 */
+	public function get_cell_start(): string {
+		$link_type    = $this->get_link_type();
+		$slide_link   = $this->get_prop( 'slide_link' );
+		$link_target  = $this->get_prop( 'link_target', '_self' );
+		$is_full_link = 'full' === $link_type && Validate::url( $slide_link );
+
+		$cell_attr = [
+			'class' => 'carousel-slider-hero__cell hero__cell-' . $this->get_item_id(),
+			'style' => '--cell-height: ' . $this->get_slide_height(),
+		];
+		if ( $is_full_link ) {
+			$cell_attr = array_merge(
+				$cell_attr,
+				[
+					'href'   => $slide_link,
+					'target' => $link_target,
+				]
+			);
+		}
+
+		return '<' . ( $is_full_link ? 'a' : 'div' ) . ' ' . join( ' ', Helper::array_to_attribute( $cell_attr ) ) . '>';
+	}
+
+	/**
+	 * Get cell end html
+	 *
+	 * @return string
+	 */
+	public function get_cell_end(): string {
+		$is_full_link = 'full' === $this->get_link_type() && Validate::url( $this->get_prop( 'slide_link' ) );
+
+		return $is_full_link ? '</a>' : '</div>'; // .carousel-slider-hero__cell
 	}
 }

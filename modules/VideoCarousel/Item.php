@@ -71,4 +71,17 @@ class Item extends Data {
 
 		return '//about:blank';
 	}
+
+	/**
+	 * Get video thumbnail
+	 *
+	 * @param string $size Image size.
+	 *
+	 * @return string
+	 */
+	public function get_thumbnail_url( string $size = 'large' ): string {
+		$thumbnail = $this->get_prop( 'thumbnail' );
+
+		return $thumbnail[ $size ] ?? '';
+	}
 }
