@@ -28,7 +28,7 @@
 		position: relative;
 
 		&:last-child {
-			border-right-width: 1px;
+			border-right: 1px solid rgba(0, 0, 0, .2) !important;
 		}
 	}
 

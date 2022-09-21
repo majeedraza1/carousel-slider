@@ -199,6 +199,10 @@ class MetaBoxForm {
 	 * @return string
 	 */
 	public static function field( array $args ): string {
+		$is_pro_only = isset( $args['pro_only'] ) && $args['pro_only'];
+		if ( $is_pro_only && Helper::show_pro_features() === false ) {
+			return '';
+		}
 		$settings = self::map_field_settings( $args );
 
 		list( $name, $value ) = self::get_name_and_value( $settings );

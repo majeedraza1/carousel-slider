@@ -36,6 +36,11 @@ $accent: #323232;
 .shapla-tab {
 	margin: 0 0 2em 0;
 	padding: 21px 20px 20px 20px;
+	box-sizing: border-box;
+
+	*, *:before, *:after {
+		box-sizing: border-box;
+	}
 
 	p:first-of-type {
 		margin-top: 0;

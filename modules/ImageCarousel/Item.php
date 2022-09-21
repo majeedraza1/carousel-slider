@@ -76,6 +76,44 @@ class Item {
 	}
 
 	/**
+	 * Get link start html
+	 *
+	 * @param string $context The context.
+	 * @param string $target The target.
+	 *
+	 * @return string
+	 */
+	public function get_link_html_start( string $context, string $target = '_blank' ): string {
+		if ( 'lightbox' === $context ) {
+			$full_img = $this->get_image_src( 'full' );
+
+			return '<a class="magnific-popup" href="' . esc_url( $full_img[0] ) . '" data-width="' . esc_attr( $full_img[1] ) . '" data-height="' . esc_attr( $full_img[2] ) . '">';
+		}
+
+		$link_url = $this->get_link_url();
+		if ( 'link' === $context && $link_url ) {
+			return '<a href="' . esc_url( $link_url ) . '" target="' . esc_attr( $target ) . '">';
+		}
+
+		return '';
+	}
+
+	/**
+	 * Get link end html
+	 *
+	 * @param string $context The context.
+	 *
+	 * @return string
+	 */
+	public function get_link_html_end( string $context ): string {
+		if ( in_array( $context, [ 'lightbox', 'link' ], true ) ) {
+			return '</a>';
+		}
+
+		return '';
+	}
+
+	/**
 	 * Get image
 	 *
 	 * @param string|int[] $size Registered image size name, or an array of width and height.

@@ -335,6 +335,15 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	}
 
 	/**
+	 * Check if we are using swiper
+	 *
+	 * @return bool
+	 */
+	public function is_using_swiper():bool {
+		return Helper::is_using_swiper();
+	}
+
+	/**
 	 * Read setting from database
 	 *
 	 * @param array $values The value to be read.

@@ -160,6 +160,9 @@ class MetaBoxConfig {
 				'label'       => esc_html__( 'Auto Width', 'carousel-slider' ),
 				'description' => esc_html__( 'Set item width according to its content width. Use width style on item to get the result you want. ', 'carousel-slider' ),
 				'default'     => 'off',
+				'condition'   => [
+					'_type_of_slider' => 'carousel',
+				],
 			],
 			'slides_per_view'  => [
 				'section'        => 'section_general_settings',
@@ -176,6 +179,9 @@ class MetaBoxConfig {
 					'xl'  => 4,
 					'2xl' => 5,
 				],
+				'condition'      => [
+					'_type_of_slider' => 'carousel',
+				],
 			],
 			'slider_direction' => [
 				'section'     => 'section_general_settings',
@@ -184,6 +190,7 @@ class MetaBoxConfig {
 				'label'       => esc_html__( 'Slider Direction', 'carousel-slider' ),
 				'description' => esc_html__( 'Choose slider direction.', 'carousel-slider' ),
 				'default'     => 'horizontal',
+				'pro_only'    => true,
 				'choices'     => [
 					[
 						'value' => 'horizontal',
@@ -203,6 +210,7 @@ class MetaBoxConfig {
 				'label'       => esc_html__( 'Slider Effect', 'carousel-slider' ),
 				'description' => esc_html__( 'Choose slider effect.', 'carousel-slider' ),
 				'default'     => 'slide',
+				'pro_only'    => true,
 				'choices'     => [
 					[
 						'value' => 'slide',
