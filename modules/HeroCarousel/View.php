@@ -4,6 +4,7 @@ namespace CarouselSlider\Modules\HeroCarousel;
 
 use CarouselSlider\Abstracts\AbstractView;
 use CarouselSlider\Abstracts\SliderSetting;
+use CarouselSlider\TemplateParserBase;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -39,14 +40,19 @@ class View extends AbstractView {
 		$settings          = get_post_meta( $slider_id, '_content_slider_settings', true );
 		$content_animation = ! empty( $settings['content_animation'] ) ? esc_attr( $settings['content_animation'] ) : '';
 
+		$template = new TemplateParserBase( $this->get_slider_setting() );
+		$template->set_template( 'loop/hero-banner-slider.php' );
+
 		$html = $this->start_wrapper_html( [ 'data-animation' => $content_animation ] );
 		foreach ( $items as $slide_id => $slide ) {
 			$item = new Item( $slide );
 			$item->set_prop( 'id', $slide_id + 1 );
 			$item->set_setting( $this->get_slider_setting() );
 
+			$template->set_object( $item );
+
 			$item_html  = $this->start_item_wrapper_html();
-			$item_html .= $item->get_view();
+			$item_html .= $template->render();
 			$item_html .= $this->end_item_wrapper_html();
 
 			$html .= apply_filters( 'carousel_slider/loop/hero-banner-slider', $item_html, $item, $this->get_slider_setting() ) . PHP_EOL;

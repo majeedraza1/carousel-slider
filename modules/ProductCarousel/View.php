@@ -8,6 +8,7 @@ use CarouselSlider\Admin\Setting as GlobalSetting;
 use CarouselSlider\Helper;
 use CarouselSlider\Supports\Validate;
 use CarouselSlider\Modules\ProductCarousel\Helper as ProductCarouselHelper;
+use CarouselSlider\TemplateParserBase;
 use WC_Product;
 
 defined( 'ABSPATH' ) || exit;
@@ -96,6 +97,12 @@ class View extends AbstractView {
 	 */
 	public function get_view(): string {
 		$products = ProductCarouselHelper::get_products( $this->get_slider_id() );
+		$settings = $this->get_slider_setting();
+
+		$template_name     = GlobalSetting::get_option( 'woocommerce_shop_loop_item_template' );
+		$template_filename = 'v1-compatibility' === $template_name ? 'loop/product-carousel.php' : 'loop/product-carousel-2.php';
+		$template          = new TemplateParserBase( $settings );
+		$template->set_template( $template_filename );
 
 		global $post;
 		global $product;
@@ -112,14 +119,13 @@ class View extends AbstractView {
 			if ( ! $product->has_enough_stock( 1 ) ) {
 				continue;
 			}
-			$template = GlobalSetting::get_option( 'woocommerce_shop_loop_item_template' );
+
+			$template->set_object( $product );
+			$template->set_extra_vars( 'post', $_post );
+			$template->set_extra_vars( 'product', $product );
 
 			$html .= $this->start_item_wrapper_html();
-			if ( 'v1-compatibility' === $template ) {
-				$html .= self::get_item( $product, $this->get_slider_setting() ) . PHP_EOL;
-			} else {
-				$html .= self::get_slider_item( $product, $this->get_slider_setting() ) . PHP_EOL;
-			}
+			$html .= apply_filters( 'carousel_slider/loop/product-carousel', $template->render(), $product, $settings );
 			$html .= $this->end_item_wrapper_html();
 		}
 		wp_reset_postdata();
@@ -132,98 +138,36 @@ class View extends AbstractView {
 	/**
 	 * Get item
 	 *
-	 * @param WC_Product    $product The WC_Product object.
+	 * @param WC_Product $product The WC_Product object.
 	 * @param SliderSetting $settings Settings array.
 	 *
 	 * @return string
 	 */
 	public static function get_item( WC_Product $product, Setting $settings ): string {
-		ob_start();
+		$template = new TemplateParserBase( $settings );
+		$template->set_template( 'loop/product-carousel.php' );
+		$template->set_object( $product );
+		$template->set_extra_vars( 'product', $product );
 
-		echo '<div class="product carousel-slider__product">';
-
-		do_action( 'carousel_slider_before_shop_loop_item', $product );
-
-		// Show product image.
-		if ( $product->get_image_id() ) {
-			echo '<a class="woocommerce-LoopProduct-link" href="' . esc_url( $product->get_permalink() ) . '">';
-			if ( $settings->get_prop( 'lazy_load' ) ) {
-				$image = wp_get_attachment_image_src( $product->get_image_id(), $settings->get_image_size() );
-				echo '<img class="owl-lazy" data-src="' . esc_url( $image[0] ) . '" />';
-			} else {
-				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				echo $product->get_image( $settings->get_image_size() );
-			}
-			echo '</a>';
-		}
-
-		// Show title.
-		if ( $settings->get_prop( 'show_title' ) ) {
-			echo '<a href="' . esc_attr( $product->get_permalink() ) . '">';
-			echo '<h3 class="woocommerce-loop-product__title">' . esc_html( $product->get_title() ) . '</h3>';
-			echo '</a>';
-		}
-
-		// Show Rating.
-		if ( $settings->get_prop( 'show_rating' ) ) {
-			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			echo wc_get_rating_html( $product->get_average_rating() );
-		}
-
-		// Sale Product batch.
-		if ( $product->is_on_sale() && $settings->get_prop( 'show_onsale_tag' ) ) {
-			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			echo apply_filters( 'woocommerce_sale_flash', '<span class="onsale">' . __( 'Sale!', 'carousel-slider' ) . '</span>', $product );
-		}
-
-		// Show Price.
-		if ( $settings->get_prop( 'show_price' ) ) {
-			$price_html = '<span class="price">' . $product->get_price_html() . '</span>';
-			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			echo apply_filters( 'carousel_slider_product_price', $price_html, $product );
-		}
-
-		// Show button.
-		if ( $settings->get_prop( 'show_cart_button' ) ) {
-			echo '<div style="clear: both;"></div>';
-			woocommerce_template_loop_add_to_cart();
-		}
-
-		do_action( 'carousel_slider_after_shop_loop_item', $product, $settings->get_slider_id(), $settings );
-
-		echo '</div>';
-
-		$item_html = ob_get_clean();
-
-		return apply_filters( 'carousel_slider/loop/product-carousel', $item_html, $product, $settings );
+		return apply_filters( 'carousel_slider/loop/product-carousel', $template->render(), $product, $settings );
 	}
 
 	/**
 	 * Get product slider item
 	 *
-	 * @param WC_Product    $product The WC_Product object.
+	 * @param WC_Product $product The WC_Product object.
 	 * @param SliderSetting $settings Settings array.
 	 *
 	 * @return string
 	 */
 	public static function get_slider_item( WC_Product $product, SliderSetting $settings ): string {
-		ob_start();
-		echo '<div class="product carousel-slider__product">';
 
-		do_action( 'carousel_slider_before_shop_loop_item', $product, $settings->get_slider_id() );
+		$template = new TemplateParserBase( $settings );
+		$template->set_template( 'loop/product-carousel-2.php' );
+		$template->set_object( $product );
+		$template->set_extra_vars( 'product', $product );
 
-		do_action( 'woocommerce_before_shop_loop_item' );
-		do_action( 'woocommerce_before_shop_loop_item_title' );
-		do_action( 'woocommerce_shop_loop_item_title' );
-		do_action( 'woocommerce_after_shop_loop_item_title' );
-		do_action( 'woocommerce_after_shop_loop_item' );
-
-		do_action( 'carousel_slider_after_shop_loop_item', $product, $settings->get_slider_id() );
-
-		echo '</div>';
-		$item_html = ob_get_clean();
-
-		return apply_filters( 'carousel_slider/loop/product-carousel', $item_html, $product, $settings );
+		return apply_filters( 'carousel_slider/loop/product-carousel', $template->render(), $product, $settings );
 	}
 
 	/**
@@ -235,19 +179,15 @@ class View extends AbstractView {
 		$slider_id  = $this->get_slider_id();
 		$categories = ProductCarouselHelper::product_categories();
 
+		$template = new TemplateParserBase( $this->get_slider_setting() );
+		$template->set_template( 'loop/product-categories-list.php' );
+
 		$html = $this->start_wrapper_html();
 		foreach ( $categories as $category ) {
-			ob_start();
-			Helper::print_unescaped_internal_string( $this->start_item_wrapper_html() );
-			echo '<div class="product carousel-slider__product">';
-			do_action( 'woocommerce_before_subcategory', $category );
-			do_action( 'woocommerce_before_subcategory_title', $category );
-			do_action( 'woocommerce_shop_loop_subcategory_title', $category );
-			do_action( 'woocommerce_after_subcategory_title', $category );
-			do_action( 'woocommerce_after_subcategory', $category );
-			echo '</div>' . PHP_EOL;
-			Helper::print_unescaped_internal_string( $this->end_item_wrapper_html() );
-			$html .= apply_filters( 'carousel_slider/loop/product-category', ob_get_clean(), $category, $this->get_slider_setting() );
+			$template->set_object( $category );
+			$html .= $this->start_item_wrapper_html();
+			$html .= apply_filters( 'carousel_slider/loop/product-category', $template->render(), $category, $this->get_slider_setting() );
+			$html .= $this->end_item_wrapper_html();
 		}
 
 		$html .= $this->end_wrapper_html();

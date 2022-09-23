@@ -40,7 +40,7 @@ class Setting {
 	 * Get option
 	 *
 	 * @param string $key option key.
-	 * @param mixed  $default default value.
+	 * @param mixed $default default value.
 	 *
 	 * @return mixed
 	 */
@@ -126,7 +126,7 @@ class Setting {
 				'choices'     => [
 					[
 						'value' => 'swiper',
-						'label' => __( 'Swiper (recommended)', 'carousel-slider' ),
+						'label' => __( 'Swiper (experimental)', 'carousel-slider' ),
 					],
 					[
 						'value' => 'owl.carousel',
@@ -153,18 +153,19 @@ class Setting {
 			]
 		);
 
-		$settings->add_field(
-			[
-				'id'          => 'inactive_modules',
-				'type'        => 'multi_checkbox',
-				'default'     => [],
-				'name'        => __( 'Disable Modules', 'carousel-slider' ),
-				'description' => __( 'Check to disable modules.', 'carousel-slider' ),
-				'panel'       => 'general',
-				'choices'     => $this->get_modules_choices(),
-				'priority'    => 40,
-			]
-		);
+//		$settings->add_field(
+//			[
+//				'id'          => 'inactive_modules',
+//				'type'        => 'multi_checkbox',
+//				'default'     => [],
+//				'name'        => __( 'Disable Modules', 'carousel-slider' ),
+//				'description' => __( 'Check to disable modules.', 'carousel-slider' ),
+//				'panel'       => 'general',
+//				'choices'     => $this->get_modules_choices(),
+//				'priority'    => 40,
+//			]
+//		);
+
 		$choices = [
 			[
 				'value' => 'wc-default',

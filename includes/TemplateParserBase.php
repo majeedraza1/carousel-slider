@@ -46,6 +46,13 @@ class TemplateParserBase implements TemplateParserInterface {
 	protected $use_condition = false;
 
 	/**
+	 * Extra data to pass to the template
+	 *
+	 * @var array
+	 */
+	protected $extra_vars = [];
+
+	/**
 	 * The class constructor
 	 *
 	 * @param SliderSetting|null $setting The setting object.
@@ -151,6 +158,9 @@ class TemplateParserBase implements TemplateParserInterface {
 	public function get_template_content(): string {
 		$setting = $this->get_slider_setting();
 		$object  = $this->get_object();
+		if ( count( $this->extra_vars ) ) {
+			extract( $this->extra_vars, EXTR_OVERWRITE ); // phpcs:ignore WordPress.PHP.DontExtract.extract_extract
+		}
 		ob_start();
 		include $this->get_template_file();
 
@@ -208,5 +218,15 @@ class TemplateParserBase implements TemplateParserInterface {
 			},
 			$subject
 		);
+	}
+
+	/**
+	 * Set extra variables
+	 *
+	 * @param string $key The extra variable key.
+	 * @param mixed $value The value to replace placeholder.
+	 */
+	public function set_extra_vars( string $key, $value ) {
+		$this->extra_vars[ $key ] = $value;
 	}
 }
