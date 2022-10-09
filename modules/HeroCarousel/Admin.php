@@ -55,10 +55,11 @@ class Admin {
 		<div id="carouselSliderContentInside">
 			<?php
 			$content_sliders  = get_post_meta( $post->ID, '_content_slider', true );
+			$content_sliders  = is_array( $content_sliders ) ? array_values( $content_sliders ) : [];
 			$content_settings = get_post_meta( $post->ID, '_content_slider_settings', true );
 			$content_settings = is_array( $content_settings ) ? $content_settings : [];
 
-			if ( is_array( $content_sliders ) && count( $content_sliders ) > 0 ) {
+			if ( count( $content_sliders ) > 0 ) {
 				$total_sliders = count( $content_sliders );
 				foreach ( $content_sliders as $slide_num => $content_slider ) {
 					$item = new Item( $content_slider, $content_settings );
@@ -84,7 +85,7 @@ class Admin {
 	 */
 	public static function item_meta_box( Item $item, int $total_items = 0 ) {
 		$title       = sprintf( '%s %s', __( 'Slide', 'carousel-slider' ), $item->get_item_id() );
-		$action_html = self::get_actions_html( $item->get_slider_id(), $item->get_item_id(), $total_items );
+		$action_html = self::get_actions_html( $item->get_slider_id(), $item->get_item_id() - 1, $total_items );
 		?>
 		<div class="shapla-toggle shapla-toggle--normal" data-id="closed">
 			<div class="shapla-toggle-title"><?php echo esc_html( $title ); ?></div>

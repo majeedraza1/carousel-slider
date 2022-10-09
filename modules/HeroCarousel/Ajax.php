@@ -49,7 +49,7 @@ class Ajax {
 		$task = isset( $_POST['task'] ) ? sanitize_text_field( $_POST['task'] ) : 'add-slide';
 
 		$slider_content = get_post_meta( $post_id, '_content_slider', true );
-		$slider_content = is_array( $slider_content ) ? $slider_content : [];
+		$slider_content = is_array( $slider_content ) ? array_values( $slider_content ) : [];
 
 		if ( 'add-slide' === $task ) {
 			$new_content = $this->add_new_item( $post_id, $slider_content );

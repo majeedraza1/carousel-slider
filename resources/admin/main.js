@@ -89,7 +89,9 @@ document.addEventListener('DOMContentLoaded', () => {
 	toggleSlidesPerViewContainer(sliderType.value);
 	toggleAutoWidthContainer(sliderType.value);
 	let autoWidth = document.querySelector('[type="checkbox"][name="carousel_slider[_auto_width]"]:checked');
-	toggleSlidesPerViewContainer(autoWidth ? 'slider' : 'carousel');
+	if (autoWidth) {
+		toggleSlidesPerViewContainer(autoWidth ? 'slider' : 'carousel');
+	}
 });
 // Hide "Slides Per View" option if "Auto Width" is "on"
 document.querySelectorAll('[type="checkbox"][name="carousel_slider[_auto_width]"]').forEach(autoWidth => {
