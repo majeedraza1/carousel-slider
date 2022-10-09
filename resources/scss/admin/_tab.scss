@@ -53,8 +53,8 @@ $accent: #323232;
 
 .shapla-tabs--normal {
 	.shapla-nav {
-		--shapla-primary: #cf4944;
-		--shapla-on-primary: #ffffff;
+		--shapla-primary: #d1d5db;
+		--shapla-on-primary: #000;
 
 		a {
 			background: var(--shapla-primary);
@@ -65,8 +65,12 @@ $accent: #323232;
 		.ui-tabs-active a {
 			background: #ffffff;
 			border-color: var(--shapla-primary);
-			color: var(--shapla-primary);
+			color: var(--shapla-on-primary);
 			outline: 0;
+
+			&:focus{
+				box-shadow: none;
+			}
 		}
 	}
 

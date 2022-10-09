@@ -1,4 +1,18 @@
-#### version 2.1.0 - 2022-05-27 =
+#### Version 2.2.0 - 2022-##-##
+
+* Feature - Add template to overwrite design from theme.
+* Feature - Add basic dialog to replace "Magnific Popup" library.
+* Feature - Add "Swiper" for replacement of "Owl Carousel 2" for slider library.
+* Dev - Re-design responsive setting functionality.
+* Dev - Add SliderSettingInterface class.
+* Dev - Add MetaBoxConfig class to make metabox configuration shareable.
+* Dev - Add multi checkbox setting field.
+
+#### Version 2.1.1 - 2022-10-04
+
+* Fix - Fix error for WooCommerce product carousel error.
+
+#### version 2.1.0 - 2022-05-27
 
 * Feature - Add new javaScript dialog to create carousel slider with title and slider type.
 * Feature - Update metabox functionality separating create and edit functionality.
@@ -22,11 +36,11 @@
 * Dev - Add SliderSetting::lazy_load_image() to get lazy load setting.
 * Dev - Add filter to modify hero and video carousel item html.
 
-#### version 2.0.10 - 2022-03-26 =
+#### version 2.0.10 - 2022-03-26
 
 * Fix - Fix image carousel image edit button is not working for single image.
 
-#### version 2.0.9 - 2022-02-27 =
+#### version 2.0.9 - 2022-02-27
 
 * Fix - Fix multi select field is showing as single select.
 

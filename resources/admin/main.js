@@ -58,3 +58,42 @@ inputs.forEach(inputEl => {
 		});
 	})
 })
+
+const toggleSlidesPerViewContainer = (value) => {
+	let slidesPerViewContainer = document.querySelector('#field-_slides_per_view');
+	if (value === 'slider') {
+		slidesPerViewContainer.style.display = 'none';
+	} else {
+		slidesPerViewContainer.style.display = 'block';
+	}
+}
+
+const toggleAutoWidthContainer = (value) => {
+	let autoWidthContainer = document.querySelector('#field-_auto_width');
+	if (value === 'slider') {
+		autoWidthContainer.style.display = 'none';
+	} else {
+		autoWidthContainer.style.display = 'block';
+	}
+}
+
+// Hide "Slides Per View" option if "Slider Type" is "Slider"
+document.querySelectorAll('[name="carousel_slider[_type_of_slider]"]').forEach(sliderType => {
+	sliderType.addEventListener('change', (event) => {
+		toggleSlidesPerViewContainer(event.target.value);
+		toggleAutoWidthContainer(event.target.value);
+	});
+});
+document.addEventListener('DOMContentLoaded', () => {
+	let sliderType = document.querySelector('[name="carousel_slider[_type_of_slider]"]:checked');
+	toggleSlidesPerViewContainer(sliderType.value);
+	toggleAutoWidthContainer(sliderType.value);
+	let autoWidth = document.querySelector('[type="checkbox"][name="carousel_slider[_auto_width]"]:checked');
+	toggleSlidesPerViewContainer(autoWidth ? 'slider' : 'carousel');
+});
+// Hide "Slides Per View" option if "Auto Width" is "on"
+document.querySelectorAll('[type="checkbox"][name="carousel_slider[_auto_width]"]').forEach(autoWidth => {
+	autoWidth.addEventListener('change', (event) => {
+		toggleSlidesPerViewContainer(event.target.checked ? 'slider' : 'carousel');
+	});
+});

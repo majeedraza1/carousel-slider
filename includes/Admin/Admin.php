@@ -54,6 +54,8 @@ class Admin {
 				'plugin_action_links_' . plugin_basename( CAROUSEL_SLIDER_FILE ),
 				[ self::$instance, 'action_links' ]
 			);
+
+			add_filter( 'plugin_row_meta', [ self::$instance, 'plugin_row_meta' ], 10, 2 );
 		}
 
 		return self::$instance;
@@ -82,6 +84,24 @@ class Admin {
 		}
 
 		return array_merge( $plugin_links, $links, $pro_links );
+	}
+
+	/**
+	 * Filters the array of row meta for the plugin in the Plugins list table.
+	 *
+	 * @param string[] $plugin_meta An array of the plugin's metadata, including
+	 *                              the version, author, author URI, and plugin URI.
+	 * @param string   $plugin_file Path to the plugin file relative to the plugins directory.
+	 *
+	 * @return array
+	 */
+	public function plugin_row_meta( $plugin_meta, $plugin_file ) {
+		if ( plugin_basename( CAROUSEL_SLIDER_FILE ) === $plugin_file ) {
+			$plugin_meta[] = '<a href="' . Api::FREE_SUPPORT_URL . '" target="_blank">' . __( 'Community support', 'carousel-slider' ) . '</a>';
+			$plugin_meta[] = '<a href="' . Api::PRO_SUPPORT_URL . '" target="_blank">' . __( 'Pro Support', 'carousel-slider' ) . '</a>';
+		}
+
+		return $plugin_meta;
 	}
 
 	/**
@@ -238,7 +258,7 @@ class Admin {
 				'title'      => __( 'Hero Image Carousel', 'carousel-slider' ),
 			],
 			[
-				'youtube_id' => 'ZzI1JhElrxc',
+				'youtube_id' => 'UOYK79yVrJ4',
 				'title'      => __( 'Image carousel (gallery images)', 'carousel-slider' ),
 			],
 			[

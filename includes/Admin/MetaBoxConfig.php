@@ -295,10 +295,17 @@ class MetaBoxConfig {
 				'id'          => '_arrow_position',
 				'label'       => esc_html__( 'Navigation Position', 'carousel-slider' ),
 				'description' => esc_html__( 'Choose where to show arrow. Inside slider or outside slider.', 'carousel-slider' ),
-				'default'     => 'outside',
+				'default'     => Helper::is_using_swiper() ? 'inside' : 'outside',
 				'choices'     => [
-					'outside' => esc_html__( 'Outside', 'carousel-slider' ),
-					'inside'  => esc_html__( 'Inside', 'carousel-slider' ),
+					[
+						'value'    => 'outside',
+						'label'    => esc_html__( 'Outside', 'carousel-slider' ),
+						'disabled' => Helper::is_using_swiper(),
+					],
+					[
+						'value' => 'inside',
+						'label' => esc_html__( 'Inside', 'carousel-slider' ),
+					],
 				],
 			],
 		];
@@ -367,16 +374,17 @@ class MetaBoxConfig {
 			'id'          => '_pagination_position',
 			'label'       => esc_html__( 'Pagination Position', 'carousel-slider' ),
 			'description' => esc_html__( 'Choose where to show pagination. Inside slider or outside slider.', 'carousel-slider' ),
-			'default'     => 'outside',
+			'default'     => Helper::is_using_swiper() ? 'inside' : 'outside',
+			'pro_only'    => true,
 			'choices'     => [
 				[
-					'value' => 'outside',
-					'label' => esc_html__( 'Outside', 'carousel-slider' ),
+					'value'    => 'outside',
+					'label'    => esc_html__( 'Outside', 'carousel-slider' ),
+					'disabled' => Helper::is_using_swiper(),
 				],
 				[
-					'value'    => 'inside',
-					'label'    => esc_html__( 'Inside', 'carousel-slider' ),
-					'pro_only' => true,
+					'value' => 'inside',
+					'label' => esc_html__( 'Inside', 'carousel-slider' ),
 				],
 			],
 		];
@@ -387,6 +395,7 @@ class MetaBoxConfig {
 			'label'       => esc_html__( 'Pagination Type', 'carousel-slider' ),
 			'description' => esc_html__( 'Choose pagination type.', 'carousel-slider' ),
 			'default'     => 'bullets',
+			'pro_only'    => true,
 			'choices'     => [
 				[
 					'value' => 'bullets',

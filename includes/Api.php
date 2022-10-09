@@ -13,9 +13,11 @@ use WP_Error;
  * @since 2.1.0
  */
 class Api {
-	const BASE_URL    = 'https://api.carousel-slider.com/v1';
-	const PRIVACY_URL = 'https://carousel-slider.com/privacy-policy';
-	const GO_PRO_URL  = 'https://carousel-slider.com/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash';
+	const BASE_URL         = 'https://api.carousel-slider.com/v1';
+	const PRIVACY_URL      = 'https://carousel-slider.com/privacy-policy';
+	const GO_PRO_URL       = 'https://carousel-slider.com/?utm_source=wp-menu&utm_campaign=gopro&utm_medium=wp-dash';
+	const PRO_SUPPORT_URL  = 'https://carousel-slider.com/?utm_source=wp-menu&utm_campaign=pro-support&utm_medium=wp-dash';
+	const FREE_SUPPORT_URL = 'https://wordpress.org/support/plugin/carousel-slider';
 
 	/**
 	 * Send remote request
