@@ -149,6 +149,9 @@ class Template extends AbstractTemplate {
 		foreach ( $images_ids as $index => $images_id ) {
 			$content[] = self::get_content( $index, $images_id );
 		}
+
+		$content = array_values( $content );
+
 		update_post_meta( $post_id, '_content_slider', $content );
 
 		return $post_id;
