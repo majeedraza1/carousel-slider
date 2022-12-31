@@ -11,7 +11,6 @@ use CarouselSlider\Modules\ProductCarousel\Template as TemplateProductCarousel;
 use CarouselSlider\Modules\VideoCarousel\Template as TemplateVideoCarousel;
 use WP_CLI;
 use WP_CLI_Command;
-use WP_Post;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -25,8 +24,8 @@ class Command extends WP_CLI_Command {
 	/**
 	 * Create post carousel
 	 *
-	 * @param array  $args The arguments.
-	 * @param string $slider_title The slider title.
+	 * @param  array  $args  The arguments.
+	 * @param  string $slider_title  The slider title.
 	 *
 	 * @return int
 	 */
@@ -121,8 +120,8 @@ class Command extends WP_CLI_Command {
 	 * wp carousel-slider create_slider 'Post Carousel - PC' --type='post-carousel' --post-query='post_categories'
 	 * wp carousel-slider create_slider 'Post Carousel - PT' --type='post-carousel' --post-query='post_tags'
 	 *
-	 * @param mixed $args The arguments.
-	 * @param mixed $assoc_args The additional arguments.
+	 * @param  mixed $args  The arguments.
+	 * @param  mixed $assoc_args  The additional arguments.
 	 *
 	 * @throws WP_CLI\ExitException The Exception.
 	 */
@@ -168,8 +167,12 @@ class Command extends WP_CLI_Command {
 			return;
 		}
 
-		/* translators: 1: the slider id, 2: the slider title */
-		$response = sprintf( __( '#%1$s - %2$s has been created successfully.', 'carousel-slider' ), $slider_id, $slider_title );
+		$response = sprintf(
+			/* translators: 1: the slider id, 2: the slider title */
+			__( '#%1$s - %2$s has been created successfully.', 'carousel-slider' ),
+			$slider_id,
+			$slider_title
+		);
 		WP_CLI::success( $response );
 	}
 
@@ -333,7 +336,7 @@ class Command extends WP_CLI_Command {
 	 * <id>
 	 * : The slider id.
 	 *
-	 * @param array|mixed $args The arguments.
+	 * @param  array|mixed $args  The arguments.
 	 */
 	public function delete_slider( $args ) {
 		list( $id ) = $args;
@@ -360,5 +363,26 @@ class Command extends WP_CLI_Command {
 			}
 		}
 		WP_CLI::success( 'Carousel Slider: all sliders has been deleted successfully.' );
+	}
+
+	/**
+	 * Delete all slider settings
+	 */
+	public function delete_options() {
+		$options = [
+			'wp_carousel_free_version',
+			'wp_carousel_free_db_version',
+			'carousel_slider_settings',
+			'carousel_slider_allow_tracking',
+			'carousel_slider_tracking_notice',
+			'carousel_slider_tracking_skipped',
+			'widget_widget_carousel_slider',
+		];
+		foreach ( $options as $option ) {
+			if ( delete_option( $option ) ) {
+				WP_CLI::line( "Option '{$option}' has been deleted successfully." );
+			}
+		}
+		WP_CLI::success( 'Carousel Slider: all options has been deleted successfully.' );
 	}
 }

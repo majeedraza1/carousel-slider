@@ -29,7 +29,7 @@ class OwlSetting {
 	/**
 	 * Class constructor
 	 *
-	 * @param SliderSetting $slider_setting slider setting class.
+	 * @param  SliderSetting $slider_setting  slider setting class.
 	 */
 	public function __construct( SliderSetting $slider_setting ) {
 		$this->slider_setting = $slider_setting;
@@ -39,7 +39,7 @@ class OwlSetting {
 	/**
 	 * Read settings
 	 *
-	 * @param SliderSetting $setting slider setting class.
+	 * @param  SliderSetting $setting  slider setting class.
 	 *
 	 * @return void
 	 */
@@ -59,8 +59,12 @@ class OwlSetting {
 			'autoWidth'          => $setting->is_auto_width(),
 		];
 
-		foreach ( $this->slider_setting->get_slides_per_view() as $prefix => $item ) {
-			$this->settings['responsive'][ Helper::get_breakpoint_width( $prefix ) ] = [ 'items' => $item ];
+		if ( $this->slider_setting->is_slider() ) {
+			$this->settings['items'] = 1;
+		} else {
+			foreach ( $this->slider_setting->get_slides_per_view() as $prefix => $item ) {
+				$this->settings['responsive'][ Helper::get_breakpoint_width( $prefix ) ] = [ 'items' => $item ];
+			}
 		}
 	}
 

@@ -136,6 +136,7 @@ class Helper extends ViewHelper {
 				'carousel_slider/global_options/default_args',
 				[
 					'load_scripts'                        => 'optimized',
+					'slider_js_package'                   => 'owl.carousel',
 					'show_structured_data'                => '1',
 					'woocommerce_shop_loop_item_template' => 'v1-compatibility',
 					'breakpoints_width'                   => [],

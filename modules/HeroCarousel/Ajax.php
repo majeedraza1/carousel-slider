@@ -77,7 +77,7 @@ class Ajax {
 			$slider_content = $this->move_array_element( $slider_content, $current_index, $new_index[ $task ] );
 		}
 
-		$slider_content = array_values($slider_content);
+		$slider_content = array_values( $slider_content );
 
 		update_post_meta( $post_id, '_content_slider', $slider_content );
 		wp_send_json( $slider_content );
@@ -86,9 +86,9 @@ class Ajax {
 	/**
 	 * Move array element position
 	 *
-	 * @param array $array Array content.
-	 * @param int   $current_index The current index.
-	 * @param int   $new_index The new index.
+	 * @param  array $array  Array content.
+	 * @param  int   $current_index  The current index.
+	 * @param  int   $new_index  The new index.
 	 *
 	 * @return array
 	 */
@@ -102,8 +102,8 @@ class Ajax {
 	/**
 	 * Add new item
 	 *
-	 * @param int   $post_id The post id.
-	 * @param array $slider_content The slider content.
+	 * @param  int   $post_id  The post id.
+	 * @param  array $slider_content  The slider content.
 	 *
 	 * @return array
 	 */
@@ -121,7 +121,7 @@ class Ajax {
 	/**
 	 * Get current index
 	 *
-	 * @param int $last_index Last slider index.
+	 * @param  int $last_index  Last slider index.
 	 *
 	 * @return int
 	 */

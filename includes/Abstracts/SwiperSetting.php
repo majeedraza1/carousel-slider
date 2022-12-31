@@ -26,7 +26,7 @@ class SwiperSetting {
 	/**
 	 * Class constructor
 	 *
-	 * @param SliderSetting $slider_setting slider setting class.
+	 * @param  SliderSetting $slider_setting  slider setting class.
 	 */
 	public function __construct( SliderSetting $slider_setting ) {
 		$this->slider_setting = $slider_setting;
@@ -36,13 +36,11 @@ class SwiperSetting {
 	/**
 	 * Read settings
 	 *
-	 * @param SliderSetting $setting slider setting class.
+	 * @param  SliderSetting $setting  slider setting class.
 	 *
 	 * @return void
 	 */
 	public function read( SliderSetting $setting ) {
-		// 'slideBy'   => $setting->get_prop( 'nav_steps' ),
-
 		$show_navigation = $setting->get_nav_visibility() !== 'never';
 		$show_pagination = $setting->get_pagination_visibility() !== 'never';
 
@@ -55,16 +53,24 @@ class SwiperSetting {
 			'slidesOffsetAfter'  => $setting->get_prop( 'stage_padding', 0 ),
 			'speed'              => $setting->get_prop( 'autoplay_speed', 300 ),
 			'spaceBetween'       => $setting->get_prop( 'space_between' ),
-			'breakpoints'        => $this->get_breakpoints(),
+			'slidesPerView'      => 1,
 		];
 
+		if ( ! $setting->is_slider() ) {
+			$this->settings['breakpoints'] = $this->get_breakpoints();
+		}
+
 		if ( $setting->is_auto_width() ) {
-			unset( $this->settings['breakpoints'] );
+			if ( isset( $this->settings['breakpoints'] ) ) {
+				unset( $this->settings['breakpoints'] );
+			}
 			$this->settings['slidesPerView'] = 'auto';
 		}
 
 		if ( 'vertical' === $setting->get_slider_direction() || $setting->is_slider() ) {
-			unset( $this->settings['breakpoints'] );
+			if ( isset( $this->settings['breakpoints'] ) ) {
+				unset( $this->settings['breakpoints'] );
+			}
 		}
 
 		if ( $show_navigation ) {

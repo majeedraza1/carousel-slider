@@ -138,7 +138,7 @@ class View extends AbstractView {
 	/**
 	 * Get item
 	 *
-	 * @param WC_Product $product The WC_Product object.
+	 * @param WC_Product    $product The WC_Product object.
 	 * @param SliderSetting $settings Settings array.
 	 *
 	 * @return string
@@ -155,7 +155,7 @@ class View extends AbstractView {
 	/**
 	 * Get product slider item
 	 *
-	 * @param WC_Product $product The WC_Product object.
+	 * @param WC_Product    $product The WC_Product object.
 	 * @param SliderSetting $settings Settings array.
 	 *
 	 * @return string

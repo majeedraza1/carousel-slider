@@ -8,10 +8,10 @@
  * Author URI: https://sayfulislam.com/?utm_source=wp-plugins&utm_campaign=author-uri&utm_medium=wp-dash
  * Requires PHP: 7.0
  * Requires at least: 5.6
- * Tested up to: 6.0
+ * Tested up to: 6.1
  *
  * WC requires at least: 3.0
- * WC tested up to: 6.9
+ * WC tested up to: 7.2
  *
  * Text Domain: carousel-slider
  *

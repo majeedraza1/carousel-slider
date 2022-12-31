@@ -194,7 +194,7 @@ class TemplateParserBase implements TemplateParserInterface {
 	 * @return string|null
 	 */
 	public function handle_conditional_tags( string $subject ) {
-		$regex = '/'; // Start of Regex.
+		$regex  = '/'; // Start of Regex.
 		$regex .= '<!--\s*{if\s*\((?P<condition>\s*.*)\)}\s*-->\s*'; // Start of condition.
 		$regex .= '(?P<html>\s*.*)'; // Grab the html.
 		$regex .= '\s*<!--\s{endif}\s-->'; // End of condition.
@@ -210,6 +210,7 @@ class TemplateParserBase implements TemplateParserInterface {
 				$value1 = str_replace( [ '"', "'" ], '', $value1 );
 				$value2 = str_replace( [ '"', "'" ], '', $value2 );
 
+				// phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
 				if ( '==' === $operator && $value1 == $value2 ) {
 					return $html;
 				}
@@ -224,7 +225,7 @@ class TemplateParserBase implements TemplateParserInterface {
 	 * Set extra variables
 	 *
 	 * @param string $key The extra variable key.
-	 * @param mixed $value The value to replace placeholder.
+	 * @param mixed  $value The value to replace placeholder.
 	 */
 	public function set_extra_vars( string $key, $value ) {
 		$this->extra_vars[ $key ] = $value;

@@ -1,4 +1,4 @@
-#### Version 2.2.0 - 2022-##-##
+#### Version 2.2.0 - 2022-12-31
 
 * Feature - Add template to overwrite design from theme.
 * Feature - Add basic dialog to replace "Magnific Popup" library.
@@ -7,6 +7,8 @@
 * Dev - Add SliderSettingInterface class.
 * Dev - Add MetaBoxConfig class to make metabox configuration shareable.
 * Dev - Add multi checkbox setting field.
+* Fix - Hero carousel delete button not working.
+* Fix - Hero carousel index is not correct.
 
 #### Version 2.1.1 - 2022-10-04
 

@@ -40,7 +40,7 @@ class Setting {
 	 * Get option
 	 *
 	 * @param string $key option key.
-	 * @param mixed $default default value.
+	 * @param mixed  $default default value.
 	 *
 	 * @return mixed
 	 */
@@ -115,7 +115,7 @@ class Setting {
 			[
 				'id'          => 'slider_js_package',
 				'type'        => 'radio',
-				'default'     => 'swiper',
+				'default'     => 'owl.carousel',
 				'name'        => __( 'Slider JavaScript package', 'carousel-slider' ),
 				'description' => __(
 					'<strong>Swiper</strong>, is the most modern mobile touch slider without any third party dependencies.
@@ -125,12 +125,12 @@ class Setting {
 				),
 				'choices'     => [
 					[
-						'value' => 'swiper',
-						'label' => __( 'Swiper (experimental)', 'carousel-slider' ),
-					],
-					[
 						'value' => 'owl.carousel',
 						'label' => __( 'Owl Carousel 2 + Magnific Popup', 'carousel-slider' ),
+					],
+					[
+						'value' => 'swiper',
+						'label' => __( 'Swiper (experimental)', 'carousel-slider' ),
 					],
 				],
 				'panel'       => 'general',
@@ -152,19 +152,6 @@ class Setting {
 				'priority'    => 30,
 			]
 		);
-
-//		$settings->add_field(
-//			[
-//				'id'          => 'inactive_modules',
-//				'type'        => 'multi_checkbox',
-//				'default'     => [],
-//				'name'        => __( 'Disable Modules', 'carousel-slider' ),
-//				'description' => __( 'Check to disable modules.', 'carousel-slider' ),
-//				'panel'       => 'general',
-//				'choices'     => $this->get_modules_choices(),
-//				'priority'    => 40,
-//			]
-//		);
 
 		$choices = [
 			[

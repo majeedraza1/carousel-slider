@@ -3,9 +3,9 @@ Contributors: sayful, majeedraza
 Donate link: https://www.buymeacoffee.com/sayful1
 Tags: carousel, carousel slider, image carousel, product carousel, woocommerce, slider
 Requires at least: 5.6
-Tested up to: 6.0
+Tested up to: 6.1
 Requires PHP: 7.0
-Stable tag: 2.1.0
+Stable tag: 2.2.0
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -95,6 +95,17 @@ Carousel Slider is first class citizen in Gutenberg Block Editor. Just search 'c
 a dedicated 'carousel slider' block with live preview for Gutenberg Block Editor.
 
 == Changelog ==
+
+= version 2.2.0 - 2022-12-31 =
+* Feature - Add template to overwrite design from theme.
+* Feature - Add basic dialog to replace "Magnific Popup" library.
+* Feature - Add "Swiper" for replacement of "Owl Carousel 2" for slider library.
+* Dev - Re-design responsive setting functionality.
+* Dev - Add SliderSettingInterface class.
+* Dev - Add MetaBoxConfig class to make metabox configuration shareable.
+* Dev - Add multi checkbox setting field.
+* Fix - Hero carousel delete button not working.
+* Fix - Hero carousel index is not correct.
 
 = version 2.1.0 - 2022-05-27 =
 * Feature - Add new javaScript dialog to create carousel slider with title and slider type.

@@ -33,7 +33,7 @@ class Item {
 	 * Get thumbnail html
 	 *
 	 * @param string $image_size Image size slug.
-	 * @param bool $lazy_load Lazy load images.
+	 * @param bool   $lazy_load Lazy load images.
 	 *
 	 * @return string
 	 */
