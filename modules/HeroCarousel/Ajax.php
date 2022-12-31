@@ -77,6 +77,8 @@ class Ajax {
 			$slider_content = $this->move_array_element( $slider_content, $current_index, $new_index[ $task ] );
 		}
 
+		$slider_content = array_values($slider_content);
+
 		update_post_meta( $post_id, '_content_slider', $slider_content );
 		wp_send_json( $slider_content );
 	}

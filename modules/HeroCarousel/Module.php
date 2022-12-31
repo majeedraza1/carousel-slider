@@ -69,6 +69,8 @@ class Module {
 				$_content_slides
 			);
 
+			$_slides = array_values( $_slides );
+
 			update_post_meta( $slider_id, '_content_slider', $_slides );
 		}
 
