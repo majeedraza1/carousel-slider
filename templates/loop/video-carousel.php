@@ -29,8 +29,12 @@ $lazy_class = $setting->is_using_swiper() ? 'swiper-lazy' : 'owl-lazy';
 			<div class="carousel-slider-video-play-icon"></div>
 			<div class="carousel-slider-video-overlay"></div>
 			<?php if ( $setting->lazy_load_image() ) { ?>
-				<img class="<?php echo esc_attr( $lazy_class ); ?>" alt=""
-					 data-src="<?php echo esc_url( $object->get_thumbnail_url() ); ?>">
+				<?php if ( Helper::is_using_swiper() ) { ?>
+					<img  alt="" src="<?php echo esc_url( $object->get_thumbnail_url() ); ?>" loading="lazy">
+				<?php } else { ?>
+					<img class="<?php echo esc_attr( $lazy_class ); ?>" alt=""
+						data-src="<?php echo esc_url( $object->get_thumbnail_url() ); ?>">
+				<?php } ?>
 			<?php } else { ?>
 				<img src="<?php echo esc_url( $object->get_thumbnail_url() ); ?>" alt="">
 			<?php } ?>

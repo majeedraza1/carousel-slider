@@ -1,3 +1,9 @@
+#### Version 2.2.1 - 2023-03-31
+
+* Dev - Tested with WordPress 6.2 and WooCommerce 7.5
+* Dev - Update Swiper javaScript library to version 9.1
+* Dev - Update others JavaScript dependencies to the latest version.
+
 #### Version 2.2.0 - 2022-12-31
 
 * Feature - Add template to overwrite design from theme.

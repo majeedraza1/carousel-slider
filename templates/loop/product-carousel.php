@@ -18,7 +18,11 @@ if ( $object->get_image_id() ) {
 	if ( $setting->lazy_load_image() ) {
 		$image      = wp_get_attachment_image_src( $object->get_image_id(), $setting->get_image_size() );
 		$lazy_class = $setting->is_using_swiper() ? 'swiper-lazy' : 'owl-lazy';
-		echo '<img class="' . esc_attr( $lazy_class ) . '" data-src="' . esc_url( $image[0] ) . '" />';
+		if ( $setting->is_using_swiper() ) {
+			echo '<img src="' . esc_url( $image[0] ) . '" alt="" loading="lazy" />';
+		} else {
+			echo '<img class="' . esc_attr( $lazy_class ) . '" data-src="' . esc_url( $image[0] ) . '" />';
+		}
 	} else {
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $object->get_image( $setting->get_image_size() );

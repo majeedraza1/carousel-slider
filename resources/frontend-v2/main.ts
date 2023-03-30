@@ -3,7 +3,7 @@ import '../web-components/ShaplaDialog.ts'
 import '../web-components/ShaplaAspectRatio.ts'
 
 import Swiper, {
-	Autoplay, Keyboard, Lazy, Mousewheel, Navigation, Pagination, Scrollbar,
+	Autoplay, Keyboard,  Mousewheel, Navigation, Pagination, Scrollbar,
 	EffectFade, EffectCube, EffectCoverflow, EffectFlip, EffectCards, EffectCreative
 } from 'swiper';
 import {createEl} from "../utils/misc";
@@ -53,7 +53,7 @@ sliders.forEach((slider: HTMLElement) => {
 	const swiper = new Swiper(slider, {
 		...swiperSettings,
 		modules: [
-			Autoplay, Lazy, Mousewheel, Navigation, Pagination, Scrollbar, Keyboard,
+			Autoplay, Mousewheel, Navigation, Pagination, Scrollbar, Keyboard,
 			EffectFade, EffectCube, EffectCoverflow, EffectFlip, EffectCards, EffectCreative
 		],
 	});

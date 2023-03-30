@@ -3,7 +3,7 @@ Contributors: sayful, majeedraza
 Donate link: https://www.buymeacoffee.com/sayful1
 Tags: carousel, carousel slider, image carousel, product carousel, woocommerce, slider
 Requires at least: 5.6
-Tested up to: 6.1
+Tested up to: 6.2
 Requires PHP: 7.0
 Stable tag: 2.2.0
 License: GPLv3
@@ -95,6 +95,11 @@ Carousel Slider is first class citizen in Gutenberg Block Editor. Just search 'c
 a dedicated 'carousel slider' block with live preview for Gutenberg Block Editor.
 
 == Changelog ==
+
+= version 2.2.1 - 2023-03-31 =
+* Dev - Tested with WordPress 6.2 and WooCommerce 7.5
+* Dev - Update Swiper javaScript library to version 9.1
+* Dev - Update others JavaScript dependencies to the latest version.
 
 = version 2.2.0 - 2022-12-31 =
 * Feature - Add template to overwrite design from theme.

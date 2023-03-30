@@ -24,9 +24,12 @@ $link_context = $setting->should_show_lightbox() ? 'lightbox' : 'link';
 
 	// Print image.
 	if ( $setting->lazy_load_image() ) {
-		$image_src  = $object->get_image_src( $setting->get_image_size() );
-		$lazy_class = $setting->is_using_swiper() ? 'swiper-lazy' : 'owl-lazy';
-		echo '<img class="' . esc_attr( $lazy_class ) . '" data-src="' . esc_attr( $image_src[0] ) . '" alt="' . esc_attr( $object->get_alt_text() ) . '">';
+		$image_src = $object->get_image_src( $setting->get_image_size() );
+		if ( $setting->is_using_swiper() ) {
+			echo '<img src="' . esc_attr( $image_src[0] ) . '" loading="lazy" alt="' . esc_attr( $object->get_alt_text() ) . '">';
+		} else {
+			echo '<img class="owl-lazy" data-src="' . esc_attr( $image_src[0] ) . '" alt="' . esc_attr( $object->get_alt_text() ) . '">';
+		}
 	} else {
 		Helper::print_unescaped_internal_string( $object->get_image( $setting->get_image_size() ) );
 	}
