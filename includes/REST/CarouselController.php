@@ -78,26 +78,6 @@ class CarouselController extends ApiController {
 	}
 
 	/**
-	 * Checks if a given request has access to get items.
-	 *
-	 * @param WP_REST_Request $request Full details about the request.
-	 *
-	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
-	 */
-	public function get_items_permissions_check( $request ) {
-		$post_type = get_post_type_object( CAROUSEL_SLIDER_POST_TYPE );
-		if ( ! current_user_can( $post_type->cap->edit_posts ) ) {
-			return new WP_Error(
-				'rest_forbidden_context',
-				__( 'Sorry, you are not allowed to edit sliders.', 'carousel-slider' ),
-				array( 'status' => rest_authorization_required_code() )
-			);
-		}
-
-		return true;
-	}
-
-	/**
 	 * Retrieves a collection of items.
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
@@ -140,26 +120,6 @@ class CarouselController extends ApiController {
 	}
 
 	/**
-	 * Checks if a given request has access to create items.
-	 *
-	 * @param WP_REST_Request $request Full details about the request.
-	 *
-	 * @return true|WP_Error True if the request has access to create items, WP_Error object otherwise.
-	 */
-	public function create_item_permissions_check( $request ) {
-		$post_type = get_post_type_object( CAROUSEL_SLIDER_POST_TYPE );
-		if ( ! current_user_can( $post_type->cap->create_posts ) ) {
-			return new WP_Error(
-				'rest_cannot_create',
-				__( 'Sorry, you are not allowed to create posts as this user.', 'carousel-slider' ),
-				[ 'status' => rest_authorization_required_code() ]
-			);
-		}
-
-		return true;
-	}
-
-	/**
 	 * Creates one item from the collection.
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
@@ -188,36 +148,6 @@ class CarouselController extends ApiController {
 		do_action( 'carousel_slider/rest_create_slider', $response_data, $request->get_params() );
 
 		return $this->respond_created( $response_data );
-	}
-
-	/**
-	 * Checks if a given request has access to delete a post.
-	 *
-	 * @param WP_REST_Request $request Full details about the request.
-	 *
-	 * @return true|WP_Error True if the request has access to delete the item, WP_Error object otherwise.
-	 */
-	public function delete_item_permissions_check( $request ) {
-		$post = get_post( $request['id'] );
-		if ( ! $post instanceof \WP_Post ) {
-			return new WP_Error(
-				'rest_no_item_found',
-				__( 'Sorry, no item found for your request.', 'carousel-slider' ),
-				array( 'status' => 404 )
-			);
-		}
-
-		$post_type = get_post_type_object( CAROUSEL_SLIDER_POST_TYPE );
-
-		if ( ! current_user_can( $post_type->cap->delete_post, $post ) ) {
-			return new WP_Error(
-				'rest_cannot_delete',
-				__( 'Sorry, you are not allowed to delete this post.', 'carousel-slider' ),
-				array( 'status' => rest_authorization_required_code() )
-			);
-		}
-
-		return true;
 	}
 
 	/**

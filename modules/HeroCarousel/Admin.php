@@ -314,10 +314,7 @@ class Admin {
 						[
 							'id'               => 'button_one_type',
 							'name'             => esc_html__( 'Button Type', 'carousel-slider' ),
-							'options'          => [
-								'normal' => esc_html__( 'Normal', 'carousel-slider' ),
-								'stroke' => esc_html__( 'Stroke', 'carousel-slider' ),
-							],
+							'options'          => \CarouselSlider\Modules\HeroCarousel\Helper::button_type(),
 							'input_attributes' => [
 								'name'  => sprintf( 'carousel_slider_content[%s][button_one_type]', $item->get_item_id() ),
 								'value' => $item->get_prop( 'button_one_type' ),
@@ -328,11 +325,7 @@ class Admin {
 						[
 							'id'               => 'button_one_size',
 							'name'             => esc_html__( 'Button Size', 'carousel-slider' ),
-							'options'          => [
-								'large'  => esc_html__( 'Large', 'carousel-slider' ),
-								'medium' => esc_html__( 'Medium', 'carousel-slider' ),
-								'small'  => esc_html__( 'Small', 'carousel-slider' ),
-							],
+							'options'          => \CarouselSlider\Modules\HeroCarousel\Helper::button_size(),
 							'input_attributes' => [
 								'name'  => sprintf( 'carousel_slider_content[%s][button_one_size]', $item->get_item_id() ),
 								'value' => $item->get_prop( 'button_one_size' ),

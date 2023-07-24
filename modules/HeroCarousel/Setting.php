@@ -16,6 +16,22 @@ class Setting extends SliderSetting {
 	protected $extra_data_read = false;
 
 	/**
+	 * Get slider items
+	 *
+	 * @return array
+	 */
+	public function get_slider_items(): array {
+		$items = get_post_meta( $this->get_slider_id(), '_content_slider', true );
+		$items = is_array( $items ) ? array_values( $items ) : [];
+		$data  = [];
+		foreach ( $items as $item ) {
+			$data[] = new Item( $item, $this->get_prop( 'slider_settings' ) );
+		}
+
+		return $data;
+	}
+
+	/**
 	 * Get content settings
 	 *
 	 * @return array

@@ -93,7 +93,10 @@ class Helper {
 	 * @return string[]
 	 */
 	public static function link_target(): array {
-		return [ '_blank', '_self' ];
+		return [
+			'_blank' => __( 'New window', 'carousel-slider' ),
+			'_self'  => __( 'Same window', 'carousel-slider' ),
+		];
 	}
 
 	/**
@@ -106,6 +109,31 @@ class Helper {
 			''         => __( 'None', 'carousel-slider' ),
 			'zoom-in'  => __( 'Zoom In', 'carousel-slider' ),
 			'zoom-out' => __( 'Zoom Out', 'carousel-slider' ),
+		];
+	}
+
+	/**
+	 * Button size
+	 *
+	 * @return array
+	 */
+	public static function button_size(): array {
+		return [
+			'large'  => esc_html__( 'Large', 'carousel-slider' ),
+			'medium' => esc_html__( 'Medium', 'carousel-slider' ),
+			'small'  => esc_html__( 'Small', 'carousel-slider' ),
+		];
+	}
+
+	/**
+	 * Button type
+	 *
+	 * @return array
+	 */
+	public static function button_type(): array {
+		return [
+			'normal' => esc_html__( 'Normal', 'carousel-slider' ),
+			'stroke' => esc_html__( 'Stroke', 'carousel-slider' ),
 		];
 	}
 }

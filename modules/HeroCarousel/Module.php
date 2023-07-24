@@ -30,6 +30,7 @@ class Module {
 
 			add_filter( 'carousel_slider/register_view', [ self::$instance, 'view' ] );
 			add_action( 'carousel_slider/save_slider', [ self::$instance, 'save_slider' ], 10, 2 );
+			add_action( 'rest_api_init', [ new Controller(), 'register_routes' ] );
 
 			if ( Helper::is_request( 'admin' ) ) {
 				Admin::init();
@@ -56,7 +57,7 @@ class Module {
 	/**
 	 * Save slider content and settings
 	 *
-	 * @param int   $slider_id The slider id.
+	 * @param int $slider_id The slider id.
 	 * @param array $data User submitted data.
 	 */
 	public function save_slider( int $slider_id, array $data ) {
