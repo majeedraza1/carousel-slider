@@ -216,6 +216,21 @@ class ApiController extends WP_REST_Controller {
 	}
 
 	/**
+	 * @param int $slider_id
+	 * @param array $values
+	 *
+	 * @return void
+	 */
+	public function update_general_setting( int $slider_id, array $values ) {
+		$field_settings = MetaBoxConfig::get_fields_settings();
+		foreach ( $field_settings as $key => $setting ) {
+			$default = $setting['default'] ?? null;
+			$value   = $values[ $key ] ?? $default;
+			update_post_meta( $slider_id, $setting['id'], $value );
+		}
+	}
+
+	/**
 	 * Generate pagination metadata
 	 *
 	 * @param int $total_items Total available items.

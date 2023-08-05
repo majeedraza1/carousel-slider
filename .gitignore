@@ -11,4 +11,3 @@ tests/coverage
 # Files
 **.map
 package-lock.json
-composer.lock

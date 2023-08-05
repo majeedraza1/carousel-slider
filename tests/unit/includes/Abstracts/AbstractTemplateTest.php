@@ -7,7 +7,7 @@ use CarouselSlider\Abstracts\AbstractTemplate;
 class AbstractTemplateTest extends \WP_UnitTestCase {
 	protected $template;
 
-	public function setUp() {
+	protected function setUp() {
 		parent::setUp();
 		$this->template = $this->getMockForAbstractClass( AbstractTemplate::class );
 	}

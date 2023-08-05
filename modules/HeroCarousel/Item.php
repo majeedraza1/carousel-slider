@@ -120,6 +120,18 @@ class Item extends Data {
 	}
 
 	/**
+	 * Get default value
+	 *
+	 * @param string $key Props key.
+	 * @param mixed $default Default value.
+	 *
+	 * @return mixed|string
+	 */
+	public static function get_default_value( string $key, $default = '' ) {
+		return static::$default[ $key ] ?? $default;
+	}
+
+	/**
 	 * Sanitize item data
 	 *
 	 * @param array $data The data to be sanitized.
