@@ -1,3 +1,8 @@
+#### Version 2.2.2 - 2023-08-08
+
+* Dev - Tested with WordPress 6.3 and WooCommerce 7.9
+* Dev - Add REST API functionality to create/update hero carousel (Coming UI improvement for hero carousel).
+
 #### Version 2.2.1 - 2023-03-31
 
 * Dev - Tested with WordPress 6.2 and WooCommerce 7.5

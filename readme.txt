@@ -3,9 +3,9 @@ Contributors: sayful, majeedraza
 Donate link: https://www.buymeacoffee.com/sayful1
 Tags: carousel, carousel slider, image carousel, product carousel, woocommerce, slider
 Requires at least: 5.6
-Tested up to: 6.2
+Tested up to: 6.3
 Requires PHP: 7.0
-Stable tag: 2.2.0
+Stable tag: 2.2.2
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -96,6 +96,10 @@ a dedicated 'carousel slider' block with live preview for Gutenberg Block Editor
 
 == Changelog ==
 
+= version 2.2.2 - 2023-08-08 =
+* Dev - Tested with WordPress 6.3 and WooCommerce 7.9
+* Dev - Add REST API functionality to create/update hero carousel (Coming UI improvement for hero carousel).
+
 = version 2.2.1 - 2023-03-31 =
 * Dev - Tested with WordPress 6.2 and WooCommerce 7.5
 * Dev - Update Swiper javaScript library to version 9.1
@@ -111,72 +115,5 @@ a dedicated 'carousel slider' block with live preview for Gutenberg Block Editor
 * Dev - Add multi checkbox setting field.
 * Fix - Hero carousel delete button not working.
 * Fix - Hero carousel index is not correct.
-
-= version 2.1.0 - 2022-05-27 =
-* Feature - Add new javaScript dialog to create carousel slider with title and slider type.
-* Feature - Update metabox functionality separating create and edit functionality.
-* Feature - Update slider type metabox design.
-* Fix - Video Content is not saving.
-* Fix - Content slider animation is too fast and not considering autoplay speed.
-* Dev - Add typescript support.
-* Dev - Add new meta box fields (Radio, Switch, ButtonGroup, Breakpoint, Html, Switch).
-* Dev - Update metabox hiding slider change on edit mode.
-* Dev - Add REST endpoint to create slider.
-* Dev - Add admin feedback ui for plugin de-activation feedback.
-* Dev - Add admin ui to take user confirmation to send non-sensitive data.
-* Dev - Add sanitize method to sanitize array of integer.
-* Dev - Add 'image_size' attribute on SliderSetting class.
-* Dev - Add TemplateParserInterface class.
-* Dev - Fix `ReturnTypeWillChange` warning on PHP 8.0 onward
-* Dev - Add filter to modify slider css classes.
-* Dev - Add functionality to modify responsive breakpoint.
-* Dev - Group color metabox setting together.
-* Dev - Fix section setting and description is not showing.
-* Dev - Add SliderSetting::lazy_load_image() to get lazy load setting.
-* Dev - Add filter to modify hero and video carousel item html.
-
-= version 2.0.10 - 2022-03-26 =
-* Fix - Fix image carousel image edit button is not working for single image.
-
-= version 2.0.9 - 2022-02-27 =
-* Fix - Fix multi select field is showing as single select.
-
-= version 2.0.8 - 2022-01-07 =
-* Dev - Remove return type declaration from admin footer text.
-
-= version 2.0.7 - 2022-01-07 =
-* Fix - Fix null value issue on admin footer text.
-
-= version 2.0.6 - 2022-01-03 =
-* Add - Add functionality to add css file link dynamically if it is not added yet
-* Add - Add custom module for "Divi Builder"
-* Fix - Showing data update message on admin area.
-* Dev - Add unit testing for helpers classes.
-* Dev - Update code according to WordPress Coding Standards
-
-= version 2.0.5 - 2021-11-20 =
-* Fix - Product carousel button style is not working for 'read more' button
-
-= version 2.0.4 - 2021-11-20 =
-* Tweak - Update carousel preview link on edit page
-
-= version 2.0.3 - 2021-11-04 =
-* Fix - Fix error on image carousel structure data if image is deleted.
-
-= version 2.0.2 - 2021-11-03 =
-* Fix - Fix hero carousel height is not working as before.
-
-= version 2.0.1 - 2021-11-02 =
-* Fix - Fix issue with version 1 compatibility template for WooCommerce product loop item
-* Feature - Add random order for images carousel
-
-= version 2.0.0 - 2021-10-31 =
-
-* Dev - Add CLI(Command Line Interface) to create test sliders.
-* Dev - Update owl setting functionality to data attribute.
-* Dev - Add CSS variable to handle inline style.
-* Dev - Separate sliders code to modules
-* Dev - Add Upgrader class to handle upgrade functionality.
-* Dev - Update gutenberg block script.
 
 [See changelog for all versions](https://raw.githubusercontent.com/sayful1/carousel-slider/main/changelog.md).
