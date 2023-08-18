@@ -1,3 +1,7 @@
+#### Version 2.2.3 - 2023-08-18
+
+* Fix - Fix a security issue related to plugin data tracking consent option.
+
 #### Version 2.2.2 - 2023-08-08
 
 * Dev - Tested with WordPress 6.3 and WooCommerce 7.9

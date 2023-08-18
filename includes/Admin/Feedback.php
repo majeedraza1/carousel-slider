@@ -41,9 +41,9 @@ class Feedback {
 			);
 
 			add_action( 'wp_ajax_carousel_slider_deactivate_feedback', [ self::$instance, 'deactivate_feedback' ] );
+			add_action( 'wp_ajax_carousel_slider_tracker_consent', [ self::$instance, 'handle_optin_optout' ] );
 
 			add_action( 'admin_notices', [ self::$instance, 'admin_notice' ] );
-			add_action( 'admin_init', [ self::$instance, 'handle_optin_optout' ] );
 
 			add_filter( 'cron_schedules', [ self::$instance, 'add_weekly_schedule' ] );
 			add_action( 'carousel_slider_tracker_send_event', [ self::$instance, 'send_tracking_data' ] );
@@ -55,7 +55,7 @@ class Feedback {
 	/**
 	 * Add weekly cron schedule
 	 *
-	 * @param array $schedules List of schedules.
+	 * @param  array $schedules  List of schedules.
 	 *
 	 * @return array
 	 */
@@ -90,7 +90,9 @@ class Feedback {
 	 * @since 2.1.0
 	 */
 	public function deactivate_feedback() {
-		if ( ! isset( $_POST['_wpnonce'] ) || ! wp_verify_nonce( $_POST['_wpnonce'], '_carousel_slider_deactivate_feedback_nonce' ) ) {
+		if ( ! isset( $_POST['_wpnonce'] ) ||
+			 ! wp_verify_nonce( $_POST['_wpnonce'], '_carousel_slider_deactivate_feedback_nonce' )
+		) {
 			wp_send_json_error();
 		}
 
@@ -158,7 +160,10 @@ class Feedback {
 			],
 			'not_working'            => [
 				'title'             => esc_html__( 'I couldn\'t get the plugin to work', 'carousel-slider' ),
-				'input_placeholder' => esc_html__( 'Could you tell us a bit more whats not working?', 'carousel-slider' ),
+				'input_placeholder' => esc_html__(
+					'Could you tell us a bit more whats not working?',
+					'carousel-slider'
+				),
 			],
 			'missing_a_feature'      => [
 				'title'             => esc_html__( 'Missing a specific feature', 'carousel-slider' ),
@@ -170,7 +175,10 @@ class Feedback {
 			],
 			'carousel_slider_pro'    => [
 				'title' => esc_html__( 'I have Carousel Slider Pro', 'carousel-slider' ),
-				'alert' => esc_html__( 'Wait! Don\'t deactivate Carousel Slider. You have to activate both Carousel Slider and Carousel Slider Pro in order for the plugin to work.', 'carousel-slider' ),
+				'alert' => esc_html__(
+					'Wait! Don\'t deactivate Carousel Slider. You have to activate both Carousel Slider and Carousel Slider Pro in order for the plugin to work.',
+					'carousel-slider'
+				),
 			],
 			'other'                  => [
 				'title'             => esc_html__( 'Other', 'carousel-slider' ),
@@ -189,7 +197,12 @@ class Feedback {
 					<input type="hidden" name="action" value="carousel_slider_deactivate_feedback"/>
 
 					<div class="feedback-dialog__form-caption">
-						<?php echo esc_html__( 'If you have a moment, please share why you are deactivating Carousel Slider:', 'carousel-slider' ); ?>
+						<?php
+						echo esc_html__(
+							'If you have a moment, please share why you are deactivating Carousel Slider:',
+							'carousel-slider'
+						);
+						?>
 					</div>
 					<div class="feedback-dialog__form-body">
 						<?php foreach ( $deactivate_reasons as $reason_key => $reason ) : ?>
@@ -202,10 +215,10 @@ class Feedback {
 									   class="feedback-dialog__form-label"><?php echo esc_html( $reason['title'] ); ?></label>
 								<?php if ( ! empty( $reason['input_placeholder'] ) ) : ?>
 									<textarea
-										class="carousel-slider-feedback-text"
-										name="reason_<?php echo esc_attr( $reason_key ); ?>"
-										placeholder="<?php echo esc_attr( $reason['input_placeholder'] ); ?>"
-										rows="2"
+											class="carousel-slider-feedback-text"
+											name="reason_<?php echo esc_attr( $reason_key ); ?>"
+											placeholder="<?php echo esc_attr( $reason['input_placeholder'] ); ?>"
+											rows="2"
 									></textarea>
 								<?php endif; ?>
 								<?php if ( ! empty( $reason['alert'] ) ) : ?>
@@ -236,6 +249,23 @@ class Feedback {
 	}
 
 	/**
+	 * Get consent url
+	 *
+	 * @param  array $args  Additional arguments.
+	 *
+	 * @return string
+	 */
+	public static function get_consent_url( array $args = [] ): string {
+		$args['action'] = 'carousel_slider_tracker_consent';
+
+		return wp_nonce_url(
+			add_query_arg( $args, admin_url( 'admin-ajax.php' ) ),
+			'carousel_slider_tracker',
+			'_token'
+		);
+	}
+
+	/**
 	 * Show tracker notice to admin
 	 *
 	 * @return void
@@ -249,20 +279,38 @@ class Feedback {
 		}
 
 		/* translators: 1 - Plugin name */
-		$message = sprintf( __( 'Want to help make <strong>%1$s</strong> even more awesome? Allow %1$s to collect non-sensitive diagnostic data and usage information.', 'carousel-slider' ), 'Carousel Slider' );
+		$message = sprintf(
+			__(
+				'Want to help make <strong>%1$s</strong> even more awesome? Allow %1$s to collect non-sensitive diagnostic data and usage information.',
+				'carousel-slider'
+			),
+			'Carousel Slider'
+		);
 
-		$message .= ' (<a class="carousel-slider-insights-data-we-collect" href="#">' . __( 'what we collect', 'carousel-slider' ) . '</a>)';
-		$message .= '<p class="description" style="display:none;">' . implode( ', ', $this->data_we_collect() ) . '. No sensitive data is tracked. ';
+		$message .= ' (<a class="carousel-slider-insights-data-we-collect" href="#">' . __(
+			'what we collect',
+			'carousel-slider'
+		) . '</a>)';
+		$message .= '<p class="description" style="display:none;">' . implode(
+			', ',
+			$this->data_we_collect()
+		) . '. No sensitive data is tracked. ';
 		$message .= '<a href="' . Api::PRIVACY_URL . '" target="_blank">Learn more</a> about how Carousel Slider collects and handle your data.</p>';
 
-		$optin_url  = add_query_arg( 'carousel_slider_tracker_optin', 'true' );
-		$optout_url = add_query_arg( 'carousel_slider_tracker_optout', 'true' );
+		$optin_url  = static::get_consent_url( [ 'carousel_slider_tracker_optin' => 'true' ] );
+		$optout_url = static::get_consent_url( [ 'carousel_slider_tracker_optout' => 'true' ] );
 
 		$html  = '<div class="updated"><p>';
 		$html .= $message;
 		$html .= '</p><p class="submit">';
-		$html .= '&nbsp;<a href="' . esc_url( $optin_url ) . '" class="button-primary button-large">' . __( 'Allow', 'carousel-slider' ) . '</a>';
-		$html .= '&nbsp;<a href="' . esc_url( $optout_url ) . '" class="button-secondary button-large">' . __( 'No thanks', 'carousel-slider' ) . '</a>';
+		$html .= '&nbsp;<a href="' . esc_url( $optin_url ) . '" class="button-primary button-large">' . __(
+			'Allow',
+			'carousel-slider'
+		) . '</a>';
+		$html .= '&nbsp;<a href="' . esc_url( $optout_url ) . '" class="button-secondary button-large">' . __(
+			'No thanks',
+			'carousel-slider'
+		) . '</a>';
 		$html .= '</p></div>';
 
 		$html .= "<script type='text/javascript'>
@@ -282,22 +330,24 @@ class Feedback {
 	 * @return void
 	 */
 	public function handle_optin_optout() {
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( isset( $_GET['carousel_slider_tracker_optin'] ) && 'true' === $_GET['carousel_slider_tracker_optin'] ) {
-			$this->optin();
+		if (
+			current_user_can( 'manage_options' ) &&
+			isset( $_GET['_token'] ) &&
+			wp_verify_nonce( $_GET['_token'], 'carousel_slider_tracker' )
+		) {
+			if ( isset( $_GET['carousel_slider_tracker_optin'] ) && 'true' === $_GET['carousel_slider_tracker_optin'] ) {
+				$this->optin();
 
-			// phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect
-			wp_redirect( remove_query_arg( 'carousel_slider_tracker_optin' ) );
-			exit;
-		}
+				wp_safe_redirect( admin_url() );
+				exit;
+			}
 
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		if ( isset( $_GET['carousel_slider_tracker_optout'] ) && 'true' === $_GET['carousel_slider_tracker_optout'] ) {
-			$this->optout();
+			if ( isset( $_GET['carousel_slider_tracker_optout'] ) && 'true' === $_GET['carousel_slider_tracker_optout'] ) {
+				$this->optout();
 
-			// phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect
-			wp_redirect( remove_query_arg( 'carousel_slider_tracker_optout' ) );
-			exit;
+				wp_safe_redirect( admin_url() );
+				exit;
+			}
 		}
 	}
 
@@ -410,7 +460,7 @@ class Feedback {
 	/**
 	 * Send tracking data to server
 	 *
-	 * @param boolean $override Re-sent even if it is already sent data.
+	 * @param  boolean $override  Re-sent even if it is already sent data.
 	 *
 	 * @return void
 	 */
