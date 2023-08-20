@@ -75,7 +75,7 @@ class Assets {
 	/**
 	 * Get assets URL
 	 *
-	 * @param string $path Optional path.
+	 * @param  string  $path  Optional path.
 	 *
 	 * @return string
 	 */
@@ -113,7 +113,7 @@ class Assets {
 	/**
 	 * Register scripts
 	 *
-	 * @param array $scripts The scripts to register.
+	 * @param  array  $scripts  The scripts to register.
 	 *
 	 * @return void
 	 */
@@ -129,7 +129,7 @@ class Assets {
 	/**
 	 * Register styles
 	 *
-	 * @param array $styles The styles to register.
+	 * @param  array  $styles  The styles to register.
 	 *
 	 * @return void
 	 */
@@ -203,9 +203,9 @@ class Assets {
 		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		$javascript = file_get_contents( self::get_assets_url( '/js/frontend-style-loader.js' ) );
 		$script     = '<script id="carousel-slider-style-loader">' . PHP_EOL;
-		$script    .= 'window.carouselSliderCssUrl = ' . wp_json_encode( $data ) . ';' . PHP_EOL;
-		$script    .= $javascript . PHP_EOL;
-		$script    .= '</script>' . PHP_EOL;
+		$script     .= 'window.carouselSliderCssUrl = ' . wp_json_encode( $data ) . ';' . PHP_EOL;
+		$script     .= $javascript . PHP_EOL;
+		$script     .= '</script>' . PHP_EOL;
 
 		return $script;
 	}
@@ -221,6 +221,7 @@ class Assets {
 			'homeUrl'  => home_url(),
 			'ajaxUrl'  => admin_url( 'admin-ajax.php' ),
 			'restRoot' => esc_url_raw( rest_url( 'carousel-slider/v1' ) ),
+			'nonce'    => wp_create_nonce( 'carousel_slider_ajax_nonce' ),
 		];
 
 		if ( $is_user_logged_in ) {
@@ -233,6 +234,10 @@ class Assets {
 				$slider_types[] = array_merge( [ 'slug' => $slug ], $args );
 			}
 			$data['sliderTypes'] = $slider_types;
+
+			$data['l10n'] = [
+				'confirmDelete' => __( 'Are you sure to delete it?', 'carousel-slider' ),
+			];
 		}
 
 		echo '<script>window.CarouselSliderL10n = ' . wp_json_encode( $data ) . '</script>' . PHP_EOL;

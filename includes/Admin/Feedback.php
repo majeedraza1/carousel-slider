@@ -90,8 +90,10 @@ class Feedback {
 	 * @since 2.1.0
 	 */
 	public function deactivate_feedback() {
-		if ( ! isset( $_POST['_wpnonce'] ) ||
-			 ! wp_verify_nonce( $_POST['_wpnonce'], '_carousel_slider_deactivate_feedback_nonce' )
+		if (
+			! current_user_can( 'manage_options' ) ||
+			! isset( $_POST['_wpnonce'] ) ||
+			! wp_verify_nonce( $_POST['_wpnonce'], '_carousel_slider_deactivate_feedback_nonce' )
 		) {
 			wp_send_json_error();
 		}

@@ -38,57 +38,64 @@ class Ajax {
 	 * @return void
 	 */
 	public function add_slide_template() {
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		if ( ! isset( $_POST['post_id'] ) ) {
-			wp_send_json( __( 'Required attribute is not set properly.', 'carousel-slider' ), 422 );
+		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( $_POST['nonce'], 'carousel_slider_ajax_nonce' ) ) {
+			if ( ! isset( $_POST['post_id'] ) ) {
+				wp_send_json( __( 'Required attribute is not set properly.', 'carousel-slider' ), 422 );
+			}
+
+			$post_id = isset( $_POST['post_id'] ) ? absint( $_POST['post_id'] ) : 0;
+
+			$post_type = get_post_type_object( CAROUSEL_SLIDER_POST_TYPE );
+			if ( ! current_user_can( $post_type->cap->edit_post, $post_id ) ) {
+				wp_send_json( __( 'You are not authorized to perform this action.', 'carousel-slider' ), 401 );
+			}
+
+			$task = isset( $_POST['task'] ) ? sanitize_text_field( $_POST['task'] ) : 'add-slide';
+
+			$slider_content = get_post_meta( $post_id, '_content_slider', true );
+			$slider_content = is_array( $slider_content ) ? array_values( $slider_content ) : [];
+
+			if ( 'add-slide' === $task ) {
+				$new_content = $this->add_new_item( $post_id, $slider_content );
+				wp_send_json( $new_content, 201 );
+			}
+
+			$last_index    = count( $slider_content ) - 1;
+			$current_index = $this->get_current_index( $last_index );
+			if ( - 1 === $current_index ) {
+				wp_send_json_error();
+			}
+
+			$new_index = [
+				'move-slide-top'    => 0,
+				'move-slide-up'     => $current_index - 1,
+				'move-slide-down'   => $current_index + 1,
+				'move-slide-bottom' => $last_index,
+			];
+
+			if ( 'delete-slide' === $task ) {
+				array_splice( $slider_content, $current_index, 1 );
+			}
+
+			if ( array_key_exists( $task, $new_index ) ) {
+				$slider_content = $this->move_array_element( $slider_content, $current_index, $new_index[ $task ] );
+			}
+
+			$slider_content = array_values( $slider_content );
+
+			update_post_meta( $post_id, '_content_slider', $slider_content );
+			wp_send_json( $slider_content );
 		}
 
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		$post_id = isset( $_POST['post_id'] ) ? absint( $_POST['post_id'] ) : 0;
-		// phpcs:ignore WordPress.Security.NonceVerification.Missing
-		$task = isset( $_POST['task'] ) ? sanitize_text_field( $_POST['task'] ) : 'add-slide';
-
-		$slider_content = get_post_meta( $post_id, '_content_slider', true );
-		$slider_content = is_array( $slider_content ) ? array_values( $slider_content ) : [];
-
-		if ( 'add-slide' === $task ) {
-			$new_content = $this->add_new_item( $post_id, $slider_content );
-			wp_send_json( $new_content, 201 );
-		}
-
-		$last_index    = count( $slider_content ) - 1;
-		$current_index = $this->get_current_index( $last_index );
-		if ( - 1 === $current_index ) {
-			wp_send_json_error();
-		}
-
-		$new_index = [
-			'move-slide-top'    => 0,
-			'move-slide-up'     => $current_index - 1,
-			'move-slide-down'   => $current_index + 1,
-			'move-slide-bottom' => $last_index,
-		];
-
-		if ( 'delete-slide' === $task ) {
-			array_splice( $slider_content, $current_index, 1 );
-		}
-
-		if ( array_key_exists( $task, $new_index ) ) {
-			$slider_content = $this->move_array_element( $slider_content, $current_index, $new_index[ $task ] );
-		}
-
-		$slider_content = array_values( $slider_content );
-
-		update_post_meta( $post_id, '_content_slider', $slider_content );
-		wp_send_json( $slider_content );
+		wp_send_json( __( 'You are not authorized to perform this action.', 'carousel-slider' ), 401 );
 	}
 
 	/**
 	 * Move array element position
 	 *
-	 * @param  array $array  Array content.
-	 * @param  int   $current_index  The current index.
-	 * @param  int   $new_index  The new index.
+	 * @param  array  $array  Array content.
+	 * @param  int  $current_index  The current index.
+	 * @param  int  $new_index  The new index.
 	 *
 	 * @return array
 	 */
@@ -102,8 +109,8 @@ class Ajax {
 	/**
 	 * Add new item
 	 *
-	 * @param  int   $post_id  The post id.
-	 * @param  array $slider_content  The slider content.
+	 * @param  int  $post_id  The post id.
+	 * @param  array  $slider_content  The slider content.
 	 *
 	 * @return array
 	 */
@@ -121,7 +128,7 @@ class Ajax {
 	/**
 	 * Get current index
 	 *
-	 * @param  int $last_index  Last slider index.
+	 * @param  int  $last_index  Last slider index.
 	 *
 	 * @return int
 	 */

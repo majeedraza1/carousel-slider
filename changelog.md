@@ -1,3 +1,8 @@
+#### Version 2.2.4 - 2023-08-20
+
+* Fix - Add nonce verification and permission checking on hero carousel ajax actions.
+* Fix - Add permission checking on plugin deactivation feedback data submission.
+
 #### Version 2.2.3 - 2023-08-18
 
 * Fix - Fix a security issue related to plugin data tracking consent option.
