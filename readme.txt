@@ -1,11 +1,11 @@
 === Carousel Slider ===
-Contributors: sayful, majeedraza
+Contributors: sayful
 Donate link: https://www.buymeacoffee.com/sayful1
 Tags: carousel, carousel slider, image carousel, product carousel, woocommerce, slider
 Requires at least: 5.6
-Tested up to: 6.3
+Tested up to: 6.4
 Requires PHP: 7.0
-Stable tag: 2.2.4
+Stable tag: 2.2.5
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
