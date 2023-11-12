@@ -156,7 +156,7 @@ class Item {
 			$format = get_option( 'date_format' );
 		}
 
-		return date_i18n( $format, $this->get_post()->post_modified );
+		return date_i18n( $format, strtotime( $this->get_post()->post_modified ) );
 	}
 
 	/**
