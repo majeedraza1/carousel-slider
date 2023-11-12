@@ -1,3 +1,10 @@
+#### Version 2.2.5 - 2023-11-12
+
+* Fix - Fix post carousel date issue.
+* Fix - Fix star rating style broken for WooCommerce product carousel.
+* Dev - Update swiper javaScript library to version 11.
+* Dev - Tested with WordPress 6.4 and WooCommerce 8.2
+
 #### Version 2.2.4 - 2023-08-20
 
 * Fix - Add nonce verification and permission checking on hero carousel ajax actions.
