@@ -1,3 +1,7 @@
+#### Version 2.2.6 - 2024-02-07
+
+* Fix - Fix data sanitize issue for field 'Slides Per View' on admin edit page.
+
 #### Version 2.2.5 - 2023-11-12
 
 * Fix - Fix post carousel date issue.

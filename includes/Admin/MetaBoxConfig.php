@@ -3,6 +3,7 @@
 namespace CarouselSlider\Admin;
 
 use CarouselSlider\Helper;
+use CarouselSlider\Supports\Sanitize;
 use WP_Post;
 
 /**
@@ -182,6 +183,7 @@ class MetaBoxConfig {
 				'condition'      => [
 					'_type_of_slider' => 'carousel',
 				],
+				'sanitize_callback'=> [ Sanitize::class, 'deep_int' ],
 			],
 			'slider_direction' => [
 				'section'     => 'section_general_settings',
