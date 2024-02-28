@@ -33,6 +33,13 @@ use CarouselSlider\Supports\Validate;
  * @package CarouselSlider/Abstracts
  */
 class SliderSetting extends Data implements SliderSettingInterface {
+
+	const NAV_VISIBILITY = array( 'always', 'never', 'hover' );
+	const NAV_POSITION = array( 'inside', 'outside' );
+	const PAGINATION_VISIBILITY = array( 'always', 'never', 'hover' );
+	const PAGINATION_TYPE = array( 'bullets', 'fraction', 'progressbar', 'custom' );
+	const SLIDE_EFFECTS = array( 'slide', 'fade', 'cube', 'coverflow', 'flip', 'creative', 'cards' );
+
 	/**
 	 * The slider id.
 	 *
@@ -59,13 +66,13 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	 *
 	 * @var array
 	 */
-	protected static $global_settings = [];
+	protected static $global_settings = array();
 
 	/**
 	 * Class constructor
 	 *
-	 * @param int  $slider_id The slider id.
-	 * @param bool $read_metadata Should read metadata immediately.
+	 * @param  int  $slider_id  The slider id.
+	 * @param  bool  $read_metadata  Should read metadata immediately.
 	 */
 	public function __construct( int $slider_id, bool $read_metadata = true ) {
 		$this->slider_id = $slider_id;
@@ -89,7 +96,7 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	/**
 	 * Does this collection have a given key?
 	 *
-	 * @param string $key The data key.
+	 * @param  string  $key  The data key.
 	 *
 	 * @return bool
 	 */
@@ -100,8 +107,8 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	/**
 	 * Get option
 	 *
-	 * @param string $key option key.
-	 * @param mixed  $default default value.
+	 * @param  string  $key  option key.
+	 * @param  mixed  $default  default value.
 	 *
 	 * @return mixed
 	 */
@@ -117,8 +124,8 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	 * Get option for key
 	 * If there is no option for key, return from global option.
 	 *
-	 * @param string $key option key.
-	 * @param mixed  $default default value to return if data key does not exist.
+	 * @param  string  $key  option key.
+	 * @param  mixed  $default  default value to return if data key does not exist.
 	 *
 	 * @return mixed The key's value, or the default value
 	 */
@@ -156,7 +163,7 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	/**
 	 * Set slider type
 	 *
-	 * @param mixed $type The slider type.
+	 * @param  mixed  $type  The slider type.
 	 *
 	 * @return void
 	 */
@@ -193,13 +200,13 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	/**
 	 * Set nav visibility
 	 *
-	 * @param mixed $value The navigation visibility.
+	 * @param  mixed  $value  The navigation visibility.
 	 */
 	public function set_nav_visibility( $value ) {
 		// For backup compatability.
-		$value = str_replace( [ 'off', 'on' ], [ 'never', 'hover' ], $value );
+		$value = str_replace( array( 'off', 'on' ), array( 'never', 'hover' ), $value );
 
-		if ( in_array( $value, [ 'always', 'never', 'hover' ], true ) ) {
+		if ( in_array( $value, static::NAV_VISIBILITY, true ) ) {
 			$this->data['nav_visibility'] = $value;
 		}
 	}
@@ -213,7 +220,7 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	public function get_nav_visibility(): string {
 		$value = $this->get_prop( 'nav_visibility' );
 		// For backup compatability.
-		$value = str_replace( [ 'off', 'on' ], [ 'never', 'hover' ], $value );
+		$value = str_replace( array( 'off', 'on' ), array( 'never', 'hover' ), $value );
 
 		return $value;
 	}
@@ -221,10 +228,10 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	/**
 	 * Set nav position
 	 *
-	 * @param mixed $value The navigation position.
+	 * @param  mixed  $value  The navigation position.
 	 */
 	public function set_nav_position( $value ) {
-		if ( in_array( $value, [ 'inside', 'outside' ], true ) ) {
+		if ( in_array( $value, static::NAV_POSITION, true ) ) {
 			$this->data['nav_position'] = $value;
 		}
 	}
@@ -232,10 +239,10 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	/**
 	 * Set nav steps
 	 *
-	 * @param mixed $value The navigation steps.
+	 * @param  mixed  $value  The navigation steps.
 	 */
 	public function set_nav_steps( $value ) {
-		if ( in_array( $value, [ 'page', '-1', - 1 ], true ) ) {
+		if ( in_array( $value, array( 'page', '-1', - 1 ), true ) ) {
 			$this->data['nav_steps'] = 'page';
 		} else {
 			$this->data['nav_steps'] = max( 1, intval( $value ) );
@@ -245,13 +252,13 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	/**
 	 * Set pagination visibility
 	 *
-	 * @param mixed $value The pagination visibility value.
+	 * @param  mixed  $value  The pagination visibility value.
 	 */
 	public function set_pagination_visibility( $value ) {
 		// For backup compatability.
-		$value = str_replace( [ 'off', 'on' ], [ 'never', 'always' ], $value );
+		$value = str_replace( array( 'off', 'on' ), array( 'never', 'always' ), $value );
 
-		if ( in_array( $value, [ 'always', 'never', 'hover' ], true ) ) {
+		if ( in_array( $value, static::PAGINATION_VISIBILITY, true ) ) {
 			$this->data['pagination_visibility'] = $value;
 		}
 	}
@@ -264,7 +271,7 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	public function get_pagination_visibility(): string {
 		$value = $this->get_prop( 'pagination_visibility' );
 		// For backup compatability.
-		$value = str_replace( [ 'off', 'on' ], [ 'never', 'always' ], $value );
+		$value = str_replace( array( 'off', 'on' ), array( 'never', 'always' ), $value );
 
 		return $value;
 	}
@@ -277,7 +284,7 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	public function get_pagination_type(): string {
 		$value = $this->get_prop( 'pagination_type', 'bullets' );
 
-		return in_array( $value, [ 'bullets', 'fraction', 'progressbar', 'custom' ], true ) ? $value : 'bullets';
+		return in_array( $value, static::PAGINATION_TYPE, true ) ? $value : 'bullets';
 	}
 
 	/**
@@ -298,10 +305,9 @@ class SliderSetting extends Data implements SliderSettingInterface {
 		if ( ! Helper::is_pro_active() ) {
 			return 'slide';
 		}
-		$effect  = $this->get_option( 'slider_effect' );
-		$effects = [ 'slide', 'fade', 'cube', 'coverflow', 'flip', 'creative', 'cards' ];
+		$effect = $this->get_option( 'slider_effect' );
 
-		return in_array( $effect, $effects, true ) ? $effect : 'slide';
+		return in_array( $effect, static::SLIDE_EFFECTS, true ) ? $effect : 'slide';
 	}
 
 	/**
@@ -310,19 +316,25 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	 * @return array
 	 */
 	public function get_slides_per_view(): array {
+		// For backup compatability.
 		if ( ! $this->has_prop( 'slides_per_view' ) ) {
-			return [
-				'xs'  => $this->get_items_on_mobile(),
-				'sm'  => $this->get_items_on_small_tablet(),
-				'md'  => $this->get_items_on_tablet(),
-				'lg'  => $this->get_items_on_desktop(),
-				'xl'  => $this->get_items_on_widescreen(),
-				'2xl' => $this->get_items_on_fullhd(),
-			];
+			return array(
+				'xs'  => (int) $this->get_items_on_mobile(),
+				'sm'  => (int) $this->get_items_on_small_tablet(),
+				'md'  => (int) $this->get_items_on_tablet(),
+				'lg'  => (int) $this->get_items_on_desktop(),
+				'xl'  => (int) $this->get_items_on_widescreen(),
+				'2xl' => (int) $this->get_items_on_fullhd(),
+			);
 		}
-		$slides = (array) $this->get_option( 'slides_per_view', [] );
+		$slides          = (array) $this->get_option( 'slides_per_view', array() );
+		$slides          = wp_parse_args( $slides, array( 'xs' => 1 ) );
+		$slides_per_view = array();
+		foreach ( $slides as $prefix => $item ) {
+			$slides_per_view[ esc_attr( $prefix ) ] = intval( $item );
+		}
 
-		return wp_parse_args( $slides, [ 'xs' => 1 ] );
+		return $slides_per_view;
 	}
 
 	/**
@@ -339,18 +351,18 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	 *
 	 * @return bool
 	 */
-	public function is_using_swiper():bool {
+	public function is_using_swiper(): bool {
 		return Helper::is_using_swiper();
 	}
 
 	/**
 	 * Read setting from database
 	 *
-	 * @param array $values The value to be read.
+	 * @param  array  $values  The value to be read.
 	 *
 	 * @return void
 	 */
-	public function read_metadata( array $values = [] ) {
+	public function read_metadata( array $values = array() ) {
 		if ( $this->data_read ) {
 			return;
 		}
@@ -370,11 +382,11 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	/**
 	 * Read data from HTTP POST variable
 	 *
-	 * @param array $values The values from HTTP POST variables.
+	 * @param  array  $values  The values from HTTP POST variables.
 	 *
 	 * @return void
 	 */
-	public function read_http_post_variables( array $values = [] ) {
+	public function read_http_post_variables( array $values = array() ) {
 		$fields_settings = self::get_fields_settings();
 		foreach ( $fields_settings as $attribute => $config ) {
 			$this->read_single_metadata( $attribute, $config, $values );
@@ -384,9 +396,9 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	/**
 	 * Read single metadata
 	 *
-	 * @param string $attribute property name.
-	 * @param array  $field The field settings.
-	 * @param array  $values The values.
+	 * @param  string  $attribute  property name.
+	 * @param  array  $field  The field settings.
+	 * @param  array  $values  The values.
 	 *
 	 * @return void
 	 */
@@ -414,10 +426,10 @@ class SliderSetting extends Data implements SliderSettingInterface {
 		foreach ( $fields_settings as $prop_name => $field ) {
 			$value = $this->get_prop( $prop_name );
 			if ( 'nav_visibility' === $prop_name ) {
-				$value = str_replace( [ 'never', 'hover' ], [ 'off', 'on' ], $value );
+				$value = str_replace( array( 'never', 'hover' ), array( 'off', 'on' ), $value );
 			}
 			if ( 'pagination_visibility' === $prop_name ) {
-				$value = str_replace( [ 'never', 'always' ], [ 'off', 'on' ], $value );
+				$value = str_replace( array( 'never', 'always' ), array( 'off', 'on' ), $value );
 			}
 			$sanitized_value = $this->prepare_item_for_database( $value, $field );
 			update_post_meta( $this->slider_id, $field['id'], $sanitized_value );
@@ -427,8 +439,8 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	/**
 	 * Sanitize value by data type
 	 *
-	 * @param string $type The type.
-	 * @param mixed  $value The value.
+	 * @param  string  $type  The type.
+	 * @param  mixed  $value  The value.
 	 *
 	 * @return mixed
 	 */
@@ -439,10 +451,10 @@ class SliderSetting extends Data implements SliderSettingInterface {
 		if ( 'int[]' === $type && is_string( $value ) ) {
 			$value = array_filter( array_map( 'intval', explode( ',', $value ) ) );
 		}
-		if ( in_array( $type, [ 'int', 'number' ], true ) ) {
+		if ( in_array( $type, array( 'int', 'number' ), true ) ) {
 			$value = (int) $value;
 		}
-		if ( in_array( $type, [ 'bool', 'switch' ], true ) ) {
+		if ( in_array( $type, array( 'bool', 'switch' ), true ) ) {
 			$value = Validate::checked( $value );
 		}
 
@@ -452,8 +464,8 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	/**
 	 * Prepare item for database store
 	 *
-	 * @param mixed $value The value to be sanitized.
-	 * @param array $setting The field setting.
+	 * @param  mixed  $value  The value to be sanitized.
+	 * @param  array  $setting  The field setting.
 	 *
 	 * @return mixed
 	 */
@@ -464,7 +476,7 @@ class SliderSetting extends Data implements SliderSettingInterface {
 		if ( isset( $setting['choices'] ) && is_array( $setting['choices'] ) ) {
 			return $this->sanitize_choices( $value, $setting );
 		}
-		if ( in_array( $setting['type'], [ 'bool', 'switch' ], true ) ) {
+		if ( in_array( $setting['type'], array( 'bool', 'switch' ), true ) ) {
 			return Validate::checked( $value ) ? 'on' : 'off';
 		}
 
@@ -474,13 +486,13 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	/**
 	 * Sanitize choices value
 	 *
-	 * @param mixed $value The value to be sanitized.
-	 * @param array $setting The field setting.
+	 * @param  mixed  $value  The value to be sanitized.
+	 * @param  array  $setting  The field setting.
 	 *
 	 * @return array|mixed|null
 	 */
 	public function sanitize_choices( $value, array $setting ) {
-		$enum = [];
+		$enum = array();
 		foreach ( $setting['choices'] as $key => $choice ) {
 			if ( is_array( $choice ) && isset( $choice['value'] ) ) {
 				$enum[] = $choice['value'];
@@ -491,7 +503,7 @@ class SliderSetting extends Data implements SliderSettingInterface {
 
 		$default = $setting['default'] ?? null;
 		if ( isset( $setting['multiple'] ) ) {
-			$sanitized_value = [];
+			$sanitized_value = array();
 			foreach ( (array) $value as $item ) {
 				if ( in_array( $item, $enum, true ) ) {
 					$sanitized_value[] = $item;
@@ -516,8 +528,8 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	/**
 	 * Handle calling property via method
 	 *
-	 * @param string $name The name of the method being called.
-	 * @param array  $args An enumerated array containing the parameters passed to the $name'ed method.
+	 * @param  string  $name  The name of the method being called.
+	 * @param  array  $args  An enumerated array containing the parameters passed to the $name'ed method.
 	 *
 	 * @return mixed
 	 * @throws BadMethodCallException Exception if not method available.
@@ -525,7 +537,7 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	public function __call( string $name, array $args ) {
 		if ( preg_match( '/^(?P<prefix>get|is|has|should)_(?P<property>\s*.*)/', $name, $matches ) ) {
 			if ( $this->has_prop( $matches['property'] ) ) {
-				if ( in_array( $matches['prefix'], [ 'is', 'has', 'should' ], true ) ) {
+				if ( in_array( $matches['prefix'], array( 'is', 'has', 'should' ), true ) ) {
 					return Validate::checked( $this->get_prop( $matches['property'] ) );
 				}
 

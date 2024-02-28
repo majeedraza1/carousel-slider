@@ -26,7 +26,7 @@ class SwiperSetting {
 	/**
 	 * Class constructor
 	 *
-	 * @param  SliderSetting $slider_setting  slider setting class.
+	 * @param  SliderSetting  $slider_setting  slider setting class.
 	 */
 	public function __construct( SliderSetting $slider_setting ) {
 		$this->slider_setting = $slider_setting;
@@ -36,7 +36,7 @@ class SwiperSetting {
 	/**
 	 * Read settings
 	 *
-	 * @param  SliderSetting $setting  slider setting class.
+	 * @param  SliderSetting  $setting  slider setting class.
 	 *
 	 * @return void
 	 */
@@ -132,6 +132,8 @@ class SwiperSetting {
 	 * @return array
 	 */
 	public function all(): array {
-		return apply_filters( 'carousel_slider/settings/swiper_settings', $this->settings, $this->slider_setting );
+		$settings = apply_filters( 'carousel_slider/settings/swiper_settings', $this->settings, $this->slider_setting );
+
+		return map_deep( $settings, 'esc_attr' );
 	}
 }

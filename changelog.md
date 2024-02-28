@@ -1,3 +1,7 @@
+#### Version 2.2.7 - 2024-02-28
+
+* Fix - Update data escape functionality for slider configuration.
+
 #### Version 2.2.6 - 2024-02-07
 
 * Fix - Fix data sanitize issue for field 'Slides Per View' on admin edit page.

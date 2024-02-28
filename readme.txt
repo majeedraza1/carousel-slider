@@ -5,7 +5,7 @@ Tags: carousel, carousel slider, image carousel, product carousel, woocommerce, 
 Requires at least: 5.6
 Tested up to: 6.4
 Requires PHP: 7.0
-Stable tag: 2.2.6
+Stable tag: 2.2.7
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -95,6 +95,9 @@ Carousel Slider is first class citizen in Gutenberg Block Editor. Just search 'c
 a dedicated 'carousel slider' block with live preview for Gutenberg Block Editor.
 
 == Changelog ==
+
+= version 2.2.7 - 2024-02-28 =
+* Fix - Update data escape functionality for slider configuration.
 
 = version 2.2.6 - 2024-02-07 =
 * Fix - Fix data sanitize issue for field 'Slides Per View' on admin edit page.
