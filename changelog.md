@@ -1,3 +1,7 @@
+#### Version 2.2.8 - 2024-02-28
+
+* Fix - Fix slider is not showing on update 2.2.7
+
 #### Version 2.2.7 - 2024-02-28
 
 * Fix - Update data escape functionality for slider configuration.

@@ -331,7 +331,7 @@ class SliderSetting extends Data implements SliderSettingInterface {
 		$slides          = wp_parse_args( $slides, array( 'xs' => 1 ) );
 		$slides_per_view = array();
 		foreach ( $slides as $prefix => $item ) {
-			$slides_per_view[ esc_attr( $prefix ) ] = intval( $item );
+			$slides_per_view[ esc_attr( $prefix ) ] = floatval( $item );
 		}
 
 		return $slides_per_view;

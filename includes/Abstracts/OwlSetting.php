@@ -74,8 +74,6 @@ class OwlSetting {
 	 * @return array
 	 */
 	public function all(): array {
-		$settings = apply_filters( 'carousel_slider/settings/owl_settings', $this->settings, $this->slider_setting );
-
-		return map_deep( $settings, 'esc_attr' );
+		return apply_filters( 'carousel_slider/settings/owl_settings', $this->settings, $this->slider_setting );
 	}
 }
