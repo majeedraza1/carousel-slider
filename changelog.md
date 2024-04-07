@@ -1,3 +1,8 @@
+#### version 2.2.9 - 2024-04-07
+
+* Dev - Update compatibility with WooCommerce High-Performance Order Storage.
+* Dev - Tested with WordPress 6.5 and WooCommerce 8.7
+
 #### Version 2.2.8 - 2024-02-28
 
 * Fix - Fix slider is not showing on update 2.2.7
