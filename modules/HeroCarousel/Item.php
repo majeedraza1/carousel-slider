@@ -83,8 +83,8 @@ class Item extends Data {
 	/**
 	 * Class constructor.
 	 *
-	 * @param array $args Optional arguments.
-	 * @param array $slider_settings Slider settings.
+	 * @param  array  $args  Optional arguments.
+	 * @param  array  $slider_settings  Slider settings.
 	 */
 	public function __construct( array $args = [], array $slider_settings = [] ) {
 		$this->data            = wp_parse_args( $args, self::get_default() );
@@ -103,7 +103,7 @@ class Item extends Data {
 	/**
 	 * Set setting
 	 *
-	 * @param Setting|SliderSetting $setting The SliderSetting object.
+	 * @param  Setting|SliderSetting  $setting  The SliderSetting object.
 	 */
 	public function set_setting( Setting $setting ) {
 		$this->setting         = $setting;
@@ -122,8 +122,8 @@ class Item extends Data {
 	/**
 	 * Get default value
 	 *
-	 * @param string $key Props key.
-	 * @param mixed $default Default value.
+	 * @param  string  $key  Props key.
+	 * @param  mixed  $default  Default value.
 	 *
 	 * @return mixed|string
 	 */
@@ -134,7 +134,7 @@ class Item extends Data {
 	/**
 	 * Sanitize item data
 	 *
-	 * @param array $data The data to be sanitized.
+	 * @param  array  $data  The data to be sanitized.
 	 *
 	 * @return array
 	 */
@@ -261,8 +261,14 @@ class Item extends Data {
 			'bottom' => '1rem',
 			'left'   => '3rem',
 		];
-		$slide_padding = isset( $this->slider_settings['slide_padding'] ) && is_array( $this->slider_settings['slide_padding'] ) ?
-			$this->slider_settings['slide_padding'] : [];
+		$slide_padding = [];
+		if ( isset( $this->slider_settings['slide_padding'] ) && is_array( $this->slider_settings['slide_padding'] ) ) {
+			foreach ( $this->slider_settings['slide_padding'] as $position => $value ) {
+				if ( array_key_exists( $position, $default ) ) {
+					$slide_padding[ $position ] = $value;
+				}
+			}
+		}
 
 		return wp_parse_args( $slide_padding, $default );
 	}
@@ -421,10 +427,10 @@ class Item extends Data {
 		];
 
 		$styles = [
-			'padding-top'    => $slide_padding['top'],
-			'padding-right'  => $slide_padding['right'],
-			'padding-bottom' => $slide_padding['bottom'],
-			'padding-left'   => $slide_padding['left'],
+			'padding-top'    => esc_attr( $slide_padding['top'] ),
+			'padding-right'  => esc_attr( $slide_padding['right'] ),
+			'padding-bottom' => esc_attr( $slide_padding['bottom'] ),
+			'padding-left'   => esc_attr( $slide_padding['left'] ),
 		];
 
 		return '<div class="' . implode( ' ', $classes ) . '" style="' . Helper::array_to_style( $styles ) . '">';
@@ -570,7 +576,8 @@ class Item extends Data {
 			);
 		}
 
-		return '<' . ( $is_full_link ? 'a' : 'div' ) . ' ' . join( ' ', Helper::array_to_attribute( $cell_attr ) ) . '>';
+		return '<' . ( $is_full_link ? 'a' : 'div' ) . ' ' . join( ' ',
+				Helper::array_to_attribute( $cell_attr ) ) . '>';
 	}
 
 	/**

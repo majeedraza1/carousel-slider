@@ -1,3 +1,7 @@
+#### version 2.2.10 - 2024-04-09
+
+* Fix - Fix XSS security vulnerability from slide edit page.
+
 #### version 2.2.9 - 2024-04-07
 
 * Dev - Update compatibility with WooCommerce High-Performance Order Storage.

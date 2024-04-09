@@ -841,6 +841,10 @@ class Admin {
 					'bottom' => '1rem',
 					'left'   => '1rem',
 				],
+				'input_attributes' => [
+					'value' => isset( $content_settings['slide_padding'] ) && is_array( $content_settings['slide_padding'] ) ?
+						$content_settings['slide_padding'] : [],
+				],
 			]
 		);
 		echo '</div>';
