@@ -1,6 +1,10 @@
+#### version 2.2.11 - 2024-04-18
+
+* Fix - Fix XSS security vulnerability from slide edit page for Image Carousel (URL) (reported by Dmitrii Ignatyev).
+
 #### version 2.2.10 - 2024-04-09
 
-* Fix - Fix XSS security vulnerability from slide edit page.
+* Fix - Fix XSS security vulnerability from slide edit page for Hero Carousel. (reported by Artyom Krugov)
 
 #### version 2.2.9 - 2024-04-07
 

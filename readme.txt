@@ -5,7 +5,7 @@ Tags: carousel, carousel slider, image carousel, product carousel, slider
 Requires at least: 5.6
 Tested up to: 6.5
 Requires PHP: 7.0
-Stable tag: 2.2.10
+Stable tag: 2.2.11
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -96,8 +96,11 @@ a dedicated 'carousel slider' block with live preview for Gutenberg Block Editor
 
 == Changelog ==
 
+= version 2.2.11 - 2024-04-18 =
+* Fix - Fix XSS security vulnerability from slide edit page for Image Carousel (URL). (reported by Dmitrii Ignatyev)
+
 = version 2.2.10 - 2024-04-09 =
-* Fix - Fix XSS security vulnerability from slide edit page.
+* Fix - Fix XSS security vulnerability from slide edit page for Hero Carousel. (reported by Artyom Krugov)
 
 = version 2.2.9 - 2024-04-07 =
 * Dev - Update compatibility with WooCommerce High-Performance Order Storage.
