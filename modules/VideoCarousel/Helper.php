@@ -13,7 +13,7 @@ class Helper {
 	/**
 	 * Get Youtube video ID from URL
 	 *
-	 * @param string $url The url string.
+	 * @param  string $url  The url string.
 	 *
 	 * @return false|string Youtube video ID or FALSE if not found
 	 */
@@ -39,7 +39,7 @@ class Helper {
 	/**
 	 * Get Vimeo video ID from URL
 	 *
-	 * @param string $url The url string.
+	 * @param  string $url  The url string.
 	 *
 	 * @return false|string Vimeo video ID or FALSE if not found
 	 */
@@ -57,46 +57,51 @@ class Helper {
 	/**
 	 * Get video URL
 	 *
-	 * @param array $video_urls The video urls.
+	 * @param  array|string $video_urls  The video urls.
 	 *
 	 * @return array
 	 */
-	public static function get_video_url( array $video_urls ): array {
-		$_url = [];
-		foreach ( $video_urls as $video_url ) {
-			if ( ! filter_var( $video_url, FILTER_VALIDATE_URL ) ) {
-				continue;
-			}
-			$provider  = '';
-			$video_id  = '';
-			$thumbnail = '';
-			if ( false !== strpos( $video_url, 'youtube.com' ) ) {
-				$provider  = 'youtube';
-				$video_id  = static::get_youtube_id_from_url( $video_url );
-				$thumbnail = [
-					'large'  => 'https://img.youtube.com/vi/' . $video_id . '/hqdefault.jpg',
-					'medium' => 'https://img.youtube.com/vi/' . $video_id . '/mqdefault.jpg',
-					'small'  => 'https://img.youtube.com/vi/' . $video_id . '/sddefault.jpg',
-				];
+	public static function get_video_url( $video_urls ): array {
+		if ( is_string( $video_urls ) ) {
+			$video_urls = array_filter( explode( ',', $video_urls ) );
+		}
+		$_url = array();
+		if ( is_array( $video_urls ) && count( $video_urls ) ) {
+			foreach ( $video_urls as $video_url ) {
+				if ( ! filter_var( $video_url, FILTER_VALIDATE_URL ) ) {
+					continue;
+				}
+				$provider  = '';
+				$video_id  = '';
+				$thumbnail = '';
+				if ( false !== strpos( $video_url, 'youtube.com' ) ) {
+					$provider  = 'youtube';
+					$video_id  = static::get_youtube_id_from_url( $video_url );
+					$thumbnail = array(
+						'large'  => 'https://img.youtube.com/vi/' . $video_id . '/hqdefault.jpg',
+						'medium' => 'https://img.youtube.com/vi/' . $video_id . '/mqdefault.jpg',
+						'small'  => 'https://img.youtube.com/vi/' . $video_id . '/sddefault.jpg',
+					);
 
-			} elseif ( false !== strpos( $video_url, 'vimeo.com' ) ) {
-				$provider  = 'vimeo';
-				$video_id  = static::get_vimeo_id_from_url( $video_url );
-				$response  = wp_remote_get( "https://vimeo.com/api/v2/video/$video_id.json" );
-				$thumbnail = json_decode( wp_remote_retrieve_body( $response ), true );
-				$thumbnail = [
-					'large'  => $thumbnail[0]['thumbnail_large'] ?? null,
-					'medium' => $thumbnail[0]['thumbnail_medium'] ?? null,
-					'small'  => $thumbnail[0]['thumbnail_small'] ?? null,
-				];
-			}
+				} elseif ( false !== strpos( $video_url, 'vimeo.com' ) ) {
+					$provider  = 'vimeo';
+					$video_id  = static::get_vimeo_id_from_url( $video_url );
+					$response  = wp_remote_get( "https://vimeo.com/api/v2/video/$video_id.json" );
+					$thumbnail = json_decode( wp_remote_retrieve_body( $response ), true );
+					$thumbnail = array(
+						'large'  => $thumbnail[0]['thumbnail_large'] ?? null,
+						'medium' => $thumbnail[0]['thumbnail_medium'] ?? null,
+						'small'  => $thumbnail[0]['thumbnail_small'] ?? null,
+					);
+				}
 
-			$_url[] = [
-				'provider'  => $provider,
-				'url'       => $video_url,
-				'video_id'  => $video_id,
-				'thumbnail' => $thumbnail,
-			];
+				$_url[] = array(
+					'provider'  => $provider,
+					'url'       => $video_url,
+					'video_id'  => $video_id,
+					'thumbnail' => $thumbnail,
+				);
+			}
 		}
 
 		return $_url;

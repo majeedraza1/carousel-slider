@@ -3,7 +3,6 @@
 namespace CarouselSlider\Supports\SettingApi;
 
 use CarouselSlider\Supports\Sanitize;
-use CarouselSlider\Supports\Validate;
 use WP_Error;
 
 defined( 'ABSPATH' ) || exit;
@@ -31,35 +30,35 @@ class SettingApi {
 	 *
 	 * @var array
 	 */
-	protected $options = [];
+	protected $options = array();
 
 	/**
 	 * Settings menu fields array
 	 *
 	 * @var array
 	 */
-	protected $menu_fields = [];
+	protected $menu_fields = array();
 
 	/**
 	 * Settings fields array
 	 *
 	 * @var array
 	 */
-	protected $fields = [];
+	protected $fields = array();
 
 	/**
 	 * Settings tabs array
 	 *
 	 * @var array
 	 */
-	protected $panels = [];
+	protected $panels = array();
 
 	/**
 	 * The setting sections
 	 *
 	 * @var array
 	 */
-	protected $sections = [];
+	protected $sections = array();
 
 	/**
 	 * Option name
@@ -86,7 +85,7 @@ class SettingApi {
 	 *
 	 * This method is accessible outside the class for creating menu
 	 *
-	 * @param array $menu_fields The setting arguments.
+	 * @param  array $menu_fields  The setting arguments.
 	 *
 	 * @return WP_Error|SettingApi
 	 */
@@ -107,7 +106,7 @@ class SettingApi {
 	/**
 	 * Sanitize options values
 	 *
-	 * @param array $input The setting arguments.
+	 * @param  array $input  The setting arguments.
 	 *
 	 * @return array
 	 */
@@ -140,8 +139,8 @@ class SettingApi {
 	/**
 	 * Validate the option's value
 	 *
-	 * @param mixed  $value The value.
-	 * @param string $type The input field type.
+	 * @param  mixed  $value  The value.
+	 * @param  string $type  The input field type.
 	 *
 	 * @return string|numeric
 	 */
@@ -203,8 +202,8 @@ class SettingApi {
 	/**
 	 * Update options
 	 *
-	 * @param array $options The options.
-	 * @param bool  $sanitize If it should sanitize options.
+	 * @param  array $options  The options.
+	 * @param  bool  $sanitize  If it should sanitize options.
 	 */
 	public function update_options( array $options, bool $sanitize = true ) {
 		if ( $sanitize ) {
@@ -222,7 +221,7 @@ class SettingApi {
 		$panels = apply_filters( 'carousel_slider/settings/panels', $this->panels );
 
 		// Sort by priority.
-		usort( $panels, [ $this, 'sort_by_priority' ] );
+		usort( $panels, array( $this, 'sort_by_priority' ) );
 
 		return $panels;
 	}
@@ -230,7 +229,7 @@ class SettingApi {
 	/**
 	 * Set panels
 	 *
-	 * @param array $panels The setting arguments.
+	 * @param  array $panels  The setting arguments.
 	 *
 	 * @return self
 	 */
@@ -251,7 +250,7 @@ class SettingApi {
 		$sections = apply_filters( 'carousel_slider/settings/sections', $this->sections );
 
 		// Sort by priority.
-		usort( $sections, [ $this, 'sort_by_priority' ] );
+		usort( $sections, array( $this, 'sort_by_priority' ) );
 
 		return $sections;
 	}
@@ -259,7 +258,7 @@ class SettingApi {
 	/**
 	 * Set sections
 	 *
-	 * @param array $sections The setting arguments.
+	 * @param  array $sections  The setting arguments.
 	 *
 	 * @return self
 	 */
@@ -280,7 +279,7 @@ class SettingApi {
 		$fields = apply_filters( 'carousel_slider/settings/fields', $this->fields );
 
 		// Sort by priority.
-		usort( $fields, [ $this, 'sort_by_priority' ] );
+		usort( $fields, array( $this, 'sort_by_priority' ) );
 
 		return $fields;
 	}
@@ -288,7 +287,7 @@ class SettingApi {
 	/**
 	 * Set fields
 	 *
-	 * @param array $fields The setting arguments.
+	 * @param  array $fields  The setting arguments.
 	 *
 	 * @return self
 	 */
@@ -301,11 +300,29 @@ class SettingApi {
 	}
 
 	/**
+	 * Get panel by panel id
+	 *
+	 * @param  string $panel_id  The panel id.
+	 *
+	 * @return false|array
+	 */
+	public function get_panel( string $panel_id ) {
+		$current_panel = false;
+		foreach ( $this->panels as $panel ) {
+			if ( $panel_id === $panel['id'] ) {
+				$current_panel = $panel;
+			}
+		}
+
+		return $current_panel;
+	}
+
+	/**
 	 * Add setting page tab
 	 *
 	 * This method is accessible outside the class for creating page tab
 	 *
-	 * @param array $panel The setting arguments.
+	 * @param  array $panel  The setting arguments.
 	 *
 	 * @return self
 	 */
@@ -328,7 +345,7 @@ class SettingApi {
 	/**
 	 * Add Setting page section
 	 *
-	 * @param array $section The setting arguments.
+	 * @param  array $section  The setting arguments.
 	 *
 	 * @return self
 	 */
@@ -353,7 +370,7 @@ class SettingApi {
 	 * Add new settings field
 	 * This method is accessible outside the class for creating settings field
 	 *
-	 * @param array $field The setting arguments.
+	 * @param  array $field  The setting arguments.
 	 *
 	 * @return self
 	 */
@@ -378,8 +395,8 @@ class SettingApi {
 	/**
 	 * Sort array by its priority field
 	 *
-	 * @param array $array1 First array.
-	 * @param array $array2 Second array.
+	 * @param  array $array1  First array.
+	 * @param  array $array2  Second array.
 	 *
 	 * @return mixed
 	 */
@@ -403,7 +420,7 @@ class SettingApi {
 	/**
 	 * Set option name
 	 *
-	 * @param string $option_name The option name.
+	 * @param  string $option_name  The option name.
 	 *
 	 * @return SettingApi
 	 */

@@ -1,72 +1,78 @@
 @import "shapla-css/src/colors";
 
 .switch-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 
-	.switch-label {
-		display: inline-flex;
-	}
+  .switch-label {
+    display: inline-flex;
+  }
 
-	.switch {
-		border: 1px solid #b4b9be;
-		display: inline-block;
-		width: 35px;
-		height: 12px;
-		border-radius: 8px;
-		background: #b4b9be;
-		vertical-align: middle;
-		position: relative;
-		top: 4px;
-		cursor: pointer;
-		user-select: none;
-		transition: background 350ms ease;
-		text-indent: -999999px;
+  .switch-label-text {
+    margin-left: .5rem;
+  }
 
-		&:after,
-		&:before {
-			content: "";
-			display: block;
-			width: 20px;
-			height: 20px;
-			border-radius: 50%;
-			position: absolute;
-			top: 50%;
-			left: -3px;
-			transition: all 350ms cubic-bezier(0, 0.95, 0.38, 0.98), background 150ms ease;
-		}
+  .switch {
+    border: 1px solid #b4b9be;
+    display: inline-block;
+    width: 35px;
+    height: 12px;
+    border-radius: 8px;
+    background: #b4b9be;
+    vertical-align: middle;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    transition: background 350ms ease;
+    text-indent: -999999px;
 
-		&:before {
-			background: rgba(0, 0, 0, 0.2);
-			transform: translate3d(0, -50%, 0) scale(0);
-		}
+    &:after,
+    &:before {
+      content: "";
+      display: block;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: -3px;
+      transition: all 350ms cubic-bezier(0, 0.95, 0.38, 0.98), background 150ms ease;
+    }
 
-		&:after {
-			background: #999;
-			border: 1px solid rgba(0, 0, 0, 0.1);
-			transform: translate3d(0, -50%, 0);
-		}
+    &:before {
+      background: rgba(0, 0, 0, 0.2);
+      transform: translate3d(0, -50%, 0) scale(0);
+    }
 
-		&:active:before {
-			transform: translate3d(0, -50%, 0) scale(3);
-		}
-	}
+    &:after {
+      background: #999;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      transform: translate3d(0, -50%, 0);
+    }
 
-	input[type="checkbox"],
-	input[type="checkbox"]:checked::before {
-		display: none !important;
-	}
+    &:active:before {
+      transform: translate3d(0, -50%, 0) scale(3);
+    }
+  }
 
-	input:checked + .switch:before {
-		background: rgba(0, 115, 170, 0.075);
-		transform: translate3d(100%, -50%, 0) scale(1);
-	}
+  input[type="checkbox"],
+  input[type="checkbox"]:checked::before {
+    display: none !important;
+  }
 
-	input:checked + .switch:after {
-		background: $primary;
-		transform: translate3d(100%, -50%, 0);
-	}
+  input:checked + .switch:before {
+    background: rgba(0, 115, 170, 0.075);
+    transform: translate3d(100%, -50%, 0) scale(1);
+  }
 
-	input:checked + .switch:active:before {
-		background: rgba(0, 115, 170, 0.075);
-		transform: translate3d(100%, -50%, 0) scale(3);
-	}
+  input:checked + .switch:after {
+    background: $primary;
+    transform: translate3d(100%, -50%, 0);
+  }
+
+  input:checked + .switch:active:before {
+    background: rgba(0, 115, 170, 0.075);
+    transform: translate3d(100%, -50%, 0) scale(3);
+  }
 }

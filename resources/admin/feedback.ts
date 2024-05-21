@@ -23,11 +23,6 @@ const sendRequest = (body: any = null) => {
 }
 
 skipBtnLink.addEventListener('click', () => {
-	let formData = new FormData(form);
-	formData.append('reason_key', 'skip_and_deactivate');
-	sendRequest(formData).then(() => {
-		// Nothing to do here.
-	});
 	dialog.removeAttribute('open');
 });
 

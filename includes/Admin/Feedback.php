@@ -36,17 +36,17 @@ class Feedback {
 						return;
 					}
 
-					add_action( 'admin_enqueue_scripts', [ self::$instance, 'enqueue_feedback_dialog_scripts' ] );
+					add_action( 'admin_enqueue_scripts', array( self::$instance, 'enqueue_feedback_dialog_scripts' ) );
 				}
 			);
 
-			add_action( 'wp_ajax_carousel_slider_deactivate_feedback', [ self::$instance, 'deactivate_feedback' ] );
-			add_action( 'wp_ajax_carousel_slider_tracker_consent', [ self::$instance, 'handle_optin_optout' ] );
+			add_action( 'wp_ajax_carousel_slider_deactivate_feedback', array( self::$instance, 'deactivate_feedback' ) );
+			add_action( 'wp_ajax_carousel_slider_tracker_consent', array( self::$instance, 'handle_optin_optout' ) );
 
-			add_action( 'admin_notices', [ self::$instance, 'admin_notice' ] );
+			add_action( 'admin_notices', array( self::$instance, 'admin_notice' ) );
 
-			add_filter( 'cron_schedules', [ self::$instance, 'add_weekly_schedule' ] );
-			add_action( 'carousel_slider_tracker_send_event', [ self::$instance, 'send_tracking_data' ] );
+			add_filter( 'cron_schedules', array( self::$instance, 'add_weekly_schedule' ) );
+			add_action( 'carousel_slider_tracker_send_event', array( self::$instance, 'send_tracking_data' ) );
 		}
 
 		return self::$instance;
@@ -77,7 +77,7 @@ class Feedback {
 	 * @since 2.1.0
 	 */
 	private function is_plugins_screen(): bool {
-		return in_array( get_current_screen()->id, [ 'plugins', 'plugins-network' ], true );
+		return in_array( get_current_screen()->id, array( 'plugins', 'plugins-network' ), true );
 	}
 
 	/**
@@ -112,10 +112,10 @@ class Feedback {
 		Api::send_deactivation_feedback( $reason_key, $reason_text );
 
 		wp_send_json_success(
-			[
+			array(
 				'reason_key'  => $reason_key,
 				'reason_text' => $reason_text,
-			]
+			)
 		);
 	}
 
@@ -127,12 +127,12 @@ class Feedback {
 	 * @since 2.1.0
 	 */
 	public function enqueue_feedback_dialog_scripts() {
-		add_action( 'admin_footer', [ $this, 'print_deactivate_feedback_dialog' ] );
+		add_action( 'admin_footer', array( $this, 'print_deactivate_feedback_dialog' ) );
 
 		wp_register_script(
 			'carousel-slider-admin-feedback',
 			CAROUSEL_SLIDER_ASSETS . '/js/admin-feedback.js',
-			[],
+			array(),
 			CAROUSEL_SLIDER_VERSION,
 			true
 		);
@@ -151,46 +151,46 @@ class Feedback {
 	 * @access public
 	 */
 	public function print_deactivate_feedback_dialog() {
-		$deactivate_reasons = [
-			'no_longer_needed'       => [
+		$deactivate_reasons = array(
+			'no_longer_needed'       => array(
 				'title'             => esc_html__( 'I no longer need the plugin', 'carousel-slider' ),
 				'input_placeholder' => esc_html__( 'Please share the reason', 'carousel-slider' ),
-			],
-			'found_a_better_plugin'  => [
+			),
+			'found_a_better_plugin'  => array(
 				'title'             => esc_html__( 'I found a better plugin', 'carousel-slider' ),
 				'input_placeholder' => esc_html__( 'Please share which plugin', 'carousel-slider' ),
-			],
-			'not_working'            => [
+			),
+			'not_working'            => array(
 				'title'             => esc_html__( 'I couldn\'t get the plugin to work', 'carousel-slider' ),
 				'input_placeholder' => esc_html__(
 					'Could you tell us a bit more whats not working?',
 					'carousel-slider'
 				),
-			],
-			'missing_a_feature'      => [
+			),
+			'missing_a_feature'      => array(
 				'title'             => esc_html__( 'Missing a specific feature', 'carousel-slider' ),
 				'input_placeholder' => esc_html__( 'Could you tell us more about that feature?', 'carousel-slider' ),
-			],
-			'temporary_deactivation' => [
+			),
+			'temporary_deactivation' => array(
 				'title'             => esc_html__( 'It\'s a temporary deactivation', 'carousel-slider' ),
 				'input_placeholder' => esc_html__( 'Are you facing any problem?', 'carousel-slider' ),
-			],
-			'carousel_slider_pro'    => [
+			),
+			'carousel_slider_pro'    => array(
 				'title' => esc_html__( 'I have Carousel Slider Pro', 'carousel-slider' ),
 				'alert' => esc_html__(
 					'Wait! Don\'t deactivate Carousel Slider. You have to activate both Carousel Slider and Carousel Slider Pro in order for the plugin to work.',
 					'carousel-slider'
 				),
-			],
-			'other'                  => [
+			),
+			'other'                  => array(
 				'title'             => esc_html__( 'Other', 'carousel-slider' ),
 				'input_placeholder' => esc_html__( 'Please share the reason', 'carousel-slider' ),
-			],
-		];
+			),
+		);
 
 		?>
 		<shapla-dialog type="card" heading="<?php echo esc_html__( 'Quick Feedback', 'carousel-slider' ); ?>"
-					   class="feedback-dialog" id="carousel-slider-deactivate-feedback-dialog-wrapper">
+						class="feedback-dialog" id="carousel-slider-deactivate-feedback-dialog-wrapper">
 			<div class="feedback-dialog__body">
 				<form id="carousel-slider-deactivate-feedback-dialog-form" class="feedback-dialog__form" method="post">
 					<?php
@@ -210,11 +210,11 @@ class Feedback {
 						<?php foreach ( $deactivate_reasons as $reason_key => $reason ) : ?>
 							<div class="feedback-dialog__form-control">
 								<input type="radio" name="reason_key"
-									   id="elementor-deactivate-feedback-<?php echo esc_attr( $reason_key ); ?>"
-									   class="feedback-dialog__form-input"
-									   value="<?php echo esc_attr( $reason_key ); ?>"/>
+										id="elementor-deactivate-feedback-<?php echo esc_attr( $reason_key ); ?>"
+										class="feedback-dialog__form-input"
+										value="<?php echo esc_attr( $reason_key ); ?>"/>
 								<label for="elementor-deactivate-feedback-<?php echo esc_attr( $reason_key ); ?>"
-									   class="feedback-dialog__form-label"><?php echo esc_html( $reason['title'] ); ?></label>
+										class="feedback-dialog__form-label"><?php echo esc_html( $reason['title'] ); ?></label>
 								<?php if ( ! empty( $reason['input_placeholder'] ) ) : ?>
 									<textarea
 											class="carousel-slider-feedback-text"
@@ -257,7 +257,7 @@ class Feedback {
 	 *
 	 * @return string
 	 */
-	public static function get_consent_url( array $args = [] ): string {
+	public static function get_consent_url( array $args = array() ): string {
 		$args['action'] = 'carousel_slider_tracker_consent';
 
 		return wp_nonce_url(
@@ -299,8 +299,8 @@ class Feedback {
 		) . '. No sensitive data is tracked. ';
 		$message .= '<a href="' . Api::PRIVACY_URL . '" target="_blank">Learn more</a> about how Carousel Slider collects and handle your data.</p>';
 
-		$optin_url  = static::get_consent_url( [ 'carousel_slider_tracker_optin' => 'true' ] );
-		$optout_url = static::get_consent_url( [ 'carousel_slider_tracker_optout' => 'true' ] );
+		$optin_url  = static::get_consent_url( array( 'carousel_slider_tracker_optin' => 'true' ) );
+		$optout_url = static::get_consent_url( array( 'carousel_slider_tracker_optout' => 'true' ) );
 
 		$html  = '<div class="updated"><p>';
 		$html .= $message;
@@ -334,22 +334,23 @@ class Feedback {
 	public function handle_optin_optout() {
 		if (
 			current_user_can( 'manage_options' ) &&
-			isset( $_GET['_token'] ) &&
-			wp_verify_nonce( $_GET['_token'], 'carousel_slider_tracker' )
+			isset( $_REQUEST['_token'] ) &&
+			wp_verify_nonce( $_REQUEST['_token'], 'carousel_slider_tracker' )
 		) {
-			if ( isset( $_GET['carousel_slider_tracker_optin'] ) && 'true' === $_GET['carousel_slider_tracker_optin'] ) {
+			if ( isset( $_REQUEST['carousel_slider_tracker_optin'] ) && 'true' === $_REQUEST['carousel_slider_tracker_optin'] ) {
 				$this->optin();
-
-				wp_safe_redirect( admin_url() );
-				exit;
 			}
 
-			if ( isset( $_GET['carousel_slider_tracker_optout'] ) && 'true' === $_GET['carousel_slider_tracker_optout'] ) {
+			if ( isset( $_REQUEST['carousel_slider_tracker_optout'] ) && 'true' === $_REQUEST['carousel_slider_tracker_optout'] ) {
 				$this->optout();
-
-				wp_safe_redirect( admin_url() );
-				exit;
 			}
+
+			if ( 'application/json' === $_SERVER['HTTP_ACCEPT'] ?? '' ) {
+				wp_send_json_success( array( 'tracking_allowed' => $this->tracking_allowed() ) );
+			}
+			wp_safe_redirect( admin_url() );
+			exit;
+
 		}
 	}
 
@@ -383,7 +384,7 @@ class Feedback {
 	 * @return array
 	 */
 	protected function data_we_collect(): array {
-		return [
+		return array(
 			'Server environment details (php, mysql, server, WordPress versions)',
 			'Number of users in your site',
 			'Site language',
@@ -391,7 +392,7 @@ class Feedback {
 			'Configuration of carousel slider',
 			'Site name and url',
 			'Your name and email address',
-		];
+		);
 	}
 
 	/**

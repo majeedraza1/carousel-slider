@@ -23,10 +23,7 @@ class View extends AbstractView {
 		$setting   = $this->get_slider_setting();
 		$slider_id = $this->get_slider_id();
 		$urls      = get_post_meta( $slider_id, '_video_url', true );
-		if ( is_string( $urls ) ) {
-			$urls = array_filter( explode( ',', $urls ) );
-		}
-		$urls = VideoCarouselHelper::get_video_url( $urls );
+		$urls      = VideoCarouselHelper::get_video_url( $urls );
 
 		$template = new TemplateParserBase( $setting );
 		$template->set_template( 'loop/video-carousel.php' );

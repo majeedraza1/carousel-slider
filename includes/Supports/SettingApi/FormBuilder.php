@@ -10,6 +10,7 @@ use CarouselSlider\Supports\FormFields\ButtonGroup;
 use CarouselSlider\Supports\FormFields\Checkbox;
 use CarouselSlider\Supports\FormFields\CheckboxSwitch;
 use CarouselSlider\Supports\FormFields\Color;
+use CarouselSlider\Supports\FormFields\DataSharing;
 use CarouselSlider\Supports\FormFields\ImagesGallery;
 use CarouselSlider\Supports\FormFields\ImageUploader;
 use CarouselSlider\Supports\FormFields\ImageUrl;
@@ -55,7 +56,7 @@ class FormBuilder implements FormBuilderInterface {
 	/**
 	 * Set field settings
 	 *
-	 * @param array $settings The settings arguments.
+	 * @param  array  $settings  The settings arguments.
 	 *
 	 * @return void
 	 */
@@ -66,7 +67,7 @@ class FormBuilder implements FormBuilderInterface {
 	/**
 	 * Set option name
 	 *
-	 * @param string $option_name The option name.
+	 * @param  string  $option_name  The option name.
 	 *
 	 * @return void
 	 */
@@ -77,7 +78,7 @@ class FormBuilder implements FormBuilderInterface {
 	/**
 	 * Set fields values
 	 *
-	 * @param array $values The values.
+	 * @param  array  $values  The values.
 	 *
 	 * @return void
 	 */
@@ -104,17 +105,18 @@ class FormBuilder implements FormBuilderInterface {
 
 			$table .= '<tr>';
 			if ( ! empty( $field['title'] ) ) {
-				$table .= sprintf( '<th scope="row"><label for="%1$s">%2$s</label></th>', $field['id'], $field['title'] );
+				$table .= sprintf( '<th scope="row"><label for="%1$s">%2$s</label></th>', $field['id'],
+					$field['title'] );
 			}
 			$table .= '<td>';
 
-			$field_class->set_settings( $this->map_field_settings( $field ) );
+			$field_class->set_settings( $field );
 			$field_class->set_name( $name );
 			$field_class->set_value( $value );
 			$table .= $field_class->render();
 
 			if ( ! empty( $field['description'] ) ) {
-				$desc   = is_array( $field['description'] ) ?
+				$desc  = is_array( $field['description'] ) ?
 					implode( '<br>', $field['description'] ) :
 					$field['description'];
 				$table .= sprintf( '<p class="description">%s</p>', $desc );
@@ -131,9 +133,9 @@ class FormBuilder implements FormBuilderInterface {
 	/**
 	 * Settings fields
 	 *
-	 * @param array  $fields The fields settings.
-	 * @param string $option_name The option name.
-	 * @param array  $values The values.
+	 * @param  array  $fields  The fields settings.
+	 * @param  string  $option_name  The option name.
+	 * @param  array  $values  The values.
 	 *
 	 * @return string
 	 */
@@ -148,7 +150,7 @@ class FormBuilder implements FormBuilderInterface {
 	/**
 	 * Get field class
 	 *
-	 * @param string $type The field type.
+	 * @param  string  $type  The field type.
 	 *
 	 * @return BaseField|FieldInterface|null
 	 */
@@ -173,6 +175,7 @@ class FormBuilder implements FormBuilderInterface {
 				'radio'          => Radio::class,
 				'switch'         => CheckboxSwitch::class,
 				'breakpoint'     => Breakpoint::class,
+				'data_sharing'   => DataSharing::class,
 			]
 		);
 
@@ -181,31 +184,5 @@ class FormBuilder implements FormBuilderInterface {
 		}
 
 		return new $types['text']();
-	}
-
-	/**
-	 * Map field settings.
-	 *
-	 * @param array $settings The settings.
-	 *
-	 * @return array
-	 */
-	private function map_field_settings( array $settings ): array {
-		$attrs = [
-			'name'    => 'label',
-			'title'   => 'label',
-			'desc'    => 'description',
-			'class'   => 'field_class',
-			'options' => 'choices',
-			'std'     => 'default',
-		];
-		foreach ( $settings as $key => $value ) {
-			if ( isset( $attrs[ $key ] ) ) {
-				$settings[ $attrs[ $key ] ] = $value;
-				unset( $settings[ $key ] );
-			}
-		}
-
-		return $settings;
 	}
 }

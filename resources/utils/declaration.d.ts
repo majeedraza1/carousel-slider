@@ -11,6 +11,7 @@ declare global {
 			sliderTypes: SliderTypeInfoInterface[];
 			restRoot: string;
 			restNonce: string;
+			ajaxUrl: string;
 		};
 		i18nCarouselSliderBlock: {
 			sliders: (Record<string, any>)[],

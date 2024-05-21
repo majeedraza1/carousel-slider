@@ -10,6 +10,7 @@ import '@/admin/carousels/image-carousel-url.js';
 import '@/admin/carousels/post-carousel.js';
 import '@/admin/carousels/product-carousel.js';
 import '@/admin/add-new.ts';
+import '@/admin/input-data-sharing.ts';
 
 let elements = document.querySelectorAll(".cs-tooltip");
 if (elements.length) {
