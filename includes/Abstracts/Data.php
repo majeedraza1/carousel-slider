@@ -86,16 +86,16 @@ class Data implements ArrayAccess, JsonSerializable {
 	 * Get collection item for key
 	 *
 	 * @param string $key The data key.
-	 * @param mixed  $default The default value to return if data key does not exist.
+	 * @param mixed  $default_value The default value to return if data key does not exist.
 	 *
 	 * @return mixed The key's value, or the default value
 	 */
-	public function get_prop( string $key, $default = '' ) {
+	public function get_prop( string $key, $default_value = '' ) {
 		if ( $this->has_prop( $key ) ) {
 			return $this->data[ $key ];
 		}
 
-		return $default;
+		return $default_value;
 	}
 
 	/**

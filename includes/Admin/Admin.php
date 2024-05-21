@@ -64,7 +64,7 @@ class Admin {
 	/**
 	 * Add custom links on plugins page.
 	 *
-	 * @param array $links An array of plugin action links.
+	 * @param  array $links  An array of plugin action links.
 	 *
 	 * @return array
 	 */
@@ -78,7 +78,10 @@ class Admin {
 		if ( ! Helper::is_pro_active() ) {
 			if ( Helper::show_pro_features() ) {
 				$pro_links = [
-					'<a href="' . Api::GO_PRO_URL . '" target="_blank" class="carousel-slider-plugins-gopro">' . __( 'Go Pro', 'carousel-slider' ) . '</a>',
+					'<a href="' . Api::GO_PRO_URL . '" target="_blank" class="carousel-slider-plugins-gopro">' . __(
+						'Go Pro',
+						'carousel-slider'
+					) . '</a>',
 				];
 			}
 		}
@@ -89,16 +92,22 @@ class Admin {
 	/**
 	 * Filters the array of row meta for the plugin in the Plugins list table.
 	 *
-	 * @param string[] $plugin_meta An array of the plugin's metadata, including
-	 *                              the version, author, author URI, and plugin URI.
-	 * @param string   $plugin_file Path to the plugin file relative to the plugins directory.
+	 * @param  string[] $plugin_meta  An array of the plugin's metadata, including
+	 *                             the version, author, author URI, and plugin URI.
+	 * @param  string   $plugin_file  Path to the plugin file relative to the plugins directory.
 	 *
 	 * @return array
 	 */
 	public function plugin_row_meta( $plugin_meta, $plugin_file ) {
 		if ( plugin_basename( CAROUSEL_SLIDER_FILE ) === $plugin_file ) {
-			$plugin_meta[] = '<a href="' . Api::FREE_SUPPORT_URL . '" target="_blank">' . __( 'Community support', 'carousel-slider' ) . '</a>';
-			$plugin_meta[] = '<a href="' . Api::PRO_SUPPORT_URL . '" target="_blank">' . __( 'Pro Support', 'carousel-slider' ) . '</a>';
+			$plugin_meta[] = '<a href="' . Api::FREE_SUPPORT_URL . '" target="_blank">' . __(
+				'Community support',
+				'carousel-slider'
+			) . '</a>';
+			$plugin_meta[] = '<a href="' . Api::PRO_SUPPORT_URL . '" target="_blank">' . __(
+				'Pro Support',
+				'carousel-slider'
+			) . '</a>';
 		}
 
 		return $plugin_meta;
@@ -107,8 +116,8 @@ class Admin {
 	/**
 	 * Modify preview post link for carousel slider
 	 *
-	 * @param string  $preview_link The preview link.
-	 * @param WP_Post $post The WP_Post object.
+	 * @param  string  $preview_link  The preview link.
+	 * @param  WP_Post $post  The WP_Post object.
 	 *
 	 * @return string
 	 */
@@ -137,8 +146,8 @@ class Admin {
 	/**
 	 * Generate carousel slider list table content for each custom column
 	 *
-	 * @param string $column_name The name of the column to display.
-	 * @param int    $post_id The current post ID.
+	 * @param  string $column_name  The name of the column to display.
+	 * @param  int    $post_id  The current post ID.
 	 *
 	 * @return void
 	 */
@@ -152,13 +161,13 @@ class Admin {
 					Copy shortcode
 				</label>
 				<input
-					id="carousel_slider_usage_<?php echo esc_attr( $post_id ); ?>"
-					type="text"
-					onmousedown="this.clicked = 1;"
-					onfocus="if (!this.clicked) this.select(); else this.clicked = 2;"
-					onclick="if (this.clicked === 2) this.select(); this.clicked = 0;"
-					value="[carousel_slide id='<?php echo esc_attr( $post_id ); ?>']"
-					style="background-color: #f1f1f1;min-width: 250px;padding: 5px 8px;"
+						id="carousel_slider_usage_<?php echo esc_attr( $post_id ); ?>"
+						type="text"
+						onmousedown="this.clicked = 1;"
+						onfocus="if (!this.clicked) this.select(); else this.clicked = 2;"
+						onclick="if (this.clicked === 2) this.select(); this.clicked = 0;"
+						value="[carousel_slide id='<?php echo esc_attr( $post_id ); ?>']"
+						style="background-color: #f1f1f1;min-width: 250px;padding: 5px 8px;"
 				>
 				<?php
 				break;
@@ -176,8 +185,8 @@ class Admin {
 	/**
 	 * Hide view and quick edit from carousel slider admin
 	 *
-	 * @param array   $actions The post row actions list.
-	 * @param WP_Post $post The WP_Post object.
+	 * @param  array   $actions  The post row actions list.
+	 * @param  WP_Post $post  The WP_Post object.
 	 *
 	 * @return array
 	 */
@@ -187,7 +196,10 @@ class Admin {
 		}
 
 		$view_url        = Helper::get_preview_link( $post );
-		$actions['view'] = '<a href="' . $view_url . '" target="_blank">' . esc_html__( 'Preview', 'carousel-slider' ) . '</a>';
+		$actions['view'] = '<a href="' . $view_url . '" target="_blank">' . esc_html__(
+			'Preview',
+			'carousel-slider'
+		) . '</a>';
 
 		unset( $actions['inline hide-if-no-js'] );
 
@@ -197,7 +209,7 @@ class Admin {
 	/**
 	 * Load admin scripts
 	 *
-	 * @param string|mixed $hook Page hook.
+	 * @param  string|mixed $hook  Page hook.
 	 */
 	public function admin_scripts( $hook ) {
 		global $post;
@@ -230,6 +242,10 @@ class Admin {
 				'addNew'        => esc_html__( 'Add New Item', 'carousel-slider' ),
 				'moveCurrent'   => esc_html__( 'Move Current Item', 'carousel-slider' ),
 				'deleteCurrent' => esc_html__( 'Delete Current Item', 'carousel-slider' ),
+				'videoCarousel' => [
+					'YoutubeOrVimeoURL'  => esc_html__( 'Youtube or Vimeo URL', 'carousel-slider' ),
+					'AreYouSureToDelete' => esc_html__( 'Are you sure to delete?', 'carousel-slider' ),
+				],
 			]
 		);
 	}
@@ -287,7 +303,10 @@ class Admin {
 			],
 		];
 		$html  = '<div class="wrap">';
-		$html .= '<h1 class="wp-heading">' . esc_html__( 'Carousel Slider Documentation', 'carousel-slider' ) . '</h1>';
+		$html .= '<h1 class="wp-heading">' . esc_html__(
+			'Carousel Slider Documentation',
+			'carousel-slider'
+		) . '</h1>';
 		$html .= '<div class="clear"></div>';
 		$html .= '<div class="postbox"><div class="inside">';
 		$html .= '<div class="carousel_slider_columns">';
@@ -316,7 +335,7 @@ class Admin {
 	/**
 	 * Add custom footer text on plugins page.
 	 *
-	 * @param string|null $text The custom admin footer text.
+	 * @param  string|null $text  The custom admin footer text.
 	 *
 	 * @return string|null Admin footer text
 	 */
@@ -325,7 +344,10 @@ class Admin {
 
 		$footer_text = sprintf(
 		/* translators: 1: plugin review page link */
-			__( 'If you like <strong>Carousel Slider</strong> please leave us a %s rating. A huge thanks in advance!', 'carousel-slider' ),
+			__(
+				'If you like <strong>Carousel Slider</strong> please leave us a %s rating. A huge thanks in advance!',
+				'carousel-slider'
+			),
 			'<a href="https://wordpress.org/support/view/plugin-reviews/carousel-slider?filter=5#postform" target="_blank" data-rated="Thanks :)">&starf;&starf;&starf;&starf;&starf;</a>'
 		);
 
@@ -351,7 +373,10 @@ class Admin {
 		add_submenu_page(
 			'edit.php?post_type=carousels',
 			'',
-			'<span class="dashicons dashicons-star-filled" style="font-size: 17px"></span> ' . esc_html__( 'Go Pro', 'carousel-slider' ),
+			'<span class="dashicons dashicons-star-filled" style="font-size: 17px"></span> ' . esc_html__(
+				'Go Pro',
+				'carousel-slider'
+			),
 			'manage_options',
 			'go_carousel_slider_pro',
 			[ $this, 'handle_external_redirects' ]

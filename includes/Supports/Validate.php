@@ -35,15 +35,15 @@ class Validate {
 	/**
 	 * Check if value is json
 	 *
-	 * @param mixed $string The value to be checked.
+	 * @param mixed $value The value to be checked.
 	 *
 	 * @return bool
 	 */
-	public static function json( $string ): bool {
-		if ( ! is_string( $string ) ) {
+	public static function json( $value ): bool {
+		if ( ! is_string( $value ) ) {
 			return false;
 		}
-		json_decode( $string );
+		json_decode( $value );
 
 		return ( json_last_error() === JSON_ERROR_NONE );
 	}

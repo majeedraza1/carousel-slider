@@ -280,8 +280,8 @@ class Feedback {
 			return;
 		}
 
-		/* translators: 1 - Plugin name */
 		$message = sprintf(
+			/* translators: 1 - Plugin name */
 			__(
 				'Want to help make <strong>%1$s</strong> even more awesome? Allow %1$s to collect non-sensitive diagnostic data and usage information.',
 				'carousel-slider'

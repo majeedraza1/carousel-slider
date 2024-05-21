@@ -50,7 +50,7 @@ class DefaultSettingApi extends SettingApi {
 	/**
 	 * Sanitize each setting field as needed
 	 *
-	 * @param  array|mixed  $input  Contains all settings fields as array keys.
+	 * @param  array|mixed $input  Contains all settings fields as array keys.
 	 *
 	 * @return array
 	 */
@@ -105,34 +105,38 @@ class DefaultSettingApi extends SettingApi {
 			$hide_submit_button = isset( $panel_setting['hide_submit_button'] ) && $panel_setting['hide_submit_button'];
 		}
 		ob_start(); ?>
-        <div class="wrap">
-            <h1><?php echo esc_html( $this->menu_fields['page_title'] ); ?></h1>
-            <hr class="wp-header-end">
+		<div class="wrap">
+			<h1><?php echo esc_html( $this->menu_fields['page_title'] ); ?></h1>
+			<hr class="wp-header-end">
 			<?php if ( ! empty( $this->menu_fields['about_text'] ) ) { ?>
-                <div class="about-text"><?php echo esc_html( $this->menu_fields['about_text'] ); ?></div>
+				<div class="about-text"><?php echo esc_html( $this->menu_fields['about_text'] ); ?></div>
 			<?php } ?>
 			<?php
 			if ( $this->has_panels() ) {
 				Helper::print_unescaped_internal_string( $this->option_page_tabs() );
 			}
 			?>
-            <form autocomplete="off" method="POST" action="<?php echo esc_attr( $this->action ); ?>">
+			<form autocomplete="off" method="POST" action="<?php echo esc_attr( $this->action ); ?>">
 				<?php
 				settings_fields( $option_name );
 				if ( $has_sections ) {
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					echo $this->get_fields_html_by_section( $sections, $panel );
+					$html = $this->get_fields_html_by_section( $sections, $panel );
 				} else {
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-					echo $this->get_form_builder()->get_fields_html( $this->filter_fields_by_tab(), $option_name,
-						$options );
+					$html = $this->get_form_builder()->get_fields_html(
+						$this->filter_fields_by_tab(),
+						$option_name,
+						$options
+					);
 				}
+				Helper::print_unescaped_internal_string( $html );
 				if ( false === $hide_submit_button ) {
 					submit_button();
 				}
 				?>
-            </form>
-        </div>
+			</form>
+		</div>
 		<?php
 		echo ob_get_clean(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
@@ -140,8 +144,8 @@ class DefaultSettingApi extends SettingApi {
 	/**
 	 * Get fields HTML by section
 	 *
-	 * @param  array  $sections  Array of section.
-	 * @param  string|null  $panel  Panel id.
+	 * @param  array       $sections  Array of section.
+	 * @param  string|null $panel  Panel id.
 	 *
 	 * @return string
 	 */
@@ -159,7 +163,7 @@ class DefaultSettingApi extends SettingApi {
 			}
 
 			$fields = $this->get_fields_by( $section['id'], $panel );
-			$table  .= $this->get_form_builder()->get_fields_html( $fields, $option_name, $options );
+			$table .= $this->get_form_builder()->get_fields_html( $fields, $option_name, $options );
 		}
 
 		return $table;
@@ -191,7 +195,7 @@ class DefaultSettingApi extends SettingApi {
 					admin_url( $this->menu_fields['parent_slug'] )
 				)
 			);
-			$html     .= '<a class="nav-tab' . $class . '" href="' . $page_url . '">' . $tab['title'] . '</a>';
+			$html    .= '<a class="nav-tab' . $class . '" href="' . $page_url . '">' . $tab['title'] . '</a>';
 		}
 		$html .= '</h2>';
 
@@ -201,7 +205,7 @@ class DefaultSettingApi extends SettingApi {
 	/**
 	 * Filter settings fields by page tab
 	 *
-	 * @param  string|null  $current_tab  The current tab slug.
+	 * @param  string|null $current_tab  The current tab slug.
 	 *
 	 * @return array
 	 */
@@ -221,7 +225,7 @@ class DefaultSettingApi extends SettingApi {
 	/**
 	 * Add new field
 	 *
-	 * @param  array  $field  The field settings.
+	 * @param  array $field  The field settings.
 	 */
 	public function add_field( array $field ) {
 		$this->set_field( $field );
@@ -248,7 +252,7 @@ class DefaultSettingApi extends SettingApi {
 	/**
 	 * Get sections for current panel
 	 *
-	 * @param  string  $panel  The panel slug.
+	 * @param  string $panel  The panel slug.
 	 *
 	 * @return array
 	 */
@@ -270,8 +274,8 @@ class DefaultSettingApi extends SettingApi {
 	/**
 	 * Get field for current section
 	 *
-	 * @param  string|null  $section  The section slug.
-	 * @param  string|null  $panel  The panel slug.
+	 * @param  string|null $section  The section slug.
+	 * @param  string|null $panel  The panel slug.
 	 *
 	 * @return array
 	 */
@@ -296,7 +300,7 @@ class DefaultSettingApi extends SettingApi {
 	/**
 	 * Filter settings fields by page tab
 	 *
-	 * @param  string|null  $panel  The panel slug.
+	 * @param  string|null $panel  The panel slug.
 	 *
 	 * @return array
 	 */
@@ -332,7 +336,7 @@ class DefaultSettingApi extends SettingApi {
 	/**
 	 * Set form builder class
 	 *
-	 * @param  FormBuilderInterface  $form_builder  The form builder class.
+	 * @param  FormBuilderInterface $form_builder  The form builder class.
 	 */
 	public function set_form_builder( FormBuilderInterface $form_builder ) {
 		$this->form_builder = $form_builder;

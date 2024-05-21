@@ -25,7 +25,7 @@ class DataSharing extends BaseField {
 			'data-token' => wp_create_nonce( 'carousel_slider_tracker' ),
 		);
 
-		$html = '<div class="switch-container">';
+		$html  = '<div class="switch-container">';
 		$html .= '<input type="hidden" name="carousel_slider_allow_tracking" value="no">';
 		$html .= '<label for="carousel_slider_allow_tracking" class="switch-label">';
 		$html .= '<input ' . $this->array_to_attributes( $attributes ) . '>';

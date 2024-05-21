@@ -166,13 +166,13 @@ class MetaBoxConfig {
 				],
 			],
 			'slides_per_view'  => [
-				'section'        => 'section_general_settings',
-				'type'           => 'responsive_control',
-				'id'             => '_slides_per_view',
-				'label'          => esc_html__( 'Slides Per View', 'carousel-slider' ),
-				'description'    => esc_html__( 'Set number of slides to show per view. If you enable "Auto Width", this option will be disabled.', 'carousel-slider' ),
-				'device_choices' => [ 'xs', 'sm', 'md', 'lg', 'xl', '2xl' ],
-				'default'        => [
+				'section'           => 'section_general_settings',
+				'type'              => 'responsive_control',
+				'id'                => '_slides_per_view',
+				'label'             => esc_html__( 'Slides Per View', 'carousel-slider' ),
+				'description'       => esc_html__( 'Set number of slides to show per view. If you enable "Auto Width", this option will be disabled.', 'carousel-slider' ),
+				'device_choices'    => [ 'xs', 'sm', 'md', 'lg', 'xl', '2xl' ],
+				'default'           => [
 					'xs'  => 1,
 					'sm'  => 2,
 					'md'  => 2,
@@ -180,10 +180,10 @@ class MetaBoxConfig {
 					'xl'  => 4,
 					'2xl' => 5,
 				],
-				'condition'      => [
+				'condition'         => [
 					'_type_of_slider' => 'carousel',
 				],
-				'sanitize_callback'=> [ Sanitize::class, 'deep_int' ],
+				'sanitize_callback' => [ Sanitize::class, 'deep_int' ],
 			],
 			'slider_direction' => [
 				'section'     => 'section_general_settings',

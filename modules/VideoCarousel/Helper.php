@@ -74,9 +74,13 @@ class Helper {
 				$provider  = '';
 				$video_id  = '';
 				$thumbnail = '';
-				if ( false !== strpos( $video_url, 'youtube.com' ) ) {
+				if (
+					false !== strpos( $video_url, 'youtube.com' ) ||
+					false !== strpos( $video_url, 'youtu.be' )
+				) {
 					$provider  = 'youtube';
 					$video_id  = static::get_youtube_id_from_url( $video_url );
+					$video_url = sprintf( 'https://youtube.com/watch?v=%s', $video_id );
 					$thumbnail = array(
 						'large'  => 'https://img.youtube.com/vi/' . $video_id . '/hqdefault.jpg',
 						'medium' => 'https://img.youtube.com/vi/' . $video_id . '/mqdefault.jpg',

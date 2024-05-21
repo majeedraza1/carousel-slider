@@ -75,10 +75,10 @@ class TemplateParserBase implements TemplateParserInterface {
 	/**
 	 * Set object
 	 *
-	 * @param mixed $object The object to replace placeholder.
+	 * @param mixed $data_object The object to replace placeholder.
 	 */
-	public function set_object( $object ) {
-		$this->object = $object;
+	public function set_object( $data_object ) {
+		$this->object = $data_object;
 	}
 
 	/**
@@ -210,7 +210,7 @@ class TemplateParserBase implements TemplateParserInterface {
 				$value1 = str_replace( [ '"', "'" ], '', $value1 );
 				$value2 = str_replace( [ '"', "'" ], '', $value2 );
 
-				// phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
+				// phpcs:ignore Universal.Operators.StrictComparisons.LooseEqual
 				if ( '==' === $operator && $value1 == $value2 ) {
 					return $html;
 				}

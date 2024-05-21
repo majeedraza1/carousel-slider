@@ -64,7 +64,7 @@ class Template extends AbstractTemplate {
 	 * @return array
 	 */
 	protected static function get_content( int $index = 0, int $image_id = 0, array $args = array() ): array {
-		++ $index;
+		++$index;
 		$settings = [
 			// Slide Content.
 			'slide_heading'            => 'Slide Heading ' . $index,

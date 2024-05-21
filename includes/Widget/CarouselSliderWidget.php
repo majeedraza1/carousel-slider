@@ -67,7 +67,10 @@ class CarouselSliderWidget extends WP_Widget {
 	public function __construct() {
 		$widget_ops = array(
 			'classname'   => 'widget_carousel_slider',
-			'description' => __( 'The easiest way to create image, video, post and WooCommerce product carousel.', 'carousel-slider' ),
+			'description' => __(
+				'The easiest way to create image, video, post and WooCommerce product carousel.',
+				'carousel-slider'
+			),
 		);
 		parent::__construct( 'widget_carousel_slider', __( 'Carousel Slider', 'carousel-slider' ), $widget_ops );
 	}
@@ -75,9 +78,9 @@ class CarouselSliderWidget extends WP_Widget {
 	/**
 	 * Outputs the content of the widget
 	 *
-	 * @param array $args Display arguments including 'before_title', 'after_title',
-	 *                        'before_widget', and 'after_widget'.
-	 * @param array $instance The settings for the particular instance of the widget.
+	 * @param  array $args  Display arguments including 'before_title', 'after_title',
+	 *                       'before_widget', and 'after_widget'.
+	 * @param  array $instance  The settings for the particular instance of the widget.
 	 */
 	public function widget( $args, $instance ) {
 		$title       = isset( $instance['title'] ) ? esc_html( $instance['title'] ) : null;
@@ -87,20 +90,22 @@ class CarouselSliderWidget extends WP_Widget {
 			return;
 		}
 
-		echo $args['before_widget']; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
+		$html = $args['before_widget'];
 
 		if ( ! empty( $title ) ) {
-			echo $args['before_title'] . $title . $args['after_title']; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
+			$html .= $args['before_title'] . $title . $args['after_title'];
 		}
 
-		echo Frontend::init()->carousel_slide( [ 'id' => $carousel_id ] ); // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
-		echo $args['after_widget']; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
+		$html .= Frontend::init()->carousel_slide( [ 'id' => $carousel_id ] );
+		$html .= $args['after_widget'];
+
+		Helper::print_unescaped_internal_string( $html );
 	}
 
 	/**
 	 * Outputs the settings update form.
 	 *
-	 * @param array $instance Current settings.
+	 * @param  array $instance  Current settings.
 	 *
 	 * @return void
 	 */
@@ -110,8 +115,17 @@ class CarouselSliderWidget extends WP_Widget {
 		$title       = ! empty( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
 		$html        = '';
 		if ( count( $carousels ) > 0 ) {
-			$html .= sprintf( '<p><label for="%1$s">%2$s</label>', $this->get_field_id( 'title' ), __( 'Title (optional):', 'carousel-slider' ) );
-			$html .= sprintf( '<input type="text" class="widefat" id="%1$s" name="%2$s" value="%3$s" /></p>', $this->get_field_id( 'title' ), $this->get_field_name( 'title' ), $title );
+			$html .= sprintf(
+				'<p><label for="%1$s">%2$s</label>',
+				$this->get_field_id( 'title' ),
+				__( 'Title (optional):', 'carousel-slider' )
+			);
+			$html .= sprintf(
+				'<input type="text" class="widefat" id="%1$s" name="%2$s" value="%3$s" /></p>',
+				$this->get_field_id( 'title' ),
+				$this->get_field_name( 'title' ),
+				$title
+			);
 
 			$html .= sprintf( '<p><label>%s</label>', __( 'Choose Slide', 'carousel-slider' ) );
 			$html .= sprintf( '<select class="widefat" name="%s">', $this->get_field_name( 'carousel_id' ) );
@@ -141,8 +155,8 @@ class CarouselSliderWidget extends WP_Widget {
 	/**
 	 * Processing widget options on save
 	 *
-	 * @param array $new_instance The new options.
-	 * @param array $old_instance The previous options.
+	 * @param  array $new_instance  The new options.
+	 * @param  array $old_instance  The previous options.
 	 *
 	 * @return array
 	 */

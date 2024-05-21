@@ -87,7 +87,7 @@ class Helper extends ViewHelper {
 	/**
 	 * Get sliders
 	 *
-	 * @param array $args Optional arguments.
+	 * @param  array $args  Optional arguments.
 	 *
 	 * @return WP_Post[]|int[] Array of post objects or post IDs.
 	 */
@@ -154,21 +154,21 @@ class Helper extends ViewHelper {
 	/**
 	 * Get setting
 	 *
-	 * @param string $key The setting key.
-	 * @param mixed  $default Setting default value.
+	 * @param  string $key  The setting key.
+	 * @param  mixed  $default_value  Setting default value.
 	 *
 	 * @return mixed|null
 	 */
-	public static function get_setting( string $key, $default = null ) {
+	public static function get_setting( string $key, $default_value = null ) {
 		$settings = self::get_global_settings();
 
-		return $settings[ $key ] ?? $default;
+		return $settings[ $key ] ?? $default_value;
 	}
 
 	/**
 	 * Get breakpoint width
 	 *
-	 * @param string $prefix The breakpoint prefix.
+	 * @param  string $prefix  The breakpoint prefix.
 	 *
 	 * @return int
 	 */
@@ -291,7 +291,7 @@ class Helper extends ViewHelper {
 	/**
 	 * Get slider view
 	 *
-	 * @param string $key The slider type slug.
+	 * @param  string $key  The slider type slug.
 	 *
 	 * @return false|SliderViewInterface
 	 */
@@ -304,7 +304,7 @@ class Helper extends ViewHelper {
 	/**
 	 * Get slider template parser
 	 *
-	 * @param string $key The slider type slug.
+	 * @param  string $key  The slider type slug.
 	 *
 	 * @return false|TemplateParserInterface
 	 */
@@ -337,15 +337,15 @@ class Helper extends ViewHelper {
 	/**
 	 * Get default setting
 	 *
-	 * @param string $key The setting key.
-	 * @param mixed  $default Default value.
+	 * @param  string $key  The setting key.
+	 * @param  mixed  $default_value  Default value.
 	 *
 	 * @return mixed|null
 	 */
-	public static function get_default_setting( string $key, $default = null ) {
+	public static function get_default_setting( string $key, $default_value = null ) {
 		$settings = self::get_default_settings();
 
-		return $settings[ $key ] ?? $default;
+		return $settings[ $key ] ?? $default_value;
 	}
 
 	/**
@@ -393,7 +393,7 @@ class Helper extends ViewHelper {
 	/**
 	 * Creates Carousel Slider test page
 	 *
-	 * @param array $ids The sliders ids.
+	 * @param  array $ids  The sliders ids.
 	 *
 	 * @return int|WP_Error
 	 */
@@ -439,7 +439,7 @@ class Helper extends ViewHelper {
 	/**
 	 * What type of request is this?
 	 *
-	 * @param string $type admin, ajax, rest, cron or frontend.
+	 * @param  string $type  admin, ajax, rest, cron or frontend.
 	 *
 	 * @return bool
 	 */
@@ -463,9 +463,9 @@ class Helper extends ViewHelper {
 	/**
 	 * Create a new slider.
 	 *
-	 * @param string $title The slider title.
-	 * @param string $type The slider type.
-	 * @param array  $args Additional arguments.
+	 * @param  string $title  The slider title.
+	 * @param  string $type  The slider type.
+	 * @param  array  $args  Additional arguments.
 	 *
 	 * @return int|WP_Error The post ID on success. The value 0 or \WP_Error on failure.
 	 */
@@ -498,7 +498,7 @@ class Helper extends ViewHelper {
 	/**
 	 * Get preview link
 	 *
-	 * @param WP_Post $post The WP_Post object.
+	 * @param  WP_Post $post  The WP_Post object.
 	 *
 	 * @return string
 	 */
@@ -515,16 +515,16 @@ class Helper extends ViewHelper {
 	/**
 	 * Print internal content (not user input) without escaping.
 	 *
-	 * @param string $string The string to be print.
+	 * @param  string $html  The string to be print.
 	 */
-	public static function print_unescaped_internal_string( string $string ) {
-		echo $string; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	public static function print_unescaped_internal_string( string $html ) {
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 
 	/**
 	 * Get slider ids from content
 	 *
-	 * @param string $content The content to be tested.
+	 * @param  string $content  The content to be tested.
 	 *
 	 * @return array|int[]
 	 */
@@ -533,7 +533,11 @@ class Helper extends ViewHelper {
 		if ( false === strpos( $content, '[carousel_slide' ) ) {
 			return $slider_ids;
 		}
-		if ( preg_match_all( '/(\[carousel_slide)\s*.*id=(\'?\"?)(?P<slider_id>\d+)(\'?\"?)\s*.*(\])/', $content, $matches ) ) {
+		if ( preg_match_all(
+			'/(\[carousel_slide)\s*.*id=(\'?\"?)(?P<slider_id>\d+)(\'?\"?)\s*.*(\])/',
+			$content,
+			$matches
+		) ) {
 			$slider_ids = array_map( 'intval', $matches['slider_id'] );
 		}
 

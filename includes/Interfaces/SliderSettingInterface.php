@@ -29,20 +29,20 @@ interface SliderSettingInterface extends ArrayAccess, JsonSerializable {
 	 * Get global option for key
 	 *
 	 * @param string $key option key.
-	 * @param mixed  $default default value to return if data key does not exist.
+	 * @param mixed  $default_value default value to return if data key does not exist.
 	 *
 	 * @return mixed The key's value, or the default value
 	 */
-	public function get_global_option( string $key, $default = '' );
+	public function get_global_option( string $key, $default_value = '' );
 
 	/**
 	 * Get option for key
 	 * If there is no option for key, return from global option.
 	 *
 	 * @param string $key option key.
-	 * @param mixed  $default default value to return if data key does not exist.
+	 * @param mixed  $default_value default value to return if data key does not exist.
 	 *
 	 * @return mixed The key's value, or the default value
 	 */
-	public function get_option( string $key, $default = '' );
+	public function get_option( string $key, $default_value = '' );
 }

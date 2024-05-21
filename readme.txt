@@ -5,7 +5,7 @@ Tags: carousel, carousel slider, image carousel, product carousel, slider
 Requires at least: 5.6
 Tested up to: 6.5
 Requires PHP: 7.0
-Stable tag: 2.2.11
+Stable tag: 2.2.12
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -95,6 +95,13 @@ Carousel Slider is first class citizen in Gutenberg Block Editor. Just search 'c
 a dedicated 'carousel slider' block with live preview for Gutenberg Block Editor.
 
 == Changelog ==
+
+= version 2.2.12 - 2024-05-22 =
+* Feature - Re-design video carousel admin UI.
+* Tweak - Update video parse functionality from youtube share url.
+* Tweak - Add setting option to enable/disable data sharing.
+* Dev - Update internal code based on updated WordPress coding standards.
+* Dev - Fix some minor bugs.
 
 = version 2.2.11 - 2024-04-18 =
 * Fix - Fix XSS security vulnerability from slide edit page for Image Carousel (URL). (reported by Dmitrii Ignatyev)

@@ -40,11 +40,11 @@ class Setting {
 	 * Get option
 	 *
 	 * @param  string $key  option key.
-	 * @param  mixed  $default  default value.
+	 * @param  mixed  $default_value  default value.
 	 *
 	 * @return mixed
 	 */
-	public static function get_option( string $key, $default = '' ) {
+	public static function get_option( string $key, $default_value = '' ) {
 		$default_args = array(
 			'load_scripts'                        => 'optimized',
 			'show_structured_data'                => 'on',
@@ -52,7 +52,7 @@ class Setting {
 		);
 		$options      = wp_parse_args( get_option( 'carousel_slider_settings', array() ), $default_args );
 
-		return $options[ $key ] ?? $default;
+		return $options[ $key ] ?? $default_value;
 	}
 
 	/**

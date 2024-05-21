@@ -65,7 +65,7 @@ class Admin {
 
 			$urls = array();
 
-			for ( $i = 0; $i < $total_items; $i ++ ) {
+			for ( $i = 0; $i < $total_items; $i++ ) {
 				$urls[] = array(
 					'url'      => esc_url_raw( $url[ $i ] ),
 					'title'    => sanitize_text_field( $title[ $i ] ),

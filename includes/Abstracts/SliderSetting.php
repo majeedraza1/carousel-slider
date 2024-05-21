@@ -34,11 +34,11 @@ use CarouselSlider\Supports\Validate;
  */
 class SliderSetting extends Data implements SliderSettingInterface {
 
-	const NAV_VISIBILITY = array( 'always', 'never', 'hover' );
-	const NAV_POSITION = array( 'inside', 'outside' );
+	const NAV_VISIBILITY        = array( 'always', 'never', 'hover' );
+	const NAV_POSITION          = array( 'inside', 'outside' );
 	const PAGINATION_VISIBILITY = array( 'always', 'never', 'hover' );
-	const PAGINATION_TYPE = array( 'bullets', 'fraction', 'progressbar', 'custom' );
-	const SLIDE_EFFECTS = array( 'slide', 'fade', 'cube', 'coverflow', 'flip', 'creative', 'cards' );
+	const PAGINATION_TYPE       = array( 'bullets', 'fraction', 'progressbar', 'custom' );
+	const SLIDE_EFFECTS         = array( 'slide', 'fade', 'cube', 'coverflow', 'flip', 'creative', 'cards' );
 
 	/**
 	 * The slider id.
@@ -72,7 +72,7 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	 * Class constructor
 	 *
 	 * @param  int  $slider_id  The slider id.
-	 * @param  bool  $read_metadata  Should read metadata immediately.
+	 * @param  bool $read_metadata  Should read metadata immediately.
 	 */
 	public function __construct( int $slider_id, bool $read_metadata = true ) {
 		$this->slider_id = $slider_id;
@@ -96,7 +96,7 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	/**
 	 * Does this collection have a given key?
 	 *
-	 * @param  string  $key  The data key.
+	 * @param  string $key  The data key.
 	 *
 	 * @return bool
 	 */
@@ -107,34 +107,34 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	/**
 	 * Get option
 	 *
-	 * @param  string  $key  option key.
-	 * @param  mixed  $default  default value.
+	 * @param  string $key  option key.
+	 * @param  mixed  $default_value  default value.
 	 *
 	 * @return mixed
 	 */
-	public function get_global_option( string $key, $default = '' ) {
+	public function get_global_option( string $key, $default_value = '' ) {
 		if ( static::has_global_option( $key ) ) {
 			return static::get_global_settings()[ $key ];
 		}
 
-		return $default;
+		return $default_value;
 	}
 
 	/**
 	 * Get option for key
 	 * If there is no option for key, return from global option.
 	 *
-	 * @param  string  $key  option key.
-	 * @param  mixed  $default  default value to return if data key does not exist.
+	 * @param  string $key  option key.
+	 * @param  mixed  $default_value  default value to return if data key does not exist.
 	 *
 	 * @return mixed The key's value, or the default value
 	 */
-	public function get_option( string $key, $default = '' ) {
+	public function get_option( string $key, $default_value = '' ) {
 		if ( $this->has_prop( $key ) ) {
-			return $this->get_prop( $key, $default );
+			return $this->get_prop( $key, $default_value );
 		}
 
-		return $this->get_global_option( $key, $default );
+		return $this->get_global_option( $key, $default_value );
 	}
 
 	/**
@@ -163,7 +163,7 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	/**
 	 * Set slider type
 	 *
-	 * @param  mixed  $type  The slider type.
+	 * @param  mixed $type  The slider type.
 	 *
 	 * @return void
 	 */
@@ -200,7 +200,7 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	/**
 	 * Set nav visibility
 	 *
-	 * @param  mixed  $value  The navigation visibility.
+	 * @param  mixed $value  The navigation visibility.
 	 */
 	public function set_nav_visibility( $value ) {
 		// For backup compatability.
@@ -228,7 +228,7 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	/**
 	 * Set nav position
 	 *
-	 * @param  mixed  $value  The navigation position.
+	 * @param  mixed $value  The navigation position.
 	 */
 	public function set_nav_position( $value ) {
 		if ( in_array( $value, static::NAV_POSITION, true ) ) {
@@ -239,7 +239,7 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	/**
 	 * Set nav steps
 	 *
-	 * @param  mixed  $value  The navigation steps.
+	 * @param  mixed $value  The navigation steps.
 	 */
 	public function set_nav_steps( $value ) {
 		if ( in_array( $value, array( 'page', '-1', - 1 ), true ) ) {
@@ -252,7 +252,7 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	/**
 	 * Set pagination visibility
 	 *
-	 * @param  mixed  $value  The pagination visibility value.
+	 * @param  mixed $value  The pagination visibility value.
 	 */
 	public function set_pagination_visibility( $value ) {
 		// For backup compatability.
@@ -358,7 +358,7 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	/**
 	 * Read setting from database
 	 *
-	 * @param  array  $values  The value to be read.
+	 * @param  array $values  The value to be read.
 	 *
 	 * @return void
 	 */
@@ -382,7 +382,7 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	/**
 	 * Read data from HTTP POST variable
 	 *
-	 * @param  array  $values  The values from HTTP POST variables.
+	 * @param  array $values  The values from HTTP POST variables.
 	 *
 	 * @return void
 	 */
@@ -396,7 +396,7 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	/**
 	 * Read single metadata
 	 *
-	 * @param  string  $attribute  property name.
+	 * @param  string $attribute  property name.
 	 * @param  array  $field  The field settings.
 	 * @param  array  $values  The values.
 	 *
@@ -439,7 +439,7 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	/**
 	 * Sanitize value by data type
 	 *
-	 * @param  string  $type  The type.
+	 * @param  string $type  The type.
 	 * @param  mixed  $value  The value.
 	 *
 	 * @return mixed
@@ -464,8 +464,8 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	/**
 	 * Prepare item for database store
 	 *
-	 * @param  mixed  $value  The value to be sanitized.
-	 * @param  array  $setting  The field setting.
+	 * @param  mixed $value  The value to be sanitized.
+	 * @param  array $setting  The field setting.
 	 *
 	 * @return mixed
 	 */
@@ -486,8 +486,8 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	/**
 	 * Sanitize choices value
 	 *
-	 * @param  mixed  $value  The value to be sanitized.
-	 * @param  array  $setting  The field setting.
+	 * @param  mixed $value  The value to be sanitized.
+	 * @param  array $setting  The field setting.
 	 *
 	 * @return array|mixed|null
 	 */
@@ -528,7 +528,7 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	/**
 	 * Handle calling property via method
 	 *
-	 * @param  string  $name  The name of the method being called.
+	 * @param  string $name  The name of the method being called.
 	 * @param  array  $args  An enumerated array containing the parameters passed to the $name'ed method.
 	 *
 	 * @return mixed
@@ -548,7 +548,7 @@ class SliderSetting extends Data implements SliderSettingInterface {
 			}
 		}
 		throw new BadMethodCallException(
-			'Call to undefined method ' . sprintf( '%s::%s()', __CLASS__, $name )
+			'Call to undefined method ' . esc_html( sprintf( '%s::%s()', __CLASS__, $name ) )
 		);
 	}
 }

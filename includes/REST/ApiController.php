@@ -216,8 +216,10 @@ class ApiController extends WP_REST_Controller {
 	}
 
 	/**
-	 * @param int $slider_id
-	 * @param array $values
+	 * Update slider general settings
+	 *
+	 * @param int   $slider_id The slider id.
+	 * @param array $values The values to be saved.
 	 *
 	 * @return void
 	 */

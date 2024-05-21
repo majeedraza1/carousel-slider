@@ -45,7 +45,7 @@ class Module {
 	/**
 	 * Register view for hero carousel
 	 *
-	 * @param  array  $views  List of views.
+	 * @param  array $views  List of views.
 	 *
 	 * @return array
 	 */
@@ -58,8 +58,8 @@ class Module {
 	/**
 	 * Save slider content and settings
 	 *
-	 * @param  int  $slider_id  The slider id.
-	 * @param  array  $data  User submitted data.
+	 * @param  int   $slider_id  The slider id.
+	 * @param  array $data  User submitted data.
 	 */
 	public function save_slider( int $slider_id, array $data ) {
 		if ( isset( $data['carousel_slider_content'] ) ) {
@@ -84,7 +84,8 @@ class Module {
 	/**
 	 * Update hero carousel settings
 	 *
-	 * @param  int  $post_id  post id.
+	 * @param  int   $post_id  post id.
+	 * @param  array $setting Settings array.
 	 */
 	private function update_content_settings( int $post_id, array $setting ) {
 		$_settings = [

@@ -830,12 +830,12 @@ class Admin {
 		);
 		$form->spacing(
 			[
-				'meta_key' => '_content_slider_settings',
-				'group'    => 'content_settings',
-				'id'       => 'slide_padding',
-				'name'     => esc_html__( 'Slider Padding', 'carousel-slider' ),
-				'desc'     => esc_html__( 'Enter padding around slide in px, em or rem.', 'carousel-slider' ),
-				'default'  => [
+				'meta_key'         => '_content_slider_settings',
+				'group'            => 'content_settings',
+				'id'               => 'slide_padding',
+				'name'             => esc_html__( 'Slider Padding', 'carousel-slider' ),
+				'desc'             => esc_html__( 'Enter padding around slide in px, em or rem.', 'carousel-slider' ),
+				'default'          => [
 					'top'    => '1rem',
 					'right'  => '1rem',
 					'bottom' => '1rem',

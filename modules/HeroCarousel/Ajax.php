@@ -93,24 +93,24 @@ class Ajax {
 	/**
 	 * Move array element position
 	 *
-	 * @param  array  $array  Array content.
-	 * @param  int  $current_index  The current index.
-	 * @param  int  $new_index  The new index.
+	 * @param  array $original_array  Array content.
+	 * @param  int   $current_index  The current index.
+	 * @param  int   $new_index  The new index.
 	 *
 	 * @return array
 	 */
-	private function move_array_element( array $array, int $current_index, int $new_index ): array {
-		$output = array_splice( $array, $current_index, 1 );
-		array_splice( $array, $new_index, 0, $output );
+	private function move_array_element( array $original_array, int $current_index, int $new_index ): array {
+		$output = array_splice( $original_array, $current_index, 1 );
+		array_splice( $original_array, $new_index, 0, $output );
 
-		return $array;
+		return $original_array;
 	}
 
 	/**
 	 * Add new item
 	 *
-	 * @param  int  $post_id  The post id.
-	 * @param  array  $slider_content  The slider content.
+	 * @param  int   $post_id  The post id.
+	 * @param  array $slider_content  The slider content.
 	 *
 	 * @return array
 	 */
@@ -128,7 +128,7 @@ class Ajax {
 	/**
 	 * Get current index
 	 *
-	 * @param  int  $last_index  Last slider index.
+	 * @param  int $last_index  Last slider index.
 	 *
 	 * @return int
 	 */

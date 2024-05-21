@@ -39,51 +39,52 @@ class Module {
 	/**
 	 * Meta box content
 	 *
-	 * @param  int  $slider_id  The slider id.
-	 * @param  string  $slider_type  The slider type.
+	 * @param  int    $slider_id  The slider id.
+	 * @param  string $slider_type  The slider type.
 	 */
 	public function meta_box_content( int $slider_id, string $slider_type ) {
 		if ( 'video-carousel' !== $slider_type ) {
 			return;
 		}
-		$urls        = get_post_meta( $slider_id, '_video_url', true );
-		$video_urls  = VideoCarouselHelper::get_video_url( $urls );
-		$description = sprintf(
-			'%s<br><br>%s %s',
-			esc_html__( 'Only support youtube and vimeo. Enter video URL from youtube or vimeo separating each by comma',
-				'carousel-slider' ),
-			esc_html__( 'Example:', 'carousel-slider' ),
-			'https://www.youtube.com/watch?v=O4-EM32h7b4,https://www.youtube.com/watch?v=72IO4gzB8mU,https://vimeo.com/193773669,https://vimeo.com/193517656'
-		);
 		?>
-        <div class="sp-input-group" id="field-_video_url">
-            <div class="sp-input-label">
-                <label for="_video_url"><?php esc_html_e( 'Video URLs', 'carousel-slider' ); ?></label>
-                <p class="sp-input-desc"><?php echo wp_kses_post( $description ); ?></p>
-            </div>
-            <div class="sp-input-field">
-				<textarea class="sp-input-textarea" id="_video_url" cols="35" rows="6"
-                          name="_video_url"><?php echo esc_textarea( $urls ); ?></textarea>
-            </div>
-        </div>
-        <div class="sp-input-group" id="field-_video_urls">
+		<div class="carousel-slider-video-carousel-urls shapla-columns is-multiline" id="carousel-slider-video-carousel-urls">
 			<?php
+			$video_urls = get_post_meta( $slider_id, '_video_urls', true );
+			if ( empty( $video_urls ) ) {
+				$urls       = get_post_meta( $slider_id, '_video_url', true );
+				$video_urls = VideoCarouselHelper::get_video_url( $urls );
+			}
 			foreach ( $video_urls as $index => $video_url ) {
 				$item = new Item( $video_url );
 				include CAROUSEL_SLIDER_PATH . '/templates/admin-meta-box/video-loop-item.php';
 			}
 			?>
-        </div>
+		</div>
+		<div class="shapla-column is-12">
+			<button class="button add_video_url_row"><?php esc_html_e( 'Add New Item', 'carousel-slider' ); ?></button>
+		</div>
 		<?php
 	}
 
 	/**
 	 * Save slider video url
 	 *
-	 * @param  int  $slider_id  The slider id.
-	 * @param  array  $data  The raw data.
+	 * @param  int   $slider_id  The slider id.
+	 * @param  array $data  The raw data.
 	 */
 	public function save_slider( int $slider_id, $data ) {
+		$video_urls = $data['_video_urls'] ?? [];
+		if ( is_array( $video_urls ) && count( $video_urls ) ) {
+			$video_urls = VideoCarouselHelper::get_video_url( $video_urls );
+			update_post_meta( $slider_id, '_video_urls', $video_urls );
+
+			if ( count( $video_urls ) ) {
+				$sanitize_urls = wp_list_pluck( $video_urls, 'url' );
+				update_post_meta( $slider_id, '_video_url', implode( ',', $sanitize_urls ) );
+			}
+
+			return;
+		}
 		$urls = $data['_video_url'] ?? '';
 		if ( $urls ) {
 			$urls          = is_string( $urls ) ? explode( ',', $urls ) : $urls;
@@ -102,7 +103,7 @@ class Module {
 	/**
 	 * Register view
 	 *
-	 * @param  array  $views  Registered views.
+	 * @param  array $views  Registered views.
 	 *
 	 * @return array
 	 */

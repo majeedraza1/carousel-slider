@@ -56,7 +56,7 @@ class FormBuilder implements FormBuilderInterface {
 	/**
 	 * Set field settings
 	 *
-	 * @param  array  $settings  The settings arguments.
+	 * @param  array $settings  The settings arguments.
 	 *
 	 * @return void
 	 */
@@ -67,7 +67,7 @@ class FormBuilder implements FormBuilderInterface {
 	/**
 	 * Set option name
 	 *
-	 * @param  string  $option_name  The option name.
+	 * @param  string $option_name  The option name.
 	 *
 	 * @return void
 	 */
@@ -78,7 +78,7 @@ class FormBuilder implements FormBuilderInterface {
 	/**
 	 * Set fields values
 	 *
-	 * @param  array  $values  The values.
+	 * @param  array $values  The values.
 	 *
 	 * @return void
 	 */
@@ -105,8 +105,11 @@ class FormBuilder implements FormBuilderInterface {
 
 			$table .= '<tr>';
 			if ( ! empty( $field['title'] ) ) {
-				$table .= sprintf( '<th scope="row"><label for="%1$s">%2$s</label></th>', $field['id'],
-					$field['title'] );
+				$table .= sprintf(
+					'<th scope="row"><label for="%1$s">%2$s</label></th>',
+					$field['id'],
+					$field['title']
+				);
 			}
 			$table .= '<td>';
 
@@ -116,7 +119,7 @@ class FormBuilder implements FormBuilderInterface {
 			$table .= $field_class->render();
 
 			if ( ! empty( $field['description'] ) ) {
-				$desc  = is_array( $field['description'] ) ?
+				$desc   = is_array( $field['description'] ) ?
 					implode( '<br>', $field['description'] ) :
 					$field['description'];
 				$table .= sprintf( '<p class="description">%s</p>', $desc );
@@ -134,7 +137,7 @@ class FormBuilder implements FormBuilderInterface {
 	 * Settings fields
 	 *
 	 * @param  array  $fields  The fields settings.
-	 * @param  string  $option_name  The option name.
+	 * @param  string $option_name  The option name.
 	 * @param  array  $values  The values.
 	 *
 	 * @return string
@@ -150,7 +153,7 @@ class FormBuilder implements FormBuilderInterface {
 	/**
 	 * Get field class
 	 *
-	 * @param  string  $type  The field type.
+	 * @param  string $type  The field type.
 	 *
 	 * @return BaseField|FieldInterface|null
 	 */

@@ -15,7 +15,7 @@ class ExternalImageItem extends Data {
 	/**
 	 * The image url
 	 *
-	 * @param  array  $data  The data.
+	 * @param  array $data  The data.
 	 */
 	public function __construct( array $data ) {
 		$this->data = $data;
@@ -69,7 +69,7 @@ class ExternalImageItem extends Data {
 	/**
 	 * Get image html
 	 *
-	 * @param  bool  $lazy  Load image lazily.
+	 * @param  bool $lazy  Load image lazily.
 	 *
 	 * @return string
 	 */
@@ -93,7 +93,7 @@ class ExternalImageItem extends Data {
 	/**
 	 * Get link start html
 	 *
-	 * @param  string  $target  The target.
+	 * @param  string $target  The target.
 	 *
 	 * @return string
 	 */

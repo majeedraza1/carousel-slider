@@ -40,12 +40,12 @@ abstract class BaseField implements FieldInterface {
 	 * Get setting
 	 *
 	 * @param string $key The setting key.
-	 * @param mixed  $default The default value for the setting.
+	 * @param mixed  $default_value The default value for the setting.
 	 *
 	 * @return mixed
 	 */
-	public function get_setting( string $key, $default = null ) {
-		return $this->settings[ $key ] ?? $default;
+	public function get_setting( string $key, $default_value = null ) {
+		return $this->settings[ $key ] ?? $default_value;
 	}
 
 	/**
@@ -187,7 +187,6 @@ abstract class BaseField implements FieldInterface {
 
 				// If string value.
 				return sprintf( '%s="%s"', $key, esc_attr( $value ) );
-
 			},
 			array_keys( $attributes ),
 			array_values( $attributes )

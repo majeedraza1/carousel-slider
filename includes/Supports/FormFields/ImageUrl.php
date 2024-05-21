@@ -16,7 +16,7 @@ class ImageUrl extends BaseField {
 		$value    = $this->get_value();
 		$btn_text = $value ? __( 'Edit URLs', 'carousel-slider' ) : __( 'Add URLs', 'carousel-slider' );
 
-		$html = sprintf( '<a id="_images_urls_btn" class="button" href="#">%s</a>', $btn_text );
+		$html  = sprintf( '<a id="_images_urls_btn" class="button" href="#">%s</a>', $btn_text );
 		$html .= '<ul class="carousel_slider_url_images_list">';
 		if ( is_array( $value ) && count( $value ) > 0 ) {
 			foreach ( $value as $image ) {

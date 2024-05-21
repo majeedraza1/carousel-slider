@@ -34,11 +34,11 @@ class ViewHelper {
 	/**
 	 * Convert array to html data attribute
 	 *
-	 * @param array $array The attributes list.
+	 * @param array $attributes The attributes list.
 	 *
 	 * @return array
 	 */
-	public static function array_to_attribute( array $array ): array {
+	public static function array_to_attribute( array $attributes ): array {
 		return array_map(
 			function ( $key, $value ) {
 				// If boolean value.
@@ -56,10 +56,9 @@ class ViewHelper {
 
 				// If string value.
 				return sprintf( '%s="%s"', $key, esc_attr( $value ) );
-
 			},
-			array_keys( $array ),
-			array_values( $array )
+			array_keys( $attributes ),
+			array_values( $attributes )
 		);
 	}
 }

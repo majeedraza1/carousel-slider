@@ -83,8 +83,8 @@ class Item extends Data {
 	/**
 	 * Class constructor.
 	 *
-	 * @param  array  $args  Optional arguments.
-	 * @param  array  $slider_settings  Slider settings.
+	 * @param  array $args  Optional arguments.
+	 * @param  array $slider_settings  Slider settings.
 	 */
 	public function __construct( array $args = [], array $slider_settings = [] ) {
 		$this->data            = wp_parse_args( $args, self::get_default() );
@@ -103,7 +103,7 @@ class Item extends Data {
 	/**
 	 * Set setting
 	 *
-	 * @param  Setting|SliderSetting  $setting  The SliderSetting object.
+	 * @param  Setting|SliderSetting $setting  The SliderSetting object.
 	 */
 	public function set_setting( Setting $setting ) {
 		$this->setting         = $setting;
@@ -122,19 +122,19 @@ class Item extends Data {
 	/**
 	 * Get default value
 	 *
-	 * @param  string  $key  Props key.
-	 * @param  mixed  $default  Default value.
+	 * @param  string $key  Props key.
+	 * @param  mixed  $default_value  Default value.
 	 *
 	 * @return mixed|string
 	 */
-	public static function get_default_value( string $key, $default = '' ) {
-		return static::$default[ $key ] ?? $default;
+	public static function get_default_value( string $key, $default_value = '' ) {
+		return static::$default[ $key ] ?? $default_value;
 	}
 
 	/**
 	 * Sanitize item data
 	 *
-	 * @param  array  $data  The data to be sanitized.
+	 * @param  array $data  The data to be sanitized.
 	 *
 	 * @return array
 	 */
@@ -499,7 +499,7 @@ class Item extends Data {
 		$btn_text = $this->get_prop( 'button_one_text' );
 		$target   = $this->get_prop( 'button_one_target', '_self' );
 
-		$classes = 'button cs-hero-button';
+		$classes  = 'button cs-hero-button';
 		$classes .= ' cs-hero-button-' . $this->get_item_id() . '-1';
 		$classes .= ' cs-hero-button-' . $this->get_prop( 'button_one_type', 'normal' );
 		$classes .= ' cs-hero-button-' . $this->get_prop( 'button_one_size', 'medium' );
@@ -532,7 +532,7 @@ class Item extends Data {
 		$text   = $this->get_prop( 'button_two_text' );
 		$target = $this->get_prop( 'button_two_target', '_self' );
 
-		$classes = 'button cs-hero-button';
+		$classes  = 'button cs-hero-button';
 		$classes .= ' cs-hero-button-' . $this->get_item_id() . '-2';
 		$classes .= ' cs-hero-button-' . $this->get_prop( 'button_two_type', 'normal' );
 		$classes .= ' cs-hero-button-' . $this->get_prop( 'button_two_size', 'medium' );
@@ -576,8 +576,10 @@ class Item extends Data {
 			);
 		}
 
-		return '<' . ( $is_full_link ? 'a' : 'div' ) . ' ' . join( ' ',
-				Helper::array_to_attribute( $cell_attr ) ) . '>';
+		return '<' . ( $is_full_link ? 'a' : 'div' ) . ' ' . join(
+			' ',
+			Helper::array_to_attribute( $cell_attr )
+		) . '>';
 	}
 
 	/**

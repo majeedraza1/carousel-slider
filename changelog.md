@@ -1,3 +1,11 @@
+#### version 2.2.12 - 2024-05-22
+
+* Feature - Re-design video carousel admin UI.
+* Tweak - Update video parse functionality from youtube share url.
+* Tweak - Add setting option to enable/disable data sharing.
+* Dev - Update internal code based on updated WordPress coding standards.
+* Dev - Fix some minor bugs.
+
 #### version 2.2.11 - 2024-04-18
 
 * Fix - Fix XSS security vulnerability from slide edit page for Image Carousel (URL) (reported by Dmitrii Ignatyev).

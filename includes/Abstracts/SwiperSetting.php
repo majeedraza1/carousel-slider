@@ -26,7 +26,7 @@ class SwiperSetting {
 	/**
 	 * Class constructor
 	 *
-	 * @param  SliderSetting  $slider_setting  slider setting class.
+	 * @param  SliderSetting $slider_setting  slider setting class.
 	 */
 	public function __construct( SliderSetting $slider_setting ) {
 		$this->slider_setting = $slider_setting;
@@ -36,7 +36,7 @@ class SwiperSetting {
 	/**
 	 * Read settings
 	 *
-	 * @param  SliderSetting  $setting  slider setting class.
+	 * @param  SliderSetting $setting  slider setting class.
 	 *
 	 * @return void
 	 */
