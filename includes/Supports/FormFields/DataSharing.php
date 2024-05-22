@@ -34,10 +34,13 @@ class DataSharing extends BaseField {
 		$html .= '<span class="switch-label-text">' . $this->get_setting( 'label' ) . '</span>';
 		$html .= '</div>';
 
-		$html .= '<div style="max-width: 600px;max-height:400px;background-color: #ddd;overflow: auto;margin-top:1rem;">';
+		$html .= '<div class="admin-data-sharing-container">';
+		$html .= '<div class="admin-data-sharing-header">' . esc_html__( 'If data sharing is enabled, the following data will be shared occasionally (normally once a week).', 'carousel-slider' ) . '</div>';
+		$html .= '<div class="admin-data-sharing-code">';
 		$html .= '<pre>';
 		$html .= wp_json_encode( TrackingData::all(), \JSON_PRETTY_PRINT );
 		$html .= '</pre>';
+		$html .= '</div>';
 		$html .= '</div>';
 
 		return $html;

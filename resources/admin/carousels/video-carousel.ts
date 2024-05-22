@@ -8,7 +8,7 @@ const _l10n = window.CarouselSliderAdminL10n.videoCarousel;
 const loopItemContainerId = 'carousel-slider-video-carousel-urls';
 const loopItemClassname = 'carousel_slider-fields--video-urls';
 
-const template = `<div class="carousel_slider-fields--video-urls shapla-column is-6">
+const template = `<div class="carousel_slider-fields--video-urls shapla-column is-12 is-6-fullhd">
     <div class="carousel_slider-fields media-url-form-field">
       <div class="media-url-form-field__content">
           <label class="setting media-url-form-field__item">
@@ -18,7 +18,7 @@ const template = `<div class="carousel_slider-fields--video-urls shapla-column i
           </label>
       </div>
       <div class="media-url-form-field__actions flex-direction-row">
-          <span class="sort_row"><span class="dashicons dashicons-move"></span></span>
+          <span class="sort_video_url_row"><span class="dashicons dashicons-move"></span></span>
           <span class="add_video_url_row"><span class="dashicons dashicons-plus-alt"></span></span>
           <span class="delete_video_url_row"><span class="dashicons dashicons-trash"></span></span>
       </div>
@@ -51,5 +51,8 @@ $(document).on('click', '.delete_video_url_row', function () {
 
 // Make fields sortable
 if ($.fn.sortable) {
-  $('#carousel-slider-video-carousel-urls').sortable();
+  $('#carousel-slider-video-carousel-urls').sortable({
+    handle: ".sort_video_url_row",
+    placeholder: "cs-sortable-state-highlight shapla-column is-12 is-6-fullhd"
+  });
 }

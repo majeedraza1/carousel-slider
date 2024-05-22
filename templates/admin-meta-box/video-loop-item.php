@@ -9,7 +9,7 @@ defined( 'ABSPATH' ) || die;
  * @var int $index Item index number.
  */
 ?>
-<div class="carousel_slider-fields--video-urls shapla-column is-6">
+<div class="carousel_slider-fields--video-urls shapla-column is-12 is-6-fullhd">
     <div class="carousel_slider-fields media-url-form-field">
         <div class="media-url-form-field__content">
             <label class="setting media-url-form-field__item">
@@ -20,7 +20,7 @@ defined( 'ABSPATH' ) || die;
             </label>
         </div>
         <div class="media-url-form-field__actions flex-direction-row">
-            <span class="sort_row"><span class="dashicons dashicons-move"></span></span>
+            <span class="sort_video_url_row"><span class="dashicons dashicons-move"></span></span>
             <span class="add_video_url_row"><span class="dashicons dashicons-plus-alt"></span></span>
             <span class="delete_video_url_row"><span class="dashicons dashicons-trash"></span></span>
         </div>

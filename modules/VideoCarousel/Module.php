@@ -47,22 +47,26 @@ class Module {
 			return;
 		}
 		?>
-		<div class="carousel-slider-video-carousel-urls shapla-columns is-multiline" id="carousel-slider-video-carousel-urls">
-			<?php
-			$video_urls = get_post_meta( $slider_id, '_video_urls', true );
-			if ( empty( $video_urls ) ) {
-				$urls       = get_post_meta( $slider_id, '_video_url', true );
-				$video_urls = VideoCarouselHelper::get_video_url( $urls );
-			}
-			foreach ( $video_urls as $index => $video_url ) {
-				$item = new Item( $video_url );
-				include CAROUSEL_SLIDER_PATH . '/templates/admin-meta-box/video-loop-item.php';
-			}
-			?>
-		</div>
-		<div class="shapla-column is-12">
-			<button class="button add_video_url_row"><?php esc_html_e( 'Add New Item', 'carousel-slider' ); ?></button>
-		</div>
+			<div class="carousel-slider-video-carousel-urls-container">
+				<div class="carousel-slider-video-carousel-urls shapla-columns is-multiline" id="carousel-slider-video-carousel-urls">
+					<?php
+					$video_urls = get_post_meta( $slider_id, '_video_urls', true );
+					if ( empty( $video_urls ) ) {
+						$urls       = get_post_meta( $slider_id, '_video_url', true );
+						$video_urls = VideoCarouselHelper::get_video_url( $urls );
+					}
+					foreach ( $video_urls as $index => $video_url ) {
+						$item = new Item( $video_url );
+						include CAROUSEL_SLIDER_PATH . '/templates/admin-meta-box/video-loop-item.php';
+					}
+					?>
+				</div>
+				<div class="shapla-columns">
+					<div class="shapla-column is-12">
+						<button class="button add_video_url_row"><?php esc_html_e( 'Add New Item', 'carousel-slider' ); ?></button>
+					</div>
+				</div>
+			</div>
 		<?php
 	}
 
