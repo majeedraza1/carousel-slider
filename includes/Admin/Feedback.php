@@ -40,7 +40,10 @@ class Feedback {
 				}
 			);
 
-			add_action( 'wp_ajax_carousel_slider_deactivate_feedback', array( self::$instance, 'deactivate_feedback' ) );
+			add_action(
+				'wp_ajax_carousel_slider_deactivate_feedback',
+				array( self::$instance, 'deactivate_feedback' )
+			);
 			add_action( 'wp_ajax_carousel_slider_tracker_consent', array( self::$instance, 'handle_optin_optout' ) );
 
 			add_action( 'admin_notices', array( self::$instance, 'admin_notice' ) );
@@ -175,22 +178,26 @@ class Feedback {
 				'title'             => esc_html__( 'It\'s a temporary deactivation', 'carousel-slider' ),
 				'input_placeholder' => esc_html__( 'Are you facing any problem?', 'carousel-slider' ),
 			),
-			'carousel_slider_pro'    => array(
+		);
+
+		if ( defined( 'CAROUSEL_SLIDER_PRO_PROMOTION' ) && CAROUSEL_SLIDER_PRO_PROMOTION ) {
+			$deactivate_reasons['carousel_slider_pro'] = array(
 				'title' => esc_html__( 'I have Carousel Slider Pro', 'carousel-slider' ),
 				'alert' => esc_html__(
 					'Wait! Don\'t deactivate Carousel Slider. You have to activate both Carousel Slider and Carousel Slider Pro in order for the plugin to work.',
 					'carousel-slider'
 				),
-			),
-			'other'                  => array(
-				'title'             => esc_html__( 'Other', 'carousel-slider' ),
-				'input_placeholder' => esc_html__( 'Please share the reason', 'carousel-slider' ),
-			),
+			);
+		}
+
+		$deactivate_reasons['other'] = array(
+			'title'             => esc_html__( 'Other', 'carousel-slider' ),
+			'input_placeholder' => esc_html__( 'Please share the reason', 'carousel-slider' ),
 		);
 
 		?>
 		<shapla-dialog type="card" heading="<?php echo esc_html__( 'Quick Feedback', 'carousel-slider' ); ?>"
-						class="feedback-dialog" id="carousel-slider-deactivate-feedback-dialog-wrapper">
+					   class="feedback-dialog" id="carousel-slider-deactivate-feedback-dialog-wrapper">
 			<div class="feedback-dialog__body">
 				<form id="carousel-slider-deactivate-feedback-dialog-form" class="feedback-dialog__form" method="post">
 					<?php
@@ -210,11 +217,11 @@ class Feedback {
 						<?php foreach ( $deactivate_reasons as $reason_key => $reason ) : ?>
 							<div class="feedback-dialog__form-control">
 								<input type="radio" name="reason_key"
-										id="elementor-deactivate-feedback-<?php echo esc_attr( $reason_key ); ?>"
-										class="feedback-dialog__form-input"
-										value="<?php echo esc_attr( $reason_key ); ?>"/>
+									   id="elementor-deactivate-feedback-<?php echo esc_attr( $reason_key ); ?>"
+									   class="feedback-dialog__form-input"
+									   value="<?php echo esc_attr( $reason_key ); ?>"/>
 								<label for="elementor-deactivate-feedback-<?php echo esc_attr( $reason_key ); ?>"
-										class="feedback-dialog__form-label"><?php echo esc_html( $reason['title'] ); ?></label>
+									   class="feedback-dialog__form-label"><?php echo esc_html( $reason['title'] ); ?></label>
 								<?php if ( ! empty( $reason['input_placeholder'] ) ) : ?>
 									<textarea
 											class="carousel-slider-feedback-text"
@@ -281,7 +288,7 @@ class Feedback {
 		}
 
 		$message = sprintf(
-			/* translators: 1 - Plugin name */
+		/* translators: 1 - Plugin name */
 			__(
 				'Want to help make <strong>%1$s</strong> even more awesome? Allow %1$s to collect non-sensitive diagnostic data and usage information.',
 				'carousel-slider'

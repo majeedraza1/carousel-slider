@@ -104,10 +104,12 @@ class Admin {
 				'Community support',
 				'carousel-slider'
 			) . '</a>';
-			$plugin_meta[] = '<a href="' . Api::PRO_SUPPORT_URL . '" target="_blank">' . __(
-				'Pro Support',
-				'carousel-slider'
-			) . '</a>';
+			if ( defined( 'CAROUSEL_SLIDER_PRO_PROMOTION' ) && CAROUSEL_SLIDER_PRO_PROMOTION ) {
+				$plugin_meta[] = '<a href="' . Api::PRO_SUPPORT_URL . '" target="_blank">' . __(
+						'Pro Support',
+						'carousel-slider'
+					) . '</a>';
+			}
 		}
 
 		return $plugin_meta;

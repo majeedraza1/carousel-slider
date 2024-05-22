@@ -1,6 +1,5 @@
 === Carousel Slider ===
 Contributors: sayful
-Donate link: https://www.buymeacoffee.com/sayful1
 Tags: carousel, carousel slider, image carousel, product carousel, slider
 Requires at least: 5.6
 Tested up to: 6.5
