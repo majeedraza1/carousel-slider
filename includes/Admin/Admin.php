@@ -47,7 +47,7 @@ class Admin {
 			add_filter( 'preview_post_link', [ self::$instance, 'preview_post_link' ], 10, 2 );
 
 			add_action( 'admin_enqueue_scripts', [ self::$instance, 'admin_scripts' ], 10 );
-			add_action( 'admin_menu', [ self::$instance, 'documentation_menu' ] );
+			// add_action( 'admin_menu', [ self::$instance, 'documentation_menu' ] );
 			add_filter( 'admin_footer_text', [ self::$instance, 'admin_footer_text' ] );
 			add_action( 'admin_menu', [ self::$instance, 'go_pro_menu' ], 999 );
 			add_filter(

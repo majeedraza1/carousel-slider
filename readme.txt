@@ -1,5 +1,5 @@
 === Carousel Slider ===
-Contributors: sayful
+Contributors: majeedraza
 Tags: carousel, carousel slider, image carousel, product carousel, slider
 Requires at least: 5.6
 Tested up to: 6.5
@@ -11,10 +11,6 @@ License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 Create SEO friendly Image, Logo, Video, Post, WooCommerce Product Carousel and Slider.
 
 == Description ==
-
-https://www.youtube.com/watch?v=UOYK79yVrJ4&list=PL9GiQPpTzMv6aMEq449a7RPzjSVRf1bsc&index=1
-
-= Overview =
 
 **Create SEO friendly Image, Logo, Video, Post, WooCommerce Product Carousel and Slider.**
 
@@ -43,13 +39,6 @@ custom url, post carousel, video carousel.
 * Lazy load images
 * Support image title, caption, link url
 * and more options
-
-= How to Videos =
-
-Images Carousel: [https://www.youtube.com/watch?v=UOYK79yVrJ4](https://www.youtube.com/watch?v=UOYK79yVrJ4)
-Hero Slider: [https://www.youtube.com/watch?v=_hVsamgr1k4](https://www.youtube.com/watch?v=_hVsamgr1k4)
-Posts Carousel: [https://www.youtube.com/watch?v=ImJB946azy0](https://www.youtube.com/watch?v=ImJB946azy0)
-WooCommerce Products Carousel: [https://www.youtube.com/watch?v=yiAkvXyfakg](https://www.youtube.com/watch?v=yiAkvXyfakg)
 
 == Installation ==
 
@@ -151,5 +140,3 @@ a dedicated 'carousel slider' block with live preview for Gutenberg Block Editor
 * Dev - Add multi checkbox setting field.
 * Fix - Hero carousel delete button not working.
 * Fix - Hero carousel index is not correct.
-
-[See changelog for all versions](https://raw.githubusercontent.com/sayful1/carousel-slider/main/changelog.md).

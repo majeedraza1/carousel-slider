@@ -1,28 +1,7 @@
 {
   "name": "carousel-slider",
   "description": "The Easiest Way to Create SEO friendly Image, Logo, Video, Post and WooCommerce Product Carousel.",
-  "keywords": [
-    "wordpress",
-    "wordpress-plugin",
-    "carousel-slider",
-    "carousel",
-    "slider",
-    "hero-slider",
-    "product-slider"
-  ],
-  "author": {
-    "name": "Sayful Islam",
-    "email": "sayful.islam001@gmail.com",
-    "url": "https://sayfulislam.com"
-  },
   "license": "GPL-3.0-only",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sayful1/carousel-slider.git"
-  },
-  "bugs": {
-    "url": "https://github.com/sayful1/carousel-slider/issues"
-  },
   "homepage": "https://wordpress.org/plugins/carousel-slider/",
   "scripts": {
     "dev": "webpack --mode=development --progress --watch",
