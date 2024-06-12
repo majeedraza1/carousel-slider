@@ -6,6 +6,7 @@ use CarouselSlider\Admin\Admin;
 use CarouselSlider\Admin\Feedback;
 use CarouselSlider\Admin\GutenbergBlock;
 use CarouselSlider\Admin\MetaBox;
+use CarouselSlider\Admin\PreviewMetaBox;
 use CarouselSlider\Admin\Setting;
 use CarouselSlider\Admin\Upgrader;
 use CarouselSlider\CLI\Command;
@@ -50,7 +51,7 @@ class Plugin {
 	/**
 	 * Get class from container
 	 *
-	 * @param string $key The key used for class name.
+	 * @param  string  $key  The key used for class name.
 	 *
 	 * @return false|mixed
 	 */
@@ -160,11 +161,12 @@ class Plugin {
 	 * @return void
 	 */
 	public function admin_includes() {
-		$this->container['admin']           = Admin::init();
-		$this->container['meta_box']        = MetaBox::init();
-		$this->container['setting']         = Setting::init();
-		$this->container['gutenberg_block'] = GutenbergBlock::init();
-		$this->container['upgrader']        = Upgrader::init();
+		$this->container['admin']            = Admin::init();
+		$this->container['meta_box']         = MetaBox::init();
+		$this->container['setting']          = Setting::init();
+		$this->container['gutenberg_block']  = GutenbergBlock::init();
+		$this->container['upgrader']         = Upgrader::init();
+		$this->container['preview_meta_box'] = PreviewMetaBox::init();
 	}
 
 	/**
@@ -253,7 +255,7 @@ class Plugin {
 	/**
 	 * What type of request is this?
 	 *
-	 * @param string $type admin, ajax, rest, cron or frontend.
+	 * @param  string  $type  admin, ajax, rest, cron or frontend.
 	 *
 	 * @return bool
 	 */

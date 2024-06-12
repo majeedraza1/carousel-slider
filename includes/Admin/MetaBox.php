@@ -174,6 +174,25 @@ class MetaBox {
 		</div>
 		<?php
 		Helper::print_unescaped_internal_string( ob_get_clean() );
+		?>
+		<div>
+			<a class="button button-primary button-cs-preview hidden" id="carousel-slider-update-preview"
+			   data-id="<?php echo esc_attr( $post->ID ); ?>" href="#">
+				<span class="button-cs-preview__icon dashicons dashicons-image-rotate"></span>
+				<span class="button-cs-preview__label">Update Preview</span>
+			</a>
+			<a class="button button-primary button-cs-preview hidden" id="carousel-slider-hide-preview"
+			   data-id="<?php echo esc_attr( $post->ID ); ?>" href="#">
+				<span class="button-cs-preview__icon dashicons dashicons-hidden"></span>
+				<span class="button-cs-preview__label">Hide Preview</span>
+			</a>
+			<a class="button button-primary button-cs-preview" id="carousel-slider-show-preview"
+			   data-id="<?php echo esc_attr( $post->ID ); ?>" href="#">
+				<span class="button-cs-preview__icon dashicons dashicons-visibility"></span>
+				<span class="button-cs-preview__label">Show Preview</span>
+			</a>
+		</div>
+		<?php
 	}
 
 	/**

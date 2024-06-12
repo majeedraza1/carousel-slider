@@ -12,6 +12,7 @@ declare global {
       restRoot: string;
       restNonce: string;
       ajaxUrl: string;
+      nonce: string;
     };
     CarouselSliderAdminL10n: {
       videoCarousel: {

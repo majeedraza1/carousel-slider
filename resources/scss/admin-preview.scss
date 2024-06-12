@@ -1,0 +1,26 @@
+#carousel-slider-live-preview {
+  display: none;
+}
+
+.button-cs-preview {
+  display: inline-flex !important;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  right: 2rem;
+  bottom: 2rem;
+  z-index: 1001;
+  height: 3rem;
+  padding: 1rem 2rem !important;
+  font-size: 1.125rem !important;
+  width: 215px;
+
+  &__label {
+    margin-left: .5rem;
+    display: inline-flex;
+  }
+
+  &.hidden {
+    display: none !important;
+  }
+}

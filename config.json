@@ -14,6 +14,7 @@
     ],
     "admin": [
       "./resources/scss/admin.scss",
+      "./resources/scss/admin-preview.scss",
       "./resources/admin/main.js"
     ],
     "admin-add-new-carousel": [
