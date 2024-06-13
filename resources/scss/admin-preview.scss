@@ -1,3 +1,16 @@
+.carousel_slider_preview_iframe_container {
+  width: 100%;
+  box-sizing: border-box;
+
+  *, *:before, *:after {
+    box-sizing: border-box;
+  }
+
+  iframe {
+    width: 100%;
+  }
+}
+
 #carousel-slider-live-preview {
   display: none;
 }

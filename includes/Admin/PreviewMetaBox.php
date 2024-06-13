@@ -2,6 +2,8 @@
 
 namespace CarouselSlider\Admin;
 
+use CarouselSlider\Helper;
+use CarouselSlider\Interfaces\SliderViewInterface;
 use WP_Post;
 
 /**
@@ -36,7 +38,7 @@ class PreviewMetaBox {
 	 * Add carousel slider meta box
 	 *
 	 * @param  string  $post_type  The post type.
-	 * @param  WP_Post $post  The post object.
+	 * @param  WP_Post  $post  The post object.
 	 */
 	public function add_meta_boxes( $post_type, $post ) {
 		if ( CAROUSEL_SLIDER_POST_TYPE !== $post_type ) {
@@ -55,14 +57,17 @@ class PreviewMetaBox {
 	/**
 	 * Carousel slider live preview
 	 *
-	 * @param  WP_Post $post  The post object.
+	 * @param  WP_Post  $post  The post object.
 	 *
 	 * @return void
 	 */
 	public function carousel_slider_live_preview( $post ) {
 		?>
-		<div id="carousel_slider_preview_meta_box">
-		</div>
+        <div id="carousel_slider_preview_iframe_container" class="carousel_slider_preview_iframe_container">
+
+        </div>
+        <div id="carousel_slider_preview_meta_box">
+        </div>
 		<?php
 	}
 
@@ -72,9 +77,43 @@ class PreviewMetaBox {
 	 * @return void
 	 */
 	public function preview_meta_box() {
-		$nonce = isset( $_POST['cs_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['cs_nonce'] ) ) : ''; // phpcs:ignore
+		$nonce = isset( $_REQUEST['cs_nonce'] ) ? sanitize_text_field( wp_unslash( $_REQUEST['cs_nonce'] ) ) : ''; // phpcs:ignore
 		if ( ! wp_verify_nonce( $nonce, 'carousel_slider_ajax_nonce' ) ) {
-			return;
+			wp_send_json_error( __( 'Sorry, you are not allowed to access this resource.', 'carousel-slider' ), 403 );
 		}
+		$post_id = isset( $_REQUEST['post_ID'] ) ? absint( $_REQUEST['post_ID'] ) : 0;
+		$post    = get_post( $post_id );
+		if ( ! $post instanceof WP_Post ) {
+			wp_send_json_error( __( 'Sorry, no item found for your request.', 'carousel-slider' ), 404 );
+		}
+
+		if ( ! current_user_can( 'edit_post', $post_id ) ) {
+			wp_send_json_error( __( 'Sorry, you are not allowed to access this resource.', 'carousel-slider' ), 403 );
+		}
+
+		if ( CAROUSEL_SLIDER_POST_TYPE !== $post->post_type ) {
+			wp_send_json_error( __( 'Sorry, you are not allowed to access this resource.', 'carousel-slider' ), 401 );
+		}
+		$slider_type = get_post_meta( $post_id, '_slide_type', true );
+		$view        = Helper::get_slider_view( $slider_type );
+		$html        = '';
+		if ( $view instanceof SliderViewInterface ) {
+			$view->set_slider_id( $post_id );
+			$view->set_slider_type( $slider_type );
+
+			$html = $view->render();
+		}
+		$common_settings = $_POST['carousel_slider'] ?? [];
+		$image_carousel  = $_POST['image_carousel'] ?? [];
+
+		wp_send_json_success(
+			[
+				'slider_type'     => $slider_type,
+				'common_settings' => $common_settings,
+				'image_carousel'  => $image_carousel,
+				'html'            => $html,
+			],
+			200
+		);
 	}
 }

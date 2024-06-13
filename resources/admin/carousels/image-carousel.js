@@ -9,6 +9,7 @@ let frame,
 const updateDom = (ids_string, gallery_html) => {
 	$('#_carousel_slider_images_ids').val(ids_string);
 	$('.carousel_slider_gallery_list').html(gallery_html);
+	document.body.dispatchEvent(new CustomEvent('CarouselSlider.refresh.preview'))
 }
 
 _this.on('click', function (e) {

@@ -64,7 +64,7 @@ class Admin {
 	/**
 	 * Add custom links on plugins page.
 	 *
-	 * @param  array $links  An array of plugin action links.
+	 * @param  array  $links  An array of plugin action links.
 	 *
 	 * @return array
 	 */
@@ -92,18 +92,18 @@ class Admin {
 	/**
 	 * Filters the array of row meta for the plugin in the Plugins list table.
 	 *
-	 * @param  string[] $plugin_meta  An array of the plugin's metadata, including
+	 * @param  string[]  $plugin_meta  An array of the plugin's metadata, including
 	 *                             the version, author, author URI, and plugin URI.
-	 * @param  string   $plugin_file  Path to the plugin file relative to the plugins directory.
+	 * @param  string  $plugin_file  Path to the plugin file relative to the plugins directory.
 	 *
 	 * @return array
 	 */
 	public function plugin_row_meta( $plugin_meta, $plugin_file ) {
 		if ( plugin_basename( CAROUSEL_SLIDER_FILE ) === $plugin_file ) {
 			$plugin_meta[] = '<a href="' . Api::FREE_SUPPORT_URL . '" target="_blank">' . __(
-				'Community support',
-				'carousel-slider'
-			) . '</a>';
+					'Community support',
+					'carousel-slider'
+				) . '</a>';
 			if ( defined( 'CAROUSEL_SLIDER_PRO_PROMOTION' ) && CAROUSEL_SLIDER_PRO_PROMOTION ) {
 				$plugin_meta[] = '<a href="' . Api::PRO_SUPPORT_URL . '" target="_blank">' . __(
 						'Pro Support',
@@ -119,7 +119,7 @@ class Admin {
 	 * Modify preview post link for carousel slider
 	 *
 	 * @param  string  $preview_link  The preview link.
-	 * @param  WP_Post $post  The WP_Post object.
+	 * @param  WP_Post  $post  The WP_Post object.
 	 *
 	 * @return string
 	 */
@@ -148,8 +148,8 @@ class Admin {
 	/**
 	 * Generate carousel slider list table content for each custom column
 	 *
-	 * @param  string $column_name  The name of the column to display.
-	 * @param  int    $post_id  The current post ID.
+	 * @param  string  $column_name  The name of the column to display.
+	 * @param  int  $post_id  The current post ID.
 	 *
 	 * @return void
 	 */
@@ -159,18 +159,18 @@ class Admin {
 
 			case 'usage':
 				?>
-				<label class="screen-reader-text" for="carousel_slider_usage_<?php echo esc_attr( $post_id ); ?>">
-					Copy shortcode
-				</label>
-				<input
-						id="carousel_slider_usage_<?php echo esc_attr( $post_id ); ?>"
-						type="text"
-						onmousedown="this.clicked = 1;"
-						onfocus="if (!this.clicked) this.select(); else this.clicked = 2;"
-						onclick="if (this.clicked === 2) this.select(); this.clicked = 0;"
-						value="[carousel_slide id='<?php echo esc_attr( $post_id ); ?>']"
-						style="background-color: #f1f1f1;min-width: 250px;padding: 5px 8px;"
-				>
+                <label class="screen-reader-text" for="carousel_slider_usage_<?php echo esc_attr( $post_id ); ?>">
+                    Copy shortcode
+                </label>
+                <input
+                        id="carousel_slider_usage_<?php echo esc_attr( $post_id ); ?>"
+                        type="text"
+                        onmousedown="this.clicked = 1;"
+                        onfocus="if (!this.clicked) this.select(); else this.clicked = 2;"
+                        onclick="if (this.clicked === 2) this.select(); this.clicked = 0;"
+                        value="[carousel_slide id='<?php echo esc_attr( $post_id ); ?>']"
+                        style="background-color: #f1f1f1;min-width: 250px;padding: 5px 8px;"
+                >
 				<?php
 				break;
 
@@ -187,8 +187,8 @@ class Admin {
 	/**
 	 * Hide view and quick edit from carousel slider admin
 	 *
-	 * @param  array   $actions  The post row actions list.
-	 * @param  WP_Post $post  The WP_Post object.
+	 * @param  array  $actions  The post row actions list.
+	 * @param  WP_Post  $post  The WP_Post object.
 	 *
 	 * @return array
 	 */
@@ -199,9 +199,9 @@ class Admin {
 
 		$view_url        = Helper::get_preview_link( $post );
 		$actions['view'] = '<a href="' . $view_url . '" target="_blank">' . esc_html__(
-			'Preview',
-			'carousel-slider'
-		) . '</a>';
+				'Preview',
+				'carousel-slider'
+			) . '</a>';
 
 		unset( $actions['inline hide-if-no-js'] );
 
@@ -211,12 +211,12 @@ class Admin {
 	/**
 	 * Load admin scripts
 	 *
-	 * @param  string|mixed $hook  Page hook.
+	 * @param  string|mixed  $hook  Page hook.
 	 */
 	public function admin_scripts( $hook ) {
 		global $post;
 
-		$_is_carousel    = is_a( $post, 'WP_Post' ) && ( 'carousels' === $post->post_type );
+		$_is_carousel    = is_a( $post, 'WP_Post' ) && ( CAROUSEL_SLIDER_POST_TYPE === $post->post_type );
 		$_is_doc         = ( 'carousels_page_carousel-slider-documentation' === $hook );
 		$_is_settings    = ( 'carousels_page_settings' === $hook );
 		$_is_plugin_page = 'plugins.php' === $hook;
@@ -305,13 +305,13 @@ class Admin {
 			],
 		];
 		$html  = '<div class="wrap">';
-		$html .= '<h1 class="wp-heading">' . esc_html__(
-			'Carousel Slider Documentation',
-			'carousel-slider'
-		) . '</h1>';
-		$html .= '<div class="clear"></div>';
-		$html .= '<div class="postbox"><div class="inside">';
-		$html .= '<div class="carousel_slider_columns">';
+		$html  .= '<h1 class="wp-heading">' . esc_html__(
+				'Carousel Slider Documentation',
+				'carousel-slider'
+			) . '</h1>';
+		$html  .= '<div class="clear"></div>';
+		$html  .= '<div class="postbox"><div class="inside">';
+		$html  .= '<div class="carousel_slider_columns">';
 		foreach ( $items as $item ) {
 			$html .= '<div class="carousel_slider_column">';
 			$html .= '<div class="carousel_slider_iframe">';
@@ -337,7 +337,7 @@ class Admin {
 	/**
 	 * Add custom footer text on plugins page.
 	 *
-	 * @param  string|null $text  The custom admin footer text.
+	 * @param  string|null  $text  The custom admin footer text.
 	 *
 	 * @return string|null Admin footer text
 	 */
