@@ -60,6 +60,7 @@ If you still need help. visit [WordPress codex](https://codex.wordpress.org/Mana
 5. Front-end example of products carousel slider.
 6. Front-end example of products Quick View.
 7. Front-end example of image lightbox.
+8. Carousel slider admin live preview.
 
 == Upgrade Notice ==
 Update to get new features and better security.
