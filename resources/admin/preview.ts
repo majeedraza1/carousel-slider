@@ -1,6 +1,6 @@
 class CarouselSliderPreviewMetaBox {
-  private _formPost: HTMLFormElement;
   private _previewContainer: HTMLDivElement;
+  private readonly _formPost: HTMLFormElement;
   private readonly _previewMetaBox: HTMLDivElement;
   private readonly _iframeContainer: HTMLDivElement;
   private readonly _btnUpdatePreview: HTMLAnchorElement;
@@ -17,7 +17,7 @@ class CarouselSliderPreviewMetaBox {
     this._btnHidePreview = document.querySelector<HTMLAnchorElement>('#carousel-slider-hide-preview');
     this._previewContainer = document.querySelector<HTMLAnchorElement>('#carousel_slider_preview_meta_box');
     this._formPost = document.body.querySelector<HTMLFormElement>('form#post');
-    if (this._previewMetaBox && this._btnUpdatePreview && this._btnHidePreview && this._formPost) {
+    if (this._iframeContainer && this._btnUpdatePreview && this._btnHidePreview && this._formPost) {
       this._postId = parseInt(this._btnShowPreview.dataset.id as string)
       this._btnShowPreview.addEventListener('click', () => this.onClickShowPreviewButton())
       this._btnHidePreview.addEventListener('click', () => this.onClickHidePreviewButton())
@@ -112,7 +112,6 @@ class CarouselSliderPreviewMetaBox {
           .then(response => response.json())
           .then(response => {
             resolve(response.data);
-            window.console.log(response.data);
             // this._previewContainer.innerHTML = response.data.html;
             this.refreshIframe();
           })

@@ -18,7 +18,7 @@ class Setting extends SliderSetting {
 	/**
 	 * Get slider items
 	 *
-	 * @return array
+	 * @return Item[]
 	 */
 	public function get_slider_items(): array {
 		$items = get_post_meta( $this->get_slider_id(), '_content_slider', true );

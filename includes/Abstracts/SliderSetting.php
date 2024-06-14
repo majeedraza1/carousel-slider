@@ -394,6 +394,21 @@ class SliderSetting extends Data implements SliderSettingInterface {
 	}
 
 	/**
+	 * Read data from HTTP POST variable
+	 *
+	 * @param  array $values  The values from HTTP POST variables.
+	 *
+	 * @return void
+	 */
+	public function read_extra_http_post_variables( array $values = array() ) {
+		if ( method_exists( get_called_class(), 'extra_props' ) ) {
+			foreach ( static::extra_props() as $attribute => $config ) {
+				$this->read_single_metadata( $attribute, $config, $values );
+			}
+		}
+	}
+
+	/**
 	 * Read single metadata
 	 *
 	 * @param  string $attribute  property name.

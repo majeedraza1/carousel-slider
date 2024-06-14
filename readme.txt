@@ -4,7 +4,7 @@ Tags: carousel, carousel slider, image carousel, product carousel, slider
 Requires at least: 5.6
 Tested up to: 6.5
 Requires PHP: 7.0
-Stable tag: 2.2.12
+Stable tag: 2.2.13
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -84,9 +84,11 @@ a dedicated 'carousel slider' block with live preview for Gutenberg Block Editor
 
 == Changelog ==
 
+= version 2.2.13 - 2024-06-14 =
+* Feature - Add live preview option on slider edit page.
+
 = version 2.2.12 - 2024-05-22 =
-* Feature - Re-design video carousel admin UI.
-* Tweak - Update video parse functionality from youtube share url.
+* Tweak - Update video parse functionality from YouTube share url.
 * Tweak - Add setting option to enable/disable data sharing.
 * Dev - Update internal code based on updated WordPress coding standards.
 * Dev - Fix some minor bugs.

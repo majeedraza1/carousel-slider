@@ -1,3 +1,7 @@
+#### version 2.2.13 - 2024-06-14
+
+* Feature - Add live preview option on slider edit page.
+
 #### version 2.2.12 - 2024-05-22
 
 * Feature - Re-design video carousel admin UI.

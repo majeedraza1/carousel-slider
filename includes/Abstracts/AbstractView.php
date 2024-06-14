@@ -57,7 +57,7 @@ abstract class AbstractView implements SliderViewInterface {
 	/**
 	 * Set slider id
 	 *
-	 * @param int $slider_id The slider id.
+	 * @param  int $slider_id  The slider id.
 	 */
 	public function set_slider_id( int $slider_id ) {
 		$this->slider_id = $slider_id;
@@ -75,7 +75,7 @@ abstract class AbstractView implements SliderViewInterface {
 	/**
 	 * Set slider type
 	 *
-	 * @param string $slider_type The slider type.
+	 * @param  string $slider_type  The slider type.
 	 */
 	public function set_slider_type( string $slider_type ) {
 		$this->slider_type = $slider_type;
@@ -97,7 +97,7 @@ abstract class AbstractView implements SliderViewInterface {
 	/**
 	 * Set slider setting class
 	 *
-	 * @param SliderSettingInterface $slider_setting The SliderSetting class.
+	 * @param  SliderSettingInterface $slider_setting  The SliderSetting class.
 	 */
 	public function set_slider_setting( SliderSettingInterface $slider_setting ) {
 		$this->slider_setting = $slider_setting;
@@ -126,7 +126,7 @@ abstract class AbstractView implements SliderViewInterface {
 	/**
 	 * Get slider start wrapper html
 	 *
-	 * @param array $args The additional arguments.
+	 * @param  array $args  The additional arguments.
 	 *
 	 * @return string
 	 */
@@ -216,7 +216,7 @@ abstract class AbstractView implements SliderViewInterface {
 	/**
 	 * Get slider default attributes
 	 *
-	 * @param array $args The additional arguments.
+	 * @param  array $args  The additional arguments.
 	 *
 	 * @return array
 	 */

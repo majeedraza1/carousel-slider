@@ -2,6 +2,9 @@
 
 namespace CarouselSlider\Frontend;
 
+use CarouselSlider\Helper;
+use CarouselSlider\Interfaces\SliderViewInterface;
+
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -65,7 +68,20 @@ class Preview {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$slider_id = isset( $_GET['slider_id'] ) ? intval( $_GET['slider_id'] ) : 0;
 
-		$html  = '<!DOCTYPE html>' . PHP_EOL;
+		$slide_type = get_post_meta( $slider_id, '_slide_type', true );
+		$slide_type = array_key_exists( $slide_type, Helper::get_slide_types() ) ? $slide_type : 'image-carousel';
+
+		$view = Helper::get_slider_view( $slide_type );
+		if ( $view instanceof SliderViewInterface ) {
+			$view->set_slider_id( $slider_id );
+			$view->set_slider_type( $slide_type );
+
+			$slider_html = $view->render();
+		} else {
+			$slider_html = '';
+		}
+
+		$html = '<!DOCTYPE html>' . PHP_EOL;
 		$html .= '<html ' . get_language_attributes() . '>' . PHP_EOL;
 		$html .= '<head>' . PHP_EOL;
 		$html .= '<meta charset="' . get_bloginfo( 'charset' ) . '">' . PHP_EOL;
@@ -84,7 +100,7 @@ class Preview {
 		$html .= '</head>' . PHP_EOL;
 		$html .= '</body>' . PHP_EOL;
 		$html .= '<div class="carousel-slider-preview-container">' . PHP_EOL;
-		$html .= do_shortcode( '[carousel_slide id="' . $slider_id . '"]' ) . PHP_EOL;
+		$html .= $slider_html . PHP_EOL;
 		$html .= '</div>' . PHP_EOL;
 		$html .= $wp_footer . PHP_EOL;
 		$html .= '<script type="text/javascript">
@@ -92,6 +108,11 @@ class Preview {
 				if (window.frameElement) {
 					window.frameElement.height = document.querySelector(".carousel-slider-preview-container").offsetHeight;
 				}
+                window.addEventListener("load", () => {
+					if (window.frameElement) {
+						window.frameElement.height = document.querySelector(".carousel-slider-preview-container").offsetHeight;
+					}
+				});
 			})();
 		</script>' . PHP_EOL;
 		$html .= '</body>' . PHP_EOL;
