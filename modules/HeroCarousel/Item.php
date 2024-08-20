@@ -83,8 +83,8 @@ class Item extends Data {
 	/**
 	 * Class constructor.
 	 *
-	 * @param  array $args  Optional arguments.
-	 * @param  array $slider_settings  Slider settings.
+	 * @param  array  $args  Optional arguments.
+	 * @param  array  $slider_settings  Slider settings.
 	 */
 	public function __construct( array $args = [], array $slider_settings = [] ) {
 		$this->data            = wp_parse_args( $args, self::get_default() );
@@ -103,7 +103,7 @@ class Item extends Data {
 	/**
 	 * Set setting
 	 *
-	 * @param  Setting|SliderSetting $setting  The SliderSetting object.
+	 * @param  Setting|SliderSetting  $setting  The SliderSetting object.
 	 */
 	public function set_setting( Setting $setting ) {
 		$this->setting         = $setting;
@@ -122,7 +122,7 @@ class Item extends Data {
 	/**
 	 * Get default value
 	 *
-	 * @param  string $key  Props key.
+	 * @param  string  $key  Props key.
 	 * @param  mixed  $default_value  Default value.
 	 *
 	 * @return mixed|string
@@ -134,12 +134,20 @@ class Item extends Data {
 	/**
 	 * Sanitize item data
 	 *
-	 * @param  array $data  The data to be sanitized.
+	 * @param  array  $data  The data to be sanitized.
 	 *
 	 * @return array
 	 */
 	public static function sanitize( array $data ): array {
-		$color_fields  = [
+		$dimension_fields = [
+			'heading_gutter',
+			'description_gutter',
+			'button_one_border_width',
+			'button_one_border_radius',
+			'button_two_border_width',
+			'button_two_border_radius',
+		];
+		$color_fields     = [
 			'bg_color',
 			'bg_overlay',
 			'heading_color',
@@ -149,8 +157,8 @@ class Item extends Data {
 			'button_two_bg_color',
 			'button_two_color',
 		];
-		$data          = wp_parse_args( $data, self::get_default() );
-		$sanitize_data = [];
+		$data             = wp_parse_args( $data, self::get_default() );
+		$sanitize_data    = [];
 		foreach ( $data as $key => $value ) {
 			if ( in_array( $key, [ 'slide_heading', 'slide_description' ], true ) ) {
 				$sanitize_data[ $key ] = Sanitize::html( $value );
@@ -160,6 +168,8 @@ class Item extends Data {
 				$sanitize_data[ $key ] = Sanitize::url( $value );
 			} elseif ( in_array( $key, $color_fields, true ) ) {
 				$sanitize_data[ $key ] = Sanitize::color( $value );
+			} elseif ( in_array( $key, $dimension_fields, true ) ) {
+				$sanitize_data[ $key ] = Sanitize::css_dimension( $value );
 			} else {
 				$sanitize_data[ $key ] = Sanitize::text( $value );
 			}
@@ -499,7 +509,7 @@ class Item extends Data {
 		$btn_text = $this->get_prop( 'button_one_text' );
 		$target   = $this->get_prop( 'button_one_target', '_self' );
 
-		$classes  = 'button cs-hero-button';
+		$classes = 'button cs-hero-button';
 		$classes .= ' cs-hero-button-' . $this->get_item_id() . '-1';
 		$classes .= ' cs-hero-button-' . $this->get_prop( 'button_one_type', 'normal' );
 		$classes .= ' cs-hero-button-' . $this->get_prop( 'button_one_size', 'medium' );
@@ -532,7 +542,7 @@ class Item extends Data {
 		$text   = $this->get_prop( 'button_two_text' );
 		$target = $this->get_prop( 'button_two_target', '_self' );
 
-		$classes  = 'button cs-hero-button';
+		$classes = 'button cs-hero-button';
 		$classes .= ' cs-hero-button-' . $this->get_item_id() . '-2';
 		$classes .= ' cs-hero-button-' . $this->get_prop( 'button_two_type', 'normal' );
 		$classes .= ' cs-hero-button-' . $this->get_prop( 'button_two_size', 'medium' );
@@ -577,9 +587,9 @@ class Item extends Data {
 		}
 
 		return '<' . ( $is_full_link ? 'a' : 'div' ) . ' ' . join(
-			' ',
-			Helper::array_to_attribute( $cell_attr )
-		) . '>';
+				' ',
+				Helper::array_to_attribute( $cell_attr )
+			) . '>';
 	}
 
 	/**

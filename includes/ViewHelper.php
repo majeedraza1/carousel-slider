@@ -15,7 +15,7 @@ class ViewHelper {
 	/**
 	 * Array to style
 	 *
-	 * @param array $styles The styles array.
+	 * @param  array  $styles  The styles array.
 	 *
 	 * @return string
 	 */
@@ -25,7 +25,7 @@ class ViewHelper {
 			if ( ! is_string( $key ) || empty( $value ) ) {
 				continue;
 			}
-			$_styles[] = sprintf( '%s:%s', $key, $value );
+			$_styles[] = sprintf( '%s:%s', $key, esc_attr( $value ) );
 		}
 
 		return implode( ';', $_styles );
@@ -34,7 +34,7 @@ class ViewHelper {
 	/**
 	 * Convert array to html data attribute
 	 *
-	 * @param array $attributes The attributes list.
+	 * @param  array  $attributes  The attributes list.
 	 *
 	 * @return array
 	 */

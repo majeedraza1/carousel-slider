@@ -2,9 +2,9 @@
 Contributors: majeedraza
 Tags: carousel, carousel slider, image carousel, product carousel, slider
 Requires at least: 5.6
-Tested up to: 6.5
+Tested up to: 6.6
 Requires PHP: 7.0
-Stable tag: 2.2.13
+Stable tag: 2.2.14
 License: GPLv3
 License URI: https://www.gnu.org/licenses/gpl-3.0.txt
 
@@ -84,6 +84,9 @@ Carousel Slider is first class citizen in Gutenberg Block Editor. Just search 'c
 a dedicated 'carousel slider' block with live preview for Gutenberg Block Editor.
 
 == Changelog ==
+
+= version 2.2.14 - 2024-08-20 =
+* Fix - Fix XSS security vulnerability from slide edit page for Hero Carousel. (reported by Bob)
 
 = version 2.2.13 - 2024-06-14 =
 * Feature - Add live preview option on slider edit page.
