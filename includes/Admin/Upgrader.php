@@ -46,7 +46,7 @@ class Upgrader {
 	/**
 	 * Show in plugin update message
 	 *
-	 * @param array $plugin_data plugin info data.
+	 * @param  array  $plugin_data  plugin info data.
 	 */
 	public function in_plugin_update_message( array $plugin_data ) {
 		$current_version       = CAROUSEL_SLIDER_VERSION;
@@ -67,8 +67,10 @@ class Upgrader {
 			$html .= '</div>';
 			$html .= '<div class="cs_plugin_upgrade_notice__description">';
 			$html .= __( 'We made a lot of major changes to this version.', 'carousel-slider' ) . ' ';
-			$html .= __( 'We believe that all functionality will remain same after update (remember to refresh you cache plugin).', 'carousel-slider' ) . ' ';
-			$html .= __( 'Still make sure that you took a backup so you can role back if anything happen wrong to you.', 'carousel-slider' );
+			$html .= __( 'We believe that all functionality will remain same after update (remember to refresh you cache plugin).',
+					'carousel-slider' ) . ' ';
+			$html .= __( 'Still make sure that you took a backup so you can role back if anything happen wrong to you.',
+				'carousel-slider' );
 			$html .= '</div>';
 			$html .= '</div><p class="dummy" style="display: none">';
 		}
@@ -93,9 +95,9 @@ class Upgrader {
 			'carousel_slider_upgrade'
 		);
 		$html        = '<div class="notice notice-info is-dismissible">';
-		$html       .= '<p><strong>' . $message . '</strong> ' . $message2 . '</p>';
-		$html       .= '<p><a href="' . $update_url . '" class="button">' . $button_text . '</a></p>';
-		$html       .= '</div>';
+		$html        .= '<p><strong>' . $message . '</strong> ' . $message2 . '</p>';
+		$html        .= '<p><a href="' . $update_url . '" class="button">' . $button_text . '</a></p>';
+		$html        .= '</div>';
 
 		echo wp_kses_post( $html );
 	}
@@ -104,13 +106,17 @@ class Upgrader {
 	 * Run upgrade function
 	 */
 	public function upgrade() {
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
-		$nonce       = $_REQUEST['_wpnonce'] ? sanitize_text_field( $_REQUEST['_wpnonce'] ) : null;
-		$is_verified = wp_verify_nonce( $nonce, 'carousel_slider_upgrade' );
+		$nonce       = isset( $_REQUEST['_wpnonce'] ) && is_string( $_REQUEST['_wpnonce'] )
+			? sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) )
+			: '';
 
 		$message = '<h1>' . __( 'Carousel Slider', 'carousel-slider' ) . '</h1>';
-		if ( ! ( current_user_can( 'manage_options' ) && $is_verified ) ) {
-			$message .= '<p>' . __( 'Sorry. This link only for admin to perform upgrade tasks.', 'carousel-slider' ) . '</p>';
+		if (
+			! current_user_can( 'manage_options' )
+			|| ! wp_verify_nonce( $nonce, 'carousel_slider_upgrade' )
+		) {
+			$message .= '<p>' . __( 'Sorry. This link only for admin to perform upgrade tasks.',
+					'carousel-slider' ) . '</p>';
 			_default_wp_die_handler( $message, '', [ 'back_link' => true ] );
 		}
 
@@ -136,7 +142,7 @@ class Upgrader {
 		$ids = static::get_sliders_ids();
 		if ( count( $ids ) ) {
 			global $wpdb;
-			$sql  = "UPDATE {$wpdb->postmeta} SET `meta_key`= '_infinity_loop' WHERE `meta_key` = '_inifnity_loop'";
+			$sql = "UPDATE {$wpdb->postmeta} SET `meta_key`= '_infinity_loop' WHERE `meta_key` = '_inifnity_loop'";
 			$sql .= ' AND post_id IN(' . implode( ',', $ids ) . ')';
 
 			// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared
@@ -155,7 +161,7 @@ class Upgrader {
 		$ids = static::get_sliders_ids();
 		if ( count( $ids ) ) {
 			global $wpdb;
-			$sql  = "UPDATE {$wpdb->postmeta} SET `meta_value`= 'query_product' WHERE `meta_value` = 'query_porduct'";
+			$sql = "UPDATE {$wpdb->postmeta} SET `meta_value`= 'query_product' WHERE `meta_value` = 'query_porduct'";
 			$sql .= " AND `meta_key` = '_product_query_type' AND post_id IN(" . implode( ',', $ids ) . ')';
 
 			// phpcs:ignore WordPress.DB.PreparedSQL.NotPrepared

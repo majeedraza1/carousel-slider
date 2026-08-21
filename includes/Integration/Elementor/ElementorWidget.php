@@ -134,7 +134,7 @@ class ElementorWidget extends Widget_Base {
     protected function render() {
         $settings  = $this->get_settings_for_display();
         $slider_id = intval( $settings['slider_id'] );
-        $action    = $_GET['action'] ? sanitize_text_field( wp_unslash( $_GET['action'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+        $action    = isset( $_GET['action'] ) ? sanitize_text_field( wp_unslash( $_GET['action'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
         if ( 'elementor' === $action ) {
             $args = add_query_arg(

@@ -101,7 +101,7 @@ class Module {
 			wp_die();
 		}
 
-		if ( ! wp_verify_nonce( $_GET['_wpnonce'], 'carousel_slider_quick_view' ) ) {
+		if ( ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'carousel_slider_quick_view' ) ) {
 			wp_die();
 		}
 

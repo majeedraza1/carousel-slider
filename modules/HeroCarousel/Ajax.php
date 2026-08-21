@@ -38,7 +38,10 @@ class Ajax {
 	 * @return void
 	 */
 	public function add_slide_template() {
-		if ( isset( $_POST['nonce'] ) && wp_verify_nonce( $_POST['nonce'], 'carousel_slider_ajax_nonce' ) ) {
+		if (
+			isset( $_POST['nonce'] )
+			&& wp_verify_nonce( sanitize_text_field(wp_unslash($_POST['nonce'])), 'carousel_slider_ajax_nonce' )
+		) {
 			if ( ! isset( $_POST['post_id'] ) ) {
 				wp_send_json( __( 'Required attribute is not set properly.', 'carousel-slider' ), 422 );
 			}
@@ -50,7 +53,7 @@ class Ajax {
 				wp_send_json( __( 'You are not authorized to perform this action.', 'carousel-slider' ), 401 );
 			}
 
-			$task = isset( $_POST['task'] ) ? sanitize_text_field( $_POST['task'] ) : 'add-slide';
+			$task = isset( $_POST['task'] ) ? sanitize_text_field( wp_unslash( $_POST['task'] ) ) : 'add-slide';
 
 			$slider_content = get_post_meta( $post_id, '_content_slider', true );
 			$slider_content = is_array( $slider_content ) ? array_values( $slider_content ) : [];

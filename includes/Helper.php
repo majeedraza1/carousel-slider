@@ -108,24 +108,6 @@ class Helper extends ViewHelper {
 	}
 
 	/**
-	 * Get total sliders count
-	 *
-	 * @return int
-	 */
-	public static function get_sliders_count(): int {
-		global $wpdb;
-		$result = (array) $wpdb->get_row(
-			$wpdb->prepare(
-				"SELECT COUNT( * ) AS num_posts FROM {$wpdb->posts} WHERE post_type = %s",
-				CAROUSEL_SLIDER_POST_TYPE
-			),
-			ARRAY_A
-		);
-
-		return isset( $result['num_posts'] ) ? intval( $result['num_posts'] ) : 0;
-	}
-
-	/**
 	 * Get global settings
 	 *
 	 * @return array

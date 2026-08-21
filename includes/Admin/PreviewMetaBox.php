@@ -100,11 +100,11 @@ class PreviewMetaBox {
 
 		// Modify setting.
 		$setting         = $view->get_slider_setting();
-		$common_settings = $_POST['carousel_slider'] ?? [];
+		$common_settings = isset($_POST['carousel_slider']) ? wp_unslash($_POST['carousel_slider']): [];
 		$setting->read_http_post_variables( $common_settings );
 
 		if ( 'image-carousel' === $slider_type ) {
-			$image_carousel = $_POST['image_carousel'] ?? [];
+			$image_carousel = isset($_POST['image_carousel']) ? wp_unslash($_POST['image_carousel']): [];
 			$setting->read_extra_http_post_variables( $image_carousel );
 		}
 

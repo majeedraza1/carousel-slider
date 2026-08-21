@@ -180,8 +180,11 @@ class DefaultSettingApi extends SettingApi {
             return '';
         }
 
-        $current_tab = $_GET['tab'] ? wp_unslash( $_GET['tab'] ) : $panels[0]['id'];  // phpcs:ignore WordPress.Security.NonceVerification.Recommended
-        $page        = $this->menu_fields['menu_slug'];
+        $current_tab = $panels[0]['id'];
+        if ( isset( $_GET['tab'] ) ) {
+            $current_tab = sanitize_text_field( wp_unslash( $_GET['tab'] ) );
+        }
+        $page = $this->menu_fields['menu_slug'];
 
         $html = '<h2 class="nav-tab-wrapper wp-clearfix">';
         foreach ( $panels as $tab ) {
@@ -216,7 +219,10 @@ class DefaultSettingApi extends SettingApi {
 
         if ( empty( $current_tab ) ) {
             $panels      = $this->get_panels();
-            $current_tab = $_GET['tab'] ? wp_unslash( $_GET['tab'] ) : $panels[0]['id']; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+            $current_tab = $panels[0]['id'];
+            if ( isset( $_GET['tab'] ) ) {
+                $current_tab = sanitize_text_field( wp_unslash( $_GET['tab'] ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+            }
         }
 
         return $this->get_fields_by_panel( $current_tab );

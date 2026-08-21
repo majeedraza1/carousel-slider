@@ -85,6 +85,12 @@ a dedicated 'carousel slider' block with a live preview for Gutenberg Block Edit
 
 == Changelog ==
 
+= version 2.2.18 - 2026-08-21 =
+* Fix security vulnerability on an AJAX action.
+* Update code based on the latest WordPress plugin standard.
+* Test with WordPress 7.1 and WooCommerce 11.0
+
+
 = version 2.2.17 - 2025-12-01 =
 * Test with WordPress 6.9 and WooCommerce 10.3
 * Fix - Function _load_textdomain_just_in_time was called incorrectly issue.

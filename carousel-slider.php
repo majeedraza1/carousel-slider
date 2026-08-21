@@ -10,7 +10,7 @@
  * Author URI: https://github.com/sayful1/
  *
  * WC requires at least: 3.0
- * WC tested up to: 10.3
+ * WC tested up to: 11.0
  *
  * Text Domain: carousel-slider
  *
